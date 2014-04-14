@@ -16,3 +16,6 @@ Thumbs.db
 /tmp/*
 !/tmp/index.html
 /configuration.php
+
+# Akeeba Backup
+/administrator/components/com_akeeba/backup/*
