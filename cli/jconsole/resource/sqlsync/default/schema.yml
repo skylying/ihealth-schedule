@@ -1,3 +1,53 @@
+'#__ak_profiles':
+    name: '#__ak_profiles'
+    from:
+        - '#__ak_profiles'
+    columns:
+        id: { Field: id, Type: 'int(10) unsigned', 'Null': NO, Default: null, Extra: auto_increment, Comment: '', From: [id] }
+        description: { Field: description, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: '', From: [description] }
+        configuration: { Field: configuration, Type: longtext, 'Null': YES, Default: null, Extra: '', Comment: '', From: [configuration] }
+        filters: { Field: filters, Type: longtext, 'Null': YES, Default: null, Extra: '', Comment: '', From: [filters] }
+    index:
+        - { Table: '#__ak_profiles', Non_unique: '0', Key_name: PRIMARY, Seq_in_index: '1', Column_name: id, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
+    data:
+        - ['1', 'Default Backup Profile', '###AES128###D/s2mJ5WazzE2znyejhwLJxT24v/+E40r0WdiPVR7DEpuMP+XDijKlDSMFxXHuf82wpj0/SzTkgJUrOtI71hcBy4xlazXH+pSSmdybDR4XXTWdv5lmmfK/M8UhlhpdbDqBf4voAOa79XkxzsoMY5+Gk7X458//1Dgt4wtfY1zNX3r7Fp6KI4ZkHFY9GwkSR/BGZ6XuiDUYW+1laeuBT8EK2ZfJPHJMzPJ1qBbYv59eDGtNcD+OoqN0xYme/MN2f2yqnN7xYMxl5bF1HB3l3phDXLBtQFgyk7zgyhnR3AMbx5HCCp2zPLMz2+QgGHZG7xDlWl7uJ1SucYCmJUniDCIGLK7YiK6EouWMRK9U4xNB7HXfALGXMU/yyVUuzo0ofJxz7Mavr2ZWGmommvVKKOdARvBvVMbcMJypKRfgKlDo2mMx9Y+Rkvj1uPYJMSxPbpcsSKJXfDZfF7N2so3y/RonzVnCun3PELdGjylmHgzMTWdwMVXdeBXroGoy3wgiJxDokZG0hpfjEV/Mv2Y6ToyhEIoiXFJQ/Mz6QKfCFoT0LMhC6smwb82bGWm91snv2tNFSrNgTEwlzT9YNF89APC4s3YWxW2DTk7iLiIWMjUW/u4idooGIJMU1dEvu7Wc9RmEfdLmEU9140FxkcjZkb1stNjpmdg7oifo2K01BRdpYaG4yd3JsYy8ECXAgY52AOeAE1pObQOQSPa52Bdz8CKy/mxov71KGdFzjTjoyCvoXc3BRw0IYc26G5SZmAYdWrN7GBdQPEKlwiHzkB3MPy6YR11a3CvL0POoM5Ps+SCGIAv8Z7sU/VmTyW7zP2jB/rf4tozKklTc97ul3F687jWd6zKbZ75KKg5TrhAzrpqeC5Scfg/+RLa/Je4enDEhXozzjeuCxnWO+lIXYOLCPTCtQL5SpEzD24VlkrQBFb3NX13Xt6wbQYuxkmHUK8a4vK8tIOJ25ry+zbkh0OXttpZdVf+jb6ArvCeTo/qex4d4LR/z3wmtXXkfVhW5euykbxRhF50Px/ngdk4Au40SqkMT6xSxx7sVBjHs60yw0zxiL5u+jj+ri/5ChCyf1nMGNw9599op11TWrLFQtp5cl0B79rSvZIWfQwXabKVqwe7A1eMey65b1zmaz2C3Ck9ZGEJz85JJZ48S1jfuiwBDJMh4FCe6md7qrNCfsWOyCeeupOXSwXf2EwsN/upHI808uMZAFHkiEJrE0fJYfAyoVduXqPgESS+BqrEDgIEEilGnHGBihTDoiPJ6E13sw/i/n2vTBVWrZqqIzMewJOXa2qg24hYvcSKXQR2hMlNZUTlGiI+DgMq26WY8P8vnnrB8t0sGypSC+JKDxxkAMOAe+Z5A0ZdMeaVtypEhapA8ywVdxwPb3cLGwYQ6JOF/iKHJMYj/PZ39XqIoNJZNlf4V6WtQraPngCb5uAmsegoOyTVki5kZT7plJiMUcH8wXmGDe/XXGFOwtgZ4frG41IH6RRX1qxNz2QlNGoXBREamHTfzkpmS2rq/zM8IySuVSh4zt01PncIypNr4G7JQAyA0T41LuLD+VNN1byhjLk0BpiX20s0loISxPnPWZYUjUBTVjxHsP6I0dHc8tvYFaGwuYBbKtB79tNXb5Bxg3Q/vb8KvoDTT8jzXfxnGZFbJoSkab+wQbuV1756H32I8E4cW42PlXkO/IThzFyfIRNO0TnkDMA85e23M679KnLfulpVuJNwbKUGn5dbCGzZrCAtWEM9nB4eOqZlr5qINJ9Dyd56G1ocIE4mUjAR6P1rT1H1dKBmdP6vJwnvna7zApbt/c4X/Y+mv+ym1zARUJmXOeX9M3OefeSVSwv8dczeAPzEUcBn6MEH9Ma5S3nRoa7jmUlhqYSFve2ZsDmAenxLmkTLyj6nzC1FoMWl97Y/JaS2hNSVWf1oBJ4InYs5K9rl91ICOdXSjXYVYGY85SjhqkLS+Nbg1ik3P0FE4tbV/ahWNkvikTitmDnenG4bt5OEOPGWLL3gaGFY3Fr6yWPeAMLy9NCNBxQ8BkFDuNSASZ7wBHagi0WB1nUvIjMqjsnmvOZwF2xSCrIfCUO2Inl7eLz9Szf2umbYue+H+jV/7AaTugeuX7NoSOvgEFOq8muSKST4pZHqtacnTx70Dml8eJy4nFPxL0XJEyuQgnpcuZ6xM+0BXuvyT09rVbzxwMsKtT6JdzBVoDxfezIb+aGFolT09Yn+jCytKJi+GCpUDfK9FKohwYAAA==', '']
+'#__ak_stats':
+    name: '#__ak_stats'
+    from:
+        - '#__ak_stats'
+    columns:
+        id: { Field: id, Type: 'bigint(20) unsigned', 'Null': NO, Default: null, Extra: auto_increment, Comment: '', From: [id] }
+        description: { Field: description, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: '', From: [description] }
+        comment: { Field: comment, Type: longtext, 'Null': YES, Default: null, Extra: '', Comment: '', From: [comment] }
+        backupstart: { Field: backupstart, Type: timestamp, 'Null': NO, Default: '0000-00-00 00:00:00', Extra: '', Comment: '', From: [backupstart] }
+        backupend: { Field: backupend, Type: timestamp, 'Null': NO, Default: '0000-00-00 00:00:00', Extra: '', Comment: '', From: [backupend] }
+        status: { Field: status, Type: 'enum(''run'',''fail'',''complete'')', 'Null': NO, Default: run, Extra: '', Comment: '', From: [status] }
+        origin: { Field: origin, Type: varchar(30), 'Null': NO, Default: backend, Extra: '', Comment: '', From: [origin] }
+        type: { Field: type, Type: varchar(30), 'Null': NO, Default: full, Extra: '', Comment: '', From: [type] }
+        profile_id: { Field: profile_id, Type: bigint(20), 'Null': NO, Default: '1', Extra: '', Comment: '', From: [profile_id] }
+        archivename: { Field: archivename, Type: longtext, 'Null': YES, Default: null, Extra: '', Comment: '', From: [archivename] }
+        absolute_path: { Field: absolute_path, Type: longtext, 'Null': YES, Default: null, Extra: '', Comment: '', From: [absolute_path] }
+        multipart: { Field: multipart, Type: int(11), 'Null': NO, Default: '0', Extra: '', Comment: '', From: [multipart] }
+        tag: { Field: tag, Type: varchar(255), 'Null': YES, Default: null, Extra: '', Comment: '', From: [tag] }
+        filesexist: { Field: filesexist, Type: tinyint(3), 'Null': NO, Default: '1', Extra: '', Comment: '', From: [filesexist] }
+        remote_filename: { Field: remote_filename, Type: varchar(1000), 'Null': YES, Default: null, Extra: '', Comment: '', From: [remote_filename] }
+        total_size: { Field: total_size, Type: bigint(20), 'Null': NO, Default: '0', Extra: '', Comment: '', From: [total_size] }
+    index:
+        - { Table: '#__ak_stats', Non_unique: '0', Key_name: PRIMARY, Seq_in_index: '1', Column_name: id, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
+        - { Table: '#__ak_stats', Non_unique: '1', Key_name: idx_fullstatus, Seq_in_index: '1', Column_name: filesexist, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
+        - { Table: '#__ak_stats', Non_unique: '1', Key_name: idx_fullstatus, Seq_in_index: '2', Column_name: status, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
+        - { Table: '#__ak_stats', Non_unique: '1', Key_name: idx_stale, Seq_in_index: '1', Column_name: status, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
+        - { Table: '#__ak_stats', Non_unique: '1', Key_name: idx_stale, Seq_in_index: '2', Column_name: origin, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
+'#__ak_storage':
+    name: '#__ak_storage'
+    from:
+        - '#__ak_storage'
+    columns:
+        tag: { Field: tag, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: '', From: [tag] }
+        lastupdate: { Field: lastupdate, Type: timestamp, 'Null': NO, Default: CURRENT_TIMESTAMP, Extra: 'on update CURRENT_TIMESTAMP', Comment: '', From: [lastupdate] }
+        data: { Field: data, Type: longtext, 'Null': YES, Default: null, Extra: '', Comment: '', From: [data] }
+    index:
+        - { Table: '#__ak_storage', Non_unique: '0', Key_name: PRIMARY, Seq_in_index: '1', Column_name: tag, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
 '#__assets':
     name: '#__assets'
     from:
@@ -234,7 +284,7 @@
         - ['100', PHPMailer, library, phpmailer, '', '0', '1', '1', '0', '{"name":"PHPMailer","type":"library","creationDate":"2001","author":"PHPMailer","copyright":"(c) 2001-2003, Brent R. Matzelle, (c) 2004-2009, Andy Prevost. All Rights Reserved., (c) 2010-2013, Jim Jagielski. All Rights Reserved.","authorEmail":"jimjag@gmail.com","authorUrl":"https:\/\/github.com\/PHPMailer\/PHPMailer","version":"5.2.6","description":"LIB_PHPMAILER_XML_DESCRIPTION","group":""}', '', '', '', '0', '0000-00-00 00:00:00', '0', '0']
         - ['101', SimplePie, library, simplepie, '', '0', '1', '1', '0', '{"name":"SimplePie","type":"library","creationDate":"2004","author":"SimplePie","copyright":"Copyright (c) 2004-2009, Ryan Parman and Geoffrey Sneddon","authorEmail":"","authorUrl":"http:\/\/simplepie.org\/","version":"1.2","description":"LIB_SIMPLEPIE_XML_DESCRIPTION","group":""}', '', '', '', '0', '0000-00-00 00:00:00', '0', '0']
         - ['102', phputf8, library, phputf8, '', '0', '1', '1', '0', '{"name":"phputf8","type":"library","creationDate":"2006","author":"Harry Fuecks","copyright":"Copyright various authors","authorEmail":"hfuecks@gmail.com","authorUrl":"http:\/\/sourceforge.net\/projects\/phputf8","version":"0.5","description":"LIB_PHPUTF8_XML_DESCRIPTION","group":""}', '', '', '', '0', '0000-00-00 00:00:00', '0', '0']
-        - ['103', 'Joomla! Platform', library, joomla, '', '0', '1', '1', '0', '{"name":"Joomla! Platform","type":"library","creationDate":"2008","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2014 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"http:\/\/www.joomla.org","version":"13.1","description":"LIB_JOOMLA_XML_DESCRIPTION","group":""}', '{"mediaversion":"3a136315e450c37ece791fcdde8e64fd"}', '', '', '0', '0000-00-00 00:00:00', '0', '0']
+        - ['103', 'Joomla! Platform', library, joomla, '', '0', '1', '1', '0', '{"name":"Joomla! Platform","type":"library","creationDate":"2008","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2014 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"http:\/\/www.joomla.org","version":"13.1","description":"LIB_JOOMLA_XML_DESCRIPTION","group":""}', '{"mediaversion":"9ad6597aa3e9edebd24beb7abd1ba7a2"}', '', '', '0', '0000-00-00 00:00:00', '0', '0']
         - ['104', 'IDNA Convert', library, idna_convert, '', '0', '1', '1', '0', '{"name":"IDNA Convert","type":"library","creationDate":"2004","author":"phlyLabs","copyright":"2004-2011 phlyLabs Berlin, http:\/\/phlylabs.de","authorEmail":"phlymail@phlylabs.de","authorUrl":"http:\/\/phlylabs.de","version":"0.8.0","description":"LIB_IDNA_XML_DESCRIPTION","group":""}', '', '', '', '0', '0000-00-00 00:00:00', '0', '0']
         - ['105', FOF, library, fof, '', '0', '1', '1', '0', '{"name":"FOF","type":"library","creationDate":"2013-12-14","author":"Nicholas K. Dionysopoulos \/ Akeeba Ltd","copyright":"(C)2011-2013 Nicholas K. Dionysopoulos","authorEmail":"nicholas@akeebabackup.com","authorUrl":"https:\/\/www.akeebabackup.com","version":"2.1.1","description":"LIB_FOF_XML_DESCRIPTION","group":""}', '', '', '', '0', '0000-00-00 00:00:00', '0', '0']
         - ['106', PHPass, library, phpass, '', '0', '1', '1', '0', '{"name":"PHPass","type":"library","creationDate":"2004-2006","author":"Solar Designer","copyright":"","authorEmail":"solar@openwall.com","authorUrl":"http:\/\/www.openwall.com\/phpass\/","version":"0.3","description":"LIB_PHPASS_XML_DESCRIPTION","group":""}', '', '', '', '0', '0000-00-00 00:00:00', '0', '0']
@@ -873,3 +923,30 @@
         - ['3', Special, '2', '[6,3,8]']
         - ['5', Guest, '0', '[9]']
         - ['6', 'Super Users', '0', '[8]']
+'#__wf_profiles':
+    name: '#__wf_profiles'
+    from:
+        - '#__wf_profiles'
+    columns:
+        id: { Field: id, Type: int(11), 'Null': NO, Default: null, Extra: auto_increment, Comment: '', From: [id] }
+        name: { Field: name, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: '', From: [name] }
+        description: { Field: description, Type: text, 'Null': NO, Default: null, Extra: '', Comment: '', From: [description] }
+        users: { Field: users, Type: text, 'Null': NO, Default: null, Extra: '', Comment: '', From: [users] }
+        types: { Field: types, Type: text, 'Null': NO, Default: null, Extra: '', Comment: '', From: [types] }
+        components: { Field: components, Type: text, 'Null': NO, Default: null, Extra: '', Comment: '', From: [components] }
+        area: { Field: area, Type: tinyint(3), 'Null': NO, Default: null, Extra: '', Comment: '', From: [area] }
+        device: { Field: device, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: '', From: [device] }
+        rows: { Field: rows, Type: text, 'Null': NO, Default: null, Extra: '', Comment: '', From: [rows] }
+        plugins: { Field: plugins, Type: text, 'Null': NO, Default: null, Extra: '', Comment: '', From: [plugins] }
+        published: { Field: published, Type: tinyint(3), 'Null': NO, Default: null, Extra: '', Comment: '', From: [published] }
+        ordering: { Field: ordering, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: '', From: [ordering] }
+        checked_out: { Field: checked_out, Type: tinyint(3), 'Null': NO, Default: null, Extra: '', Comment: '', From: [checked_out] }
+        checked_out_time: { Field: checked_out_time, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: '', From: [checked_out_time] }
+        params: { Field: params, Type: text, 'Null': NO, Default: null, Extra: '', Comment: '', From: [params] }
+    index:
+        - { Table: '#__wf_profiles', Non_unique: '0', Key_name: PRIMARY, Seq_in_index: '1', Column_name: id, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
+    data:
+        - ['1', Default, 'Default Profile for ASIKART / SMS', '', '6,7,3,4,5,10,8', '', '0', 'desktop,tablet,phone', 'cleanup,removeformat,spacer,bold,italic,underline,strikethrough,justifyfull,justifycenter,justifyleft,justifyright,spacer,fontselect,formatselect,styleselect,fontsizeselect;clipboard,forecolor,backcolor,spacer,style,blockquote,outdent,indent,lists,sub,sup,textcase,hr,imgmanager,anchor,link,unlink,article;nonbreaking,visualblocks,preview,source,searchreplace,table,visualaid,fullscreen', 'cleanup,clipboard,style,lists,textcase,imgmanager,anchor,link,article,nonbreaking,visualblocks,preview,source,searchreplace,table,fullscreen,browser,contextmenu,inlinepopups,media', '1', '1', '0', '0000-00-00 00:00:00', '{"editor":{"height":"500px","theme_advanced_font_sizes":"8px,10px,12px,13px,15px,16px,18px,24px,36px","allow_javascript":"1","allow_css":"1","allow_php":"1"},"clipboard":{"paste_remove_empty_paragraphs":"0"},"imgmanager":{"extensions":"image=PNG,JPG,jpeg,jpg,png,gif","margin_top":"10","margin_right":"10","margin_bottom":"10","margin_left":"10"},"media":{"iframes":"1"}}']
+        - ['2', 'Front End', 'Sample Front-end Profile', '', '3,4,10,5', '', '1', 'desktop,tablet,phone', 'help,newdocument,undo,redo,spacer,bold,italic,underline,strikethrough,justifyfull,justifycenter,justifyleft,justifyright,spacer,formatselect,styleselect;clipboard,searchreplace,indent,outdent,lists,cleanup,charmap,removeformat,hr,sub,sup,textcase,nonbreaking,visualchars,visualblocks;fullscreen,preview,print,visualaid,style,xhtmlxtras,anchor,unlink,link,imgmanager,spellchecker,article', 'charmap,contextmenu,inlinepopups,help,clipboard,searchreplace,fullscreen,preview,print,style,textcase,nonbreaking,visualchars,visualblocks,xhtmlxtras,imgmanager,anchor,link,spellchecker,article,lists', '0', '2', '0', '0000-00-00 00:00:00', '']
+        - ['3', Blogger, 'Simple Blogging Profile', '', '3,4,10,5,6,8,7', '', '0', 'desktop,tablet,phone', 'bold,italic,strikethrough,lists,blockquote,spacer,justifyleft,justifycenter,justifyright,spacer,link,unlink,imgmanager,article,spellchecker,fullscreen,kitchensink;formatselect,underline,justifyfull,forecolor,clipboard,removeformat,charmap,indent,outdent,undo,redo,help', 'link,imgmanager,article,spellchecker,fullscreen,kitchensink,clipboard,contextmenu,inlinepopups,lists', '0', '3', '0', '0000-00-00 00:00:00', '{"editor":{"toggle":"0"}}']
+        - ['4', Mobile, 'Sample Mobile Profile', '', '3,4,10,5,6,8,7', '', '0', 'tablet,phone', 'undo,redo,spacer,bold,italic,underline,formatselect,spacer,justifyleft,justifycenter,justifyfull,justifyright,spacer,fullscreen,kitchensink;styleselect,lists,spellchecker,article,link,unlink', 'fullscreen,kitchensink,spellchecker,article,link,inlinepopups,lists', '0', '4', '0', '0000-00-00 00:00:00', '{"editor":{"toolbar_theme":"mobile","resizing":"0","resize_horizontal":"0","resizing_use_cookie":"0","toggle":"0","links":{"popups":{"default":"","jcemediabox":{"enable":"0"},"window":{"enable":"0"}}}}}']
