@@ -35,7 +35,7 @@ $ cp htaccess.dist.txt .htaccess
 匯入新專案預設的資訊
 
 ```bash
-$ php cli/console sql import default -y
+$ php cli/console sql import default schedule fixtures -y
 ```
 
 ## 後台
