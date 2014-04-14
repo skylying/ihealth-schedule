@@ -67,3 +67,7 @@ table:
     '#__users': all
     '#__viewlevels': all
     '#__weblinks': all
+    '#__wf_profiles': all
+    '#__ak_profiles': all
+    '#__ak_stats': all
+    '#__ak_storage': all
