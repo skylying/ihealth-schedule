@@ -33,5 +33,9 @@ final class ScheduleComponent extends ScheduleComponentBase
 	protected function prepare()
 	{
 		parent::prepare();
+
+		$asset = $this->container->get('helper.asset');
+
+		$asset->addCss('global.css');
 	}
 }
