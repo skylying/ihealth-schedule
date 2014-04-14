@@ -20,42 +20,34 @@
 								<call static="JHtmlGrid::checkAll"/>
 							</col>
 
-							<!--STATUS-->
 							<col width="5%" class="nowrap center">
-								<sort field="institute.state">JSTATUS</sort>
+								<sort field="institute.short_title">COM_SCHEDULE_INSTITUTE_SHORT_TITLE</sort>
 							</col>
 
-							<!--TITLE-->
 							<col class="center">
-								<sort field="institute.title">JGLOBAL_TITLE</sort>
+								<sort field="institute.delivery_weekday">COM_SCHEDULE_INSTITUTE_DELIVERY_WEEKDAY</sort>
 							</col>
 
-							<!--CATEGORY-->
 							<col width="10%" sort="true" class="center">
-								<sort field="category.title">JCATEGORY</sort>
+								<sort field="category.delivery_weekday">COM_SCHEDULE_INSTITUTE_LAST_DELIVERY_WEEKDAY</sort>
 							</col>
 
-							<!--ACCESS VIEW LEVEL-->
 							<col width="5%" sort="true" class="center">
 								<sort field="viewlevel.title">JGRID_HEADING_ACCESS</sort>
 							</col>
 
-							<!--CREATED-->
 							<col width="10%" sort="true" class="center">
 								<sort field="institute.created">JDATE</sort>
 							</col>
 
-							<!--USER-->
 							<col width="10%" sort="true" class="center">
 								<sort field="user.name">JAUTHOR</sort>
 							</col>
 
-							<!--LANGUAGE-->
 							<col width="5%" sort="true" class="center">
 								<sort field="lang.title">JGRID_HEADING_LANGUAGE</sort>
 							</col>
 
-							<!--ID-->
 							<col width="1%" sort="true" class="nowrap center">
 								<sort field="institute.id">JGRID_HEADING_ID</sort>
 							</col>

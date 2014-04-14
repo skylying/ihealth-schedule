@@ -71,11 +71,7 @@ class ScheduleModelInstitutes extends ListModel
 	{
 		$queryHelper = $this->getContainer()->get('model.institutes.helper.query', Container::FORCE_NEW);
 
-		$queryHelper->addTable('institute', '#__schedule_institutes')
-			->addTable('category',  '#__categories', 'institute.catid      = category.id')
-			->addTable('user',      '#__users',      'institute.created_by = user.id')
-			->addTable('viewlevel', '#__viewlevels', 'institute.access     = viewlevel.id')
-			->addTable('lang',      '#__languages',  'institute.language   = lang.lang_code');
+		$queryHelper->addTable('institute', '#__schedule_institutes');
 
 		$this->filterFields = array_merge($this->filterFields, $queryHelper->getFilterFields());
 	}
@@ -97,7 +93,7 @@ class ScheduleModelInstitutes extends ListModel
 
 			$ordering = property_exists($table, 'ordering') ? 'institute.ordering' : 'institute.id';
 
-			$ordering = property_exists($table, 'catid') ? 'institute.catid, ' . $ordering : $ordering;
+			$ordering = property_exists($table, 'id') ? 'institute.id, ' . $ordering : $ordering;
 		}
 
 		parent::populateState($ordering, 'ASC');

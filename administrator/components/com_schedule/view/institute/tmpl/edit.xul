@@ -18,20 +18,6 @@
 						</column>
 					</row>
 				</tab>
-				<tab name="advanced">
-					<row>
-						<column name="left" span="8">
-							<fieldset name="created" class="form-horizontal"/>
-						</column>
-					</row>
-				</tab>
-				<tab name="rules">
-					<row>
-						<column>
-							<fieldset name="rules" class="form-horizontal"/>
-						</column>
-					</row>
-				</tab>
 			</tabset>
 		</form>
 	</html:div>
