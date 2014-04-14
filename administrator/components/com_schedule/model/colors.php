@@ -71,11 +71,7 @@ class ScheduleModelColors extends ListModel
 	{
 		$queryHelper = $this->getContainer()->get('model.colors.helper.query', Container::FORCE_NEW);
 
-		$queryHelper->addTable('color', '#__schedule_colors')
-			->addTable('category',  '#__categories', 'color.catid      = category.id')
-			->addTable('user',      '#__users',      'color.created_by = user.id')
-			->addTable('viewlevel', '#__viewlevels', 'color.access     = viewlevel.id')
-			->addTable('lang',      '#__languages',  'color.language   = lang.lang_code');
+		$queryHelper->addTable('color', '#__schedule_colors');
 
 		$this->filterFields = array_merge($this->filterFields, $queryHelper->getFilterFields());
 	}
