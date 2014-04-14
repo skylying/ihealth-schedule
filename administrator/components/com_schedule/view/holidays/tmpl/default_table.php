@@ -53,34 +53,19 @@ $grid->registerTableSort();
 		<?php echo $grid->sortTitle('JSTATUS', 'holiday.state'); ?>
 	</th>
 
-	<!--TITLE-->
-	<th class="center">
-		<?php echo $grid->sortTitle('JGLOBAL_TITLE', 'holiday.title'); ?>
-	</th>
-
-	<!--CATEGORY-->
+	<!--YEAR-->
 	<th width="10%" class="center">
-		<?php echo $grid->sortTitle('JCATEGORY', 'category.title'); ?>
+		<?php echo $grid->sortTitle('COM_SCHEDULE_HOLIDAY_YEAR_LABEL', 'holiday.year'); ?>
 	</th>
 
-	<!--ACCESS VIEW LEVEL-->
-	<th width="5%" class="center">
-		<?php echo $grid->sortTitle('JGRID_HEADING_ACCESS', 'viewlevel.title'); ?>
-	</th>
-
-	<!--CREATED-->
+	<!--MONTH-->
 	<th width="10%" class="center">
-		<?php echo $grid->sortTitle('JDATE', 'holiday.created'); ?>
+		<?php echo $grid->sortTitle('COM_SCHEDULE_HOLIDAY_MONTH_LABEL', 'holiday.month'); ?>
 	</th>
 
-	<!--USER-->
+	<!--DAY-->
 	<th width="10%" class="center">
-		<?php echo $grid->sortTitle('JAUTHOR', 'user.name'); ?>
-	</th>
-
-	<!--LANGUAGE-->
-	<th width="5%" class="center">
-		<?php echo $grid->sortTitle('JGRID_HEADING_LANGUAGE', 'lang.title'); ?>
+		<?php echo $grid->sortTitle('COM_SCHEDULE_HOLIDAY_DAY_LABEL', 'holiday.day'); ?>
 	</th>
 
 	<!--ID-->
@@ -133,59 +118,24 @@ $grid->registerTableSort();
 			</div>
 		</td>
 
-		<!--TITLE-->
-		<td class="n/owrap has-context quick-edit-wrap">
-			<div class="item-title">
-				<!-- Checkout -->
-				<?php echo $grid->checkoutButton(); ?>
-
-				<!-- Title -->
-				<?php echo $grid->editTitle(); ?>
-			</div>
-
-			<!-- Sub Title -->
-			<div class="small">
-				<?php echo JText::sprintf('JGLOBAL_LIST_ALIAS', $this->escape($item->alias)); ?>
-			</div>
+		<!--YEAR-->
+		<td class="center">
+			<?php echo $this->escape($item->year); ?>
 		</td>
 
-		<!--CATEGORY-->
+		<!--MONTH-->
 		<td class="center">
-			<?php echo $this->escape($item->category_title); ?>
+			<?php echo $this->escape($item->month); ?>
 		</td>
 
-		<!--ACCESS VIEW LEVEL-->
+		<!--DAY-->
 		<td class="center">
-			<?php echo $this->escape($item->viewlevel_title); ?>
-		</td>
-
-		<!--CREATED-->
-		<td class="center">
-			<?php echo JHtml::_('date', $item->created, JText::_('DATE_FORMAT_LC4')); ?>
-		</td>
-
-		<!--USER-->
-		<td class="center">
-			<?php echo $this->escape($item->user_name); ?>
-		</td>
-
-		<!--LANGUAGE-->
-		<td class="center">
-			<?php
-			if ($item->language == '*')
-			{
-				echo JText::alt('JALL', 'language');
-			}
-			else
-			{
-				echo $item->lang_title ? $this->escape($item->lang_title) : JText::_('JUNDEFINED');
-			}
-			?>
+			<?php echo $this->escape($item->day); ?>
 		</td>
 
 		<!--ID-->
 		<td class="center">
-			<?php echo (int) $item->id; ?>
+			<a href="<?php echo JRoute::_('index.php?option=com_schedule&view=holiday&layout=edit&id=' . $item->id); ?>"><?php echo $item->id; ?></a>
 		</td>
 
 	</tr>
