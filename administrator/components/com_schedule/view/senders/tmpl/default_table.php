@@ -110,8 +110,8 @@ $grid->registerTableSort();
 				<?php
 					$query = array(
 						'option' => 'com_schedule',
-						'layout' => 'sender',
-						'view' => 'edit',
+						'view' => 'sender',
+						'layout' => 'edit',
 						'id'  => $item->id
 					);
 				?>
