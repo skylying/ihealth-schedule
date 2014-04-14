@@ -71,11 +71,7 @@ class ScheduleModelSenders extends ListModel
 	{
 		$queryHelper = $this->getContainer()->get('model.senders.helper.query', Container::FORCE_NEW);
 
-		$queryHelper->addTable('sender', '#__schedule_senders')
-			->addTable('category',  '#__categories', 'sender.catid      = category.id')
-			->addTable('user',      '#__users',      'sender.created_by = user.id')
-			->addTable('viewlevel', '#__viewlevels', 'sender.access     = viewlevel.id')
-			->addTable('lang',      '#__languages',  'sender.language   = lang.lang_code');
+		$queryHelper->addTable('sender', '#__schedule_senders');
 
 		$this->filterFields = array_merge($this->filterFields, $queryHelper->getFilterFields());
 	}
