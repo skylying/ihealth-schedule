@@ -1,0 +1,16 @@
+table:
+    '#__schedule_addresses': all
+    '#__schedule_colors': all
+    '#__schedule_customers': all
+    '#__schedule_drugprices': all
+    '#__schedule_drugs': all
+    '#__schedule_holidays': all
+    '#__schedule_hospitals': all
+    '#__schedule_images': all
+    '#__schedule_institutes': all
+    '#__schedule_members': all
+    '#__schedule_prescriptions': all
+    '#__schedule_routes': all
+    '#__schedule_schedules': all
+    '#__schedule_senders': all
+    '#__schedule_tasks': all
