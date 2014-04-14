@@ -64,9 +64,6 @@ class PlgSystemDev extends JPlugin
 		$query = $uri->getQuery();
 		// $method = $app->input->getMethod();
 
-		$easyset = JPluginHelper::getPlugin('system', 'asikart_easyset');
-		$params = new JRegistry(json_decode($easyset->params));
-
 		// Redirect to component
 		if (empty($query) && !$user->guest)
 		{
@@ -78,6 +75,9 @@ class PlgSystemDev extends JPlugin
 		// Site to Admin
 		if ($app->isSite())
 		{
+			$easyset = JPluginHelper::getPlugin('system', 'asikart_easyset');
+			$params = new JRegistry(json_decode($easyset->params));
+
 			$app->redirect(JUri::root() . '/administrator/index.php?option=com_schedule&' . $params->get('adminSecureCode', ''));
 
 			exit();
