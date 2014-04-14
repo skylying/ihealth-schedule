@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "f7425be19b437090947d6bc463c48a74",
+    "hash": "aac11eaf2a8c7d039f23ff76976b330a",
     "packages": [
         {
             "name": "asika/joomla-console",
@@ -641,12 +641,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ventoviro/windwalker.git",
-                "reference": "f627164764e13405205b9727d7d6e34996125c0e"
+                "reference": "1fd04900fa654a237c198c2fe6ceac209088d1fe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ventoviro/windwalker/zipball/f627164764e13405205b9727d7d6e34996125c0e",
-                "reference": "f627164764e13405205b9727d7d6e34996125c0e",
+                "url": "https://api.github.com/repos/ventoviro/windwalker/zipball/1fd04900fa654a237c198c2fe6ceac209088d1fe",
+                "reference": "1fd04900fa654a237c198c2fe6ceac209088d1fe",
                 "shasum": ""
             },
             "require": {
@@ -674,7 +674,7 @@
             ],
             "description": "Rapido de la vento viro.",
             "homepage": "https://github.com/ventoviro/windwalker",
-            "time": "2014-04-12 09:45:08"
+            "time": "2014-04-14 08:33:42"
         }
     ],
     "packages-dev": [
