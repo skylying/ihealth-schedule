@@ -18,7 +18,7 @@
         - { Table: '#__assets', Non_unique: '1', Key_name: idx_lft_rgt, Seq_in_index: '2', Column_name: rgt, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
         - { Table: '#__assets', Non_unique: '1', Key_name: idx_parent_id, Seq_in_index: '1', Column_name: parent_id, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
     data:
-        - ['1', '0', '0', '75', '0', root.1, 'Root Asset', '{"core.login.site":{"6":1,"2":1},"core.login.admin":{"6":1},"core.login.offline":{"6":1},"core.admin":{"8":1},"core.manage":{"7":1},"core.create":{"6":1,"3":1},"core.delete":{"6":1},"core.edit":{"6":1,"4":1},"core.edit.state":{"6":1,"5":1},"core.edit.own":{"6":1,"3":1}}']
+        - ['1', '0', '0', '77', '0', root.1, 'Root Asset', '{"core.login.site":{"6":1,"2":1},"core.login.admin":{"6":1},"core.login.offline":{"6":1},"core.admin":{"8":1},"core.manage":{"7":1},"core.create":{"6":1,"3":1},"core.delete":{"6":1},"core.edit":{"6":1,"4":1},"core.edit.state":{"6":1,"5":1},"core.edit.own":{"6":1,"3":1}}']
         - ['2', '1', '1', '2', '1', com_admin, com_admin, '{}']
         - ['4', '1', '3', '4', '1', com_cache, com_cache, '{"core.admin":{"7":1},"core.manage":{"7":1}}']
         - ['5', '1', '5', '6', '1', com_checkin, com_checkin, '{"core.admin":{"7":1},"core.manage":{"7":1}}']
@@ -31,14 +31,14 @@
         - ['14', '1', '19', '20', '1', com_massmail, com_massmail, '{}']
         - ['15', '1', '21', '22', '1', com_media, com_media, '{"core.admin":{"7":1},"core.manage":{"6":1},"core.create":{"3":1},"core.delete":{"5":1}}']
         - ['16', '1', '23', '24', '1', com_menus, com_menus, '{"core.admin":{"7":1},"core.manage":[],"core.create":[],"core.delete":[],"core.edit":[],"core.edit.state":[]}']
-        - ['18', '1', '25', '56', '1', com_modules, com_modules, '{"core.admin":{"7":1},"core.manage":[],"core.create":[],"core.delete":[],"core.edit":[],"core.edit.state":[]}']
-        - ['20', '1', '57', '58', '1', com_plugins, com_plugins, '{"core.admin":{"7":1},"core.manage":[],"core.edit":[],"core.edit.state":[]}']
-        - ['21', '1', '59', '60', '1', com_redirect, com_redirect, '{"core.admin":{"7":1},"core.manage":[]}']
-        - ['23', '1', '61', '62', '1', com_templates, com_templates, '{"core.admin":{"7":1},"core.manage":[],"core.create":[],"core.delete":[],"core.edit":[],"core.edit.state":[]}']
-        - ['24', '1', '63', '66', '1', com_users, com_users, '{"core.admin":{"7":1},"core.manage":[],"core.create":[],"core.delete":[],"core.edit":[],"core.edit.state":[]}']
-        - ['26', '1', '67', '68', '1', com_wrapper, com_wrapper, '{}']
-        - ['32', '24', '64', '65', '1', com_users.category.7, Uncategorised, '{"core.create":[],"core.delete":[],"core.edit":[],"core.edit.state":[]}']
-        - ['35', '1', '69', '70', '1', com_tags, com_tags, '{"core.admin":[],"core.manage":[],"core.manage":[],"core.delete":[],"core.edit.state":[]}']
+        - ['18', '1', '25', '58', '1', com_modules, com_modules, '{"core.admin":{"7":1},"core.manage":[],"core.create":[],"core.delete":[],"core.edit":[],"core.edit.state":[]}']
+        - ['20', '1', '59', '60', '1', com_plugins, com_plugins, '{"core.admin":{"7":1},"core.manage":[],"core.edit":[],"core.edit.state":[]}']
+        - ['21', '1', '61', '62', '1', com_redirect, com_redirect, '{"core.admin":{"7":1},"core.manage":[]}']
+        - ['23', '1', '63', '64', '1', com_templates, com_templates, '{"core.admin":{"7":1},"core.manage":[],"core.create":[],"core.delete":[],"core.edit":[],"core.edit.state":[]}']
+        - ['24', '1', '65', '68', '1', com_users, com_users, '{"core.admin":{"7":1},"core.manage":[],"core.create":[],"core.delete":[],"core.edit":[],"core.edit.state":[]}']
+        - ['26', '1', '69', '70', '1', com_wrapper, com_wrapper, '{}']
+        - ['32', '24', '66', '67', '1', com_users.category.7, Uncategorised, '{"core.create":[],"core.delete":[],"core.edit":[],"core.edit.state":[]}']
+        - ['35', '1', '71', '72', '1', com_tags, com_tags, '{"core.admin":[],"core.manage":[],"core.manage":[],"core.delete":[],"core.edit.state":[]}']
         - ['39', '18', '26', '27', '2', com_modules.module.1, 'Main Menu', '{"core.delete":[],"core.edit":[],"core.edit.state":[]}']
         - ['40', '18', '28', '29', '2', com_modules.module.2, Login, '{"core.delete":[],"core.edit":[],"core.edit.state":[]}']
         - ['41', '18', '30', '31', '2', com_modules.module.3, 'Popular Articles', '{"core.delete":[],"core.edit":[],"core.edit.state":[]}']
@@ -54,8 +54,9 @@
         - ['51', '18', '50', '51', '2', com_modules.module.17, Breadcrumbs, '{"core.delete":[],"core.edit":[],"core.edit.state":[]}']
         - ['52', '18', '52', '53', '2', com_modules.module.79, 'Multilanguage status', '{"core.delete":[],"core.edit":[],"core.edit.state":[]}']
         - ['53', '18', '54', '55', '2', com_modules.module.86, 'Joomla Version', '{"core.delete":[],"core.edit":[],"core.edit.state":[]}']
-        - ['54', '1', '71', '72', '1', com_akeeba, akeeba, '{}']
-        - ['55', '1', '73', '74', '1', com_jce, jce, '{}']
+        - ['54', '1', '73', '74', '1', com_akeeba, akeeba, '{}']
+        - ['55', '1', '75', '76', '1', com_jce, jce, '{}']
+        - ['56', '18', '56', '57', '2', com_modules.module.18, 'NoNumber Cache Cleaner', '']
 '#__associations':
     name: '#__associations'
     from:
@@ -233,7 +234,7 @@
         - ['100', PHPMailer, library, phpmailer, '', '0', '1', '1', '0', '{"name":"PHPMailer","type":"library","creationDate":"2001","author":"PHPMailer","copyright":"(c) 2001-2003, Brent R. Matzelle, (c) 2004-2009, Andy Prevost. All Rights Reserved., (c) 2010-2013, Jim Jagielski. All Rights Reserved.","authorEmail":"jimjag@gmail.com","authorUrl":"https:\/\/github.com\/PHPMailer\/PHPMailer","version":"5.2.6","description":"LIB_PHPMAILER_XML_DESCRIPTION","group":""}', '', '', '', '0', '0000-00-00 00:00:00', '0', '0']
         - ['101', SimplePie, library, simplepie, '', '0', '1', '1', '0', '{"name":"SimplePie","type":"library","creationDate":"2004","author":"SimplePie","copyright":"Copyright (c) 2004-2009, Ryan Parman and Geoffrey Sneddon","authorEmail":"","authorUrl":"http:\/\/simplepie.org\/","version":"1.2","description":"LIB_SIMPLEPIE_XML_DESCRIPTION","group":""}', '', '', '', '0', '0000-00-00 00:00:00', '0', '0']
         - ['102', phputf8, library, phputf8, '', '0', '1', '1', '0', '{"name":"phputf8","type":"library","creationDate":"2006","author":"Harry Fuecks","copyright":"Copyright various authors","authorEmail":"hfuecks@gmail.com","authorUrl":"http:\/\/sourceforge.net\/projects\/phputf8","version":"0.5","description":"LIB_PHPUTF8_XML_DESCRIPTION","group":""}', '', '', '', '0', '0000-00-00 00:00:00', '0', '0']
-        - ['103', 'Joomla! Platform', library, joomla, '', '0', '1', '1', '0', '{"name":"Joomla! Platform","type":"library","creationDate":"2008","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2014 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"http:\/\/www.joomla.org","version":"13.1","description":"LIB_JOOMLA_XML_DESCRIPTION","group":""}', '{"mediaversion":"31bbdc2ec4e790d0f17ead301319defb"}', '', '', '0', '0000-00-00 00:00:00', '0', '0']
+        - ['103', 'Joomla! Platform', library, joomla, '', '0', '1', '1', '0', '{"name":"Joomla! Platform","type":"library","creationDate":"2008","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2014 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"http:\/\/www.joomla.org","version":"13.1","description":"LIB_JOOMLA_XML_DESCRIPTION","group":""}', '{"mediaversion":"281a1f9d54e4631636d93d0544dba4c6"}', '', '', '0', '0000-00-00 00:00:00', '0', '0']
         - ['104', 'IDNA Convert', library, idna_convert, '', '0', '1', '1', '0', '{"name":"IDNA Convert","type":"library","creationDate":"2004","author":"phlyLabs","copyright":"2004-2011 phlyLabs Berlin, http:\/\/phlylabs.de","authorEmail":"phlymail@phlylabs.de","authorUrl":"http:\/\/phlylabs.de","version":"0.8.0","description":"LIB_IDNA_XML_DESCRIPTION","group":""}', '', '', '', '0', '0000-00-00 00:00:00', '0', '0']
         - ['105', FOF, library, fof, '', '0', '1', '1', '0', '{"name":"FOF","type":"library","creationDate":"2013-12-14","author":"Nicholas K. Dionysopoulos \/ Akeeba Ltd","copyright":"(C)2011-2013 Nicholas K. Dionysopoulos","authorEmail":"nicholas@akeebabackup.com","authorUrl":"https:\/\/www.akeebabackup.com","version":"2.1.1","description":"LIB_FOF_XML_DESCRIPTION","group":""}', '', '', '', '0', '0000-00-00 00:00:00', '0', '0']
         - ['106', PHPass, library, phpass, '', '0', '1', '1', '0', '{"name":"PHPass","type":"library","creationDate":"2004-2006","author":"Solar Designer","copyright":"","authorEmail":"solar@openwall.com","authorUrl":"http:\/\/www.openwall.com\/phpass\/","version":"0.3","description":"LIB_PHPASS_XML_DESCRIPTION","group":""}', '', '', '', '0', '0000-00-00 00:00:00', '0', '0']
@@ -295,6 +296,9 @@
         - ['10008', plg_editors_jce, plugin, jce, editors, '0', '1', '1', '0', '{"name":"plg_editors_jce","type":"plugin","creationDate":"12 December 2013","author":"Ryan Demmer","copyright":"2006-2010 Ryan Demmer","authorEmail":"info@joomlacontenteditor.net","authorUrl":"http:\/\/www.joomlacontenteditor.net","version":"2.3.4.4","description":"WF_EDITOR_PLUGIN_DESC","group":""}', '{}', '', '', '0', '0000-00-00 00:00:00', '0', '0']
         - ['10009', plg_quickicon_jcefilebrowser, plugin, jcefilebrowser, quickicon, '0', '1', '1', '0', '{"name":"plg_quickicon_jcefilebrowser","type":"plugin","creationDate":"12 December 2013","author":"Ryan Demmer","copyright":"Copyright (C) 2006 - 2013 Ryan Demmer. All rights reserved","authorEmail":"@@email@@","authorUrl":"www.joomalcontenteditor.net","version":"2.3.4.4","description":"PLG_QUICKICON_JCEFILEBROWSER_XML_DESCRIPTION","group":""}', '{}', '', '', '0', '0000-00-00 00:00:00', '0', '0']
         - ['10010', jce, component, com_jce, '', '1', '1', '0', '0', '{"name":"JCE","type":"component","creationDate":"12 December 2013","author":"Ryan Demmer","copyright":"Copyright (C) 2006 - 2013 Ryan Demmer. All rights reserved","authorEmail":"info@joomlacontenteditor.net","authorUrl":"www.joomlacontenteditor.net","version":"2.3.4.4","description":"WF_ADMIN_DESC","group":""}', '{}', '', '', '0', '0000-00-00 00:00:00', '0', '0']
+        - ['10011', PLG_SYSTEM_CACHECLEANER, plugin, cachecleaner, system, '0', '1', '1', '0', '{"name":"PLG_SYSTEM_CACHECLEANER","type":"plugin","creationDate":"April 2014","author":"NoNumber (Peter van Westen)","copyright":"Copyright \u00a9 2014 NoNumber All Rights Reserved","authorEmail":"peter@nonumber.nl","authorUrl":"http:\/\/www.nonumber.nl","version":"3.3.5FREE","description":"PLG_SYSTEM_CACHECLEANER_DESC","group":""}', '', '', '', '0', '0000-00-00 00:00:00', '0', '0']
+        - ['10012', MOD_CACHECLEANER, module, mod_cachecleaner, '', '1', '1', '3', '0', '{"name":"MOD_CACHECLEANER","type":"module","creationDate":"April 2014","author":"NoNumber (Peter van Westen)","copyright":"Copyright \u00a9 2014 NoNumber All Rights Reserved","authorEmail":"peter@nonumber.nl","authorUrl":"http:\/\/www.nonumber.nl","version":"3.3.5FREE","description":"MOD_CACHECLEANER_DESC","group":""}', '', '', '', '0', '0000-00-00 00:00:00', '0', '0']
+        - ['10013', PLG_SYSTEM_NNFRAMEWORK, plugin, nnframework, system, '0', '1', '1', '0', '{"name":"PLG_SYSTEM_NNFRAMEWORK","type":"plugin","creationDate":"April 2014","author":"NoNumber (Peter van Westen)","copyright":"Copyright \u00a9 2014 NoNumber All Rights Reserved","authorEmail":"peter@nonumber.nl","authorUrl":"http:\/\/www.nonumber.nl","version":"14.4.3","description":"PLG_SYSTEM_NNFRAMEWORK_DESC","group":""}', '', '', '', '0', '0000-00-00 00:00:00', '0', '0']
 '#__languages':
     name: '#__languages'
     from:
@@ -433,6 +437,7 @@
         - ['15', '65', Title, '', '', '1', title, '0', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '1', mod_title, '3', '1', '', '1', '*']
         - ['16', '66', 'Login Form', '', '', '7', position-7, '0', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '1', mod_login, '1', '1', '{"greeting":"1","name":"0"}', '0', '*']
         - ['17', '67', Breadcrumbs, '', '', '1', position-2, '0', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '1', mod_breadcrumbs, '1', '1', '{"moduleclass_sfx":"","showHome":"1","homeText":"","showComponent":"1","separator":"","cache":"1","cache_time":"900","cachemode":"itemid"}', '0', '*']
+        - ['18', '56', 'NoNumber Cache Cleaner', '', '', '1', status, '0', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '1', mod_cachecleaner, '3', '1', '', '1', '*']
 '#__modules_menu':
     name: '#__modules_menu'
     from:
@@ -456,6 +461,7 @@
         - ['15', '0']
         - ['16', '0']
         - ['17', '0']
+        - ['18', '0']
 '#__overrider':
     name: '#__overrider'
     from:
@@ -687,6 +693,7 @@
         - ['2', 'Joomla Extension Directory', collection, 'http://update.joomla.org/jed/list.xml', '1', '0', '']
         - ['3', 'Accredited Joomla! Translations', collection, 'http://update.joomla.org/language/translationlist_3.xml', '1', '1397403262', '']
         - ['4', 'Akeeba Backup Core', extension, 'http://cdn.akeebabackup.com/updates/abcore.xml', '1', '0', '']
+        - ['5', 'NoNumber Cache Cleaner', extension, 'http://download.nonumber.nl/updates.php?e=cachecleaner&type=.zip', '1', '0', '']
 '#__update_sites_extensions':
     name: '#__update_sites_extensions'
     from:
@@ -703,6 +710,8 @@
         - ['3', '600']
         - ['3', '10002']
         - ['4', '10006']
+        - ['5', '10011']
+        - ['5', '10012']
 '#__updates':
     name: '#__updates'
     from:
