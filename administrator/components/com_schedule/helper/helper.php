@@ -30,24 +30,41 @@ abstract class ScheduleHelper
 		$app       = \JFactory::getApplication();
 		$inflector = \JStringInflector::getInstance(true);
 
-		// Add Category Menu Item
-		if ($app->isAdmin())
+		$menus = array(
+			'institutes' => 'home',
+			'prescriptions' => 'list-alt',
+			'schedules' => 'calendar',
+			'tasks' => 'tasks',
+			'senders' => 'envelope',
+			'members' => 'user',
+			'customers' => 'tree-deciduous',
+			'hospitals' => 'tower',
+			'holidays' => 'calendar',
+			'routes' => 'road',
+		);
+
+		$noMvcMenus = array(
+			'drugs' => 'tint',
+			'addresses' => 'list-alt',
+			'drugprices' => 'usd',
+			'colors' => 'th-large',
+			'images' => 'picture',
+		);
+
+		if (JDEBUG)
 		{
-			JHtmlSidebar::addEntry(
-				JText::_('JCATEGORY'),
-				'index.php?option=com_categories&extension=com_schedule',
-				($vName == 'categories')
-			);
+			$menus = array_merge($menus, $noMvcMenus);
 		}
 
-		foreach (new \DirectoryIterator(JPATH_ADMINISTRATOR . '/components/com_schedule/view') as $folder)
+		foreach ($menus as $folder => $icon)
 		{
-			if ($folder->isDir() && $inflector->isPlural($view = $folder->getBasename()))
+			// if ($folder->isDir() && $inflector->isPlural($view = $folder->getBasename()))
 			{
 				JHtmlSidebar::addEntry(
+					'<i class="glyphicon glyphicon-' . $icon . '"></i> ' .
 					JText::sprintf(sprintf('COM_SCHEDULE_%s_TITLE_LIST', strtoupper($folder))),
-					'index.php?option=com_schedule&view=' . $view,
-					($vName == $view)
+					'index.php?option=com_schedule&view=' . $folder,
+					($vName == $folder)
 				);
 			}
 		}

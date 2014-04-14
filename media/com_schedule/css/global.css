@@ -1,0 +1,10 @@
+/*!
+ * Part of Schedule component CSS
+*/
+
+/* Submenu */
+#submenu a
+{
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
