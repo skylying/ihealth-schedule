@@ -63,6 +63,16 @@ class ScheduleModelSchedules extends ListModel
 	protected $viewList = 'schedules';
 
 	/**
+	 * Valid filter fields or ordering.
+	 *
+	 * @var  array
+	 */
+	protected $filterFields = array(
+		'schedule.date_start',
+		'schedule.date_end'
+	);
+
+	/**
 	 * configureTables
 	 *
 	 * @return  void
@@ -112,6 +122,27 @@ class ScheduleModelSchedules extends ListModel
 	 */
 	protected function configureFilters($filterHelper)
 	{
+		$filterHelper->setHandler(
+			'schedule.date_start',
+			function ($query, $field, $start)
+			{
+				if ($start)
+				{
+					$query->where('`schedule`.`date` >= ' . $query->q($start));
+				}
+			}
+		);
+
+		$filterHelper->setHandler(
+			'schedule.date_end',
+			function ($query, $field, $end)
+			{
+				if ($end)
+				{
+					$query->where('`schedule`.`date` >= ' . $query->q($end));
+				}
+			}
+		);
 	}
 
 	/**
