@@ -71,11 +71,7 @@ class ScheduleModelAddresses extends ListModel
 	{
 		$queryHelper = $this->getContainer()->get('model.addresses.helper.query', Container::FORCE_NEW);
 
-		$queryHelper->addTable('address', '#__schedule_addresses')
-			->addTable('category',  '#__categories', 'address.catid      = category.id')
-			->addTable('user',      '#__users',      'address.created_by = user.id')
-			->addTable('viewlevel', '#__viewlevels', 'address.access     = viewlevel.id')
-			->addTable('lang',      '#__languages',  'address.language   = lang.lang_code');
+		$queryHelper->addTable('address', '#__schedule_addresses');
 
 		$this->filterFields = array_merge($this->filterFields, $queryHelper->getFilterFields());
 	}
