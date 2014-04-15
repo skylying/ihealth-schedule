@@ -2,6 +2,8 @@
 
 namespace Schedule\Helper;
 
+use Windwalker\Data\Data;
+
 /**
  * Class ScheduleHelper
  *
@@ -12,11 +14,11 @@ class ScheduleHelper
 	/**
 	 * getEditLink
 	 *
-	 * @param   object $item
+	 * @param   Data $item
 	 *
 	 * @return  string
 	 */
-	public static function getEditLink($item)
+	public static function getEditLink(Data $item)
 	{
 		$attr = array('target' => '_blank');
 
