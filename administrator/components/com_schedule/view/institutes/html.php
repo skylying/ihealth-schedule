@@ -65,6 +65,13 @@ class ScheduleViewInstitutesHtml extends GridView
 	protected $viewList = 'institutes';
 
 	/**
+	 * Property pagination.
+	 *
+	 * @var  string
+	 */
+	protected $pagination;
+
+	/**
 	 * Method to instantiate the view.
 	 *
 	 * @param Model            $model     The model object.
@@ -82,7 +89,7 @@ class ScheduleViewInstitutesHtml extends GridView
 			'view_list' => 'institutes',
 
 			// Column which we allow to drag sort
-			'order_column'   => 'institute.id, institute.ordering',
+			'order_column'   => 'institute.id',
 
 			// Table id
 			'order_table_id' => 'instituteList',
@@ -124,6 +131,11 @@ class ScheduleViewInstitutesHtml extends GridView
 		{
 			$buttonSet['trash']['access']  = false;
 			$buttonSet['delete']['access'] = true;
+			$buttonSet['batch']['access'] = false;
+			$buttonSet['publish']['access'] = false;
+			$buttonSet['unpublish']['access'] = false;
+			$buttonSet['edit']['access'] = false;
+			$buttonSet['checkin']['access'] = false;
 		}
 
 		return $buttonSet;

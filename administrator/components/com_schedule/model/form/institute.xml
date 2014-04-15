@@ -8,7 +8,6 @@
 			type="text"
 			label="COM_SCHEDULE_INSTITUTE_SERIAL"
 			description="COM_SCHEDULE_INSTITUTE_SERIAL"
-			required="true"
 			class="input-xxlarge required"
 			/>
 
@@ -16,7 +15,6 @@
 			type="text"
 			label="COM_SCHEDULE_INSTITUTE_TITLE"
 			description="COM_SCHEDULE_INSTITUTE_TITLE"
-			required="true"
 			class="input-xxlarge required"
 			/>
 
@@ -40,7 +38,6 @@
 			type="text"
 			label="COM_SCHEDULE_INSTITUTE_FAX"
 			description="COM_SCHEDULE_INSTITUTE_FAX"
-			required="true"
 			class="input-xxlarge required"
 			/>
 
@@ -96,7 +93,6 @@
 			type="textarea"
 			label="COM_SCHEDULE_INSTITUTE_NOTE"
 			description="COM_SCHEDULE_INSTITUTE_NOTE"
-			required="true"
 			class="input-xxlarge required"
 			/>
 
