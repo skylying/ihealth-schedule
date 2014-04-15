@@ -38,19 +38,14 @@ $grid->registerTableSort();
 <!-- TABLE HEADER -->
 <thead>
 <tr>
-	<!--SORT-->
-	<th width="1%" class="nowrap center hidden-phone">
-		<?php echo $grid->orderTitle(); ?>
-	</th>
-
 	<!--CHECKBOX-->
 	<th width="1%" class="center">
 		<?php echo JHtml::_('grid.checkAll'); ?>
 	</th>
 
-	<!--STATE-->
-	<th width="5%" class="nowrap center">
-		<?php echo $grid->sortTitle('JSTATUS', 'image.state'); ?>
+	<!--ID-->
+	<th width="1%" class="nowrap center">
+		<?php echo $grid->sortTitle('JGRID_HEADING_ID', 'image.id'); ?>
 	</th>
 
 	<!--TITLE-->
@@ -58,35 +53,12 @@ $grid->registerTableSort();
 		<?php echo $grid->sortTitle('JGLOBAL_TITLE', 'image.title'); ?>
 	</th>
 
-	<!--CATEGORY-->
-	<th width="10%" class="center">
-		<?php echo $grid->sortTitle('JCATEGORY', 'category.title'); ?>
+	<!--RX_ID-->
+	<th class="center">
+		<?php echo $grid->sortTitle('對應處方箋', 'image.rx_id'); ?>
 	</th>
 
-	<!--ACCESS VIEW LEVEL-->
-	<th width="5%" class="center">
-		<?php echo $grid->sortTitle('JGRID_HEADING_ACCESS', 'viewlevel.title'); ?>
-	</th>
 
-	<!--CREATED-->
-	<th width="10%" class="center">
-		<?php echo $grid->sortTitle('JDATE', 'image.created'); ?>
-	</th>
-
-	<!--USER-->
-	<th width="10%" class="center">
-		<?php echo $grid->sortTitle('JAUTHOR', 'user.name'); ?>
-	</th>
-
-	<!--LANGUAGE-->
-	<th width="5%" class="center">
-		<?php echo $grid->sortTitle('JGRID_HEADING_LANGUAGE', 'lang.title'); ?>
-	</th>
-
-	<!--ID-->
-	<th width="1%" class="nowrap center">
-		<?php echo $grid->sortTitle('JGRID_HEADING_ID', 'image.id'); ?>
-	</th>
 </tr>
 </thead>
 
@@ -112,81 +84,33 @@ $grid->registerTableSort();
 	$grid->setItem($item, $i);
 	?>
 	<tr class="image-row" sortable-group-id="<?php echo $item->catid; ?>">
-		<!-- DRAG SORT -->
-		<td class="order nowrap center hidden-phone">
-			<?php echo $grid->dragSort(); ?>
-		</td>
 
 		<!--CHECKBOX-->
 		<td class="center">
 			<?php echo JHtml::_('grid.id', $i, $item->image_id); ?>
 		</td>
 
-		<!--STATE-->
+		<!--ID-->
 		<td class="center">
-			<div class="btn-group">
-				<!-- STATE BUTTON -->
-				<?php echo $grid->state() ?>
-
-				<!-- CHANGE STATE DROP DOWN -->
-				<?php echo $this->loadTemplate('dropdown'); ?>
-			</div>
+			<?php echo (int) $item->id; ?>
 		</td>
 
 		<!--TITLE-->
 		<td class="n/owrap has-context quick-edit-wrap">
-			<div class="item-title">
+			<div class="item-title text-center">
 				<!-- Checkout -->
 				<?php echo $grid->checkoutButton(); ?>
 
 				<!-- Title -->
 				<?php echo $grid->editTitle(); ?>
 			</div>
-
-			<!-- Sub Title -->
-			<div class="small">
-				<?php echo JText::sprintf('JGLOBAL_LIST_ALIAS', $this->escape($item->alias)); ?>
-			</div>
 		</td>
 
-		<!--CATEGORY-->
+		<!--RX_ID-->
 		<td class="center">
-			<?php echo $this->escape($item->category_title); ?>
+			<a href="<?php echo JRoute::_('index.php?option=com_schedule&view=prescription&layout=edit&id=' . $item->rx_id); ?>"><?php echo $item->rx_id; ?></a>
 		</td>
 
-		<!--ACCESS VIEW LEVEL-->
-		<td class="center">
-			<?php echo $this->escape($item->viewlevel_title); ?>
-		</td>
-
-		<!--CREATED-->
-		<td class="center">
-			<?php echo JHtml::_('date', $item->created, JText::_('DATE_FORMAT_LC4')); ?>
-		</td>
-
-		<!--USER-->
-		<td class="center">
-			<?php echo $this->escape($item->user_name); ?>
-		</td>
-
-		<!--LANGUAGE-->
-		<td class="center">
-			<?php
-			if ($item->language == '*')
-			{
-				echo JText::alt('JALL', 'language');
-			}
-			else
-			{
-				echo $item->lang_title ? $this->escape($item->lang_title) : JText::_('JUNDEFINED');
-			}
-			?>
-		</td>
-
-		<!--ID-->
-		<td class="center">
-			<?php echo (int) $item->id; ?>
-		</td>
 
 	</tr>
 <?php endforeach; ?>
