@@ -71,11 +71,7 @@ class ScheduleModelHospitals extends ListModel
 	{
 		$queryHelper = $this->getContainer()->get('model.hospitals.helper.query', Container::FORCE_NEW);
 
-		$queryHelper->addTable('hospital', '#__schedule_hospitals')
-			->addTable('category',  '#__categories', 'hospital.catid      = category.id')
-			->addTable('user',      '#__users',      'hospital.created_by = user.id')
-			->addTable('viewlevel', '#__viewlevels', 'hospital.access     = viewlevel.id')
-			->addTable('lang',      '#__languages',  'hospital.language   = lang.lang_code');
+		$queryHelper->addTable('hospital', '#__schedule_hospitals');
 
 		$this->filterFields = array_merge($this->filterFields, $queryHelper->getFilterFields());
 	}
