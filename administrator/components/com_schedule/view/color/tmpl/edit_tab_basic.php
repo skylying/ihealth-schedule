@@ -26,3 +26,11 @@ $fieldsets = $data->form->getFieldsets();
 </div>
 
 <?php echo JHtmlBootstrap::endTab(); ?>
+
+<style>
+#jform_colorpicker
+{
+	width: 100px;
+	height: 30px;
+}
+</style>

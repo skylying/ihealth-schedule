@@ -13,9 +13,11 @@
 			/>
 
 		<field name="hex"
-		       type="text"
-		       label="COM_SCHEDULE_COLOR_HEX_LABEL"
-		       description="COM_SCHEDULE_COLOR_HEX_DESC"
+		    id="colorpicker"
+		    type="color"
+		    default="#eee"
+		    label="HEX 碼"
+		    description="顏色HEX碼, ex: #ff0000"
 			/>
 	</fieldset>
 
@@ -103,40 +105,4 @@
 			validate="rules"
 			/>
 	</fieldset>
-
-	<!-- For Quick Ajax AddNew -->
-	<fieldset name="quickadd">
-		<field name="title"
-			type="text"
-			label="JGLOBAL_TITLE"
-			description="JFIELD_TITLE_DESC"
-			required="true"
-			size="50"
-			labelclass=""
-			class="input-xlarge"
-			/>
-
-		<field name="catid"
-			type="category"
-			label="JCATEGORY"
-			description="JFIELD_CATEGORY_DESC"
-			extension="com_schedule"
-			labelclass=""
-			>
-			<option value="0">COM_SCHEDULE_TITLE_UNCATEGORISED</option>
-		</field>
-
-		<!--<field name="parent_id"
-			type="color_list"
-			label="COM_SCHEDULE_PARENT_ITEM"
-			description="COM_SCHEDULE_PARENT_ITEM_DESC"
-			labelclass=""
-			class="input-xlarge inputbox"
-			access="true"
-		>
-			<option>JSELECT</option>
-			<option value="1">JLIB_HTML_ADD_TO_ROOT</option>
-		</field>-->
-	</fieldset>
-
 </form>

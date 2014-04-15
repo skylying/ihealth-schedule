@@ -43,6 +43,11 @@ $grid->registerTableSort();
 		<?php echo JHtml::_('grid.checkAll'); ?>
 	</th>
 
+	<!--ID-->
+	<th width="1%" class="nowrap center">
+		<?php echo $grid->sortTitle('JGRID_HEADING_ID', 'color.id'); ?>
+	</th>
+
 	<!--TITLE-->
 	<th width="10%"  class="center">
 		<?php echo $grid->sortTitle('JGLOBAL_TITLE', 'color.title'); ?>
@@ -50,13 +55,9 @@ $grid->registerTableSort();
 
 	<!--HEX block-->
 	<th width="10%"  class="center">
-		<?php echo $grid->sortTitle('COM_SCHEDULE_COLOR_HEX_LABEL', 'color.hex'); ?>
+		<?php echo $grid->sortTitle('色塊', 'color.hex'); ?>
 	</th>
 
-	<!--ID-->
-	<th width="1%" class="nowrap center">
-		<?php echo $grid->sortTitle('JGRID_HEADING_ID', 'color.id'); ?>
-	</th>
 </tr>
 </thead>
 
@@ -87,6 +88,11 @@ $grid->registerTableSort();
 			<?php echo JHtml::_('grid.id', $i, $item->color_id); ?>
 		</td>
 
+		<!--ID-->
+		<td class="center">
+			<?php echo (int) $item->id; ?>
+		</td>
+
 		<!--TITLE-->
 		<td class="n/owrap has-context quick-edit-wrap">
 			<div class="item-title text-center">
@@ -102,12 +108,6 @@ $grid->registerTableSort();
 		<td class="center">
 			<div style=" margin:0 auto; width: 25px; height: 25px; background: <?php echo $item->hex; ?>"></div>
 		</td>
-
-		<!--ID-->
-		<td class="center">
-			<?php echo (int) $item->id; ?>
-		</td>
-
 	</tr>
 <?php endforeach; ?>
 </tbody>
