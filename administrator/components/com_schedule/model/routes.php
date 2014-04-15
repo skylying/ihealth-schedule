@@ -71,11 +71,7 @@ class ScheduleModelRoutes extends ListModel
 	{
 		$queryHelper = $this->getContainer()->get('model.routes.helper.query', Container::FORCE_NEW);
 
-		$queryHelper->addTable('route', '#__schedule_routes')
-			->addTable('category',  '#__categories', 'route.catid      = category.id')
-			->addTable('user',      '#__users',      'route.created_by = user.id')
-			->addTable('viewlevel', '#__viewlevels', 'route.access     = viewlevel.id')
-			->addTable('lang',      '#__languages',  'route.language   = lang.lang_code');
+		$queryHelper->addTable('route', '#__schedule_routes');
 
 		$this->filterFields = array_merge($this->filterFields, $queryHelper->getFilterFields());
 	}
