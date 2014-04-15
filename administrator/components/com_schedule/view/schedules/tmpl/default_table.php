@@ -38,49 +38,57 @@ $grid->registerTableSort();
 <!-- TABLE HEADER -->
 <thead>
 <tr>
-	<!--SORT-->
+	<!-- SORT -->
 	<th width="1%" class="nowrap center hidden-phone">
 		<?php echo $grid->orderTitle(); ?>
 	</th>
 
-	<!--CHECKBOX-->
+	<!-- CHECKBOX -->
 	<th width="1%" class="center">
 		<?php echo JHtml::_('grid.checkAll'); ?>
 	</th>
 
-	<!--ID-->
+	<!-- schedule.id -->
 	<th class="nowrap center">
 		<?php echo $grid->sortTitle('處方箋編號', 'schedule.id'); ?>
 	</th>
 
+	<!-- schedule.type -->
 	<th class="nowrap center">
 		<?php echo $grid->sortTitle('類別', 'schedule.type'); ?>
 	</th>
 
+	<!-- schedule.institute_id | schedule.customer_id -->
 	<th class="center">
 		<?php echo $grid->sortTitle('所屬機構/所屬會員', 'schedule.type, schedule.institute_id, schedule.customer_id'); ?>
 	</th>
 
+	<!-- schedule.city -->
 	<th class="center">
 		<?php echo $grid->sortTitle('縣市', 'schedule.city'); ?>
 	</th>
 
+	<!-- schedule.area -->
 	<th class="center">
 		<?php echo $grid->sortTitle('區域', 'schedule.area'); ?>
 	</th>
 
+	<!-- schedule.customer_id -->
 	<th class="center">
 		<?php echo $grid->sortTitle('客戶', 'schedule.customer_id'); ?>
 	</th>
 
+	<!-- schedule.date -->
 	<th class="center">
 		<?php echo $grid->sortTitle('預計外送日', 'schedule.date'); ?>
 	</th>
 
+	<!-- route.sender_id -->
 	<th class="center">
 		<?php echo $grid->sortTitle('外送藥師', 'route.sender_id'); ?>
 	</th>
 
+	<!-- schedule.status -->
 	<th class="center">
 		<?php echo $grid->sortTitle('狀態', 'schedule.status'); ?>
 	</th>
@@ -114,45 +122,53 @@ $grid->registerTableSort();
 			<?php echo $grid->dragSort(); ?>
 		</td>
 
-		<!--CHECKBOX-->
+		<!-- CHECKBOX -->
 		<td class="center">
 			<?php echo JHtml::_('grid.id', $i, $item->id); ?>
 		</td>
 
-		<!--ID-->
+		<!-- id -->
 		<td class="center">
 			<?php echo (int) $item->id; ?>
 		</td>
 
+		<!-- type -->
 		<td class="center">
 			<?php echo $item->type; ?>
 		</td>
 
+		<!-- customer_name | institute_name -->
 		<td class="center">
 			<?php echo ('individual' === $item->type ? $item->customer_name  : ''); ?>
 			<?php echo ('resident' === $item->type ? $item->institute_name : ''); ?>
 		</td>
 
+		<!-- city_title -->
 		<td class="center">
 			<?php echo $item->city_title; ?>
 		</td>
 
+		<!-- area_title -->
 		<td class="center">
 			<?php echo $item->area_title; ?>
 		</td>
 
+		<!-- customer_name -->
 		<td class="center">
 			<?php echo $item->customer_name; ?>
 		</td>
 
+		<!-- date -->
 		<td class="center">
 			<?php echo $item->date; ?>
 		</td>
 
+		<!-- route_sender_name -->
 		<td class="center">
 			<?php echo $item->route_sender_name; ?>
 		</td>
 
+		<!-- status -->
 		<td class="center">
 			<?php echo $item->status; ?>
 		</td>
