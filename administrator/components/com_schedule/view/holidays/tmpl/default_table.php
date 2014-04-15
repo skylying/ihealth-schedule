@@ -38,40 +38,31 @@ $grid->registerTableSort();
 <!-- TABLE HEADER -->
 <thead>
 <tr>
-	<!--SORT-->
-	<th width="1%" class="nowrap center hidden-phone">
-		<?php echo $grid->orderTitle(); ?>
-	</th>
-
 	<!--CHECKBOX-->
 	<th width="1%" class="center">
 		<?php echo JHtml::_('grid.checkAll'); ?>
-	</th>
-
-	<!--STATE-->
-	<th width="5%" class="nowrap center">
-		<?php echo $grid->sortTitle('JSTATUS', 'holiday.state'); ?>
-	</th>
-
-	<!--YEAR-->
-	<th width="10%" class="center">
-		<?php echo $grid->sortTitle('COM_SCHEDULE_HOLIDAY_YEAR_LABEL', 'holiday.year'); ?>
-	</th>
-
-	<!--MONTH-->
-	<th width="10%" class="center">
-		<?php echo $grid->sortTitle('COM_SCHEDULE_HOLIDAY_MONTH_LABEL', 'holiday.month'); ?>
-	</th>
-
-	<!--DAY-->
-	<th width="10%" class="center">
-		<?php echo $grid->sortTitle('COM_SCHEDULE_HOLIDAY_DAY_LABEL', 'holiday.day'); ?>
 	</th>
 
 	<!--ID-->
 	<th width="1%" class="nowrap center">
 		<?php echo $grid->sortTitle('JGRID_HEADING_ID', 'holiday.id'); ?>
 	</th>
+
+	<!--YEAR-->
+	<th width="10%" class="center">
+		<?php echo $grid->sortTitle('年份', 'holiday.year'); ?>
+	</th>
+
+	<!--MONTH-->
+	<th width="10%" class="center">
+		<?php echo $grid->sortTitle('月份', 'holiday.month'); ?>
+	</th>
+
+	<!--DAY-->
+	<th width="10%" class="center">
+		<?php echo $grid->sortTitle('日期', 'holiday.day'); ?>
+	</th>
+
 </tr>
 </thead>
 
@@ -97,25 +88,15 @@ $grid->registerTableSort();
 	$grid->setItem($item, $i);
 	?>
 	<tr class="holiday-row" sortable-group-id="<?php echo $item->catid; ?>">
-		<!-- DRAG SORT -->
-		<td class="order nowrap center hidden-phone">
-			<?php echo $grid->dragSort(); ?>
-		</td>
 
 		<!--CHECKBOX-->
 		<td class="center">
 			<?php echo JHtml::_('grid.id', $i, $item->holiday_id); ?>
 		</td>
 
-		<!--STATE-->
+		<!--ID-->
 		<td class="center">
-			<div class="btn-group">
-				<!-- STATE BUTTON -->
-				<?php echo $grid->state() ?>
-
-				<!-- CHANGE STATE DROP DOWN -->
-				<?php echo $this->loadTemplate('dropdown'); ?>
-			</div>
+			<a href="<?php echo JRoute::_('index.php?option=com_schedule&view=holiday&layout=edit&id=' . $item->id); ?>"><?php echo $item->id; ?></a>
 		</td>
 
 		<!--YEAR-->
@@ -132,12 +113,6 @@ $grid->registerTableSort();
 		<td class="center">
 			<?php echo $this->escape($item->day); ?>
 		</td>
-
-		<!--ID-->
-		<td class="center">
-			<a href="<?php echo JRoute::_('index.php?option=com_schedule&view=holiday&layout=edit&id=' . $item->id); ?>"><?php echo $item->id; ?></a>
-		</td>
-
 	</tr>
 <?php endforeach; ?>
 </tbody>
