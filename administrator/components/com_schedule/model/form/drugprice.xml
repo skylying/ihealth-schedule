@@ -4,52 +4,30 @@
 		align="left"
 		horz="true">
 
-		<field name="title"
+		<field name="institute_id"
 			type="text"
-			label="JGLOBAL_TITLE"
-			description="JFIELD_TITLE_DESC"
-			required="true"
-			class="input-xxlarge required"
+			label="藥品所屬機構"
+			description="要加購藥品的機構名稱"
 			/>
 
-		<field name="alias"
-			type="text"
-			label="JFIELD_ALIAS_LABEL"
-			description="JFIELD_ALIAS_DESC"
+		<field name="customer_id"
+		    type="text"
+		    label="藥品所屬客戶"
+		    description="要加購藥品的客戶"
 			/>
 
-		<field name="parent_id"
-			type="drugprice_modal"
-			label="COM_SCHEDULE_PARENT_ITEM"
-			description="COM_SCHEDULE_PARENT_ITEM_DESC"
-			show_root="true"
-			class="input-xlarge"
-			access="true"
+		<field name="date"
+		    type="calendar"
+	        label="對應日期"
+	        description="對應的排程日期"
 			/>
 
-		<field name="catid"
-			type="categoryadd"
-			label="JCATEGORY"
-			description="JFIELD_CATEGORY_DESC"
-			extension="com_schedule"
-			quickadd="true"
-			>
-			<option value="0">COM_SCHEDULE_TITLE_UNCATEGORISED</option>
-		</field>
-
-		<field name="images"
-			type="finder"
-			label="COM_SCHEDULE_IMAGES"
-			description="COM_SCHEDULE_IMAGES_DESC"
-			preview="true"
+		<field name="price"
+	        type="text"
+		    label="單筆金額"
+		    description="單一一種藥品的總額"
 			/>
 
-		<field name="url"
-			type="uri"
-			label="COM_SCHEDULE_URL"
-			description="COM_SCHEDULE_URL_DESC"
-			class="input-xlarge"
-			/>
 	</fieldset>
 
 	<fieldset
@@ -104,36 +82,6 @@
 
 	</fieldset>
 
-	<fieldset name="text"
-		align="left">
-		<field name="introtext"
-			type="editor"
-			label="COM_SCHEDULE_INTROTEXT"
-			description="COM_SCHEDULE_INTROTEXT_DESC"
-			filter="raw"
-			buttons="true"
-			hide="readmore,pagebreak,article"
-			/>
-
-		<field name="fulltext"
-			type="editor"
-			label="COM_SCHEDULE_FULLTEXT"
-			description="COM_SCHEDULE_FULLTEXT_DESC"
-			filter="raw"
-			buttons="true"
-			hide="readmore,pagebreak,article"
-			/>
-
-		<field name="checked_out"
-			type="hidden"
-			filter="unset"/>
-
-		<field name="checked_out_time"
-			type="hidden"
-			filter="unset"/>
-
-	</fieldset>
-
 	<fieldset name="created">
 		<field name="access"
 			type="accesslevel"
@@ -166,40 +114,4 @@
 			validate="rules"
 			/>
 	</fieldset>
-
-	<!-- For Quick Ajax AddNew -->
-	<fieldset name="quickadd">
-		<field name="title"
-			type="text"
-			label="JGLOBAL_TITLE"
-			description="JFIELD_TITLE_DESC"
-			required="true"
-			size="50"
-			labelclass=""
-			class="input-xlarge"
-			/>
-
-		<field name="catid"
-			type="category"
-			label="JCATEGORY"
-			description="JFIELD_CATEGORY_DESC"
-			extension="com_schedule"
-			labelclass=""
-			>
-			<option value="0">COM_SCHEDULE_TITLE_UNCATEGORISED</option>
-		</field>
-
-		<!--<field name="parent_id"
-			type="drugprice_list"
-			label="COM_SCHEDULE_PARENT_ITEM"
-			description="COM_SCHEDULE_PARENT_ITEM_DESC"
-			labelclass=""
-			class="input-xlarge inputbox"
-			access="true"
-		>
-			<option>JSELECT</option>
-			<option value="1">JLIB_HTML_ADD_TO_ROOT</option>
-		</field>-->
-	</fieldset>
-
 </form>
