@@ -54,12 +54,12 @@ $grid->registerTableSort();
 	</th>
 
 	<!--NAME-->
-	<th class="center">
+	<th width="10%" class="center">
 		<?php echo $grid->sortTitle('COM_SCHEDULE_SENDER_ITEM_NAME', 'sender.name'); ?>
 	</th>
 
 	<!--NAME-->
-	<th width="10%" class="center">
+	<th class="center">
 		<?php echo $grid->sortTitle('COM_SCHEDULE_SENDER_ITEM_NOTE', 'sender.note'); ?>
 	</th>
 
@@ -105,7 +105,7 @@ $grid->registerTableSort();
 		</td>
 
 		<!--NAME-->
-		<td class="nowrap has-context quick-edit-wrap">
+		<td class="nowrap quick-edit-wrap">
 			<div class="item-title center">
 				<?php
 					$query = array(
@@ -124,10 +124,6 @@ $grid->registerTableSort();
 		<td class="center">
 			<?php echo $this->escape($item->note); ?>
 		</td>
-
-
-
-
 	</tr>
 <?php endforeach; ?>
 </tbody>

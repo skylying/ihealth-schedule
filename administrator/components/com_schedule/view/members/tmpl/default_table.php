@@ -48,44 +48,29 @@ $grid->registerTableSort();
 		<?php echo JHtml::_('grid.checkAll'); ?>
 	</th>
 
-	<!--STATE-->
-	<th width="5%" class="nowrap center">
-		<?php echo $grid->sortTitle('JSTATUS', 'member.state'); ?>
-	</th>
-
-	<!--TITLE-->
-	<th class="center">
-		<?php echo $grid->sortTitle('JGLOBAL_TITLE', 'member.title'); ?>
-	</th>
-
-	<!--CATEGORY-->
-	<th width="10%" class="center">
-		<?php echo $grid->sortTitle('JCATEGORY', 'category.title'); ?>
-	</th>
-
-	<!--ACCESS VIEW LEVEL-->
-	<th width="5%" class="center">
-		<?php echo $grid->sortTitle('JGRID_HEADING_ACCESS', 'viewlevel.title'); ?>
-	</th>
-
-	<!--CREATED-->
-	<th width="10%" class="center">
-		<?php echo $grid->sortTitle('JDATE', 'member.created'); ?>
-	</th>
-
-	<!--USER-->
-	<th width="10%" class="center">
-		<?php echo $grid->sortTitle('JAUTHOR', 'user.name'); ?>
-	</th>
-
-	<!--LANGUAGE-->
-	<th width="5%" class="center">
-		<?php echo $grid->sortTitle('JGRID_HEADING_LANGUAGE', 'lang.title'); ?>
-	</th>
-
 	<!--ID-->
-	<th width="1%" class="nowrap center">
-		<?php echo $grid->sortTitle('JGRID_HEADING_ID', 'member.id'); ?>
+	<th width="5%" class="center">
+		<?php echo $grid->sortTitle('COM_SCHEDULE_MEMBER_ITEM_ID', 'member.id'); ?>
+	</th>
+
+	<!--NAME-->
+	<th width="8%" class="center">
+		<?php echo $grid->sortTitle('COM_SCHEDULE_MEMBER_ITEM_NAME', 'member.name'); ?>
+	</th>
+
+	<!--EMAIL-->
+	<th width="25%"class="center">
+		<?php echo $grid->sortTitle('COM_SCHEDULE_MEMBER_ITEM_EMAIL', 'member.email'); ?>
+	</th>
+
+	<!--Customer Amount-->
+	<th width="5%" class="center">
+		<?php echo $grid->sortTitle('COM_SCHEDULE_MEMBER_ITEM_NUMBER_OF_CUSTOMERS', 'member.email'); ?>
+	</th>
+
+	<!--Relative Customers-->
+	<th width="35%" class="center">
+		<?php echo $grid->sortTitle('COM_SCHEDULE_MEMBER_ITEM_CUSTOMERS', 'member.email'); ?>
 	</th>
 </tr>
 </thead>
@@ -117,77 +102,45 @@ $grid->registerTableSort();
 			<?php echo $grid->dragSort(); ?>
 		</td>
 
-		<!--CHECKBOX-->
+		<!--ID-->
 		<td class="center">
-			<?php echo JHtml::_('grid.id', $i, $item->member_id); ?>
-		</td>
-
-		<!--STATE-->
-		<td class="center">
-			<div class="btn-group">
-				<!-- STATE BUTTON -->
-				<?php echo $grid->state() ?>
-
-				<!-- CHANGE STATE DROP DOWN -->
-				<?php echo $this->loadTemplate('dropdown'); ?>
-			</div>
-		</td>
-
-		<!--TITLE-->
-		<td class="n/owrap has-context quick-edit-wrap">
-			<div class="item-title">
-				<!-- Checkout -->
-				<?php echo $grid->checkoutButton(); ?>
-
-				<!-- Title -->
-				<?php echo $grid->editTitle(); ?>
-			</div>
-
-			<!-- Sub Title -->
-			<div class="small">
-				<?php echo JText::sprintf('JGLOBAL_LIST_ALIAS', $this->escape($item->alias)); ?>
-			</div>
-		</td>
-
-		<!--CATEGORY-->
-		<td class="center">
-			<?php echo $this->escape($item->category_title); ?>
-		</td>
-
-		<!--ACCESS VIEW LEVEL-->
-		<td class="center">
-			<?php echo $this->escape($item->viewlevel_title); ?>
-		</td>
-
-		<!--CREATED-->
-		<td class="center">
-			<?php echo JHtml::_('date', $item->created, JText::_('DATE_FORMAT_LC4')); ?>
-		</td>
-
-		<!--USER-->
-		<td class="center">
-			<?php echo $this->escape($item->user_name); ?>
-		</td>
-
-		<!--LANGUAGE-->
-		<td class="center">
-			<?php
-			if ($item->language == '*')
-			{
-				echo JText::alt('JALL', 'language');
-			}
-			else
-			{
-				echo $item->lang_title ? $this->escape($item->lang_title) : JText::_('JUNDEFINED');
-			}
-			?>
+			<?php echo JHtml::_('grid.id', $i, $item->id); ?>
 		</td>
 
 		<!--ID-->
 		<td class="center">
-			<?php echo (int) $item->id; ?>
+			<?php echo $item->id; ?>
 		</td>
 
+		<!--NAME-->
+		<td class="nowrap quick-edit-wrap">
+			<div class="center">
+				<?php
+				$query = array(
+					'option' => 'com_schedule',
+					'view' => 'member',
+					'layout' => 'edit',
+					'id'  => $item->id
+				);
+				?>
+				<a href="<?php echo JRoute::_("index.php?". http_build_query($query)); ?>">
+					<?php echo $this->escape($item->name); ?>
+				</a>
+			</div>
+		</td>
+
+		<!--EMAIL-->
+		<td class="center">
+			<?php echo $this->escape($item->email); ?>
+		</td>
+
+		<!--Customer Amount-->
+		<td class="center">
+		</td>
+
+		<!--Relative Customers-->
+		<td class="center">
+		</td>
 	</tr>
 <?php endforeach; ?>
 </tbody>
