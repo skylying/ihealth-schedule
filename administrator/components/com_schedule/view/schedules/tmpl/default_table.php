@@ -48,44 +48,41 @@ $grid->registerTableSort();
 		<?php echo JHtml::_('grid.checkAll'); ?>
 	</th>
 
-	<!--STATE-->
-	<th width="5%" class="nowrap center">
-		<?php echo $grid->sortTitle('JSTATUS', 'schedule.state'); ?>
-	</th>
-
-	<!--TITLE-->
-	<th class="center">
-		<?php echo $grid->sortTitle('JGLOBAL_TITLE', 'schedule.title'); ?>
-	</th>
-
-	<!--CATEGORY-->
-	<th width="10%" class="center">
-		<?php echo $grid->sortTitle('JCATEGORY', 'category.title'); ?>
-	</th>
-
-	<!--ACCESS VIEW LEVEL-->
-	<th width="5%" class="center">
-		<?php echo $grid->sortTitle('JGRID_HEADING_ACCESS', 'viewlevel.title'); ?>
-	</th>
-
-	<!--CREATED-->
-	<th width="10%" class="center">
-		<?php echo $grid->sortTitle('JDATE', 'schedule.created'); ?>
-	</th>
-
-	<!--USER-->
-	<th width="10%" class="center">
-		<?php echo $grid->sortTitle('JAUTHOR', 'user.name'); ?>
-	</th>
-
-	<!--LANGUAGE-->
-	<th width="5%" class="center">
-		<?php echo $grid->sortTitle('JGRID_HEADING_LANGUAGE', 'lang.title'); ?>
-	</th>
-
 	<!--ID-->
-	<th width="1%" class="nowrap center">
-		<?php echo $grid->sortTitle('JGRID_HEADING_ID', 'schedule.id'); ?>
+	<th class="nowrap center">
+		<?php echo $grid->sortTitle('處方箋編號', 'schedule.id'); ?>
+	</th>
+
+	<th class="nowrap center">
+		<?php echo $grid->sortTitle('類別', 'schedule.type'); ?>
+	</th>
+
+	<th class="center">
+		<?php echo $grid->sortTitle('所屬機構/所屬會員', 'schedule.type, schedule.institute_id, schedule.customer_id'); ?>
+	</th>
+
+	<th class="center">
+		<?php echo $grid->sortTitle('縣市', 'schedule.city'); ?>
+	</th>
+
+	<th class="center">
+		<?php echo $grid->sortTitle('區域', 'schedule.area'); ?>
+	</th>
+
+	<th class="center">
+		<?php echo $grid->sortTitle('客戶', 'schedule.customer_id'); ?>
+	</th>
+
+	<th class="center">
+		<?php echo $grid->sortTitle('預計外送日', 'schedule.date'); ?>
+	</th>
+
+	<th class="center">
+		<?php echo $grid->sortTitle('外送藥師', 'route.sender_id'); ?>
+	</th>
+
+	<th class="center">
+		<?php echo $grid->sortTitle('狀態', 'schedule.status'); ?>
 	</th>
 </tr>
 </thead>
@@ -119,68 +116,7 @@ $grid->registerTableSort();
 
 		<!--CHECKBOX-->
 		<td class="center">
-			<?php echo JHtml::_('grid.id', $i, $item->schedule_id); ?>
-		</td>
-
-		<!--STATE-->
-		<td class="center">
-			<div class="btn-group">
-				<!-- STATE BUTTON -->
-				<?php echo $grid->state() ?>
-
-				<!-- CHANGE STATE DROP DOWN -->
-				<?php echo $this->loadTemplate('dropdown'); ?>
-			</div>
-		</td>
-
-		<!--TITLE-->
-		<td class="n/owrap has-context quick-edit-wrap">
-			<div class="item-title">
-				<!-- Checkout -->
-				<?php echo $grid->checkoutButton(); ?>
-
-				<!-- Title -->
-				<?php echo $grid->editTitle(); ?>
-			</div>
-
-			<!-- Sub Title -->
-			<div class="small">
-				<?php echo JText::sprintf('JGLOBAL_LIST_ALIAS', $this->escape($item->alias)); ?>
-			</div>
-		</td>
-
-		<!--CATEGORY-->
-		<td class="center">
-			<?php echo $this->escape($item->category_title); ?>
-		</td>
-
-		<!--ACCESS VIEW LEVEL-->
-		<td class="center">
-			<?php echo $this->escape($item->viewlevel_title); ?>
-		</td>
-
-		<!--CREATED-->
-		<td class="center">
-			<?php echo JHtml::_('date', $item->created, JText::_('DATE_FORMAT_LC4')); ?>
-		</td>
-
-		<!--USER-->
-		<td class="center">
-			<?php echo $this->escape($item->user_name); ?>
-		</td>
-
-		<!--LANGUAGE-->
-		<td class="center">
-			<?php
-			if ($item->language == '*')
-			{
-				echo JText::alt('JALL', 'language');
-			}
-			else
-			{
-				echo $item->lang_title ? $this->escape($item->lang_title) : JText::_('JUNDEFINED');
-			}
-			?>
+			<?php echo JHtml::_('grid.id', $i, $item->id); ?>
 		</td>
 
 		<!--ID-->
@@ -188,6 +124,38 @@ $grid->registerTableSort();
 			<?php echo (int) $item->id; ?>
 		</td>
 
+		<td class="center">
+			<?php echo $item->type; ?>
+		</td>
+
+		<td class="center">
+			<?php echo ('individual' === $item->type ? $item->customer_name  : ''); ?>
+			<?php echo ('resident' === $item->type ? $item->institute_name : ''); ?>
+		</td>
+
+		<td class="center">
+			<?php echo $item->city_title; ?>
+		</td>
+
+		<td class="center">
+			<?php echo $item->area_title; ?>
+		</td>
+
+		<td class="center">
+			<?php echo $item->customer_name; ?>
+		</td>
+
+		<td class="center">
+			<?php echo $item->date; ?>
+		</td>
+
+		<td class="center">
+			<?php echo $item->route_sender_name; ?>
+		</td>
+
+		<td class="center">
+			<?php echo $item->status; ?>
+		</td>
 	</tr>
 <?php endforeach; ?>
 </tbody>
