@@ -13,11 +13,11 @@
 			/>
 
 		<field name="hex"
-		    id="colorpicker"
-		    type="color"
-		    default="#eee"
-		    label="HEX 碼"
-		    description="顏色HEX碼, ex: #ff0000"
+			id="colorpicker"
+			type="color"
+			default="#eee"
+			label="HEX 碼"
+			description="顏色HEX碼, ex: #ff0000"
 			/>
 	</fieldset>
 
@@ -92,7 +92,7 @@
 	<!-- Need this field as child of root node for access setting. -->
 	<field name="asset_id"
 		type="hidden"
-		filter="unset"/>
+		filter="unset" />
 
 	<fieldset name="rules">
 		<field name="rules"

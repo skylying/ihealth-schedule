@@ -8,19 +8,19 @@
 			type="text"
 			label="對應處方箋"
 			description="對應處方箋 id"
-		    readonly="true"
+			readonly="true"
 			/>
 
 		<field name="hicode"
-		       type="text"
-		       label="藥品健保碼"
-		       description="藥品健保碼"
+			type="text"
+			label="藥品健保碼"
+			description="藥品健保碼"
 			/>
 
 		<field name="quantity"
-		       type="number"
-		       label="數量"
-		       description="單一藥品總數"
+			type="number"
+			label="數量"
+			description="單一藥品總數"
 			/>
 
 	</fieldset>
@@ -96,7 +96,7 @@
 	<!-- Need this field as child of root node for access setting. -->
 	<field name="asset_id"
 		type="hidden"
-		filter="unset"/>
+		filter="unset" />
 
 	<fieldset name="rules">
 		<field name="rules"
