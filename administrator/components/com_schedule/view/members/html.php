@@ -82,7 +82,7 @@ class ScheduleViewMembersHtml extends GridView
 			'view_list' => 'members',
 
 			// Column which we allow to drag sort
-			'order_column'   => 'member.catid, member.ordering',
+			'order_column'   => 'member.ordering',
 
 			// Table id
 			'order_table_id' => 'memberList',
