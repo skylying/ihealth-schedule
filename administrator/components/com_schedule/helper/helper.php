@@ -104,25 +104,4 @@ abstract class ScheduleHelper
 
 		return $result;
 	}
-
-	/**
-	 * getColorBlock
-	 * ex: getColorBlock('#ff0000', 30)            => generate a 30px red square
-	 * ex: getColorBlock('red', 20, 'pull-right')  => generate a 20px pull-right red square
-	 *
-	 * @param string $color
-	 * @param int    $size
-	 * @param string $class
-	 *
-	 * @return  string
-	 */
-	public static function getColorBlock($color = '#eee', $size = 25, $class = null)
-	{
-		$attributes = array(
-			'class' => $class,
-			'style' => sprintf('width:%spx; height:%spx; background:%s; margin:0 auto', $size, $size, $color)
-		);
-
-		return (string) new \Windwalker\Html\HtmlElement('div', 'content', $attributes);
-	}
 }
