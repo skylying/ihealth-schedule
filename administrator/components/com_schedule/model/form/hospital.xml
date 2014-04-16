@@ -33,9 +33,28 @@
 			type="text"
 			label="COM_SCHEDULE_HOSPITAL_ITEM_TITLE"
 			description="COM_SCHEDULE_HOSPITAL_ITEM_TITLE"
-			required="true"
 			class="input-xlarge required"
 			/>
-
+		<field name="city"
+			type="sql"
+			query="SELECT `id`, `title` FROM #__schedule_cities WHERE published=1"
+			key_field="id"
+			value_field="title"
+			label="COM_SCHEDULE_HOSPITAL_ITEM_CITY_TITLE"
+			description="COM_SCHEDULE_HOSPITAL_ITEM_CITY_TITLE">
+		<option>- 請選擇縣市 -</option>
+		</field>
+		<field name="city_title"
+			type="hidden"
+			label="縣市標題"
+			description="標題" />
+		<field name="area"
+			type="hidden"
+			label="現居地地區"
+			description="現居地地區" />
+		<field name="area_title"
+			type="hidden"
+			label="地區標題"
+			description="地區標題" />
 	</fieldset>
 </form>
