@@ -50,43 +50,25 @@ $grid->registerTableSort();
 
 	<!--STATE-->
 	<th width="5%" class="nowrap center">
-		<?php echo $grid->sortTitle('JSTATUS', 'task.state'); ?>
+		<?php echo $grid->sortTitle('COM_SCHEDULE_TASK_TITLE_LIST_STATUS', 'task.status'); ?>
 	</th>
 
-	<!--TITLE-->
-	<th class="center">
-		<?php echo $grid->sortTitle('JGLOBAL_TITLE', 'task.title'); ?>
+	<!--TASK DATE-->
+	<th width="20%" class="nowrap center">
+		<?php echo $grid->sortTitle('COM_SCHEDULE_TASK_TITLE_LIST_DATE', 'task.date'); ?>
 	</th>
 
-	<!--CATEGORY-->
-	<th width="10%" class="center">
-		<?php echo $grid->sortTitle('JCATEGORY', 'category.title'); ?>
-	</th>
-
-	<!--ACCESS VIEW LEVEL-->
-	<th width="5%" class="center">
-		<?php echo $grid->sortTitle('JGRID_HEADING_ACCESS', 'viewlevel.title'); ?>
-	</th>
-
-	<!--CREATED-->
-	<th width="10%" class="center">
-		<?php echo $grid->sortTitle('JDATE', 'task.created'); ?>
-	</th>
-
-	<!--USER-->
-	<th width="10%" class="center">
-		<?php echo $grid->sortTitle('JAUTHOR', 'user.name'); ?>
+	<!--SENDER NAME-->
+	<th width="20%" class="center">
+		<?php echo $grid->sortTitle('COM_SCHEDULE_TASK_TITLE_LIST_SENDER_NAME', 'task.sender_name'); ?>
 	</th>
 
 	<!--LANGUAGE-->
-	<th width="5%" class="center">
-		<?php echo $grid->sortTitle('JGRID_HEADING_LANGUAGE', 'lang.title'); ?>
+	<th width="64%" class="center">
+		<?php echo JText::_('COM_SCHEDULE_TASK_TITLE_LIST_PRINT'); ?>
 	</th>
 
-	<!--ID-->
-	<th width="1%" class="nowrap center">
-		<?php echo $grid->sortTitle('JGRID_HEADING_ID', 'task.id'); ?>
-	</th>
+
 </tr>
 </thead>
 
@@ -128,66 +110,35 @@ $grid->registerTableSort();
 				<!-- STATE BUTTON -->
 				<?php echo $grid->state() ?>
 
+				<?php //\Schedule\Helper\ToggleHelper::toggleState(); ?>
+
 				<!-- CHANGE STATE DROP DOWN -->
 				<?php echo $this->loadTemplate('dropdown'); ?>
 			</div>
 		</td>
 
-		<!--TITLE-->
-		<td class="n/owrap has-context quick-edit-wrap">
-			<div class="item-title">
-				<!-- Checkout -->
-				<?php echo $grid->checkoutButton(); ?>
-
-				<!-- Title -->
-				<?php echo $grid->editTitle(); ?>
-			</div>
-
-			<!-- Sub Title -->
-			<div class="small">
-				<?php echo JText::sprintf('JGLOBAL_LIST_ALIAS', $this->escape($item->alias)); ?>
-			</div>
-		</td>
-
-		<!--CATEGORY-->
-		<td class="center">
-			<?php echo $this->escape($item->category_title); ?>
-		</td>
-
-		<!--ACCESS VIEW LEVEL-->
-		<td class="center">
-			<?php echo $this->escape($item->viewlevel_title); ?>
-		</td>
-
-		<!--CREATED-->
-		<td class="center">
-			<?php echo JHtml::_('date', $item->created, JText::_('DATE_FORMAT_LC4')); ?>
-		</td>
-
-		<!--USER-->
-		<td class="center">
-			<?php echo $this->escape($item->user_name); ?>
-		</td>
-
-		<!--LANGUAGE-->
+		<!--TASK DATE-->
 		<td class="center">
 			<?php
-			if ($item->language == '*')
-			{
-				echo JText::alt('JALL', 'language');
-			}
-			else
-			{
-				echo $item->lang_title ? $this->escape($item->lang_title) : JText::_('JUNDEFINED');
-			}
+			$weekday = JDate::getInstance( $item->date );
+			echo  $weekday->format('Y-m-d') . '(' . $weekday->dayToString($weekday->dayofweek) . ')';
 			?>
 		</td>
 
-		<!--ID-->
-		<td class="center">
-			<?php echo (int) $item->id; ?>
+		<!--SENDER NAME-->
+		<td class="nowrap quick-edit-wrap">
+			<div class="item-title center">
+				<?php echo $item->sender_name; ?>
+			</div>
 		</td>
 
+		<!--PRINT-->
+		<td class="center">
+			<a href="print-preview" class="btn btn-info">
+				<span class="glyphicon glyphicon-print"></span>
+				列印
+			</a>
+		</td>
 	</tr>
 <?php endforeach; ?>
 </tbody>

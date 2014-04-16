@@ -58,7 +58,7 @@ $grid->registerTableSort();
 		<?php echo $grid->sortTitle('COM_SCHEDULE_SENDER_ITEM_NAME', 'sender.name'); ?>
 	</th>
 
-	<!--NAME-->
+	<!--NOTE-->
 	<th class="center">
 		<?php echo $grid->sortTitle('COM_SCHEDULE_SENDER_ITEM_NOTE', 'sender.note'); ?>
 	</th>
