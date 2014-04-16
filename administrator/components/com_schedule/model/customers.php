@@ -71,11 +71,8 @@ class ScheduleModelCustomers extends ListModel
 	{
 		$queryHelper = $this->getContainer()->get('model.customers.helper.query', Container::FORCE_NEW);
 
-		$queryHelper->addTable('customer', '#__schedule_customers')
-			->addTable('category',  '#__categories', 'customer.catid      = category.id')
-			->addTable('user',      '#__users',      'customer.created_by = user.id')
-			->addTable('viewlevel', '#__viewlevels', 'customer.access     = viewlevel.id')
-			->addTable('lang',      '#__languages',  'customer.language   = lang.lang_code');
+		$queryHelper->addTable('customer', '#__schedule_customers');
+
 
 		$this->filterFields = array_merge($this->filterFields, $queryHelper->getFilterFields());
 	}

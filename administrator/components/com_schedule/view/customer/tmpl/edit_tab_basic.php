@@ -16,14 +16,14 @@ $fieldsets = $data->form->getFieldsets();
 <?php echo JHtmlBootstrap::addTab('customerEditTab', $tab, \JText::_($data->view->option . '_EDIT_' . strtoupper($tab))) ?>
 
 <div class="row-fluid">
-	<div class="span8">
-		<?php echo $this->loadTemplate('fieldset', array('fieldset' => $fieldsets['information'], 'class' => 'form-horizontal')); ?>
-
-		<?php echo $this->loadTemplate('fieldset', array('fieldset' => $fieldsets['text'], 'class' => 'form-horizontal')); ?>
+	<div class="span6">
+		<?php echo $this->loadTemplate('fieldset', array('fieldset' => $fieldsets['edit'], 'class' => 'form-horizontal')); ?>
 	</div>
 
-	<div class="span4">
-		<?php echo $this->loadTemplate('fieldset', array('fieldset' => $fieldsets['publish'], 'class' => 'form-horizontal')); ?>
+	<div class="span6">
+		<?php echo $this->loadTemplate('fieldset', array('fieldset' => $fieldsets['contact'], 'class' => 'form-horizontal')); ?>
+		<?php echo $this->loadTemplate('fieldset', array('fieldset' => $fieldsets['address'], 'class' => 'form-horizontal')); ?>
+		<?php echo $this->loadTemplate('fieldset', array('fieldset' => $fieldsets['phones'], 'class' => 'form-horizontal')); ?>
 	</div>
 </div>
 

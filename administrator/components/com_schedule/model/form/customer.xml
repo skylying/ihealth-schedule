@@ -1,137 +1,160 @@
 <?xml version="1.0" encoding="utf-8"?>
 <form>
-	<fieldset name="information"
+	<fieldset name="edit"
 		align="left"
 		horz="true">
 
+		<field name="serial"
+			type="text"
+			label="COM_SCHEDULE_CUSTOMER_SERIAL"
+			description="COM_SCHEDULE_CUSTOMER_SERIAL"
+			required="true"
+			class="input-small required"
+			/>
+
 		<field name="title"
 			type="text"
-			label="JGLOBAL_TITLE"
-			description="JFIELD_TITLE_DESC"
+			label="COM_SCHEDULE_CUSTOMER_NAME"
+			description="COM_SCHEDULE_CUSTOMER_NAME"
 			required="true"
-			class="input-xxlarge required"
+			class="input-large required"
 			/>
 
-		<field name="alias"
+		<field name="id_number"
 			type="text"
-			label="JFIELD_ALIAS_LABEL"
-			description="JFIELD_ALIAS_DESC"
+			label="COM_SCHEDULE_CUSTOMER_ID_NUMBER"
+			description="COM_SCHEDULE_CUSTOMER_ID_NUMBER"
 			/>
 
-		<field name="parent_id"
-			type="customer_modal"
-			label="COM_SCHEDULE_PARENT_ITEM"
-			description="COM_SCHEDULE_PARENT_ITEM_DESC"
-			show_root="true"
-			class="input-xlarge"
-			access="true"
+		<field name="birth_date"
+			type="calendar"
+			label="COM_SCHEDULE_CUSTOMER_BIRTH_DATE"
+			description="COM_SCHEDULE_CUSTOMER_BIRTH_DATE"
 			/>
 
-		<field name="catid"
-			type="categoryadd"
-			label="JCATEGORY"
-			description="JFIELD_CATEGORY_DESC"
-			extension="com_schedule"
-			quickadd="true"
-			>
-			<option value="0">COM_SCHEDULE_TITLE_UNCATEGORISED</option>
+		<field name="age"
+			type="int"
+			label="COM_SCHEDULE_CUSTOMER_AGE"
+			description="COM_SCHEDULE_CUSTOMER_AGE"
+			class="input-small"
+			/>
+
+		<field name="state"
+			type="radio"
+			label="COM_SCHEDULE_CUSTOMER_STATE"
+			description="COM_SCHEDULE_CUSTOMER_STATE"
+			class="btn-group btn-group-yesno">
+			<option value="0">結案</option>
+			<option value="1">服務中</option>
 		</field>
 
-		<field name="images"
-			type="finder"
-			label="COM_SCHEDULE_IMAGES"
-			description="COM_SCHEDULE_IMAGES_DESC"
-			preview="true"
-			/>
-
-		<field name="url"
-			type="uri"
-			label="COM_SCHEDULE_URL"
-			description="COM_SCHEDULE_URL_DESC"
-			class="input-xlarge"
-			/>
 	</fieldset>
 
 	<fieldset
-		name="publish"
+		name="contact"
 		align="right"
 		horz="true">
 
-		<field name="state"
-			type="list"
-			label="JSTATUS"
-			description="JFIELD_PUBLISHED_DESC"
-			class="chzn-color-state"
-			size="1"
-			default="1"
-			>
-			<option value="1">JPUBLISHED</option>
-			<option value="0">JUNPUBLISHED</option>
+		<field name="type"
+			type="radio"
+			label="COM_SCHEDULE_CUSTOMER_TYPE"
+			description="COM_SCHEDULE_CUSTOMER_TYPE"
+			class="btn-group btn-group-yesno">
+			<option value="0">住民</option>
+			<option value="1">散客</option>
 		</field>
 
-		<field name="id"
+		<field name="institute_title"
 			type="text"
-			default="0"
-			label="JGLOBAL_FIELD_ID_LABEL"
-			readonly="true"
-			class="readonly"
-			description="JGLOBAL_FIELD_ID_DESC"
+			label="COM_SCHEDULE_INSTITUTE_TITLE"
+			description="COM_SCHEDULE_INSTITUTE_TITLE"
 			/>
 
-		<field name="created_by"
-			type="user"
-			label="COM_SCHEDULE_CREATED_BY"
-			description="COM_SCHEDULE_CREATED_BY_DESC"
+		<field name=""
+			type="text"
+			label="COM_SCHEDULE_CUSTOMER_MEMBER"
+			description="COM_SCHEDULE_CUSTOMER_MEMBER"
+			class="input-large"
 			/>
 
-		<field name="created"
-			type="calendar"
-			label="COM_SCHEDULE_CREATED"
-			description="COM_SCHEDULE_CREATED_DESC"
+		<field name="hospital_title"
+			type="text"
+			label="COM_SCHEDULE_CUSTOMER_HOSPITAL_TITLE"
+			description="COM_SCHEDULE_CUSTOMER_HOSPITAL_TITLE"
+			class="input-large"
 			/>
 
-		<field name="publish_up"
-			type="calendar"
-			label="COM_SCHEDULE_PUBLISH_UP"
-			description="COM_SCHEDULE_PUBLISH_UP_DESC"
+		<field name="rx_period"
+			type="text"
+			label="COM_SCHEDULE_RX_PERIOD"
+			description="COM_SCHEDULE_RX_PERIOD"
+			class="input-large"
 			/>
 
-		<field name="publish_down"
-			type="calendar"
-			label="COM_SCHEDULE_PUBLISHED_DOWN"
-			description="COM_SCHEDULE_PUBLISH_DOWN_DESC"
+		<field name="rx_time"
+			type="list"
+			label="COM_SCHEDULE_RX_TIME"
+			description="COM_SCHEDULE_RX_TIME">
+			<option value="1">1次</option>
+			<option value="2">2次</option>
+			<option value="3">3次</option>
+		</field>
+
+		<field name="note"
+			type="textarea"
+			label="COM_SCHEDULE_NOTE"
+			description="COM_SCHEDULE_NOTE"
 			/>
 
-	</fieldset>
+		<fieldset
+			name="address"
+			>
+				<field name="city"
+					type="list"
+					label="city"
+					description=""
+					class="pull-left"
+					/>
 
-	<fieldset name="text"
-		align="left">
-		<field name="introtext"
-			type="editor"
-			label="COM_SCHEDULE_INTROTEXT"
-			description="COM_SCHEDULE_INTROTEXT_DESC"
-			filter="raw"
-			buttons="true"
-			hide="readmore,pagebreak,article"
+				<field name="area"
+					type="list"
+					label="area"
+					description=""
+					class="pull-left"
+					/>
+
+				<field name="address"
+					type="text"
+					label="address"
+					description=""
+					class="pull-left"
+					/>
+		</fieldset>
+
+		<fieldset
+			name="phones"
+			>
+			<field name="tel_office"
+				type="text"
+				label="COM_SCHEDULE_TEL_OFFICE"
+				description="COM_SCHEDULE_TEL_OFFICE"
+				class="input-large"
 			/>
 
-		<field name="fulltext"
-			type="editor"
-			label="COM_SCHEDULE_FULLTEXT"
-			description="COM_SCHEDULE_FULLTEXT_DESC"
-			filter="raw"
-			buttons="true"
-			hide="readmore,pagebreak,article"
-			/>
+			<field name="tel_home"
+				type="text"
+				label="COM_SCHEDULE_TEL_HOME"
+				description="COM_SCHEDULE_TEL_HOME"
+				class="input-large"
+				/>
 
-		<field name="checked_out"
-			type="hidden"
-			filter="unset"/>
-
-		<field name="checked_out_time"
-			type="hidden"
-			filter="unset"/>
-
+			<field name="mobile"
+				type="text"
+				label="COM_SCHEDULE_TEL_MOBILE"
+				description="COM_SCHEDULE_TEL_MOBILE"
+				class="input-large"
+				/>
+		</fieldset>
 	</fieldset>
 
 	<fieldset name="created">
