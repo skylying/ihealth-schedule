@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fieldset name="basic">
+		<field name="customer_id"
+			type="list"
+			default=""
+			label="散客名稱"
+			description="散客名稱"
+			>
+			<option></option>
+		</field>
+		<field name="customer_name"
+			type="hidden"
+			default=""
+			label="散客名稱"
+			description="散客名稱"
+			readonly="true"
+			/>
+		<field name="member_id"
+			type="list"
+			default=""
+			label="會員名稱"
+			description="會員名稱"
+			>
+			<option></option>
+		</field>
+		<field name="member_name"
+			type="hidden"
+			default=""
+			label="會員名稱"
+			description="會員名稱"
+			readonly="true"
+			/>
+
+		<field name="city"
+			type="list"
+			default=""
+			label="縣市"
+			description="縣市"
+			readonly="true"
+			>
+			<option></option>
+		</field>
+		<field name="city_title"
+			type="hidden"
+			default=""
+			label="縣市"
+			description="縣市"
+			readonly="true"
+			/>
+
+		<field name="area"
+			type="list"
+			default=""
+			label="區域"
+			description="區域"
+			readonly="true"
+			>
+			<option></option>
+		</field>
+		<field name="area_title"
+			type="hidden"
+			default=""
+			label="區域"
+			description="區域"
+			readonly="true"
+			/>
+
+		<field name="address"
+			type="text"
+			default=""
+			class="input-xlarge"
+			label="地址"
+			description="地址"
+			readonly="true"
+			/>
+
+		<field name="type"
+			type="radio"
+			default=""
+			class=""
+			label="排程類別"
+			description="排程類別"
+			required="true"
+			>
+			<option value="collect">收單</option>
+			<option value="other">其他</option>
+		</field>
+
+		<field name="note"
+			type="textarea"
+			default=""
+			label="備註說明"
+			description="備註說明"
+			/>
+
+		<field id="individual_date"
+			name="date"
+			type="calendar"
+			default=""
+			format="%Y-%m-%d"
+			label="拜訪日期"
+			description="拜訪日期"
+			/>
+
+		<field name="route_sender_id"
+			type="list"
+			label="負責藥師"
+			description="負責藥師"
+			>
+			<option></option>
+		</field>
+	</fieldset>
+</form>
