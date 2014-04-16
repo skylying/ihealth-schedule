@@ -139,7 +139,7 @@ class ScheduleModelSchedules extends ListModel
 			{
 				if ($end)
 				{
-					$query->where('`schedule`.`date` >= ' . $query->q($end));
+					$query->where('`schedule`.`date` <= ' . $query->q($end));
 				}
 			}
 		);

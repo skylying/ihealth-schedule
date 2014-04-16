@@ -27,9 +27,6 @@ $container = $this->getContainer();
 $asset     = $container->get('helper.asset');
 $grid      = $data->grid;
 $date      = $container->get('date');
-
-// Set order script.
-$grid->registerTableSort();
 ?>
 
 <!-- LIST TABLE -->
@@ -48,7 +45,7 @@ $grid->registerTableSort();
 		排程
 	</th>
 
-	<!-- schedule.id -->
+	<!-- schedule.rx_id -->
 	<th width="5%" class="nowrap center">
 		<?php echo $grid->sortTitle('處方箋編號', 'schedule.rx_id'); ?>
 	</th>
