@@ -4,11 +4,12 @@
 		align="left"
 		horz="true">
 
-		<field name="serial"
+		<field name="id"
 			type="text"
 			label="COM_SCHEDULE_INSTITUTE_SERIAL"
+			readonly="true"
+			class="readonly"
 			description="COM_SCHEDULE_INSTITUTE_SERIAL"
-			class="input-xxlarge required"
 			/>
 
 		<field name="title"
