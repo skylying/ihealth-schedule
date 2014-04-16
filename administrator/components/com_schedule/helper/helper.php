@@ -104,4 +104,31 @@ abstract class ScheduleHelper
 
 		return $result;
 	}
+
+	/**
+	 * getColorBlock
+	 * ex: getColorBlock('#ff0000', 30)            => generate a 30px red square
+	 * ex: getColorBlock('red', 20, 'pull-right')  => generate a 20px pull-right red square
+	 *
+	 * @param string $color
+	 * @param int    $size
+	 * @param string $class
+	 *
+	 * @return  string
+	 */
+	public static function getColorBlock($color = '#eee', $size = 25, $class = null)
+	{
+		$attributes = array(
+			'class' => $class,
+			'style' => 'width:' . $size . 'px; height:' . $size . 'px; background:' . $color . '; margin:0 auto;'
+		);
+
+		$html = '<div ' . implode(' ', array_map(
+					function($key) use ($attributes)
+					{
+						return $key . '="' . $attributes[$key] . '"';
+					}, array_keys($attributes))) . '></div>';
+
+		return $html;
+	}
 }
