@@ -4,272 +4,113 @@
         - '#__schedule_addresses'
     columns:
         id: { Field: id, Type: 'int(11) unsigned', 'Null': NO, Default: null, Extra: auto_increment, Comment: 'Primary Key', From: [id] }
-        asset_id: { Field: asset_id, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: 'ACL Key', From: [asset_id] }
-        catid: { Field: catid, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: 'Category ID', From: [catid] }
-        title: { Field: title, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 'Record title', From: [title] }
-        alias: { Field: alias, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 'URL Alias', From: [alias] }
-        url: { Field: url, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: URL, From: [url] }
-        introtext: { Field: introtext, Type: mediumtext, 'Null': NO, Default: null, Extra: '', Comment: Intro, From: [introtext] }
-        fulltext: { Field: fulltext, Type: mediumtext, 'Null': NO, Default: null, Extra: '', Comment: 'Full content', From: [fulltext] }
-        images: { Field: images, Type: text, 'Null': NO, Default: null, Extra: '', Comment: Images, From: [images] }
-        version: { Field: version, Type: 'int(11) unsigned', 'Null': NO, Default: null, Extra: '', Comment: Version, From: [version] }
-        created: { Field: created, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: 'Created time', From: [created] }
-        created_by: { Field: created_by, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: Author, From: [created_by] }
-        modified: { Field: modified, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: 'Modified time', From: [modified] }
-        modified_by: { Field: modified_by, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: 'Modified user', From: [modified_by] }
-        ordering: { Field: ordering, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: 'Ordering key', From: [ordering] }
-        state: { Field: state, Type: tinyint(1), 'Null': NO, Default: '1', Extra: '', Comment: 'Record state', From: [state] }
-        publish_up: { Field: publish_up, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: 'Publish start time', From: [publish_up] }
-        publish_down: { Field: publish_down, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: 'Publish end time', From: [publish_down] }
-        checked_out: { Field: checked_out, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: 'Checkout user', From: [checked_out] }
-        checked_out_time: { Field: checked_out_time, Type: datetime, 'Null': NO, Default: '0000-00-00 00:00:00', Extra: '', Comment: 'Checkout time', From: [checked_out_time] }
-        access: { Field: access, Type: 'int(11) unsigned', 'Null': NO, Default: null, Extra: '', Comment: 'Access viewlevels', From: [access] }
-        language: { Field: language, Type: char(7), 'Null': NO, Default: null, Extra: '', Comment: 'Language key', From: [language] }
-        params: { Field: params, Type: text, 'Null': NO, Default: null, Extra: '', Comment: Params, From: [params] }
+        customer_id: { Field: customer_id, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: '客戶 id', From: [customer_id] }
+        city: { Field: city, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: '縣市 id', From: [city] }
+        city_title: { Field: city_title, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 縣市名稱, From: [city_title] }
+        area: { Field: area, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: '區域 id', From: [area] }
+        area_title: { Field: area_title, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 區域名稱, From: [area_title] }
+        address: { Field: address, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 路名, From: [address] }
     index:
         - { Table: '#__schedule_addresses', Non_unique: '0', Key_name: PRIMARY, Seq_in_index: '1', Column_name: id, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_addresses', Non_unique: '1', Key_name: idx_access, Seq_in_index: '1', Column_name: access, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_addresses', Non_unique: '1', Key_name: idx_alias, Seq_in_index: '1', Column_name: alias, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_addresses', Non_unique: '1', Key_name: idx_catid, Seq_in_index: '1', Column_name: catid, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_addresses', Non_unique: '1', Key_name: idx_language, Seq_in_index: '1', Column_name: language, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_addresses', Non_unique: '1', Key_name: idx_checkout, Seq_in_index: '1', Column_name: checked_out, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_addresses', Non_unique: '1', Key_name: cat_index, Seq_in_index: '1', Column_name: state, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_addresses', Non_unique: '1', Key_name: cat_index, Seq_in_index: '2', Column_name: access, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_addresses', Non_unique: '1', Key_name: cat_index, Seq_in_index: '3', Column_name: catid, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_addresses', Non_unique: '1', Key_name: idx_created_by, Seq_in_index: '1', Column_name: created_by, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
 '#__schedule_colors':
     name: '#__schedule_colors'
     from:
         - '#__schedule_colors'
     columns:
         id: { Field: id, Type: 'int(11) unsigned', 'Null': NO, Default: null, Extra: auto_increment, Comment: 'Primary Key', From: [id] }
-        asset_id: { Field: asset_id, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: 'ACL Key', From: [asset_id] }
-        catid: { Field: catid, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: 'Category ID', From: [catid] }
-        title: { Field: title, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 'Record title', From: [title] }
-        alias: { Field: alias, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 'URL Alias', From: [alias] }
-        url: { Field: url, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: URL, From: [url] }
-        introtext: { Field: introtext, Type: mediumtext, 'Null': NO, Default: null, Extra: '', Comment: Intro, From: [introtext] }
-        fulltext: { Field: fulltext, Type: mediumtext, 'Null': NO, Default: null, Extra: '', Comment: 'Full content', From: [fulltext] }
-        images: { Field: images, Type: text, 'Null': NO, Default: null, Extra: '', Comment: Images, From: [images] }
-        version: { Field: version, Type: 'int(11) unsigned', 'Null': NO, Default: null, Extra: '', Comment: Version, From: [version] }
-        created: { Field: created, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: 'Created time', From: [created] }
-        created_by: { Field: created_by, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: Author, From: [created_by] }
-        modified: { Field: modified, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: 'Modified time', From: [modified] }
-        modified_by: { Field: modified_by, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: 'Modified user', From: [modified_by] }
-        ordering: { Field: ordering, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: 'Ordering key', From: [ordering] }
-        state: { Field: state, Type: tinyint(1), 'Null': NO, Default: '1', Extra: '', Comment: 'Record state', From: [state] }
-        publish_up: { Field: publish_up, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: 'Publish start time', From: [publish_up] }
-        publish_down: { Field: publish_down, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: 'Publish end time', From: [publish_down] }
-        checked_out: { Field: checked_out, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: 'Checkout user', From: [checked_out] }
-        checked_out_time: { Field: checked_out_time, Type: datetime, 'Null': NO, Default: '0000-00-00 00:00:00', Extra: '', Comment: 'Checkout time', From: [checked_out_time] }
-        access: { Field: access, Type: 'int(11) unsigned', 'Null': NO, Default: null, Extra: '', Comment: 'Access viewlevels', From: [access] }
-        language: { Field: language, Type: char(7), 'Null': NO, Default: null, Extra: '', Comment: 'Language key', From: [language] }
-        params: { Field: params, Type: text, 'Null': NO, Default: null, Extra: '', Comment: Params, From: [params] }
+        title: { Field: title, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 顏色名稱, From: [title] }
+        hex: { Field: hex, Type: char(7), 'Null': NO, Default: null, Extra: '', Comment: 'HEX code', From: [hex] }
     index:
         - { Table: '#__schedule_colors', Non_unique: '0', Key_name: PRIMARY, Seq_in_index: '1', Column_name: id, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_colors', Non_unique: '1', Key_name: idx_access, Seq_in_index: '1', Column_name: access, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_colors', Non_unique: '1', Key_name: idx_alias, Seq_in_index: '1', Column_name: alias, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_colors', Non_unique: '1', Key_name: idx_catid, Seq_in_index: '1', Column_name: catid, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_colors', Non_unique: '1', Key_name: idx_language, Seq_in_index: '1', Column_name: language, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_colors', Non_unique: '1', Key_name: idx_checkout, Seq_in_index: '1', Column_name: checked_out, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_colors', Non_unique: '1', Key_name: cat_index, Seq_in_index: '1', Column_name: state, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_colors', Non_unique: '1', Key_name: cat_index, Seq_in_index: '2', Column_name: access, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_colors', Non_unique: '1', Key_name: cat_index, Seq_in_index: '3', Column_name: catid, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_colors', Non_unique: '1', Key_name: idx_created_by, Seq_in_index: '1', Column_name: created_by, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
 '#__schedule_customers':
     name: '#__schedule_customers'
     from:
         - '#__schedule_customers'
     columns:
         id: { Field: id, Type: 'int(11) unsigned', 'Null': NO, Default: null, Extra: auto_increment, Comment: 'Primary Key', From: [id] }
-        asset_id: { Field: asset_id, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: 'ACL Key', From: [asset_id] }
-        catid: { Field: catid, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: 'Category ID', From: [catid] }
-        title: { Field: title, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 'Record title', From: [title] }
-        alias: { Field: alias, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 'URL Alias', From: [alias] }
-        url: { Field: url, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: URL, From: [url] }
-        introtext: { Field: introtext, Type: mediumtext, 'Null': NO, Default: null, Extra: '', Comment: Intro, From: [introtext] }
-        fulltext: { Field: fulltext, Type: mediumtext, 'Null': NO, Default: null, Extra: '', Comment: 'Full content', From: [fulltext] }
-        images: { Field: images, Type: text, 'Null': NO, Default: null, Extra: '', Comment: Images, From: [images] }
-        version: { Field: version, Type: 'int(11) unsigned', 'Null': NO, Default: null, Extra: '', Comment: Version, From: [version] }
-        created: { Field: created, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: 'Created time', From: [created] }
-        created_by: { Field: created_by, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: Author, From: [created_by] }
-        modified: { Field: modified, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: 'Modified time', From: [modified] }
-        modified_by: { Field: modified_by, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: 'Modified user', From: [modified_by] }
-        ordering: { Field: ordering, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: 'Ordering key', From: [ordering] }
-        state: { Field: state, Type: tinyint(1), 'Null': NO, Default: '1', Extra: '', Comment: 'Record state', From: [state] }
-        publish_up: { Field: publish_up, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: 'Publish start time', From: [publish_up] }
-        publish_down: { Field: publish_down, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: 'Publish end time', From: [publish_down] }
-        checked_out: { Field: checked_out, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: 'Checkout user', From: [checked_out] }
-        checked_out_time: { Field: checked_out_time, Type: datetime, 'Null': NO, Default: '0000-00-00 00:00:00', Extra: '', Comment: 'Checkout time', From: [checked_out_time] }
-        access: { Field: access, Type: 'int(11) unsigned', 'Null': NO, Default: null, Extra: '', Comment: 'Access viewlevels', From: [access] }
-        language: { Field: language, Type: char(7), 'Null': NO, Default: null, Extra: '', Comment: 'Language key', From: [language] }
-        params: { Field: params, Type: text, 'Null': NO, Default: null, Extra: '', Comment: Params, From: [params] }
+        institute_id: { Field: institute_id, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: '所屬機構 id', From: [institute_id] }
+        route_id: { Field: route_id, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: '路線 id', From: [route_id] }
+        id_number: { Field: id_number, Type: char(15), 'Null': NO, Default: null, Extra: '', Comment: 身分證字號, From: [id_number] }
+        serial: { Field: serial, Type: char(10), 'Null': NO, Default: null, Extra: '', Comment: 客戶編號, From: [serial] }
+        name: { Field: name, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 客戶姓名, From: [name] }
+        type: { Field: type, Type: char(20), 'Null': NO, Default: null, Extra: '', Comment: 客戶類別, From: [type] }
+        birth_date: { Field: birth_date, Type: date, 'Null': NO, Default: null, Extra: '', Comment: 出生年月日, From: [birth_date] }
+        age: { Field: age, Type: tinyint(3), 'Null': NO, Default: null, Extra: '', Comment: 年齡, From: [age] }
+        state: { Field: state, Type: tinyint(2), 'Null': NO, Default: null, Extra: '', Comment: '服務狀態', From: [state] }
+        city: { Field: city, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: '縣市 id', From: [city] }
+        city_title: { Field: city_title, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 縣市名稱, From: [city_title] }
+        area: { Field: area, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: '區域 id', From: [area] }
+        area_title: { Field: area_title, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 區域名稱, From: [area_title] }
+        hospital: { Field: hospital, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: '開立處方醫院 id', From: [hospital] }
+        hospital_title: { Field: hospital_title, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 開立處方醫院名稱, From: [hospital_title] }
+        rx_period: { Field: rx_period, Type: tinyint(2), 'Null': NO, Default: null, Extra: '', Comment: 給藥天數, From: [rx_period] }
+        rx_times: { Field: rx_times, Type: tinyint(1), 'Null': NO, Default: null, Extra: '', Comment: 可調劑次數, From: [rx_times] }
+        tel_office: { Field: tel_office, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: '宅配電話(O)', From: [tel_office] }
+        tel_home: { Field: tel_home, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: '宅配電話(H)', From: [tel_home] }
+        mobile: { Field: mobile, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 手機, From: [mobile] }
+        note: { Field: note, Type: text, 'Null': NO, Default: null, Extra: '', Comment: 備註, From: [note] }
+        created: { Field: created, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: '', From: [created] }
+        created_by: { Field: created_by, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: '', From: [created_by] }
+        modified: { Field: modified, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: '', From: [modified] }
+        modified_by: { Field: modified_by, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: '', From: [modified_by] }
+        params: { Field: params, Type: text, 'Null': NO, Default: null, Extra: '', Comment: '', From: [params] }
     index:
         - { Table: '#__schedule_customers', Non_unique: '0', Key_name: PRIMARY, Seq_in_index: '1', Column_name: id, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_customers', Non_unique: '1', Key_name: idx_access, Seq_in_index: '1', Column_name: access, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_customers', Non_unique: '1', Key_name: idx_alias, Seq_in_index: '1', Column_name: alias, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_customers', Non_unique: '1', Key_name: idx_catid, Seq_in_index: '1', Column_name: catid, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_customers', Non_unique: '1', Key_name: idx_language, Seq_in_index: '1', Column_name: language, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_customers', Non_unique: '1', Key_name: idx_checkout, Seq_in_index: '1', Column_name: checked_out, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_customers', Non_unique: '1', Key_name: cat_index, Seq_in_index: '1', Column_name: state, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_customers', Non_unique: '1', Key_name: cat_index, Seq_in_index: '2', Column_name: access, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_customers', Non_unique: '1', Key_name: cat_index, Seq_in_index: '3', Column_name: catid, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_customers', Non_unique: '1', Key_name: idx_created_by, Seq_in_index: '1', Column_name: created_by, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
 '#__schedule_drugprices':
     name: '#__schedule_drugprices'
     from:
         - '#__schedule_drugprices'
     columns:
         id: { Field: id, Type: 'int(11) unsigned', 'Null': NO, Default: null, Extra: auto_increment, Comment: 'Primary Key', From: [id] }
-        asset_id: { Field: asset_id, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: 'ACL Key', From: [asset_id] }
-        catid: { Field: catid, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: 'Category ID', From: [catid] }
-        title: { Field: title, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 'Record title', From: [title] }
-        alias: { Field: alias, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 'URL Alias', From: [alias] }
-        url: { Field: url, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: URL, From: [url] }
-        introtext: { Field: introtext, Type: mediumtext, 'Null': NO, Default: null, Extra: '', Comment: Intro, From: [introtext] }
-        fulltext: { Field: fulltext, Type: mediumtext, 'Null': NO, Default: null, Extra: '', Comment: 'Full content', From: [fulltext] }
-        images: { Field: images, Type: text, 'Null': NO, Default: null, Extra: '', Comment: Images, From: [images] }
-        version: { Field: version, Type: 'int(11) unsigned', 'Null': NO, Default: null, Extra: '', Comment: Version, From: [version] }
-        created: { Field: created, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: 'Created time', From: [created] }
-        created_by: { Field: created_by, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: Author, From: [created_by] }
-        modified: { Field: modified, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: 'Modified time', From: [modified] }
-        modified_by: { Field: modified_by, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: 'Modified user', From: [modified_by] }
-        ordering: { Field: ordering, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: 'Ordering key', From: [ordering] }
-        state: { Field: state, Type: tinyint(1), 'Null': NO, Default: '1', Extra: '', Comment: 'Record state', From: [state] }
-        publish_up: { Field: publish_up, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: 'Publish start time', From: [publish_up] }
-        publish_down: { Field: publish_down, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: 'Publish end time', From: [publish_down] }
-        checked_out: { Field: checked_out, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: 'Checkout user', From: [checked_out] }
-        checked_out_time: { Field: checked_out_time, Type: datetime, 'Null': NO, Default: '0000-00-00 00:00:00', Extra: '', Comment: 'Checkout time', From: [checked_out_time] }
-        access: { Field: access, Type: 'int(11) unsigned', 'Null': NO, Default: null, Extra: '', Comment: 'Access viewlevels', From: [access] }
-        language: { Field: language, Type: char(7), 'Null': NO, Default: null, Extra: '', Comment: 'Language key', From: [language] }
-        params: { Field: params, Type: text, 'Null': NO, Default: null, Extra: '', Comment: Params, From: [params] }
+        institute_id: { Field: institute_id, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: '對應機構 id', From: [institute_id] }
+        customer_id: { Field: customer_id, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: '對應客戶 id', From: [customer_id] }
+        date: { Field: date, Type: date, 'Null': NO, Default: null, Extra: '', Comment: 對應外送日期, From: [date] }
+        price: { Field: price, Type: 'decimal(10,0)', 'Null': NO, Default: null, Extra: '', Comment: 單筆金額, From: [price] }
     index:
         - { Table: '#__schedule_drugprices', Non_unique: '0', Key_name: PRIMARY, Seq_in_index: '1', Column_name: id, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_drugprices', Non_unique: '1', Key_name: idx_access, Seq_in_index: '1', Column_name: access, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_drugprices', Non_unique: '1', Key_name: idx_alias, Seq_in_index: '1', Column_name: alias, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_drugprices', Non_unique: '1', Key_name: idx_catid, Seq_in_index: '1', Column_name: catid, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_drugprices', Non_unique: '1', Key_name: idx_language, Seq_in_index: '1', Column_name: language, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_drugprices', Non_unique: '1', Key_name: idx_checkout, Seq_in_index: '1', Column_name: checked_out, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_drugprices', Non_unique: '1', Key_name: cat_index, Seq_in_index: '1', Column_name: state, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_drugprices', Non_unique: '1', Key_name: cat_index, Seq_in_index: '2', Column_name: access, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_drugprices', Non_unique: '1', Key_name: cat_index, Seq_in_index: '3', Column_name: catid, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_drugprices', Non_unique: '1', Key_name: idx_created_by, Seq_in_index: '1', Column_name: created_by, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
 '#__schedule_drugs':
     name: '#__schedule_drugs'
     from:
         - '#__schedule_drugs'
     columns:
         id: { Field: id, Type: 'int(11) unsigned', 'Null': NO, Default: null, Extra: auto_increment, Comment: 'Primary Key', From: [id] }
-        asset_id: { Field: asset_id, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: 'ACL Key', From: [asset_id] }
-        catid: { Field: catid, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: 'Category ID', From: [catid] }
-        title: { Field: title, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 'Record title', From: [title] }
-        alias: { Field: alias, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 'URL Alias', From: [alias] }
-        url: { Field: url, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: URL, From: [url] }
-        introtext: { Field: introtext, Type: mediumtext, 'Null': NO, Default: null, Extra: '', Comment: Intro, From: [introtext] }
-        fulltext: { Field: fulltext, Type: mediumtext, 'Null': NO, Default: null, Extra: '', Comment: 'Full content', From: [fulltext] }
-        images: { Field: images, Type: text, 'Null': NO, Default: null, Extra: '', Comment: Images, From: [images] }
-        version: { Field: version, Type: 'int(11) unsigned', 'Null': NO, Default: null, Extra: '', Comment: Version, From: [version] }
-        created: { Field: created, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: 'Created time', From: [created] }
-        created_by: { Field: created_by, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: Author, From: [created_by] }
-        modified: { Field: modified, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: 'Modified time', From: [modified] }
-        modified_by: { Field: modified_by, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: 'Modified user', From: [modified_by] }
-        ordering: { Field: ordering, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: 'Ordering key', From: [ordering] }
-        state: { Field: state, Type: tinyint(1), 'Null': NO, Default: '1', Extra: '', Comment: 'Record state', From: [state] }
-        publish_up: { Field: publish_up, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: 'Publish start time', From: [publish_up] }
-        publish_down: { Field: publish_down, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: 'Publish end time', From: [publish_down] }
-        checked_out: { Field: checked_out, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: 'Checkout user', From: [checked_out] }
-        checked_out_time: { Field: checked_out_time, Type: datetime, 'Null': NO, Default: '0000-00-00 00:00:00', Extra: '', Comment: 'Checkout time', From: [checked_out_time] }
-        access: { Field: access, Type: 'int(11) unsigned', 'Null': NO, Default: null, Extra: '', Comment: 'Access viewlevels', From: [access] }
-        language: { Field: language, Type: char(7), 'Null': NO, Default: null, Extra: '', Comment: 'Language key', From: [language] }
-        params: { Field: params, Type: text, 'Null': NO, Default: null, Extra: '', Comment: Params, From: [params] }
+        rx_id: { Field: rx_id, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: '對應散客處方箋 id', From: [rx_id] }
+        hicode: { Field: hicode, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 藥品健保碼, From: [hicode] }
+        quantity: { Field: quantity, Type: tinyint(4), 'Null': NO, Default: null, Extra: '', Comment: 數量, From: [quantity] }
     index:
         - { Table: '#__schedule_drugs', Non_unique: '0', Key_name: PRIMARY, Seq_in_index: '1', Column_name: id, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_drugs', Non_unique: '1', Key_name: idx_access, Seq_in_index: '1', Column_name: access, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_drugs', Non_unique: '1', Key_name: idx_alias, Seq_in_index: '1', Column_name: alias, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_drugs', Non_unique: '1', Key_name: idx_catid, Seq_in_index: '1', Column_name: catid, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_drugs', Non_unique: '1', Key_name: idx_language, Seq_in_index: '1', Column_name: language, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_drugs', Non_unique: '1', Key_name: idx_checkout, Seq_in_index: '1', Column_name: checked_out, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_drugs', Non_unique: '1', Key_name: cat_index, Seq_in_index: '1', Column_name: state, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_drugs', Non_unique: '1', Key_name: cat_index, Seq_in_index: '2', Column_name: access, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_drugs', Non_unique: '1', Key_name: cat_index, Seq_in_index: '3', Column_name: catid, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_drugs', Non_unique: '1', Key_name: idx_created_by, Seq_in_index: '1', Column_name: created_by, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
 '#__schedule_holidays':
     name: '#__schedule_holidays'
     from:
         - '#__schedule_holidays'
     columns:
         id: { Field: id, Type: 'int(11) unsigned', 'Null': NO, Default: null, Extra: auto_increment, Comment: 'Primary Key', From: [id] }
-        asset_id: { Field: asset_id, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: 'ACL Key', From: [asset_id] }
-        catid: { Field: catid, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: 'Category ID', From: [catid] }
-        title: { Field: title, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 'Record title', From: [title] }
-        alias: { Field: alias, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 'URL Alias', From: [alias] }
-        url: { Field: url, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: URL, From: [url] }
-        introtext: { Field: introtext, Type: mediumtext, 'Null': NO, Default: null, Extra: '', Comment: Intro, From: [introtext] }
-        fulltext: { Field: fulltext, Type: mediumtext, 'Null': NO, Default: null, Extra: '', Comment: 'Full content', From: [fulltext] }
-        images: { Field: images, Type: text, 'Null': NO, Default: null, Extra: '', Comment: Images, From: [images] }
-        version: { Field: version, Type: 'int(11) unsigned', 'Null': NO, Default: null, Extra: '', Comment: Version, From: [version] }
-        created: { Field: created, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: 'Created time', From: [created] }
-        created_by: { Field: created_by, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: Author, From: [created_by] }
-        modified: { Field: modified, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: 'Modified time', From: [modified] }
-        modified_by: { Field: modified_by, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: 'Modified user', From: [modified_by] }
-        ordering: { Field: ordering, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: 'Ordering key', From: [ordering] }
-        state: { Field: state, Type: tinyint(1), 'Null': NO, Default: '1', Extra: '', Comment: 'Record state', From: [state] }
-        publish_up: { Field: publish_up, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: 'Publish start time', From: [publish_up] }
-        publish_down: { Field: publish_down, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: 'Publish end time', From: [publish_down] }
-        checked_out: { Field: checked_out, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: 'Checkout user', From: [checked_out] }
-        checked_out_time: { Field: checked_out_time, Type: datetime, 'Null': NO, Default: '0000-00-00 00:00:00', Extra: '', Comment: 'Checkout time', From: [checked_out_time] }
-        access: { Field: access, Type: 'int(11) unsigned', 'Null': NO, Default: null, Extra: '', Comment: 'Access viewlevels', From: [access] }
-        language: { Field: language, Type: char(7), 'Null': NO, Default: null, Extra: '', Comment: 'Language key', From: [language] }
-        params: { Field: params, Type: text, 'Null': NO, Default: null, Extra: '', Comment: Params, From: [params] }
+        year: { Field: year, Type: mediumint(8), 'Null': NO, Default: null, Extra: '', Comment: 年份, From: [year] }
+        month: { Field: month, Type: tinyint(2), 'Null': NO, Default: null, Extra: '', Comment: 月份, From: [month] }
+        day: { Field: day, Type: tinyint(2), 'Null': NO, Default: null, Extra: '', Comment: 國定假日日期, From: [day] }
+        state: { Field: state, Type: tinyint(1), 'Null': NO, Default: null, Extra: '', Comment: '假日狀態', From: [state] }
     index:
         - { Table: '#__schedule_holidays', Non_unique: '0', Key_name: PRIMARY, Seq_in_index: '1', Column_name: id, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_holidays', Non_unique: '1', Key_name: idx_access, Seq_in_index: '1', Column_name: access, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_holidays', Non_unique: '1', Key_name: idx_alias, Seq_in_index: '1', Column_name: alias, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_holidays', Non_unique: '1', Key_name: idx_catid, Seq_in_index: '1', Column_name: catid, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_holidays', Non_unique: '1', Key_name: idx_language, Seq_in_index: '1', Column_name: language, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_holidays', Non_unique: '1', Key_name: idx_checkout, Seq_in_index: '1', Column_name: checked_out, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_holidays', Non_unique: '1', Key_name: cat_index, Seq_in_index: '1', Column_name: state, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_holidays', Non_unique: '1', Key_name: cat_index, Seq_in_index: '2', Column_name: access, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_holidays', Non_unique: '1', Key_name: cat_index, Seq_in_index: '3', Column_name: catid, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_holidays', Non_unique: '1', Key_name: idx_created_by, Seq_in_index: '1', Column_name: created_by, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
 '#__schedule_hospitals':
     name: '#__schedule_hospitals'
     from:
         - '#__schedule_hospitals'
     columns:
         id: { Field: id, Type: 'int(11) unsigned', 'Null': NO, Default: null, Extra: auto_increment, Comment: 'Primary Key', From: [id] }
-        asset_id: { Field: asset_id, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: 'ACL Key', From: [asset_id] }
-        catid: { Field: catid, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: 'Category ID', From: [catid] }
         title: { Field: title, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 'Record title', From: [title] }
-        alias: { Field: alias, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 'URL Alias', From: [alias] }
-        url: { Field: url, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: URL, From: [url] }
-        introtext: { Field: introtext, Type: mediumtext, 'Null': NO, Default: null, Extra: '', Comment: Intro, From: [introtext] }
-        fulltext: { Field: fulltext, Type: mediumtext, 'Null': NO, Default: null, Extra: '', Comment: 'Full content', From: [fulltext] }
-        images: { Field: images, Type: text, 'Null': NO, Default: null, Extra: '', Comment: Images, From: [images] }
-        version: { Field: version, Type: 'int(11) unsigned', 'Null': NO, Default: null, Extra: '', Comment: Version, From: [version] }
+        has_hicode: { Field: has_hicode, Type: tinyint(1), 'Null': NO, Default: null, Extra: '', Comment: '藥品健保碼 無0 / 有1', From: [has_hicode] }
+        city: { Field: city, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: 醫院所在縣市, From: [city] }
+        city_title: { Field: city_title, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 縣市名稱, From: [city_title] }
+        images: { Field: images, Type: text, 'Null': NO, Default: null, Extra: '', Comment: 圖片路徑, From: [images] }
+        area: { Field: area, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: 醫院所在區域, From: [area] }
+        area_title: { Field: area_title, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 區域名稱, From: [area_title] }
         created: { Field: created, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: 'Created time', From: [created] }
         created_by: { Field: created_by, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: Author, From: [created_by] }
         modified: { Field: modified, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: 'Modified time', From: [modified] }
         modified_by: { Field: modified_by, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: 'Modified user', From: [modified_by] }
-        ordering: { Field: ordering, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: 'Ordering key', From: [ordering] }
-        state: { Field: state, Type: tinyint(1), 'Null': NO, Default: '1', Extra: '', Comment: 'Record state', From: [state] }
-        publish_up: { Field: publish_up, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: 'Publish start time', From: [publish_up] }
-        publish_down: { Field: publish_down, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: 'Publish end time', From: [publish_down] }
-        checked_out: { Field: checked_out, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: 'Checkout user', From: [checked_out] }
-        checked_out_time: { Field: checked_out_time, Type: datetime, 'Null': NO, Default: '0000-00-00 00:00:00', Extra: '', Comment: 'Checkout time', From: [checked_out_time] }
-        access: { Field: access, Type: 'int(11) unsigned', 'Null': NO, Default: null, Extra: '', Comment: 'Access viewlevels', From: [access] }
-        language: { Field: language, Type: char(7), 'Null': NO, Default: null, Extra: '', Comment: 'Language key', From: [language] }
         params: { Field: params, Type: text, 'Null': NO, Default: null, Extra: '', Comment: Params, From: [params] }
     index:
         - { Table: '#__schedule_hospitals', Non_unique: '0', Key_name: PRIMARY, Seq_in_index: '1', Column_name: id, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_hospitals', Non_unique: '1', Key_name: idx_access, Seq_in_index: '1', Column_name: access, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_hospitals', Non_unique: '1', Key_name: idx_alias, Seq_in_index: '1', Column_name: alias, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_hospitals', Non_unique: '1', Key_name: idx_catid, Seq_in_index: '1', Column_name: catid, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_hospitals', Non_unique: '1', Key_name: idx_language, Seq_in_index: '1', Column_name: language, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_hospitals', Non_unique: '1', Key_name: idx_checkout, Seq_in_index: '1', Column_name: checked_out, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_hospitals', Non_unique: '1', Key_name: cat_index, Seq_in_index: '1', Column_name: state, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_hospitals', Non_unique: '1', Key_name: cat_index, Seq_in_index: '2', Column_name: access, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_hospitals', Non_unique: '1', Key_name: cat_index, Seq_in_index: '3', Column_name: catid, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
         - { Table: '#__schedule_hospitals', Non_unique: '1', Key_name: idx_created_by, Seq_in_index: '1', Column_name: created_by, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
 '#__schedule_images':
     name: '#__schedule_images'
@@ -277,77 +118,42 @@
         - '#__schedule_images'
     columns:
         id: { Field: id, Type: 'int(11) unsigned', 'Null': NO, Default: null, Extra: auto_increment, Comment: 'Primary Key', From: [id] }
-        asset_id: { Field: asset_id, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: 'ACL Key', From: [asset_id] }
-        catid: { Field: catid, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: 'Category ID', From: [catid] }
-        title: { Field: title, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 'Record title', From: [title] }
-        alias: { Field: alias, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 'URL Alias', From: [alias] }
-        url: { Field: url, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: URL, From: [url] }
-        introtext: { Field: introtext, Type: mediumtext, 'Null': NO, Default: null, Extra: '', Comment: Intro, From: [introtext] }
-        fulltext: { Field: fulltext, Type: mediumtext, 'Null': NO, Default: null, Extra: '', Comment: 'Full content', From: [fulltext] }
-        images: { Field: images, Type: text, 'Null': NO, Default: null, Extra: '', Comment: Images, From: [images] }
-        version: { Field: version, Type: 'int(11) unsigned', 'Null': NO, Default: null, Extra: '', Comment: Version, From: [version] }
-        created: { Field: created, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: 'Created time', From: [created] }
-        created_by: { Field: created_by, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: Author, From: [created_by] }
-        modified: { Field: modified, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: 'Modified time', From: [modified] }
-        modified_by: { Field: modified_by, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: 'Modified user', From: [modified_by] }
-        ordering: { Field: ordering, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: 'Ordering key', From: [ordering] }
-        state: { Field: state, Type: tinyint(1), 'Null': NO, Default: '1', Extra: '', Comment: 'Record state', From: [state] }
-        publish_up: { Field: publish_up, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: 'Publish start time', From: [publish_up] }
-        publish_down: { Field: publish_down, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: 'Publish end time', From: [publish_down] }
-        checked_out: { Field: checked_out, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: 'Checkout user', From: [checked_out] }
-        checked_out_time: { Field: checked_out_time, Type: datetime, 'Null': NO, Default: '0000-00-00 00:00:00', Extra: '', Comment: 'Checkout time', From: [checked_out_time] }
-        access: { Field: access, Type: 'int(11) unsigned', 'Null': NO, Default: null, Extra: '', Comment: 'Access viewlevels', From: [access] }
-        language: { Field: language, Type: char(7), 'Null': NO, Default: null, Extra: '', Comment: 'Language key', From: [language] }
-        params: { Field: params, Type: text, 'Null': NO, Default: null, Extra: '', Comment: Params, From: [params] }
+        rx_id: { Field: rx_id, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: '對應處方箋 id', From: [rx_id] }
+        title: { Field: title, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 圖片說明, From: [title] }
+        path: { Field: path, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 圖片位址, From: [path] }
     index:
         - { Table: '#__schedule_images', Non_unique: '0', Key_name: PRIMARY, Seq_in_index: '1', Column_name: id, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_images', Non_unique: '1', Key_name: idx_access, Seq_in_index: '1', Column_name: access, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_images', Non_unique: '1', Key_name: idx_alias, Seq_in_index: '1', Column_name: alias, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_images', Non_unique: '1', Key_name: idx_catid, Seq_in_index: '1', Column_name: catid, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_images', Non_unique: '1', Key_name: idx_language, Seq_in_index: '1', Column_name: language, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_images', Non_unique: '1', Key_name: idx_checkout, Seq_in_index: '1', Column_name: checked_out, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_images', Non_unique: '1', Key_name: cat_index, Seq_in_index: '1', Column_name: state, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_images', Non_unique: '1', Key_name: cat_index, Seq_in_index: '2', Column_name: access, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_images', Non_unique: '1', Key_name: cat_index, Seq_in_index: '3', Column_name: catid, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_images', Non_unique: '1', Key_name: idx_created_by, Seq_in_index: '1', Column_name: created_by, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
 '#__schedule_institutes':
     name: '#__schedule_institutes'
     from:
         - '#__schedule_institutes'
     columns:
         id: { Field: id, Type: 'int(11) unsigned', 'Null': NO, Default: null, Extra: auto_increment, Comment: 'Primary Key', From: [id] }
-        asset_id: { Field: asset_id, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: 'ACL Key', From: [asset_id] }
-        catid: { Field: catid, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: 'Category ID', From: [catid] }
+        serial: { Field: serial, Type: char(10), 'Null': NO, Default: null, Extra: '', Comment: 機構編號, From: [serial] }
+        route_id: { Field: route_id, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: '路線 id', From: [route_id] }
         title: { Field: title, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 'Record title', From: [title] }
-        alias: { Field: alias, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 'URL Alias', From: [alias] }
-        url: { Field: url, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: URL, From: [url] }
-        introtext: { Field: introtext, Type: mediumtext, 'Null': NO, Default: null, Extra: '', Comment: Intro, From: [introtext] }
-        fulltext: { Field: fulltext, Type: mediumtext, 'Null': NO, Default: null, Extra: '', Comment: 'Full content', From: [fulltext] }
-        images: { Field: images, Type: text, 'Null': NO, Default: null, Extra: '', Comment: Images, From: [images] }
-        version: { Field: version, Type: 'int(11) unsigned', 'Null': NO, Default: null, Extra: '', Comment: Version, From: [version] }
+        short_title: { Field: short_title, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 機構簡稱, From: [short_title] }
+        delivery_weekday: { Field: delivery_weekday, Type: 'enum(''MON'',''TUE'',''WED'',''THU'',''FRI'',''SAT'',''SUN'')', 'Null': NO, Default: null, Extra: '', Comment: 外送日, From: [delivery_weekday] }
+        color_id: { Field: color_id, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: '顏色 id', From: [color_id] }
+        color_hex: { Field: color_hex, Type: char(10), 'Null': NO, Default: null, Extra: '', Comment: 註記顏色, From: [color_hex] }
+        color_title: { Field: color_title, Type: char(10), 'Null': NO, Default: null, Extra: '', Comment: 註記顏色名稱, From: [color_title] }
+        sender_id: { Field: sender_id, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: '外送藥師 id', From: [sender_id] }
+        sender_name: { Field: sender_name, Type: char(10), 'Null': NO, Default: null, Extra: '', Comment: 外送藥師姓名, From: [sender_name] }
+        tel: { Field: tel, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 機構電話, From: [tel] }
+        fax: { Field: fax, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 機構傳真, From: [fax] }
+        city: { Field: city, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: 機構所在縣市, From: [city] }
+        city_title: { Field: city_title, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 縣市名稱, From: [city_title] }
+        area: { Field: area, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: 機構所在區域, From: [area] }
+        area_title: { Field: area_title, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 區域名稱, From: [area_title] }
+        address: { Field: address, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 機構路名, From: [address] }
+        note: { Field: note, Type: text, 'Null': NO, Default: null, Extra: '', Comment: 備註, From: [note] }
         created: { Field: created, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: 'Created time', From: [created] }
         created_by: { Field: created_by, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: Author, From: [created_by] }
         modified: { Field: modified, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: 'Modified time', From: [modified] }
         modified_by: { Field: modified_by, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: 'Modified user', From: [modified_by] }
-        ordering: { Field: ordering, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: 'Ordering key', From: [ordering] }
-        state: { Field: state, Type: tinyint(1), 'Null': NO, Default: '1', Extra: '', Comment: 'Record state', From: [state] }
-        publish_up: { Field: publish_up, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: 'Publish start time', From: [publish_up] }
-        publish_down: { Field: publish_down, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: 'Publish end time', From: [publish_down] }
-        checked_out: { Field: checked_out, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: 'Checkout user', From: [checked_out] }
-        checked_out_time: { Field: checked_out_time, Type: datetime, 'Null': NO, Default: '0000-00-00 00:00:00', Extra: '', Comment: 'Checkout time', From: [checked_out_time] }
-        access: { Field: access, Type: 'int(11) unsigned', 'Null': NO, Default: null, Extra: '', Comment: 'Access viewlevels', From: [access] }
-        language: { Field: language, Type: char(7), 'Null': NO, Default: null, Extra: '', Comment: 'Language key', From: [language] }
         params: { Field: params, Type: text, 'Null': NO, Default: null, Extra: '', Comment: Params, From: [params] }
     index:
         - { Table: '#__schedule_institutes', Non_unique: '0', Key_name: PRIMARY, Seq_in_index: '1', Column_name: id, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_institutes', Non_unique: '1', Key_name: idx_access, Seq_in_index: '1', Column_name: access, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_institutes', Non_unique: '1', Key_name: idx_alias, Seq_in_index: '1', Column_name: alias, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_institutes', Non_unique: '1', Key_name: idx_catid, Seq_in_index: '1', Column_name: catid, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_institutes', Non_unique: '1', Key_name: idx_language, Seq_in_index: '1', Column_name: language, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_institutes', Non_unique: '1', Key_name: idx_checkout, Seq_in_index: '1', Column_name: checked_out, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_institutes', Non_unique: '1', Key_name: cat_index, Seq_in_index: '1', Column_name: state, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_institutes', Non_unique: '1', Key_name: cat_index, Seq_in_index: '2', Column_name: access, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_institutes', Non_unique: '1', Key_name: cat_index, Seq_in_index: '3', Column_name: catid, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
         - { Table: '#__schedule_institutes', Non_unique: '1', Key_name: idx_created_by, Seq_in_index: '1', Column_name: created_by, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
 '#__schedule_members':
     name: '#__schedule_members'
@@ -355,77 +161,51 @@
         - '#__schedule_members'
     columns:
         id: { Field: id, Type: 'int(11) unsigned', 'Null': NO, Default: null, Extra: auto_increment, Comment: 'Primary Key', From: [id] }
-        asset_id: { Field: asset_id, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: 'ACL Key', From: [asset_id] }
-        catid: { Field: catid, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: 'Category ID', From: [catid] }
-        title: { Field: title, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 'Record title', From: [title] }
-        alias: { Field: alias, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 'URL Alias', From: [alias] }
-        url: { Field: url, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: URL, From: [url] }
-        introtext: { Field: introtext, Type: mediumtext, 'Null': NO, Default: null, Extra: '', Comment: Intro, From: [introtext] }
-        fulltext: { Field: fulltext, Type: mediumtext, 'Null': NO, Default: null, Extra: '', Comment: 'Full content', From: [fulltext] }
-        images: { Field: images, Type: text, 'Null': NO, Default: null, Extra: '', Comment: Images, From: [images] }
-        version: { Field: version, Type: 'int(11) unsigned', 'Null': NO, Default: null, Extra: '', Comment: Version, From: [version] }
-        created: { Field: created, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: 'Created time', From: [created] }
-        created_by: { Field: created_by, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: Author, From: [created_by] }
-        modified: { Field: modified, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: 'Modified time', From: [modified] }
-        modified_by: { Field: modified_by, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: 'Modified user', From: [modified_by] }
-        ordering: { Field: ordering, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: 'Ordering key', From: [ordering] }
-        state: { Field: state, Type: tinyint(1), 'Null': NO, Default: '1', Extra: '', Comment: 'Record state', From: [state] }
-        publish_up: { Field: publish_up, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: 'Publish start time', From: [publish_up] }
-        publish_down: { Field: publish_down, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: 'Publish end time', From: [publish_down] }
-        checked_out: { Field: checked_out, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: 'Checkout user', From: [checked_out] }
-        checked_out_time: { Field: checked_out_time, Type: datetime, 'Null': NO, Default: '0000-00-00 00:00:00', Extra: '', Comment: 'Checkout time', From: [checked_out_time] }
-        access: { Field: access, Type: 'int(11) unsigned', 'Null': NO, Default: null, Extra: '', Comment: 'Access viewlevels', From: [access] }
-        language: { Field: language, Type: char(7), 'Null': NO, Default: null, Extra: '', Comment: 'Language key', From: [language] }
-        params: { Field: params, Type: text, 'Null': NO, Default: null, Extra: '', Comment: Params, From: [params] }
+        name: { Field: name, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 'Member name', From: [name] }
+        email: { Field: email, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 'Member email', From: [email] }
+        password: { Field: password, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 'Member password', From: [password] }
+        tel: { Field: tel, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 'Member Phone Number', From: [tel] }
     index:
         - { Table: '#__schedule_members', Non_unique: '0', Key_name: PRIMARY, Seq_in_index: '1', Column_name: id, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_members', Non_unique: '1', Key_name: idx_access, Seq_in_index: '1', Column_name: access, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_members', Non_unique: '1', Key_name: idx_alias, Seq_in_index: '1', Column_name: alias, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_members', Non_unique: '1', Key_name: idx_catid, Seq_in_index: '1', Column_name: catid, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_members', Non_unique: '1', Key_name: idx_language, Seq_in_index: '1', Column_name: language, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_members', Non_unique: '1', Key_name: idx_checkout, Seq_in_index: '1', Column_name: checked_out, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_members', Non_unique: '1', Key_name: cat_index, Seq_in_index: '1', Column_name: state, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_members', Non_unique: '1', Key_name: cat_index, Seq_in_index: '2', Column_name: access, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_members', Non_unique: '1', Key_name: cat_index, Seq_in_index: '3', Column_name: catid, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_members', Non_unique: '1', Key_name: idx_created_by, Seq_in_index: '1', Column_name: created_by, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
+        - { Table: '#__schedule_members', Non_unique: '1', Key_name: idx_alias, Seq_in_index: '1', Column_name: email, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
 '#__schedule_prescriptions':
     name: '#__schedule_prescriptions'
     from:
         - '#__schedule_prescriptions'
     columns:
         id: { Field: id, Type: 'int(11) unsigned', 'Null': NO, Default: null, Extra: auto_increment, Comment: 'Primary Key', From: [id] }
-        asset_id: { Field: asset_id, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: 'ACL Key', From: [asset_id] }
-        catid: { Field: catid, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: 'Category ID', From: [catid] }
-        title: { Field: title, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 'Record title', From: [title] }
-        alias: { Field: alias, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 'URL Alias', From: [alias] }
-        url: { Field: url, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: URL, From: [url] }
-        introtext: { Field: introtext, Type: mediumtext, 'Null': NO, Default: null, Extra: '', Comment: Intro, From: [introtext] }
-        fulltext: { Field: fulltext, Type: mediumtext, 'Null': NO, Default: null, Extra: '', Comment: 'Full content', From: [fulltext] }
-        images: { Field: images, Type: text, 'Null': NO, Default: null, Extra: '', Comment: Images, From: [images] }
-        version: { Field: version, Type: 'int(11) unsigned', 'Null': NO, Default: null, Extra: '', Comment: Version, From: [version] }
         created: { Field: created, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: 'Created time', From: [created] }
         created_by: { Field: created_by, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: Author, From: [created_by] }
         modified: { Field: modified, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: 'Modified time', From: [modified] }
         modified_by: { Field: modified_by, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: 'Modified user', From: [modified_by] }
         ordering: { Field: ordering, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: 'Ordering key', From: [ordering] }
-        state: { Field: state, Type: tinyint(1), 'Null': NO, Default: '1', Extra: '', Comment: 'Record state', From: [state] }
-        publish_up: { Field: publish_up, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: 'Publish start time', From: [publish_up] }
-        publish_down: { Field: publish_down, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: 'Publish end time', From: [publish_down] }
-        checked_out: { Field: checked_out, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: 'Checkout user', From: [checked_out] }
-        checked_out_time: { Field: checked_out_time, Type: datetime, 'Null': NO, Default: '0000-00-00 00:00:00', Extra: '', Comment: 'Checkout time', From: [checked_out_time] }
-        access: { Field: access, Type: 'int(11) unsigned', 'Null': NO, Default: null, Extra: '', Comment: 'Access viewlevels', From: [access] }
-        language: { Field: language, Type: char(7), 'Null': NO, Default: null, Extra: '', Comment: 'Language key', From: [language] }
         params: { Field: params, Type: text, 'Null': NO, Default: null, Extra: '', Comment: Params, From: [params] }
+        customer_id: { Field: customer_id, Type: int(11), 'Null': YES, Default: null, Extra: '', Comment: '', From: [customer_id] }
+        customer_name: { Field: customer_name, Type: varchar(255), 'Null': YES, Default: null, Extra: '', Comment: '', From: [customer_name] }
+        hospital_id: { Field: hospital_id, Type: int(11), 'Null': YES, Default: null, Extra: '', Comment: '', From: [hospital_id] }
+        member_id: { Field: member_id, Type: int(11), 'Null': YES, Default: null, Extra: '', Comment: '', From: [member_id] }
+        member_name: { Field: member_name, Type: varchar(255), 'Null': YES, Default: null, Extra: '', Comment: '', From: [member_name] }
+        received: { Field: received, Type: tinyint(1), 'Null': YES, Default: null, Extra: '', Comment: '', From: [received] }
+        hospital_title: { Field: hospital_title, Type: varchar(255), 'Null': YES, Default: null, Extra: '', Comment: '', From: [hospital_title] }
+        called: { Field: called, Type: tinyint(1), 'Null': YES, Default: null, Extra: '', Comment: '', From: [called] }
+        institute_id: { Field: institute_id, Type: int(11), 'Null': YES, Default: null, Extra: '', Comment: '', From: [institute_id] }
+        institute_short_title: { Field: institute_short_title, Type: varchar(255), 'Null': YES, Default: null, Extra: '', Comment: '', From: [institute_short_title] }
+        floor: { Field: floor, Type: varchar(10), 'Null': YES, Default: null, Extra: '', Comment: '', From: [floor] }
+        id_number: { Field: id_number, Type: char(10), 'Null': YES, Default: null, Extra: '', Comment: '', From: [id_number] }
+        type: { Field: type, Type: char(10), 'Null': YES, Default: null, Extra: '', Comment: '', From: [type] }
+        serial: { Field: serial, Type: varchar(255), 'Null': YES, Default: null, Extra: '', Comment: '', From: [serial] }
+        birth_date: { Field: birth_date, Type: date, 'Null': YES, Default: null, Extra: '', Comment: '', From: [birth_date] }
+        see_dr_date: { Field: see_dr_date, Type: date, 'Null': YES, Default: null, Extra: '', Comment: '', From: [see_dr_date] }
+        period: { Field: period, Type: tinyint(2), 'Null': YES, Default: null, Extra: '', Comment: '', From: [period] }
+        times: { Field: times, Type: tinyint(1), 'Null': YES, Default: null, Extra: '', Comment: '', From: [times] }
+        deliver_nths: { Field: deliver_nths, Type: 'set(''1st'',''2nd'',''3rd'')', 'Null': YES, Default: null, Extra: '', Comment: '', From: [deliver_nths] }
+        method: { Field: method, Type: char(10), 'Null': YES, Default: null, Extra: '', Comment: '', From: [method] }
+        delivered: { Field: delivered, Type: tinyint(1), 'Null': YES, Default: null, Extra: '', Comment: '', From: [delivered] }
+        empty_date_1st: { Field: empty_date_1st, Type: date, 'Null': YES, Default: null, Extra: '', Comment: '', From: [empty_date_1st] }
+        empty_date_2nd: { Field: empty_date_2nd, Type: date, 'Null': YES, Default: null, Extra: '', Comment: '', From: [empty_date_2nd] }
+        note: { Field: note, Type: text, 'Null': YES, Default: null, Extra: '', Comment: '', From: [note] }
     index:
         - { Table: '#__schedule_prescriptions', Non_unique: '0', Key_name: PRIMARY, Seq_in_index: '1', Column_name: id, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_prescriptions', Non_unique: '1', Key_name: idx_access, Seq_in_index: '1', Column_name: access, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_prescriptions', Non_unique: '1', Key_name: idx_alias, Seq_in_index: '1', Column_name: alias, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_prescriptions', Non_unique: '1', Key_name: idx_catid, Seq_in_index: '1', Column_name: catid, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_prescriptions', Non_unique: '1', Key_name: idx_language, Seq_in_index: '1', Column_name: language, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_prescriptions', Non_unique: '1', Key_name: idx_checkout, Seq_in_index: '1', Column_name: checked_out, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_prescriptions', Non_unique: '1', Key_name: cat_index, Seq_in_index: '1', Column_name: state, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_prescriptions', Non_unique: '1', Key_name: cat_index, Seq_in_index: '2', Column_name: access, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_prescriptions', Non_unique: '1', Key_name: cat_index, Seq_in_index: '3', Column_name: catid, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
         - { Table: '#__schedule_prescriptions', Non_unique: '1', Key_name: idx_created_by, Seq_in_index: '1', Column_name: created_by, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
 '#__schedule_routes':
     name: '#__schedule_routes'
@@ -433,153 +213,77 @@
         - '#__schedule_routes'
     columns:
         id: { Field: id, Type: 'int(11) unsigned', 'Null': NO, Default: null, Extra: auto_increment, Comment: 'Primary Key', From: [id] }
-        asset_id: { Field: asset_id, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: 'ACL Key', From: [asset_id] }
-        catid: { Field: catid, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: 'Category ID', From: [catid] }
-        title: { Field: title, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 'Record title', From: [title] }
-        alias: { Field: alias, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 'URL Alias', From: [alias] }
-        url: { Field: url, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: URL, From: [url] }
-        introtext: { Field: introtext, Type: mediumtext, 'Null': NO, Default: null, Extra: '', Comment: Intro, From: [introtext] }
-        fulltext: { Field: fulltext, Type: mediumtext, 'Null': NO, Default: null, Extra: '', Comment: 'Full content', From: [fulltext] }
-        images: { Field: images, Type: text, 'Null': NO, Default: null, Extra: '', Comment: Images, From: [images] }
-        version: { Field: version, Type: 'int(11) unsigned', 'Null': NO, Default: null, Extra: '', Comment: Version, From: [version] }
-        created: { Field: created, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: 'Created time', From: [created] }
-        created_by: { Field: created_by, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: Author, From: [created_by] }
-        modified: { Field: modified, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: 'Modified time', From: [modified] }
-        modified_by: { Field: modified_by, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: 'Modified user', From: [modified_by] }
-        ordering: { Field: ordering, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: 'Ordering key', From: [ordering] }
-        state: { Field: state, Type: tinyint(1), 'Null': NO, Default: '1', Extra: '', Comment: 'Record state', From: [state] }
-        publish_up: { Field: publish_up, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: 'Publish start time', From: [publish_up] }
-        publish_down: { Field: publish_down, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: 'Publish end time', From: [publish_down] }
-        checked_out: { Field: checked_out, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: 'Checkout user', From: [checked_out] }
-        checked_out_time: { Field: checked_out_time, Type: datetime, 'Null': NO, Default: '0000-00-00 00:00:00', Extra: '', Comment: 'Checkout time', From: [checked_out_time] }
-        access: { Field: access, Type: 'int(11) unsigned', 'Null': NO, Default: null, Extra: '', Comment: 'Access viewlevels', From: [access] }
-        language: { Field: language, Type: char(7), 'Null': NO, Default: null, Extra: '', Comment: 'Language key', From: [language] }
-        params: { Field: params, Type: text, 'Null': NO, Default: null, Extra: '', Comment: Params, From: [params] }
+        sender_id: { Field: sender_id, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: '外送藥師 id', From: [sender_id] }
+        city: { Field: city, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: '縣市 id', From: [city] }
+        city_title: { Field: city_title, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 縣市名稱, From: [city_title] }
+        area: { Field: area, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: '區域 id', From: [area] }
+        area_title: { Field: area_title, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 區域名稱, From: [area_title] }
+        weekday: { Field: weekday, Type: 'enum(''MON'',''TUE'',''WED'',''THU'',''FRI'',''SAT'',''SUN'')', 'Null': NO, Default: null, Extra: '', Comment: 外送日, From: [weekday] }
+        sender_name: { Field: sender_name, Type: char(10), 'Null': NO, Default: null, Extra: '', Comment: 外送藥師名稱, From: [sender_name] }
     index:
         - { Table: '#__schedule_routes', Non_unique: '0', Key_name: PRIMARY, Seq_in_index: '1', Column_name: id, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_routes', Non_unique: '1', Key_name: idx_access, Seq_in_index: '1', Column_name: access, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_routes', Non_unique: '1', Key_name: idx_alias, Seq_in_index: '1', Column_name: alias, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_routes', Non_unique: '1', Key_name: idx_catid, Seq_in_index: '1', Column_name: catid, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_routes', Non_unique: '1', Key_name: idx_language, Seq_in_index: '1', Column_name: language, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_routes', Non_unique: '1', Key_name: idx_checkout, Seq_in_index: '1', Column_name: checked_out, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_routes', Non_unique: '1', Key_name: cat_index, Seq_in_index: '1', Column_name: state, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_routes', Non_unique: '1', Key_name: cat_index, Seq_in_index: '2', Column_name: access, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_routes', Non_unique: '1', Key_name: cat_index, Seq_in_index: '3', Column_name: catid, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_routes', Non_unique: '1', Key_name: idx_created_by, Seq_in_index: '1', Column_name: created_by, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
 '#__schedule_schedules':
     name: '#__schedule_schedules'
     from:
         - '#__schedule_schedules'
     columns:
-        id: { Field: id, Type: 'int(11) unsigned', 'Null': NO, Default: null, Extra: auto_increment, Comment: 'Primary Key', From: [id] }
-        asset_id: { Field: asset_id, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: 'ACL Key', From: [asset_id] }
-        catid: { Field: catid, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: 'Category ID', From: [catid] }
-        title: { Field: title, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 'Record title', From: [title] }
-        alias: { Field: alias, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 'URL Alias', From: [alias] }
-        url: { Field: url, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: URL, From: [url] }
-        introtext: { Field: introtext, Type: mediumtext, 'Null': NO, Default: null, Extra: '', Comment: Intro, From: [introtext] }
-        fulltext: { Field: fulltext, Type: mediumtext, 'Null': NO, Default: null, Extra: '', Comment: 'Full content', From: [fulltext] }
-        images: { Field: images, Type: text, 'Null': NO, Default: null, Extra: '', Comment: Images, From: [images] }
-        version: { Field: version, Type: 'int(11) unsigned', 'Null': NO, Default: null, Extra: '', Comment: Version, From: [version] }
-        created: { Field: created, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: 'Created time', From: [created] }
-        created_by: { Field: created_by, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: Author, From: [created_by] }
-        modified: { Field: modified, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: 'Modified time', From: [modified] }
-        modified_by: { Field: modified_by, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: 'Modified user', From: [modified_by] }
-        ordering: { Field: ordering, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: 'Ordering key', From: [ordering] }
-        state: { Field: state, Type: tinyint(1), 'Null': NO, Default: '1', Extra: '', Comment: 'Record state', From: [state] }
-        publish_up: { Field: publish_up, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: 'Publish start time', From: [publish_up] }
-        publish_down: { Field: publish_down, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: 'Publish end time', From: [publish_down] }
-        checked_out: { Field: checked_out, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: 'Checkout user', From: [checked_out] }
-        checked_out_time: { Field: checked_out_time, Type: datetime, 'Null': NO, Default: '0000-00-00 00:00:00', Extra: '', Comment: 'Checkout time', From: [checked_out_time] }
-        access: { Field: access, Type: 'int(11) unsigned', 'Null': NO, Default: null, Extra: '', Comment: 'Access viewlevels', From: [access] }
-        language: { Field: language, Type: char(7), 'Null': NO, Default: null, Extra: '', Comment: 'Language key', From: [language] }
+        id: { Field: id, Type: 'int(11) unsigned', 'Null': NO, Default: null, Extra: auto_increment, Comment: '排程編號 = 處方箋編號 + (1, 2, 3)', From: [id] }
+        task_id: { Field: task_id, Type: int(11), 'Null': YES, Default: null, Extra: '', Comment: '對應外送 id', From: [task_id] }
+        member_id: { Field: member_id, Type: int(11), 'Null': YES, Default: null, Extra: '', Comment: '會員 id', From: [member_id] }
+        member_name: { Field: member_name, Type: varchar(255), 'Null': YES, Default: null, Extra: '', Comment: 會員姓名, From: [member_name] }
+        customer_id: { Field: customer_id, Type: int(11), 'Null': YES, Default: null, Extra: '', Comment: '客戶 id', From: [customer_id] }
+        customer_name: { Field: customer_name, Type: varchar(255), 'Null': YES, Default: null, Extra: '', Comment: 客戶名稱, From: [customer_name] }
+        institute_id: { Field: institute_id, Type: int(11), 'Null': YES, Default: null, Extra: '', Comment: '機構 id', From: [institute_id] }
+        institute_title: { Field: institute_title, Type: varchar(255), 'Null': YES, Default: null, Extra: '', Comment: 機構名稱, From: [institute_title] }
+        route_id: { Field: route_id, Type: int(11), 'Null': YES, Default: null, Extra: '', Comment: '對應路線 id', From: [route_id] }
+        rx_id: { Field: rx_id, Type: int(11), 'Null': YES, Default: null, Extra: '', Comment: '對應處方箋 id', From: [rx_id] }
+        type: { Field: type, Type: char(10), 'Null': YES, Default: null, Extra: '', Comment: '排程類別 (individual:散客 / resident:住民 / discuss:討論 / speech:演講 / collect:拿處方箋 / visit:新簽約後拜訪 / other:其他)', From: [type] }
+        city: { Field: city, Type: int(11), 'Null': YES, Default: null, Extra: '', Comment: 縣市, From: [city] }
+        city_title: { Field: city_title, Type: varchar(255), 'Null': YES, Default: null, Extra: '', Comment: 縣市名稱, From: [city_title] }
+        area: { Field: area, Type: int(11), 'Null': YES, Default: null, Extra: '', Comment: 區域, From: [area] }
+        area_title: { Field: area_title, Type: varchar(255), 'Null': YES, Default: null, Extra: '', Comment: 區域名稱, From: [area_title] }
+        address: { Field: address, Type: varchar(255), 'Null': YES, Default: null, Extra: '', Comment: 地址, From: [address] }
+        date: { Field: date, Type: date, 'Null': YES, Default: null, Extra: '', Comment: 排程日期, From: [date] }
+        sorted: { Field: sorted, Type: tinyint(1), 'Null': YES, Default: null, Extra: '', Comment: '是否完成分藥 (0:否 / 1:是)', From: [sorted] }
+        deliver_nth: { Field: deliver_nth, Type: 'enum(''1st'',''2nd'',''3rd'')', 'Null': YES, Default: null, Extra: '', Comment: '第幾次宅配', From: [deliver_nth] }
+        drug_empty_date: { Field: drug_empty_date, Type: date, 'Null': YES, Default: null, Extra: '', Comment: 藥品吃完日, From: [drug_empty_date] }
+        session: { Field: session, Type: char(10), 'Null': YES, Default: null, Extra: '', Comment: '時段 (daytime:白天皆可 0900-1800 / morning:早上 0900-1300 / afternoon:下午 1300-1800 / night:晚上 1800-2100 / other:其他)', From: [session] }
+        ice: { Field: ice, Type: tinyint(1), 'Null': YES, Default: null, Extra: '', Comment: '是否有冰品 (0:否 / 1:是)', From: [ice] }
+        expense: { Field: expense, Type: tinyint(1), 'Null': YES, Default: null, Extra: '', Comment: '是否為自費藥品 (0:否 / 1:是)', From: [expense] }
+        price: { Field: price, Type: 'decimal(10,2)', 'Null': YES, Default: null, Extra: '', Comment: 自費金額, From: [price] }
+        status: { Field: status, Type: char(20), 'Null': YES, Default: null, Extra: '', Comment: '排程狀態 (scheduled:已排程 / emergency:急件 / deleted:已刪除 / cancelonly:取消-要退單 / cancelreject:取消-不退單 / pause:暫緩)', From: [status] }
+        cancel: { Field: cancel, Type: char(10), 'Null': YES, Default: null, Extra: '', Comment: '刪除原因 (badservice:服務不周 / changedrug:醫師換藥 / passaway:往生 / other:其他)', From: [cancel] }
+        cancel_note: { Field: cancel_note, Type: text, 'Null': YES, Default: null, Extra: '', Comment: '刪除原因說明', From: [cancel_note] }
+        note: { Field: note, Type: text, 'Null': YES, Default: null, Extra: '', Comment: 行政排程類別說明, From: [note] }
         params: { Field: params, Type: text, 'Null': NO, Default: null, Extra: '', Comment: Params, From: [params] }
     index:
         - { Table: '#__schedule_schedules', Non_unique: '0', Key_name: PRIMARY, Seq_in_index: '1', Column_name: id, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_schedules', Non_unique: '1', Key_name: idx_access, Seq_in_index: '1', Column_name: access, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_schedules', Non_unique: '1', Key_name: idx_alias, Seq_in_index: '1', Column_name: alias, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_schedules', Non_unique: '1', Key_name: idx_catid, Seq_in_index: '1', Column_name: catid, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_schedules', Non_unique: '1', Key_name: idx_language, Seq_in_index: '1', Column_name: language, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_schedules', Non_unique: '1', Key_name: idx_checkout, Seq_in_index: '1', Column_name: checked_out, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_schedules', Non_unique: '1', Key_name: cat_index, Seq_in_index: '1', Column_name: state, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_schedules', Non_unique: '1', Key_name: cat_index, Seq_in_index: '2', Column_name: access, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_schedules', Non_unique: '1', Key_name: cat_index, Seq_in_index: '3', Column_name: catid, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_schedules', Non_unique: '1', Key_name: idx_created_by, Seq_in_index: '1', Column_name: created_by, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
 '#__schedule_senders':
     name: '#__schedule_senders'
     from:
         - '#__schedule_senders'
     columns:
         id: { Field: id, Type: 'int(11) unsigned', 'Null': NO, Default: null, Extra: auto_increment, Comment: 'Primary Key', From: [id] }
-        asset_id: { Field: asset_id, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: 'ACL Key', From: [asset_id] }
-        catid: { Field: catid, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: 'Category ID', From: [catid] }
-        title: { Field: title, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 'Record title', From: [title] }
-        alias: { Field: alias, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 'URL Alias', From: [alias] }
-        url: { Field: url, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: URL, From: [url] }
-        introtext: { Field: introtext, Type: mediumtext, 'Null': NO, Default: null, Extra: '', Comment: Intro, From: [introtext] }
-        fulltext: { Field: fulltext, Type: mediumtext, 'Null': NO, Default: null, Extra: '', Comment: 'Full content', From: [fulltext] }
-        images: { Field: images, Type: text, 'Null': NO, Default: null, Extra: '', Comment: Images, From: [images] }
-        version: { Field: version, Type: 'int(11) unsigned', 'Null': NO, Default: null, Extra: '', Comment: Version, From: [version] }
-        created: { Field: created, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: 'Created time', From: [created] }
-        created_by: { Field: created_by, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: Author, From: [created_by] }
-        modified: { Field: modified, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: 'Modified time', From: [modified] }
-        modified_by: { Field: modified_by, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: 'Modified user', From: [modified_by] }
-        ordering: { Field: ordering, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: 'Ordering key', From: [ordering] }
-        state: { Field: state, Type: tinyint(1), 'Null': NO, Default: '1', Extra: '', Comment: 'Record state', From: [state] }
-        publish_up: { Field: publish_up, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: 'Publish start time', From: [publish_up] }
-        publish_down: { Field: publish_down, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: 'Publish end time', From: [publish_down] }
-        checked_out: { Field: checked_out, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: 'Checkout user', From: [checked_out] }
-        checked_out_time: { Field: checked_out_time, Type: datetime, 'Null': NO, Default: '0000-00-00 00:00:00', Extra: '', Comment: 'Checkout time', From: [checked_out_time] }
-        access: { Field: access, Type: 'int(11) unsigned', 'Null': NO, Default: null, Extra: '', Comment: 'Access viewlevels', From: [access] }
-        language: { Field: language, Type: char(7), 'Null': NO, Default: null, Extra: '', Comment: 'Language key', From: [language] }
-        params: { Field: params, Type: text, 'Null': NO, Default: null, Extra: '', Comment: Params, From: [params] }
+        name: { Field: name, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 藥師姓名, From: [name] }
+        note: { Field: note, Type: text, 'Null': NO, Default: null, Extra: '', Comment: '', From: [note] }
     index:
         - { Table: '#__schedule_senders', Non_unique: '0', Key_name: PRIMARY, Seq_in_index: '1', Column_name: id, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_senders', Non_unique: '1', Key_name: idx_access, Seq_in_index: '1', Column_name: access, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_senders', Non_unique: '1', Key_name: idx_alias, Seq_in_index: '1', Column_name: alias, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_senders', Non_unique: '1', Key_name: idx_catid, Seq_in_index: '1', Column_name: catid, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_senders', Non_unique: '1', Key_name: idx_language, Seq_in_index: '1', Column_name: language, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_senders', Non_unique: '1', Key_name: idx_checkout, Seq_in_index: '1', Column_name: checked_out, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_senders', Non_unique: '1', Key_name: cat_index, Seq_in_index: '1', Column_name: state, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_senders', Non_unique: '1', Key_name: cat_index, Seq_in_index: '2', Column_name: access, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_senders', Non_unique: '1', Key_name: cat_index, Seq_in_index: '3', Column_name: catid, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_senders', Non_unique: '1', Key_name: idx_created_by, Seq_in_index: '1', Column_name: created_by, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
 '#__schedule_tasks':
     name: '#__schedule_tasks'
     from:
         - '#__schedule_tasks'
     columns:
         id: { Field: id, Type: 'int(11) unsigned', 'Null': NO, Default: null, Extra: auto_increment, Comment: 'Primary Key', From: [id] }
-        asset_id: { Field: asset_id, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: 'ACL Key', From: [asset_id] }
-        catid: { Field: catid, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: 'Category ID', From: [catid] }
-        title: { Field: title, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 'Record title', From: [title] }
-        alias: { Field: alias, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 'URL Alias', From: [alias] }
-        url: { Field: url, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: URL, From: [url] }
-        introtext: { Field: introtext, Type: mediumtext, 'Null': NO, Default: null, Extra: '', Comment: Intro, From: [introtext] }
-        fulltext: { Field: fulltext, Type: mediumtext, 'Null': NO, Default: null, Extra: '', Comment: 'Full content', From: [fulltext] }
-        images: { Field: images, Type: text, 'Null': NO, Default: null, Extra: '', Comment: Images, From: [images] }
-        version: { Field: version, Type: 'int(11) unsigned', 'Null': NO, Default: null, Extra: '', Comment: Version, From: [version] }
+        serial: { Field: serial, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 'Serial Number', From: [serial] }
+        date: { Field: date, Type: date, 'Null': NO, Default: null, Extra: '', Comment: 外送日期, From: [date] }
+        sender: { Field: sender, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: 外送藥師ID, From: [sender] }
+        sender_name: { Field: sender_name, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 外送藥師名稱, From: [sender_name] }
+        status: { Field: status, Type: tinyint(1), 'Null': NO, Default: null, Extra: '', Comment: '0 or 1 ', From: [status] }
         created: { Field: created, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: 'Created time', From: [created] }
         created_by: { Field: created_by, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: Author, From: [created_by] }
         modified: { Field: modified, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: 'Modified time', From: [modified] }
         modified_by: { Field: modified_by, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: 'Modified user', From: [modified_by] }
-        ordering: { Field: ordering, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: 'Ordering key', From: [ordering] }
-        state: { Field: state, Type: tinyint(1), 'Null': NO, Default: '1', Extra: '', Comment: 'Record state', From: [state] }
-        publish_up: { Field: publish_up, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: 'Publish start time', From: [publish_up] }
-        publish_down: { Field: publish_down, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: 'Publish end time', From: [publish_down] }
-        checked_out: { Field: checked_out, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: 'Checkout user', From: [checked_out] }
-        checked_out_time: { Field: checked_out_time, Type: datetime, 'Null': NO, Default: '0000-00-00 00:00:00', Extra: '', Comment: 'Checkout time', From: [checked_out_time] }
-        access: { Field: access, Type: 'int(11) unsigned', 'Null': NO, Default: null, Extra: '', Comment: 'Access viewlevels', From: [access] }
-        language: { Field: language, Type: char(7), 'Null': NO, Default: null, Extra: '', Comment: 'Language key', From: [language] }
         params: { Field: params, Type: text, 'Null': NO, Default: null, Extra: '', Comment: Params, From: [params] }
     index:
         - { Table: '#__schedule_tasks', Non_unique: '0', Key_name: PRIMARY, Seq_in_index: '1', Column_name: id, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_tasks', Non_unique: '1', Key_name: idx_access, Seq_in_index: '1', Column_name: access, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_tasks', Non_unique: '1', Key_name: idx_alias, Seq_in_index: '1', Column_name: alias, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_tasks', Non_unique: '1', Key_name: idx_catid, Seq_in_index: '1', Column_name: catid, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_tasks', Non_unique: '1', Key_name: idx_language, Seq_in_index: '1', Column_name: language, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_tasks', Non_unique: '1', Key_name: idx_checkout, Seq_in_index: '1', Column_name: checked_out, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_tasks', Non_unique: '1', Key_name: cat_index, Seq_in_index: '1', Column_name: state, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_tasks', Non_unique: '1', Key_name: cat_index, Seq_in_index: '2', Column_name: access, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_tasks', Non_unique: '1', Key_name: cat_index, Seq_in_index: '3', Column_name: catid, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
         - { Table: '#__schedule_tasks', Non_unique: '1', Key_name: idx_created_by, Seq_in_index: '1', Column_name: created_by, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
