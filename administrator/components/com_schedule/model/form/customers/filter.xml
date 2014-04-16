@@ -96,17 +96,32 @@
 		</field>
 
 		<field
+			name="customer.age"
+			type="input"
+			label="COM_SCHEDULE_CUSTOMER_FILTER_AGE_FROM"
+			default=""
+			onchange="this.form.submit();"
+			/>
+
+		<field
+			name=""
+			type="input"
+			label="COM_SCHEDULE_CUSTOMER_FILTER_AGE_TO"
+			default=""
+			onchange="this.form.submit();"
+			/>
+
+		<field
 			name="customer.state"
 			type="list"
 			query=""
-			label="COM_SCHEDULE_CUSTOMER_FILTER_AREA_TITLE"
+			label="COM_SCHEDULE_CUSTOMER_FILTER_STATE"
 			default=""
 			onchange="this.form.submit();"
 			>
 			<option></option>
 			<option>選擇</option>
 		</field>
-
 
 		<!--
 		<field

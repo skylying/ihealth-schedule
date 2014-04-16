@@ -33,7 +33,7 @@
 			/>
 
 		<field name="age"
-			type="int"
+			type="integer"
 			label="COM_SCHEDULE_CUSTOMER_AGE"
 			description="COM_SCHEDULE_CUSTOMER_AGE"
 			class="input-small"
@@ -95,9 +95,9 @@
 			type="list"
 			label="COM_SCHEDULE_RX_TIME"
 			description="COM_SCHEDULE_RX_TIME">
-			<option value="1">1次</option>
-			<option value="2">2次</option>
-			<option value="3">3次</option>
+			<option value="1">第1次</option>
+			<option value="2">第2次</option>
+			<option value="3">第3次</option>
 		</field>
 
 		<field name="note"
