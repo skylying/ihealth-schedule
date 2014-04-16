@@ -94,14 +94,8 @@ $grid->registerTableSort();
 		</td>
 
 		<!--TITLE-->
-		<td class="n/owrap has-context quick-edit-wrap">
-			<div class="item-title text-center">
-				<!-- Checkout -->
-				<?php echo $grid->checkoutButton(); ?>
-
-				<!-- Title -->
-				<?php echo $grid->editTitle(); ?>
-			</div>
+		<td class="center">
+			<?php echo $grid->editTitle(); ?>
 		</td>
 
 		<!--Hex block-->
