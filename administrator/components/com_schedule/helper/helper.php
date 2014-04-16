@@ -120,15 +120,9 @@ abstract class ScheduleHelper
 	{
 		$attributes = array(
 			'class' => $class,
-			'style' => 'width:' . $size . 'px; height:' . $size . 'px; background:' . $color . '; margin:0 auto;'
+			'style' => sprintf('width:%spx; height:%spx; background:%s; margin:0 auto', $size, $size, $color)
 		);
 
-		$html = '<div ' . implode(' ', array_map(
-					function($key) use ($attributes)
-					{
-						return $key . '="' . $attributes[$key] . '"';
-					}, array_keys($attributes))) . '></div>';
-
-		return $html;
+		return (string) new \Windwalker\Html\HtmlElement('div', 'content', $attributes);
 	}
 }
