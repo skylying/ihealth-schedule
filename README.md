@@ -1,7 +1,9 @@
 # iHealth 排程管理 (ihealth-schedule)
 
 ## 注意事項
-N/A
+
+- [Prototype](http://ihealth.prototype.ipharmacy.com.tw/index)
+- [Trello](http://trello.com/b/74CnbCQs/ihealth-crm-schedule-ow)
 
 ## 專案初始化流程
 
