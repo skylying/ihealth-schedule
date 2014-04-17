@@ -13,7 +13,7 @@ $tab       = $data->tab;
 $fieldsets = $data->form->getFieldsets();
 ?>
 
-<?php echo JHtmlBootstrap::addTab('customerEditTab', $tab, \JText::_($data->view->option . '_EDIT_' . strtoupper($tab))) ?>
+<?php echo JHtmlBootstrap::addTab('customerEditTab', $tab, \JText::_("CUSTOMERS_EDITS_VIEW_TAB")) ?>
 
 <div class="row-fluid">
 	<div class="span6">
