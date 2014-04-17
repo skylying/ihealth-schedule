@@ -21,22 +21,22 @@ JHtmlBehavior::formvalidation();
  * @var $item      \stdClass
  */
 $container = $this->getContainer();
-$form      = $data->form;
-$item      = $data->item;
+$form = $data->form;
+$item = $data->item;
 
 // Setting tabset
 $tabs = array(
 	'tab_basic',
 );
 
-$cityId       = $form->getField('city')->id;
-$cityTitleId  = $form->getField('city_title')->id;
-$areaId           = $form->getField('area')->id;
-$areaTitleId      = $form->getField('area_title')->id;
+$cityId 	 = $form->getField('city')->id;
+$cityTitleId = $form->getField('city_title')->id;
+$areaId 	 = $form->getField('area')->id;
+$areaTitleId = $form->getField('area_title')->id;
 ?>
 <!-- Validate Script -->
 <script type="text/javascript">
-	Joomla.submitbutton = function(task)
+	Joomla.submitbutton = function (task)
 	{
 		if (task == 'hospital.edit.cancel' || document.formvalidator.isValid(document.id('adminForm')))
 		{
@@ -46,17 +46,17 @@ $areaTitleId      = $form->getField('area_title')->id;
 </script>
 
 <div id="schedule" class="windwalker hospital edit-form row-fluid">
-	<form action="<?php echo JURI::getInstance(); ?>"  method="post" name="adminForm" id="adminForm"
+	<form action="<?php echo JURI::getInstance(); ?>" method="post" name="adminForm" id="adminForm"
 		class="form-validate" enctype="multipart/form-data">
 
 		<?php echo JHtmlBootstrap::startTabSet('hospitalEditTab', array('active' => 'tab_basic')); ?>
 
-			<?php
-			foreach ($tabs as $tab)
-			{
-				echo $this->loadTemplate($tab, array('tab' => $tab));
-			}
-			?>
+		<?php
+		foreach ($tabs as $tab)
+		{
+			echo $this->loadTemplate($tab, array('tab' => $tab));
+		}
+		?>
 
 		<?php echo JHtmlBootstrap::endTabSet(); ?>
 
@@ -70,7 +70,8 @@ $areaTitleId      = $form->getField('area_title')->id;
 </div>
 
 <script type="text/javascript">
-	(function($, window) {
+	(function ($, window)
+	{
 		/**
 		 * Class Address
 		 *
@@ -78,7 +79,7 @@ $areaTitleId      = $form->getField('area_title')->id;
 		 */
 		function Address(fieldIdList)
 		{
-			if (! fieldIdList['city'])
+			if (!fieldIdList['city'])
 			{
 				return;
 			}
@@ -95,10 +96,8 @@ $areaTitleId      = $form->getField('area_title')->id;
 
 			this.$cityValue = $('#' + fieldIdList['city']);
 			this.$cityTitle = (fieldIdList['cityTitle'] ? $('#' + fieldIdList['cityTitle']) : null);
-			this.$areaValue = (fieldIdList['area']      ? $('#' + fieldIdList['area'])      : null);
+			this.$areaValue = (fieldIdList['area'] ? $('#' + fieldIdList['area']) : null);
 			this.$areaTitle = (fieldIdList['areaTitle'] ? $('#' + fieldIdList['areaTitle']) : null);
-
-			console.log(this.$cityTitle);
 
 			this.bind();
 
@@ -118,7 +117,7 @@ $areaTitleId      = $form->getField('area_title')->id;
 			if (self.$cityTitle)
 			{
 				// Update city title when city value changed
-				self.$cityValue.change(function()
+				self.$cityValue.change(function ()
 				{
 					self.$cityTitle.val(self.getCityValue() > 0 ? self.$cityValue.find("option:selected").text() : '');
 				});
@@ -129,7 +128,7 @@ $areaTitleId      = $form->getField('area_title')->id;
 				self.$cityValue.css('margin-right', '5px');
 
 				// Initialize area selector when city value changed
-				self.$cityValue.change(function()
+				self.$cityValue.change(function ()
 				{
 					$('#' + self.getAreaSelectorId()).remove();
 					self.$areaValue.val('');
