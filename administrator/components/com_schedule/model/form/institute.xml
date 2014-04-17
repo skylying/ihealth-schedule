@@ -75,12 +75,20 @@
 			/>
 
 		<field name="delivery_weekday"
-			type="text"
+			type="list"
 			label="COM_SCHEDULE_INSTITUTE_DELIVERY_WEEKDAY"
 			description="COM_SCHEDULE_INSTITUTE_DELIVERY_WEEKDAY"
 			required="true"
 			class="input-xxlarge required"
-			/>
+			>
+			<option value="MON">COM_SCHEDULE_WEEK_MON</option>
+			<option value="TUE">COM_SCHEDULE_WEEK_TUE</option>
+			<option value="WED">COM_SCHEDULE_WEEK_WED</option>
+			<option value="THU">COM_SCHEDULE_WEEK_THU</option>
+			<option value="FRI">COM_SCHEDULE_WEEK_FRI</option>
+			<option value="SAT">COM_SCHEDULE_WEEK_SAT</option>
+			<option value="SUN">COM_SCHEDULE_WEEK_SUN</option>
+		</field>
 
 		<field name="color_hex"
 			type="text"
