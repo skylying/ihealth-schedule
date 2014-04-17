@@ -133,7 +133,6 @@ $function = $input->get('function', 'jSelectArticle');
 					<td class="center">
 						<?php echo (int) $item->id; ?>
 					</td>
-
 				</tr>
 			<?php endforeach; ?>
 			</tbody>
