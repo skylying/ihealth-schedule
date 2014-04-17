@@ -4,6 +4,14 @@
 		align="left"
 		horz="true">
 
+		<field name="id"
+			type="hidden"
+			label=""
+			description=""
+			required="true"
+			class="input-small required"
+			/>
+
 		<field name="serial"
 			type="text"
 			label="COM_SCHEDULE_CUSTOMER_SERIAL"
@@ -111,21 +119,21 @@
 			>
 				<field name="city"
 					type="list"
-					label="city"
+					label="COM_SCHEDULE_EDIT_CITY"
 					description=""
 					class="pull-left"
 					/>
 
 				<field name="area"
 					type="list"
-					label="area"
+					label="COM_SCHEDULE_EDIT_AREA"
 					description=""
 					class="pull-left"
 					/>
 
 				<field name="address"
 					type="text"
-					label="address"
+					label="COM_SCHEDULE_EDIT_ADDRESS"
 					description=""
 					class="pull-left"
 					/>
