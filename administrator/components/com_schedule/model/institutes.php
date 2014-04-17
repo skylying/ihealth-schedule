@@ -71,11 +71,7 @@ class ScheduleModelInstitutes extends ListModel
 	{
 		$queryHelper = $this->getContainer()->get('model.institutes.helper.query', Container::FORCE_NEW);
 
-		$queryHelper->addTable('institute', '#__schedule_institutes')
-			->addTable('category',  '#__categories', 'institute.catid      = category.id')
-			->addTable('user',      '#__users',      'institute.created_by = user.id')
-			->addTable('viewlevel', '#__viewlevels', 'institute.access     = viewlevel.id')
-			->addTable('lang',      '#__languages',  'institute.language   = lang.lang_code');
+		$queryHelper->addTable('institute', '#__schedule_institutes');
 
 		$this->filterFields = array_merge($this->filterFields, $queryHelper->getFilterFields());
 	}
@@ -95,9 +91,8 @@ class ScheduleModelInstitutes extends ListModel
 		{
 			$table = $this->getTable('Institute');
 
-			$ordering = property_exists($table, 'ordering') ? 'institute.ordering' : 'institute.id';
+			$ordering = property_exists($table, 'ordering') ? 'institute.short_title' : 'institute.id';
 
-			$ordering = property_exists($table, 'catid') ? 'institute.catid, ' . $ordering : $ordering;
 		}
 
 		parent::populateState($ordering, 'ASC');
@@ -114,9 +109,9 @@ class ScheduleModelInstitutes extends ListModel
 	protected function processFilters(\JDatabaseQuery $query, $filters = array())
 	{
 		// If no state filter, set published >= 0
-		if (!isset($filters['institute.state']) && property_exists($this->getTable(), 'state'))
+		if (!isset($filters['institute.short_title']) && property_exists($this->getTable(), 'short_title'))
 		{
-			$query->where($query->quoteName('institute.state') . ' >= 0');
+			$query->where($query->quoteName('institute.id') . ' >= 0');
 		}
 
 		return parent::processFilters($query, $filters);

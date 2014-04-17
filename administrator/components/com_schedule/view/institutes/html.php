@@ -82,7 +82,7 @@ class ScheduleViewInstitutesHtml extends GridView
 			'view_list' => 'institutes',
 
 			// Column which we allow to drag sort
-			'order_column'   => 'institute.catid, institute.ordering',
+			'order_column'   => 'institute.id',
 
 			// Table id
 			'order_table_id' => 'instituteList',
@@ -125,6 +125,14 @@ class ScheduleViewInstitutesHtml extends GridView
 			$buttonSet['trash']['access']  = false;
 			$buttonSet['delete']['access'] = true;
 		}
+
+		$buttonSet['trash']['access']  = false;
+		$buttonSet['delete']['access'] = true;
+		$buttonSet['batch']['access'] = false;
+		$buttonSet['publish']['access'] = false;
+		$buttonSet['unpublish']['access'] = false;
+		$buttonSet['edit']['access'] = false;
+		$buttonSet['checkin']['access'] = false;
 
 		return $buttonSet;
 	}

@@ -4,167 +4,107 @@
 		align="left"
 		horz="true">
 
+		<field name="id"
+			type="text"
+			label="COM_SCHEDULE_INSTITUTE_SERIAL"
+			readonly="true"
+			class="readonly"
+			description="COM_SCHEDULE_INSTITUTE_SERIAL"
+			/>
+
 		<field name="title"
 			type="text"
-			label="JGLOBAL_TITLE"
-			description="JFIELD_TITLE_DESC"
+			label="COM_SCHEDULE_INSTITUTE_TITLE"
+			description="COM_SCHEDULE_INSTITUTE_TITLE"
+			class="input-xxlarge required"
+			/>
+
+		<field name="short_title"
+			type="text"
+			label="COM_SCHEDULE_INSTITUTE_SHORT_TITLE"
+			description="COM_SCHEDULE_INSTITUTE_SHORT_TITLE"
 			required="true"
 			class="input-xxlarge required"
 			/>
 
-		<field name="alias"
+		<field name="tel"
 			type="text"
-			label="JFIELD_ALIAS_LABEL"
-			description="JFIELD_ALIAS_DESC"
+			label="COM_SCHEDULE_INSTITUTE_TEL"
+			description="COM_SCHEDULE_INSTITUTE_TEL"
+			required="true"
+			class="input-xxlarge required"
 			/>
 
-		<field name="parent_id"
-			type="institute_modal"
-			label="COM_SCHEDULE_PARENT_ITEM"
-			description="COM_SCHEDULE_PARENT_ITEM_DESC"
-			show_root="true"
-			class="input-xlarge"
-			access="true"
+		<field name="fax"
+			type="text"
+			label="COM_SCHEDULE_INSTITUTE_FAX"
+			description="COM_SCHEDULE_INSTITUTE_FAX"
+			class="input-xxlarge required"
 			/>
 
-		<field name="catid"
-			type="categoryadd"
-			label="JCATEGORY"
-			description="JFIELD_CATEGORY_DESC"
-			extension="com_schedule"
-			quickadd="true"
-			>
-			<option value="0">COM_SCHEDULE_TITLE_UNCATEGORISED</option>
-		</field>
-
-		<field name="images"
-			type="finder"
-			label="COM_SCHEDULE_IMAGES"
-			description="COM_SCHEDULE_IMAGES_DESC"
-			preview="true"
+		<field name="city"
+			type="text"
+			label="COM_SCHEDULE_INSTITUTE_CITY"
+			description="COM_SCHEDULE_INSTITUTE_CITY"
+			required="true"
+			class="input-xxlarge required"
 			/>
 
-		<field name="url"
-			type="uri"
-			label="COM_SCHEDULE_URL"
-			description="COM_SCHEDULE_URL_DESC"
-			class="input-xlarge"
+		<field name="area"
+			type="text"
+			label="COM_SCHEDULE_INSTITUTE_AREA"
+			description="COM_SCHEDULE_INSTITUTE_AREA"
+			required="true"
+			class="input-xxlarge required"
 			/>
-	</fieldset>
 
-	<fieldset
-		name="publish"
-		align="right"
-		horz="true">
+		<field name="address"
+			type="text"
+			label="COM_SCHEDULE_INSTITUTE_ADDRESS"
+			description="COM_SCHEDULE_INSTITUTE_ADDRESS"
+			required="true"
+			class="input-xxlarge required"
+			/>
 
-		<field name="state"
+		<field name="sender_name"
+			type="text"
+			label="COM_SCHEDULE_INSTITUTE_SENDER_NAME"
+			description="COM_SCHEDULE_INSTITUTE_SENDER_NAME"
+			required="true"
+			class="input-xxlarge required"
+			/>
+
+		<field name="delivery_weekday"
 			type="list"
-			label="JSTATUS"
-			description="JFIELD_PUBLISHED_DESC"
-			class="chzn-color-state"
-			size="1"
-			default="1"
+			label="COM_SCHEDULE_INSTITUTE_DELIVERY_WEEKDAY"
+			description="COM_SCHEDULE_INSTITUTE_DELIVERY_WEEKDAY"
+			required="true"
+			class="input-xxlarge required"
 			>
-			<option value="1">JPUBLISHED</option>
-			<option value="0">JUNPUBLISHED</option>
+			<option value="MON">COM_SCHEDULE_WEEK_MON</option>
+			<option value="TUE">COM_SCHEDULE_WEEK_TUE</option>
+			<option value="WED">COM_SCHEDULE_WEEK_WED</option>
+			<option value="THU">COM_SCHEDULE_WEEK_THU</option>
+			<option value="FRI">COM_SCHEDULE_WEEK_FRI</option>
+			<option value="SAT">COM_SCHEDULE_WEEK_SAT</option>
+			<option value="SUN">COM_SCHEDULE_WEEK_SUN</option>
 		</field>
 
-		<field name="id"
+		<field name="color_hex"
 			type="text"
-			default="0"
-			label="JGLOBAL_FIELD_ID_LABEL"
-			readonly="true"
-			class="readonly"
-			description="JGLOBAL_FIELD_ID_DESC"
+			label="COM_SCHEDULE_INSTITUTE_MARK_COLOR"
+			description="COM_SCHEDULE_INSTITUTE_MARK_COLOR"
+			required="true"
+			class="input-xxlarge required"
 			/>
 
-		<field name="created_by"
-			type="user"
-			label="COM_SCHEDULE_CREATED_BY"
-			description="COM_SCHEDULE_CREATED_BY_DESC"
+		<field name="note"
+			type="textarea"
+			label="COM_SCHEDULE_INSTITUTE_NOTE"
+			description="COM_SCHEDULE_INSTITUTE_NOTE"
+			class="input-xxlarge required"
 			/>
 
-		<field name="created"
-			type="calendar"
-			label="COM_SCHEDULE_CREATED"
-			description="COM_SCHEDULE_CREATED_DESC"
-			/>
-
-		<field name="publish_up"
-			type="calendar"
-			label="COM_SCHEDULE_PUBLISH_UP"
-			description="COM_SCHEDULE_PUBLISH_UP_DESC"
-			/>
-
-		<field name="publish_down"
-			type="calendar"
-			label="COM_SCHEDULE_PUBLISHED_DOWN"
-			description="COM_SCHEDULE_PUBLISH_DOWN_DESC"
-			/>
-
-	</fieldset>
-
-	<fieldset name="text"
-		align="left">
-		<field name="introtext"
-			type="editor"
-			label="COM_SCHEDULE_INTROTEXT"
-			description="COM_SCHEDULE_INTROTEXT_DESC"
-			filter="raw"
-			buttons="true"
-			hide="readmore,pagebreak,article"
-			/>
-
-		<field name="fulltext"
-			type="editor"
-			label="COM_SCHEDULE_FULLTEXT"
-			description="COM_SCHEDULE_FULLTEXT_DESC"
-			filter="raw"
-			buttons="true"
-			hide="readmore,pagebreak,article"
-			/>
-
-		<field name="checked_out"
-			type="hidden"
-			filter="unset"/>
-
-		<field name="checked_out_time"
-			type="hidden"
-			filter="unset"/>
-
-	</fieldset>
-
-	<fieldset name="created">
-		<field name="access"
-			type="accesslevel"
-			label="JFIELD_ACCESS_LABEL"
-			description="JFIELD_ACCESS_DESC"
-			/>
-
-		<field name="language"
-			type="language"
-			label="JGRID_HEADING_LANGUAGE"
-			description="JGRID_HEADING_LANGUAGE"
-			>
-			<option value="*">JALL</option>
-		</field>
-	</fieldset>
-
-	<!-- Need this field as child of root node for access setting. -->
-	<field name="asset_id"
-		type="hidden"
-		filter="unset"/>
-
-	<fieldset name="rules">
-		<field name="rules"
-			type="rules"
-			translate_label="false"
-			class="inputbox"
-			filter="rules"
-			component="com_schedule"
-			section="institute"
-			validate="rules"
-			/>
 	</fieldset>
 
 	<!-- For Quick Ajax AddNew -->

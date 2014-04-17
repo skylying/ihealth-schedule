@@ -38,54 +38,65 @@ $grid->registerTableSort();
 <!-- TABLE HEADER -->
 <thead>
 <tr>
-	<!--SORT-->
-	<th width="1%" class="nowrap center hidden-phone">
-		<?php echo $grid->orderTitle(); ?>
-	</th>
 
 	<!--CHECKBOX-->
 	<th width="1%" class="center">
 		<?php echo JHtml::_('grid.checkAll'); ?>
 	</th>
 
-	<!--STATE-->
-	<th width="5%" class="nowrap center">
-		<?php echo $grid->sortTitle('JSTATUS', 'institute.state'); ?>
+	<!--Short Title-->
+	<th width="5%" class="left">
+		<?php echo $grid->sortTitle('COM_SCHEDULE_INSTITUTE_SHORT_TITLE', 'institute.short_title'); ?>
 	</th>
 
-	<!--TITLE-->
-	<th class="center">
-		<?php echo $grid->sortTitle('JGLOBAL_TITLE', 'institute.title'); ?>
+	<!--Delivery Weekday-->
+	<th width="5%" class="left">
+		<?php echo $grid->sortTitle('COM_SCHEDULE_INSTITUTE_DELIVERY_WEEKDAY', 'institute.title'); ?>
 	</th>
 
-	<!--CATEGORY-->
-	<th width="10%" class="center">
-		<?php echo $grid->sortTitle('JCATEGORY', 'category.title'); ?>
+	<!--Last Delivery Weekday-->
+	<th width="5%" class="nowrap left">
+		<?php echo $grid->sortTitle('COM_SCHEDULE_INSTITUTE_LAST_DELIVERY_WEEKDAY', 'institute.delivery_weekday'); ?>
 	</th>
 
-	<!--ACCESS VIEW LEVEL-->
+	<!--Color for Weekday-->
 	<th width="5%" class="center">
-		<?php echo $grid->sortTitle('JGRID_HEADING_ACCESS', 'viewlevel.title'); ?>
+		<?php echo $grid->sortTitle('COM_SCHEDULE_INSTITUTE_MARK_COLOR', 'institute.color_hex'); ?>
 	</th>
 
-	<!--CREATED-->
-	<th width="10%" class="center">
-		<?php echo $grid->sortTitle('JDATE', 'institute.created'); ?>
+	<!--Sender Name-->
+	<th width="5%" class="left">
+		<?php echo $grid->sortTitle('COM_SCHEDULE_INSTITUTE_SENDER_NAME', 'institute.sender_name'); ?>
 	</th>
 
-	<!--USER-->
-	<th width="10%" class="center">
-		<?php echo $grid->sortTitle('JAUTHOR', 'user.name'); ?>
+	<!--Tel-->
+	<th width="5%" class="left">
+		<?php echo $grid->sortTitle('COM_SCHEDULE_INSTITUTE_TEL', 'institute.tel'); ?>
 	</th>
 
-	<!--LANGUAGE-->
-	<th width="5%" class="center">
-		<?php echo $grid->sortTitle('JGRID_HEADING_LANGUAGE', 'lang.title'); ?>
+	<!--City-->
+	<th width="5%" class="left">
+		<?php echo $grid->sortTitle('COM_SCHEDULE_INSTITUTE_CITY', 'institute.city'); ?>
+	</th>
+
+	<!--Area-->
+	<th width="5%" class="left">
+		<?php echo $grid->sortTitle('COM_SCHEDULE_INSTITUTE_AREA', 'institute.area'); ?>
+	</th>
+
+	<!--Address-->
+	<th width="5%" class="left">
+		<?php echo $grid->sortTitle('COM_SCHEDULE_INSTITUTE_ADDRESS', 'institute.address'); ?>
 	</th>
 
 	<!--ID-->
 	<th width="1%" class="nowrap center">
-		<?php echo $grid->sortTitle('JGRID_HEADING_ID', 'institute.id'); ?>
+		<?php echo $grid->sortTitle('COM_SCHEDULE_INSTITUTE_SERIAL', 'institute.id'); ?>
+	</th>
+
+	<!--Link To Elder List-->
+	<th width="5%" class="nowrap center">
+		<?php echo JText::_('COM_SCHEDULE_INSTITUTE_ELDER_LISTS')?>
 	</th>
 </tr>
 </thead>
@@ -111,81 +122,66 @@ $grid->registerTableSort();
 	// Prepare item for GridHelper
 	$grid->setItem($item, $i);
 	?>
-	<tr class="institute-row" sortable-group-id="<?php echo $item->catid; ?>">
-		<!-- DRAG SORT -->
-		<td class="order nowrap center hidden-phone">
-			<?php echo $grid->dragSort(); ?>
-		</td>
+	<tr class="institute-row" sortable-group-id="<?php echo $item->id; ?>">
 
 		<!--CHECKBOX-->
 		<td class="center">
 			<?php echo JHtml::_('grid.id', $i, $item->institute_id); ?>
 		</td>
 
-		<!--STATE-->
-		<td class="center">
-			<div class="btn-group">
-				<!-- STATE BUTTON -->
-				<?php echo $grid->state() ?>
-
-				<!-- CHANGE STATE DROP DOWN -->
-				<?php echo $this->loadTemplate('dropdown'); ?>
-			</div>
+		<!--Short Title-->
+		<td class="left">
+			<a href="<?php echo JRoute::_('?option=com_schedule&view=institute&layout=edit&id=' . $item->id);?>"><?php echo $item->short_title;?></a>
 		</td>
 
-		<!--TITLE-->
-		<td class="n/owrap has-context quick-edit-wrap">
-			<div class="item-title">
-				<!-- Checkout -->
-				<?php echo $grid->checkoutButton(); ?>
-
-				<!-- Title -->
-				<?php echo $grid->editTitle(); ?>
-			</div>
-
-			<!-- Sub Title -->
-			<div class="small">
-				<?php echo JText::sprintf('JGLOBAL_LIST_ALIAS', $this->escape($item->alias)); ?>
-			</div>
+		<!--Delivery Weekday-->
+		<td class="left">
+			<?php echo JText::_('COM_SCHEDULE_WEEK_' . $item->delivery_weekday);?>
 		</td>
 
-		<!--CATEGORY-->
-		<td class="center">
-			<?php echo $this->escape($item->category_title); ?>
+		<!--Last Delivery Weekday-->
+		<td class="left">
+			<?php echo $item->delivery_weekday;?>
 		</td>
 
-		<!--ACCESS VIEW LEVEL-->
+		<!--Color for Weekday-->
 		<td class="center">
-			<?php echo $this->escape($item->viewlevel_title); ?>
+			<span style="background-color: <?php echo $item->color_hex;?>"><?php echo $item->color_hex;?></span>
 		</td>
 
-		<!--CREATED-->
-		<td class="center">
-			<?php echo JHtml::_('date', $item->created, JText::_('DATE_FORMAT_LC4')); ?>
+		<!--Sender Name-->
+		<td class="left">
+			<?php echo $item->sender_name;?>
 		</td>
 
-		<!--USER-->
-		<td class="center">
-			<?php echo $this->escape($item->user_name); ?>
+		<!--Tel-->
+		<td class="left">
+			<?php echo $item->tel;?>
 		</td>
 
-		<!--LANGUAGE-->
-		<td class="center">
-			<?php
-			if ($item->language == '*')
-			{
-				echo JText::alt('JALL', 'language');
-			}
-			else
-			{
-				echo $item->lang_title ? $this->escape($item->lang_title) : JText::_('JUNDEFINED');
-			}
-			?>
+		<!--City Title-->
+		<td class="left">
+			<?php echo $item->city_title;?>
+		</td>
+
+		<!--City Area-->
+		<td class="left">
+			<?php echo $item->area;?>
+		</td>
+
+		<!--Address-->
+		<td class="left">
+			<?php echo $item->address;?>
 		</td>
 
 		<!--ID-->
 		<td class="center">
-			<?php echo (int) $item->id; ?>
+			<?php echo (int) $item->id;?>
+		</td>
+
+		<!--Link To Elder List-->
+		<td class="center">
+			<a href="#"> Link </a>
 		</td>
 
 	</tr>
