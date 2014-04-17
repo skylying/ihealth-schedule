@@ -48,44 +48,29 @@ $grid->registerTableSort();
 		<?php echo JHtml::_('grid.checkAll'); ?>
 	</th>
 
-	<!--STATE-->
+	<!--HOSPITAL ID-->
 	<th width="5%" class="nowrap center">
-		<?php echo $grid->sortTitle('JSTATUS', 'hospital.state'); ?>
+		<?php echo $grid->sortTitle('COM_SCHEDULE_HOSPITAL_ITEM_ID', 'hospital.title'); ?>
 	</th>
 
-	<!--TITLE-->
-	<th class="center">
-		<?php echo $grid->sortTitle('JGLOBAL_TITLE', 'hospital.title'); ?>
+	<!--HOSPITA TITLE-->
+	<th width="49%" class="center">
+		<?php echo $grid->sortTitle('COM_SCHEDULE_HOSPITAL_ITEM_TITLE', 'hospital.title'); ?>
 	</th>
 
-	<!--CATEGORY-->
-	<th width="10%" class="center">
-		<?php echo $grid->sortTitle('JCATEGORY', 'category.title'); ?>
+	<!--CITY_TITLE-->
+	<th width="15%" class="center">
+		<?php echo $grid->sortTitle('COM_SCHEDULE_HOSPITAL_ITEM_CITY_TITLE', 'category.title'); ?>
 	</th>
 
-	<!--ACCESS VIEW LEVEL-->
-	<th width="5%" class="center">
-		<?php echo $grid->sortTitle('JGRID_HEADING_ACCESS', 'viewlevel.title'); ?>
+	<!--AREA_TITLE-->
+	<th width="15%" class="center">
+		<?php echo $grid->sortTitle('COM_SCHEDULE_HOSPITAL_ITEM_AREA_TITLE', 'viewlevel.title'); ?>
 	</th>
 
-	<!--CREATED-->
-	<th width="10%" class="center">
-		<?php echo $grid->sortTitle('JDATE', 'hospital.created'); ?>
-	</th>
-
-	<!--USER-->
-	<th width="10%" class="center">
-		<?php echo $grid->sortTitle('JAUTHOR', 'user.name'); ?>
-	</th>
-
-	<!--LANGUAGE-->
-	<th width="5%" class="center">
-		<?php echo $grid->sortTitle('JGRID_HEADING_LANGUAGE', 'lang.title'); ?>
-	</th>
-
-	<!--ID-->
-	<th width="1%" class="nowrap center">
-		<?php echo $grid->sortTitle('JGRID_HEADING_ID', 'hospital.id'); ?>
+	<!--HAS_HI_CODE-->
+	<th width="15%" class="center">
+		<?php echo $grid->sortTitle('COM_SCHEDULE_HOSPITAL_ITEM_HICODE', 'hospital.created'); ?>
 	</th>
 </tr>
 </thead>
@@ -119,68 +104,7 @@ $grid->registerTableSort();
 
 		<!--CHECKBOX-->
 		<td class="center">
-			<?php echo JHtml::_('grid.id', $i, $item->hospital_id); ?>
-		</td>
-
-		<!--STATE-->
-		<td class="center">
-			<div class="btn-group">
-				<!-- STATE BUTTON -->
-				<?php echo $grid->state() ?>
-
-				<!-- CHANGE STATE DROP DOWN -->
-				<?php echo $this->loadTemplate('dropdown'); ?>
-			</div>
-		</td>
-
-		<!--TITLE-->
-		<td class="n/owrap has-context quick-edit-wrap">
-			<div class="item-title">
-				<!-- Checkout -->
-				<?php echo $grid->checkoutButton(); ?>
-
-				<!-- Title -->
-				<?php echo $grid->editTitle(); ?>
-			</div>
-
-			<!-- Sub Title -->
-			<div class="small">
-				<?php echo JText::sprintf('JGLOBAL_LIST_ALIAS', $this->escape($item->alias)); ?>
-			</div>
-		</td>
-
-		<!--CATEGORY-->
-		<td class="center">
-			<?php echo $this->escape($item->category_title); ?>
-		</td>
-
-		<!--ACCESS VIEW LEVEL-->
-		<td class="center">
-			<?php echo $this->escape($item->viewlevel_title); ?>
-		</td>
-
-		<!--CREATED-->
-		<td class="center">
-			<?php echo JHtml::_('date', $item->created, JText::_('DATE_FORMAT_LC4')); ?>
-		</td>
-
-		<!--USER-->
-		<td class="center">
-			<?php echo $this->escape($item->user_name); ?>
-		</td>
-
-		<!--LANGUAGE-->
-		<td class="center">
-			<?php
-			if ($item->language == '*')
-			{
-				echo JText::alt('JALL', 'language');
-			}
-			else
-			{
-				echo $item->lang_title ? $this->escape($item->lang_title) : JText::_('JUNDEFINED');
-			}
-			?>
+			<?php echo JHtml::_('grid.id', $i, $item->sender_id); ?>
 		</td>
 
 		<!--ID-->
@@ -188,7 +112,38 @@ $grid->registerTableSort();
 			<?php echo (int) $item->id; ?>
 		</td>
 
+		<!--HOSPITAL TITLE-->
+		<td class="nowrap quick-edit-wrap">
+			<div class="item-title center">
+				<?php
+				$query = array(
+					'option' => 'com_schedule',
+					'view' => 'hospital',
+					'layout' => 'edit',
+					'id'  => $item->id
+				);
+				?>
+				<a href="<?php echo JRoute::_("index.php?". http_build_query($query)); ?>">
+					<?php echo $this->escape($item->title); ?></a>
+			</div>
+		</td>
+
+		<!--CITY TITLE-->
+		<td class="center">
+			<?php echo $this->escape($item->city_title); ?>
+		</td>
+
+		<!--AREA TITLE-->
+		<td class="center">
+			<?php echo $this->escape($item->area_title); ?>
+		</td>
+
+		<!--HAS HI CODE-->
+		<td class="center">
+			<?php echo $item->has_hicode ? JText::_('COM_SCHEDULE_HOSPITAL_ITEM_HAS_HICODE') : JText::_('COM_SCHEDULE_HOSPITAL_ITEM_NO_HICODE'); ?>
+		</td>
 	</tr>
 <?php endforeach; ?>
 </tbody>
 </table>
+

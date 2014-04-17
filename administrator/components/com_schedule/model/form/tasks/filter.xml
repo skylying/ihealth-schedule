@@ -42,13 +42,20 @@
 	<!-- Filter -->
 	<fields name="filter">
 		<field
-			type="note"
-			label="COM_SCHEDULE_FILTER_NOTE_GENERAL"
-			class="filter-title"
-			/>
+			name="task.id"
+			type="sql"
+			query="SELECT `id`, `name` FROM #__schedule_senders"
+			key_field="id"
+			value_field="name"
+			label="COM_SCHEDULE_TASK_TITLE_LIST_SENDER_NAME"
+			default=""
+			onchange="this.form.submit();"
+			>
+			<option>- 請選擇藥師 -</option>
+		</field>
 
 		<field
-			name="task.state"
+			name="task.status"
 			type="list"
 			label="JSTATUS"
 			default=""
@@ -62,17 +69,6 @@
 			<option value="*">JALL</option>
 		</field>
 
-		<field
-			name="task.catid"
-			type="category"
-			default=""
-			label="JCATEGORY"
-			extension="com_schedule"
-			onchange="this.form.submit();"
-			>
-			<option></option>
-			<option>JOPTION_SELECT_CATEGORY</option>
-		</field>
 	</fields>
 
 	<fields name="list">
@@ -85,22 +81,10 @@
 			default="a.title ASC"
 			>
 			<option value="">JGLOBAL_SORT_BY</option>
-			<option value="task.catid, task.ordering ASC">JGRID_HEADING_ORDERING_ASC</option>
-			<option value="task.catid, task.ordering DESC">JGRID_HEADING_ORDERING_DESC</option>
-			<option value="task.state ASC">JSTATUS_ASC</option>
-			<option value="task.state DESC">JSTATUS_DESC</option>
+			<option value="task.status ASC">JSTATUS_ASC</option>
+			<option value="task.status DESC">JSTATUS_DESC</option>
 			<option value="task.title ASC">JGLOBAL_TITLE_ASC</option>
 			<option value="task.title DESC">JGLOBAL_TITLE_DESC</option>
-			<option value="category.title ASC">JCATEGORY_ASC</option>
-			<option value="category.title DESC">JCATEGORY_DESC</option>
-			<option value="task.access ASC">JGRID_HEADING_ACCESS_ASC</option>
-			<option value="task.access DESC">JGRID_HEADING_ACCESS_DESC</option>
-			<option value="task.created_by ASC">JAUTHOR_ASC</option>
-			<option value="task.created_by DESC">JAUTHOR_DESC</option>
-			<option value="task.language ASC">JGRID_HEADING_LANGUAGE_ASC</option>
-			<option value="task.language DESC">JGRID_HEADING_LANGUAGE_DESC</option>
-			<option value="task.created ASC">JDATE_ASC</option>
-			<option value="task.created DESC">JDATE_DESC</option>
 			<option value="task.id ASC">JGRID_HEADING_ID_ASC</option>
 			<option value="task.id DESC">JGRID_HEADING_ID_DESC</option>
 		</field>
