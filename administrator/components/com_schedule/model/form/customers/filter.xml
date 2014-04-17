@@ -48,20 +48,82 @@
 			/>
 
 		<field
-			name="customer.state"
+			name="customer.type"
 			type="list"
-			label="JSTATUS"
+			label="COM_SCHEDULE_CUSTOMER_FILTER_TYPE"
 			default=""
 			onchange="this.form.submit();"
 			>
 			<option></option>
-			<option>JOPTION_SELECT_PUBLISHED</option>
-			<option value="1">JPUBLISHED</option>
-			<option value="0">JUNPUBLISHED</option>
-			<option value="-2">JTRASHED</option>
-			<option value="*">JALL</option>
+			<option>選擇類別</option>
+			<option value="1">散客</option>
+			<option value="0">住民</option>
 		</field>
 
+		<field
+			name=""
+			type="list"
+			label="COM_SCHEDULE_CUSTOMER_FILTER_INSTITUTE"
+			default=""
+			onchange="this.form.submit();"
+			>
+			<option></option>
+			<option>選擇</option>
+		</field>
+
+		<field
+			name="customer.city_title"
+			type="list"
+			query=""
+			label="COM_SCHEDULE_CUSTOMER_FILTER_CITY_TITLE"
+			default=""
+			onchange="this.form.submit();"
+			>
+			<option></option>
+			<option>選擇</option>
+		</field>
+
+		<field
+			name="customer.area_title"
+			type="list"
+			query=""
+			label="COM_SCHEDULE_CUSTOMER_FILTER_AREA_TITLE"
+			default=""
+			onchange="this.form.submit();"
+			>
+			<option></option>
+			<option>選擇</option>
+		</field>
+
+		<field
+			name="customer.age"
+			type="input"
+			label="COM_SCHEDULE_CUSTOMER_FILTER_AGE_FROM"
+			default=""
+			onchange="this.form.submit();"
+			/>
+
+		<field
+			name=""
+			type="input"
+			label="COM_SCHEDULE_CUSTOMER_FILTER_AGE_TO"
+			default=""
+			onchange="this.form.submit();"
+			/>
+
+		<field
+			name="customer.state"
+			type="list"
+			query=""
+			label="COM_SCHEDULE_CUSTOMER_FILTER_STATE"
+			default=""
+			onchange="this.form.submit();"
+			>
+			<option></option>
+			<option>選擇</option>
+		</field>
+
+		<!--
 		<field
 			name="customer.catid"
 			type="category"
@@ -73,6 +135,7 @@
 			<option></option>
 			<option>JOPTION_SELECT_CATEGORY</option>
 		</field>
+		-->
 	</fields>
 
 	<fields name="list">

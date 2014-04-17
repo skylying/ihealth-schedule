@@ -48,44 +48,59 @@ $grid->registerTableSort();
 		<?php echo JHtml::_('grid.checkAll'); ?>
 	</th>
 
-	<!--STATE-->
+	<!--CUSTOMER_ID-->
 	<th width="5%" class="nowrap center">
-		<?php echo $grid->sortTitle('JSTATUS', 'customer.state'); ?>
+		<?php echo $grid->sortTitle('COM_SCHEDULE_CUSTOMER_ID', 'customer.id'); ?>
 	</th>
 
-	<!--TITLE-->
-	<th class="center">
-		<?php echo $grid->sortTitle('JGLOBAL_TITLE', 'customer.title'); ?>
-	</th>
-
-	<!--CATEGORY-->
-	<th width="10%" class="center">
-		<?php echo $grid->sortTitle('JCATEGORY', 'category.title'); ?>
-	</th>
-
-	<!--ACCESS VIEW LEVEL-->
+	<!--CUSTOMER_TYPE-->
 	<th width="5%" class="center">
-		<?php echo $grid->sortTitle('JGRID_HEADING_ACCESS', 'viewlevel.title'); ?>
+		<?php echo $grid->sortTitle('COM_SCHEDULE_CUSTOMER_TYPE', 'customer.type'); ?>
 	</th>
 
-	<!--CREATED-->
-	<th width="10%" class="center">
-		<?php echo $grid->sortTitle('JDATE', 'customer.created'); ?>
+	<!--CUSTOMER_NAME-->
+	<th width="7%" class="center">
+		<?php echo $grid->sortTitle('COM_SCHEDULE_CUSTOMER_NAME', 'customer.name'); ?>
 	</th>
 
-	<!--USER-->
-	<th width="10%" class="center">
-		<?php echo $grid->sortTitle('JAUTHOR', 'user.name'); ?>
-	</th>
-
-	<!--LANGUAGE-->
+	<!--CUSTOMER_ID_NUMBER-->
 	<th width="5%" class="center">
-		<?php echo $grid->sortTitle('JGRID_HEADING_LANGUAGE', 'lang.title'); ?>
+		<?php echo $grid->sortTitle('COM_SCHEDULE_CUSTOMER_ID_NUMBER', 'customer.id_number'); ?>
 	</th>
 
-	<!--ID-->
-	<th width="1%" class="nowrap center">
-		<?php echo $grid->sortTitle('JGRID_HEADING_ID', 'customer.id'); ?>
+	<!--CUSTOMER_CUSTOMER_AGE-->
+	<th width="5%" class="center">
+		<?php echo $grid->sortTitle('COM_SCHEDULE_CUSTOMER_AGE', 'customer.age'); ?>
+	</th>
+
+	<!--CUSTOMER_CUSTOMER_MEMBER_MAPS-->
+	<th width="10%" class="center">
+		<?php echo $grid->sortTitle('COM_SCHEDULE_CUSTOMER_MEMBER_MAPS', ''); ?>
+	</th>
+
+	<!--CITY TITLE-->
+	<th width="5%" class="center">
+		<?php echo $grid->sortTitle('COM_SCHEDULE_CUSTOMER_CITY_TITLE', 'customer.city_title'); ?>
+	</th>
+
+	<!--AREA TITLE-->
+	<th width="5%" class="center">
+		<?php echo $grid->sortTitle('COM_SCHEDULE_CUSTOMER_AREA_TITLE', 'customer.area_title'); ?>
+	</th>
+
+	<!--STATE-->
+	<th width="5%" class="center">
+		<?php echo $grid->sortTitle('COM_SCHEDULE_CUSTOMER_STATE', 'customer.state'); ?>
+	</th>
+
+	<!--SCHEDULE-->
+	<th width="5%" class="center">
+		<?php echo $grid->sortTitle('COM_SCHEDULE_CUSTOMER_SCHEDULE_RECORD', ''); ?>
+	</th>
+
+	<!--RESERVE-->
+	<th width="4%" class="center">
+		<?php echo $grid->sortTitle('COM_SCHEDULE_CUSTOMER_RESERVE', ''); ?>
 	</th>
 </tr>
 </thead>
@@ -119,73 +134,70 @@ $grid->registerTableSort();
 
 		<!--CHECKBOX-->
 		<td class="center">
-			<?php echo JHtml::_('grid.id', $i, $item->customer_id); ?>
+			<?php echo JHtml::_('grid.id', $i, $item->id); ?>
 		</td>
 
-		<!--STATE-->
+		<!--CUSTOMER_ID-->
 		<td class="center">
-			<div class="btn-group">
-				<!-- STATE BUTTON -->
-				<?php echo $grid->state() ?>
-
-				<!-- CHANGE STATE DROP DOWN -->
-				<?php echo $this->loadTemplate('dropdown'); ?>
-			</div>
+			<?php echo $this->escape($item->id); ?>
 		</td>
 
-		<!--TITLE-->
+		<!--CUSTOMER_TYPE-->
+		<td class="center">
+			<?php echo $this->escape($item->type); ?>
+		</td>
+
+		<!--CUSTOMER_NAME-->
 		<td class="n/owrap has-context quick-edit-wrap">
-			<div class="item-title">
+			<div class="center">
 				<!-- Checkout -->
 				<?php echo $grid->checkoutButton(); ?>
 
 				<!-- Title -->
 				<?php echo $grid->editTitle(); ?>
 			</div>
-
-			<!-- Sub Title -->
-			<div class="small">
-				<?php echo JText::sprintf('JGLOBAL_LIST_ALIAS', $this->escape($item->alias)); ?>
-			</div>
 		</td>
 
-		<!--CATEGORY-->
+		<!--CUSTOMER_ID_NUMBER-->
 		<td class="center">
-			<?php echo $this->escape($item->category_title); ?>
+			<?php echo $this->escape($item->id_number); ?>
 		</td>
 
-		<!--ACCESS VIEW LEVEL-->
+		<!--CUSTOMER_AGE-->
 		<td class="center">
-			<?php echo $this->escape($item->viewlevel_title); ?>
+			<?php echo $this->escape($item->age); ?>
 		</td>
 
-		<!--CREATED-->
+		<!--CUSTOMER_MEMBER_MAPS-->
 		<td class="center">
-			<?php echo JHtml::_('date', $item->created, JText::_('DATE_FORMAT_LC4')); ?>
+			<?php echo $this->escape($item->title); ?>
 		</td>
 
-		<!--USER-->
+		<!--CITY_TITLE-->
 		<td class="center">
-			<?php echo $this->escape($item->user_name); ?>
+			<?php echo $this->escape($item->city_title); ?>
 		</td>
 
-		<!--LANGUAGE-->
+		<!--AREA_TITLE-->
 		<td class="center">
-			<?php
-			if ($item->language == '*')
-			{
-				echo JText::alt('JALL', 'language');
-			}
-			else
-			{
-				echo $item->lang_title ? $this->escape($item->lang_title) : JText::_('JUNDEFINED');
-			}
-			?>
+			<?php echo $this->escape($item->area_title); ?>
 		</td>
 
-		<!--ID-->
+		<!--STATE-->
 		<td class="center">
-			<?php echo (int) $item->id; ?>
+			<?php echo $this->escape($item->state); ?>
+		</td>
+
+		<!--SCHEDULE_RECORD-->
+		<td class="center">
+
+		</td>
+
+		<!--RESERVE-->
+		<td class="center">
+			<span class="glyphicon glyphicon-plus">
+				<a></a>
+			</span>
 		</td>
 
 	</tr>
