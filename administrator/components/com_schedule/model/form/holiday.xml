@@ -4,51 +4,24 @@
 		align="left"
 		horz="true">
 
-		<field name="title"
+		<field name="year"
 			type="text"
-			label="JGLOBAL_TITLE"
-			description="JFIELD_TITLE_DESC"
+			label="COM_SCHEDULE_HOLIDAY_YEAR_LABEL"
+			description="COM_SCHEDULE_HOLIDAY_YEAR_DESC"
 			required="true"
 			class="input-xxlarge required"
 			/>
 
-		<field name="alias"
+		<field name="month"
 			type="text"
-			label="JFIELD_ALIAS_LABEL"
-			description="JFIELD_ALIAS_DESC"
+			label="月份"
+			description="月份"
 			/>
 
-		<field name="parent_id"
-			type="holiday_modal"
-			label="COM_SCHEDULE_PARENT_ITEM"
-			description="COM_SCHEDULE_PARENT_ITEM_DESC"
-			show_root="true"
-			class="input-xlarge"
-			access="true"
-			/>
-
-		<field name="catid"
-			type="categoryadd"
-			label="JCATEGORY"
-			description="JFIELD_CATEGORY_DESC"
-			extension="com_schedule"
-			quickadd="true"
-			>
-			<option value="0">COM_SCHEDULE_TITLE_UNCATEGORISED</option>
-		</field>
-
-		<field name="images"
-			type="finder"
-			label="COM_SCHEDULE_IMAGES"
-			description="COM_SCHEDULE_IMAGES_DESC"
-			preview="true"
-			/>
-
-		<field name="url"
-			type="uri"
-			label="COM_SCHEDULE_URL"
-			description="COM_SCHEDULE_URL_DESC"
-			class="input-xlarge"
+		<field name="day"
+			type="text"
+			label="日期"
+			description="日期"
 			/>
 	</fieldset>
 
@@ -104,36 +77,6 @@
 
 	</fieldset>
 
-	<fieldset name="text"
-		align="left">
-		<field name="introtext"
-			type="editor"
-			label="COM_SCHEDULE_INTROTEXT"
-			description="COM_SCHEDULE_INTROTEXT_DESC"
-			filter="raw"
-			buttons="true"
-			hide="readmore,pagebreak,article"
-			/>
-
-		<field name="fulltext"
-			type="editor"
-			label="COM_SCHEDULE_FULLTEXT"
-			description="COM_SCHEDULE_FULLTEXT_DESC"
-			filter="raw"
-			buttons="true"
-			hide="readmore,pagebreak,article"
-			/>
-
-		<field name="checked_out"
-			type="hidden"
-			filter="unset"/>
-
-		<field name="checked_out_time"
-			type="hidden"
-			filter="unset"/>
-
-	</fieldset>
-
 	<fieldset name="created">
 		<field name="access"
 			type="accesslevel"
@@ -153,7 +96,7 @@
 	<!-- Need this field as child of root node for access setting. -->
 	<field name="asset_id"
 		type="hidden"
-		filter="unset"/>
+		filter="unset" />
 
 	<fieldset name="rules">
 		<field name="rules"
@@ -173,21 +116,11 @@
 			type="text"
 			label="JGLOBAL_TITLE"
 			description="JFIELD_TITLE_DESC"
-			required="true"
+			required=""
 			size="50"
 			labelclass=""
 			class="input-xlarge"
 			/>
-
-		<field name="catid"
-			type="category"
-			label="JCATEGORY"
-			description="JFIELD_CATEGORY_DESC"
-			extension="com_schedule"
-			labelclass=""
-			>
-			<option value="0">COM_SCHEDULE_TITLE_UNCATEGORISED</option>
-		</field>
 
 		<!--<field name="parent_id"
 			type="holiday_list"

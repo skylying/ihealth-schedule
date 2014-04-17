@@ -48,30 +48,40 @@
 			/>
 
 		<field
-			name="holiday.state"
+			name="holiday.year"
 			type="list"
-			label="JSTATUS"
+			label="年份"
 			default=""
 			onchange="this.form.submit();"
 			>
 			<option></option>
-			<option>JOPTION_SELECT_PUBLISHED</option>
-			<option value="1">JPUBLISHED</option>
-			<option value="0">JUNPUBLISHED</option>
-			<option value="-2">JTRASHED</option>
+			<option value="">選擇年份</option>
+			<option value="2014">2014</option>
+			<option value="2015">2015</option>
 			<option value="*">JALL</option>
 		</field>
 
 		<field
-			name="holiday.catid"
-			type="category"
+			name="holiday.month"
+			type="list"
+			label="月份"
 			default=""
-			label="JCATEGORY"
-			extension="com_schedule"
 			onchange="this.form.submit();"
 			>
 			<option></option>
-			<option>JOPTION_SELECT_CATEGORY</option>
+			<option>選擇月份</option>
+			<option value="1">一月</option>
+			<option value="2">二月</option>
+			<option value="3">三月</option>
+			<option value="4">四月</option>
+			<option value="5">五月</option>
+			<option value="6">六月</option>
+			<option value="7">七月</option>
+			<option value="8">八月</option>
+			<option value="9">九月</option>
+			<option value="10">十月</option>
+			<option value="11">十一月</option>
+			<option value="12">十二月</option>
 		</field>
 	</fields>
 

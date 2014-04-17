@@ -18,8 +18,6 @@ $fieldsets = $data->form->getFieldsets();
 <div class="row-fluid">
 	<div class="span8">
 		<?php echo $this->loadTemplate('fieldset', array('fieldset' => $fieldsets['information'], 'class' => 'form-horizontal')); ?>
-
-		<?php echo $this->loadTemplate('fieldset', array('fieldset' => $fieldsets['text'], 'class' => 'form-horizontal')); ?>
 	</div>
 
 	<div class="span4">
@@ -28,3 +26,11 @@ $fieldsets = $data->form->getFieldsets();
 </div>
 
 <?php echo JHtmlBootstrap::endTab(); ?>
+
+<style>
+#jform_colorpicker
+{
+	width: 100px;
+	height: 30px;
+}
+</style>

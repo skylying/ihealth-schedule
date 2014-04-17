@@ -71,11 +71,7 @@ class ScheduleModelHolidays extends ListModel
 	{
 		$queryHelper = $this->getContainer()->get('model.holidays.helper.query', Container::FORCE_NEW);
 
-		$queryHelper->addTable('holiday', '#__schedule_holidays')
-			->addTable('category',  '#__categories', 'holiday.catid      = category.id')
-			->addTable('user',      '#__users',      'holiday.created_by = user.id')
-			->addTable('viewlevel', '#__viewlevels', 'holiday.access     = viewlevel.id')
-			->addTable('lang',      '#__languages',  'holiday.language   = lang.lang_code');
+		$queryHelper->addTable('holiday', '#__schedule_holidays');
 
 		$this->filterFields = array_merge($this->filterFields, $queryHelper->getFilterFields());
 	}
