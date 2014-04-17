@@ -72,4 +72,64 @@ class ScheduleModelSchedule extends AdminModel
 	{
 		parent::setOrderPosition($table, $position);
 	}
+
+	/**
+	 * getForm
+	 *
+	 * @param   array $data
+	 * @param   bool  $loadData
+	 *
+	 * @return  mixed
+	 */
+	public function getForm($data = array(), $loadData = true)
+	{
+		$config = array(
+			'control'   => 'jform',
+			'load_data' => $loadData
+		);
+
+		$formName = $this->state->get('form.type', 'schedule_institute');
+
+		return $this->loadForm($this->option . '.' . $formName . '.form', $formName, $config);
+	}
+
+	/**
+	 * getFormInstitute
+	 *
+	 * @param   array  $data
+	 * @param   bool   $loadData
+	 *
+	 * @return  mixed
+	 */
+	public function getFormInstitute($data = array(), $loadData = true)
+	{
+		$config = array(
+			'control'   => 'jform',
+			'load_data' => $loadData
+		);
+
+		$formName = 'schedule_institute';
+
+		return $this->loadForm($this->option . '.' . $formName . '.form', $formName, $config);
+	}
+
+	/**
+	 * getFormIndividual
+	 *
+	 * @param   array  $data
+	 * @param   bool   $loadData
+	 *
+	 * @return  mixed
+	 */
+	public function getFormIndividual($data = array(), $loadData = true)
+	{
+		$config = array(
+			'control'   => 'jform',
+			'load_data' => $loadData
+		);
+
+		$formName = 'schedule_individual';
+
+		return $this->loadForm($this->option . '.' . $formName . '.form', $formName, $config);
+	}
 }

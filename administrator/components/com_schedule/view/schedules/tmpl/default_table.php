@@ -27,9 +27,6 @@ $container = $this->getContainer();
 $asset     = $container->get('helper.asset');
 $grid      = $data->grid;
 $date      = $container->get('date');
-
-// Set order script.
-$grid->registerTableSort();
 ?>
 
 <!-- LIST TABLE -->
@@ -38,54 +35,64 @@ $grid->registerTableSort();
 <!-- TABLE HEADER -->
 <thead>
 <tr>
-	<!--SORT-->
-	<th width="1%" class="nowrap center hidden-phone">
-		<?php echo $grid->orderTitle(); ?>
-	</th>
-
-	<!--CHECKBOX-->
+	<!-- CHECKBOX -->
 	<th width="1%" class="center">
 		<?php echo JHtml::_('grid.checkAll'); ?>
 	</th>
 
-	<!--STATE-->
+	<!-- EDIT -->
+	<th width="3%" class="center">
+		排程
+	</th>
+
+	<!-- schedule.rx_id -->
 	<th width="5%" class="nowrap center">
-		<?php echo $grid->sortTitle('JSTATUS', 'schedule.state'); ?>
+		<?php echo $grid->sortTitle('處方箋編號', 'schedule.rx_id'); ?>
 	</th>
 
-	<!--TITLE-->
+	<!-- schedule.type -->
+	<th class="nowrap center">
+		<?php echo $grid->sortTitle('類別', 'schedule.type'); ?>
+	</th>
+
+	<!-- schedule.institute_id | schedule.customer_id -->
 	<th class="center">
-		<?php echo $grid->sortTitle('JGLOBAL_TITLE', 'schedule.title'); ?>
+		<?php echo $grid->sortTitle('所屬機構/所屬會員', 'schedule.type, schedule.institute_id, schedule.customer_id'); ?>
 	</th>
 
-	<!--CATEGORY-->
-	<th width="10%" class="center">
-		<?php echo $grid->sortTitle('JCATEGORY', 'category.title'); ?>
+	<!-- schedule.city -->
+	<th class="center">
+		<?php echo $grid->sortTitle('縣市', 'schedule.city'); ?>
 	</th>
 
-	<!--ACCESS VIEW LEVEL-->
-	<th width="5%" class="center">
-		<?php echo $grid->sortTitle('JGRID_HEADING_ACCESS', 'viewlevel.title'); ?>
+	<!-- schedule.area -->
+	<th class="center">
+		<?php echo $grid->sortTitle('區域', 'schedule.area'); ?>
 	</th>
 
-	<!--CREATED-->
-	<th width="10%" class="center">
-		<?php echo $grid->sortTitle('JDATE', 'schedule.created'); ?>
+	<!-- schedule.customer_id -->
+	<th class="center">
+		<?php echo $grid->sortTitle('客戶', 'schedule.customer_id'); ?>
 	</th>
 
-	<!--USER-->
-	<th width="10%" class="center">
-		<?php echo $grid->sortTitle('JAUTHOR', 'user.name'); ?>
+	<!-- schedule.date -->
+	<th class="center">
+		<?php echo $grid->sortTitle('預計外送日', 'schedule.date'); ?>
 	</th>
 
-	<!--LANGUAGE-->
-	<th width="5%" class="center">
-		<?php echo $grid->sortTitle('JGRID_HEADING_LANGUAGE', 'lang.title'); ?>
+	<!-- route.sender_id -->
+	<th class="center">
+		<?php echo $grid->sortTitle('外送藥師', 'route.sender_id'); ?>
 	</th>
 
-	<!--ID-->
-	<th width="1%" class="nowrap center">
-		<?php echo $grid->sortTitle('JGRID_HEADING_ID', 'schedule.id'); ?>
+	<!-- schedule.sorted -->
+	<th class="center">
+		<?php echo $grid->sortTitle('分藥', 'schedule.sorted'); ?>
+	</th>
+
+	<!-- schedule.status -->
+	<th class="center">
+		<?php echo $grid->sortTitle('狀態', 'schedule.status'); ?>
 	</th>
 </tr>
 </thead>
@@ -93,7 +100,7 @@ $grid->registerTableSort();
 <!--PAGINATION-->
 <tfoot>
 <tr>
-	<td colspan="15">
+	<td colspan="11">
 		<div class="pull-left">
 			<?php echo $data->pagination->getListFooter(); ?>
 		</div>
@@ -111,83 +118,71 @@ $grid->registerTableSort();
 	// Prepare item for GridHelper
 	$grid->setItem($item, $i);
 	?>
-	<tr class="schedule-row" sortable-group-id="<?php echo $item->catid; ?>">
-		<!-- DRAG SORT -->
-		<td class="order nowrap center hidden-phone">
-			<?php echo $grid->dragSort(); ?>
-		</td>
-
-		<!--CHECKBOX-->
+	<tr class="schedule-row">
+		<!-- CHECKBOX -->
 		<td class="center">
-			<?php echo JHtml::_('grid.id', $i, $item->schedule_id); ?>
+			<?php echo JHtml::_('grid.id', $i, $item->id); ?>
 		</td>
 
-		<!--STATE-->
+		<!-- EDIT -->
 		<td class="center">
-			<div class="btn-group">
-				<!-- STATE BUTTON -->
-				<?php echo $grid->state() ?>
-
-				<!-- CHANGE STATE DROP DOWN -->
-				<?php echo $this->loadTemplate('dropdown'); ?>
-			</div>
+			<a class="btn btn-mini btn-primary"
+				href="<?php echo JRoute::_('index.php?option=com_schedule&task=schedule.edit.edit&id=' . $item->id); ?>">
+				<i class="glyphicon glyphicon-edit"></i>
+			</a>
 		</td>
 
-		<!--TITLE-->
-		<td class="n/owrap has-context quick-edit-wrap">
-			<div class="item-title">
-				<!-- Checkout -->
-				<?php echo $grid->checkoutButton(); ?>
-
-				<!-- Title -->
-				<?php echo $grid->editTitle(); ?>
-			</div>
-
-			<!-- Sub Title -->
-			<div class="small">
-				<?php echo JText::sprintf('JGLOBAL_LIST_ALIAS', $this->escape($item->alias)); ?>
-			</div>
-		</td>
-
-		<!--CATEGORY-->
+		<!-- rx_id -->
 		<td class="center">
-			<?php echo $this->escape($item->category_title); ?>
+			<a href="<?php echo JRoute::_('index.php?option=com_schedule&task=prescription.edit.edit&id=' . $item->rx_id); ?>">
+				<?php echo (int) $item->rx_id; ?>
+			</a>
 		</td>
 
-		<!--ACCESS VIEW LEVEL-->
+		<!-- type -->
 		<td class="center">
-			<?php echo $this->escape($item->viewlevel_title); ?>
+			<?php echo JText::_('COM_SCHEDULE_SCHEDULE_FIELD_TYEP_' . strtoupper($item->type)); ?>
 		</td>
 
-		<!--CREATED-->
+		<!-- customer_name | institute_name -->
 		<td class="center">
-			<?php echo JHtml::_('date', $item->created, JText::_('DATE_FORMAT_LC4')); ?>
+			<?php echo Schedule\Helper\ScheduleHelper::getEditLink($item); ?>
 		</td>
 
-		<!--USER-->
+		<!-- city_title -->
 		<td class="center">
-			<?php echo $this->escape($item->user_name); ?>
+			<?php echo $item->city_title; ?>
 		</td>
 
-		<!--LANGUAGE-->
+		<!-- area_title -->
 		<td class="center">
-			<?php
-			if ($item->language == '*')
-			{
-				echo JText::alt('JALL', 'language');
-			}
-			else
-			{
-				echo $item->lang_title ? $this->escape($item->lang_title) : JText::_('JUNDEFINED');
-			}
-			?>
+			<?php echo $item->area_title; ?>
 		</td>
 
-		<!--ID-->
+		<!-- customer_name -->
 		<td class="center">
-			<?php echo (int) $item->id; ?>
+			<?php echo $item->customer_name; ?>
 		</td>
 
+		<!-- date -->
+		<td class="center">
+			<?php echo $item->date; ?>
+		</td>
+
+		<!-- route_sender_name -->
+		<td class="center">
+			<?php echo $item->route_sender_name; ?>
+		</td>
+
+		<!-- sorted -->
+		<td class="center">
+			<input type="checkbox" value="1"<?php echo ($item->sorted ? ' checked="checked"' : ''); ?>>
+		</td>
+
+		<!-- status -->
+		<td class="center">
+			<?php echo $item->status; ?>
+		</td>
 	</tr>
 <?php endforeach; ?>
 </tbody>

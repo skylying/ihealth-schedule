@@ -63,6 +63,16 @@ class ScheduleModelSchedules extends ListModel
 	protected $viewList = 'schedules';
 
 	/**
+	 * Valid filter fields or ordering.
+	 *
+	 * @var  array
+	 */
+	protected $filterFields = array(
+		'schedule.date_start',
+		'schedule.date_end'
+	);
+
+	/**
 	 * configureTables
 	 *
 	 * @return  void
@@ -72,10 +82,7 @@ class ScheduleModelSchedules extends ListModel
 		$queryHelper = $this->getContainer()->get('model.schedules.helper.query', Container::FORCE_NEW);
 
 		$queryHelper->addTable('schedule', '#__schedule_schedules')
-			->addTable('category',  '#__categories', 'schedule.catid      = category.id')
-			->addTable('user',      '#__users',      'schedule.created_by = user.id')
-			->addTable('viewlevel', '#__viewlevels', 'schedule.access     = viewlevel.id')
-			->addTable('lang',      '#__languages',  'schedule.language   = lang.lang_code');
+			->addTable('route', '#__schedule_routes', 'schedule.route_id = route.id');
 
 		$this->filterFields = array_merge($this->filterFields, $queryHelper->getFilterFields());
 	}
@@ -83,24 +90,14 @@ class ScheduleModelSchedules extends ListModel
 	/**
 	 * populateState
 	 *
-	 * @param null $ordering
-	 * @param null $direction
+	 * @param   string  $ordering
+	 * @param   string  $direction
 	 *
 	 * @return  void
 	 */
-	protected function populateState($ordering = null, $direction = null)
+	protected function populateState($ordering = 'schedule.id', $direction = 'ASC')
 	{
-		// Build ordering prefix
-		if (!$ordering)
-		{
-			$table = $this->getTable('Schedule');
-
-			$ordering = property_exists($table, 'ordering') ? 'schedule.ordering' : 'schedule.id';
-
-			$ordering = property_exists($table, 'catid') ? 'schedule.catid, ' . $ordering : $ordering;
-		}
-
-		parent::populateState($ordering, 'ASC');
+		parent::populateState($ordering, $direction);
 	}
 
 	/**
@@ -113,12 +110,6 @@ class ScheduleModelSchedules extends ListModel
 	 */
 	protected function processFilters(\JDatabaseQuery $query, $filters = array())
 	{
-		// If no state filter, set published >= 0
-		if (!isset($filters['schedule.state']) && property_exists($this->getTable(), 'state'))
-		{
-			$query->where($query->quoteName('schedule.state') . ' >= 0');
-		}
-
 		return parent::processFilters($query, $filters);
 	}
 
@@ -131,6 +122,27 @@ class ScheduleModelSchedules extends ListModel
 	 */
 	protected function configureFilters($filterHelper)
 	{
+		$filterHelper->setHandler(
+			'schedule.date_start',
+			function ($query, $field, $start)
+			{
+				if ($start)
+				{
+					$query->where('`schedule`.`date` >= ' . $query->q($start));
+				}
+			}
+		);
+
+		$filterHelper->setHandler(
+			'schedule.date_end',
+			function ($query, $field, $end)
+			{
+				if ($end)
+				{
+					$query->where('`schedule`.`date` <= ' . $query->q($end));
+				}
+			}
+		);
 	}
 
 	/**

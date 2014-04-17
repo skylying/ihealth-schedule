@@ -82,5 +82,47 @@ class ScheduleViewScheduleHtml extends EditView
 	protected function prepareRender()
 	{
 		parent::prepareRender();
+
+		$data = $this->getData();
+
+		$data->formInstitute = $this->get('FormInstitute');
+		$data->formIndividual = $this->get('FormIndividual');
+	}
+
+	/**
+	 * setTitle
+	 *
+	 * @param   string  $title
+	 * @param   string  $icons
+	 *
+	 * @return  void
+	 */
+	protected function setTitle($title = null, $icons = 'pencil-2')
+	{
+		if (!$title)
+		{
+			$key = 'COM_%s_%s_TITLE_ITEM_' . ($this->data->item->id ? 'EDIT' : 'NEW');
+
+			$title = \JText::_(sprintf($key, strtoupper($this->prefix), strtoupper($this->viewItem)));
+		}
+
+		parent::setTitle($title, 'pencil-2 article');
+	}
+
+	/**
+	 * configureToolbar
+	 *
+	 * @param array  $buttonSet
+	 * @param Object $canDo
+	 *
+	 * @return  array
+	 */
+	protected function configureToolbar($buttonSet = array(), $canDo = null)
+	{
+		$config = parent::configureToolbar($buttonSet, $canDo);
+
+		$config['apply']['access'] = false;
+
+		return $config;
 	}
 }
