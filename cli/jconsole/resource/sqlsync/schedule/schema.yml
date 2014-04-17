@@ -27,11 +27,10 @@
     from:
         - '#__schedule_customers'
     columns:
-        id: { Field: id, Type: 'int(11) unsigned', 'Null': NO, Default: null, Extra: auto_increment, Comment: 'Primary Key', From: [id] }
+        id: { Field: id, Type: 'int(11) unsigned', 'Null': NO, Default: null, Extra: auto_increment, Comment: 客戶編號, From: [id] }
         institute_id: { Field: institute_id, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: '所屬機構 id', From: [institute_id] }
         route_id: { Field: route_id, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: '路線 id', From: [route_id] }
         id_number: { Field: id_number, Type: char(15), 'Null': NO, Default: null, Extra: '', Comment: 身分證字號, From: [id_number] }
-        serial: { Field: serial, Type: char(10), 'Null': NO, Default: null, Extra: '', Comment: 客戶編號, From: [serial] }
         name: { Field: name, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 客戶姓名, From: [name] }
         type: { Field: type, Type: char(20), 'Null': NO, Default: null, Extra: '', Comment: 客戶類別, From: [type] }
         birth_date: { Field: birth_date, Type: date, 'Null': NO, Default: null, Extra: '', Comment: 出生年月日, From: [birth_date] }
@@ -128,8 +127,7 @@
     from:
         - '#__schedule_institutes'
     columns:
-        id: { Field: id, Type: 'int(11) unsigned', 'Null': NO, Default: null, Extra: auto_increment, Comment: 'Primary Key', From: [id] }
-        serial: { Field: serial, Type: char(10), 'Null': NO, Default: null, Extra: '', Comment: 機構編號, From: [serial] }
+        id: { Field: id, Type: 'int(11) unsigned', 'Null': NO, Default: null, Extra: auto_increment, Comment: 機構編號, From: [id] }
         route_id: { Field: route_id, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: '路線 id', From: [route_id] }
         title: { Field: title, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 'Record title', From: [title] }
         short_title: { Field: short_title, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 機構簡稱, From: [short_title] }
@@ -173,7 +171,7 @@
     from:
         - '#__schedule_prescriptions'
     columns:
-        id: { Field: id, Type: 'int(11) unsigned', 'Null': NO, Default: null, Extra: auto_increment, Comment: 'Primary Key', From: [id] }
+        id: { Field: id, Type: 'int(11) unsigned', 'Null': NO, Default: null, Extra: auto_increment, Comment: 處方箋編號, From: [id] }
         created: { Field: created, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: 'Created time', From: [created] }
         created_by: { Field: created_by, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: Author, From: [created_by] }
         modified: { Field: modified, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: 'Modified time', From: [modified] }
@@ -193,7 +191,6 @@
         floor: { Field: floor, Type: varchar(10), 'Null': YES, Default: null, Extra: '', Comment: '', From: [floor] }
         id_number: { Field: id_number, Type: char(10), 'Null': YES, Default: null, Extra: '', Comment: '', From: [id_number] }
         type: { Field: type, Type: char(10), 'Null': YES, Default: null, Extra: '', Comment: '', From: [type] }
-        serial: { Field: serial, Type: varchar(255), 'Null': YES, Default: null, Extra: '', Comment: '', From: [serial] }
         birth_date: { Field: birth_date, Type: date, 'Null': YES, Default: null, Extra: '', Comment: '', From: [birth_date] }
         see_dr_date: { Field: see_dr_date, Type: date, 'Null': YES, Default: null, Extra: '', Comment: '', From: [see_dr_date] }
         period: { Field: period, Type: tinyint(2), 'Null': YES, Default: null, Extra: '', Comment: '', From: [period] }
@@ -273,8 +270,7 @@
     from:
         - '#__schedule_tasks'
     columns:
-        id: { Field: id, Type: 'int(11) unsigned', 'Null': NO, Default: null, Extra: auto_increment, Comment: 'Primary Key', From: [id] }
-        serial: { Field: serial, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 'Serial Number', From: [serial] }
+        id: { Field: id, Type: 'int(11) unsigned', 'Null': NO, Default: null, Extra: auto_increment, Comment: 外送編號, From: [id] }
         date: { Field: date, Type: date, 'Null': NO, Default: null, Extra: '', Comment: 外送日期, From: [date] }
         sender: { Field: sender, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: 外送藥師ID, From: [sender] }
         sender_name: { Field: sender_name, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 外送藥師名稱, From: [sender_name] }
