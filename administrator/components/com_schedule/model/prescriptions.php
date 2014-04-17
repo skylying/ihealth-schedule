@@ -71,11 +71,7 @@ class ScheduleModelPrescriptions extends ListModel
 	{
 		$queryHelper = $this->getContainer()->get('model.prescriptions.helper.query', Container::FORCE_NEW);
 
-		$queryHelper->addTable('prescription', '#__schedule_prescriptions')
-			->addTable('category',  '#__categories', 'prescription.catid      = category.id')
-			->addTable('user',      '#__users',      'prescription.created_by = user.id')
-			->addTable('viewlevel', '#__viewlevels', 'prescription.access     = viewlevel.id')
-			->addTable('lang',      '#__languages',  'prescription.language   = lang.lang_code');
+		$queryHelper->addTable('prescription', '#__schedule_prescriptions');
 
 		$this->filterFields = array_merge($this->filterFields, $queryHelper->getFilterFields());
 	}
