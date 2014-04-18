@@ -1,0 +1,68 @@
+'#__user_usergroup_map':
+    name: '#__user_usergroup_map'
+    from:
+        - '#__user_usergroup_map'
+    columns:
+        user_id: { Field: user_id, Type: 'int(10) unsigned', 'Null': NO, Default: '0', Extra: '', Comment: 'Foreign Key to #__users.id', From: [user_id] }
+        group_id: { Field: group_id, Type: 'int(10) unsigned', 'Null': NO, Default: '0', Extra: '', Comment: 'Foreign Key to #__usergroups.id', From: [group_id] }
+    index:
+        - { Table: '#__user_usergroup_map', Non_unique: '0', Key_name: PRIMARY, Seq_in_index: '1', Column_name: user_id, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
+        - { Table: '#__user_usergroup_map', Non_unique: '0', Key_name: PRIMARY, Seq_in_index: '2', Column_name: group_id, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
+    data:
+        - ['279', '8']
+'#__usergroups':
+    name: '#__usergroups'
+    from:
+        - '#__usergroups'
+    columns:
+        id: { Field: id, Type: 'int(10) unsigned', 'Null': NO, Default: null, Extra: auto_increment, Comment: 'Primary Key', From: [id] }
+        parent_id: { Field: parent_id, Type: 'int(10) unsigned', 'Null': NO, Default: '0', Extra: '', Comment: 'Adjacency List Reference Id', From: [parent_id] }
+        lft: { Field: lft, Type: int(11), 'Null': NO, Default: '0', Extra: '', Comment: 'Nested set lft.', From: [lft] }
+        rgt: { Field: rgt, Type: int(11), 'Null': NO, Default: '0', Extra: '', Comment: 'Nested set rgt.', From: [rgt] }
+        title: { Field: title, Type: varchar(100), 'Null': NO, Default: '', Extra: '', Comment: '', From: [title] }
+    index:
+        - { Table: '#__usergroups', Non_unique: '0', Key_name: PRIMARY, Seq_in_index: '1', Column_name: id, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
+        - { Table: '#__usergroups', Non_unique: '0', Key_name: idx_usergroup_parent_title_lookup, Seq_in_index: '1', Column_name: parent_id, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
+        - { Table: '#__usergroups', Non_unique: '0', Key_name: idx_usergroup_parent_title_lookup, Seq_in_index: '2', Column_name: title, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
+        - { Table: '#__usergroups', Non_unique: '1', Key_name: idx_usergroup_title_lookup, Seq_in_index: '1', Column_name: title, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
+        - { Table: '#__usergroups', Non_unique: '1', Key_name: idx_usergroup_adjacency_lookup, Seq_in_index: '1', Column_name: parent_id, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
+        - { Table: '#__usergroups', Non_unique: '1', Key_name: idx_usergroup_nested_set_lookup, Seq_in_index: '1', Column_name: lft, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
+        - { Table: '#__usergroups', Non_unique: '1', Key_name: idx_usergroup_nested_set_lookup, Seq_in_index: '2', Column_name: rgt, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
+    data:
+        - ['1', '0', '1', '18', Public]
+        - ['2', '1', '8', '15', Registered]
+        - ['3', '2', '9', '14', Author]
+        - ['4', '3', '10', '13', Editor]
+        - ['5', '4', '11', '12', Publisher]
+        - ['6', '1', '4', '7', Manager]
+        - ['7', '6', '5', '6', Administrator]
+        - ['8', '1', '16', '17', 'Super Users']
+        - ['9', '1', '2', '3', Guest]
+'#__users':
+    name: '#__users'
+    from:
+        - '#__users'
+    columns:
+        id: { Field: id, Type: int(11), 'Null': NO, Default: null, Extra: auto_increment, Comment: '', From: [id] }
+        name: { Field: name, Type: varchar(255), 'Null': NO, Default: '', Extra: '', Comment: '', From: [name] }
+        username: { Field: username, Type: varchar(150), 'Null': NO, Default: '', Extra: '', Comment: '', From: [username] }
+        email: { Field: email, Type: varchar(100), 'Null': NO, Default: '', Extra: '', Comment: '', From: [email] }
+        password: { Field: password, Type: varchar(100), 'Null': NO, Default: '', Extra: '', Comment: '', From: [password] }
+        block: { Field: block, Type: tinyint(4), 'Null': NO, Default: '0', Extra: '', Comment: '', From: [block] }
+        sendEmail: { Field: sendEmail, Type: tinyint(4), 'Null': YES, Default: '0', Extra: '', Comment: '', From: [sendEmail] }
+        registerDate: { Field: registerDate, Type: datetime, 'Null': NO, Default: '0000-00-00 00:00:00', Extra: '', Comment: '', From: [registerDate] }
+        lastvisitDate: { Field: lastvisitDate, Type: datetime, 'Null': NO, Default: '0000-00-00 00:00:00', Extra: '', Comment: '', From: [lastvisitDate] }
+        activation: { Field: activation, Type: varchar(100), 'Null': NO, Default: '', Extra: '', Comment: '', From: [activation] }
+        params: { Field: params, Type: text, 'Null': NO, Default: null, Extra: '', Comment: '', From: [params] }
+        lastResetTime: { Field: lastResetTime, Type: datetime, 'Null': NO, Default: '0000-00-00 00:00:00', Extra: '', Comment: 'Date of last password reset', From: [lastResetTime] }
+        resetCount: { Field: resetCount, Type: int(11), 'Null': NO, Default: '0', Extra: '', Comment: 'Count of password resets since lastResetTime', From: [resetCount] }
+        otpKey: { Field: otpKey, Type: varchar(1000), 'Null': NO, Default: '', Extra: '', Comment: 'Two factor authentication encrypted keys', From: [otpKey] }
+        otep: { Field: otep, Type: varchar(1000), 'Null': NO, Default: '', Extra: '', Comment: 'One time emergency passwords', From: [otep] }
+    index:
+        - { Table: '#__users', Non_unique: '0', Key_name: PRIMARY, Seq_in_index: '1', Column_name: id, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
+        - { Table: '#__users', Non_unique: '1', Key_name: idx_name, Seq_in_index: '1', Column_name: name, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
+        - { Table: '#__users', Non_unique: '1', Key_name: idx_block, Seq_in_index: '1', Column_name: block, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
+        - { Table: '#__users', Non_unique: '1', Key_name: username, Seq_in_index: '1', Column_name: username, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
+        - { Table: '#__users', Non_unique: '1', Key_name: email, Seq_in_index: '1', Column_name: email, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
+    data:
+        - ['279', 'Super User', smstw, service@bm-sms.com.tw, $P$DJ9ygEXhN9o2F0v53Q5FgeaY/wIk7K/, '0', '1', '2014-03-17 08:43:46', '2014-04-15 02:11:03', '0', '', '0000-00-00 00:00:00', '0', '', '']
