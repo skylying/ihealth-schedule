@@ -36,25 +36,40 @@
 			class="input-xlarge required"
 			/>
 		<field name="city"
-			type="sql"
-			query="SELECT `id`, `title` FROM #__schedule_cities WHERE published=1"
-			key_field="id"
-			value_field="title"
+			type="list"
 			label="COM_SCHEDULE_HOSPITAL_ITEM_CITY_TITLE"
 			description="COM_SCHEDULE_HOSPITAL_ITEM_CITY_TITLE">
-		<option>- 請選擇縣市 -</option>
+			<option>- 請選擇縣市 -</option>
+			<option value="1">台北市</option>
+			<option value="2">新北市</option>
+			<option value="3">台中市</option>
+			<option value="4">高雄市</option>
+			<option value="5">台灣市</option>
 		</field>
 		<field name="city_title"
 			type="hidden"
 			label="縣市標題"
 			description="標題" />
 		<field name="area"
-			type="hidden"
-			label="現居地地區"
-			description="現居地地區" />
+			type="list"
+			label="COM_SCHEDULE_HOSPITAL_ITEM_AREA"
+			description="COM_SCHEDULE_HOSPITAL_ITEM_AREA">
+			<option>- 請選擇區域 -</option>
+			<option value="1">大同區</option>
+			<option value="2">中正區</option>
+			<option value="3">阿瑪茸區</option>
+			<option value="4">天龍區</option>
+			<option value="5">三角洲區</option>
+		</field>
 		<field name="area_title"
 			type="hidden"
-			label="地區標題"
-			description="地區標題" />
+			label="COM_SCHEDULE_HOSPITAL_ITEM_AREA_TITLE"
+			description="COM_SCHEDULE_HOSPITAL_ITEM_AREA_TITLE" />
+		<field name="images"
+				type="file"
+				label="COM_SCHEDULE_HOSPITAL_ITEM_IMAGE"
+				description="COM_SCHEDULE_HOSPITAL_ITEM_IMAGE"
+				size="40"
+				class="inputbox"/>
 	</fieldset>
 </form>
