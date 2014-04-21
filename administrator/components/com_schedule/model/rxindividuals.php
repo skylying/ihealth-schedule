@@ -63,6 +63,16 @@ class ScheduleModelRxindividuals extends ListModel
 	protected $viewList = 'rxindividuals';
 
 	/**
+	 * Property filterFields.
+	 *
+	 * @var array
+	 */
+	protected $filterFields = array(
+		'see_dr_date_start',
+		'see_dr_date_end'
+	);
+
+	/**
 	 * configureTables
 	 *
 	 * @return  void
@@ -129,6 +139,27 @@ class ScheduleModelRxindividuals extends ListModel
 	 */
 	protected function configureFilters($filterHelper)
 	{
+		$filterHelper->setHandler(
+			'see_dr_date_start',
+			function ($query, $field, $min)
+			{
+				if ($min)
+				{
+					$query->where('`rxindividual`.`see_dr_date` >= ' . $query->q($min));
+				}
+			}
+		);
+
+		$filterHelper->setHandler(
+			'see_dr_date_end',
+			function($query, $field, $max)
+			{
+				if ($max)
+				{
+					$query->where('`rxindividual`.`see_dr_date` <= ' . $query->q($max));
+				}
+			}
+		);
 	}
 
 	/**
