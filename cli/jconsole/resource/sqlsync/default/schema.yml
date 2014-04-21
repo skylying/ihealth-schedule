@@ -869,6 +869,16 @@
         - { Table: '#__usergroups', Non_unique: '1', Key_name: idx_usergroup_adjacency_lookup, Seq_in_index: '1', Column_name: parent_id, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
         - { Table: '#__usergroups', Non_unique: '1', Key_name: idx_usergroup_nested_set_lookup, Seq_in_index: '1', Column_name: lft, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
         - { Table: '#__usergroups', Non_unique: '1', Key_name: idx_usergroup_nested_set_lookup, Seq_in_index: '2', Column_name: rgt, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
+    data:
+        - ['1', '0', '1', '18', Public]
+        - ['2', '1', '8', '15', Registered]
+        - ['3', '2', '9', '14', Author]
+        - ['4', '3', '10', '13', Editor]
+        - ['5', '4', '11', '12', Publisher]
+        - ['6', '1', '4', '7', Manager]
+        - ['7', '6', '5', '6', Administrator]
+        - ['8', '1', '16', '17', 'Super Users']
+        - ['9', '1', '2', '3', Guest]
 '#__users':
     name: '#__users'
     from:
