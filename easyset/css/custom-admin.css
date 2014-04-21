@@ -1,2 +1,6 @@
 /* ASIKART EasySet Custom CSS Admin */
 
+div.modal.hide
+{
+	position: fixed;
+}
