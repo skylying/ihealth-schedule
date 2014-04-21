@@ -134,9 +134,7 @@ $date      = $container->get('date');
 
 		<!-- rx_id -->
 		<td class="center">
-			<a href="<?php echo JRoute::_('index.php?option=com_schedule&task=prescription.edit.edit&id=' . $item->rx_id); ?>">
-				<?php echo (int) $item->rx_id; ?>
-			</a>
+			<?php echo Schedule\Helper\ScheduleHelper::getRXLink($item); ?>
 		</td>
 
 		<!-- type -->
@@ -161,7 +159,12 @@ $date      = $container->get('date');
 
 		<!-- customer_name -->
 		<td class="center">
-			<?php echo $item->customer_name; ?>
+			<?php if ($item->customer_id > 0): ?>
+			<a href="<?php echo JRoute::_('index.php?option=com_schedule&task=customer.edit.edit&id=' . $item->customer_id); ?>" target="_blank">
+				<?php echo $item->customer_name; ?>
+				<i class="glyphicon glyphicon-share-alt"></i>
+			</a>
+			<?php endif; ?>
 		</td>
 
 		<!-- date -->
