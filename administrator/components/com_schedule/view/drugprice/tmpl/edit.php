@@ -26,9 +26,7 @@ $item      = $data->item;
 
 // Setting tabset
 $tabs = array(
-	'tab_basic',
-	'tab_advanced',
-	'tab_rules'
+	'tab_basic'
 )
 ?>
 <!-- Validate Script -->
