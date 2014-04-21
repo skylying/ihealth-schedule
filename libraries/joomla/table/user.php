@@ -391,6 +391,7 @@ class JTableUser extends JTable
 		 * Clean Up Related Data.
 		 */
 
+		/* Hack by CMF
 		$query->clear()
 			->delete($this->_db->quoteName('#__messages_cfg'))
 			->where($this->_db->quoteName('user_id') . ' = ' . (int) $this->$k);
@@ -402,6 +403,7 @@ class JTableUser extends JTable
 			->where($this->_db->quoteName('user_id_to') . ' = ' . (int) $this->$k);
 		$this->_db->setQuery($query);
 		$this->_db->execute();
+		*/
 
 		$query->clear()
 			->delete($this->_db->quoteName('#__user_keys'))
