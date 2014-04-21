@@ -29,7 +29,7 @@ $grid      = $data->grid;
 $date      = $container->get('date');
 
 // Set order script.
-$grid->registerTableSort();
+
 ?>
 
 <!-- LIST TABLE -->
@@ -38,10 +38,7 @@ $grid->registerTableSort();
 <!-- TABLE HEADER -->
 <thead>
 <tr>
-	<!--SORT-->
-	<th width="1%" class="nowrap center hidden-phone">
-		<?php echo $grid->orderTitle(); ?>
-	</th>
+
 
 	<!--CHECKBOX-->
 	<th width="1%" class="center">
@@ -126,11 +123,7 @@ $grid->registerTableSort();
 	// Prepare item for GridHelper
 	$grid->setItem($item, $i);
 	?>
-	<tr class="customer-row" sortable-group-id="<?php echo $item->catid; ?>">
-		<!-- DRAG SORT -->
-		<td class="order nowrap center hidden-phone">
-			<?php echo $grid->dragSort(); ?>
-		</td>
+	<tr class="customer-row" <?php echo $item->catid; ?>>
 
 		<!--CHECKBOX-->
 		<td class="center">
@@ -190,7 +183,7 @@ $grid->registerTableSort();
 
 		<!--SCHEDULE_RECORD-->
 		<td class="center">
-
+			<a href=<?php JRoute::_('index.php?option-com_schedule&view=schedules');?>><?php echo JTEXT::_('COM_SCHEDULE_RECORD_LINK');?></a>
 		</td>
 
 		<!--RESERVE-->

@@ -128,6 +128,27 @@ class ScheduleModelCustomers extends ListModel
 	 */
 	protected function configureFilters($filterHelper)
 	{
+		$filterHelper->setHandler(
+			'customers.age_start',
+			function ($query, $field, $start)
+			{
+				if ($start)
+				{
+					$query->where('`customers`.`age` >= ' . $query->q($start));
+				}
+			}
+		);
+
+		$filterHelper->setHandler(
+			'customers.age_end',
+			function ($query, $field, $end)
+			{
+				if ($end)
+				{
+					$query->where('`customers`.`age` <= ' . $query->q($end));
+				}
+			}
+		);
 	}
 
 	/**

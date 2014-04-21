@@ -18,6 +18,7 @@
 			description="COM_SCHEDULE_CUSTOMER_SERIAL"
 			required="true"
 			class="input-small required"
+			readonly="true"
 			/>
 
 		<field name="title"
@@ -41,10 +42,11 @@
 			/>
 
 		<field name="age"
-			type="integer"
+			type="text"
 			label="COM_SCHEDULE_CUSTOMER_AGE"
 			description="COM_SCHEDULE_CUSTOMER_AGE"
 			class="input-small"
+			readonly="true"
 			/>
 
 		<field name="state"
@@ -93,19 +95,22 @@
 			/>
 
 		<field name="rx_period"
-			type="text"
+			type="list"
 			label="COM_SCHEDULE_RX_PERIOD"
-			description="COM_SCHEDULE_RX_PERIOD"
-			class="input-large"
-			/>
+			description="COM_SCHEDULE_RX_PERIOD">
+			<option value="21">21天</option>
+			<option value="28">28天</option>
+			<option value="30">30天</option>
+			<option value="31">31天</option>
+		</field>
 
 		<field name="rx_time"
 			type="list"
 			label="COM_SCHEDULE_RX_TIME"
 			description="COM_SCHEDULE_RX_TIME">
-			<option value="1">第1次</option>
-			<option value="2">第2次</option>
-			<option value="3">第3次</option>
+			<option value="1">1次</option>
+			<option value="2">2次</option>
+			<option value="3">3次</option>
 		</field>
 
 		<field name="note"
