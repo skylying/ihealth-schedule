@@ -176,8 +176,8 @@
 			onchange="this.form.submit();"
 			>
 			<option value="">JGLOBAL_SORT_BY</option>
-			<option value="schedule.rx_id ASC">處方箋編號升冪排序</option>
-			<option value="schedule.rx_id DESC">處方箋編號降冪排序</option>
+			<option value="schedule.id ASC">排程編號升冪排序</option>
+			<option value="schedule.id DESC">排程編號降冪排序</option>
 			<option value="schedule.type ASC">類別升冪排序</option>
 			<option value="schedule.type DESC">類別降冪排序</option>
 			<option value="schedule.type, schedule.institute_id, schedule.customer_id ASC">所屬機構/所屬會員升冪排序</option>

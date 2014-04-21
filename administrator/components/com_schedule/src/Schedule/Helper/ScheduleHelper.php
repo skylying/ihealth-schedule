@@ -26,12 +26,16 @@ class ScheduleHelper
 		{
 			case 'individual':
 				$url = 'index.php?option=com_schedule&task=member.edit.edit&id=' . $item->member_id;
-				$text = $item->member_name . ' <i class="glyphicon glyphicon-share-alt"></i>';
+				$text = '<i class="glyphicon glyphicon-user"></i> ' .
+					$item->member_name .
+					' <i class="glyphicon glyphicon-share-alt"></i>';
 
 				return \JHtml::link($url, $text, $attr);
 			case 'resident':
 				$url = 'index.php?option=com_schedule&task=institute.edit.edit&id=' . $item->institute_id;
-				$text = $item->institute_title . ' <i class="glyphicon glyphicon-share-alt"></i>';
+				$text = '<i class="glyphicon glyphicon-home"></i> ' .
+					$item->institute_title .
+					' <i class="glyphicon glyphicon-share-alt"></i>';
 
 				return \JHtml::link($url, $text, $attr);
 		}
@@ -40,34 +44,55 @@ class ScheduleHelper
 	}
 
 	/**
-	 * Get prescription edit link
+	 * getStatusSelector
 	 *
-	 * @param   Data $item
+	 * @param   string  $value
 	 *
 	 * @return  string
 	 */
-	public static function getRXLink(Data $item)
+	public static function getStatusSelector($value)
 	{
-		if ((int) $item->rx_id <= 0)
+		$value = strtolower(trim($value));
+
+		$options = array(
+			'scheduled'		=> array('text' => '已排程',		'color' => '#26C281', 'icon' => 'calendar'),
+			'emergency'		=> array('text' => '急件',		'color' => '#E74C3C', 'icon' => 'fire'),
+			'deleted'		=> array('text' => '已刪除',		'color' => '#b97e7e', 'icon' => 'trash'),
+			'cancelonly'	=> array('text' => '取消-要退單',	'color' => '#95A5A6', 'icon' => 'remove'),
+			'cancelreject'	=> array('text' => '取消-不退單',	'color' => '#26C281', 'icon' => 'remove'),
+			'pause'			=> array('text' => '暫緩',		'color' => '#F5AB35', 'icon' => 'pause'),
+		);
+		$text = '';
+		$color = '';
+		$icon = '';
+
+		if (isset($options[$value]))
 		{
-			return '';
+			$text = $options[$value]['text'];
+			$color = $options[$value]['color'];
+			$icon = $options[$value]['icon'];
 		}
 
-		$attr = array('target' => '_blank');
-		$text = $item->rx_id . ' <i class="glyphicon glyphicon-share-alt"></i>';
+		$html[] = '<div class="btn-group">';
+		$html[] = '    <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown" style="background:' . $color . ';">';
+		$html[] = '        <i class="glyphicon glyphicon-' . $icon . '"></i> ' . $text . ' <span class="caret"></span>';
+		$html[] = '    </button>';
+		$html[] = '    <ul class="dropdown-menu">';
 
-		switch ($item->type)
+		foreach ($options as $key => $option)
 		{
-			case 'individual':
-				$url = 'index.php?option=com_schedule&task=rxindividual.edit.edit&id=' . $item->rx_id;
+			if ($value === $key || 'deleted' === $key)
+			{
+				continue;
+			}
 
-				return \JHtml::link($url, $text, $attr);
-			case 'resident':
-				$url = 'index.php?option=com_schedule&task=rxresident.edit.edit&id=' . $item->rx_id;
-
-				return \JHtml::link($url, $text, $attr);
+			$html[] = '<li style="background:' . $option['color'] . ';" data-status="' . $key . '">';
+			$html[] = '    <a href="#"><i class="glyphicon glyphicon-' . $option['icon'] . '"></i> ' . $option['text'] . ' </a>';
+			$html[] = '</li>';
 		}
 
-		return '';
+		$html[] = '</ul></div>';
+
+		return implode("\n", $html);
 	}
 }

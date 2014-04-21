@@ -41,22 +41,22 @@ $date      = $container->get('date');
 	</th>
 
 	<!-- EDIT -->
-	<th width="3%" class="center">
-		排程
+	<th width="3%" class="center nowrap">
+		編輯
 	</th>
 
-	<!-- schedule.rx_id -->
-	<th width="5%" class="nowrap center">
-		<?php echo $grid->sortTitle('處方箋編號', 'schedule.rx_id'); ?>
+	<!-- schedule.id -->
+	<th width="5%" class="nowrap">
+		<?php echo $grid->sortTitle('排程編號', 'schedule.id'); ?>
 	</th>
 
 	<!-- schedule.type -->
-	<th class="nowrap center">
+	<th width="5%" class="nowrap">
 		<?php echo $grid->sortTitle('類別', 'schedule.type'); ?>
 	</th>
 
 	<!-- schedule.institute_id | schedule.customer_id -->
-	<th class="center">
+	<th>
 		<?php echo $grid->sortTitle('所屬機構/所屬會員', 'schedule.type, schedule.institute_id, schedule.customer_id'); ?>
 	</th>
 
@@ -91,7 +91,7 @@ $date      = $container->get('date');
 	</th>
 
 	<!-- schedule.status -->
-	<th class="center">
+	<th>
 		<?php echo $grid->sortTitle('狀態', 'schedule.status'); ?>
 	</th>
 </tr>
@@ -100,7 +100,7 @@ $date      = $container->get('date');
 <!--PAGINATION-->
 <tfoot>
 <tr>
-	<td colspan="11">
+	<td colspan="12">
 		<div class="pull-left">
 			<?php echo $data->pagination->getListFooter(); ?>
 		</div>
@@ -132,18 +132,18 @@ $date      = $container->get('date');
 			</a>
 		</td>
 
-		<!-- rx_id -->
-		<td class="center">
-			<?php echo Schedule\Helper\ScheduleHelper::getRXLink($item); ?>
+		<!-- id -->
+		<td>
+			<?php echo $item->id; ?>
 		</td>
 
 		<!-- type -->
-		<td class="center">
+		<td>
 			<?php echo JText::_('COM_SCHEDULE_SCHEDULE_FIELD_TYEP_' . strtoupper($item->type)); ?>
 		</td>
 
 		<!-- customer_name | institute_name -->
-		<td class="center">
+		<td>
 			<?php echo Schedule\Helper\ScheduleHelper::getEditLink($item); ?>
 		</td>
 
@@ -174,17 +174,17 @@ $date      = $container->get('date');
 
 		<!-- route_sender_name -->
 		<td class="center">
-			<?php echo $item->route_sender_name; ?>
+			<?php echo $item->sender_name; ?>
 		</td>
 
 		<!-- sorted -->
 		<td class="center">
-			<input type="checkbox" value="1"<?php echo ($item->sorted ? ' checked="checked"' : ''); ?>>
+			<i class="glyphicon glyphicon-<?php echo ($item->sorted ? 'ok' : 'remove'); ?>"></i>
 		</td>
 
 		<!-- status -->
-		<td class="center">
-			<?php echo $item->status; ?>
+		<td>
+			<?php echo \Schedule\Helper\ScheduleHelper::getStatusSelector($item->status); ?>
 		</td>
 	</tr>
 <?php endforeach; ?>
