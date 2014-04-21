@@ -37,7 +37,7 @@ $ cp htaccess.dist.txt .htaccess
 匯入新專案預設的資訊
 
 ```bash
-$ php cli/console sql import default schedule fixtures -y
+$ php cli/console sql import default schedule fixtures default-user -y
 ```
 
 ## 後台
@@ -52,7 +52,20 @@ $ php cli/console sql import default schedule fixtures -y
 
 ## 元件資訊
 
-- com_xxx  
-資料表:
-    - xxx_items
-
+- com_schedule  
+  資料表:
+    - `#__schedule_addresses`
+    - `#__schedule_colors`
+    - `#__schedule_customers`
+    - `#__schedule_drugprices`
+    - `#__schedule_drugs`
+    - `#__schedule_holidays`
+    - `#__schedule_hospitals`
+    - `#__schedule_images`
+    - `#__schedule_institutes`
+    - `#__schedule_members`
+    - `#__schedule_prescriptions`
+    - `#__schedule_routes`
+    - `#__schedule_schedules`
+    - `#__schedule_senders`
+    - `#__schedule_tasks`
