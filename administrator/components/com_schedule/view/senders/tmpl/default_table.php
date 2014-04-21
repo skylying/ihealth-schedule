@@ -38,11 +38,6 @@ $grid->registerTableSort();
 <!-- TABLE HEADER -->
 <thead>
 <tr>
-	<!--SORT-->
-	<th width="1%" class="nowrap center hidden-phone">
-		<?php echo $grid->orderTitle(); ?>
-	</th>
-
 	<!--CHECKBOX-->
 	<th width="1%" class="center">
 		<?php echo JHtml::_('grid.checkAll'); ?>
@@ -88,12 +83,7 @@ $grid->registerTableSort();
 	// Prepare item for GridHelper
 	$grid->setItem($item, $i);
 	?>
-	<tr class="sender-row" sortable-group-id="<?php echo $item->catid; ?>">
-		<!-- DRAG SORT -->
-		<td class="order nowrap center hidden-phone">
-			<?php echo $grid->dragSort(); ?>
-		</td>
-
+	<tr class="sender-row">
 		<!--CHECKBOX-->
 		<td class="center">
 			<?php echo JHtml::_('grid.id', $i, $item->sender_id); ?>

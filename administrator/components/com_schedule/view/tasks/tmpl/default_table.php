@@ -88,7 +88,7 @@ $grid->registerTableSort();
 	// Prepare item for GridHelper
 	$grid->setItem($item, $i);
 	?>
-	<tr class="task-row" sortable-group-id="<?php echo $item->catid; ?>">
+	<tr class="task-row">
 		<!--CHECKBOX-->
 		<td class="center">
 			<?php echo JHtml::_('grid.id', $i, $item->task_id); ?>
