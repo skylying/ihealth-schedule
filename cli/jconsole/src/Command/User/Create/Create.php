@@ -54,6 +54,13 @@ class Create extends JCommand
 	protected $usage = 'create <option>[option]</option>';
 
 	/**
+	 * Superuser group id.
+	 *
+	 * @var  int
+	 */
+	const SUPER_USER_GROUP_ID = 8;
+
+	/**
 	 * Configure command information.
 	 *
 	 * @return void
@@ -122,7 +129,7 @@ class Create extends JCommand
 
 		$query = $db->getQuery(true)
 			->update('#__user_usergroup_map')
-			->set('group_id = 8')
+			->set('group_id = ' . self::SUPER_USER_GROUP_ID)
 			->where('user_id = ' . $userId);
 
 		$db->setQuery($query)->execute();
