@@ -62,10 +62,9 @@
 			onchange="this.form.submit();"
 			>
 			<option></option>
-			<option>JOPTION_SELECT_PUBLISHED</option>
-			<option value="1">JPUBLISHED</option>
-			<option value="0">JUNPUBLISHED</option>
-			<option value="-2">JTRASHED</option>
+			<option>COM_SCHEDULE_TASK_TITLE_FILTER_CHOOSE_STATUS</option>
+			<option value="1">COM_SCHEDULE_TASK_TITLE_FILTER_STATUS_YES</option>
+			<option value="0">COM_SCHEDULE_TASK_TITLE_FILTER_STATUS_NO</option>
 			<option value="*">JALL</option>
 		</field>
 
