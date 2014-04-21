@@ -4,6 +4,15 @@
 		align="left"
 		horz="true">
 
+		<field name="id"
+			type="text"
+			default="0"
+			label="JGLOBAL_FIELD_ID_LABEL"
+			readonly="true"
+			class="readonly"
+			description="JGLOBAL_FIELD_ID_DESC"
+			/>
+
 		<field name="title"
 			type="text"
 			label="JGLOBAL_TITLE"
@@ -17,92 +26,6 @@
 			label="對應處方箋"
 			description="對應處方箋 id"
 			readonly="true"
-			/>
-
-	</fieldset>
-
-	<fieldset
-		name="publish"
-		align="right"
-		horz="true">
-
-		<field name="state"
-			type="list"
-			label="JSTATUS"
-			description="JFIELD_PUBLISHED_DESC"
-			class="chzn-color-state"
-			size="1"
-			default="1"
-			>
-			<option value="1">JPUBLISHED</option>
-			<option value="0">JUNPUBLISHED</option>
-		</field>
-
-		<field name="id"
-			type="text"
-			default="0"
-			label="JGLOBAL_FIELD_ID_LABEL"
-			readonly="true"
-			class="readonly"
-			description="JGLOBAL_FIELD_ID_DESC"
-			/>
-
-		<field name="created_by"
-			type="user"
-			label="COM_SCHEDULE_CREATED_BY"
-			description="COM_SCHEDULE_CREATED_BY_DESC"
-			/>
-
-		<field name="created"
-			type="calendar"
-			label="COM_SCHEDULE_CREATED"
-			description="COM_SCHEDULE_CREATED_DESC"
-			/>
-
-		<field name="publish_up"
-			type="calendar"
-			label="COM_SCHEDULE_PUBLISH_UP"
-			description="COM_SCHEDULE_PUBLISH_UP_DESC"
-			/>
-
-		<field name="publish_down"
-			type="calendar"
-			label="COM_SCHEDULE_PUBLISHED_DOWN"
-			description="COM_SCHEDULE_PUBLISH_DOWN_DESC"
-			/>
-
-	</fieldset>
-
-	<fieldset name="created">
-		<field name="access"
-			type="accesslevel"
-			label="JFIELD_ACCESS_LABEL"
-			description="JFIELD_ACCESS_DESC"
-			/>
-
-		<field name="language"
-			type="language"
-			label="JGRID_HEADING_LANGUAGE"
-			description="JGRID_HEADING_LANGUAGE"
-			>
-			<option value="*">JALL</option>
-		</field>
-	</fieldset>
-
-	<!-- Need this field as child of root node for access setting. -->
-	<field name="asset_id"
-		type="hidden"
-		filter="unset" />
-
-	<fieldset name="rules">
-		<field name="rules"
-			type="rules"
-			translate_label="false"
-			class="inputbox"
-			filter="rules"
-			component="com_schedule"
-			section="image"
-			validate="rules"
 			/>
 	</fieldset>
 </form>
