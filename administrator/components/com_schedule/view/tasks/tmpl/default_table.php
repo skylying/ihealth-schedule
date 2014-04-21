@@ -38,19 +38,9 @@ $grid->registerTableSort();
 <!-- TABLE HEADER -->
 <thead>
 <tr>
-	<!--SORT-->
-	<th width="1%" class="nowrap center hidden-phone">
-		<?php echo $grid->orderTitle(); ?>
-	</th>
-
 	<!--CHECKBOX-->
 	<th width="1%" class="center">
 		<?php echo JHtml::_('grid.checkAll'); ?>
-	</th>
-
-	<!--STATE-->
-	<th width="5%" class="nowrap center">
-		<?php echo $grid->sortTitle('COM_SCHEDULE_TASK_TITLE_LIST_STATUS', 'task.status'); ?>
 	</th>
 
 	<!--TASK DATE-->
@@ -61,6 +51,11 @@ $grid->registerTableSort();
 	<!--SENDER NAME-->
 	<th width="20%" class="center">
 		<?php echo $grid->sortTitle('COM_SCHEDULE_TASK_TITLE_LIST_SENDER_NAME', 'task.sender_name'); ?>
+	</th>
+
+	<!--STATE-->
+	<th width="5%" class="nowrap center">
+		<?php echo $grid->sortTitle('COM_SCHEDULE_TASK_TITLE_LIST_STATUS', 'task.status'); ?>
 	</th>
 
 	<!--LANGUAGE-->
@@ -94,27 +89,9 @@ $grid->registerTableSort();
 	$grid->setItem($item, $i);
 	?>
 	<tr class="task-row" sortable-group-id="<?php echo $item->catid; ?>">
-		<!-- DRAG SORT -->
-		<td class="order nowrap center hidden-phone">
-			<?php echo $grid->dragSort(); ?>
-		</td>
-
 		<!--CHECKBOX-->
 		<td class="center">
 			<?php echo JHtml::_('grid.id', $i, $item->task_id); ?>
-		</td>
-
-		<!--STATE-->
-		<td class="center">
-			<div class="btn-group">
-				<!-- STATE BUTTON -->
-				<?php echo $grid->state() ?>
-
-				<?php //\Schedule\Helper\ToggleHelper::toggleState(); ?>
-
-				<!-- CHANGE STATE DROP DOWN -->
-				<?php echo $this->loadTemplate('dropdown'); ?>
-			</div>
 		</td>
 
 		<!--TASK DATE-->
@@ -129,6 +106,19 @@ $grid->registerTableSort();
 		<td class="nowrap quick-edit-wrap">
 			<div class="item-title center">
 				<?php echo $item->sender_name; ?>
+			</div>
+		</td>
+
+		<!--STATE-->
+		<td class="center">
+			<div class="btn-group">
+				<!-- STATE BUTTON -->
+				<?php echo $grid->state() ?>
+
+				<?php //\Schedule\Helper\ToggleHelper::toggleState(); ?>
+
+				<!-- CHANGE STATE DROP DOWN -->
+				<?php echo $this->loadTemplate('dropdown'); ?>
 			</div>
 		</td>
 
