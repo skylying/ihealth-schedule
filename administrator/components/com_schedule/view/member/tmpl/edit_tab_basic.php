@@ -13,13 +13,8 @@ $tab       = $data->tab;
 $fieldsets = $data->form->getFieldsets();
 ?>
 
-<?php echo JHtmlBootstrap::addTab('memberEditTab', $tab, \JText::_($data->view->option . '_EDIT_' . strtoupper($tab))) ?>
-
-
 <div class="row-fluid">
 	<div class="span12">
 		<?php echo $this->loadTemplate('fieldset', array('fieldset' => $fieldsets['information'], 'class' => 'form-horizontal')); ?>
 	</div>
 </div>
-
-<?php echo JHtmlBootstrap::endTab(); ?>

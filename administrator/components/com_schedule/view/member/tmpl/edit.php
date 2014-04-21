@@ -43,17 +43,12 @@ $tabs = array(
 <div id="schedule" class="windwalker member edit-form row-fluid">
 	<form action="<?php echo JURI::getInstance(); ?>"  method="post" name="adminForm" id="adminForm"
 		class="form-validate" enctype="multipart/form-data">
-
-		<?php echo JHtmlBootstrap::startTabSet('memberEditTab', array('active' => 'tab_basic')); ?>
-
 			<?php
 			foreach ($tabs as $tab)
 			{
 				echo $this->loadTemplate($tab, array('tab' => $tab));
 			}
 			?>
-
-		<?php echo JHtmlBootstrap::endTabSet(); ?>
 
 		<!-- Hidden Inputs -->
 		<div id="hidden-inputs">

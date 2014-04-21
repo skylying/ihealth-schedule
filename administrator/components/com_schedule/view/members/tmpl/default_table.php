@@ -38,11 +38,6 @@ $grid->registerTableSort();
 <!-- TABLE HEADER -->
 <thead>
 <tr>
-	<!--SORT-->
-	<th width="1%" class="nowrap center hidden-phone">
-		<?php echo $grid->orderTitle(); ?>
-	</th>
-
 	<!--CHECKBOX-->
 	<th width="1%" class="center">
 		<?php echo JHtml::_('grid.checkAll'); ?>
@@ -97,11 +92,6 @@ $grid->registerTableSort();
 	$grid->setItem($item, $i);
 	?>
 	<tr class="member-row" sortable-group-id="<?php echo $item->catid; ?>">
-		<!-- DRAG SORT -->
-		<td class="order nowrap center hidden-phone">
-			<?php echo $grid->dragSort(); ?>
-		</td>
-
 		<!--ID-->
 		<td class="center">
 			<?php echo JHtml::_('grid.id', $i, $item->id); ?>
