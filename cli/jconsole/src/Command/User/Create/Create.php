@@ -127,7 +127,7 @@ class Create extends JCommand
 
 		$db->setQuery($query)->execute();
 
-		$this->out()->out('Create usr success.');
+		$this->out()->out('Create user success.');
 
 		return true;
 	}
