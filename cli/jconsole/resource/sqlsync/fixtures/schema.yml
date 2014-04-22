@@ -250,13 +250,25 @@
         ice: { Field: ice, Type: tinyint(1), 'Null': YES, Default: null, Extra: '', Comment: '是否有冰品 (0:否 / 1:是)', From: [ice] }
         expense: { Field: expense, Type: tinyint(1), 'Null': YES, Default: null, Extra: '', Comment: '是否為自費藥品 (0:否 / 1:是)', From: [expense] }
         price: { Field: price, Type: 'decimal(10,2)', 'Null': YES, Default: null, Extra: '', Comment: 自費金額, From: [price] }
-        status: { Field: status, Type: char(20), 'Null': YES, Default: null, Extra: '', Comment: '排程狀態 (scheduled:已排程 / emergency:急件 / deleted:已刪除 / cancelonly:取消-要退單 / cancelreject:取消-不退單 / pause:暫緩)', From: [status] }
+        status: { Field: status, Type: char(20), 'Null': YES, Default: null, Extra: '', Comment: '排程狀態 (scheduled:已排程 / emergency:急件 / deleted:已刪除 / cancel_reject:取消-要退單 / cancel_only:取消-不退單 / pause:暫緩)', From: [status] }
         cancel: { Field: cancel, Type: char(10), 'Null': YES, Default: null, Extra: '', Comment: '刪除原因 (badservice:服務不周 / changedrug:醫師換藥 / passaway:往生 / other:其他)', From: [cancel] }
         cancel_note: { Field: cancel_note, Type: text, 'Null': YES, Default: null, Extra: '', Comment: '刪除原因說明', From: [cancel_note] }
         note: { Field: note, Type: text, 'Null': YES, Default: null, Extra: '', Comment: 行政排程類別說明, From: [note] }
         params: { Field: params, Type: text, 'Null': NO, Default: null, Extra: '', Comment: Params, From: [params] }
     index:
         - { Table: '#__schedule_schedules', Non_unique: '0', Key_name: PRIMARY, Seq_in_index: '1', Column_name: id, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
+    data:
+        - ['1', null, '1', 高大雄, '1', 高大姊, '1', 愛愛養護機構, '1', '1', resident, '1', 台北市, '1', 松山區, null, 黃藥師, '2014-04-10', '0', null, null, null, null, null, null, scheduled, null, null, null, '{}']
+        - ['2', null, '2', 張宜靜, '2', 張阿伯, '2', 天天天天養護機構, '2', '2', resident, '1', 台北市, '1', 松山區, null, 高藥師, '2014-04-11', '1', null, null, null, null, null, null, scheduled, null, null, null, '{}']
+        - ['3', null, '3', 李濟安, '3', 李小妹, '3', '藍藍綠安養中心', '3', '3', individual, '1', 台北市, '1', 松山區, null, 黃藥師, '2014-04-12', '0', null, null, null, null, null, null, scheduled, null, null, null, '{}']
+        - ['5', null, '4', 李濟安, '4', 李小妹, '4', '藍藍綠安養中心', '4', '4', individual, '1', 台北市, '1', 松山區, null, 王藥師, '2014-04-12', '0', null, null, null, null, null, null, emergency, null, null, null, '{}']
+        - ['6', null, '5', 李濟安, '5', 李小妹, '5', '藍藍綠安養中心', '5', '5', individual, '1', 台北市, '1', 松山區, null, 高藥師, '2014-04-13', '0', null, null, null, null, null, null, cancel_reject, null, null, null, '{}']
+        - ['7', null, '6', 李濟安, '6', 李小妹, '6', '藍藍綠安養中心', '6', '6', individual, '1', 台北市, '1', 松山區, null, 高藥師, '2014-04-11', '1', null, null, null, null, null, null, scheduled, null, null, null, '{}']
+        - ['8', null, '7', 李濟安, '7', 李小妹, '7', '藍藍綠安養中心', '7', '7', individual, '1', 台北市, '1', 松山區, null, 王藥師, '2014-04-13', '0', null, null, null, null, null, null, pause, null, null, null, '{}']
+        - ['10', null, '0', null, '0', null, '0', null, '0', '0', discuss, '1', 台北市, '1', 松山區, null, 黃藥師, '2014-04-12', '0', null, null, null, null, null, null, scheduled, null, null, '', '']
+        - ['11', null, '0', null, '0', null, '0', null, '0', '0', collect, '1', 台北市, '1', 松山區, null, 王藥師, '2014-04-13', '0', null, null, null, null, null, null, cancel_only, null, null, '', '']
+        - ['12', null, '0', null, '0', null, '0', null, '0', '0', other, '1', 台北市, '1', 松山區, null, 高藥師, '2014-04-12', '1', null, null, null, null, null, null, scheduled, null, null, '', '']
+        - ['13', null, '0', null, '0', null, '0', null, '0', '0', other, '1', 台北市, '1', 松山區, null, 黃藥師, '2014-04-16', '0', null, null, null, null, null, null, scheduled, null, null, '', '']
 '#__schedule_senders':
     name: '#__schedule_senders'
     from:
