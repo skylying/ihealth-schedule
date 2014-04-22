@@ -137,19 +137,26 @@ $date      = $container->get('date');
 
 		<!--CUSTOMER_TYPE-->
 		<td class="center">
-			<?php echo $this->escape($item->type); ?>
+			<?php echo $this->escape($item->type ? JTEXT::_('COM_CUSTOMERS_NON_RESIDENT') : JTEXT::_('COM_CUSTOMERS_RESIDENT')); ?>
 		</td>
 
 		<!--CUSTOMER_NAME-->
-		<td class="n/owrap has-context quick-edit-wrap">
+		<td class="nowrap quick-edit-wrap">
 			<div class="center">
-				<!-- Checkout -->
-				<?php echo $grid->checkoutButton(); ?>
-
-				<!-- Title -->
-				<?php echo $grid->editTitle(); ?>
+				<?php
+				$query = array(
+					'option' => 'com_schedule',
+					'view' => 'member',
+					'layout' => 'edit',
+					'id'  => $item->id
+				);
+				?>
+				<a href="<?php echo JRoute::_("index.php?". http_build_query($query)); ?>">
+					<?php echo $this->escape($item->name); ?>
+				</a>
 			</div>
 		</td>
+
 
 		<!--CUSTOMER_ID_NUMBER-->
 		<td class="center">
@@ -163,7 +170,7 @@ $date      = $container->get('date');
 
 		<!--CUSTOMER_MEMBER_MAPS-->
 		<td class="center">
-			<?php echo $this->escape($item->title); ?>
+			<?php  ?>
 		</td>
 
 		<!--CITY_TITLE-->
@@ -178,12 +185,12 @@ $date      = $container->get('date');
 
 		<!--STATE-->
 		<td class="center">
-			<?php echo $this->escape($item->state); ?>
+			<?php echo $this->escape($item->state ? JTEXT::_('COM_CUSTOMERS_IN_SERVICE') : JTEXT::_('COM_CUSTOMERS_CLOSE_CASE')); ?>
 		</td>
 
 		<!--SCHEDULE_RECORD-->
 		<td class="center">
-			<a href=<?php JRoute::_('index.php?option-com_schedule&view=schedules');?>><?php echo JTEXT::_('COM_SCHEDULE_RECORD_LINK');?></a>
+			<a href=<?php JRoute::_('index.php?option?com_schedule&view=schedules');?>><?php echo JTEXT::_('COM_SCHEDULE_RECORD_LINK');?></a>
 		</td>
 
 		<!--RESERVE-->

@@ -100,7 +100,7 @@
 			type="input"
 			label="COM_SCHEDULE_CUSTOMER_FILTER_AGE_FROM"
 			default=""
-			onchange="this.form.submit();"
+
 			/>
 
 		<field
@@ -120,6 +120,7 @@
 			onchange="this.form.submit();"
 			>
 			<option></option>
+			<option>選擇狀態</option>
 			<option value="0">結案</option>
 			<option value="1">服務中</option>
 		</field>

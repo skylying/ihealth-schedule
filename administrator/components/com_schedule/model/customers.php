@@ -67,6 +67,11 @@ class ScheduleModelCustomers extends ListModel
 	 *
 	 * @return  void
 	 */
+	protected $filterFields = array(
+		'customers.age_start',
+		'customers.age_end'
+	);
+
 	protected function configureTables()
 	{
 		$queryHelper = $this->getContainer()->get('model.customers.helper.query', Container::FORCE_NEW);
@@ -134,7 +139,7 @@ class ScheduleModelCustomers extends ListModel
 			{
 				if ($start)
 				{
-					$query->where('`customers`.`age` >= ' . $query->q($start));
+					$query->where('`customer`.`age` >= ' . $query->q($start));
 				}
 			}
 		);
@@ -145,7 +150,7 @@ class ScheduleModelCustomers extends ListModel
 			{
 				if ($end)
 				{
-					$query->where('`customers`.`age` <= ' . $query->q($end));
+					$query->where('`customer`.`age` <= ' . $query->q($end));
 				}
 			}
 		);
