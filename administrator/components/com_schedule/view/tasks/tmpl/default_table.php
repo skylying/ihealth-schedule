@@ -95,9 +95,20 @@ $date      = $container->get('date');
 		<!--TASK DATE-->
 		<td class="center">
 			<?php
+			$query = array(
+				'option' => 'com_schedule',
+				'view' => 'task',
+				'layout' => 'edit',
+				'id'  => $item->id
+			);
+			?>
+			<a href="<?php echo JRoute::_("index.php?". http_build_query($query)); ?>">
+
+			<?php
 			$weekday = JDate::getInstance( $item->date );
 			echo  $weekday->format('Y-m-d') . '(' . $weekday->dayToString($weekday->dayofweek) . ')';
 			?>
+			</a>
 		</td>
 
 		<!--SENDER NAME-->
