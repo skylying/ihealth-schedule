@@ -13,19 +13,26 @@
 			description="JGLOBAL_FIELD_ID_DESC"
 			/>
 
-		<field name="title"
-			type="text"
-			label="JGLOBAL_TITLE"
-			description="JFIELD_TITLE_DESC"
-			required="true"
-			class="input-xxlarge"
-			/>
-
 		<field name="rx_id"
 			type="text"
 			label="對應處方箋"
 			description="對應處方箋 id"
 			readonly="true"
+			/>
+
+		<field name="title"
+			type="text"
+			label="JGLOBAL_TITLE"
+			description="JFIELD_TITLE_DESC"
+			required="true"
+			class="input-large"
+			/>
+
+		<field name="path"
+			type="finder"
+			label="檔案位址"
+			description="儲存檔案的路徑"
+			class="input-large"
 			/>
 	</fieldset>
 </form>
