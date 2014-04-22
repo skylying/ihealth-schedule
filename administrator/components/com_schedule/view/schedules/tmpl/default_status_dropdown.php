@@ -32,7 +32,7 @@ $options = array(
 		class="btn btn-default btn-sm dropdown-toggle"
 		data-toggle="dropdown"
 		style="background:<?php echo JText::_($prefix . $status . '_COLOR'); ?>;">
-		<i class="glyphicon glyphicon-<?php echo JText::_($prefix . $status . '_ICON'); ?>"></i>
+		<span class="glyphicon glyphicon-<?php echo JText::_($prefix . $status . '_ICON'); ?>"></span>
 		<?php echo JText::_($prefix . $status); ?>
 		<span class="caret"></span>
 	</button>
@@ -48,7 +48,7 @@ $options = array(
 		<li style="background:<?php echo JText::_($prefix . $option . '_COLOR'); ?>;"
 			data-status="<?php echo strtolower($option); ?>">
 			<a href="#" class="update-status-button">
-				<i class="glyphicon glyphicon-<?php echo JText::_($prefix . $option . '_ICON'); ?>"></i>
+				<span class="glyphicon glyphicon-<?php echo JText::_($prefix . $option . '_ICON'); ?>"></span>
 				<?php echo JText::_($prefix . $option); ?>
 			</a>
 		</li>

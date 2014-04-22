@@ -128,7 +128,7 @@ $date      = $container->get('date');
 		<td class="center">
 			<a class="btn btn-mini btn-primary"
 				href="<?php echo JRoute::_('index.php?option=com_schedule&task=schedule.edit.edit&id=' . $item->id); ?>">
-				<i class="glyphicon glyphicon-edit"></i>
+				<span class="glyphicon glyphicon-edit"></span>
 			</a>
 		</td>
 
@@ -162,7 +162,7 @@ $date      = $container->get('date');
 			<?php if ($item->customer_id > 0): ?>
 			<a href="<?php echo JRoute::_('index.php?option=com_schedule&task=customer.edit.edit&id=' . $item->customer_id); ?>" target="_blank">
 				<?php echo $item->customer_name; ?>
-				<i class="glyphicon glyphicon-share-alt"></i>
+				<span class="glyphicon glyphicon-share-alt"></span>
 			</a>
 			<?php endif; ?>
 		</td>
@@ -179,7 +179,7 @@ $date      = $container->get('date');
 
 		<!-- sorted -->
 		<td class="center">
-			<i class="glyphicon glyphicon-<?php echo ($item->sorted ? 'ok' : 'remove'); ?>"></i>
+			<span class="glyphicon glyphicon-<?php echo ($item->sorted ? 'ok' : 'remove'); ?>"></span>
 		</td>
 
 		<!-- status -->

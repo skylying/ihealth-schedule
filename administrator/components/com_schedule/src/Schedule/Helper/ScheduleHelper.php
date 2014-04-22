@@ -26,16 +26,16 @@ class ScheduleHelper
 		{
 			case 'individual':
 				$url = 'index.php?option=com_schedule&task=member.edit.edit&id=' . $item->member_id;
-				$text = '<i class="glyphicon glyphicon-user"></i> ' .
+				$text = '<span class="glyphicon glyphicon-user"></span> ' .
 					$item->member_name .
-					' <i class="glyphicon glyphicon-share-alt"></i>';
+					' <span class="glyphicon glyphicon-share-alt"></span>';
 
 				return \JHtml::link($url, $text, $attr);
 			case 'resident':
 				$url = 'index.php?option=com_schedule&task=institute.edit.edit&id=' . $item->institute_id;
-				$text = '<i class="glyphicon glyphicon-home"></i> ' .
+				$text = '<span class="glyphicon glyphicon-home"></span> ' .
 					$item->institute_title .
-					' <i class="glyphicon glyphicon-share-alt"></i>';
+					' <span class="glyphicon glyphicon-share-alt"></span>';
 
 				return \JHtml::link($url, $text, $attr);
 		}

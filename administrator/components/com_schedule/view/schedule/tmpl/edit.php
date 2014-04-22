@@ -70,7 +70,7 @@ $formIndividual = $data->formIndividual;
 
 				<a href="#">
 					查詢前後七日排程
-					<i class="glyphicon glyphicon-share-alt"></i>
+					<span class="glyphicon glyphicon-share-alt"></span>
 				</a>
 			<?php echo JHtmlBootstrap::endTab(); ?>
 
@@ -83,7 +83,7 @@ $formIndividual = $data->formIndividual;
 
 				<a href="#">
 					查詢前後七日排程
-					<i class="glyphicon glyphicon-share-alt"></i>
+					<span class="glyphicon glyphicon-share-alt"></span>
 				</a>
 			<?php echo JHtmlBootstrap::endTab(); ?>
 
