@@ -12,6 +12,17 @@
         address: { Field: address, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 路名, From: [address] }
     index:
         - { Table: '#__schedule_addresses', Non_unique: '0', Key_name: PRIMARY, Seq_in_index: '1', Column_name: id, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
+    data:
+        - ['1', '2', '1', 台北市, '10', 文山區, 文山路100號]
+        - ['2', '2', '1', 台北市, '10', 文山區, 文山路100號2F]
+        - ['3', '2', '1', 台北市, '10', 文山區, 文山路100號3F]
+        - ['4', '2', '1', 台北市, '10', 文山區, 文山路100號4F]
+        - ['5', '2', '1', 台北市, '10', 文山區, 文山路100號5F]
+        - ['6', '2', '1', 台北市, '10', 文山區, 文山路100號6F]
+        - ['7', '2', '1', 台北市, '10', 文山區, 文山路100號7F]
+        - ['8', '2', '1', 台北市, '12', 信義區, 信義路100號7F]
+        - ['9', '2', '1', 台北市, '12', 信義區, 信義路100號6F]
+        - ['10', '2', '1', 台北市, '12', 信義區, 信義路100號5F]
 '#__schedule_colors':
     name: '#__schedule_colors'
     from:
@@ -22,6 +33,17 @@
         hex: { Field: hex, Type: char(7), 'Null': NO, Default: null, Extra: '', Comment: 'HEX code', From: [hex] }
     index:
         - { Table: '#__schedule_colors', Non_unique: '0', Key_name: PRIMARY, Seq_in_index: '1', Column_name: id, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
+    data:
+        - ['1', '紅色', '#ff0000']
+        - ['2', 藍色, '#0000ff']
+        - ['3', 紫色, '#800080']
+        - ['4', 黃色, '#ffff00']
+        - ['5', 黑色, '#000000']
+        - ['6', 橘色, '#ffa500']
+        - ['7', 咖啡色, '#a52a2a']
+        - ['8', '綠色', '#008000']
+        - ['9', '粉紅色', '#faafbe']
+        - ['10', 水藍色, '#2b65ec']
 '#__schedule_customers':
     name: '#__schedule_customers'
     from:
@@ -67,6 +89,17 @@
         price: { Field: price, Type: 'decimal(10,0)', 'Null': NO, Default: null, Extra: '', Comment: 單筆金額, From: [price] }
     index:
         - { Table: '#__schedule_drugprices', Non_unique: '0', Key_name: PRIMARY, Seq_in_index: '1', Column_name: id, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
+    data:
+        - ['1', '10', '71', '2014-04-18', '1250']
+        - ['2', '10', '70', '2014-04-18', '500']
+        - ['3', '10', '53', '2014-04-18', '200']
+        - ['4', '12', '0', '2014-04-20', '200']
+        - ['5', '12', '0', '2014-04-20', '1000']
+        - ['6', '12', '0', '2014-04-20', '750']
+        - ['7', '13', '44', '2014-04-20', '750']
+        - ['8', '13', '33', '2014-04-20', '50']
+        - ['9', '13', '20', '2014-04-20', '150']
+        - ['10', '13', '21', '2014-04-20', '195']
 '#__schedule_drugs':
     name: '#__schedule_drugs'
     from:
@@ -78,6 +111,17 @@
         quantity: { Field: quantity, Type: tinyint(4), 'Null': NO, Default: null, Extra: '', Comment: 數量, From: [quantity] }
     index:
         - { Table: '#__schedule_drugs', Non_unique: '0', Key_name: PRIMARY, Seq_in_index: '1', Column_name: id, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
+    data:
+        - ['1', '2', abc-111, '10']
+        - ['2', '2', abc-112, '5']
+        - ['3', '2', abc-113, '6']
+        - ['4', '2', abc-114, '3']
+        - ['5', '2', abc-115, '8']
+        - ['6', '10', ddd-321, '10']
+        - ['7', '10', ddd-322, '5']
+        - ['8', '10', ddd-323, '6']
+        - ['9', '10', ddd-333, '2']
+        - ['10', '10', ddd-334, '10']
 '#__schedule_holidays':
     name: '#__schedule_holidays'
     from:
@@ -90,6 +134,22 @@
         state: { Field: state, Type: tinyint(1), 'Null': NO, Default: null, Extra: '', Comment: '假日狀態', From: [state] }
     index:
         - { Table: '#__schedule_holidays', Non_unique: '0', Key_name: PRIMARY, Seq_in_index: '1', Column_name: id, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
+    data:
+        - ['1', '2014', '4', '26', '1']
+        - ['2', '2014', '4', '27', '1']
+        - ['3', '2014', '5', '3', '1']
+        - ['4', '2014', '5', '27', '1']
+        - ['5', '2015', '5', '3', '1']
+        - ['6', '2015', '5', '4', '1']
+        - ['7', '2015', '5', '10', '1']
+        - ['8', '2015', '5', '11', '1']
+        - ['9', '2015', '5', '17', '1']
+        - ['10', '2015', '5', '18', '1']
+        - ['11', '2015', '5', '24', '1']
+        - ['12', '2015', '5', '25', '1']
+        - ['13', '2015', '5', '31', '1']
+        - ['14', '2015', '6', '1', '1']
+        - ['15', '2015', '7', '2', '1']
 '#__schedule_hospitals':
     name: '#__schedule_hospitals'
     from:
@@ -122,6 +182,17 @@
         path: { Field: path, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 圖片位址, From: [path] }
     index:
         - { Table: '#__schedule_images', Non_unique: '0', Key_name: PRIMARY, Seq_in_index: '1', Column_name: id, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
+    data:
+        - ['1', '2', mypresc1.png, images/2/mypresc1.png]
+        - ['2', '2', mypresc2.png, images/2/mypresc2.png]
+        - ['3', '2', mypresc3.png, images/2/mypresc3.png]
+        - ['4', '3', mypresc1.png, images/3/mypresc1.png]
+        - ['5', '3', mypresc2.png, images/3/mypresc2.png]
+        - ['6', '3', mypresc3.png, images/3/mypresc3.png]
+        - ['7', '4', mypresc1.png, images/4/mypresc1.png]
+        - ['8', '4', mypresc2.png, images/4/mypresc2.png]
+        - ['9', '4', mypresc3.png, images/4/mypresc3.png]
+        - ['10', '5', mypresc1.png, images/5/mypresc1.png]
 '#__schedule_institutes':
     name: '#__schedule_institutes'
     from:
@@ -220,6 +291,17 @@
         sender_name: { Field: sender_name, Type: char(10), 'Null': NO, Default: null, Extra: '', Comment: 外送藥師名稱, From: [sender_name] }
     index:
         - { Table: '#__schedule_routes', Non_unique: '0', Key_name: PRIMARY, Seq_in_index: '1', Column_name: id, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
+    data:
+        - ['1', '10', '1', 台北市, '10', 文山區, MON, 王藥師]
+        - ['2', '10', '1', 台北市, '11', '內湖區', TUE, 王藥師]
+        - ['3', '10', '1', 台北市, '12', 信義區, MON, 王藥師]
+        - ['4', '10', '1', 台北市, '13', 中山區, MON, 王藥師]
+        - ['5', '10', '1', 台北市, '14', 萬華區, TUE, 王藥師]
+        - ['6', '10', '2', 新北市, '20', 板橋區, FRI, 王藥師]
+        - ['7', '10', '2', 新北市, '21', 新裝區, TUE, 王藥師]
+        - ['8', '10', '2', 新北市, '22', 三重區, WED, 王藥師]
+        - ['9', '10', '2', 新北市, '23', 新店區, FRI, 王藥師]
+        - ['10', '10', '2', 新北市, '24', 三峽區, THU, 王藥師]
 '#__schedule_schedules':
     name: '#__schedule_schedules'
     from:
