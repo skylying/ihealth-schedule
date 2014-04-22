@@ -184,7 +184,7 @@ $date      = $container->get('date');
 
 		<!-- status -->
 		<td>
-			<?php echo \Schedule\Helper\ScheduleHelper::getStatusSelector($item->status); ?>
+			<?php echo $this->loadTemplate('status_dropdown', array('item' => $item)); ?>
 		</td>
 	</tr>
 <?php endforeach; ?>
