@@ -39,9 +39,10 @@ $item      = $data->item;
 <div id="schedule" class="windwalker member edit-form row-fluid">
 	<form action="<?php echo JURI::getInstance(); ?>"  method="post" name="adminForm" id="adminForm"
 		class="form-validate" enctype="multipart/form-data">
-			<?php
-			echo $this->loadTemplate('tab_basic', array('tab' => 'tab_basic'));
-			?>
+
+		<?php
+		echo $this->loadTemplate('tab_basic', array('tab' => 'tab_basic'));
+		?>
 
 		<!-- Hidden Inputs -->
 		<div id="hidden-inputs">

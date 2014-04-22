@@ -24,12 +24,6 @@ $container = $this->getContainer();
 $form      = $data->form;
 $item      = $data->item;
 
-// Setting tabset
-$tabs = array(
-	'tab_basic',
-	'tab_advanced',
-	'tab_rules'
-)
 ?>
 <!-- Validate Script -->
 <script type="text/javascript">
@@ -46,16 +40,9 @@ $tabs = array(
 	<form action="<?php echo JURI::getInstance(); ?>"  method="post" name="adminForm" id="adminForm"
 		class="form-validate" enctype="multipart/form-data">
 
-		<?php echo JHtmlBootstrap::startTabSet('taskEditTab', array('active' => 'tab_basic')); ?>
-
-			<?php
-			foreach ($tabs as $tab)
-			{
-				echo $this->loadTemplate($tab, array('tab' => $tab));
-			}
-			?>
-
-		<?php echo JHtmlBootstrap::endTabSet(); ?>
+		<?php
+		echo $this->loadTemplate('tab_basic', array('tab' => 'tab_basic'));
+		?>
 
 		<!-- Hidden Inputs -->
 		<div id="hidden-inputs">

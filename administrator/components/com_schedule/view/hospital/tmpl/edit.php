@@ -24,11 +24,6 @@ $container = $this->getContainer();
 $form = $data->form;
 $item = $data->item;
 
-// Setting tabset
-$tabs = array(
-	'tab_basic',
-);
-
 $cityId 	 = $form->getField('city')->id;
 $cityTitleId = $form->getField('city_title')->id;
 $areaId 	 = $form->getField('area')->id;
@@ -49,16 +44,9 @@ $areaTitleId = $form->getField('area_title')->id;
 	<form action="<?php echo JURI::getInstance(); ?>" method="post" name="adminForm" id="adminForm"
 		class="form-validate" enctype="multipart/form-data">
 
-		<?php echo JHtmlBootstrap::startTabSet('hospitalEditTab', array('active' => 'tab_basic')); ?>
-
 		<?php
-		foreach ($tabs as $tab)
-		{
-			echo $this->loadTemplate($tab, array('tab' => $tab));
-		}
+		echo $this->loadTemplate('tab_basic', array('tab' => 'tab_basic'));
 		?>
-
-		<?php echo JHtmlBootstrap::endTabSet(); ?>
 
 		<!-- Hidden Inputs -->
 		<div id="hidden-inputs">
