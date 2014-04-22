@@ -9,7 +9,9 @@
 			class="input-small"
 			>
 			<option value="*">JALL</option>
-			<option value="schedule.id">處方箋編號</option>
+			<option value="schedule.customer_name">客戶名稱</option>
+			<option value="schedule.note">行政排程類別說明</option>
+			<option value="schedule.cancel_note">刪除原因說明</option>
 		</field>
 
 		<field
