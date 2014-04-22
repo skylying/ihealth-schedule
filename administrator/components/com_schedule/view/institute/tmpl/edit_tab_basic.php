@@ -13,8 +13,6 @@ $tab       = $data->tab;
 $fieldsets = $data->form->getFieldsets();
 ?>
 
-<?php echo JHtmlBootstrap::addTab('instituteEditTab', $tab, \JText::_($data->view->option . '_EDIT_' . strtoupper($tab))) ?>
-
 <div class="row-fluid">
 	<div class="span8">
 		<?php echo $this->loadTemplate('fieldset', array('fieldset' => $fieldsets['information'], 'class' => 'form-horizontal')); ?>
@@ -23,5 +21,3 @@ $fieldsets = $data->form->getFieldsets();
 	<div class="span4">
 	</div>
 </div>
-
-<?php echo JHtmlBootstrap::endTab(); ?>
