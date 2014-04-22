@@ -20,8 +20,8 @@ $status = strtolower(trim($data->item->status));
 $options = array(
 	'scheduled',
 	'emergency',
-	'cancelonly',
-	'cancelreject',
+	'cancel_reject',
+	'cancel_only',
 	'pause',
 	// 'deleted',	// Not display in dropdown list, for document only.
 );
