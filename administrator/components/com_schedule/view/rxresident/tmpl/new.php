@@ -59,12 +59,12 @@
 
 		<!-- 外送次數 -->
 		<td>
-			<label>1</label>
-			<input class="js-prescription-time-1" type="checkbox" value="1" />
-			<label>2</label>
-			<input class="js-prescription-time-2" type="checkbox" value="2" />
-			<label>3</label>
-			<input class="js-prescription-time-3" type="checkbox" value="3" />
+			<label for="item-x-prescription-time-1">1</label>
+			<input id="item-x-prescription-time-1" class="js-prescription-time-1" type="checkbox" value="1" />
+			<label for="item-x-prescription-time-2">2</label>
+			<input id="item-x-prescription-time-2" class="js-prescription-time-2" type="checkbox" value="2" />
+			<label for="item-x-prescription-time-3">3</label>
+			<input id="item-x-prescription-time-3" class="js-prescription-time-3" type="checkbox" value="3" />
 		</td>
 
 		<!-- 藥吃完日 -->

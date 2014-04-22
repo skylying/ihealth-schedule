@@ -94,7 +94,7 @@
 			type="hidden"
 			label="處方箋類別"
 			description="處方箋類別"
-			default="individual"
+			default="resident"
 			/>
 
 		<field name="serial"
