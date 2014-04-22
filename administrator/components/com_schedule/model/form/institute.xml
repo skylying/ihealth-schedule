@@ -42,16 +42,16 @@
 			class="input-xxlarge required"
 			/>
 
-		<field name="city"
-			type="text"
+		<field name="city_title"
+			type="select_city_title"
 			label="COM_SCHEDULE_INSTITUTE_CITY"
 			description="COM_SCHEDULE_INSTITUTE_CITY"
 			required="true"
 			class="input-xxlarge required"
 			/>
 
-		<field name="area"
-			type="text"
+		<field name="area_title"
+			type="select_area_title"
 			label="COM_SCHEDULE_INSTITUTE_AREA"
 			description="COM_SCHEDULE_INSTITUTE_AREA"
 			required="true"
@@ -67,7 +67,7 @@
 			/>
 
 		<field name="sender_name"
-			type="text"
+			type="sender_list"
 			label="COM_SCHEDULE_INSTITUTE_SENDER_NAME"
 			description="COM_SCHEDULE_INSTITUTE_SENDER_NAME"
 			required="true"
@@ -81,17 +81,17 @@
 			required="true"
 			class="input-xxlarge required"
 			>
-			<option value="MON">COM_SCHEDULE_WEEK_MON</option>
-			<option value="TUE">COM_SCHEDULE_WEEK_TUE</option>
-			<option value="WED">COM_SCHEDULE_WEEK_WED</option>
-			<option value="THU">COM_SCHEDULE_WEEK_THU</option>
-			<option value="FRI">COM_SCHEDULE_WEEK_FRI</option>
-			<option value="SAT">COM_SCHEDULE_WEEK_SAT</option>
-			<option value="SUN">COM_SCHEDULE_WEEK_SUN</option>
+			<option value="MON">MON</option>
+			<option value="TUE">TUE</option>
+			<option value="WED">WED</option>
+			<option value="THU">THU</option>
+			<option value="FRI">FRI</option>
+			<option value="SAT">SAT</option>
+			<option value="SUN">SUN</option>
 		</field>
 
 		<field name="color_hex"
-			type="text"
+			type="color_list"
 			label="COM_SCHEDULE_INSTITUTE_MARK_COLOR"
 			description="COM_SCHEDULE_INSTITUTE_MARK_COLOR"
 			required="true"
