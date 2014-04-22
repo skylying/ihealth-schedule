@@ -73,7 +73,7 @@ $grid->registerTableSort();
 <!--PAGINATION-->
 <tfoot>
 <tr>
-	<td colspan="15">
+	<td colspan="100">
 		<div class="pull-left">
 			<?php echo $data->pagination->getListFooter(); ?>
 		</div>
