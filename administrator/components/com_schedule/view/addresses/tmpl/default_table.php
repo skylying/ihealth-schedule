@@ -119,8 +119,18 @@ $grid->registerTableSort();
 		</td>
 
 		<!--ADDRESS-->
-		<td class="center">
-			<a href="<?php echo JRoute::_('index.php?option=com_schedule&view=customer&layout=edit&id=' . $item->customer_id);?>"><?php echo $item->customer_id; ?></a>
+		<td class="center"><a
+				href="<?php
+				$proxy = array(
+					'option' => 'com_schedule',
+					'view'   => 'member',
+					'layout' => 'edit',
+					'id'	 => $item->customer_id
+				);
+				echo JRoute::_('index.php?' . http_build_query($proxy)); ?>"
+				target="_blank">
+				<?php echo $item->customer_id; ?>&nbsp;<span class="glyphicon glyphicon-share-alt"></span>
+			</a>
 		</td>
 
 	</tr>
