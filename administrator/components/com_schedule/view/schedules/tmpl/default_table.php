@@ -139,7 +139,7 @@ $date      = $container->get('date');
 
 		<!-- type -->
 		<td>
-			<?php echo JText::_('COM_SCHEDULE_SCHEDULE_FIELD_TYEP_' . strtoupper($item->type)); ?>
+			<?php echo JText::_('COM_SCHEDULE_SCHEDULE_FIELD_TYPE_' . strtoupper($item->type)); ?>
 		</td>
 
 		<!-- customer_name | institute_name -->
