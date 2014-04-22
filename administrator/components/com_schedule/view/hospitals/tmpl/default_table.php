@@ -28,8 +28,6 @@ $asset     = $container->get('helper.asset');
 $grid      = $data->grid;
 $date      = $container->get('date');
 
-// Set order script.
-$grid->registerTableSort();
 ?>
 
 <!-- LIST TABLE -->
@@ -73,7 +71,7 @@ $grid->registerTableSort();
 <!--PAGINATION-->
 <tfoot>
 <tr>
-	<td colspan="15">
+	<td colspan="100">
 		<div class="pull-left">
 			<?php echo $data->pagination->getListFooter(); ?>
 		</div>
