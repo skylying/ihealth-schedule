@@ -126,6 +126,8 @@ class ScheduleViewSchedulesHtml extends GridView
 			$buttonSet['delete']['access'] = true;
 		}
 
+		$buttonSet['add']['args'] = array_merge($buttonSet['add']['args'], array('新增行政排程'));
+
 		$buttonSet['publish']['access'] = false;
 		$buttonSet['unpublish']['access'] = false;
 		$buttonSet['checkin']['access'] = false;
