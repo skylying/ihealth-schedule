@@ -188,4 +188,117 @@
 			description="備註"
 			/>
 	</fieldset>
+
+	<fieldset name="multiple_create">
+		<fieldset name="global">
+			<field
+				name="institute"
+				type="Institute_List"
+				label="機構名稱"
+				description="機構名稱"
+				/>
+
+			<field
+				name="floor"
+				type="text"
+				label="機構樓層"
+				description="機構樓層"
+				/>
+		</fieldset>
+
+		<fieldset name="item">
+			<field
+				name="customer_id"
+				type="Customer_List"
+				label="住民"
+				description="住民"
+				/>
+
+			<field
+				name="id_number"
+				type="text"
+				label="身分證字號"
+				description="身分證字號"
+				/>
+
+			<field
+				name="birth_date"
+				type="calendar"
+				label="生日"
+				description="生日"
+				/>
+
+			<field
+				name="see_dr_date"
+				type="calendar"
+				label="就醫日期"
+				description="就醫日期"
+				/>
+
+			<field
+				name="period"
+				type="text"
+				label="處方箋天數"
+				description="處方箋天數"
+				/>
+
+			<field name="times"
+				type="list"
+				label="可調劑次數"
+				description="可調劑次數"
+				>
+				<option value="1">1</option>
+				<option value="2">2</option>
+				<option value="3">3</option>
+			</field>
+
+			<field
+				name="deliver_nths"
+				type="checkboxes"
+				label="可調劑次數"
+				description="可調劑次數"
+				>
+				<option value="1st">第一次</option>
+				<option value="2nd">第二次</option>
+				<option value="3rd">第三次</option>
+			</field>
+
+			<field
+				name="empty_date_1st"
+				type="calendar"
+				label="第一次吃完藥日"
+				description="第一次吃完藥日"
+				/>
+
+			<field
+				name="empty_date_2nd"
+				type="calendar"
+				label="第二次吃完藥日"
+				description="第二次吃完藥日"
+				/>
+
+			<!--TODO:處方箋上傳-->
+
+			<field
+				name="method"
+				type="list"
+				label="處方箋取得方式"
+				description="處方箋取得方式"
+				>
+				<option value="fax">傳真</option>
+				<option value="line">line</option>
+				<option value="form">自行填表</option>
+				<option value="file">上傳檔案</option>
+				<option value="photo">拍照</option>
+				<option value="paper">正本</option>
+			</field>
+
+			<field
+				name="note"
+				type="textarea"
+				label="備註"
+				description="備註"
+				/>
+		</fieldset>
+	</fieldset>
 </form>
