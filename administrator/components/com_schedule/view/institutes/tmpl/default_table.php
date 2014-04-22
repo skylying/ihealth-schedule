@@ -28,8 +28,6 @@ $asset     = $container->get('helper.asset');
 $grid      = $data->grid;
 $date      = $container->get('date');
 
-// Set order script.
-$grid->registerTableSort();
 ?>
 
 <!-- LIST TABLE -->
@@ -52,11 +50,6 @@ $grid->registerTableSort();
 	<!--Delivery Weekday-->
 	<th width="5%" class="left">
 		<?php echo $grid->sortTitle('COM_SCHEDULE_INSTITUTE_DELIVERY_WEEKDAY', 'institute.title'); ?>
-	</th>
-
-	<!--Last Delivery Weekday-->
-	<th width="5%" class="nowrap left">
-		<?php echo $grid->sortTitle('COM_SCHEDULE_INSTITUTE_LAST_DELIVERY_WEEKDAY', 'institute.delivery_weekday'); ?>
 	</th>
 
 	<!--Color for Weekday-->
@@ -136,17 +129,12 @@ $grid->registerTableSort();
 
 		<!--Delivery Weekday-->
 		<td class="left">
-			<?php echo JText::_('COM_SCHEDULE_WEEK_' . $item->delivery_weekday);?>
-		</td>
-
-		<!--Last Delivery Weekday-->
-		<td class="left">
-			<?php echo $item->delivery_weekday;?>
+			<?php echo JText::_($item->delivery_weekday);?>
 		</td>
 
 		<!--Color for Weekday-->
 		<td class="center">
-			<span style="background-color: <?php echo $item->color_hex;?>"><?php echo $item->color_hex;?></span>
+			<?php echo \Schedule\Helper\ColorHelper::getColorBlock($item->color_hex, 25); ?>
 		</td>
 
 		<!--Sender Name-->
@@ -166,7 +154,7 @@ $grid->registerTableSort();
 
 		<!--City Area-->
 		<td class="left">
-			<?php echo $item->area;?>
+			<?php echo $item->area_title;?>
 		</td>
 
 		<!--Address-->
@@ -181,7 +169,10 @@ $grid->registerTableSort();
 
 		<!--Link To Elder List-->
 		<td class="center">
-			<a href="#"> Link </a>
+			<a href="#">
+				住民清單
+				<i class="glyphicon glyphicon-share-alt"></i>
+			</a>
 		</td>
 
 	</tr>
