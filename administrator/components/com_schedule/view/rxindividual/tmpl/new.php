@@ -5,6 +5,39 @@ $schedules["1st"] = $data->form->getFieldset("schedules_1st");
 $schedules["2nd"] = $data->form->getFieldset("schedules_2nd");
 $schedules["3rd"] = $data->form->getFieldset("schedules_3rd");
 $ps               = $data->form->getFieldset("schedules_ps");
+
+$document = JFactory::getDocument();
+
+$document->addStyleDeclaration(
+	<<<STYLE
+	.schedules .control-label
+	{
+		float: none;
+	}
+
+	.schedules .controls
+	{
+		margin-left: 0;
+	}
+
+	.schedules input
+	{
+		width: 80%;
+	}
+
+	.schedules select
+	{
+		width: 100%;
+	}
+
+	.address label
+	{
+		display: none;
+	}
+STYLE
+);
+
+
 ?>
 
 <form class="form-horizontal">
@@ -19,14 +52,13 @@ $ps               = $data->form->getFieldset("schedules_ps");
 		</div>
 		<div class="col-lg-5 col-lg-offset-1">
 			<?php foreach (array("1st", "2nd", "3rd") as $key): ?>
-			<div id="schedules_<?php echo $key; ?>" class="row-fluid">
-				<!-- TODO: label 排列方式 -->
-
-				<div class="col-lg-1">
+			<div id="schedules_<?php echo $key; ?>" class="row-fluid schedules schedules_<?php echo $key; ?>">
+				<div class="col-lg-3">
+					<!-- TODO: 換成可愛的圓圈圈 -->
 					<?php echo $schedules[$key]['jform_deliver_nths']->getControlGroup(); ?>
 				</div>
-				<div class="col-lg-11">
-					<div class="row-fluid">
+				<div class="col-lg-9">
+					<div class="row-fluid address">
 						<div class="col-lg-12">
 							<?php echo $schedules[$key]['jform_address']->getControlGroup(); ?>
 						</div>
