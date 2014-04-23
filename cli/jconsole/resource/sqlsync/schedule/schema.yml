@@ -22,6 +22,16 @@
         hex: { Field: hex, Type: char(7), 'Null': NO, Default: null, Extra: '', Comment: 'HEX code', From: [hex] }
     index:
         - { Table: '#__schedule_colors', Non_unique: '0', Key_name: PRIMARY, Seq_in_index: '1', Column_name: id, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
+'#__schedule_customer_member_maps':
+    name: '#__schedule_customer_member_maps'
+    from:
+        - '#__schedule_customer_member_maps'
+    columns:
+        id: { Field: id, Type: 'int(11) unsigned', 'Null': NO, Default: null, Extra: auto_increment, Comment: id, From: [id] }
+        member_id: { Field: member_id, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: '會員 id', From: [member_id] }
+        customer_id: { Field: customer_id, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: '客戶 id', From: [customer_id] }
+    index:
+        - { Table: '#__schedule_customer_member_maps', Non_unique: '0', Key_name: PRIMARY, Seq_in_index: '1', Column_name: id, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
 '#__schedule_customers':
     name: '#__schedule_customers'
     from:
