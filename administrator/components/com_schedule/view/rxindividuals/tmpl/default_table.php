@@ -27,9 +27,6 @@ $container = $this->getContainer();
 $asset     = $container->get('helper.asset');
 $grid      = $data->grid;
 $date      = $container->get('date');
-
-// Set order script.
-$grid->registerTableSort();
 ?>
 
 <!-- LIST TABLE -->
