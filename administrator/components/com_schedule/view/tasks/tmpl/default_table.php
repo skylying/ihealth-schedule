@@ -105,7 +105,7 @@ $date      = $container->get('date');
 
 					<?php
 					$weekday = JDate::getInstance($item->date);
-					echo $weekday->format('Y-m-d') . '(' . $weekday->dayToString($weekday->dayofweek) . ')';
+					echo sprintf('%s (%s)', $weekday->format('Y-m-d'), JText::_($weekday->format('D')));
 					?>
 				</a>
 			</td>
