@@ -3,7 +3,6 @@
 	<fieldset name="information"
 		align="left"
 		horz="true">
-
 		<field name="id"
 			type="text"
 			label="id"
@@ -18,15 +17,13 @@
 			class="input-xlarge"
 			/>
 		<field name="sender"
-			type="sql"
+			type="sender_list"
 			label="外送藥師"
 			description="外送藥師"
-			query="SELECT `id`, `name` FROM #__schedule_senders"
-			key_field="id"
 			value_field="name"
 			class="input-xlarge">
 			<option></option>
-			</field>
+		</field>
 		<field name="sender_name"
 			type="hidden"
 			default=""
@@ -44,6 +41,5 @@
 			<option value="0">未外送</option>
 			<option value="1">已外送</option>
 		</field>
-
 	</fieldset>
 </form>
