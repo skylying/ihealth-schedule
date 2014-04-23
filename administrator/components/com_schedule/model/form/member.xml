@@ -32,20 +32,24 @@
 
 		<field name="password"
 			type="password"
+			autocomplete="off"
+			class="validate-password input-xlarge"
+			filter="raw"
 			label="JGLOBAL_PASSWORD"
 			description="JGLOBAL_PASSWORD"
-			preview="true"
-			default=""
-			class="input-xlarge"
+			validate="password"
 			/>
 		<field name="password2"
 			type="password"
+			autocomplete="off"
+			class="validate-password input-xlarge"
+			field="password"
+			filter="raw"
+
 			label="COM_SCHEDULE_MEMBER_ITEM__PASSWORD2_LABEL"
 			description="COM_SCHEDULE_MEMBER_ITEM__PASSWORD2_LABEL"
-			default=""
-			validat="equals"
-			field="field"
-			class="input-xlarge"
+			preview="true"
+			validate="equals"
 			/>
 
 		<field name="tel"
