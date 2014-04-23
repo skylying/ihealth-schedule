@@ -27,19 +27,14 @@ $container = $this->getContainer();
 $asset     = $container->get('helper.asset');
 $grid      = $data->grid;
 $date      = $container->get('date');
-
-// Set order script.
-
+show($data);
 ?>
-
 <!-- LIST TABLE -->
 <table id="customerList" class="table table-striped adminlist">
 
 <!-- TABLE HEADER -->
 <thead>
 <tr>
-
-
 	<!--CHECKBOX-->
 	<th width="1%" class="center">
 		<?php echo JHtml::_('grid.checkAll'); ?>
@@ -137,7 +132,13 @@ $date      = $container->get('date');
 
 		<!--CUSTOMER_TYPE-->
 		<td class="center">
-			<?php echo $this->escape($item->type ? JTEXT::_('COM_CUSTOMERS_NON_RESIDENT') : JTEXT::_('COM_CUSTOMERS_RESIDENT')); ?>
+			<?php
+			if($item->type == 'individual'){
+				echo JTEXT::_('COM_CUSTOMERS_INDIVIDUAL');
+			} else {
+				echo JTEXT::_('COM_CUSTOMERS_RESIDENT');
+			}
+			?>
 		</td>
 
 		<!--CUSTOMER_NAME-->
@@ -146,7 +147,7 @@ $date      = $container->get('date');
 				<?php
 				$query = array(
 					'option' => 'com_schedule',
-					'view' => 'member',
+					'view' => 'customer',
 					'layout' => 'edit',
 					'id'  => $item->id
 				);
@@ -170,7 +171,21 @@ $date      = $container->get('date');
 
 		<!--CUSTOMER_MEMBER_MAPS-->
 		<td class="center">
-			<?php  ?>
+			<?php
+			if($item->type == 'individual'){
+			    echo	'<a class="glyphicon glyphicon-user" href='.
+						JRoute::_('index.php?option=com_schedule&view=schedules').
+						'>'.
+						$this->escape($item->member_name).
+						'</a>';
+			} else {
+				echo	'<a class="glyphicon glyphicon-home" href='.
+						JRoute::_('index.php?option=com_schedule&view=schedules').
+						'>'.
+						 $this->escape($item->institute_title).
+						'</a>';
+			}
+			?>
 		</td>
 
 		<!--CITY_TITLE-->
@@ -190,7 +205,7 @@ $date      = $container->get('date');
 
 		<!--SCHEDULE_RECORD-->
 		<td class="center">
-			<a href=<?php JRoute::_('index.php?option?com_schedule&view=schedules');?>><?php echo JTEXT::_('COM_SCHEDULE_RECORD_LINK');?></a>
+			<a href=<?php JRoute::_('index.php?option=com_schedule&view=schedules');?>><?php echo JTEXT::_('COM_SCHEDULE_RECORD_LINK');?></a>
 		</td>
 
 		<!--RESERVE-->
