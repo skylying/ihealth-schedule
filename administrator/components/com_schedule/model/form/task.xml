@@ -34,7 +34,7 @@
 			description="外送藥師名稱"
 			readonly="true"
 			/>
-		<field name="has_hicode"
+		<field name="status"
 			type="radio"
 			class="btn-group btn-group-yesno"
 			label="外送狀態"

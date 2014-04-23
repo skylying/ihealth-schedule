@@ -49,10 +49,6 @@ $areaTitleId = $form->getField('area_title')->id;
 		<div class="row-fluid">
 			<div class="span8">
 				<fieldset id="sender-edit-fieldset-<?php echo $fieldset->name ?>" class="form-horizontal">
-					<legend>
-						<?php echo $fieldset->label ? JText::_($fieldset->label) : JText::_('COM_SCHEDULE_EDIT_FIELDSET_' . $fieldset->name); ?>
-					</legend>
-
 					<?php foreach ($data->form->getFieldset($fieldset->name) as $field): ?>
 						<div id="control_<?php echo $field->id; ?>">
 							<?php echo $field->getControlGroup() . "\n\n"; ?>

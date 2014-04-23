@@ -39,8 +39,6 @@ $senderName = $form->getField('sender_name')->id;
 		{
 			Joomla.submitform(task, document.getElementById('adminForm'));
 		}
-
-
 	};
 
 	jQuery(function()
@@ -52,7 +50,7 @@ $senderName = $form->getField('sender_name')->id;
 			senderName.val( jQuery(this).find("option:selected").text() );
 
 		});
-	})
+	});
 </script>
 
 <div id="schedule" class="windwalker task edit-form row-fluid">
@@ -61,10 +59,6 @@ $senderName = $form->getField('sender_name')->id;
 		<div class="row-fluid">
 			<div class="span8">
 				<fieldset id="sender-edit-fieldset-<?php echo $fieldset->name ?>" class="form-horizontal">
-					<legend>
-						<?php echo $fieldset->label ? JText::_($fieldset->label) : JText::_('COM_SCHEDULE_EDIT_FIELDSET_' . $fieldset->name); ?>
-					</legend>
-
 					<?php foreach ($data->form->getFieldset($fieldset->name) as $field): ?>
 						<div id="control_<?php echo $field->id; ?>">
 							<?php echo $field->getControlGroup() . "\n\n"; ?>
@@ -72,6 +66,7 @@ $senderName = $form->getField('sender_name')->id;
 					<?php endforeach;?>
 				</fieldset>
 			</div>
+		</div>
 
 		<!-- Hidden Inputs -->
 		<div id="hidden-inputs">

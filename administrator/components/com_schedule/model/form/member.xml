@@ -45,7 +45,6 @@
 			class="validate-password input-xlarge"
 			field="password"
 			filter="raw"
-
 			label="COM_SCHEDULE_MEMBER_ITEM__PASSWORD2_LABEL"
 			description="COM_SCHEDULE_MEMBER_ITEM__PASSWORD2_LABEL"
 			preview="true"
