@@ -127,7 +127,7 @@ $date      = $container->get('date');
 				);
 				echo JRoute::_('index.php?' . http_build_query($proxy)); ?>"
 				target="_blank">
-				<?php echo $item->customer_name; ?>&nbsp;<span class="glyphicon glyphicon-share-alt"></span>
+				<?php echo $item->customer_name; ?> <span class="glyphicon glyphicon-share-alt"></span>
 			</a>
 		</td>
 
