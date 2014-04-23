@@ -4,7 +4,7 @@
 		align="left"
 		horz="true">
 
-		<field name="ID"
+		<field name="id"
 			type="text"
 			label="id"
 			description="id"
@@ -12,7 +12,7 @@
 			readonly="true"
 			/>
 		<field name="date"
-			type="date"
+			type="calendar"
 			label="外送日期"
 			description="外送日期"
 			class="input-xlarge"
@@ -27,6 +27,13 @@
 			class="input-xlarge">
 			<option></option>
 			</field>
+		<field name="sender_name"
+			type="hidden"
+			default=""
+			label="外送藥師名稱"
+			description="外送藥師名稱"
+			readonly="true"
+			/>
 		<field name="has_hicode"
 			type="radio"
 			class="btn-group btn-group-yesno"
