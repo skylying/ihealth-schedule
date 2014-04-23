@@ -43,27 +43,27 @@ $date      = $container->get('date');
 
 	<!--HOSPITAL ID-->
 	<th width="5%" class="nowrap center">
-		<?php echo $grid->sortTitle('COM_SCHEDULE_HOSPITAL_ITEM_ID', 'hospital.title'); ?>
+		<?php echo $grid->sortTitle('COM_SCHEDULE_HOSPITAL_ITEM_ID', 'hospitals.id'); ?>
 	</th>
 
 	<!--HOSPITA TITLE-->
 	<th width="49%" class="center">
-		<?php echo $grid->sortTitle('COM_SCHEDULE_HOSPITAL_ITEM_TITLE', 'hospital.title'); ?>
+		<?php echo $grid->sortTitle('COM_SCHEDULE_HOSPITAL_ITEM_TITLE', 'hospitals.title'); ?>
 	</th>
 
 	<!--CITY_TITLE-->
 	<th width="15%" class="center">
-		<?php echo $grid->sortTitle('COM_SCHEDULE_HOSPITAL_ITEM_CITY_TITLE', 'category.title'); ?>
+		<?php echo $grid->sortTitle('COM_SCHEDULE_HOSPITAL_ITEM_CITY_TITLE', 'city.title'); ?>
 	</th>
 
 	<!--AREA_TITLE-->
 	<th width="15%" class="center">
-		<?php echo $grid->sortTitle('COM_SCHEDULE_HOSPITAL_ITEM_AREA_TITLE', 'viewlevel.title'); ?>
+		<?php echo $grid->sortTitle('COM_SCHEDULE_HOSPITAL_ITEM_AREA_TITLE', 'area.title'); ?>
 	</th>
 
 	<!--HAS_HI_CODE-->
 	<th width="15%" class="center">
-		<?php echo $grid->sortTitle('COM_SCHEDULE_HOSPITAL_ITEM_HICODE', 'hospital.created'); ?>
+		<?php echo $grid->sortTitle('COM_SCHEDULE_HOSPITAL_ITEM_HICODE', 'hospitals.hicode'); ?>
 	</th>
 </tr>
 </thead>
@@ -92,7 +92,7 @@ $date      = $container->get('date');
 	<tr class="hospital-row">
 		<!--CHECKBOX-->
 		<td class="center">
-			<?php echo JHtml::_('grid.id', $i, $item->sender_id); ?>
+			<?php echo JHtml::_('grid.id', $i, $item->id); ?>
 		</td>
 
 		<!--ID-->
