@@ -14,29 +14,28 @@
 			/>
 
 		<field name="city"
-			type="list"
+			type="sql"
+			query="SELECT id AS value, title AS title FROM #__schedule_cities"
+			value_field="title"
+			key_field="value"
 			label="縣市"
 			description="選擇外送縣市"
 			required="true"
 			class="required"
 			>
-			<option value="1">台北市</option>
-			<option value="2">台中市</option>
-			<option value="3">高雄市</option>
 		</field>
 
 		<field name="area"
-			type="list"
+			type="sql"
+			query="SELECT id AS value, title AS title FROM #__schedule_areas"
+			value_field="title"
+			key_field="value"
 			label="區域"
 			description="選擇外送區域"
 			required="true"
 			class="required"
 			>
-			<option value="1">文山區</option>
-			<option value="2">松山區</option>
-			<option value="3">內湖區</option>
 		</field>
-
 
 		<field name="weekday"
 			type="list"
@@ -51,15 +50,11 @@
 		</field>
 
 		<field name="sender_id"
-			type="list"
+			type="sender_list"
+			value_field="name"
 			label="外送藥師"
 			description="選擇外送藥師"
 			>
-			<option value="1">王藥師</option>
-			<option value="2">陳藥師</option>
-			<option value="3">黑藥師</option>
-			<option value="4">白藥師</option>
-			<option value="5">胖藥師</option>
 		</field>
 	</fieldset>
 </form>

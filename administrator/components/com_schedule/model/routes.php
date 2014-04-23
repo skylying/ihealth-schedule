@@ -71,7 +71,10 @@ class ScheduleModelRoutes extends ListModel
 	{
 		$queryHelper = $this->getContainer()->get('model.routes.helper.query', Container::FORCE_NEW);
 
-		$queryHelper->addTable('route', '#__schedule_routes');
+		$queryHelper->addTable('route', '#__schedule_routes')
+					->addTable('sender', '#__schedule_senders', '`route`.`sender_id` = `sender`.`id`')
+					->addTable('area', '#__schedule_areas', '`route`.`area` = `area`.`id`')
+					->addTable('city', '#__schedule_cities', '`route`.`city` = `city`.`id`');
 
 		$this->filterFields = array_merge($this->filterFields, $queryHelper->getFilterFields());
 	}

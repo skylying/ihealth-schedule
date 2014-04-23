@@ -114,7 +114,7 @@ $date      = $container->get('date');
 
 		<!--WEEKDAY-->
 		<td class="center">
-			<?php echo $item->weekday;?>
+			<?php echo JText::_($item->weekday);?>
 		</td>
 
 		<!--SENDER-->
