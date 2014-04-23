@@ -2,8 +2,10 @@
 <form>
 	<fieldset name="basic">
 		<field name="customer_id"
-			type="list"
+			type="customer_list"
 			default=""
+			key_field="id"
+			value_field="name"
 			label="散客名稱"
 			description="散客名稱"
 			>
@@ -14,11 +16,13 @@
 			default=""
 			label="散客名稱"
 			description="散客名稱"
-			readonly="true"
+			readonly="false"
 			/>
 		<field name="member_id"
-			type="list"
+			type="member_list"
 			default=""
+			key_field="id"
+			value_field="name"
 			label="會員名稱"
 			description="會員名稱"
 			>
@@ -29,15 +33,18 @@
 			default=""
 			label="會員名稱"
 			description="會員名稱"
-			readonly="true"
+			readonly="false"
 			/>
 
 		<field name="city"
-			type="list"
+			type="sql"
 			default=""
+			query="SELECT id, title FROM #__schedule_cities"
+			key_field="id"
+			value_field="title"
 			label="縣市"
 			description="縣市"
-			readonly="true"
+			readonly="false"
 			>
 			<option></option>
 		</field>
@@ -46,15 +53,18 @@
 			default=""
 			label="縣市"
 			description="縣市"
-			readonly="true"
+			readonly="false"
 			/>
 
 		<field name="area"
-			type="list"
+			type="sql"
 			default=""
+			query="SELECT id, title FROM #__schedule_areas"
+			key_field="id"
+			value_field="title"
 			label="區域"
 			description="區域"
-			readonly="true"
+			readonly="false"
 			>
 			<option></option>
 		</field>
@@ -63,7 +73,7 @@
 			default=""
 			label="區域"
 			description="區域"
-			readonly="true"
+			readonly="false"
 			/>
 
 		<field name="address"
@@ -72,7 +82,7 @@
 			class="input-xlarge"
 			label="地址"
 			description="地址"
-			readonly="true"
+			readonly="false"
 			/>
 
 		<field name="type"
@@ -104,11 +114,20 @@
 			/>
 
 		<field name="route_sender_id"
-			type="list"
+			type="sender_list"
+			key_field="id"
+			value_field="name"
 			label="負責藥師"
 			description="負責藥師"
 			>
 			<option></option>
 		</field>
+		<field name="sender_name"
+			type="hidden"
+			default=""
+			label="負責藥師"
+			description="負責藥師"
+			readonly="false"
+			/>
 	</fieldset>
 </form>
