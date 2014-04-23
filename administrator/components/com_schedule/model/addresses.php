@@ -71,7 +71,10 @@ class ScheduleModelAddresses extends ListModel
 	{
 		$queryHelper = $this->getContainer()->get('model.addresses.helper.query', Container::FORCE_NEW);
 
-		$queryHelper->addTable('address', '#__schedule_addresses');
+		$queryHelper->addTable('address', '#__schedule_addresses')
+					->addTable('area', '#__schedule_areas', '`address`.`area` = `area`.`id`')
+					->addTable('city', '#__schedule_cities', '`address`.`city` = `city`.`id`')
+					->addTable('customer', '#__schedule_customers', '`address`.`customer_id` = `customer`.`id`');
 
 		$this->filterFields = array_merge($this->filterFields, $queryHelper->getFilterFields());
 	}

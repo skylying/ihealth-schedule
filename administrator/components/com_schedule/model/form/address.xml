@@ -14,34 +14,34 @@
 			/>
 
 		<field name="customer_id"
-			type="text"
+			type="customer_list"
+			value_field="name"
 			label="對應客戶"
 			description="對應客戶id"
-			readonly="true"
 			/>
 
 		<field name="city"
-			type="list"
+			type="sql"
+			query="SELECT id AS value, title AS title FROM #__schedule_cities"
+			value_field="title"
+			key_field="value"
 			label="縣市"
 			description="選擇外送縣市"
 			required="true"
 			class="required"
 			>
-			<option value="1">台北市</option>
-			<option value="2">台中市</option>
-			<option value="3">高雄市</option>
 		</field>
 
 		<field name="area"
-			type="list"
+			type="sql"
+			query="SELECT id AS value, title AS title FROM #__schedule_areas"
+			value_field="title"
+			key_field="value"
 			label="區域"
 			description="選擇外送區域"
 			required="true"
 			class="required"
 			>
-			<option value="1">文山區</option>
-			<option value="2">松山區</option>
-			<option value="3">內湖區</option>
 		</field>
 
 		<field name="address"

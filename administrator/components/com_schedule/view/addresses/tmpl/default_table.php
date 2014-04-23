@@ -121,13 +121,13 @@ $date      = $container->get('date');
 				href="<?php
 				$proxy = array(
 					'option' => 'com_schedule',
-					'view'   => 'member',
+					'view'   => 'customer',
 					'layout' => 'edit',
 					'id'	 => $item->customer_id
 				);
 				echo JRoute::_('index.php?' . http_build_query($proxy)); ?>"
 				target="_blank">
-				<?php echo $item->customer_id; ?>&nbsp;<span class="glyphicon glyphicon-share-alt"></span>
+				<?php echo $item->customer_name; ?>&nbsp;<span class="glyphicon glyphicon-share-alt"></span>
 			</a>
 		</td>
 
