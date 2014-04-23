@@ -33,112 +33,111 @@ $date      = $container->get('date');
 <!-- LIST TABLE -->
 <table id="taskList" class="table table-striped adminlist">
 
-<!-- TABLE HEADER -->
-<thead>
-<tr>
-	<!--CHECKBOX-->
-	<th width="1%" class="center">
-		<?php echo JHtml::_('grid.checkAll'); ?>
-	</th>
-
-	<!--TASK DATE-->
-	<th width="20%" class="nowrap center">
-		<?php echo $grid->sortTitle('COM_SCHEDULE_TASK_TITLE_LIST_DATE', 'task.date'); ?>
-	</th>
-
-	<!--SENDER NAME-->
-	<th width="20%" class="center">
-		<?php echo $grid->sortTitle('COM_SCHEDULE_TASK_TITLE_LIST_SENDER_NAME', 'task.sender_name'); ?>
-	</th>
-
-	<!--STATE-->
-	<th width="5%" class="nowrap center">
-		<?php echo $grid->sortTitle('COM_SCHEDULE_TASK_TITLE_LIST_STATUS', 'task.status'); ?>
-	</th>
-
-	<!--LANGUAGE-->
-	<th width="64%" class="center">
-		<?php echo JText::_('COM_SCHEDULE_TASK_TITLE_LIST_PRINT'); ?>
-	</th>
-
-
-</tr>
-</thead>
-
-<!--PAGINATION-->
-<tfoot>
-<tr>
-	<td colspan="5">
-		<div class="pull-left">
-			<?php echo $data->pagination->getListFooter(); ?>
-		</div>
-	</td>
-</tr>
-</tfoot>
-
-<!-- TABLE BODY -->
-<tbody>
-<?php foreach ($data->items as $i => $item)
-	:
-	// Prepare data
-	$item = new Data($item);
-
-	// Prepare item for GridHelper
-	$grid->setItem($item, $i);
-	?>
-	<tr class="task-row">
+	<!-- TABLE HEADER -->
+	<thead>
+	<tr>
 		<!--CHECKBOX-->
-		<td class="center">
-			<?php echo JHtml::_('grid.id', $i, $item->task_id); ?>
-		</td>
+		<th width="1%" class="center">
+			<?php echo JHtml::_('grid.checkAll'); ?>
+		</th>
 
 		<!--TASK DATE-->
-		<td class="center">
-			<?php
-			$query = array(
-				'option' => 'com_schedule',
-				'view' => 'task',
-				'layout' => 'edit',
-				'id'  => $item->id
-			);
-			?>
-			<a href="<?php echo JRoute::_("index.php?". http_build_query($query)); ?>">
-
-			<?php
-			$weekday = JDate::getInstance( $item->date );
-			echo  $weekday->format('Y-m-d') . '(' . $weekday->dayToString($weekday->dayofweek) . ')';
-			?>
-			</a>
-		</td>
+		<th width="20%" class="nowrap center">
+			<?php echo $grid->sortTitle('COM_SCHEDULE_TASK_TITLE_LIST_DATE', 'task.date'); ?>
+		</th>
 
 		<!--SENDER NAME-->
-		<td class="nowrap quick-edit-wrap">
-			<div class="item-title center">
-				<?php echo $item->sender_name; ?>
-			</div>
-		</td>
+		<th width="20%" class="center">
+			<?php echo $grid->sortTitle('COM_SCHEDULE_TASK_TITLE_LIST_SENDER_NAME', 'task.sender_name'); ?>
+		</th>
 
 		<!--STATE-->
-		<td class="center">
-			<div class="btn-group">
-				<!-- STATE BUTTON -->
-				<?php echo $grid->state() ?>
+		<th width="5%" class="nowrap center">
+			<?php echo $grid->sortTitle('COM_SCHEDULE_TASK_TITLE_LIST_STATUS', 'task.status'); ?>
+		</th>
 
-				<?php //\Schedule\Helper\ToggleHelper::toggleState(); ?>
+		<!--LANGUAGE-->
+		<th width="64%" class="center">
+			<?php echo JText::_('COM_SCHEDULE_TASK_TITLE_LIST_PRINT'); ?>
+		</th>
 
-				<!-- CHANGE STATE DROP DOWN -->
-				<?php echo $this->loadTemplate('dropdown'); ?>
+	</tr>
+	</thead>
+
+	<!--PAGINATION-->
+	<tfoot>
+	<tr>
+		<td colspan="5">
+			<div class="pull-left">
+				<?php echo $data->pagination->getListFooter(); ?>
 			</div>
 		</td>
-
-		<!--PRINT-->
-		<td class="center">
-			<a href="print-preview" class="btn btn-info">
-				<span class="glyphicon glyphicon-print"></span>
-				列印
-			</a>
-		</td>
 	</tr>
-<?php endforeach; ?>
-</tbody>
+	</tfoot>
+
+	<!-- TABLE BODY -->
+	<tbody>
+	<?php foreach ($data->items as $i => $item)
+		:
+		// Prepare data
+		$item = new Data($item);
+
+		// Prepare item for GridHelper
+		$grid->setItem($item, $i);
+		?>
+		<tr class="task-row">
+			<!--CHECKBOX-->
+			<td class="center">
+				<?php echo JHtml::_('grid.id', $i, $item->task_id); ?>
+			</td>
+
+			<!--TASK DATE-->
+			<td class="center">
+				<?php
+				$query = array(
+					'option' => 'com_schedule',
+					'view'   => 'task',
+					'layout' => 'edit',
+					'id'     => $item->id
+				);
+				?>
+				<a href="<?php echo JRoute::_("index.php?" . http_build_query($query)); ?>">
+
+					<?php
+					$weekday = JDate::getInstance($item->date);
+					echo $weekday->format('Y-m-d') . '(' . $weekday->dayToString($weekday->dayofweek) . ')';
+					?>
+				</a>
+			</td>
+
+			<!--SENDER NAME-->
+			<td class="nowrap quick-edit-wrap">
+				<div class="item-title center">
+					<?php echo $item->sender_name; ?>
+				</div>
+			</td>
+
+			<!--STATE-->
+			<td class="center">
+				<div class="btn-group">
+					<!-- STATE BUTTON -->
+					<?php echo $grid->state() ?>
+
+					<?php //\Schedule\Helper\ToggleHelper::toggleState(); ?>
+
+					<!-- CHANGE STATE DROP DOWN -->
+					<?php echo $this->loadTemplate('dropdown'); ?>
+				</div>
+			</td>
+
+			<!--PRINT-->
+			<td class="center">
+				<a href="print-preview" class="btn btn-info">
+					<span class="glyphicon glyphicon-print"></span>
+					列印
+				</a>
+			</td>
+		</tr>
+	<?php endforeach; ?>
+	</tbody>
 </table>
