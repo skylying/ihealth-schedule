@@ -43,7 +43,10 @@
 			/>
 
 		<field name="city_title"
-			type="select_city_title"
+			type="sql"
+			query="SELECT title FROM #__schedule_cities"
+			key_field = "title"
+			value_field = "title"
 			label="COM_SCHEDULE_INSTITUTE_CITY"
 			description="COM_SCHEDULE_INSTITUTE_CITY"
 			required="true"
@@ -51,7 +54,10 @@
 			/>
 
 		<field name="area_title"
-			type="select_area_title"
+			type="sql"
+			query="SELECT title FROM #__schedule_areas"
+			key_field = "title"
+			value_field = "title"
 			label="COM_SCHEDULE_INSTITUTE_AREA"
 			description="COM_SCHEDULE_INSTITUTE_AREA"
 			required="true"
@@ -68,6 +74,8 @@
 
 		<field name="sender_name"
 			type="sender_list"
+			value_field="name"
+			key_field="name"
 			label="COM_SCHEDULE_INSTITUTE_SENDER_NAME"
 			description="COM_SCHEDULE_INSTITUTE_SENDER_NAME"
 			required="true"
@@ -92,6 +100,8 @@
 
 		<field name="color_hex"
 			type="color_list"
+			value_field="title"
+			key_field="hex"
 			label="COM_SCHEDULE_INSTITUTE_MARK_COLOR"
 			description="COM_SCHEDULE_INSTITUTE_MARK_COLOR"
 			required="true"
