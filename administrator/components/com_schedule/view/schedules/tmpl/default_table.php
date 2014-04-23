@@ -184,7 +184,12 @@ $date      = $container->get('date');
 
 		<!-- status -->
 		<td>
-			<?php echo $this->loadTemplate('status_dropdown', array('item' => $item)); ?>
+			<?php
+			if ($item->status)
+			{
+				echo $this->loadTemplate('status_dropdown', array('item' => $item));
+			}
+			?>
 		</td>
 	</tr>
 <?php endforeach; ?>
