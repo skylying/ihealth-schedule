@@ -44,6 +44,27 @@
         - ['8', '綠色', '#008000']
         - ['9', '粉紅色', '#faafbe']
         - ['10', 水藍色, '#2b65ec']
+'#__schedule_customer_member_maps':
+    name: '#__schedule_customer_member_maps'
+    from:
+        - '#__schedule_customer_member_maps'
+    columns:
+        id: { Field: id, Type: 'int(11) unsigned', 'Null': NO, Default: null, Extra: auto_increment, Comment: id, From: [id] }
+        member_id: { Field: member_id, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: '會員 id', From: [member_id] }
+        customer_id: { Field: customer_id, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: '客戶 id', From: [customer_id] }
+    index:
+        - { Table: '#__schedule_customer_member_maps', Non_unique: '0', Key_name: PRIMARY, Seq_in_index: '1', Column_name: id, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
+    data:
+        - ['1', '1', '5']
+        - ['2', '1', '4']
+        - ['3', '2', '3']
+        - ['4', '2', '2']
+        - ['5', '3', '5']
+        - ['6', '4', '5']
+        - ['7', '5', '6']
+        - ['8', '5', '7']
+        - ['9', '6', '1']
+        - ['10', '7', '2']
 '#__schedule_customers':
     name: '#__schedule_customers'
     from:
