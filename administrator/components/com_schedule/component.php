@@ -23,7 +23,7 @@ final class ScheduleComponent extends ScheduleComponentBase
 	 *
 	 * @var string
 	 */
-	protected $defaultController = 'prescriptions.display';
+	protected $defaultController = 'rxresidents.display';
 
 	/**
 	 * init

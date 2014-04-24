@@ -27,9 +27,6 @@ $container = $this->getContainer();
 $asset     = $container->get('helper.asset');
 $grid      = $data->grid;
 $date      = $container->get('date');
-
-// Set order script.
-$grid->registerTableSort();
 ?>
 
 <!-- LIST TABLE -->
@@ -124,17 +121,23 @@ $grid->registerTableSort();
 
 		<!-- 處方箋編號 -->
 		<td>
-			<?php echo $item->id; ?>
+			<a href="<?php echo JRoute::_('index.php?option=com_schedule&task=rxindividual.edit.edit&id=' . $item->id); ?>">
+				<?php echo $item->id; ?>
+			</a>
 		</td>
 
 		<!-- 機構名稱 -->
 		<td>
-			<?php echo $this->escape($item->institute_short_title); ?>
+			<a href="<?php echo JRoute::_('index.php?option=com_schedule&task=institute.edit.edit&id=' . $item->institute_id); ?>">
+				<?php echo $this->escape($item->institute_short_title); ?>
+			</a>
 		</td>
 
 		<!-- 住民姓名 -->
 		<td>
-			<?php echo $this->escape($item->customer_name); ?>
+			<a href="<?php echo JRoute::_('index.php?option=com_schedule&task=customer.edit.edit&id=' . $item->customer_id); ?>">
+				<?php echo $this->escape($item->customer_name); ?>
+			</a>
 		</td>
 
 		<!-- 身分證字號 -->
