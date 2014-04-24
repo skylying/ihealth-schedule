@@ -124,10 +124,12 @@ $date      = $container->get('date');
 
 			<!--Customer Amount-->
 			<td class="center">
+				<?php echo empty($item->customers_name) ? '0' : count(explode(',', $item->customers_name));?>
 			</td>
 
 			<!--Relative Customers-->
 			<td class="center">
+				<?php echo $item->customers_name;?>
 			</td>
 		</tr>
 	<?php endforeach; ?>

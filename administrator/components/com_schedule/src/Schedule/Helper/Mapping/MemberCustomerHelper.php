@@ -51,6 +51,8 @@ class MemberCustomerHelper
 	 */
 	public static function addCustomers($mid, $cids)
 	{
+		if(empty($cids))
+			return true;
 		$cids = array_unique($cids);
 
 		$db = \JFactory::getDbo();
