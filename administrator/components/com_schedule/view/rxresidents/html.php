@@ -120,7 +120,7 @@ class ScheduleViewRxresidentsHtml extends GridView
 		$buttonSet = parent::configureToolbar($buttonSet, $canDo);
 
 		$buttonSet['tmpCreateLayout']['handler'] = function(){
-			AKToolbarHelper::back("tmpCreateLayout", JRoute::_("index.php?option=com_schedule&view=rxresident&layout=new"));
+			JToolbarHelper::back("tmpCreateLayout", JRoute::_("index.php?option=com_schedule&view=rxresident&layout=new"));
 		};
 
 		// In debug mode, we remove trash button but use delete button instead.
