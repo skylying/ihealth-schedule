@@ -99,7 +99,7 @@ class ScheduleModelSchedule extends AdminModel
 	 * @param   array  $data
 	 * @param   bool   $loadData
 	 *
-	 * @return  mixed
+	 * @return  JForm
 	 */
 	public function getFormInstitute($data = array(), $loadData = true)
 	{
@@ -119,7 +119,7 @@ class ScheduleModelSchedule extends AdminModel
 	 * @param   array  $data
 	 * @param   bool   $loadData
 	 *
-	 * @return  mixed
+	 * @return  JForm
 	 */
 	public function getFormIndividual($data = array(), $loadData = true)
 	{
@@ -131,5 +131,86 @@ class ScheduleModelSchedule extends AdminModel
 		$formName = 'schedule_individual';
 
 		return $this->loadForm($this->option . '.' . $formName . '.form', $formName, $config);
+	}
+
+	/**
+	 * Prepare and sanitise the table data prior to saving.
+	 *
+	 * @param   JTable  $table  A reference to a JTable object.
+	 *
+	 * @return  void
+	 */
+	public function prepareTable($table)
+	{
+		$formName = $this->state->get('form.type', 'schedule_institute');
+
+		if ('schedule_institute' === $formName)
+		{
+			$this->prepareInstituteTable($table);
+		}
+		else
+		{
+			$this->prepareIndividualTable($table);
+		}
+
+		$senderId = JFactory::getApplication()->input->get('sender_id', 0);
+
+		if ($senderId > 0)
+		{
+			$tableSender = $this->getTable('Sender');
+			$tableSender->load($senderId);
+
+			$table->sender_name = $tableSender->name;
+		}
+	}
+
+	/**
+	 * Prepare and sanitise the table data prior to save institute data.
+	 *
+	 * @param   JTable  $table  A reference to a JTable object.
+	 *
+	 * @return  void
+	 */
+	public function prepareInstituteTable($table)
+	{
+		$tableInstitute = $this->getTable('Institute');
+		$tableInstitute->load($table->institute_id);
+
+		$tableCity = $this->getTable('City');
+		$tableCity->load($table->city);
+
+		$tableArea = $this->getTable('Area');
+		$tableArea->load($table->area);
+
+		$table->institute_title = $tableInstitute->title;
+		$table->city_title = $tableCity->title;
+		$table->area_title = $tableArea->title;
+	}
+
+	/**
+	 * Prepare and sanitise the table data prior to save individual data.
+	 *
+	 * @param   JTable  $table  A reference to a JTable object.
+	 *
+	 * @return  void
+	 */
+	public function prepareIndividualTable($table)
+	{
+		$tableCustomer = $this->getTable('Customer');
+		$tableCustomer->load($table->customer_id);
+
+		$tableMember = $this->getTable('Member');
+		$tableMember->load($table->member_id);
+
+		$tableCity = $this->getTable('City');
+		$tableCity->load($table->city);
+
+		$tableArea = $this->getTable('Area');
+		$tableArea->load($table->area);
+
+		$table->customer_name = $tableCustomer->name;
+		$table->member_name = $tableMember->name;
+		$table->city_title = $tableCity->title;
+		$table->area_title = $tableArea->title;
 	}
 }
