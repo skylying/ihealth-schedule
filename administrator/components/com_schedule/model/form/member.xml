@@ -57,6 +57,13 @@
 			description="COM_SCHEDULE_MEMBER_TEL"
 			class="input-xlarge"
 			/>
+		<field name="customer"
+			type="customer_list"
+			label="Customer"
+			value_field="name"
+			multiple="true"
+			>
+		</field>
 	</fieldset>
 		<!--<field name="parent_id"
 			type="member_list"

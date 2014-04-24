@@ -72,4 +72,39 @@ class ScheduleModelMember extends AdminModel
 	{
 		parent::setOrderPosition($table, $position);
 	}
+
+
+	public function getItem($pk = null)
+	{
+		$this->item = parent::getItem($pk);
+
+		$db    = JFactory::getDbo();
+		$query = $db->getQuery(true);
+
+		if (empty($this->item->id))
+		{
+			return $this->item;
+		}
+
+		$select = "`customer`.`id` ,`customer`.`name`";
+
+		$query->select($select)
+			->from("#__schedule_customers AS customer")
+			->join('LEFT', $db->quoteName('#__schedule_customer_member_maps') . ' AS map ON customer.id = map.customer_id')
+			->where("`map`.`member_id`= {$this->item->id}");
+
+		$db->setQuery($query);
+		$customer = $db->loadObjectList();
+
+		$customer_id = array();
+
+		foreach ($customer as $cid)
+		{
+			$customer_id[] = $cid->id;
+		}
+
+		$this->item->customer = $customer_id;
+
+		return $this->item;
+	}
 }
