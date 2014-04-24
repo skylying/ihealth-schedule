@@ -11,13 +11,7 @@
 			>
 			<option></option>
 		</field>
-		<field name="customer_name"
-			type="hidden"
-			default=""
-			label="散客名稱"
-			description="散客名稱"
-			readonly="false"
-			/>
+
 		<field name="member_id"
 			type="member_list"
 			default=""
@@ -28,15 +22,9 @@
 			>
 			<option></option>
 		</field>
-		<field name="member_name"
-			type="hidden"
-			default=""
-			label="會員名稱"
-			description="會員名稱"
-			readonly="false"
-			/>
 
-		<field name="city"
+		<field id="individual_city"
+			name="city"
 			type="sql"
 			default=""
 			query="SELECT id, title FROM #__schedule_cities"
@@ -48,15 +36,9 @@
 			>
 			<option></option>
 		</field>
-		<field name="city_title"
-			type="hidden"
-			default=""
-			label="縣市"
-			description="縣市"
-			readonly="false"
-			/>
 
-		<field name="area"
+		<field id="individual_area"
+			name="area"
 			type="sql"
 			default=""
 			query="SELECT id, title FROM #__schedule_areas"
@@ -68,13 +50,6 @@
 			>
 			<option></option>
 		</field>
-		<field name="area_title"
-			type="hidden"
-			default=""
-			label="區域"
-			description="區域"
-			readonly="false"
-			/>
 
 		<field name="address"
 			type="text"
@@ -113,21 +88,16 @@
 			description="拜訪日期"
 			/>
 
-		<field name="route_sender_id"
+		<field id="individual_sender_id"
+			name="sender_id"
 			type="sender_list"
 			key_field="id"
 			value_field="name"
 			label="負責藥師"
 			description="負責藥師"
+			onchange="jQuery('input[name=sender_id]').val(jQuery(this).val());"
 			>
 			<option></option>
 		</field>
-		<field name="sender_name"
-			type="hidden"
-			default=""
-			label="負責藥師"
-			description="負責藥師"
-			readonly="false"
-			/>
 	</fieldset>
 </form>
