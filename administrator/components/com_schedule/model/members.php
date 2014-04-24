@@ -73,8 +73,8 @@ class ScheduleModelMembers extends ListModel
 		$queryHelper = $this->getContainer()->get('model.members.helper.query', Container::FORCE_NEW);
 
 		$queryHelper->addTable('member', '#__schedule_members')
-					->addTable('map', '#__schedule_customer_member_maps', 'member.id = map.member_id ')
-					->addTable('customer', '#__schedule_customers', 'customer.id = map.customer_id');
+			->addTable('map', '#__schedule_customer_member_maps', 'member.id = map.member_id')
+			->addTable('customer', '#__schedule_customers', 'customer.id = map.customer_id');
 
 		$this->filterFields = array_merge($this->filterFields, $queryHelper->getFilterFields());
 	}

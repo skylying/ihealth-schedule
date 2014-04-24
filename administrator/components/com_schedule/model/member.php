@@ -94,16 +94,16 @@ class ScheduleModelMember extends AdminModel
 			->where("`map`.`member_id`= {$this->item->id}");
 
 		$db->setQuery($query);
-		$customer = $db->loadObjectList();
+		$customers = $db->loadObjectList();
 
-		$customer_id = array();
+		$this->item->customers = array();
 
-		foreach ($customer as $cid)
+		foreach ($customers as $customer)
 		{
-			$customer_id[] = $cid->id;
+			$this->item->customers[] = $customer->id;
 		}
 
-		$this->item->customer = $customer_id;
+		$this->item->customer = $this->item->customers;
 
 		return $this->item;
 	}
