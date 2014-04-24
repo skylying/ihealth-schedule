@@ -144,7 +144,7 @@ $date      = $container->get('date');
 
 		<!-- customer_name | institute_name -->
 		<td>
-			<?php echo Schedule\Helper\ScheduleHelper::getEditLink($item); ?>
+			<?php echo Schedule\Helper\ScheduleHelper::getTargetLink($item); ?>
 		</td>
 
 		<!-- city_title -->
