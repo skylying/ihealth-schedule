@@ -112,7 +112,7 @@ $formItem   = $form->getFieldset("item");
 			<!-- 處方箋取得方式 -->
 			<td>
 				<select class="span12 form-control js-status">
-					<option value="original" selected="">正本</option>
+					<option value="original" selected>正本</option>
 					<option value="drug-dealer-photo">藥師拍照</option>
 					<option value="fax">傳真</option>
 					<option value="line">line</option>
