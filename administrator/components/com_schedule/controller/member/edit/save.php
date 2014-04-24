@@ -26,8 +26,7 @@ class ScheduleControllerMemberEditSave extends \Windwalker\Controller\Edit\SaveC
 			$validData['id'] = $model->getState()->get('member.id');
 		}
 
-		MemberCustomerHelper::disconnectCustomers($validData['id']);
-		MemberCustomerHelper::connectCustomers($validData['id'], $customer);
+		MemberCustomerHelper::updateMappingConnections($validData['id'], $customer);
 
 		parent::postSaveHook($model, $validData);
 	}

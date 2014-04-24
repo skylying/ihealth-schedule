@@ -18,6 +18,40 @@ class MemberCustomerHelper
 	const RELATION_TABLE = '#__schedule_customer_member_maps';
 
 	/**
+	 * updateMappingConnections
+	 *
+	 * @param       $mid
+	 * @param array $cids
+	 *
+	 * @return  bool
+	 */
+	public static function updateMappingConnections( $mid, $cids = array() )
+	{
+		if (empty($cids))
+		{
+			return true;
+		}
+
+		$app = \JFactory::getApplication();
+
+		if (!static::disconnectCustomers($mid))
+		{
+			$app->enqueueMessage('COM_SCHEDULE_MEMBER_DISCONNECT_MAPPING_FAILED', 'error');
+
+			return false;
+		}
+
+		if (!static::connectCustomers($mid, $cids))
+		{
+			$app->enqueueMessage('COM_SCHEDULE_MEMBER_CONNECT_MAPPING_FAILED', 'error');
+
+			return false;
+		}
+
+		return true;
+	}
+
+	/**
 	 * deleteCustomers
 	 *
 	 * @param int $mid
