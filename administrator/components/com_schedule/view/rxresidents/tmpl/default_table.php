@@ -116,7 +116,9 @@ $date      = $container->get('date');
 
 		<!-- id -->
 		<td>
-			<?php echo $this->escape($item->id); ?>
+			<a href="<?php echo JRoute::_('index.php?option=com_schedule&task=rxindividual.edit.edit&id=' . $item->id); ?>">
+				<?php echo $this->escape($item->id); ?>
+			</a>
 		</td>
 
 		<!-- 散客名稱 -->

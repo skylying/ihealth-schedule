@@ -119,6 +119,10 @@ class ScheduleViewRxindividualsHtml extends GridView
 		// Get default button set.
 		$buttonSet = parent::configureToolbar($buttonSet, $canDo);
 
+		$buttonSet['tmpCreateLayout']['handler'] = function(){
+			AKToolbarHelper::back("tmpCreateLayout", JRoute::_("index.php?option=com_schedule&view=rxindividual&layout=new"));
+		};
+
 		// In debug mode, we remove trash button but use delete button instead.
 		if (JDEBUG)
 		{
