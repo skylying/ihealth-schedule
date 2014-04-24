@@ -27,7 +27,7 @@ $container = $this->getContainer();
 $asset     = $container->get('helper.asset');
 $grid      = $data->grid;
 $date      = $container->get('date');
-show($data);
+
 ?>
 <!-- LIST TABLE -->
 <table id="customerList" class="table table-striped adminlist">
@@ -133,7 +133,8 @@ show($data);
 		<!--CUSTOMER_TYPE-->
 		<td class="center">
 			<?php
-			if($item->type == 'individual'){
+			if($item->type == 'individual')
+			{
 				echo JTEXT::_('COM_CUSTOMERS_INDIVIDUAL');
 			} else {
 				echo JTEXT::_('COM_CUSTOMERS_RESIDENT');
@@ -172,15 +173,16 @@ show($data);
 		<!--CUSTOMER_MEMBER_MAPS-->
 		<td class="center">
 			<?php
-			if($item->type == 'individual'){
+			if($item->type == 'individual')
+			{
 			    echo	'<a class="glyphicon glyphicon-user" href='.
-						JRoute::_('index.php?option=com_schedule&view=schedules').
+						JRoute::_('index.php?option=com_schedule&view=members&task=member.edit&id='.(int) $item->id).
 						'>'.
 						$this->escape($item->member_name).
 						'</a>';
 			} else {
 				echo	'<a class="glyphicon glyphicon-home" href='.
-						JRoute::_('index.php?option=com_schedule&view=schedules').
+						JRoute::_('index.php?option=com_schedule&view=institues&task=institute.edit&id='.(int) $item->id).
 						'>'.
 						 $this->escape($item->institute_title).
 						'</a>';

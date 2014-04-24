@@ -79,7 +79,7 @@ class ScheduleModelCustomers extends ListModel
 		$queryHelper->addTable('customer', '#__schedule_customers')
 					->addTable('map', '#__schedule_customer_member_maps', 'customer.id = customer_id ')
 					->addTable('member', '#__schedule_members', 'member.id = map.member_id ')
-					->addTable('institute', '#__schedule_institutes', 'customer.institute_id = institute.id ');
+					->addTable('institute', '#__schedule_institutes', '`customer`.`institute_id` = `institute`.`id` ');
 
 
 
