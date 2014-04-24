@@ -122,6 +122,10 @@ $date      = $container->get('date');
 				<?php echo $this->escape($item->email); ?>
 			</td>
 
+			<?php
+			$customers_name = explode(',', $item->customers_name);
+			$customers_id = explode(',', $item->customers_id);
+			?>
 			<!--Customer Amount-->
 			<td class="center">
 				<?php echo empty($item->customers_name) ? '0' : count(explode(',', $item->customers_name));?>
@@ -129,7 +133,21 @@ $date      = $container->get('date');
 
 			<!--Relative Customers-->
 			<td class="center">
-				<?php echo $item->customers_name;?>
+				<?php
+					foreach ($customers_name as $i => $customer):
+						$query = array(
+							'option' => 'com_schedule',
+							'view'   => 'customer',
+							'layout' => 'edit',
+							'id'     => $customers_id[$i]
+						);
+				?>
+					<a href="<?php echo JRoute::_("index.php?" . http_build_query($query));?>">
+						<?php echo $customer; ?>
+					</a>
+				<?php
+					endforeach;
+				?>
 			</td>
 		</tr>
 	<?php endforeach; ?>
