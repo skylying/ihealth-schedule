@@ -24,7 +24,7 @@ class MemberCustomerHelper
 	 *
 	 * @return  bool
 	 */
-	public static function deleteCustomers($mid)
+	public static function disconnectCustomers($mid)
 	{
 		$db = \JFactory::getDbo();
 
@@ -49,7 +49,7 @@ class MemberCustomerHelper
 	 *
 	 * @return  bool
 	 */
-	public static function addCustomers($mid, $cids)
+	public static function connectCustomers($mid, $cids)
 	{
 		if (empty($cids))
 		{
