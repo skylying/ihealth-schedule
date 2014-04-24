@@ -193,7 +193,7 @@
 		<fieldset name="global">
 			<field
 				name="institute"
-				type="Institute_List"
+				type="institute_list"
 				label="機構名稱"
 				description="機構名稱"
 				/>
@@ -209,7 +209,7 @@
 		<fieldset name="item">
 			<field
 				name="customer_id"
-				type="Customer_List"
+				type="customer_list"
 				label="住民"
 				description="住民"
 				/>

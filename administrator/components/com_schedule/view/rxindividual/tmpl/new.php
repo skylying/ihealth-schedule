@@ -1,4 +1,10 @@
 <?php
+/**
+ * Part of Component Schedule files.
+ *
+ * @copyright   Copyright (C) 2014 Asikart. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ */
 
 $basic            = $data->form->getFieldset("basic");
 $schedules["1st"] = $data->form->getFieldset("schedules_1st");
@@ -6,10 +12,9 @@ $schedules["2nd"] = $data->form->getFieldset("schedules_2nd");
 $schedules["3rd"] = $data->form->getFieldset("schedules_3rd");
 $ps               = $data->form->getFieldset("schedules_ps");
 
-$document = JFactory::getDocument();
+?>
 
-$document->addStyleDeclaration(
-	<<<STYLE
+<style>
 	.schedules .control-label
 	{
 		float: none;
@@ -34,11 +39,7 @@ $document->addStyleDeclaration(
 	{
 		display: none;
 	}
-STYLE
-);
-
-
-?>
+</style>
 
 <form class="form-horizontal">
 	<div class="row-fluid">

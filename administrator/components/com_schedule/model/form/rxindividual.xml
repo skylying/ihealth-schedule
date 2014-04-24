@@ -62,7 +62,7 @@
 			description="處方開立醫院名稱"
 			/>
 
-		<field name="received"
+		<field name="called"
 			type="radio"
 			label="電聯狀態"
 			description="電聯狀態"
@@ -217,7 +217,7 @@
 			/>
 
 		<field name="hospital_id"
-			type="Hospital_List"
+			type="hospital_list"
 			label="處方開立醫院"
 			description="處方開立醫院"
 			/>
@@ -231,7 +231,7 @@
 			<option value="1">未取得</option>
 		</field>
 
-		<field name="received"
+		<field name="called"
 			type="radio"
 			label="電聯狀態"
 			description="電聯狀態"
