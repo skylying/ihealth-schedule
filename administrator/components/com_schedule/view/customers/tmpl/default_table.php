@@ -28,21 +28,13 @@ $asset     = $container->get('helper.asset');
 $grid      = $data->grid;
 $date      = $container->get('date');
 
-// Set order script.
-$grid->registerTableSort();
 ?>
-
 <!-- LIST TABLE -->
 <table id="customerList" class="table table-striped adminlist">
 
 <!-- TABLE HEADER -->
 <thead>
 <tr>
-	<!--SORT-->
-	<th width="1%" class="nowrap center hidden-phone">
-		<?php echo $grid->orderTitle(); ?>
-	</th>
-
 	<!--CHECKBOX-->
 	<th width="1%" class="center">
 		<?php echo JHtml::_('grid.checkAll'); ?>
@@ -126,11 +118,7 @@ $grid->registerTableSort();
 	// Prepare item for GridHelper
 	$grid->setItem($item, $i);
 	?>
-	<tr class="customer-row" sortable-group-id="<?php echo $item->catid; ?>">
-		<!-- DRAG SORT -->
-		<td class="order nowrap center hidden-phone">
-			<?php echo $grid->dragSort(); ?>
-		</td>
+	<tr class="customer-row" <?php echo $item->catid; ?>>
 
 		<!--CHECKBOX-->
 		<td class="center">
@@ -144,19 +132,33 @@ $grid->registerTableSort();
 
 		<!--CUSTOMER_TYPE-->
 		<td class="center">
-			<?php echo $this->escape($item->type); ?>
+			<?php
+			if($item->type == 'individual')
+			{
+				echo JTEXT::_('COM_CUSTOMERS_INDIVIDUAL');
+			} else {
+				echo JTEXT::_('COM_CUSTOMERS_RESIDENT');
+			}
+			?>
 		</td>
 
 		<!--CUSTOMER_NAME-->
-		<td class="n/owrap has-context quick-edit-wrap">
+		<td class="nowrap quick-edit-wrap">
 			<div class="center">
-				<!-- Checkout -->
-				<?php echo $grid->checkoutButton(); ?>
-
-				<!-- Title -->
-				<?php echo $grid->editTitle(); ?>
+				<?php
+				$query = array(
+					'option' => 'com_schedule',
+					'view' => 'customer',
+					'layout' => 'edit',
+					'id'  => $item->id
+				);
+				?>
+				<a href="<?php echo JRoute::_("index.php?". http_build_query($query)); ?>">
+					<?php echo $this->escape($item->name); ?>
+				</a>
 			</div>
 		</td>
+
 
 		<!--CUSTOMER_ID_NUMBER-->
 		<td class="center">
@@ -170,7 +172,22 @@ $grid->registerTableSort();
 
 		<!--CUSTOMER_MEMBER_MAPS-->
 		<td class="center">
-			<?php echo $this->escape($item->title); ?>
+			<?php
+			if($item->type == 'individual')
+			{
+			    echo	'<a class="glyphicon glyphicon-user" href='.
+						JRoute::_('index.php?option=com_schedule&view=members&task=member.edit&id='.(int) $item->id).
+						'>'.
+						$this->escape($item->member_name).
+						'</a>';
+			} else {
+				echo	'<a class="glyphicon glyphicon-home" href='.
+						JRoute::_('index.php?option=com_schedule&view=institues&task=institute.edit&id='.(int) $item->id).
+						'>'.
+						 $this->escape($item->institute_title).
+						'</a>';
+			}
+			?>
 		</td>
 
 		<!--CITY_TITLE-->
@@ -185,12 +202,12 @@ $grid->registerTableSort();
 
 		<!--STATE-->
 		<td class="center">
-			<?php echo $this->escape($item->state); ?>
+			<?php echo $this->escape($item->state ? JTEXT::_('COM_CUSTOMERS_IN_SERVICE') : JTEXT::_('COM_CUSTOMERS_CLOSE_CASE')); ?>
 		</td>
 
 		<!--SCHEDULE_RECORD-->
 		<td class="center">
-
+			<a href=<?php JRoute::_('index.php?option=com_schedule&view=schedules');?>><?php echo JTEXT::_('COM_SCHEDULE_RECORD_LINK');?></a>
 		</td>
 
 		<!--RESERVE-->

@@ -67,11 +67,20 @@ class ScheduleModelCustomers extends ListModel
 	 *
 	 * @return  void
 	 */
+	protected $filterFields = array(
+		'customers.age_start',
+		'customers.age_end'
+	);
+
 	protected function configureTables()
 	{
 		$queryHelper = $this->getContainer()->get('model.customers.helper.query', Container::FORCE_NEW);
 
-		$queryHelper->addTable('customer', '#__schedule_customers');
+		$queryHelper->addTable('customer', '#__schedule_customers')
+					->addTable('map', '#__schedule_customer_member_maps', 'customer.id = customer_id ')
+					->addTable('member', '#__schedule_members', 'member.id = map.member_id ')
+					->addTable('institute', '#__schedule_institutes', '`customer`.`institute_id` = `institute`.`id` ');
+
 
 
 		$this->filterFields = array_merge($this->filterFields, $queryHelper->getFilterFields());
@@ -128,6 +137,27 @@ class ScheduleModelCustomers extends ListModel
 	 */
 	protected function configureFilters($filterHelper)
 	{
+		$filterHelper->setHandler(
+			'customers.age_start',
+			function ($query, $field, $start)
+			{
+				if ($start)
+				{
+					$query->where('`customer`.`age` >= ' . $query->q($start));
+				}
+			}
+		);
+
+		$filterHelper->setHandler(
+			'customers.age_end',
+			function ($query, $field, $end)
+			{
+				if ($end)
+				{
+					$query->where('`customer`.`age` <= ' . $query->q($end));
+				}
+			}
+		);
 	}
 
 	/**

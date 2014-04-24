@@ -56,8 +56,8 @@
 			>
 			<option></option>
 			<option>選擇類別</option>
-			<option value="1">散客</option>
-			<option value="0">住民</option>
+			<option value="individual">散客</option>
+			<option value="resident">住民</option>
 		</field>
 
 		<field
@@ -96,15 +96,15 @@
 		</field>
 
 		<field
-			name="customer.age"
+			name="customers.age_start"
 			type="input"
 			label="COM_SCHEDULE_CUSTOMER_FILTER_AGE_FROM"
 			default=""
-			onchange="this.form.submit();"
+
 			/>
 
 		<field
-			name=""
+			name="customers.age_end"
 			type="input"
 			label="COM_SCHEDULE_CUSTOMER_FILTER_AGE_TO"
 			default=""
@@ -120,7 +120,9 @@
 			onchange="this.form.submit();"
 			>
 			<option></option>
-			<option>選擇</option>
+			<option>選擇狀態</option>
+			<option value="0">結案</option>
+			<option value="1">服務中</option>
 		</field>
 
 		<!--
