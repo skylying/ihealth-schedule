@@ -123,12 +123,16 @@ $date      = $container->get('date');
 
 		<!-- 散客名稱 -->
 		<td>
-			<?php echo $this->escape($item->customer_name); ?>
+			<a href="<?php echo JRoute::_('index.php?option=com_schedule&task=customer.edit.edit&id=' . $item->customer_id); ?>">
+				<?php echo $this->escape($item->customer_name); ?>
+			</a>
 		</td>
 
 		<!-- 所屬會員 -->
 		<td>
-			<?php echo $this->escape($item->member_name); ?>
+			<a href="<?php echo JRoute::_('index.php?option=com_schedule&task=member.edit.edit&id=' . $item->member_id); ?>">
+				<?php echo $this->escape($item->member_name); ?>
+			</a>
 		</td>
 
 		<!-- 上傳方式 -->

@@ -128,12 +128,16 @@ $date      = $container->get('date');
 
 		<!-- 機構名稱 -->
 		<td>
-			<?php echo $this->escape($item->institute_short_title); ?>
+			<a href="<?php echo JRoute::_('index.php?option=com_schedule&task=institute.edit.edit&id=' . $item->institute_id); ?>">
+				<?php echo $this->escape($item->institute_short_title); ?>
+			</a>
 		</td>
 
 		<!-- 住民姓名 -->
 		<td>
-			<?php echo $this->escape($item->customer_name); ?>
+			<a href="<?php echo JRoute::_('index.php?option=com_schedule&task=customer.edit.edit&id=' . $item->customer_id); ?>">
+				<?php echo $this->escape($item->customer_name); ?>
+			</a>
 		</td>
 
 		<!-- 身分證字號 -->
