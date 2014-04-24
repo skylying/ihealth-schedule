@@ -71,8 +71,10 @@
 			description="COM_SCHEDULE_INSTITUTE_TITLE"
 			/>
 
-		<field name=""
-			type="text"
+		<field name="member"
+			type="member_list"
+			value_field="name"
+			multiple="true"
 			label="COM_SCHEDULE_CUSTOMER_MEMBER"
 			description="COM_SCHEDULE_CUSTOMER_MEMBER"
 			class="input-large"

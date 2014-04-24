@@ -207,14 +207,15 @@ $date      = $container->get('date');
 
 		<!--SCHEDULE_RECORD-->
 		<td class="center">
-			<a href=<?php JRoute::_('index.php?option=com_schedule&view=schedules');?>><?php echo JTEXT::_('COM_SCHEDULE_RECORD_LINK');?></a>
+			<a href="<?php echo JRoute::_('index.php?option=com_schedule&view=schedules');?>"><?php echo JTEXT::_('COM_SCHEDULE_RECORD_LINK');?></a>
 		</td>
 
 		<!--RESERVE-->
 		<td class="center">
-			<span class="glyphicon glyphicon-plus">
-				<a></a>
-			</span>
+			<a href=<?php echo JRoute::_('index.php?option=com_schedule&view=rxindividual&layout=edit');?>>
+				<span class="glyphicon glyphicon-plus">
+				</span>
+			</a>
 		</td>
 
 	</tr>
