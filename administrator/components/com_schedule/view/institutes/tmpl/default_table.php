@@ -164,7 +164,7 @@ $date      = $container->get('date');
 
 		<!--ID-->
 		<td class="center">
-			<?php echo (int) $item->id;?>
+			<a href="<?php echo JRoute::_('?option=com_schedule&view=institute&layout=edit&id=' . $item->id);?>"><?php echo $item->id;?></a>
 		</td>
 
 		<!--Link To Elder List-->
