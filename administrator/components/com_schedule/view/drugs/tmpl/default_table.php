@@ -28,8 +28,6 @@ $asset     = $container->get('helper.asset');
 $grid      = $data->grid;
 $date      = $container->get('date');
 
-// Set order script.
-$grid->registerTableSort();
 ?>
 
 <!-- LIST TABLE -->
@@ -106,8 +104,18 @@ $grid->registerTableSort();
 		</td>
 
 		<!--RX_ID-->
-		<td class="center">
-			<a href="<?php echo JRoute::_('index.php?option=com_schedule&view=prescription&layout=edit&id=' . $item->rx_id); ?>"><?php echo $item->rx_id; ?></a>
+		<td class="center"><a
+			href="<?php
+				$proxy = array(
+					'option' => 'com_schedule',
+					'view'   => 'prescription',
+					'layout' => 'edit',
+					'id'	 => $item->rx_id
+				);
+				echo JRoute::_('index.php?' . http_build_query($proxy)); ?>"
+			target="_blank">
+			<?php echo $item->rx_id; ?>&nbsp;<span class="glyphicon glyphicon-share-alt"></span>
+			</a>
 		</td>
 	</tr>
 <?php endforeach; ?>
