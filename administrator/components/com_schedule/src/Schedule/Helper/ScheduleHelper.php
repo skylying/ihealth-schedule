@@ -12,26 +12,36 @@ use Windwalker\Data\Data;
 class ScheduleHelper
 {
 	/**
-	 * getEditLink
+	 * getTargetLink
 	 *
 	 * @param   Data $item
 	 *
 	 * @return  string
 	 */
-	public static function getEditLink(Data $item)
+	public static function getTargetLink(Data $item)
 	{
 		$attr = array('target' => '_blank');
 
-		switch ($item->type)
+		if ('individual' === $item->type
+			|| ('individual' !== $item->type && $item->member_id > 0))
 		{
-			case 'individual':
-				$url = 'index.php?option=com_schedule&task=member.edit.edit&id=' . $item->member_id;
+			$url = 'index.php?option=com_schedule&task=member.edit.edit&id=' . $item->member_id;
+			$text = '<span class="glyphicon glyphicon-user"></span> ' .
+				$item->member_name .
+				' <span class="glyphicon glyphicon-share-alt"></span>';
 
-				return \JHtml::link($url, $item->member_name, $attr);
-			case 'resident':
-				$url = 'index.php?option=com_schedule&task=institute.edit.edit&id=' . $item->institute_id;
+			return \JHtml::link($url, $text, $attr);
+		}
 
-				return \JHtml::link($url, $item->institute_title, $attr);
+		if ('resident' === $item->type
+			|| ('resident' !== $item->type && $item->institute_id > 0))
+		{
+			$url = 'index.php?option=com_schedule&task=institute.edit.edit&id=' . $item->institute_id;
+			$text = '<span class="glyphicon glyphicon-home"></span> ' .
+				$item->institute_title .
+				' <span class="glyphicon glyphicon-share-alt"></span>';
+
+			return \JHtml::link($url, $text, $attr);
 		}
 
 		return '';
