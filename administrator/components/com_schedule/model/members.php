@@ -69,7 +69,7 @@ class ScheduleModelMembers extends ListModel
 	 */
 	protected function configureTables()
 	{
-		/** @var  $queryHelper */
+		/** @var \Windwalker\Model\Helper\QueryHelper $queryHelper   */
 		$queryHelper = $this->getContainer()->get('model.members.helper.query', Container::FORCE_NEW);
 
 		$queryHelper->addTable('member', '#__schedule_members')

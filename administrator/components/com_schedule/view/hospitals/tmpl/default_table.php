@@ -112,7 +112,8 @@ $date      = $container->get('date');
 					);
 					?>
 					<a href="<?php echo JRoute::_("index.php?" . http_build_query($query)); ?>">
-						<?php echo $this->escape($item->title); ?></a>
+						<?php echo $this->escape($item->title); ?>
+					</a>
 				</div>
 			</td>
 

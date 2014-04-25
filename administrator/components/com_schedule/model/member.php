@@ -103,8 +103,6 @@ class ScheduleModelMember extends AdminModel
 			$this->item->customers[] = $customer->id;
 		}
 
-		$this->item->customer = $this->item->customers;
-
 		return $this->item;
 	}
 }

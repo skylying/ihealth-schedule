@@ -19,7 +19,7 @@ class ScheduleControllerMemberEditSave extends \Windwalker\Controller\Edit\SaveC
 	 */
 	protected function postSaveHook($model, $validData)
 	{
-		$customer = JArrayHelper::getValue($validData, 'customer', array());
+		$customer = JArrayHelper::getValue($validData, 'customers', array());
 
 		if (empty($validData['id']))
 		{

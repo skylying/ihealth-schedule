@@ -105,7 +105,8 @@ $grid->registerTableSort();
 					);
 					?>
 					<a href="<?php echo JRoute::_("index.php?" . http_build_query($query)); ?>">
-						<?php echo $this->escape($item->name); ?></a>
+						<?php echo $this->escape($item->name); ?>
+					</a>
 				</div>
 			</td>
 
