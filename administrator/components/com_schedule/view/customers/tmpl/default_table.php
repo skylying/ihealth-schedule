@@ -27,7 +27,6 @@ $container = $this->getContainer();
 $asset     = $container->get('helper.asset');
 $grid      = $data->grid;
 $date      = $container->get('date');
-
 ?>
 <!-- LIST TABLE -->
 <table id="customerList" class="table table-striped adminlist">
@@ -212,12 +211,10 @@ $date      = $container->get('date');
 
 		<!--RESERVE-->
 		<td class="center">
-			<a href=<?php echo JRoute::_('index.php?option=com_schedule&view=rxindividual&layout=edit');?>>
-				<span class="glyphicon glyphicon-plus">
-				</span>
+			<a target="_blank" href="<?php echo JRoute::_('index.php?option=com_schedule&view=rxindividual&layout=edit');?>">
+				<span class="glyphicon glyphicon-plus"></span>
 			</a>
 		</td>
-
 	</tr>
 <?php endforeach; ?>
 </tbody>
