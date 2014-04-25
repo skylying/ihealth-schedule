@@ -46,6 +46,11 @@ $date      = $container->get('date');
 		<?php echo $grid->sortTitle('JGRID_HEADING_ID', 'address.id'); ?>
 	</th>
 
+	<!--EDIT-->
+	<th width="1%" class="nowrap center">
+		編輯
+	</th>
+
 	<!--CITY-->
 	<th width="10%" class="center">
 		<?php echo $grid->sortTitle('縣市', 'address.city_title'); ?>
@@ -98,7 +103,12 @@ $date      = $container->get('date');
 
 		<!--ID-->
 		<td class="center">
-			<a href="<?php echo JRoute::_('index.php?option=com_schedule&view=address&layout=edit&id=' . $item->id); ?>"><?php echo $item->id; ?></a>
+			<?php echo $item->id; ?>
+		</td>
+
+		<!--EDIT-->
+		<td class="center">
+			<?php echo \Schedule\Helper\UiHelper::editButton('address', $item->id); ?>
 		</td>
 
 		<!--CITY-->
@@ -117,18 +127,8 @@ $date      = $container->get('date');
 		</td>
 
 		<!--ADDRESS-->
-		<td class="center"><a
-				href="<?php
-				$proxy = array(
-					'option' => 'com_schedule',
-					'view'   => 'customer',
-					'layout' => 'edit',
-					'id'	 => $item->customer_id
-				);
-				echo JRoute::_('index.php?' . http_build_query($proxy)); ?>"
-				target="_blank">
-				<?php echo $item->customer_name; ?> <span class="glyphicon glyphicon-share-alt"></span>
-			</a>
+		<td class="center">
+			<?php echo \Schedule\Helper\UiHelper::foreignLink('customer', $item->customer_name, $item->customer_id); ?>
 		</td>
 
 	</tr>
