@@ -13,8 +13,6 @@ $tab       = $data->tab;
 $fieldsets = $data->form->getFieldsets();
 ?>
 
-<?php echo JHtmlBootstrap::addTab('customerEditTab', $tab, \JText::_("CUSTOMERS_EDITS_VIEW_TAB")) ?>
-
 <div class="row-fluid">
 	<div class="span6">
 		<?php echo $this->loadTemplate('fieldset', array('fieldset' => $fieldsets['edit'], 'class' => 'form-horizontal')); ?>
@@ -26,5 +24,3 @@ $fieldsets = $data->form->getFieldsets();
 		<?php echo $this->loadTemplate('fieldset', array('fieldset' => $fieldsets['phones'], 'class' => 'form-horizontal')); ?>
 	</div>
 </div>
-
-<?php echo JHtmlBootstrap::endTab(); ?>
