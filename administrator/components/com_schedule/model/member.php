@@ -73,7 +73,13 @@ class ScheduleModelMember extends AdminModel
 		parent::setOrderPosition($table, $position);
 	}
 
-
+	/**
+	 * Overwrite getItem in order to join mapping table
+	 *
+	 * @param null $pk
+	 *
+	 * @return  mixed
+	 */
 	public function getItem($pk = null)
 	{
 		$this->item = parent::getItem($pk);

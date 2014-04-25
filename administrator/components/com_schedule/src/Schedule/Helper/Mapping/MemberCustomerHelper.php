@@ -18,14 +18,14 @@ class MemberCustomerHelper
 	const RELATION_TABLE = '#__schedule_customer_member_maps';
 
 	/**
-	 * updateMappingConnections
+	 * updateCustomers
 	 *
 	 * @param       $mid
 	 * @param array $cids
 	 *
 	 * @return  bool
 	 */
-	public static function updateMappingConnections( $mid, $cids = array() )
+	public static function updateCustomers($mid, $cids = array())
 	{
 		if (empty($cids))
 		{
@@ -52,7 +52,7 @@ class MemberCustomerHelper
 	}
 
 	/**
-	 * deleteCustomers
+	 * disconnectCustomers
 	 *
 	 * @param int $mid
 	 *
@@ -76,7 +76,7 @@ class MemberCustomerHelper
 	}
 
 	/**
-	 * addTypes
+	 * connectCustomers
 	 *
 	 * @param int   $mid
 	 * @param int[] $cids
