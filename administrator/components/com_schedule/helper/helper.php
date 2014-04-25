@@ -7,6 +7,8 @@
  */
 
 // No direct access
+use Windwalker\Html\HtmlElement;
+
 defined('_JEXEC') or die;
 
 /**
@@ -27,31 +29,29 @@ abstract class ScheduleHelper
 	 */
 	public static function addSubmenu($vName)
 	{
-		$app       = \JFactory::getApplication();
-		$inflector = \JStringInflector::getInstance(true);
-
 		$menus = array(
-			'institutes' => 'home',
-			'rxresidents' => 'list-alt',
+			'rxresidents'   => 'list-alt',
 			'rxindividuals' => 'list-alt',
-			'schedules' => 'calendar',
-			'tasks' => 'tasks',
-			'senders' => 'envelope',
-			'members' => 'user',
-			'customers' => 'tree-deciduous',
-			'hospitals' => 'tower',
-			'holidays' => 'calendar',
-			'routes' => 'road',
+			'schedules'     => 'calendar',
+			'tasks'         => 'tasks',
+			'members'       => 'user',
+			'customers'     => 'tree-deciduous',
+			'institutes'    => 'home',
+			'senders'       => 'envelope',
+			'hospitals'     => 'tower',
+			'holidays'      => 'calendar'
 		);
 
 		$noMvcMenus = array(
-			'drugs' => 'tint',
-			'addresses' => 'list-alt',
+			'routes'     => 'road',
+			'drugs'      => 'tint',
+			'addresses'  => 'list-alt',
 			'drugprices' => 'usd',
-			'colors' => 'th-large',
-			'images' => 'picture',
+			'colors'     => 'th-large',
+			'images'     => 'picture',
 		);
 
+		// Show non-UI link if in debug mode.
 		if (JDEBUG)
 		{
 			$menus = array_merge($menus, $noMvcMenus);
@@ -59,15 +59,13 @@ abstract class ScheduleHelper
 
 		foreach ($menus as $folder => $icon)
 		{
-			// if ($folder->isDir() && $inflector->isPlural($view = $folder->getBasename()))
-			{
-				JHtmlSidebar::addEntry(
-					'<i class="glyphicon glyphicon-' . $icon . '"></i> ' .
-					JText::sprintf(sprintf('COM_SCHEDULE_%s_TITLE_LIST', strtoupper($folder))),
-					'index.php?option=com_schedule&view=' . $folder,
-					($vName == $folder)
-				);
-			}
+			$iconSpan = new HtmlElement('span', null, ['class' => 'glyphicon glyphicon-' . $icon]);
+
+			JHtmlSidebar::addEntry(
+				$iconSpan . ' ' . JText::sprintf(sprintf('COM_SCHEDULE_%s_TITLE_LIST', strtoupper($folder))),
+				'index.php?option=com_schedule&view=' . $folder,
+				($vName == $folder)
+			);
 		}
 
 		$dispatcher = \JEventDispatcher::getInstance();
