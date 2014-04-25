@@ -28,120 +28,128 @@ $asset     = $container->get('helper.asset');
 $grid      = $data->grid;
 $date      = $container->get('date');
 
-// Set order script.
-$grid->registerTableSort();
 ?>
 
 <!-- LIST TABLE -->
 <table id="memberList" class="table table-striped adminlist">
 
-<!-- TABLE HEADER -->
-<thead>
-<tr>
-	<!--SORT-->
-	<th width="1%" class="nowrap center hidden-phone">
-		<?php echo $grid->orderTitle(); ?>
-	</th>
-
-	<!--CHECKBOX-->
-	<th width="1%" class="center">
-		<?php echo JHtml::_('grid.checkAll'); ?>
-	</th>
-
-	<!--ID-->
-	<th width="5%" class="center">
-		<?php echo $grid->sortTitle('COM_SCHEDULE_MEMBER_ITEM_ID', 'member.id'); ?>
-	</th>
-
-	<!--NAME-->
-	<th width="8%" class="center">
-		<?php echo $grid->sortTitle('COM_SCHEDULE_MEMBER_ITEM_NAME', 'member.name'); ?>
-	</th>
-
-	<!--EMAIL-->
-	<th width="25%"class="center">
-		<?php echo $grid->sortTitle('COM_SCHEDULE_MEMBER_ITEM_EMAIL', 'member.email'); ?>
-	</th>
-
-	<!--Customer Amount-->
-	<th width="5%" class="center">
-		<?php echo $grid->sortTitle('COM_SCHEDULE_MEMBER_ITEM_NUMBER_OF_CUSTOMERS', 'member.email'); ?>
-	</th>
-
-	<!--Relative Customers-->
-	<th width="35%" class="center">
-		<?php echo $grid->sortTitle('COM_SCHEDULE_MEMBER_ITEM_CUSTOMERS', 'member.email'); ?>
-	</th>
-</tr>
-</thead>
-
-<!--PAGINATION-->
-<tfoot>
-<tr>
-	<td colspan="15">
-		<div class="pull-left">
-			<?php echo $data->pagination->getListFooter(); ?>
-		</div>
-	</td>
-</tr>
-</tfoot>
-
-<!-- TABLE BODY -->
-<tbody>
-<?php foreach ($data->items as $i => $item)
-	:
-	// Prepare data
-	$item = new Data($item);
-
-	// Prepare item for GridHelper
-	$grid->setItem($item, $i);
-	?>
-	<tr class="member-row" sortable-group-id="<?php echo $item->catid; ?>">
-		<!-- DRAG SORT -->
-		<td class="order nowrap center hidden-phone">
-			<?php echo $grid->dragSort(); ?>
-		</td>
+	<!-- TABLE HEADER -->
+	<thead>
+	<tr>
+		<!--CHECKBOX-->
+		<th width="1%" class="center">
+			<?php echo JHtml::_('grid.checkAll'); ?>
+		</th>
 
 		<!--ID-->
-		<td class="center">
-			<?php echo JHtml::_('grid.id', $i, $item->id); ?>
-		</td>
-
-		<!--ID-->
-		<td class="center">
-			<?php echo $item->id; ?>
-		</td>
+		<th width="5%" class="center">
+			<?php echo $grid->sortTitle('COM_SCHEDULE_MEMBER_ITEM_ID', 'member.id'); ?>
+		</th>
 
 		<!--NAME-->
-		<td class="nowrap quick-edit-wrap">
-			<div class="center">
-				<?php
-				$query = array(
-					'option' => 'com_schedule',
-					'view' => 'member',
-					'layout' => 'edit',
-					'id'  => $item->id
-				);
-				?>
-				<a href="<?php echo JRoute::_("index.php?". http_build_query($query)); ?>">
-					<?php echo $this->escape($item->name); ?>
-				</a>
-			</div>
-		</td>
+		<th width="8%" class="center">
+			<?php echo $grid->sortTitle('COM_SCHEDULE_MEMBER_ITEM_NAME', 'member.name'); ?>
+		</th>
 
 		<!--EMAIL-->
-		<td class="center">
-			<?php echo $this->escape($item->email); ?>
-		</td>
+		<th width="25%" class="center">
+			<?php echo $grid->sortTitle('COM_SCHEDULE_MEMBER_ITEM_EMAIL', 'member.email'); ?>
+		</th>
 
 		<!--Customer Amount-->
-		<td class="center">
-		</td>
+		<th width="5%" class="center">
+			<?php echo $grid->sortTitle('COM_SCHEDULE_MEMBER_ITEM_NUMBER_OF_CUSTOMERS', 'member.email'); ?>
+		</th>
 
 		<!--Relative Customers-->
-		<td class="center">
+		<th width="35%" class="center">
+			<?php echo $grid->sortTitle('COM_SCHEDULE_MEMBER_ITEM_CUSTOMERS', 'member.email'); ?>
+		</th>
+	</tr>
+	</thead>
+
+	<!--PAGINATION-->
+	<tfoot>
+	<tr>
+		<td colspan="6">
+			<div class="pull-left">
+				<?php echo $data->pagination->getListFooter(); ?>
+			</div>
 		</td>
 	</tr>
-<?php endforeach; ?>
-</tbody>
+	</tfoot>
+
+	<!-- TABLE BODY -->
+	<tbody>
+	<?php foreach ($data->items as $i => $item)
+		:
+		// Prepare data
+		$item = new Data($item);
+
+		// Prepare item for GridHelper
+		$grid->setItem($item, $i);
+		?>
+		<tr class="member-row">
+			<!--ID-->
+			<td class="center">
+				<?php echo JHtml::_('grid.id', $i, $item->id); ?>
+			</td>
+
+			<!--ID-->
+			<td class="center">
+				<?php echo $item->id; ?>
+			</td>
+
+			<!--NAME-->
+			<td class="nowrap quick-edit-wrap">
+				<div class="center">
+					<?php
+					$query = array(
+						'option' => 'com_schedule',
+						'view'   => 'member',
+						'layout' => 'edit',
+						'id'     => $item->id
+					);
+					?>
+					<a href="<?php echo JRoute::_("index.php?" . http_build_query($query)); ?>">
+						<?php echo $this->escape($item->name); ?>
+					</a>
+				</div>
+			</td>
+
+			<!--EMAIL-->
+			<td class="center">
+				<?php echo $this->escape($item->email); ?>
+			</td>
+
+			<?php
+			$customers_name = explode(',', $item->customers_name);
+			$customers_id = explode(',', $item->customers_id);
+			?>
+			<!--Customer Amount-->
+			<td class="center">
+				<?php echo empty($item->customers_name) ? '0' : count(explode(',', $item->customers_name));?>
+			</td>
+
+			<!--Relative Customers-->
+			<td class="center">
+				<?php
+					foreach ($customers_name as $i => $customer):
+						$query = array(
+							'option' => 'com_schedule',
+							'view'   => 'customer',
+							'layout' => 'edit',
+							'id'     => $customers_id[$i]
+						);
+				?>
+					<a href="<?php echo JRoute::_("index.php?" . http_build_query($query));?>">
+						<?php echo $customer; ?>
+					</a>
+				<?php
+					endforeach;
+				?>
+			</td>
+		</tr>
+	<?php endforeach; ?>
+	</tbody>
 </table>

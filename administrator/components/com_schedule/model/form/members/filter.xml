@@ -9,8 +9,8 @@
 			class="input-small"
 			>
 			<option value="*">JALL</option>
-			<option value="member.title">JGLOBAL_TITLE</option>
-			<option value="category.title">JCATEGORY</option>
+			<option value="member.name">JGLOBAL_TITLE</option>
+			<option value="member.email">JCATEGORY</option>
 		</field>
 
 		<field

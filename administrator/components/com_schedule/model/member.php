@@ -72,4 +72,43 @@ class ScheduleModelMember extends AdminModel
 	{
 		parent::setOrderPosition($table, $position);
 	}
+
+	/**
+	 * Overwrite getItem in order to join mapping table
+	 *
+	 * @param null $pk
+	 *
+	 * @return  mixed
+	 */
+	public function getItem($pk = null)
+	{
+		$this->item = parent::getItem($pk);
+
+		$db    = JFactory::getDbo();
+		$query = $db->getQuery(true);
+
+		if (empty($this->item->id))
+		{
+			return $this->item;
+		}
+
+		$select = "`customer`.`id` ,`customer`.`name`";
+
+		$query->select($select)
+			->from("#__schedule_customers AS customer")
+			->join('LEFT', $db->quoteName('#__schedule_customer_member_maps') . ' AS map ON customer.id = map.customer_id')
+			->where("`map`.`member_id`= {$this->item->id}");
+
+		$db->setQuery($query);
+		$customers = $db->loadObjectList();
+
+		$this->item->customers = array();
+
+		foreach ($customers as $customer)
+		{
+			$this->item->customers[] = $customer->id;
+		}
+
+		return $this->item;
+	}
 }

@@ -63,6 +63,16 @@ class ScheduleModelTasks extends ListModel
 	protected $viewList = 'tasks';
 
 	/**
+	 * Valid filter fields or ordering.
+	 *
+	 * @var  array
+	 */
+	protected $filterFields = array(
+		'task.date_start',
+		'task.date_end'
+	);
+
+	/**
 	 * configureTables
 	 *
 	 * @return  void
@@ -127,6 +137,27 @@ class ScheduleModelTasks extends ListModel
 	 */
 	protected function configureFilters($filterHelper)
 	{
+		$filterHelper->setHandler(
+			'task.date_start',
+			function ($query, $field, $start)
+			{
+				if ($start)
+				{
+					$query->where('`task`.`date` >= ' . $query->q($start));
+				}
+			}
+		);
+
+		$filterHelper->setHandler(
+			'task.date_end',
+			function ($query, $field, $end)
+			{
+				if ($end)
+				{
+					$query->where('`task`.`date` <= ' . $query->q($end));
+				}
+			}
+		);
 	}
 
 	/**

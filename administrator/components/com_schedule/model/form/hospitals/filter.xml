@@ -48,31 +48,52 @@
 			/>
 
 		<field
-			name="hospital.state"
+			name="hospital.has_hicode"
 			type="list"
-			label="JSTATUS"
+			label="COM_SCHEDULE_HOSPITAL_FILTER_HICODE"
 			default=""
 			onchange="this.form.submit();"
 			>
 			<option></option>
-			<option>JOPTION_SELECT_PUBLISHED</option>
-			<option value="1">JPUBLISHED</option>
-			<option value="0">JUNPUBLISHED</option>
-			<option value="-2">JTRASHED</option>
+			<option value="1">COM_SCHEDULE_HOSPITAL_ITEM_HAS_HICODE</option>
+			<option value="0">COM_SCHEDULE_HOSPITAL_ITEM_NO_HICODE</option>
+			<option value="*">JALL</option>
+		</field>
+
+
+		<field
+			name="hospital.city"
+			type="list"
+			label="COM_SCHEDULE_HOSPITAL_ITEM_CITY_TITLE"
+			description="COM_SCHEDULE_HOSPITAL_ITEM_CITY_TITLE"
+			onchange="this.form.submit();"
+			>
+			<option></option>
+			<option value="1">台北市</option>
+			<option value="2">新北市</option>
+			<option value="3">台中市</option>
+			<option value="4">高雄市</option>
+			<option value="5">台灣市</option>
 			<option value="*">JALL</option>
 		</field>
 
 		<field
-			name="hospital.catid"
-			type="category"
-			default=""
-			label="JCATEGORY"
-			extension="com_schedule"
+			name="hospital.area"
+			type="list"
+			label="COM_SCHEDULE_HOSPITAL_ITEM_AREA_TITLE"
+			description="COM_SCHEDULE_HOSPITAL_ITEM_AREA_TITLE"
 			onchange="this.form.submit();"
 			>
 			<option></option>
-			<option>JOPTION_SELECT_CATEGORY</option>
+			<option value="1">大同區</option>
+			<option value="2">中正區</option>
+			<option value="3">阿瑪茸區</option>
+			<option value="4">天龍區</option>
+			<option value="5">三角洲區</option>
+			<option value="*">JALL</option>
 		</field>
+
+
 	</fields>
 
 	<fields name="list">
