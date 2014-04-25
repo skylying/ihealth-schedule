@@ -128,7 +128,6 @@ class ScheduleViewInstitutesHtml extends GridView
 
 		$buttonSet['trash']['access']  = false;
 		$buttonSet['delete']['access'] = true;
-		$buttonSet['batch']['access'] = false;
 		$buttonSet['publish']['access'] = false;
 		$buttonSet['unpublish']['access'] = false;
 		$buttonSet['edit']['access'] = false;
