@@ -8,11 +8,9 @@
 			type="hidden"
 			label=""
 			description=""
-			required="true"
-			class="input-small required"
 			/>
 
-		<field name="title"
+		<field name="name"
 			type="text"
 			label="COM_SCHEDULE_CUSTOMER_NAME"
 			description="COM_SCHEDULE_CUSTOMER_NAME"
@@ -48,7 +46,6 @@
 			<option value="0">結案</option>
 			<option value="1">服務中</option>
 		</field>
-
 	</fieldset>
 
 	<fieldset
@@ -65,13 +62,13 @@
 			<option value="1">散客</option>
 		</field>
 
-		<field name="institute_title"
-			type="text"
+		<field name="institute_id"
+			type="institute_list"
 			label="COM_SCHEDULE_INSTITUTE_TITLE"
 			description="COM_SCHEDULE_INSTITUTE_TITLE"
 			/>
 
-		<field name="member"
+		<field name="members"
 			type="member_list"
 			value_field="name"
 			multiple="true"
@@ -80,8 +77,8 @@
 			class="input-large"
 			/>
 
-		<field name="hospital_title"
-			type="text"
+		<field name="hospital_id"
+			type="hospital_list"
 			label="COM_SCHEDULE_CUSTOMER_HOSPITAL_TITLE"
 			description="COM_SCHEDULE_CUSTOMER_HOSPITAL_TITLE"
 			class="input-large"
@@ -111,124 +108,63 @@
 			label="COM_SCHEDULE_NOTE"
 			description="COM_SCHEDULE_NOTE"
 			/>
-
-		<fieldset
-			name="address"
-			>
-				<field name="city"
-					type="list"
-					label="COM_SCHEDULE_EDIT_CITY"
-					description=""
-					class="pull-left"
-					/>
-
-				<field name="area"
-					type="list"
-					label="COM_SCHEDULE_EDIT_AREA"
-					description=""
-					class="pull-left"
-					/>
-
-				<field name="address"
-					type="text"
-					label="COM_SCHEDULE_EDIT_ADDRESS"
-					description=""
-					class="pull-left"
-					/>
-		</fieldset>
-
-		<fieldset
-			name="phones"
-			>
-			<field name="tel_office"
-				type="text"
-				label="COM_SCHEDULE_TEL_OFFICE"
-				description="COM_SCHEDULE_TEL_OFFICE"
-				class="input-large"
-			/>
-
-			<field name="tel_home"
-				type="text"
-				label="COM_SCHEDULE_TEL_HOME"
-				description="COM_SCHEDULE_TEL_HOME"
-				class="input-large"
-				/>
-
-			<field name="mobile"
-				type="text"
-				label="COM_SCHEDULE_TEL_MOBILE"
-				description="COM_SCHEDULE_TEL_MOBILE"
-				class="input-large"
-				/>
-		</fieldset>
 	</fieldset>
 
-	<fieldset name="created">
-		<field name="access"
-			type="accesslevel"
-			label="JFIELD_ACCESS_LABEL"
-			description="JFIELD_ACCESS_DESC"
-			/>
-
-		<field name="language"
-			type="language"
-			label="JGRID_HEADING_LANGUAGE"
-			description="JGRID_HEADING_LANGUAGE"
+	<fieldset name="address">
+		<field name="city"
+			type="sql"
+			default=""
+			query="SELECT id, title FROM #__schedule_cities"
+			key_field="id"
+			value_field="title"
+			label="縣市"
+			description="縣市"
+			readonly="false"
 			>
-			<option value="*">JALL</option>
+			<option></option>
 		</field>
-	</fieldset>
 
-	<!-- Need this field as child of root node for access setting. -->
-	<field name="asset_id"
-		type="hidden"
-		filter="unset"/>
+		<field name="area"
+			type="sql"
+			default=""
+			query="SELECT id, title FROM #__schedule_areas"
+			key_field="id"
+			value_field="title"
+			label="區域"
+			description="區域"
+			readonly="false"
+			>
+			<option></option>
+		</field>
 
-	<fieldset name="rules">
-		<field name="rules"
-			type="rules"
-			translate_label="false"
-			class="inputbox"
-			filter="rules"
-			component="com_schedule"
-			section="customer"
-			validate="rules"
-			/>
-	</fieldset>
-
-	<!-- For Quick Ajax AddNew -->
-	<fieldset name="quickadd">
-		<field name="title"
+		<field name="address"
 			type="text"
-			label="JGLOBAL_TITLE"
-			description="JFIELD_TITLE_DESC"
-			required="true"
-			size="50"
-			labelclass=""
-			class="input-xlarge"
+			label="COM_SCHEDULE_EDIT_ADDRESS"
+			description=""
+			class="pull-left"
 			/>
-
-		<field name="catid"
-			type="category"
-			label="JCATEGORY"
-			description="JFIELD_CATEGORY_DESC"
-			extension="com_schedule"
-			labelclass=""
-			>
-			<option value="0">COM_SCHEDULE_TITLE_UNCATEGORISED</option>
-		</field>
-
-		<!--<field name="parent_id"
-			type="customer_list"
-			label="COM_SCHEDULE_PARENT_ITEM"
-			description="COM_SCHEDULE_PARENT_ITEM_DESC"
-			labelclass=""
-			class="input-xlarge inputbox"
-			access="true"
-		>
-			<option>JSELECT</option>
-			<option value="1">JLIB_HTML_ADD_TO_ROOT</option>
-		</field>-->
 	</fieldset>
 
+	<fieldset name="phones">
+		<field name="tel_office"
+			type="text"
+			label="COM_SCHEDULE_TEL_OFFICE"
+			description="COM_SCHEDULE_TEL_OFFICE"
+			class="input-large"
+			/>
+
+		<field name="tel_home"
+			type="text"
+			label="COM_SCHEDULE_TEL_HOME"
+			description="COM_SCHEDULE_TEL_HOME"
+			class="input-large"
+			/>
+
+		<field name="mobile"
+			type="text"
+			label="COM_SCHEDULE_TEL_MOBILE"
+			description="COM_SCHEDULE_TEL_MOBILE"
+			class="input-large"
+			/>
+	</fieldset>
 </form>
