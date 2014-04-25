@@ -27,7 +27,9 @@ $container = $this->getContainer();
 $asset     = $container->get('helper.asset');
 $grid      = $data->grid;
 $date      = $container->get('date');
+
 ?>
+
 <!-- LIST TABLE -->
 <table id="customerList" class="table table-striped adminlist">
 
@@ -172,19 +174,27 @@ $date      = $container->get('date');
 		<!--CUSTOMER_MEMBER_MAPS-->
 		<td class="center">
 			<?php
-			if($item->type == 'individual')
+
+			$attr = array('target' => '_blank');
+
+			if ('individual' === $item->type)
 			{
-			    echo	'<a class="glyphicon glyphicon-user" href='.
-						JRoute::_('index.php?option=com_schedule&view=members&task=member.edit&id='.(int) $item->id).
-						'>'.
-						$this->escape($item->member_name).
-						'</a>';
-			} else {
-				echo	'<a class="glyphicon glyphicon-home" href='.
-						JRoute::_('index.php?option=com_schedule&view=institues&task=institute.edit&id='.(int) $item->id).
-						'>'.
-						 $this->escape($item->institute_title).
-						'</a>';
+				$url  = 'index.php?option=com_schedule&task=member.edit.edit&id=' . $item->member_id;
+				$text = '<span class="glyphicon glyphicon-user"></span> ' .
+					$item->member_name .
+					' <span class="glyphicon glyphicon-share-alt"></span>';
+
+				echo \JHtml::link($url, $text, $attr);
+			}
+
+			if ('resident' === $item->type)
+			{
+				$url  = 'index.php?option=com_schedule&task=institute.edit.edit&id=' . $item->institute_id;
+				$text = '<span class="glyphicon glyphicon-home"></span> ' .
+					$item->institute_short_title .
+					' <span class="glyphicon glyphicon-share-alt"></span>';
+
+				echo \JHtml::link($url, $text, $attr);
 			}
 			?>
 		</td>

@@ -28,6 +28,21 @@ $item      = $data->item;
 <script type="text/javascript">
 	Joomla.submitbutton = function(task)
 	{
+		(function($)
+		{
+			var customerType = $('.customertype input:checked').val(),
+				individualDiv = $('#individualdiv'),
+				residentDiv  = $('#residentdiv');
+
+			if (customerType == 'individual')
+			{
+				residentDiv.remove();
+			}
+			else
+			{
+				individualDiv.remove();
+			}
+		})(jQuery);
 		if (task == 'customer.edit.cancel' || document.formvalidator.isValid(document.id('adminForm')))
 		{
 			Joomla.submitform(task, document.getElementById('adminForm'));
