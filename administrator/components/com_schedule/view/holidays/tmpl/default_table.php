@@ -28,8 +28,6 @@ $asset     = $container->get('helper.asset');
 $grid      = $data->grid;
 $date      = $container->get('date');
 
-// Set order script.
-$grid->registerTableSort();
 ?>
 
 <!-- LIST TABLE -->
@@ -106,7 +104,7 @@ $grid->registerTableSort();
 
 		<!--MONTH-->
 		<td class="center">
-			<?php echo $this->escape($item->month); ?>
+			<?php echo JText::_('COM_SCHEDULE_VIEW_HOLIDAY_MONTH_' . $this->escape($item->month)); ?>
 		</td>
 
 		<!--DAY-->

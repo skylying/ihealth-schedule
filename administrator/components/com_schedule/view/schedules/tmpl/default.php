@@ -14,7 +14,6 @@ defined('_JEXEC') or die;
 // Prepare script
 JHtmlBootstrap::tooltip();
 JHtmlFormbehavior::chosen('select');
-JHtmlDropdown::init();
 
 /**
  * Prepare data for this template.

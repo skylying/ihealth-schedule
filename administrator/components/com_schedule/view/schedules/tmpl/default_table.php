@@ -41,22 +41,22 @@ $date      = $container->get('date');
 	</th>
 
 	<!-- EDIT -->
-	<th width="3%" class="center">
-		排程
+	<th width="3%" class="center nowrap">
+		編輯
 	</th>
 
-	<!-- schedule.rx_id -->
-	<th width="5%" class="nowrap center">
-		<?php echo $grid->sortTitle('處方箋編號', 'schedule.rx_id'); ?>
+	<!-- schedule.id -->
+	<th width="5%" class="nowrap">
+		<?php echo $grid->sortTitle('排程編號', 'schedule.id'); ?>
 	</th>
 
 	<!-- schedule.type -->
-	<th class="nowrap center">
+	<th width="5%" class="nowrap">
 		<?php echo $grid->sortTitle('類別', 'schedule.type'); ?>
 	</th>
 
 	<!-- schedule.institute_id | schedule.customer_id -->
-	<th class="center">
+	<th>
 		<?php echo $grid->sortTitle('所屬機構/所屬會員', 'schedule.type, schedule.institute_id, schedule.customer_id'); ?>
 	</th>
 
@@ -91,7 +91,7 @@ $date      = $container->get('date');
 	</th>
 
 	<!-- schedule.status -->
-	<th class="center">
+	<th>
 		<?php echo $grid->sortTitle('狀態', 'schedule.status'); ?>
 	</th>
 </tr>
@@ -100,7 +100,7 @@ $date      = $container->get('date');
 <!--PAGINATION-->
 <tfoot>
 <tr>
-	<td colspan="11">
+	<td colspan="12">
 		<div class="pull-left">
 			<?php echo $data->pagination->getListFooter(); ?>
 		</div>
@@ -128,25 +128,23 @@ $date      = $container->get('date');
 		<td class="center">
 			<a class="btn btn-mini btn-primary"
 				href="<?php echo JRoute::_('index.php?option=com_schedule&task=schedule.edit.edit&id=' . $item->id); ?>">
-				<i class="glyphicon glyphicon-edit"></i>
+				<span class="glyphicon glyphicon-edit"></span>
 			</a>
 		</td>
 
-		<!-- rx_id -->
-		<td class="center">
-			<a href="<?php echo JRoute::_('index.php?option=com_schedule&task=prescription.edit.edit&id=' . $item->rx_id); ?>">
-				<?php echo (int) $item->rx_id; ?>
-			</a>
+		<!-- id -->
+		<td>
+			<?php echo $item->id; ?>
 		</td>
 
 		<!-- type -->
-		<td class="center">
-			<?php echo JText::_('COM_SCHEDULE_SCHEDULE_FIELD_TYEP_' . strtoupper($item->type)); ?>
+		<td>
+			<?php echo JText::_('COM_SCHEDULE_SCHEDULE_FIELD_TYPE_' . strtoupper($item->type)); ?>
 		</td>
 
 		<!-- customer_name | institute_name -->
-		<td class="center">
-			<?php echo Schedule\Helper\ScheduleHelper::getEditLink($item); ?>
+		<td>
+			<?php echo Schedule\Helper\ScheduleHelper::getTargetLink($item); ?>
 		</td>
 
 		<!-- city_title -->
@@ -161,7 +159,12 @@ $date      = $container->get('date');
 
 		<!-- customer_name -->
 		<td class="center">
-			<?php echo $item->customer_name; ?>
+			<?php if ($item->customer_id > 0): ?>
+			<a href="<?php echo JRoute::_('index.php?option=com_schedule&task=customer.edit.edit&id=' . $item->customer_id); ?>" target="_blank">
+				<?php echo $item->customer_name; ?>
+				<span class="glyphicon glyphicon-share-alt"></span>
+			</a>
+			<?php endif; ?>
 		</td>
 
 		<!-- date -->
@@ -171,17 +174,22 @@ $date      = $container->get('date');
 
 		<!-- route_sender_name -->
 		<td class="center">
-			<?php echo $item->route_sender_name; ?>
+			<?php echo $item->sender_name; ?>
 		</td>
 
 		<!-- sorted -->
 		<td class="center">
-			<input type="checkbox" value="1"<?php echo ($item->sorted ? ' checked="checked"' : ''); ?>>
+			<span class="glyphicon glyphicon-<?php echo ($item->sorted ? 'ok' : 'remove'); ?>"></span>
 		</td>
 
 		<!-- status -->
-		<td class="center">
-			<?php echo $item->status; ?>
+		<td>
+			<?php
+			if ($item->status)
+			{
+				echo $this->loadTemplate('status_dropdown', array('item' => $item));
+			}
+			?>
 		</td>
 	</tr>
 <?php endforeach; ?>

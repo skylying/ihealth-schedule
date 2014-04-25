@@ -12,18 +12,18 @@ use Windwalker\Table\Table;
 defined('_JEXEC') or die;
 
 /**
- * Prescription Table class.
+ * Route Table class.
  *
  * @since 1.0
  */
-class ScheduleTablePrescription extends Table
+class ScheduleTableCity extends Table
 {
 	/**
 	 * Constructor
 	 */
 	public function __construct()
 	{
-		parent::__construct('#__schedule_prescriptions');
+		parent::__construct('#__schedule_cities');
 	}
 
 	/**

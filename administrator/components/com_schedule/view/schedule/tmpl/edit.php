@@ -51,7 +51,7 @@ $formIndividual = $data->formIndividual;
 		{
 			Joomla.submitform(task, document.getElementById('adminForm'));
 		}
-	}
+	};
 </script>
 
 <div id="schedule" class="windwalker schedule edit-form row-fluid">
@@ -70,7 +70,7 @@ $formIndividual = $data->formIndividual;
 
 				<a href="#">
 					查詢前後七日排程
-					<i class="glyphicon glyphicon-share-alt"></i>
+					<span class="glyphicon glyphicon-share-alt"></span>
 				</a>
 			<?php echo JHtmlBootstrap::endTab(); ?>
 
@@ -83,7 +83,7 @@ $formIndividual = $data->formIndividual;
 
 				<a href="#">
 					查詢前後七日排程
-					<i class="glyphicon glyphicon-share-alt"></i>
+					<span class="glyphicon glyphicon-share-alt"></span>
 				</a>
 			<?php echo JHtmlBootstrap::endTab(); ?>
 
@@ -96,6 +96,7 @@ $formIndividual = $data->formIndividual;
 			<input type="hidden" name="task" value="" />
 			<input type="hidden" name="id" value="<?php echo $data->item->id; ?>" />
 			<input type="hidden" name="form_type" value="" />
+			<input type="hidden" name="sender_id" value="" />
 			<?php echo JHtml::_('form.token'); ?>
 		</div>
 	</form>

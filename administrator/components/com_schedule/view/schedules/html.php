@@ -126,6 +126,33 @@ class ScheduleViewSchedulesHtml extends GridView
 			$buttonSet['delete']['access'] = true;
 		}
 
+		$buttonSet['add']['args'] = array_merge($buttonSet['add']['args'], array('新增行政排程'));
+
+		$buttonSet['publish']['access'] = false;
+		$buttonSet['unpublish']['access'] = false;
+		$buttonSet['checkin']['access'] = false;
+
+		// Add a print popup button
+		$buttonSet['print'] = array(
+			'handler' => function ()
+			{
+				JFactory::getDocument()->addStyleDeclaration('
+					#modal-print {
+  						overflow-y: hidden;
+					}
+					#modal-print iframe {
+						border: 0;
+					}
+				');
+
+				$printUrl = 'index.php?option=com_schedule&view=schedules&layout=print&tmpl=component';
+
+				// See JToolbarButtonPopup::fetchButton()
+				JToolbar::getInstance('toolbar')->appendButton('Popup', 'print', '列印排程統計表', $printUrl);
+			},
+			'priority' => 190,
+		);
+
 		return $buttonSet;
 	}
 }

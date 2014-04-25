@@ -28,8 +28,6 @@ $asset     = $container->get('helper.asset');
 $grid      = $data->grid;
 $date      = $container->get('date');
 
-// Set order script.
-$grid->registerTableSort();
 ?>
 
 <!-- LIST TABLE -->
@@ -116,7 +114,7 @@ $grid->registerTableSort();
 
 		<!--WEEKDAY-->
 		<td class="center">
-			<?php echo $item->weekday;?>
+			<?php echo JText::_($item->weekday);?>
 		</td>
 
 		<!--SENDER-->

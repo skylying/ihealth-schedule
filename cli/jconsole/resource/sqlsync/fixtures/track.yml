@@ -2,6 +2,7 @@ table:
     '#__schedule_addresses': all
     '#__schedule_colors': all
     '#__schedule_customers': all
+    '#__schedule_customer_member_maps': all
     '#__schedule_drugprices': all
     '#__schedule_drugs': all
     '#__schedule_holidays': all

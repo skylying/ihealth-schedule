@@ -5,9 +5,9 @@
 		horz="true">
 
 		<field name="id"
-			type="hidden"
-			label="id"
-			description="id"
+			type="text"
+			label="處方箋編號"
+			description="處方箋編號"
 			readonly="true"
 			/>
 
@@ -62,7 +62,7 @@
 			description="處方開立醫院名稱"
 			/>
 
-		<field name="received"
+		<field name="called"
 			type="radio"
 			label="電聯狀態"
 			description="電聯狀態"
@@ -133,8 +133,8 @@
 
 		<field name="deliver_nths"
 			type="checkboxes"
-			label="可調劑次數"
-			description="可調劑次數"
+			label="宅配第幾次"
+			description="宅配第幾次"
 			>
 			<option value="1st">第一次</option>
 			<option value="2nd">第二次</option>
@@ -187,5 +187,261 @@
 			label="備註"
 			description="備註"
 			/>
+	</fieldset>
+
+	<fieldset
+		name="basic"
+		align="left"
+		horz="true">
+
+		<field name="id"
+			type="text"
+			label="處方箋編號"
+			description="處方箋編號"
+			readonly="true"
+			/>
+
+		<field name="id_number"
+			type="text"
+			label="身分證字號"
+			description="身分證字號"
+			/>
+
+		<field name="customer_id"
+			type="sql"
+			label="客戶姓名"
+			description="客戶姓名"
+			query="SELECT id, name FROM #__schedule_customers WHERE `type` = 'individual'"
+			key_field="id"
+			value_field="name"
+			/>
+
+		<field name="hospital_id"
+			type="hospital_list"
+			label="處方開立醫院"
+			description="處方開立醫院"
+			/>
+
+		<field name="received"
+			type="radio"
+			label="處方箋狀態"
+			description="處方箋狀態"
+			>
+			<option value="0">已取得</option>
+			<option value="1">未取得</option>
+		</field>
+
+		<field name="called"
+			type="radio"
+			label="電聯狀態"
+			description="電聯狀態"
+			class="btn-group"
+			>
+			<option value="1">已電聯</option>
+			<option value="0">未電聯</option>
+		</field>
+
+		<field name="see_dr_date"
+			type="calendar"
+			label="就醫日期"
+			description="就醫日期"
+			/>
+
+		<field name="period"
+			type="text"
+			label="給藥天數"
+			description="給藥天數"
+			default="28"
+			/>
+
+		<field name="times"
+			type="list"
+			label="可調劑次數"
+			description="可調劑次數"
+			default="2"
+			>
+			<option value="1">1</option>
+			<option value="2">2</option>
+			<option value="3">3</option>
+		</field>
+
+		<field name="method"
+			type="list"
+			label="處方箋取得方式"
+			description="處方箋取得方式"
+			>
+			<option value="fax">傳真</option>
+			<option value="line">line</option>
+			<option value="form">自行填表</option>
+			<option value="file">上傳檔案</option>
+			<option value="photo">拍照</option>
+			<option value="paper">正本</option>
+		</field>
+
+		<field name="birth_date"
+			type="calendar"
+			label="生日"
+			description="生日"
+			/>
+
+		<field name="note"
+			type="textarea"
+			label="備註"
+			description="備註"
+			/>
+	</fieldset>
+
+	<fieldset name="schedules_1st">
+		<field name="deliver_nths"
+			type="checkboxes"
+			label="宅配第幾次"
+			description="宅配第幾次"
+			>
+			<option value="1st">第一次</option>
+		</field>
+
+		<field
+			name="address"
+			type="text"
+			label="地址"
+			description="地址"
+			/>
+
+		<field name="empty_date"
+			type="calendar"
+			label="吃完藥日"
+			description="吃完藥日"
+			/>
+
+		<field
+			name="send_date"
+			type="calendar"
+			label="預約宅配日"
+			description="預約宅配日"
+			/>
+
+		<field
+			name="send_time"
+			type="list"
+			label="時段"
+			description="時段"
+			/>
+	</fieldset>
+
+	<fieldset name="schedules_2nd">
+		<field name="deliver_nths"
+			type="checkboxes"
+			label="宅配第幾次"
+			description="宅配第幾次"
+			>
+			<option value="2nd">第二次</option>
+		</field>
+
+		<field
+			name="address"
+			type="text"
+			label="地址"
+			description="地址"
+			/>
+
+		<field name="empty_date"
+			type="calendar"
+			label="吃完藥日"
+			description="吃完藥日"
+			/>
+
+		<field
+			name="send_date"
+			type="calendar"
+			label="預約宅配日"
+			description="預約宅配日"
+			/>
+
+		<field
+			name="send_time"
+			type="list"
+			label="時段"
+			description="時段"
+			/>
+	</fieldset>
+
+	<fieldset name="schedules_3rd">
+		<field name="deliver_nths"
+			type="checkboxes"
+			label="宅配第幾次"
+			description="宅配第幾次"
+			>
+			<option value="1st">第三次</option>
+		</field>
+
+		<field
+			name="address"
+			type="text"
+			label="地址"
+			description="地址"
+			/>
+
+		<field name="empty_date"
+			type="calendar"
+			label="吃完藥日"
+			description="吃完藥日"
+			/>
+
+		<field
+			name="send_date"
+			type="calendar"
+			label="預約宅配日"
+			description="預約宅配日"
+			/>
+
+		<field
+			name="send_time"
+			type="list"
+			label="時段"
+			description="時段"
+			/>
+	</fieldset>
+
+	<fieldset
+		name="schedules_ps">
+		<field
+			name="tel_office"
+			type="text"
+			label="聯絡電話(O)"
+			description="聯絡電話(O)"
+			/>
+
+		<field
+			name="tel_home"
+			type="text"
+			label="聯絡電話(H)"
+			description="聯絡電話(H)"
+			/>
+
+		<field
+			name="mobile"
+			type="text"
+			label="手機(M)"
+			description="手機(M)"
+			/>
+
+		<!-- 存入 prescription 的備註 -->
+		<field
+			name="note"
+			type="textarea"
+			label="備註"
+			description="備註"
+			/>
+
+		<field
+			name="note_list"
+			type="checkboxes"
+			label="註記選項"
+			description="註記選項"
+			>
+			<option value="need_real_book">需確認正本</option>
+			<option value="need_breakup">藥品需分包</option>
+			<option value="take_it_back">正本已回收</option>
+		</field>
 	</fieldset>
 </form>

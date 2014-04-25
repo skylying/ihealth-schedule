@@ -39,6 +39,11 @@ $container = $this->getContainer();
 
 			<?php echo with(new FileLayout('joomla.searchtools.default'))->render(array('view' => $this->data)); ?>
 
+			<div>
+				<button class="btn btn-success" onclick="Joomla.submitbutton('tasks.state.delivery')">完成外送</button>
+				<button class="btn btn-info" onclick="Joomla.submitbutton('tasks.state.undelivery')">改回待外送</button>
+			</div>
+
 			<?php echo $this->loadTemplate('table'); ?>
 
 			<?php echo with(new FileLayout('joomla.batchtools.modal'))->render(array('view' => $this->data, 'task_prefix' => 'tasks.')); ?>

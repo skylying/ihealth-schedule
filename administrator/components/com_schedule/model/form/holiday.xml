@@ -4,44 +4,6 @@
 		align="left"
 		horz="true">
 
-		<field name="year"
-			type="text"
-			label="COM_SCHEDULE_HOLIDAY_YEAR_LABEL"
-			description="COM_SCHEDULE_HOLIDAY_YEAR_DESC"
-			required="true"
-			class="input-xxlarge required"
-			/>
-
-		<field name="month"
-			type="text"
-			label="月份"
-			description="月份"
-			/>
-
-		<field name="day"
-			type="text"
-			label="日期"
-			description="日期"
-			/>
-	</fieldset>
-
-	<fieldset
-		name="publish"
-		align="right"
-		horz="true">
-
-		<field name="state"
-			type="list"
-			label="JSTATUS"
-			description="JFIELD_PUBLISHED_DESC"
-			class="chzn-color-state"
-			size="1"
-			default="1"
-			>
-			<option value="1">JPUBLISHED</option>
-			<option value="0">JUNPUBLISHED</option>
-		</field>
-
 		<field name="id"
 			type="text"
 			default="0"
@@ -51,88 +13,43 @@
 			description="JGLOBAL_FIELD_ID_DESC"
 			/>
 
-		<field name="created_by"
-			type="user"
-			label="COM_SCHEDULE_CREATED_BY"
-			description="COM_SCHEDULE_CREATED_BY_DESC"
-			/>
-
-		<field name="created"
-			type="calendar"
-			label="COM_SCHEDULE_CREATED"
-			description="COM_SCHEDULE_CREATED_DESC"
-			/>
-
-		<field name="publish_up"
-			type="calendar"
-			label="COM_SCHEDULE_PUBLISH_UP"
-			description="COM_SCHEDULE_PUBLISH_UP_DESC"
-			/>
-
-		<field name="publish_down"
-			type="calendar"
-			label="COM_SCHEDULE_PUBLISHED_DOWN"
-			description="COM_SCHEDULE_PUBLISH_DOWN_DESC"
-			/>
-
-	</fieldset>
-
-	<fieldset name="created">
-		<field name="access"
-			type="accesslevel"
-			label="JFIELD_ACCESS_LABEL"
-			description="JFIELD_ACCESS_DESC"
-			/>
-
-		<field name="language"
-			type="language"
-			label="JGRID_HEADING_LANGUAGE"
-			description="JGRID_HEADING_LANGUAGE"
+		<field name="year"
+			type="list"
+			label="年份"
+			description="輸入年份"
+			default="2014"
 			>
-			<option value="*">JALL</option>
+			<option value="2014">2014</option>
+			<option value="2015">2015</option>
+			<option value="2016">2016</option>
+			<option value="2017">2017</option>
+			<option value="2018">2018</option>
+			<option value="2019">2019</option>
 		</field>
-	</fieldset>
 
-	<!-- Need this field as child of root node for access setting. -->
-	<field name="asset_id"
-		type="hidden"
-		filter="unset" />
+		<field name="month"
+			type="list"
+			label="月份"
+			description="月份"
+			>
+			<option value="1">JAN</option>
+			<option value="2">FEB</option>
+			<option value="3">MAR</option>
+			<option value="4">APR</option>
+			<option value="5">MAY</option>
+			<option value="6">JUN</option>
+			<option value="7">JUL</option>
+			<option value="8">AUG</option>
+			<option value="9">SEP</option>
+			<option value="10">OCT</option>
+			<option value="11">NOV</option>
+			<option value="12">DEC</option>
+		</field>
 
-	<fieldset name="rules">
-		<field name="rules"
-			type="rules"
-			translate_label="false"
-			class="inputbox"
-			filter="rules"
-			component="com_schedule"
-			section="holiday"
-			validate="rules"
+		<field name="day"
+			type="number"
+			label="日期"
+			description="日期"
 			/>
 	</fieldset>
-
-	<!-- For Quick Ajax AddNew -->
-	<fieldset name="quickadd">
-		<field name="title"
-			type="text"
-			label="JGLOBAL_TITLE"
-			description="JFIELD_TITLE_DESC"
-			required=""
-			size="50"
-			labelclass=""
-			class="input-xlarge"
-			/>
-
-		<!--<field name="parent_id"
-			type="holiday_list"
-			label="COM_SCHEDULE_PARENT_ITEM"
-			description="COM_SCHEDULE_PARENT_ITEM_DESC"
-			labelclass=""
-			class="input-xlarge inputbox"
-			access="true"
-		>
-			<option>JSELECT</option>
-			<option value="1">JLIB_HTML_ADD_TO_ROOT</option>
-		</field>-->
-	</fieldset>
-
 </form>

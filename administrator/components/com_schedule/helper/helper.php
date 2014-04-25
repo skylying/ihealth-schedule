@@ -32,7 +32,8 @@ abstract class ScheduleHelper
 
 		$menus = array(
 			'institutes' => 'home',
-			'prescriptions' => 'list-alt',
+			'rxresidents' => 'list-alt',
+			'rxindividuals' => 'list-alt',
 			'schedules' => 'calendar',
 			'tasks' => 'tasks',
 			'senders' => 'envelope',
