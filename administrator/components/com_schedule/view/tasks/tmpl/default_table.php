@@ -7,7 +7,7 @@
  */
 
 use Windwalker\Data\Data;
-
+use \Schedule\Helper\DeliveryHelper;
 // No direct access
 defined('_JEXEC') or die;
 
@@ -119,15 +119,7 @@ $date      = $container->get('date');
 
 			<!--STATE-->
 			<td class="center">
-				<div class="btn-group">
-					<!-- STATE BUTTON -->
-					<?php echo $grid->state() ?>
-
-					<?php //\Schedule\Helper\ToggleHelper::toggleState(); ?>
-
-					<!-- CHANGE STATE DROP DOWN -->
-					<?php echo $this->loadTemplate('dropdown'); ?>
-				</div>
+				<?php echo DeliveryHelper::deliveryButton($item->id, $item->status)?>
 			</td>
 
 			<!--PRINT-->
