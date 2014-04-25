@@ -182,12 +182,6 @@
         - '#__schedule_prescriptions'
     columns:
         id: { Field: id, Type: 'int(11) unsigned', 'Null': NO, Default: null, Extra: auto_increment, Comment: 'Primary Key', From: [id] }
-        created: { Field: created, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: 建立時間, From: [created] }
-        created_by: { Field: created_by, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: '建立者 user id', From: [created_by] }
-        modified: { Field: modified, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: 修改時間, From: [modified] }
-        modified_by: { Field: modified_by, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: '修改者 user id', From: [modified_by] }
-        ordering: { Field: ordering, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: 排序, From: [ordering] }
-        params: { Field: params, Type: text, 'Null': NO, Default: null, Extra: '', Comment: Params, From: [params] }
         customer_id: { Field: customer_id, Type: int(11), 'Null': YES, Default: null, Extra: '', Comment: '對應客戶 id', From: [customer_id] }
         customer_name: { Field: customer_name, Type: varchar(255), 'Null': YES, Default: null, Extra: '', Comment: 對應客戶姓名, From: [customer_name] }
         hospital_id: { Field: hospital_id, Type: int(11), 'Null': YES, Default: null, Extra: '', Comment: '處方開立醫院 id', From: [hospital_id] }
@@ -212,6 +206,12 @@
         empty_date_1st: { Field: empty_date_1st, Type: date, 'Null': YES, Default: null, Extra: '', Comment: 第一次吃完藥日, From: [empty_date_1st] }
         empty_date_2nd: { Field: empty_date_2nd, Type: date, 'Null': YES, Default: null, Extra: '', Comment: 第二次吃完藥日, From: [empty_date_2nd] }
         note: { Field: note, Type: text, 'Null': YES, Default: null, Extra: '', Comment: 備註, From: [note] }
+        created: { Field: created, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: 建立時間, From: [created] }
+        created_by: { Field: created_by, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: '建立者 user id', From: [created_by] }
+        modified: { Field: modified, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: 修改時間, From: [modified] }
+        modified_by: { Field: modified_by, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: '修改者 user id', From: [modified_by] }
+        ordering: { Field: ordering, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: 排序, From: [ordering] }
+        params: { Field: params, Type: text, 'Null': NO, Default: null, Extra: '', Comment: Params, From: [params] }
     index:
         - { Table: '#__schedule_prescriptions', Non_unique: '0', Key_name: PRIMARY, Seq_in_index: '1', Column_name: id, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
         - { Table: '#__schedule_prescriptions', Non_unique: '1', Key_name: idx_created_by, Seq_in_index: '1', Column_name: created_by, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
