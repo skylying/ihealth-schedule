@@ -41,6 +41,11 @@ $date      = $container->get('date');
 		<?php echo JHtml::_('grid.checkAll'); ?>
 	</th>
 
+	<!--EDIT-->
+	<th width="5%" class="nowrap center">
+		編輯
+	</th>
+
 	<!--CUSTOMER_ID-->
 	<th width="5%" class="nowrap center">
 		<?php echo $grid->sortTitle('COM_SCHEDULE_CUSTOMER_ID', 'customer.id'); ?>
@@ -126,6 +131,11 @@ $date      = $container->get('date');
 			<?php echo JHtml::_('grid.id', $i, $item->id); ?>
 		</td>
 
+		<!--EDIT-->
+		<td class="center">
+			<?php echo \Schedule\Helper\UiHelper::editButton('customer', $item->id); ?>
+		</td>
+
 		<!--CUSTOMER_ID-->
 		<td class="center">
 			<?php echo $this->escape($item->id); ?>
@@ -144,20 +154,8 @@ $date      = $container->get('date');
 		</td>
 
 		<!--CUSTOMER_NAME-->
-		<td class="nowrap quick-edit-wrap">
-			<div class="center">
-				<?php
-				$query = array(
-					'option' => 'com_schedule',
-					'view' => 'customer',
-					'layout' => 'edit',
-					'id'  => $item->id
-				);
-				?>
-				<a href="<?php echo JRoute::_("index.php?". http_build_query($query)); ?>">
-					<?php echo $this->escape($item->name); ?>
-				</a>
-			</div>
+		<td class="center">
+			<?php echo $this->escape($item->name); ?>
 		</td>
 
 

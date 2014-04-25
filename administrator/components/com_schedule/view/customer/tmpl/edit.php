@@ -28,6 +28,7 @@ $item      = $data->item;
 <script type="text/javascript">
 	Joomla.submitbutton = function(task)
 	{
+		// Remove unnecessary form to be saved
 		(function($)
 		{
 			var customerType = $('.customertype input:checked').val(),
@@ -43,6 +44,7 @@ $item      = $data->item;
 				individualDiv.remove();
 			}
 		})(jQuery);
+
 		if (task == 'customer.edit.cancel' || document.formvalidator.isValid(document.id('adminForm')))
 		{
 			Joomla.submitform(task, document.getElementById('adminForm'));
