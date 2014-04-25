@@ -6,14 +6,12 @@
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
-namespace Windwalker\Controller\State;
-
 /**
- * Class DeliveryController
+ * Class UndeliveryController
  *
  * @since 1.0
  */
-class DeliveryController extends AbstractUpdateStateController
+class ScheduleControllerTasksStateUndelivery extends \Windwalker\Controller\State\AbstractUpdateStateController
 {
 	/**
 	 * Property stateData.
@@ -21,7 +19,7 @@ class DeliveryController extends AbstractUpdateStateController
 	 * @var string
 	 */
 	protected $stateData = array(
-		'status' => 1
+		'status' => 0
 	);
 
 	/**
@@ -29,5 +27,5 @@ class DeliveryController extends AbstractUpdateStateController
 	 *
 	 * @var string
 	 */
-	protected $actionText = '已外送';
+	protected $actionText = '待外送';
 }
