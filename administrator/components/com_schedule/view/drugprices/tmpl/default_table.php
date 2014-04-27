@@ -108,7 +108,7 @@ $date      = $container->get('date');
 
 		<!--EDIT-->
 		<td class="center">
-			<?php echo \Schedule\Helper\UiHelper::editButton('address', $item->id); ?>
+			<?php echo \Schedule\Helper\UiHelper::editButton('drugprice', $item->id); ?>
 		</td>
 
 		<!--INSTITUTE_TITLE-->

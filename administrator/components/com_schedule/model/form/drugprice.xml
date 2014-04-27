@@ -15,7 +15,7 @@
 
 		<field name="institute_id"
 			type="institute_list"
-			value_field="title"
+			value_field="short_title"
 			key_field="id"
 			label="藥品所屬機構"
 			description="要加購藥品的機構名稱"
