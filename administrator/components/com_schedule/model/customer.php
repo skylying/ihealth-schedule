@@ -103,7 +103,13 @@ class ScheduleModelCustomer extends AdminModel
 		return $this->item;
 	}
 
-
+	/**
+	 * prepareTable
+	 *
+	 * @param JTable $table
+	 *
+	 * @return  void
+	 */
 	public function prepareTable($table)
 	{
 		$jformData = JFactory::getApplication()->input->get('jform', '', 'array');
@@ -157,7 +163,4 @@ class ScheduleModelCustomer extends AdminModel
 		$table->area_title = $tableInstitute->area_title;
 
 	}
-
-
-
 }
