@@ -18,7 +18,7 @@
 			label="JGLOBAL_TITLE"
 			description="JFIELD_TITLE_DESC"
 			required="true"
-			class="input-xxlarge required"
+			class="input-large required"
 			/>
 
 		<field name="hex"
