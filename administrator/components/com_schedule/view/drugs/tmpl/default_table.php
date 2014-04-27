@@ -46,6 +46,11 @@ $date      = $container->get('date');
 		<?php echo $grid->sortTitle('JGRID_HEADING_ID', 'drug.id'); ?>
 	</th>
 
+	<!--EDIT-->
+	<th width="1%" class="nowrap center">
+		編輯
+	</th>
+
 	<th width="10%" class="nowrap center">
 		<?php echo $grid->sortTitle('藥品健保碼', 'drug.hicode'); ?>
 	</th>
@@ -90,7 +95,12 @@ $date      = $container->get('date');
 
 		<!--ID-->
 		<td class="center">
-			<a href="<?php echo JRoute::_('index.php?option=com_schedule&view=drug&layout=edit&id=' . $item->id); ?>"><?php echo $item->id; ?></a>
+			<?php echo $item->id; ?>
+		</td>
+
+		<!--EDIT-->
+		<td class="center">
+			<?php echo \Schedule\Helper\UiHelper::editButton('drug', $item->id); ?>
 		</td>
 
 		<!--HICODE-->
@@ -104,18 +114,8 @@ $date      = $container->get('date');
 		</td>
 
 		<!--RX_ID-->
-		<td class="center"><a
-			href="<?php
-				$proxy = array(
-					'option' => 'com_schedule',
-					'view'   => 'prescription',
-					'layout' => 'edit',
-					'id'	 => $item->rx_id
-				);
-				echo JRoute::_('index.php?' . http_build_query($proxy)); ?>"
-			target="_blank">
-			<?php echo $item->rx_id; ?>&nbsp;<span class="glyphicon glyphicon-share-alt"></span>
-			</a>
+		<td class="center">
+			<?php echo \Schedule\Helper\UiHelper::foreignLink('rxindividual', $item->rx_id, $item->rx_id); ?>
 		</td>
 	</tr>
 <?php endforeach; ?>
