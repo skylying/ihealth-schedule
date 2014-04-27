@@ -14,10 +14,11 @@
 			/>
 
 		<field name="rx_id"
-			type="text"
+			type="_list"
+			value_field="id"
+			key_field="id"
 			label="對應處方箋"
 			description="對應處方箋 id"
-			readonly="true"
 			/>
 
 		<field name="title"
