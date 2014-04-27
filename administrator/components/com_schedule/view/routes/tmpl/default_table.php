@@ -46,6 +46,11 @@ $date      = $container->get('date');
 		<?php echo $grid->sortTitle('JGRID_HEADING_ID', 'route.id'); ?>
 	</th>
 
+	<!--EDIT-->
+	<th width="1%" class="nowrap center">
+		編輯
+	</th>
+
 	<!--CITY-->
 	<th width="5%" class="nowrap center">
 		<?php echo $grid->sortTitle('縣市', 'route.city_title'); ?>
@@ -99,7 +104,12 @@ $date      = $container->get('date');
 
 		<!--ID-->
 		<td class="center">
-			<a href="<?php echo JRoute::_('index.php?option=com_schedule&view=route&layout=edit&id=' . $item->id); ?>"><?php echo $item->id; ?></a>
+			<?php echo $item->id; ?>
+		</td>
+
+		<!--EDIT-->
+		<td class="center">
+			<?php echo \Schedule\Helper\UiHelper::editButton('route', $item->id); ?>
 		</td>
 
 		<!--CITY-->
