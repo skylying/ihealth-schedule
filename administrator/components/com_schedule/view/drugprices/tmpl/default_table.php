@@ -46,6 +46,11 @@ $date      = $container->get('date');
 		<?php echo $grid->sortTitle('JGRID_HEADING_ID', 'drugprice.id'); ?>
 	</th>
 
+	<!--EDIT-->
+	<th width="1%" class="nowrap center">
+		編輯
+	</th>
+
 	<!--INSTITUTE_ID-->
 	<th width="1%" class="nowrap center">
 		<?php echo $grid->sortTitle('對應機構', 'drugprice.institute_id'); ?>
@@ -98,17 +103,22 @@ $date      = $container->get('date');
 
 		<!--ID-->
 		<td class="center">
-			<a href="<?php echo JRoute::_('index.php?option=com_schedule&view=drugprice&layout=edit&id=' . $item->id); ?>"><?php echo $item->id; ?></a>
+			<?php echo $item->id; ?>
 		</td>
 
-		<!--INSTITUTE_ID-->
+		<!--EDIT-->
 		<td class="center">
-			<a href="<?php echo JRoute::_('index.php?option=com_schedule&view=institute&layout=edit&id=' . $item->institute_id); ?>"><?php echo $item->institute_id; ?></a>
+			<?php echo \Schedule\Helper\UiHelper::editButton('address', $item->id); ?>
 		</td>
 
-		<!--CUSTOMER_ID-->
+		<!--INSTITUTE_TITLE-->
+		<td width="10%" class="center">
+			<?php echo \Schedule\Helper\UiHelper::foreignLink('institute', $item->institute_short_title, $item->institute_id); ?>
+		</td>
+
+		<!--CUSTOMER_NAME-->
 		<td class="center">
-			<a href="<?php echo JRoute::_('index.php?option=com_schedule&view=customer&layout=edit&id=' . $item->customer_id); ?>"><?php echo $item->customer_id; ?></a>
+			<?php echo \Schedule\Helper\UiHelper::foreignLink('customer', $item->customer_name, $item->customer_id); ?>
 		</td>
 
 		<!--DATE-->

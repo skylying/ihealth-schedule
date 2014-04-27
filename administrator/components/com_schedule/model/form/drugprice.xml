@@ -14,13 +14,17 @@
 			/>
 
 		<field name="institute_id"
-			type="text"
+			type="institute_list"
+			value_field="title"
+			key_field="id"
 			label="藥品所屬機構"
 			description="要加購藥品的機構名稱"
 			/>
 
 		<field name="customer_id"
-			type="text"
+			type="customer_list"
+			value_field="name"
+			key_field="id"
 			label="藥品所屬客戶"
 			description="要加購藥品的客戶"
 			/>
