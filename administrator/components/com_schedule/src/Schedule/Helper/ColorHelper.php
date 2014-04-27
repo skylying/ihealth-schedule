@@ -30,7 +30,7 @@ class ColorHelper
 	{
 		$attributes = array(
 			'class' => $class,
-			'style' => sprintf('width:%spx; height:%spx; background:%s; margin:0 auto', $size, $size, $color)
+			'style' => sprintf('width:%spx; height:%spx; background:%s; margin:0 auto; border-radius:7px;', $size, $size, $color)
 		);
 
 		return (string) new \Windwalker\Html\HtmlElement('div', '', $attributes);
