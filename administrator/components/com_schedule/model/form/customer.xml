@@ -48,25 +48,35 @@
 		</field>
 	</fieldset>
 
+
+	<field name="type"
+		type="radio"
+		label="COM_SCHEDULE_CUSTOMER_TYPE"
+		description="COM_SCHEDULE_CUSTOMER_TYPE"
+		class="btn-group btn-group-yesno customertype">
+		<option value="resident">住民</option>
+		<option value="individual">散客</option>
+	</field>
+
+
 	<fieldset
-		name="contact"
+		name="institute"
 		align="right"
 		horz="true">
-
-		<field name="type"
-			type="radio"
-			label="COM_SCHEDULE_CUSTOMER_TYPE"
-			description="COM_SCHEDULE_CUSTOMER_TYPE"
-			class="btn-group btn-group-yesno">
-			<option value="0">住民</option>
-			<option value="1">散客</option>
-		</field>
 
 		<field name="institute_id"
 			type="institute_list"
 			label="COM_SCHEDULE_INSTITUTE_TITLE"
 			description="COM_SCHEDULE_INSTITUTE_TITLE"
+			class="input-large"
 			/>
+
+	</fieldset>
+
+	<fieldset
+		name="rxindividual"
+		align="right"
+		horz="true">
 
 		<field name="members"
 			type="member_list"

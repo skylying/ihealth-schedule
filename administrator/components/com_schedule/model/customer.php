@@ -102,4 +102,65 @@ class ScheduleModelCustomer extends AdminModel
 
 		return $this->item;
 	}
+
+	/**
+	 * prepareTable
+	 *
+	 * @param JTable $table
+	 *
+	 * @return  void
+	 */
+	public function prepareTable($table)
+	{
+		$jformData = JFactory::getApplication()->input->get('jform', '', 'array');
+
+		$customerType = $jformData['type'];
+
+		if ('individual' === $customerType)
+		{
+			$this->prepareCityTable($table);
+		}
+		else
+		{
+			$this->prepareInstituteTable($table);
+		}
+
+		parent::prepareTable($table);
+	}
+
+	/**
+	 * Prepare and sanitise the table data prior to save institute data.
+	 *
+	 * @param   JTable  $table  A reference to a JTable object.
+	 *
+	 * @return  void
+	 */
+	public function prepareCityTable($table)
+	{
+		$tableCity = $this->getTable('City');
+		$tableCity->load($table->city);
+
+		$tableArea = $this->getTable('Area');
+		$tableArea->load($table->area);
+
+		$table->city_title = $tableCity->title;
+		$table->area_title = $tableArea->title;
+	}
+
+	/**
+	 * Prepare and sanitise the table data prior to save institute data.
+	 *
+	 * @param   JTable  $table  A reference to a JTable object.
+	 *
+	 * @return  void
+	 */
+	public function prepareInstituteTable($table)
+	{
+		$tableInstitute = $this->getTable('Institute');
+		$tableInstitute->load($table->institute_id);
+
+		$table->city_title = $tableInstitute->city_title;
+		$table->area_title = $tableInstitute->area_title;
+
+	}
 }

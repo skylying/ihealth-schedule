@@ -125,6 +125,8 @@ class ScheduleModelCustomers extends ListModel
 			$query->where($query->quoteName('customer.state') . ' >= 0');
 		}
 
+		$query->group('customer.id');
+
 		return parent::processFilters($query, $filters);
 	}
 
