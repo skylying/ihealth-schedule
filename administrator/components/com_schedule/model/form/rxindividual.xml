@@ -51,9 +51,10 @@
 			type="radio"
 			label="處方箋狀態"
 			description="處方箋狀態"
+			class="btn-group"
 			>
-			<option value="0">已取得</option>
-			<option value="1">未取得</option>
+			<option value="1">已取得</option>
+			<option value="0">未取得</option>
 		</field>
 
 		<field name="hospital_title"
@@ -226,9 +227,10 @@
 			type="radio"
 			label="處方箋狀態"
 			description="處方箋狀態"
+			class="btn-group"
 			>
-			<option value="0">已取得</option>
-			<option value="1">未取得</option>
+			<option value="1">已取得</option>
+			<option value="0">未取得</option>
 		</field>
 
 		<field name="called"
@@ -291,7 +293,7 @@
 			/>
 	</fieldset>
 
-	<fieldset name="schedules_1st">
+	<fields name="schedules_1st">
 		<field name="deliver_nths"
 			type="checkboxes"
 			label="宅配第幾次"
@@ -326,9 +328,9 @@
 			label="時段"
 			description="時段"
 			/>
-	</fieldset>
+	</fields>
 
-	<fieldset name="schedules_2nd">
+	<fields name="schedules_2nd">
 		<field name="deliver_nths"
 			type="checkboxes"
 			label="宅配第幾次"
@@ -363,15 +365,15 @@
 			label="時段"
 			description="時段"
 			/>
-	</fieldset>
+	</fields>
 
-	<fieldset name="schedules_3rd">
+	<fields name="schedules_3rd">
 		<field name="deliver_nths"
 			type="checkboxes"
 			label="宅配第幾次"
 			description="宅配第幾次"
 			>
-			<option value="1st">第三次</option>
+			<option value="3rd">第三次</option>
 		</field>
 
 		<field
@@ -400,7 +402,7 @@
 			label="時段"
 			description="時段"
 			/>
-	</fieldset>
+	</fields>
 
 	<fieldset
 		name="schedules_ps">
