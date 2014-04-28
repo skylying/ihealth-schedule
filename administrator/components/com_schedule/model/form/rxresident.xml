@@ -1,106 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <form>
-	<fieldset name="information"
-		align="left"
-		horz="true">
+	<fieldset name="institute">
+		<field name="institute_id"
+			type="text"
+			class="input-xlarge"
+			label="機構名稱"
+			description="機構名稱"
+			/>
 
+		<field name="floor"
+			type="text"
+			label="機構樓層"
+			description="機構樓層"
+			/>
+	</fieldset>
+
+	<fieldset name="information">
 		<field name="id"
-			type="hidden"
+			type="text"
 			label="id"
 			description="id"
 			readonly="true"
+			/>
+
+		<field name="customer_id"
+			type="text"
+			label="客戶"
+			description="客戶"
 			/>
 
 		<field name="id_number"
 			type="text"
 			label="身分證字號"
 			description="身分證字號"
-			/>
-
-		<field name="customer_id"
-			type="text"
-			label="對應客戶 id"
-			description="對應客戶 id"
-			/>
-
-		<field name="customer_name"
-			type="text"
-			label="對應客戶姓名"
-			description="對應客戶姓名"
-			/>
-
-		<field name="hospital_id"
-			type="text"
-			label="處方開立醫院 id"
-			description="處方開立醫院 id"
-			/>
-
-		<field name="member_id"
-			type="text"
-			label="所屬會員 id"
-			description="所屬會員 id"
-			/>
-
-		<field name="member_name"
-			type="text"
-			label="所屬會員姓名"
-			description="所屬會員姓名"
-			/>
-
-		<field name="received"
-			type="radio"
-			label="處方箋狀態"
-			description="處方箋狀態"
-			>
-			<option value="0">已取得</option>
-			<option value="1">未取得</option>
-		</field>
-
-		<field name="hospital_title"
-			type="text"
-			label="處方開立醫院名稱"
-			description="處方開立醫院名稱"
-			/>
-
-		<field name="received"
-			type="radio"
-			label="電聯狀態"
-			description="電聯狀態"
-			class="btn-group"
-			>
-			<option value="1">已電聯</option>
-			<option value="0">未電聯</option>
-		</field>
-
-		<field name="institute_id"
-			type="text"
-			label="所屬機構 id"
-			description="所屬機構 id"
-			/>
-
-		<field name="institute_short_title"
-			type="text"
-			label="所屬機構簡稱"
-			description="所屬機構簡稱"
-			/>
-
-		<field name="floor"
-			type="text"
-			label="樓層"
-			description="樓層"
-			/>
-
-		<field name="type"
-			type="hidden"
-			label="處方箋類別"
-			description="處方箋類別"
-			default="resident"
-			/>
-
-		<field name="serial"
-			type="text"
-			label="處方箋編號"
-			description="處方箋編號"
 			/>
 
 		<field name="birth_date"
@@ -133,13 +65,25 @@
 
 		<field name="deliver_nths"
 			type="checkboxes"
-			label="可調劑次數"
-			description="可調劑次數"
+			label="處方箋外送次數"
+			description="處方箋外送次數"
 			>
-			<option value="1st">第一次</option>
-			<option value="2nd">第二次</option>
-			<option value="3rd">第三次</option>
+			<option value="1st">1</option>
+			<option value="2nd">2</option>
+			<option value="3rd">3</option>
 		</field>
+
+		<field name="empty_date_1st"
+			type="hidden"
+			label="第一次吃完藥日"
+			description="第一次吃完藥日"
+			/>
+
+		<field name="empty_date_2nd"
+			type="hidden"
+			label="第二次吃完藥日"
+			description="第二次吃完藥日"
+			/>
 
 		<field name="method"
 			type="list"
@@ -154,151 +98,10 @@
 			<option value="paper">正本</option>
 		</field>
 
-		<field name="delivered"
-			type="radio"
-			label="是否已外送"
-			description="是否已外送"
-			class="btn-group"
-			>
-			<option value="0">否</option>
-			<option value="1">是</option>
-		</field>
-
-		<field name="empty_date_1st"
-			type="calendar"
-			label="第一次吃完藥日"
-			description="第一次吃完藥日"
-			/>
-
-		<field name="empty_date_2nd"
-			type="calendar"
-			label="第二次吃完藥日"
-			description="第二次吃完藥日"
-			/>
-
-		<field name="birth_date"
-			type="calendar"
-			label="生日"
-			description="生日"
-			/>
-
 		<field name="note"
 			type="textarea"
 			label="備註"
 			description="備註"
 			/>
-	</fieldset>
-
-	<fieldset name="multiple_create">
-		<fieldset name="global">
-			<field
-				name="institute"
-				type="institute_list"
-				label="機構名稱"
-				description="機構名稱"
-				/>
-
-			<field
-				name="floor"
-				type="text"
-				label="機構樓層"
-				description="機構樓層"
-				/>
-		</fieldset>
-
-		<fieldset name="item">
-			<field
-				name="customer_id"
-				type="customer_list"
-				label="住民"
-				description="住民"
-				/>
-
-			<field
-				name="id_number"
-				type="text"
-				label="身分證字號"
-				description="身分證字號"
-				/>
-
-			<field
-				name="birth_date"
-				type="calendar"
-				label="生日"
-				description="生日"
-				/>
-
-			<field
-				name="see_dr_date"
-				type="calendar"
-				label="就醫日期"
-				description="就醫日期"
-				/>
-
-			<field
-				name="period"
-				type="text"
-				label="處方箋天數"
-				description="處方箋天數"
-				/>
-
-			<field name="times"
-				type="list"
-				label="可調劑次數"
-				description="可調劑次數"
-				>
-				<option value="1">1</option>
-				<option value="2">2</option>
-				<option value="3">3</option>
-			</field>
-
-			<field
-				name="deliver_nths"
-				type="checkboxes"
-				label="可調劑次數"
-				description="可調劑次數"
-				>
-				<option value="1st">第一次</option>
-				<option value="2nd">第二次</option>
-				<option value="3rd">第三次</option>
-			</field>
-
-			<field
-				name="empty_date_1st"
-				type="calendar"
-				label="第一次吃完藥日"
-				description="第一次吃完藥日"
-				/>
-
-			<field
-				name="empty_date_2nd"
-				type="calendar"
-				label="第二次吃完藥日"
-				description="第二次吃完藥日"
-				/>
-
-			<!--TODO:處方箋上傳-->
-
-			<field
-				name="method"
-				type="list"
-				label="處方箋取得方式"
-				description="處方箋取得方式"
-				>
-				<option value="fax">傳真</option>
-				<option value="line">line</option>
-				<option value="form">自行填表</option>
-				<option value="file">上傳檔案</option>
-				<option value="photo">拍照</option>
-				<option value="paper">正本</option>
-			</field>
-
-			<field
-				name="note"
-				type="textarea"
-				label="備註"
-				description="備註"
-				/>
-		</fieldset>
 	</fieldset>
 </form>
