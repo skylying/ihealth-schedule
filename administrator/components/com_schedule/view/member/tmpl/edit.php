@@ -25,8 +25,8 @@ $form      = $data->form;
 $item      = $data->item;
 
 $fieldsets = $data->form->getFieldsets();
-$fieldset = $fieldsets['information'];
-
+$info_fieldset = $fieldsets['information'];
+$related_customers_fieldset = $fieldsets['related_customers'];
 ?>
 <!-- Validate Script -->
 <script type="text/javascript">
@@ -43,9 +43,18 @@ $fieldset = $fieldsets['information'];
 	<form action="<?php echo JURI::getInstance(); ?>"  method="post" name="adminForm" id="adminForm"
 		class="form-validate" enctype="multipart/form-data">
 		<div class="row-fluid">
-			<div class="span8">
-				<fieldset id="sender-edit-fieldset-<?php echo $fieldset->name ?>" class="form-horizontal">
-					<?php foreach ($data->form->getFieldset($fieldset->name) as $field): ?>
+			<div class="span6">
+				<fieldset id="sender-edit-fieldset-<?php echo $info_fieldset->name ?>" class="form-horizontal">
+					<?php foreach ($data->form->getFieldset($info_fieldset->name) as $field): ?>
+						<div id="control_<?php echo $field->id; ?>">
+							<?php echo $field->getControlGroup() . "\n\n"; ?>
+						</div>
+					<?php endforeach;?>
+				</fieldset>
+			</div>
+			<div class="span6">
+				<fieldset id="sender-edit-fieldset-<?php echo $related_customers_fieldset->name ?>" class="form-horizontal">
+					<?php foreach ($data->form->getFieldset($related_customers_fieldset->name) as $field): ?>
 						<div id="control_<?php echo $field->id; ?>">
 							<?php echo $field->getControlGroup() . "\n\n"; ?>
 						</div>
