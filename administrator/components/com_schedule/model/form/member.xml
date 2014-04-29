@@ -33,7 +33,7 @@
 
 		<field name="password"
 			type="password"
-			autocomplete="all"
+			autocomplete="off"
 			class="validate-password input-xlarge"
 			filter="raw"
 			label="JGLOBAL_PASSWORD"
