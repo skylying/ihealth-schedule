@@ -87,6 +87,31 @@ class ScheduleViewRxresidentHtml extends EditView
 	protected function prepareRender()
 	{
 		parent::prepareRender();
+
+		/** @var ScheduleModelRxresident $model */
+		$model = $this->getModel();
+		$app = JFactory::getApplication();
+		$input = $app->input;
+
+		$data = $this->getData();
+		$data->forms = array();
+		$data->instituteForm = $model->getForm(array('id' => -1));
+		$data->templateForm = $model->getForm(array('id' => 0));
+
+		$cid = $input->get('cid', array(), 'ARRAY');
+
+		if (count($cid) > 0)
+		{
+			$item = (array) $model->getItem($cid[0]);
+			$data->instituteForm->bind($item);
+		}
+
+		foreach ($cid as $id)
+		{
+			$item = (array) $model->getItem($id);
+
+			$data->forms[$id] = $model->getForm($item);
+		}
 	}
 
 	/**
