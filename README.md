@@ -69,3 +69,15 @@ $ php cli/console sql import default schedule fixtures default-user -y
     - `#__schedule_schedules`
     - `#__schedule_senders`
     - `#__schedule_tasks`
+
+## 各大系統編號規則
+
+| 元件 | 範例 | 編號規則 | 備註
+| --- | --- | --- | --- |
+| 處方箋編號 | P1 | P+id |	1.Bar code會貼在處方箋上  2.可能前面需要補0 |
+| 排程編號 | S394-2 | S+id+第幾次配送	後面數字不會超過 3 |
+| 機構編號 | (需討論) | 流水號	要跟iCRM、爸媽Home、爸媽CRM同步 |
+| 外送藥師編號 | T30 | T+id |
+| 客戶編號 | C100 | C+id |
+| 會員編號 | M55 | M+id |
+| 醫院編號 | H1073 | H+id	|
