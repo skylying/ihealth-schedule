@@ -5,9 +5,10 @@
 		horz="true">
 
 		<field name="id"
-			type="hidden"
-			label=""
-			description=""
+			type="text"
+			label="COM_SCHEDULE_CUSTOMER_SERIAL"
+			description="COM_SCHEDULE_CUSTOMER_SERIAL"
+			readonly="true"
 			/>
 
 		<field name="name"
