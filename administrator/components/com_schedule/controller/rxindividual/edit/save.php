@@ -73,6 +73,8 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 					"type"            => $customer->type,
 					"customer_id"     => $customer->id,
 					"customer_name"   => $customer->name,
+
+					"address_id"      => $address->id,
 					"city"            => $address->city,
 					"city_title"      => $address->city_title,
 					"area"            => $address->area,
