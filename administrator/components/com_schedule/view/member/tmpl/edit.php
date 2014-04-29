@@ -44,7 +44,7 @@ $relatedCustomersFieldset = $fieldsets['related_customers'];
 		class="form-validate" enctype="multipart/form-data" autocomplete="off">
 		<div class="row-fluid">
 			<div class="span6">
-				<fieldset id="sender-edit-fieldset-<?php echo $infoFieldset->name ?>" class="form-horizontal">
+				<fieldset id="member-edit-fieldset-<?php echo $infoFieldset->name ?>" class="form-horizontal">
 					<?php foreach ($data->form->getFieldset($infoFieldset->name) as $field): ?>
 						<div id="control_<?php echo $field->id; ?>">
 							<?php echo $field->getControlGroup() . "\n\n"; ?>
@@ -53,7 +53,7 @@ $relatedCustomersFieldset = $fieldsets['related_customers'];
 				</fieldset>
 			</div>
 			<div class="span6">
-				<fieldset id="sender-edit-fieldset-<?php echo $relatedCustomersFieldset->name ?>" class="form-horizontal">
+				<fieldset id="member-edit-fieldset-<?php echo $relatedCustomersFieldset->name ?>" class="form-horizontal">
 					<?php foreach ($data->form->getFieldset($relatedCustomersFieldset->name) as $field): ?>
 						<div id="control_<?php echo $field->id; ?>">
 							<?php echo $field->getControlGroup() . "\n\n"; ?>
