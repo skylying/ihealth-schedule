@@ -42,10 +42,10 @@
 			class="input-xxlarge required"
 			/>
 
-		<field name="city_title"
+		<field name="city"
 			type="sql"
-			query="SELECT title FROM #__schedule_cities"
-			key_field="title"
+			query="SELECT id,title FROM #__schedule_cities"
+			key_field="id"
 			value_field="title"
 			label="COM_SCHEDULE_INSTITUTE_CITY"
 			description="COM_SCHEDULE_INSTITUTE_CITY"
@@ -53,10 +53,10 @@
 			class="input-xxlarge required"
 			/>
 
-		<field name="area_title"
+		<field name="area"
 			type="sql"
-			query="SELECT title FROM #__schedule_areas"
-			key_field="title"
+			query="SELECT id,title FROM #__schedule_areas"
+			key_field="id"
 			value_field="title"
 			label="COM_SCHEDULE_INSTITUTE_AREA"
 			description="COM_SCHEDULE_INSTITUTE_AREA"
@@ -72,10 +72,10 @@
 			class="input-xxlarge required"
 			/>
 
-		<field name="sender_name"
+		<field name="sender_id"
 			type="sender_list"
 			value_field="name"
-			key_field="name"
+			key_field="id"
 			label="COM_SCHEDULE_INSTITUTE_SENDER_NAME"
 			description="COM_SCHEDULE_INSTITUTE_SENDER_NAME"
 			required="true"
@@ -98,10 +98,10 @@
 			<option value="SUN">SUN</option>
 		</field>
 
-		<field name="color_hex"
+		<field name="color_id"
 			type="color_list"
 			value_field="title"
-			key_field="hex"
+			key_field="id"
 			label="COM_SCHEDULE_INSTITUTE_MARK_COLOR"
 			description="COM_SCHEDULE_INSTITUTE_MARK_COLOR"
 			required="true"

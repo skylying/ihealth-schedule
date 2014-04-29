@@ -3,28 +3,6 @@
 	<!-- Batch -->
 	<fields name="batch">
 
-		<field name="city_title"
-			type="sql"
-			query="SELECT title FROM #__schedule_cities"
-			key_field="title"
-			value_field="title"
-			label="COM_SCHEDULE_INSTITUTE_CITY"
-			description="COM_SCHEDULE_INSTITUTE_CITY"
-			required="true"
-			class="input-xxlarge required"
-			/>
-
-		<field name="area_title"
-			type="sql"
-			query="SELECT title FROM #__schedule_areas"
-			key_field="title"
-			value_field="title"
-			label="COM_SCHEDULE_INSTITUTE_AREA"
-			description="COM_SCHEDULE_INSTITUTE_AREA"
-			required="true"
-			class="input-xxlarge required"
-			/>
-
 		<field name="delivery_weekday"
 			type="list"
 			label="COM_SCHEDULE_INSTITUTE_DELIVERY_WEEKDAY"
@@ -32,6 +10,7 @@
 			required="true"
 			class="input-xxlarge required"
 			>
+			<option></option>
 			<option value="MON">MON</option>
 			<option value="TUE">TUE</option>
 			<option value="WED">WED</option>
@@ -41,25 +20,29 @@
 			<option value="SUN">SUN</option>
 		</field>
 
-		<field name="sender_name"
+		<field name="sender_id"
 			type="sender_list"
 			value_field="name"
-			key_field="name"
+			key_field="id"
 			label="COM_SCHEDULE_INSTITUTE_SENDER_NAME"
 			description="COM_SCHEDULE_INSTITUTE_SENDER_NAME"
 			required="true"
 			class="input-xxlarge required"
-			/>
+			>
+			<option></option>
+		</field>
 
-		<field name="color_hex"
+		<field name="color_id"
 			type="color_list"
 			value_field="title"
-			key_field="hex"
+			key_field="id"
 			label="COM_SCHEDULE_INSTITUTE_MARK_COLOR"
 			description="COM_SCHEDULE_INSTITUTE_MARK_COLOR"
 			required="true"
 			class="input-xxlarge required"
-			/>
+			>
+			<option></option>
+		</field>
 
 		<field name="task"
 			type="radio"
