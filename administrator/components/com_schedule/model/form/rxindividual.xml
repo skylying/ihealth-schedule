@@ -221,7 +221,9 @@
 			type="hospital_list"
 			label="處方開立醫院"
 			description="處方開立醫院"
-			/>
+			>
+			<option></option>
+		</field>
 
 		<field name="received"
 			type="radio"
@@ -327,7 +329,13 @@
 			type="list"
 			label="時段"
 			description="時段"
-			/>
+			>
+			<option value="daytime">白天皆可 0900-1800</option>
+			<option value="morning">早上 0900-1300</option>
+			<option value="afternoon">下午 1300-1800</option>
+			<option value="night">晚上 1800-2100</option>
+			<option value="other">其他</option>
+		</field>
 	</fields>
 
 	<fields name="schedules_2nd">
@@ -364,7 +372,13 @@
 			type="list"
 			label="時段"
 			description="時段"
-			/>
+			>
+			<option value="daytime">白天皆可 0900-1800</option>
+			<option value="morning">早上 0900-1300</option>
+			<option value="afternoon">下午 1300-1800</option>
+			<option value="night">晚上 1800-2100</option>
+			<option value="other">其他</option>
+		</field>
 	</fields>
 
 	<fields name="schedules_3rd">
@@ -401,7 +415,13 @@
 			type="list"
 			label="時段"
 			description="時段"
-			/>
+			>
+			<option value="daytime">白天皆可 0900-1800</option>
+			<option value="morning">早上 0900-1300</option>
+			<option value="afternoon">下午 1300-1800</option>
+			<option value="night">晚上 1800-2100</option>
+			<option value="other">其他</option>
+		</field>
 	</fields>
 
 	<fieldset

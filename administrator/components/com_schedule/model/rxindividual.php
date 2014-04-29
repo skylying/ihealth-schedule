@@ -72,4 +72,38 @@ class ScheduleModelRxindividual extends AdminModel
 	{
 		parent::setOrderPosition($table, $position);
 	}
+
+	/**
+	 * loadFormData
+	 *
+	 * @return  array
+	 */
+	protected function loadFormData()
+	{
+		$returnVal = parent::loadFormData();
+
+		$schedule = $this->getTable("schedule");
+
+		foreach (array("1st", "2nd", "3rd") as $key)
+		{
+			$schedule->load(array("rx_id" => $returnVal->id, "deliver_nth" => $key));
+
+			if (empty($schedule->id))
+			{
+				continue;
+			}
+
+			$method = "schedules_{$key}";
+
+			$returnVal->$method = (object) array(
+				"address"      => $schedule->address_id,
+				"empty_date"   => $schedule->drug_empty_date,
+				"send_date"    => $schedule->date,
+				"send_time"    => $schedule->session,
+				"deliver_nths" => array($schedule->deliver_nth)
+			);
+		}
+
+		return $returnVal;
+	}
 }
