@@ -6,8 +6,8 @@
 
 		<field name="id"
 			type="text"
-			label="COM_SCHEDULE_CUSTOMER_SERIAL"
-			description="COM_SCHEDULE_CUSTOMER_SERIAL"
+			label="COM_SCHEDULE_CUSTOMER_ID"
+			description="COM_SCHEDULE_CUSTOMER_ID"
 			readonly="true"
 			/>
 
