@@ -107,10 +107,10 @@ class ScheduleViewRxresidentsHtml extends GridView
 	}
 
 	/**
-	 * configToolbar
+	 * configureToolbar
 	 *
-	 * @param array $buttonSet
-	 * @param null  $canDo
+	 * @param array   $buttonSet
+	 * @param object  $canDo
 	 *
 	 * @return  array
 	 */
@@ -119,9 +119,16 @@ class ScheduleViewRxresidentsHtml extends GridView
 		// Get default button set.
 		$buttonSet = parent::configureToolbar($buttonSet, $canDo);
 
-		$buttonSet['tmpCreateLayout']['handler'] = function(){
-			JToolbarHelper::back("tmpCreateLayout", JRoute::_("index.php?option=com_schedule&view=rxresident&layout=new"));
+		$buttonSet['edit']['handler'] = function ()
+		{
+			JToolbarHelper::custom('rxresident.edit.list', 'edit', '', 'JTOOLBAR_EDIT');
 		};
+		$buttonSet['duplicate']['access'] = false;
+		$buttonSet['publish']['access'] = false;
+		$buttonSet['unpublish']['access'] = false;
+		$buttonSet['checkin']['access'] = false;
+		$buttonSet['trash']['access'] = false;
+		$buttonSet['batch']['access'] = false;
 
 		// In debug mode, we remove trash button but use delete button instead.
 		if (JDEBUG)
