@@ -79,8 +79,32 @@ class ScheduleViewRxresidentHtml extends EditView
 		parent::__construct($model, $container, $config, $paths);
 	}
 
+	/**
+	 * prepareRender
+	 *
+	 * @return  void
+	 */
 	protected function prepareRender()
 	{
 		parent::prepareRender();
+	}
+
+	/**
+	 * configureToolbar
+	 *
+	 * @param array   $buttonSet
+	 * @param object  $canDo
+	 *
+	 * @return  array
+	 */
+	protected function configureToolbar($buttonSet = array(), $canDo = null)
+	{
+		// Get default button set.
+		$buttonSet = parent::configureToolbar($buttonSet, $canDo);
+
+		$buttonSet['apply']['access'] = false;
+		$buttonSet['save2copy']['access'] = false;
+
+		return $buttonSet;
 	}
 }
