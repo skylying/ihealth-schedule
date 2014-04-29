@@ -25,8 +25,8 @@ $form      = $data->form;
 $item      = $data->item;
 
 $fieldsets = $data->form->getFieldsets();
-$fieldset = $fieldsets['information'];
-
+$infoFieldset = $fieldsets['information'];
+$relatedCustomersFieldset = $fieldsets['related_customers'];
 ?>
 <!-- Validate Script -->
 <script type="text/javascript">
@@ -36,16 +36,25 @@ $fieldset = $fieldsets['information'];
 		{
 			Joomla.submitform(task, document.getElementById('adminForm'));
 		}
-	}
+	};
 </script>
 
 <div id="schedule" class="windwalker member edit-form row-fluid">
 	<form action="<?php echo JURI::getInstance(); ?>"  method="post" name="adminForm" id="adminForm"
-		class="form-validate" enctype="multipart/form-data">
+		class="form-validate" enctype="multipart/form-data" autocomplete="off">
 		<div class="row-fluid">
-			<div class="span8">
-				<fieldset id="sender-edit-fieldset-<?php echo $fieldset->name ?>" class="form-horizontal">
-					<?php foreach ($data->form->getFieldset($fieldset->name) as $field): ?>
+			<div class="span6">
+				<fieldset id="member-edit-fieldset-<?php echo $infoFieldset->name ?>" class="form-horizontal">
+					<?php foreach ($data->form->getFieldset($infoFieldset->name) as $field): ?>
+						<div id="control_<?php echo $field->id; ?>">
+							<?php echo $field->getControlGroup() . "\n\n"; ?>
+						</div>
+					<?php endforeach;?>
+				</fieldset>
+			</div>
+			<div class="span6">
+				<fieldset id="member-edit-fieldset-<?php echo $relatedCustomersFieldset->name ?>" class="form-horizontal">
+					<?php foreach ($data->form->getFieldset($relatedCustomersFieldset->name) as $field): ?>
 						<div id="control_<?php echo $field->id; ?>">
 							<?php echo $field->getControlGroup() . "\n\n"; ?>
 						</div>
