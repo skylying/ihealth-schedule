@@ -111,7 +111,7 @@ $date      = $container->get('date');
 
 		<!-- checkbox -->
 		<td>
-			<?php echo JHtml::_('grid.id', $i, $item->prescription_id); ?>
+			<?php echo JHtml::_('grid.id', $i, $item->id); ?>
 		</td>
 
 		<!-- id -->
