@@ -1,6 +1,6 @@
 <?php
 /**
- * Part of ihealth-schedule project. 
+ * Part of ihealth-schedule project.
  *
  * @copyright  Copyright (C) 2011 - 2014 SMS Taiwan, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
@@ -9,11 +9,11 @@
 use Windwalker\Controller\DisplayController;
 
 /**
- * Class ScheduleControllerCustomerPhoneJson
+ * Class ScheduleControllerCustomerAjaxJson
  *
  * @since 1.0
  */
-class ScheduleControllerCustomerPhoneJson extends DisplayController
+class ScheduleControllerCustomerAjaxJson extends DisplayController
 {
 	/**
 	 * doExecute
@@ -24,11 +24,9 @@ class ScheduleControllerCustomerPhoneJson extends DisplayController
 	{
 		\JFactory::getDocument()->setMimeEncoding('application/json');
 
-		$input = \JFactory::getApplication()->input;
+		$id = $this->input->get('id');
 
-		$id = $input->get('id');
-
-		$model = $this->getModel('customer');
+		$model = $this->getModel('Customer');
 
 		$data = $model->getItem($id);
 
