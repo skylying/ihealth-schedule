@@ -45,16 +45,17 @@ $forms         = $data->forms;
 			</tr>
 		</thead>
 		<tbody>
-<?php if (count($forms) > 0): ?>
-	<?php
+<?php
+if (count($forms) > 0)
+{
 	foreach ($forms as $id => $form)
 	{
 		$group = 'item.old.' . $id;
 
 		echo $this->loadTemplate('row', array('group' => $group, 'form' => $form));
 	}
-	?>
-<?php endif; ?>
+}
+?>
 		</tbody>
 	</table>
 
@@ -63,7 +64,7 @@ $forms         = $data->forms;
 
 		<input type="text" value="1" id="new-row-number" />
 
-		<button type="button" class="btn button-add-row" onclick="addNewRow(jQuery('#new-row-number').val());">
+		<button type="button" class="btn btn-default button-add-row">
 			<span class="glyphicon glyphicon-plus"></span>
 			新增
 		</button>
@@ -82,6 +83,7 @@ $forms         = $data->forms;
 	{
 		var $tableBody = $('#rx-list').find('tbody');
 
+		// Add row
 		$('.button-add-row').click(function ()
 		{
 			var i,
@@ -111,11 +113,13 @@ $forms         = $data->forms;
 			}
 		});
 
+		// Delete row
 		$tableBody.on('click', '.button-delete-row', function ()
 		{
 			$(this).closest('tr').remove();
 		});
 
+		// Copy row
 		$tableBody.on('click', '.button-copy-row', function ()
 		{
 			var $row = $(this).closest('tr').clone(),

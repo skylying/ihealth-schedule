@@ -9,9 +9,7 @@
 namespace Schedule\Helper\Form;
 
 /**
- * Class UiHelper
- *
- * @since 1.0
+ * Class FieldHelper
  */
 abstract class FieldHelper
 {
@@ -23,7 +21,7 @@ abstract class FieldHelper
 	 *
 	 * @return  \JFormField
 	 */
-	public static function resetGroup($field, $group)
+	public static function resetGroup(\JFormField $field, $group)
 	{
 		// Modify field's group name
 		$field->group = $group;

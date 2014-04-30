@@ -21,10 +21,12 @@ $id    = FieldHelper::resetGroup($form->getField('id'), $group);
 $idPrefix   = preg_replace('/' . $id->fieldname . '$/', '', $id->id);
 $namePrefix = preg_replace('/\[' . $id->fieldname . '\]$/', '', $id->name);
 
+// Generate replace string for field id
 $parts = explode('_', trim($idPrefix, '_ '));
 array_pop($parts);
 $idReplace = implode('_', $parts) . '_{{hash}}_';
 
+// Generate replace string for field name
 $parts = explode('][', $namePrefix);
 array_pop($parts);
 $nameReplace = implode('][', $parts) . '][{{hash}}]';
@@ -78,10 +80,10 @@ $nameReplace = implode('][', $parts) . '][{{hash}}]';
 	</td>
 	<td>
 		<div class="btn-group">
-			<button type="button" class="btn button-copy-row">
+			<button type="button" class="btn btn-default button-copy-row">
 				<span class="glyphicon glyphicon-file"></span>
 			</button>
-			<button type="button" class="btn button-delete-row">
+			<button type="button" class="btn btn-default button-delete-row">
 				<span class="glyphicon glyphicon-remove"></span>
 			</button>
 		</div>

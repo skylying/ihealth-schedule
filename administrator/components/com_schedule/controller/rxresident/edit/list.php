@@ -14,10 +14,8 @@ class ScheduleControllerRxResidentEditList extends AbstractRedirectController
 	 */
 	protected function doExecute()
 	{
-		$input = JFactory::getApplication()->input;
-
-		$id = (int) $input->get('id');
-		$cid = $input->get('cid', array(), 'ARRAY');
+		$id = (int) $this->input->get('id');
+		$cid = $this->input->get('cid', array(), 'ARRAY');
 
 		if ($id > 0 && empty($cid))
 		{

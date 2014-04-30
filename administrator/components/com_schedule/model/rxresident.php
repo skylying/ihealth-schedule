@@ -91,7 +91,7 @@ class ScheduleModelRxresident extends AdminModel
 		);
 
 		// For form hash. @see \Windwalker\Model\FormModel (line:76)
-		$config['data.id'] = (! isset($data['id']) ? '' : $data['id']);
+		$config['data.id'] = JArrayHelper::getValue($data, 'id', '');
 
 		$key = $this->option . '.' . $this->getName() . '.form.' . $config['data.id'];
 

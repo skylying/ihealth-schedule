@@ -90,8 +90,9 @@ class ScheduleViewRxresidentHtml extends EditView
 
 		/** @var ScheduleModelRxresident $model */
 		$model = $this->getModel();
-		$app = JFactory::getApplication();
-		$input = $app->input;
+
+		/** @var JInput $input */
+		$input = $this->container->get('input');
 
 		$data = $this->getData();
 		$data->forms = array();
