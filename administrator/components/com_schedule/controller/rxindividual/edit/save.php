@@ -1,7 +1,8 @@
 <?php
 
-use Windwalker\Controller\Edit\SaveController,
-	Windwalker\Joomla\DataMapper\DataMapper;
+use Windwalker\Controller\Edit\SaveController;
+use Windwalker\Joomla\DataMapper\DataMapper;
+use Schedule\Table\Table;
 
 /**
  * Class SaveController
@@ -22,29 +23,29 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 	{
 		$rx = $model->getItem();
 
-		$customer = with(new DataMapper("#__schedule_customers"))
-			->findOne(array("id" => $this->data['customer_id']));
+		$customer = (new DataMapper(Table::CUSTOMERS))
+			->findOne($this->data['customer_id']);
 
-		// 新增排成
-		foreach (array("1st", "2nd", "3rd") as $key)
+		// 新增排程
+		foreach (array("1st", "2nd", "3rd") as $val)
 		{
 			// 沒有需要外送的次數跳過
-			if (! isset($this->data["schedules_{$key}"]["deliver_nths"]))
+			if (empty($this->data["schedules_{$val}"]["deliver_nths"]))
 			{
 				continue;
 			}
 
 			// 外送地址比對
-			$address = with(new DataMapper("#__schedule_addresses"))
-				->findOne(array("id" => $this->data["schedules_{$key}"]["address"]));
+			$address = (new DataMapper(Table::ADDRESSES))
+				->findOne($this->data["schedules_{$val}"]["address"]);
 
 			// 外送路線
-			$routes = with(new DataMapper("#__schedule_routes"))
+			$routes = (new DataMapper(Table::ROUTES))
 				->findOne(array("city" => $address->city, "area" => $address->area));
 
 			// 外送者
-			$sender = with(new DataMapper("#__schedule_senders"))
-				->findOne(array("id" => $routes->sender_id));
+			$sender = (new DataMapper(Table::SENDERS))
+				->findOne($routes->sender_id);
 
 			$task = $this->getModel("task");
 
@@ -60,9 +61,9 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 			// 取出剛剛新增的外送管理
 			$task = $task->getItem();
 
-			$schedule = $this->getModel("schedule");
+			$schedule = $this->getModel("Schedule");
 
-			// 新增排成
+			// 新增排程
 			$schedule->save(
 				array(
 					// 對應處方箋 id
@@ -82,16 +83,16 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 					"address"         => $address->address,
 
 					// 第幾次宅配
-					"deliver_nth"     => $key,
+					"deliver_nth"     => $val,
 
 					// 排程日期
-					"date"            => $this->data["schedules_{$key}"]["send_date"],
+					"date"            => $this->data["schedules_{$val}"]["send_date"],
 
 					// 藥品吃完日
-					"drug_empty_date" => $this->data["schedules_{$key}"]["empty_date"],
+					"drug_empty_date" => $this->data["schedules_{$val}"]["empty_date"],
 
 					// 時段
-					"session"         => $this->data["schedules_{$key}"]["send_time"],
+					"session"         => $this->data["schedules_{$val}"]["send_time"],
 
 					"status"          => "scheduled",
 					"sorted"          => 0

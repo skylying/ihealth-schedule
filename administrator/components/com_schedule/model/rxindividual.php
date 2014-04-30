@@ -82,19 +82,30 @@ class ScheduleModelRxindividual extends AdminModel
 	{
 		$returnVal = parent::loadFormData();
 
-		$schedule = $this->getTable("schedule");
-
-		foreach (array("1st", "2nd", "3rd") as $key)
+		// 如果取得非 object 轉為 stdClass object
+		if (! is_object($returnVal))
 		{
-			$schedule->load(array("rx_id" => $returnVal->id, "deliver_nth" => $key));
+			$returnVal = (object) $returnVal;
+		}
 
+		// 取得排程 table
+		$schedule = $this->getTable("Schedule");
+
+		foreach (array("1st", "2nd", "3rd") as $val)
+		{
+			// 讀取對應排程
+			$schedule->load(array("rx_id" => $returnVal->id, "deliver_nth" => $val));
+
+			// 如果沒有對應排程執行下一筆
 			if (empty($schedule->id))
 			{
 				continue;
 			}
 
-			$method = "schedules_{$key}";
+			// Std Class method
+			$method = "schedules_{$val}";
 
+			// 塞入資料
 			$returnVal->$method = (object) array(
 				"address"      => $schedule->address_id,
 				"empty_date"   => $schedule->drug_empty_date,
