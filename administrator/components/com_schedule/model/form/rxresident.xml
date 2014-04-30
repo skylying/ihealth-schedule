@@ -36,13 +36,15 @@
 			/>
 
 		<field name="birth_date"
-			type="calendar"
+			type="DateTimePicker"
+			class="datetimepicker"
 			label="生日"
 			description="生日"
 			/>
 
 		<field name="see_dr_date"
-			type="calendar"
+			type="DateTimePicker"
+			class="datetimepicker"
 			label="就醫日期"
 			description="就醫日期"
 			/>

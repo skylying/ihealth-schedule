@@ -9,23 +9,20 @@
 /**
  * Prepare data for this template.
  *
- * @var $container     Windwalker\DI\Container
- * @var $data          Windwalker\Data\Data
- * @var $templateForm  JForm
- * @var $forms         JForm[]
+ * @var $data         Windwalker\Data\Data
+ * @var $templateForm JForm
+ * @var $forms        JForm[]
  */
-$container     = $this->getContainer();
 $instituteForm = $data->instituteForm;
 $templateForm  = $data->templateForm;
 $forms         = $data->forms;
 ?>
-
 <form id="adminForm" name="adminForm" action="" method="post" class="form-horizontal">
 	<div id="institute-information" class="row-fluid">
-		<div class="col-lg-8">
+		<div class="col-lg-6">
 			<?php echo $instituteForm->getField('institute_id')->getControlGroup(); ?>
 		</div>
-		<div class="col-lg-4">
+		<div class="col-lg-6">
 			<?php echo $instituteForm->getField('floor')->getControlGroup(); ?>
 		</div>
 	</div>
@@ -66,7 +63,7 @@ $forms         = $data->forms;
 
 		<input type="text" value="1" id="new-row-number" />
 
-		<button type="button" class="btn button-delete-row" onclick="addNewRow(jQuery('#new-row-number').val());">
+		<button type="button" class="btn button-add-row" onclick="addNewRow(jQuery('#new-row-number').val());">
 			<span class="glyphicon glyphicon-plus"></span>
 			新增
 		</button>
@@ -81,25 +78,69 @@ $forms         = $data->forms;
 </script>
 
 <script type="text/javascript">
-	function addNewRow(amount)
+	(function ($)
 	{
-		var i,
-			html = '',
-			hash = '',
-			newHash = '',
-			$table = jQuery('#rx-list').find('tbody');
+		var $tableBody = $('#rx-list').find('tbody');
 
-		amount = isNaN(amount) ? 0 : amount;
-
-		for (i = 0; i < amount; ++i)
+		$('.button-add-row').click(function ()
 		{
-			newHash = (new Date).getTime().toString();
-			hash = (hash === newHash) ? newHash + '1' : newHash;
+			var i,
+				row = '',
+				hash = '',
+				newHash = '',
+				amount = $('#new-row-number').val();
 
-			html = jQuery('#row-template').clone().html();
-			html = html.replace('{{hash}}', hash);
+			amount = isNaN(amount) ? 0 : amount;
 
-			$table.append(html);
-		}
-	}
+			for (i = 0; i < amount; ++i)
+			{
+				newHash = (new Date).getTime().toString();
+				hash = (hash === newHash) ? newHash + '0' : newHash;
+
+				row = $('#row-template').clone().html();
+				row = row.replace(/{{hash}}/g, hash);
+				row = row.replace(/__hash__/g, hash);
+
+				row = $(row);
+
+				row.find('.datetimepicker').datetimepicker({
+					pickTime: false
+				});
+
+				$tableBody.append(row);
+			}
+		});
+
+		$tableBody.on('click', '.button-delete-row', function ()
+		{
+			$(this).closest('tr').remove();
+		});
+
+		$tableBody.on('click', '.button-copy-row', function ()
+		{
+			var $row = $(this).closest('tr').clone(),
+				hash = (new Date).getTime().toString(),
+				idPrefix = $row.data('id-prefix'),
+				namePrefix = $row.data('name-prefix'),
+				idReplace = $row.data('id-replace').replace('{{hash}}', hash),
+				nameReplace = $row.data('name-replace').replace('{{hash}}', hash);
+
+			$row.find('[name^="' + namePrefix + '"]').each(function (i, node)
+			{
+				var id = $(this).attr('id'),
+					name = $(this).attr('name'),
+					newId = id.replace(idPrefix, idReplace),
+					newName = name.replace(namePrefix, nameReplace);
+
+				$(this).attr('id', newId);
+				$(this).attr('name', newName);
+			});
+
+			$row.find('.datetimepicker').datetimepicker({
+				pickTime: false
+			});
+
+			$tableBody.append($row);
+		});
+	})(jQuery);
 </script>

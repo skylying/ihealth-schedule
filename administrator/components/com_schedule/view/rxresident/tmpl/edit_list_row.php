@@ -8,12 +8,34 @@
 
 use Schedule\Helper\Form\FieldHelper;
 
-$form = $data->form;
+/**
+ * Prepare data for this template.
+ *
+ * @var $data Windwalker\Data\Data
+ * @var $form JForm
+ */
+$form  = $data->form;
 $group = $data->group;
+$id    = FieldHelper::resetGroup($form->getField('id'), $group);
+
+$idPrefix   = preg_replace('/' . $id->fieldname . '$/', '', $id->id);
+$namePrefix = preg_replace('/\[' . $id->fieldname . '\]$/', '', $id->name);
+
+$parts = explode('_', trim($idPrefix, '_ '));
+array_pop($parts);
+$idReplace = implode('_', $parts) . '_{{hash}}_';
+
+$parts = explode('][', $namePrefix);
+array_pop($parts);
+$nameReplace = implode('][', $parts) . '][{{hash}}]';
 ?>
-<tr>
+<tr data-id-prefix="<?php echo $idPrefix; ?>"
+	data-name-prefix="<?php echo $namePrefix; ?>"
+	data-id-replace="<?php echo $idReplace; ?>"
+	data-name-replace="<?php echo $nameReplace; ?>"
+	>
 	<td>
-		<?php echo FieldHelper::resetGroup($form->getField('id'), $group)->input; ?>
+		<?php echo $id->input; ?>
 	</td>
 	<td>
 		<?php echo FieldHelper::resetGroup($form->getField('customer_id'), $group)->input; ?>
@@ -56,10 +78,10 @@ $group = $data->group;
 	</td>
 	<td>
 		<div class="btn-group">
-			<button class="btn button-copy-row">
+			<button type="button" class="btn button-copy-row">
 				<span class="glyphicon glyphicon-file"></span>
 			</button>
-			<button class="btn button-delete-row">
+			<button type="button" class="btn button-delete-row">
 				<span class="glyphicon glyphicon-remove"></span>
 			</button>
 		</div>

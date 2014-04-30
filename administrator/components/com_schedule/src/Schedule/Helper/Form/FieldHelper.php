@@ -31,6 +31,9 @@ abstract class FieldHelper
 		// Update field's form name
 		$field->name = $field->fieldname;
 
+		// Update field's form id
+		$field->id = $field->getAttribute('id');
+
 		return $field;
 	}
 }
