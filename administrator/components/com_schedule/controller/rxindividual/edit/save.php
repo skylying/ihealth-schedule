@@ -12,6 +12,35 @@ use Schedule\Table\Table;
 class ScheduleControllerRxindividualEditSave extends SaveController
 {
 	/**
+	 * preSaveHook
+	 *
+	 * @return  void
+	 */
+	protected function preSaveHook()
+	{
+		$nths = array();
+
+		foreach (array("1st", "2nd", "3rd") as $val)
+		{
+			// 沒有值跳過
+			if (empty($this->data["schedules_{$val}"]["deliver_nths"]))
+			{
+				continue;
+			}
+
+			$nths[] = $val;
+		}
+
+		// 組好他有勾選的值
+		$nths = implode(",", $nths);
+
+		// 塞入資料
+		$this->data["deliver_nths"] = $nths;
+
+		parent::preSaveHook();
+	}
+
+	/**
 	 * postSaveHook
 	 *
 	 * @param \Windwalker\Model\CrudModel $model
