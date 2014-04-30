@@ -27,6 +27,7 @@ $mobileID = $data->form->getField('mobile')->id;
 	var telOfficeID = "<?php echo $telOfficeID;?>";
 	var telHomeID = "<?php echo $telHomeID;?>";
 	var mobileID = "<?php echo $mobileID;?>";
+
 	// Update empty rows of addresses inputs
 	var addressesKeys = ["1st", "2nd", "3rd"];
 
@@ -34,6 +35,7 @@ $mobileID = $data->form->getField('mobile')->id;
 	{
 		$.fn.customerAjax = function (id)
 		{
+
 			return this.each(function ()
 			{
 				if (!id)
@@ -55,6 +57,14 @@ $mobileID = $data->form->getField('mobile')->id;
 				}
 			});
 		};
+
+		/**
+		 * Fire ajax request and get from Customer model and Addresses modl
+		 *
+		 * fireAjax
+		 *
+		 * @param id
+		 */
 		$.fn.customerAjax.fireAjax = function (id)
 		{
 			// Fire ajax to Customer
@@ -63,10 +73,10 @@ $mobileID = $data->form->getField('mobile')->id;
 				url: "index.php?option=com_schedule&task=customer.ajax.json&id=" + id
 			}).done(function (cdata)
 				{
-					var cdata = jQuery.parseJSON(cdata);
+					var cdata      = jQuery.parseJSON(cdata);
 					var tel_office = jQuery.parseJSON(cdata.tel_office);
-					var tel_home = jQuery.parseJSON(cdata.tel_home);
-					var mobile = jQuery.parseJSON(cdata.mobile);
+					var tel_home   = jQuery.parseJSON(cdata.tel_home);
+					var mobile     = jQuery.parseJSON(cdata.mobile);
 
 					$.fn.customerAjax.updatePhoneHtml(telOfficeID, tel_office);
 					$.fn.customerAjax.updatePhoneHtml(telHomeID, tel_home);
@@ -90,6 +100,14 @@ $mobileID = $data->form->getField('mobile')->id;
 				});
 		};
 
+		/**
+		 * Update address select list row
+		 *
+		 * updateAddressHtml
+		 *
+		 * @param key
+		 * @param addressJson
+		 */
 		$.fn.customerAjax.updateAddressHtml = function (key, addressJson)
 		{
 			addressJson = addressJson || {};
@@ -108,7 +126,7 @@ $mobileID = $data->form->getField('mobile')->id;
 			// Add select tag
 			html += '<select' +
 				' name="' + targetName + '"' +
-				' id="' + targetID + '">';
+				' id="'   + targetID   + '">';
 
 			for (var i = 0; i < addressJson.length; i++)
 			{
@@ -129,6 +147,14 @@ $mobileID = $data->form->getField('mobile')->id;
 			targetsParent.html(html);
 		};
 
+		/**
+		 * Update phone input list row
+		 *
+		 * updatePhoneHtml
+		 *
+		 * @param tagID
+		 * @param telJson
+		 */
 		$.fn.customerAjax.updatePhoneHtml = function (tagID, telJson)
 		{
 			telJson = telJson || {};
@@ -147,7 +173,7 @@ $mobileID = $data->form->getField('mobile')->id;
 				if (telJson[i] === undefined)
 				{
 					html += '<input type="radio" name="default_' + tagID + '"' + '/>';
-					html += '<input type="text" name="number_' + tagID + '"' + '/><br>'
+					html += '<input type="text" name="number_'   + tagID + '"' + '/><br>'
 				}
 				else
 				{
