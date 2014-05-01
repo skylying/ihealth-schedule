@@ -82,10 +82,10 @@ class ScheduleModelRxindividual extends AdminModel
 	{
 		$returnVal = parent::loadFormData();
 
-		// 如果取得非 object 轉為 stdClass object
-		if (! is_object($returnVal))
+		// 如果沒值就直接回傳
+		if (empty($returnVal))
 		{
-			$returnVal = (object) $returnVal;
+			return $returnVal;
 		}
 
 		// 取得排程 table
