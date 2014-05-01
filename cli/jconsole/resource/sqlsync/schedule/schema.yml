@@ -10,6 +10,7 @@
         area: { Field: area, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: '區域 id', From: [area] }
         area_title: { Field: area_title, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 區域名稱, From: [area_title] }
         address: { Field: address, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 路名, From: [address] }
+        previous: { Field: previous, Type: tinyint(1), 'Null': NO, Default: null, Extra: '', Comment: 是否為上次使用, From: [previous] }
     index:
         - { Table: '#__schedule_addresses', Non_unique: '0', Key_name: PRIMARY, Seq_in_index: '1', Column_name: id, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
 '#__schedule_colors':
@@ -97,7 +98,9 @@
         year: { Field: year, Type: mediumint(8), 'Null': NO, Default: null, Extra: '', Comment: 年份, From: [year] }
         month: { Field: month, Type: tinyint(2), 'Null': NO, Default: null, Extra: '', Comment: 月份, From: [month] }
         day: { Field: day, Type: tinyint(2), 'Null': NO, Default: null, Extra: '', Comment: 國定假日日期, From: [day] }
+        title: { Field: title, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: '假日種類說明', From: [title] }
         state: { Field: state, Type: tinyint(1), 'Null': NO, Default: null, Extra: '', Comment: '假日狀態', From: [state] }
+        params: { Field: params, Type: text, 'Null': NO, Default: null, Extra: '', Comment: '', From: [params] }
     index:
         - { Table: '#__schedule_holidays', Non_unique: '0', Key_name: PRIMARY, Seq_in_index: '1', Column_name: id, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
 '#__schedule_hospitals':
@@ -139,9 +142,10 @@
     columns:
         id: { Field: id, Type: 'int(11) unsigned', 'Null': NO, Default: null, Extra: auto_increment, Comment: 機構編號, From: [id] }
         route_id: { Field: route_id, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: '路線 id', From: [route_id] }
-        title: { Field: title, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 'Record title', From: [title] }
+        title: { Field: title, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: '機構全名', From: [title] }
         short_title: { Field: short_title, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 機構簡稱, From: [short_title] }
         delivery_weekday: { Field: delivery_weekday, Type: 'enum(''MON'',''TUE'',''WED'',''THU'',''FRI'',''SAT'',''SUN'')', 'Null': NO, Default: null, Extra: '', Comment: 外送日, From: [delivery_weekday] }
+        last_delivery_date: { Field: last_delivery_date, Type: date, 'Null': NO, Default: null, Extra: '', Comment: 上次外送日, From: [last_delivery_date] }
         color_id: { Field: color_id, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: '顏色 id', From: [color_id] }
         color_hex: { Field: color_hex, Type: char(10), 'Null': NO, Default: null, Extra: '', Comment: 註記顏色, From: [color_hex] }
         color_title: { Field: color_title, Type: char(10), 'Null': NO, Default: null, Extra: '', Comment: 註記顏色名稱, From: [color_title] }
@@ -187,25 +191,25 @@
         hospital_id: { Field: hospital_id, Type: int(11), 'Null': YES, Default: null, Extra: '', Comment: '處方開立醫院 id', From: [hospital_id] }
         member_id: { Field: member_id, Type: int(11), 'Null': YES, Default: null, Extra: '', Comment: '所屬會員 id', From: [member_id] }
         member_name: { Field: member_name, Type: varchar(255), 'Null': YES, Default: null, Extra: '', Comment: 所屬會員姓名, From: [member_name] }
-        received: { Field: received, Type: tinyint(1), 'Null': YES, Default: null, Extra: '', Comment: '處方箋狀態', From: [received] }
+        received: { Field: received, Type: tinyint(1), 'Null': YES, Default: null, Extra: '', Comment: '處方箋狀態 (0:未取得 / 1:已取得)', From: [received] }
         hospital_title: { Field: hospital_title, Type: varchar(255), 'Null': YES, Default: null, Extra: '', Comment: 處方開立醫院名稱, From: [hospital_title] }
-        called: { Field: called, Type: tinyint(1), 'Null': YES, Default: null, Extra: '', Comment: '電聯狀態', From: [called] }
+        called: { Field: called, Type: tinyint(1), 'Null': YES, Default: null, Extra: '', Comment: '電聯狀態 (0:未電聯 / 1:已電聯)', From: [called] }
         institute_id: { Field: institute_id, Type: int(11), 'Null': YES, Default: null, Extra: '', Comment: '所屬機構 id', From: [institute_id] }
         institute_short_title: { Field: institute_short_title, Type: varchar(255), 'Null': YES, Default: null, Extra: '', Comment: 所屬機構簡稱, From: [institute_short_title] }
         floor: { Field: floor, Type: varchar(10), 'Null': YES, Default: null, Extra: '', Comment: 樓層, From: [floor] }
         id_number: { Field: id_number, Type: char(10), 'Null': YES, Default: null, Extra: '', Comment: 身分證字號, From: [id_number] }
-        type: { Field: type, Type: char(10), 'Null': YES, Default: null, Extra: '', Comment: 處方箋類別, From: [type] }
-        serial: { Field: serial, Type: varchar(255), 'Null': YES, Default: null, Extra: '', Comment: 處方箋編號, From: [serial] }
+        type: { Field: type, Type: char(10), 'Null': YES, Default: null, Extra: '', Comment: '處方箋類別 (individual:散客 / resident:住民)', From: [type] }
         birth_date: { Field: birth_date, Type: date, 'Null': YES, Default: null, Extra: '', Comment: 生日, From: [birth_date] }
         see_dr_date: { Field: see_dr_date, Type: date, 'Null': YES, Default: null, Extra: '', Comment: 就醫日期, From: [see_dr_date] }
-        period: { Field: period, Type: tinyint(2), 'Null': YES, Default: null, Extra: '', Comment: 給藥天數, From: [period] }
+        period: { Field: period, Type: tinyint(2), 'Null': YES, Default: null, Extra: '', Comment: '給藥天數 (介於 21~31 之間)', From: [period] }
         times: { Field: times, Type: tinyint(1), 'Null': YES, Default: null, Extra: '', Comment: 可調劑次數, From: [times] }
         deliver_nths: { Field: deliver_nths, Type: 'set(''1st'',''2nd'',''3rd'')', 'Null': YES, Default: null, Extra: '', Comment: '宅配第幾次', From: [deliver_nths] }
-        method: { Field: method, Type: char(10), 'Null': YES, Default: null, Extra: '', Comment: 處方箋取得方式, From: [method] }
-        delivered: { Field: delivered, Type: tinyint(1), 'Null': YES, Default: null, Extra: '', Comment: 是否已外送, From: [delivered] }
+        method: { Field: method, Type: char(10), 'Null': YES, Default: null, Extra: '', Comment: '處方箋類別 (fax:傳真 / line:Line / form:自行填表 / file:上傳檔案 / photo:拍照 / paper:正本)', From: [method] }
+        delivered: { Field: delivered, Type: tinyint(1), 'Null': YES, Default: null, Extra: '', Comment: '是否已外送 (0:否 / 1:是)', From: [delivered] }
         empty_date_1st: { Field: empty_date_1st, Type: date, 'Null': YES, Default: null, Extra: '', Comment: 第一次吃完藥日, From: [empty_date_1st] }
         empty_date_2nd: { Field: empty_date_2nd, Type: date, 'Null': YES, Default: null, Extra: '', Comment: 第二次吃完藥日, From: [empty_date_2nd] }
         note: { Field: note, Type: text, 'Null': YES, Default: null, Extra: '', Comment: 備註, From: [note] }
+        remind: { Field: remind, Type: 'set(''checkorigin'' , ''needsplit'' , ''origincollected'' )', 'Null': YES, Default: null, Extra: '', Comment: 'checkorigin : 需確認正本, needsplit : 藥品需分包, origincollected : 正本已回收', From: [remind] }
         created: { Field: created, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: 建立時間, From: [created] }
         created_by: { Field: created_by, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: '建立者 user id', From: [created_by] }
         modified: { Field: modified, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: 修改時間, From: [modified] }
@@ -274,7 +278,7 @@
     columns:
         id: { Field: id, Type: 'int(11) unsigned', 'Null': NO, Default: null, Extra: auto_increment, Comment: 'Primary Key', From: [id] }
         name: { Field: name, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 藥師姓名, From: [name] }
-        note: { Field: note, Type: text, 'Null': NO, Default: null, Extra: '', Comment: '', From: [note] }
+        note: { Field: note, Type: text, 'Null': NO, Default: null, Extra: '', Comment: '備註', From: [note] }
     index:
         - { Table: '#__schedule_senders', Non_unique: '0', Key_name: PRIMARY, Seq_in_index: '1', Column_name: id, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
 '#__schedule_tasks':
@@ -286,7 +290,7 @@
         date: { Field: date, Type: date, 'Null': NO, Default: null, Extra: '', Comment: 外送日期, From: [date] }
         sender: { Field: sender, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: 外送藥師ID, From: [sender] }
         sender_name: { Field: sender_name, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 外送藥師名稱, From: [sender_name] }
-        status: { Field: status, Type: tinyint(1), 'Null': NO, Default: null, Extra: '', Comment: '0 or 1 ', From: [status] }
+        status: { Field: status, Type: tinyint(1), 'Null': NO, Default: null, Extra: '', Comment: '外送狀態 (0:未外送 / 1:已外送)', From: [status] }
         created: { Field: created, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: 'Created time', From: [created] }
         created_by: { Field: created_by, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: Author, From: [created_by] }
         modified: { Field: modified, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: 'Modified time', From: [modified] }

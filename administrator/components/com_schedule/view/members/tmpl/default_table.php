@@ -43,27 +43,27 @@ $date      = $container->get('date');
 
 		<!--ID-->
 		<th width="5%" class="center">
-			<?php echo $grid->sortTitle('COM_SCHEDULE_MEMBER_ITEM_ID', 'member.id'); ?>
+			<?php echo $grid->sortTitle('會員編號', 'member.id'); ?>
 		</th>
 
 		<!--NAME-->
 		<th width="8%" class="center">
-			<?php echo $grid->sortTitle('COM_SCHEDULE_MEMBER_ITEM_NAME', 'member.name'); ?>
+			<?php echo $grid->sortTitle('會員姓名', 'member.name'); ?>
 		</th>
 
 		<!--EMAIL-->
 		<th width="25%" class="center">
-			<?php echo $grid->sortTitle('COM_SCHEDULE_MEMBER_ITEM_EMAIL', 'member.email'); ?>
+			<?php echo $grid->sortTitle('會員信箱', 'member.email'); ?>
 		</th>
 
 		<!--Customer Amount-->
 		<th width="5%" class="center">
-			<?php echo $grid->sortTitle('COM_SCHEDULE_MEMBER_ITEM_NUMBER_OF_CUSTOMERS', 'member.email'); ?>
+			<?php echo $grid->sortTitle('散客數', 'member.email'); ?>
 		</th>
 
 		<!--Relative Customers-->
 		<th width="35%" class="center">
-			<?php echo $grid->sortTitle('COM_SCHEDULE_MEMBER_ITEM_CUSTOMERS', 'member.email'); ?>
+			<?php echo $grid->sortTitle('對應散客', 'member.email'); ?>
 		</th>
 	</tr>
 	</thead>

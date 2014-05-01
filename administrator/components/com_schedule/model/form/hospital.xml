@@ -7,23 +7,23 @@
 		<field name="id"
 			type="text"
 			default="0"
-			label="COM_SCHEDULE_HOSPITAL_ITEM_ID"
-			description="COM_SCHEDULE_HOSPITAL_ITEM_ID"
+			label="醫院編號"
+			description="醫院編號"
 			readonly="true"
 			class="readonly"
 			/>
 		<field name="title"
 			type="text"
-			label="COM_SCHEDULE_HOSPITAL_ITEM_TITLE"
-			description="COM_SCHEDULE_HOSPITAL_ITEM_TITLE"
+			label="醫院名稱"
+			description="醫院名稱"
 			required="true"
 			class="input-xlarge required"
 			/>
 		<field name="has_hicode"
 			type="radio"
 			class="btn-group btn-group-yesno"
-			label="COM_SCHEDULE_HOSPITAL_ITEM_HICODE"
-			description="COM_SCHEDULE_HOSPITAL_ITEM_HICODE_DES"
+			label="藥品健保碼"
+			description="藥品健保碼"
 			default="0"
 			required="true">
 			<option value="0">無</option>
@@ -31,14 +31,14 @@
 		</field>
 		<field name="title"
 			type="text"
-			label="COM_SCHEDULE_HOSPITAL_ITEM_TITLE"
-			description="COM_SCHEDULE_HOSPITAL_ITEM_TITLE"
+			label="醫院名稱"
+			description="醫院名稱"
 			class="input-xlarge required"
 			/>
 		<field name="city"
 			type="list"
-			label="COM_SCHEDULE_HOSPITAL_ITEM_CITY_TITLE"
-			description="COM_SCHEDULE_HOSPITAL_ITEM_CITY_TITLE">
+			label="醫院所在縣市"
+			description="醫院所在縣市">
 			<option>- 請選擇縣市 -</option>
 			<option value="1">台北市</option>
 			<option value="2">新北市</option>
@@ -52,8 +52,8 @@
 			description="標題" />
 		<field name="area"
 			type="list"
-			label="COM_SCHEDULE_HOSPITAL_ITEM_AREA"
-			description="COM_SCHEDULE_HOSPITAL_ITEM_AREA">
+			label="醫院所在區域"
+			description="醫院所在區域">
 			<option>- 請選擇區域 -</option>
 			<option value="1">大同區</option>
 			<option value="2">中正區</option>
@@ -63,12 +63,12 @@
 		</field>
 		<field name="area_title"
 			type="hidden"
-			label="COM_SCHEDULE_HOSPITAL_ITEM_AREA_TITLE"
-			description="COM_SCHEDULE_HOSPITAL_ITEM_AREA_TITLE" />
+			label="區域名稱"
+			description="區域名稱" />
 		<field name="images"
 				type="file"
-				label="COM_SCHEDULE_HOSPITAL_ITEM_IMAGE"
-				description="COM_SCHEDULE_HOSPITAL_ITEM_IMAGE"
+				label="處方箋上傳"
+				description="處方箋上傳"
 				size="40"
 				class="inputbox"/>
 	</fieldset>
