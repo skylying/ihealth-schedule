@@ -136,8 +136,8 @@ if (count($forms) > 0)
 				hash = (new Date).getTime().toString(),
 				idPrefix = $row.data('id-prefix'),
 				namePrefix = $row.data('name-prefix'),
-				idReplace = $row.data('id-replace').replace('{{hash}}', hash),
-				nameReplace = $row.data('name-replace').replace('{{hash}}', hash);
+				idReplace = $row.data('id-replace').replace('{{rowHash}}', hash),
+				nameReplace = $row.data('name-replace').replace('{{rowHash}}', hash);
 
 			$row.find('[name^="' + namePrefix + '"]').each(function (i, node)
 			{

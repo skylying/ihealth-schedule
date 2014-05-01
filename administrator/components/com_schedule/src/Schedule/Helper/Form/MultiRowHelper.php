@@ -30,12 +30,12 @@ abstract class MultiRowHelper
 		// Generate replace string for field id
 		$parts = explode('_', trim($idPrefix, '_ '));
 		array_pop($parts);
-		$idReplace = implode('_', $parts) . '_{{hash}}_';
+		$idReplace = implode('_', $parts) . '_{{rowHash}}_';
 
 		// Generate replace string for field name
 		$parts = explode('][', $namePrefix);
 		array_pop($parts);
-		$nameReplace = implode('][', $parts) . '][{{hash}}]';
+		$nameReplace = implode('][', $parts) . '][{{rowHash}}]';
 
 		$html[] = 'data-id-prefix="' . $idPrefix . '"';
 		$html[] = 'data-name-prefix="' . $namePrefix . '"';
