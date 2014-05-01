@@ -81,7 +81,15 @@ if (count($forms) > 0)
 <script type="text/javascript">
 	(function ($)
 	{
-		var $tableBody = $('#rx-list').find('tbody');
+		var $panel = $('#rx-list').find('tbody');
+
+		// Initialize each row
+		function initialRow($row)
+		{
+			$row.find('.datetimepicker').datetimepicker({
+				pickTime: false
+			});
+		}
 
 		// Add row
 		$('.button-add-row').click(function ()
@@ -105,22 +113,20 @@ if (count($forms) > 0)
 
 				row = $(row);
 
-				row.find('.datetimepicker').datetimepicker({
-					pickTime: false
-				});
+				initialRow(row);
 
-				$tableBody.append(row);
+				$panel.append(row);
 			}
 		});
 
 		// Delete row
-		$tableBody.on('click', '.button-delete-row', function ()
+		$panel.on('click', '.button-delete-row', function ()
 		{
 			$(this).closest('tr').remove();
 		});
 
 		// Copy row
-		$tableBody.on('click', '.button-copy-row', function ()
+		$panel.on('click', '.button-copy-row', function ()
 		{
 			var $row = $(this).closest('tr').clone(),
 				hash = (new Date).getTime().toString(),
@@ -140,11 +146,9 @@ if (count($forms) > 0)
 				$(this).attr('name', newName);
 			});
 
-			$row.find('.datetimepicker').datetimepicker({
-				pickTime: false
-			});
+			initialRow($row);
 
-			$tableBody.append($row);
+			$panel.append($row);
 		});
 	})(jQuery);
 </script>

@@ -7,6 +7,7 @@
  */
 
 use Schedule\Helper\Form\FieldHelper;
+use Schedule\Helper\Form\MultiRowHelper;
 
 /**
  * Prepare data for this template.
@@ -17,25 +18,8 @@ use Schedule\Helper\Form\FieldHelper;
 $form  = $data->form;
 $group = $data->group;
 $id    = FieldHelper::resetGroup($form->getField('id'), $group);
-
-$idPrefix   = preg_replace('/' . $id->fieldname . '$/', '', $id->id);
-$namePrefix = preg_replace('/\[' . $id->fieldname . '\]$/', '', $id->name);
-
-// Generate replace string for field id
-$parts = explode('_', trim($idPrefix, '_ '));
-array_pop($parts);
-$idReplace = implode('_', $parts) . '_{{hash}}_';
-
-// Generate replace string for field name
-$parts = explode('][', $namePrefix);
-array_pop($parts);
-$nameReplace = implode('][', $parts) . '][{{hash}}]';
 ?>
-<tr data-id-prefix="<?php echo $idPrefix; ?>"
-	data-name-prefix="<?php echo $namePrefix; ?>"
-	data-id-replace="<?php echo $idReplace; ?>"
-	data-name-replace="<?php echo $nameReplace; ?>"
-	>
+<tr <?php echo MultiRowHelper::getRowDataAttributes($id->id, $id->fieldname, $id->name); ?>>
 	<td>
 		<?php echo $id->input; ?>
 	</td>

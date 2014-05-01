@@ -9,6 +9,8 @@
 // No direct access
 defined('_JEXEC') or die;
 
+use Windwalker\DI\Container;
+
 /**
  * Class JFormFieldDateTimePicker
  */
@@ -83,11 +85,12 @@ JS;
 			return;
 		}
 
-		$doc = JFactory::getDocument();
+		/** @var \Windwalker\Helper\AssetHelper $asset */
+		$asset = Container::getInstance('com_schedule')->get('helper.asset');
 
-		$doc->addStyleSheet(JUri::root(true) . '/media/com_schedule/css/bootstrap-datetimepicker.min.css');
-		$doc->addScript(JUri::root(true) . '/media/com_schedule/js/moment-with-langs.min.js');
-		$doc->addScript(JUri::root(true) . '/media/com_schedule/js/bootstrap-datetimepicker.min.js');
+		$asset->addCSS('bootstrap-datetimepicker.min.css');
+		$asset->addJS('moment-with-langs.min.js');
+		$asset->addJS('bootstrap-datetimepicker.min.js');
 
 		self::$initialized = true;
 	}
