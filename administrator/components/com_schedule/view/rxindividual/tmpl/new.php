@@ -286,35 +286,38 @@ $mobileID = $data->form->getField('mobile')->id;
 			<div class="row-fluid well">
 				<div class="col-lg-12">
 					<!-- TODO:js -->
-					<div id="<?php echo $telOfficeID;?>" class="control-group">
+					<div class="control-group">
 						<div class="control-label">
 							<?php echo $data->form->getLabel('tel_office'); ?>
 						</div>
 						<div class="controls">
-							<input type="text" />
+							<input type="text"/>
 						</div>
+						<input type="hidden" id="<?php echo $telOfficeID;?>"/>
 					</div>
 				</div>
 				<div class="col-lg-12">
 					<!-- TODO:js -->
-					<div id="<?php echo $telHomeID;?>" class="control-group">
+					<div class="control-group">
 						<div class="control-label">
 							<?php echo $data->form->getLabel('tel_home'); ?>
 						</div>
 						<div class="controls">
-							<input type="text" />
+							<input type="text"/>
 						</div>
+						<input type="hidden" id="<?php echo $telHomeID;?>"/>
 					</div>
 				</div>
 				<div class="col-lg-12">
 					<!-- TODO:js -->
-					<div id="<?php echo $mobileID;?>" class="control-group">
+					<div class="control-group">
 						<div class="control-label">
 							<?php echo $data->form->getLabel('mobile'); ?>
 						</div>
 						<div class="controls">
-							<input type="text" />
+							<input type="text"/>
 						</div>
+						<input type="hidden" id="<?php echo $mobileID;?>"/>
 					</div>
 				</div>
 			</div>
