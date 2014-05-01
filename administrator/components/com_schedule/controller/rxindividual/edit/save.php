@@ -52,8 +52,16 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 	{
 		$rx = $model->getItem();
 
-		$customer = (new DataMapper(Table::CUSTOMERS))
-			->findOne($this->data['customer_id']);
+		$customerMapper = new DataMapper(Table::CUSTOMERS);
+
+		$customer = $customerMapper->findOne($this->data['customer_id']);
+
+		$customer->tel_office = $this->data['tel_office'];
+		$customer->tel_home   = $this->data['tel_home'];
+		$customer->mobile     = $this->data['mobile'];
+
+		// 更新客戶電話
+		$customerMapper->updateOne($customer);
 
 		// 新增排程
 		foreach (array("1st", "2nd", "3rd") as $val)
