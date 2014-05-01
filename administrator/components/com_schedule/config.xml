@@ -5,7 +5,7 @@
 			label="API"
 			description="API config"
 			addfieldpath="administrator/components/com_schedule/model/field"
-		>
+			>
 
 			<field
 				name="host"
@@ -14,7 +14,7 @@
 				class=""
 				default=""
 				/>
-    	</fieldset>
+		</fieldset>
 	</fields>
 
 	<fieldset
