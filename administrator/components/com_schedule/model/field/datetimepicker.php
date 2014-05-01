@@ -44,7 +44,8 @@ class JFormFieldDateTimePicker extends JFormFieldText
 
 		$class = $this->class;
 
-		$this->class .= ' form-control';
+		// Set input class
+		$this->class = ' form-control';
 		$input = parent::getInput();
 
 		$dateFormat = (string) $this->element['dateFormat'];
