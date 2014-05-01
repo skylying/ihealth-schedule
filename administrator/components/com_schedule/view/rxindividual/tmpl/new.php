@@ -55,27 +55,29 @@ $ps    = $data->form->getFieldset("schedules_ps");
 				<div id="schedules_<?php echo $key; ?>" class="row-fluid schedules schedules_<?php echo $key; ?>">
 					<div class="col-lg-3">
 						<!-- TODO: 換成可愛的圓圈圈 -->
-						<?php echo $schedules["jform_schedules_{$key}_deliver_nths"]->getControlGroup(); ?>
+						<?php echo $schedules["jform_schedules_{$key}_deliver_nth"]->getControlGroup(); ?>
 					</div>
 					<div class="col-lg-9">
 						<div class="row-fluid address">
 							<div class="col-lg-12">
-								<?php echo $schedules["jform_schedules_{$key}_address"]->getControlGroup(); ?>
+								<?php echo $schedules["jform_schedules_{$key}_address_id"]->getControlGroup(); ?>
 							</div>
 						</div>
 						<div class="row-fluid">
 							<div class="col-lg-4">
 								<!-- TODO:js -->
-								<?php echo $schedules["jform_schedules_{$key}_empty_date"]->getControlGroup(); ?>
+								<?php echo $schedules["jform_schedules_{$key}_drug_empty_date"]->getControlGroup(); ?>
 							</div>
 							<div class="col-lg-4">
-								<?php echo $schedules["jform_schedules_{$key}_send_date"]->getControlGroup(); ?>
+								<?php echo $schedules["jform_schedules_{$key}_date"]->getControlGroup(); ?>
 							</div>
 							<div class="col-lg-4">
-								<?php echo $schedules["jform_schedules_{$key}_send_time"]->getControlGroup(); ?>
+								<?php echo $schedules["jform_schedules_{$key}_session"]->getControlGroup(); ?>
 							</div>
 						</div>
 					</div>
+
+					<?php echo $schedules["jform_schedules_{$key}_schedule_id"]->getControlGroup(); ?>
                 </div>
 			<?php endforeach; ?>
 			<div class="row-fluid well">

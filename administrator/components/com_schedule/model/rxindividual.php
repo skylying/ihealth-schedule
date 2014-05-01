@@ -88,11 +88,11 @@ class ScheduleModelRxindividual extends AdminModel
 			return $returnVal;
 		}
 
-		// 取得排程 table
-		$schedule = $this->getTable("Schedule");
-
 		foreach (array("1st", "2nd", "3rd") as $val)
 		{
+			// 取得排程 table
+			$schedule = $this->getTable("Schedule");
+
 			// 讀取對應排程
 			$schedule->load(array("rx_id" => $returnVal->id, "deliver_nth" => $val));
 
@@ -107,11 +107,12 @@ class ScheduleModelRxindividual extends AdminModel
 
 			// 塞入資料
 			$returnVal->$method = (object) array(
-				"address"      => $schedule->address_id,
-				"empty_date"   => $schedule->drug_empty_date,
-				"send_date"    => $schedule->date,
-				"send_time"    => $schedule->session,
-				"deliver_nths" => array($schedule->deliver_nth)
+				"schedule_id"     => $schedule->id,
+				"address_id"      => $schedule->address_id,
+				"drug_empty_date" => $schedule->drug_empty_date,
+				"date"            => $schedule->date,
+				"session"         => $schedule->session,
+				"deliver_nth"     => array($schedule->deliver_nth)
 			);
 		}
 

@@ -23,7 +23,7 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 		foreach (array("1st", "2nd", "3rd") as $val)
 		{
 			// 沒有值跳過
-			if (empty($this->data["schedules_{$val}"]["deliver_nths"]))
+			if (empty($this->data["schedules_{$val}"]["deliver_nth"]))
 			{
 				continue;
 			}
@@ -77,18 +77,32 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 		// 新增排程
 		foreach (array("1st", "2nd", "3rd") as $val)
 		{
-			// 排程資料
+			// 使用者上傳的排程資料
 			$schedule = $this->data["schedules_{$val}"];
 
-			// 沒有需要外送的次數跳過
-			if (empty($schedule["deliver_nths"]))
+			// 現在這筆排程的資料
+			if (empty($schedule['schedule_id']))
 			{
-				// TODO: 取消勾選時須刪除對應排程
+				$thisScheduleData = new \Windwalker\Data\Data;
+			}
+			else
+			{
+				$thisScheduleData = $scheduleMapper->findOne($schedule['schedule_id']);
+			}
+
+			// 沒有需要外送的次數跳過
+			if (empty($schedule["deliver_nth"]) || ! isset($schedule["deliver_nth"]))
+			{
+				if (! empty($schedule['schedule_id']))
+				{
+					$scheduleMapper->delete(['id' => $schedule['schedule_id']]);
+				}
+
 				continue;
 			}
 
 			// 外送地址比對
-			$address = $addressMapper->findOne($schedule["address"]);
+			$address = $addressMapper->findOne($schedule["address_id"]);
 
 			// 外送路線
 			$routes = $routesMapper->findOne(array("city" => $address->city, "area" => $address->area));
@@ -98,6 +112,7 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 
 			// Task data
 			$taskData = array(
+				"id" => $thisScheduleData->task_id,
 				"sender" => $sender->id,
 				"sender_name" => $sender->name,
 				"status" => 0
@@ -109,9 +124,12 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 			// 取出剛剛新增的外送管理
 			$task = $taskModel->getItem();
 
+			// 對應處方箋 id
+			$thisScheduleData->rx_id = $rx->id;
+
 			// Schedule data
-			$scheduleData = array(
-				// 對應處方箋 id
+			$scheduleUpdata = array(
+				// Rx id
 				"rx_id"           => $rx->id,
 
 				// 對應外送 id
@@ -130,21 +148,13 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 				// 第幾次宅配
 				"deliver_nth"     => $val,
 
-				// 排程日期
-				"date"            => $schedule["send_date"],
-
-				// 藥品吃完日
-				"drug_empty_date" => $schedule["empty_date"],
-
-				// 時段
-				"session"         => $schedule["send_time"],
-
+				// Default
 				"status"          => "scheduled",
 				"sorted"          => 0
 			);
 
 			// 新增排程
-			$scheduleModel->save($scheduleData);
+			$scheduleModel->save(array_merge((array) $thisScheduleData, $schedule, $scheduleUpdata));
 		}
 	}
 }

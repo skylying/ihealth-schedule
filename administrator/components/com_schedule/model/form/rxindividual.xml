@@ -297,7 +297,7 @@
 	</fieldset>
 
 	<fields name="schedules_1st">
-		<field name="deliver_nths"
+		<field name="deliver_nth"
 			type="checkboxes"
 			label="宅配第幾次"
 			description="宅配第幾次"
@@ -306,27 +306,27 @@
 		</field>
 
 		<field
-			name="address"
+			name="address_id"
 			type="text"
 			label="地址"
 			description="地址"
 			/>
 
-		<field name="empty_date"
+		<field name="drug_empty_date"
 			type="calendar"
 			label="吃完藥日"
 			description="吃完藥日"
 			/>
 
 		<field
-			name="send_date"
+			name="date"
 			type="calendar"
 			label="預約宅配日"
 			description="預約宅配日"
 			/>
 
 		<field
-			name="send_time"
+			name="session"
 			type="list"
 			label="時段"
 			description="時段"
@@ -337,10 +337,15 @@
 			<option value="night">晚上 1800-2100</option>
 			<option value="other">其他</option>
 		</field>
+
+		<field
+			name="schedule_id"
+			type="hidden"
+			/>
 	</fields>
 
 	<fields name="schedules_2nd">
-		<field name="deliver_nths"
+		<field name="deliver_nth"
 			type="checkboxes"
 			label="宅配第幾次"
 			description="宅配第幾次"
@@ -349,27 +354,27 @@
 		</field>
 
 		<field
-			name="address"
+			name="address_id"
 			type="text"
 			label="地址"
 			description="地址"
 			/>
 
-		<field name="empty_date"
+		<field name="drug_empty_date"
 			type="calendar"
 			label="吃完藥日"
 			description="吃完藥日"
 			/>
 
 		<field
-			name="send_date"
+			name="date"
 			type="calendar"
 			label="預約宅配日"
 			description="預約宅配日"
 			/>
 
 		<field
-			name="send_time"
+			name="session"
 			type="list"
 			label="時段"
 			description="時段"
@@ -380,10 +385,15 @@
 			<option value="night">晚上 1800-2100</option>
 			<option value="other">其他</option>
 		</field>
+
+		<field
+			name="schedule_id"
+			type="hidden"
+			/>
 	</fields>
 
 	<fields name="schedules_3rd">
-		<field name="deliver_nths"
+		<field name="deliver_nth"
 			type="checkboxes"
 			label="宅配第幾次"
 			description="宅配第幾次"
@@ -392,27 +402,27 @@
 		</field>
 
 		<field
-			name="address"
+			name="address_id"
 			type="text"
 			label="地址"
 			description="地址"
 			/>
 
-		<field name="empty_date"
+		<field name="drug_empty_date"
 			type="calendar"
 			label="吃完藥日"
 			description="吃完藥日"
 			/>
 
 		<field
-			name="send_date"
+			name="date"
 			type="calendar"
 			label="預約宅配日"
 			description="預約宅配日"
 			/>
 
 		<field
-			name="send_time"
+			name="session"
 			type="list"
 			label="時段"
 			description="時段"
@@ -423,6 +433,11 @@
 			<option value="night">晚上 1800-2100</option>
 			<option value="other">其他</option>
 		</field>
+
+		<field
+			name="schedule_id"
+			type="hidden"
+			/>
 	</fields>
 
 	<fieldset
