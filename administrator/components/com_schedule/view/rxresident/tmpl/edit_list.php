@@ -16,6 +16,9 @@
 $instituteForm = $data->instituteForm;
 $templateForm  = $data->templateForm;
 $forms         = $data->forms;
+
+JHtml::stylesheet('com_schedule/rxresident.css', false, true);
+
 ?>
 <form id="adminForm" name="adminForm" action="" method="post" class="form-horizontal">
 	<div id="institute-information" class="row-fluid">
@@ -30,18 +33,19 @@ $forms         = $data->forms;
 	<table class="table table-striped" id="rx-list">
 		<thead>
 			<tr>
-				<th>編號</th>
-				<th>客戶</th>
-				<th>身分證字號</th>
-				<th>生日</th>
-				<th>就醫日期</th>
-				<th>給藥天數</th>
-				<th>可調劑次數</th>
-				<th>處方箋外送次數</th>
-				<th>藥吃完日</th>
-				<th>處方箋取得方式</th>
-				<th>備註</th>
-				<th>複製/刪除</th>
+				<th width="4%">編號</th>
+				<th width="7%">客戶</th>
+				<th width="12%">身分證字號</th>
+				<th width="8%">生日</th>
+				<th width="8%">就醫日期</th>
+				<th width="7%">給藥天數</th>
+				<th width="6%">可調劑次數</th>
+				<th width="7%">處方箋外送次數</th>
+				<th width="8%">藥吃完日</th>
+				<th width="12%">處方箋取得方式</th>
+				<th width="9%">處方箋上傳</th>
+				<th width="8%">備註</th>
+				<th width="4%">複製/刪除</th>
 			</tr>
 		</thead>
 		<tbody>
