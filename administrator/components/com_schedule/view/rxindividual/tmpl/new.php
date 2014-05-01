@@ -47,6 +47,13 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 		return this.length !== 0;
 	};
 
+	/**
+	 * Entering point of plugin customerAjax
+	 *
+	 * customerAjax
+	 *
+	 * @param id
+	 */
 	$.fn.customerAjax = function (id)
 	{
 		id = id || this.val();
