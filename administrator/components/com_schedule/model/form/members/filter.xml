@@ -9,8 +9,8 @@
 			class="input-small"
 			>
 			<option value="*">JALL</option>
-			<option value="member.title">JGLOBAL_TITLE</option>
-			<option value="category.title">JCATEGORY</option>
+			<option value="member.name">JGLOBAL_TITLE</option>
+			<option value="member.email">JCATEGORY</option>
 		</field>
 
 		<field
@@ -60,12 +60,12 @@
 			<option value="">JGLOBAL_SORT_BY</option>
 			<option value="member.id, member.ordering ASC">JGRID_HEADING_ORDERING_ASC</option>
 			<option value="member.id, member.ordering DESC">JGRID_HEADING_ORDERING_DESC</option>
-			<option value="member.id ASC">COM_SCHEDULE_MEMBER_ITEM_ID_ASC</option>
-			<option value="member.id DESC">COM_SCHEDULE_MEMBER_ITEM_ID_DESC</option>
-			<option value="member.name ASC">COM_SCHEDULE_MEMBER_ITEM_NAME_ASC</option>
-			<option value="member.name DESC">COM_SCHEDULE_MEMBER_ITEM_NAME_ASC</option>
-			<option value="member.email ASC">COM_SCHEDULE_MEMBER_ITEM_EMAIL_ASC</option>
-			<option value="member.email DESC">COM_SCHEDULE_MEMBER_ITEM_EMAIL_ASC</option>
+			<option value="member.id ASC">依會員編號升序排列</option>
+			<option value="member.id DESC">依會員編號降序排列</option>
+			<option value="member.name ASC">依會員姓名升序排列</option>
+			<option value="member.name DESC">依會員姓名降序排列</option>
+			<option value="member.email ASC">依會員信箱升序排列</option>
+			<option value="member.email DESC">依會員信箱降序排列</option>
 		</field>
 
 		<field

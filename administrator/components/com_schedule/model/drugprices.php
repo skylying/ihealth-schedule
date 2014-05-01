@@ -63,6 +63,16 @@ class ScheduleModelDrugprices extends ListModel
 	protected $viewList = 'drugprices';
 
 	/**
+	 * Valid filter fields or ordering.
+	 *
+	 * @var  array
+	 */
+	protected $filterFields = array(
+		'drugprice.date_start',
+		'drugprice.date_end'
+	);
+
+	/**
 	 * configureTables
 	 *
 	 * @return  void
@@ -71,7 +81,9 @@ class ScheduleModelDrugprices extends ListModel
 	{
 		$queryHelper = $this->getContainer()->get('model.drugprices.helper.query', Container::FORCE_NEW);
 
-		$queryHelper->addTable('drugprice', '#__schedule_drugprices');
+		$queryHelper->addTable('drugprice', '#__schedule_drugprices')
+			->addTable('institute', '#__schedule_institutes', 'drugprice.institute_id = institute.id')
+			->addTable('customer', '#__schedule_customers', 'drugprice.customer_id = customer.id');
 
 		$this->filterFields = array_merge($this->filterFields, $queryHelper->getFilterFields());
 	}
@@ -115,6 +127,8 @@ class ScheduleModelDrugprices extends ListModel
 			$query->where($query->quoteName('drugprice.state') . ' >= 0');
 		}
 
+		$query->group('drugprice.id');
+
 		return parent::processFilters($query, $filters);
 	}
 
@@ -127,6 +141,27 @@ class ScheduleModelDrugprices extends ListModel
 	 */
 	protected function configureFilters($filterHelper)
 	{
+		$filterHelper->setHandler(
+			'drugprice.date_start',
+			function ($query, $field, $start)
+			{
+				if ($start)
+				{
+					$query->where('`drugprice`.`date` >= ' . $query->q($start));
+				}
+			}
+		);
+
+		$filterHelper->setHandler(
+			'drugprice.date_end',
+			function ($query, $field, $end)
+			{
+				if ($end)
+				{
+					$query->where('`drugprice`.`date` <= ' . $query->q($end));
+				}
+			}
+		);
 	}
 
 	/**

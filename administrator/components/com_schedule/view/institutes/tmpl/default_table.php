@@ -44,52 +44,52 @@ $date      = $container->get('date');
 
 	<!--Short Title-->
 	<th width="5%" class="left">
-		<?php echo $grid->sortTitle('COM_SCHEDULE_INSTITUTE_SHORT_TITLE', 'institute.short_title'); ?>
+		<?php echo $grid->sortTitle('機構簡稱', 'institute.short_title'); ?>
 	</th>
 
 	<!--Delivery Weekday-->
 	<th width="5%" class="left">
-		<?php echo $grid->sortTitle('COM_SCHEDULE_INSTITUTE_DELIVERY_WEEKDAY', 'institute.title'); ?>
+		<?php echo $grid->sortTitle('外送日', 'institute.title'); ?>
 	</th>
 
 	<!--Color for Weekday-->
 	<th width="5%" class="center">
-		<?php echo $grid->sortTitle('COM_SCHEDULE_INSTITUTE_MARK_COLOR', 'institute.color_hex'); ?>
+		<?php echo $grid->sortTitle('註記顏色', 'institute.color_hex'); ?>
 	</th>
 
 	<!--Sender Name-->
 	<th width="5%" class="left">
-		<?php echo $grid->sortTitle('COM_SCHEDULE_INSTITUTE_SENDER_NAME', 'institute.sender_name'); ?>
+		<?php echo $grid->sortTitle('外送藥師', 'institute.sender_name'); ?>
 	</th>
 
 	<!--Tel-->
 	<th width="5%" class="left">
-		<?php echo $grid->sortTitle('COM_SCHEDULE_INSTITUTE_TEL', 'institute.tel'); ?>
+		<?php echo $grid->sortTitle('電話', 'institute.tel'); ?>
 	</th>
 
 	<!--City-->
 	<th width="5%" class="left">
-		<?php echo $grid->sortTitle('COM_SCHEDULE_INSTITUTE_CITY', 'institute.city'); ?>
+		<?php echo $grid->sortTitle('縣市', 'institute.city'); ?>
 	</th>
 
 	<!--Area-->
 	<th width="5%" class="left">
-		<?php echo $grid->sortTitle('COM_SCHEDULE_INSTITUTE_AREA', 'institute.area'); ?>
+		<?php echo $grid->sortTitle('區域', 'institute.area'); ?>
 	</th>
 
 	<!--Address-->
 	<th width="5%" class="left">
-		<?php echo $grid->sortTitle('COM_SCHEDULE_INSTITUTE_ADDRESS', 'institute.address'); ?>
+		<?php echo $grid->sortTitle('地址', 'institute.address'); ?>
 	</th>
 
 	<!--ID-->
 	<th width="1%" class="nowrap center">
-		<?php echo $grid->sortTitle('COM_SCHEDULE_INSTITUTE_SERIAL', 'institute.id'); ?>
+		<?php echo $grid->sortTitle('機構編號', 'institute.id'); ?>
 	</th>
 
 	<!--Link To Elder List-->
 	<th width="5%" class="nowrap center">
-		<?php echo JText::_('COM_SCHEDULE_INSTITUTE_ELDER_LISTS')?>
+		<?php echo JText::_('住民清單')?>
 	</th>
 </tr>
 </thead>

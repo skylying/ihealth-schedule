@@ -46,6 +46,11 @@ $date      = $container->get('date');
 		<?php echo $grid->sortTitle('JGRID_HEADING_ID', 'holiday.id'); ?>
 	</th>
 
+	<!--EDIT-->
+	<th width="1%" class="nowrap center">
+		編輯
+	</th>
+
 	<!--YEAR-->
 	<th width="10%" class="center">
 		<?php echo $grid->sortTitle('年份', 'holiday.year'); ?>
@@ -94,7 +99,12 @@ $date      = $container->get('date');
 
 		<!--ID-->
 		<td class="center">
-			<a href="<?php echo JRoute::_('index.php?option=com_schedule&view=holiday&layout=edit&id=' . $item->id); ?>"><?php echo $item->id; ?></a>
+			<?php echo $item->id; ?>
+		</td>
+
+		<!--EDIT-->
+		<td class="center">
+			<?php echo \Schedule\Helper\UiHelper::editButton('holiday', $item->id); ?>
 		</td>
 
 		<!--YEAR-->

@@ -24,10 +24,8 @@ $container = $this->getContainer();
 $form = $data->form;
 $item = $data->item;
 
-// Setting tabset
-$tabs = array(
-	'tab_basic',
-);
+$fieldsets = $data->form->getFieldsets();
+$fieldset = $fieldsets['information'];
 
 $cityId 	 = $form->getField('city')->id;
 $cityTitleId = $form->getField('city_title')->id;
@@ -48,17 +46,17 @@ $areaTitleId = $form->getField('area_title')->id;
 <div id="schedule" class="windwalker hospital edit-form row-fluid">
 	<form action="<?php echo JURI::getInstance(); ?>" method="post" name="adminForm" id="adminForm"
 		class="form-validate" enctype="multipart/form-data">
-
-		<?php echo JHtmlBootstrap::startTabSet('hospitalEditTab', array('active' => 'tab_basic')); ?>
-
-		<?php
-		foreach ($tabs as $tab)
-		{
-			echo $this->loadTemplate($tab, array('tab' => $tab));
-		}
-		?>
-
-		<?php echo JHtmlBootstrap::endTabSet(); ?>
+		<div class="row-fluid">
+			<div class="span8">
+				<fieldset id="sender-edit-fieldset-<?php echo $fieldset->name ?>" class="form-horizontal">
+					<?php foreach ($data->form->getFieldset($fieldset->name) as $field): ?>
+						<div id="control_<?php echo $field->id; ?>">
+							<?php echo $field->getControlGroup() . "\n\n"; ?>
+						</div>
+					<?php endforeach;?>
+				</fieldset>
+			</div>
+		</div>
 
 		<!-- Hidden Inputs -->
 		<div id="hidden-inputs">

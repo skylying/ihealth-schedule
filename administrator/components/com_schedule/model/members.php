@@ -69,9 +69,12 @@ class ScheduleModelMembers extends ListModel
 	 */
 	protected function configureTables()
 	{
+		/** @var \Windwalker\Model\Helper\QueryHelper $queryHelper   */
 		$queryHelper = $this->getContainer()->get('model.members.helper.query', Container::FORCE_NEW);
 
-		$queryHelper->addTable('member', '#__schedule_members');
+		$queryHelper->addTable('member', '#__schedule_members')
+			->addTable('map', '#__schedule_customer_member_maps', 'member.id = map.member_id')
+			->addTable('customer', '#__schedule_customers', 'customer.id = map.customer_id');
 
 		$this->filterFields = array_merge($this->filterFields, $queryHelper->getFilterFields());
 	}
@@ -114,6 +117,11 @@ class ScheduleModelMembers extends ListModel
 		{
 			$query->where($query->quoteName('member.state') . ' >= 0');
 		}
+
+		$query->select('GROUP_CONCAT(customer.name) AS customers_name');
+		$query->select('GROUP_CONCAT(customer.id) AS customers_id');
+
+		$query->group('member.id');
 
 		return parent::processFilters($query, $filters);
 	}

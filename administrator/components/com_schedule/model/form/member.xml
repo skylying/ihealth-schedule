@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<form>
+<form autocomplete="off">
 	<fieldset name="information"
 		align="left"
 		horz="true">
@@ -7,7 +7,7 @@
 		<field name="id"
 			type="text"
 			default="0"
-			label="COM_SCHEDULE_MEMBER_ITEM_ID"
+			label="會員編號"
 			description="JGLOBAL_FIELD_ID_DESC"
 			readonly="true"
 			class="readonly"
@@ -15,16 +15,17 @@
 
 		<field name="name"
 			type="text"
-			label="COM_SCHEDULE_MEMBER_ITEM_NAME"
-			description="COM_SCHEDULE_MEMBER_ITEM_NAME"
+			label="會員姓名"
+			description="會員姓名"
 			required="true"
 			class="input-xlarge required"
 			/>
 
 		<field name="email"
 			type="email"
-			label="COM_SCHEDULE_MEMBER_ITEM_EMAIL"
-			description="COM_SCHEDULE_MEMBER_ITEM_EMAIL"
+			autocomplete="off"
+			label="會員信箱"
+			description="會員信箱"
 			required="true"
 			default=" "
 			class="input-xlarge"
@@ -32,28 +33,42 @@
 
 		<field name="password"
 			type="password"
+			autocomplete="off"
+			class="validate-password input-xlarge"
+			filter="raw"
 			label="JGLOBAL_PASSWORD"
 			description="JGLOBAL_PASSWORD"
-			preview="true"
-			default=""
-			class="input-xlarge"
+			validate="password"
 			/>
 		<field name="password2"
 			type="password"
-			label="COM_SCHEDULE_MEMBER_ITEM__PASSWORD2_LABEL"
-			description="COM_SCHEDULE_MEMBER_ITEM__PASSWORD2_LABEL"
-			default=""
-			validat="equals"
-			field="field"
-			class="input-xlarge"
+			autocomplete="off"
+			class="validate-password input-xlarge"
+			field="password"
+			filter="raw"
+			label="確認密碼"
+			description="確認密碼"
+			preview="true"
+			validate="equals"
 			/>
 
 		<field name="tel"
 			type="tel"
-			label="COM_SCHEDULE_MEMBER_ITEM_TEL"
-			description="COM_SCHEDULE_MEMBER_TEL"
+			label="電話"
+			description="電話"
 			class="input-xlarge"
 			/>
+	</fieldset>
+	<fieldset name="related_customers"
+		align="left"
+		horz="true">
+		<field name="customers"
+			type="customer_list"
+			label="對應散客"
+			value_field="name"
+			multiple="true"
+			>
+		</field>
 	</fieldset>
 		<!--<field name="parent_id"
 			type="member_list"

@@ -46,6 +46,11 @@ $date      = $container->get('date');
 		<?php echo $grid->sortTitle('JGRID_HEADING_ID', 'color.id'); ?>
 	</th>
 
+	<!--EDIT-->
+	<th width="1%" class="nowrap center">
+		編輯
+	</th>
+
 	<!--TITLE-->
 	<th width="10%"  class="center">
 		<?php echo $grid->sortTitle('JGLOBAL_TITLE', 'color.title'); ?>
@@ -91,9 +96,14 @@ $date      = $container->get('date');
 			<?php echo (int) $item->id; ?>
 		</td>
 
+		<!--EDIT-->
+		<td class="center">
+			<?php echo \Schedule\Helper\UiHelper::editButton('address', $item->id); ?>
+		</td>
+
 		<!--TITLE-->
 		<td class="center">
-			<?php echo $grid->editTitle(); ?>
+			<?php echo $item->title; ?>
 		</td>
 
 		<!--Hex block-->

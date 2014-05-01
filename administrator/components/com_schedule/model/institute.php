@@ -98,6 +98,5 @@ class ScheduleModelInstitute extends AdminModel
 		$tableColor->load($table->color_id);
 		$table->color_hex = $tableColor->hex;
 		$table->color_title = $tableColor->title;
-
 	}
 }

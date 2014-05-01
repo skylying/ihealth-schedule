@@ -23,16 +23,28 @@ JHtmlBehavior::formvalidation();
 $container = $this->getContainer();
 $form      = $data->form;
 $item      = $data->item;
-
-// Setting tabset
-$tabs = array(
-	'tab_basic',
-)
 ?>
 <!-- Validate Script -->
 <script type="text/javascript">
 	Joomla.submitbutton = function(task)
 	{
+		// Remove unnecessary form to be saved
+		(function($)
+		{
+			var customerType = $('.customertype input:checked').val(),
+				individualDiv = $('#individualdiv'),
+				residentDiv  = $('#residentdiv');
+
+			if (customerType == 'individual')
+			{
+				residentDiv.remove();
+			}
+			else
+			{
+				individualDiv.remove();
+			}
+		})(jQuery);
+
 		if (task == 'customer.edit.cancel' || document.formvalidator.isValid(document.id('adminForm')))
 		{
 			Joomla.submitform(task, document.getElementById('adminForm'));
@@ -44,16 +56,7 @@ $tabs = array(
 	<form action="<?php echo JURI::getInstance(); ?>"  method="post" name="adminForm" id="adminForm"
 		class="form-validate" enctype="multipart/form-data">
 
-		<?php echo JHtmlBootstrap::startTabSet('customerEditTab', array('active' => 'tab_basic')); ?>
-
-			<?php
-			foreach ($tabs as $tab)
-			{
-				echo $this->loadTemplate($tab, array('tab' => $tab));
-			}
-			?>
-
-		<?php echo JHtmlBootstrap::endTabSet(); ?>
+		<?php echo $this->loadTemplate('basic'); ?>
 
 		<!-- Hidden Inputs -->
 		<div id="hidden-inputs">

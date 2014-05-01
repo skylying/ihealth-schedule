@@ -6,39 +6,39 @@
 
 		<field name="id"
 			type="text"
-			label="COM_SCHEDULE_INSTITUTE_SERIAL"
+			label="機構編號"
 			readonly="true"
 			class="readonly"
-			description="COM_SCHEDULE_INSTITUTE_SERIAL"
+			description="機構編號"
 			/>
 
 		<field name="title"
 			type="text"
-			label="COM_SCHEDULE_INSTITUTE_TITLE"
-			description="COM_SCHEDULE_INSTITUTE_TITLE"
+			label="機構名稱"
+			description="機構名稱"
 			class="input-xxlarge required"
 			/>
 
 		<field name="short_title"
 			type="text"
-			label="COM_SCHEDULE_INSTITUTE_SHORT_TITLE"
-			description="COM_SCHEDULE_INSTITUTE_SHORT_TITLE"
+			label="機構簡稱"
+			description="機構簡稱"
 			required="true"
 			class="input-xxlarge required"
 			/>
 
 		<field name="tel"
 			type="text"
-			label="COM_SCHEDULE_INSTITUTE_TEL"
-			description="COM_SCHEDULE_INSTITUTE_TEL"
+			label="電話"
+			description="電話"
 			required="true"
 			class="input-xxlarge required"
 			/>
 
 		<field name="fax"
 			type="text"
-			label="COM_SCHEDULE_INSTITUTE_FAX"
-			description="COM_SCHEDULE_INSTITUTE_FAX"
+			label="傳真"
+			description="傳真"
 			class="input-xxlarge required"
 			/>
 
@@ -47,8 +47,8 @@
 			query="SELECT id,title FROM #__schedule_cities"
 			key_field="id"
 			value_field="title"
-			label="COM_SCHEDULE_INSTITUTE_CITY"
-			description="COM_SCHEDULE_INSTITUTE_CITY"
+			label="縣市"
+			description="縣市"
 			required="true"
 			class="input-xxlarge required"
 			/>
@@ -58,34 +58,34 @@
 			query="SELECT id,title FROM #__schedule_areas"
 			key_field="id"
 			value_field="title"
-			label="COM_SCHEDULE_INSTITUTE_AREA"
-			description="COM_SCHEDULE_INSTITUTE_AREA"
+			label="區域"
+			description="區域"
 			required="true"
 			class="input-xxlarge required"
 			/>
 
 		<field name="address"
 			type="text"
-			label="COM_SCHEDULE_INSTITUTE_ADDRESS"
-			description="COM_SCHEDULE_INSTITUTE_ADDRESS"
+			label="地址"
+			description="地址"
 			required="true"
 			class="input-xxlarge required"
 			/>
 
 		<field name="sender_id"
 			type="sender_list"
-			value_field="name"
 			key_field="id"
-			label="COM_SCHEDULE_INSTITUTE_SENDER_NAME"
-			description="COM_SCHEDULE_INSTITUTE_SENDER_NAME"
+			value_field="name"
+			label="外送藥師"
+			description="外送藥師"
 			required="true"
 			class="input-xxlarge required"
 			/>
 
 		<field name="delivery_weekday"
 			type="list"
-			label="COM_SCHEDULE_INSTITUTE_DELIVERY_WEEKDAY"
-			description="COM_SCHEDULE_INSTITUTE_DELIVERY_WEEKDAY"
+			label="外送日"
+			description="外送日"
 			required="true"
 			class="input-xxlarge required"
 			>
@@ -100,18 +100,18 @@
 
 		<field name="color_id"
 			type="color_list"
-			value_field="title"
 			key_field="id"
-			label="COM_SCHEDULE_INSTITUTE_MARK_COLOR"
-			description="COM_SCHEDULE_INSTITUTE_MARK_COLOR"
+			value_field="title"
+			label="註記顏色"
+			description="註記顏色"
 			required="true"
 			class="input-xxlarge required"
 			/>
 
 		<field name="note"
 			type="textarea"
-			label="COM_SCHEDULE_INSTITUTE_NOTE"
-			description="COM_SCHEDULE_INSTITUTE_NOTE"
+			label="備註"
+			description="備註"
 			class="input-xxlarge required"
 			/>
 

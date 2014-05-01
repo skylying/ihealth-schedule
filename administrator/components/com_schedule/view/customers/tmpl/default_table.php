@@ -29,6 +29,7 @@ $grid      = $data->grid;
 $date      = $container->get('date');
 
 ?>
+
 <!-- LIST TABLE -->
 <table id="customerList" class="table table-striped adminlist">
 
@@ -38,6 +39,11 @@ $date      = $container->get('date');
 	<!--CHECKBOX-->
 	<th width="1%" class="center">
 		<?php echo JHtml::_('grid.checkAll'); ?>
+	</th>
+
+	<!--EDIT-->
+	<th width="5%" class="nowrap center">
+		編輯
 	</th>
 
 	<!--CUSTOMER_ID-->
@@ -125,6 +131,11 @@ $date      = $container->get('date');
 			<?php echo JHtml::_('grid.id', $i, $item->id); ?>
 		</td>
 
+		<!--EDIT-->
+		<td class="center">
+			<?php echo \Schedule\Helper\UiHelper::editButton('customer', $item->id); ?>
+		</td>
+
 		<!--CUSTOMER_ID-->
 		<td class="center">
 			<?php echo $this->escape($item->id); ?>
@@ -143,20 +154,8 @@ $date      = $container->get('date');
 		</td>
 
 		<!--CUSTOMER_NAME-->
-		<td class="nowrap quick-edit-wrap">
-			<div class="center">
-				<?php
-				$query = array(
-					'option' => 'com_schedule',
-					'view' => 'customer',
-					'layout' => 'edit',
-					'id'  => $item->id
-				);
-				?>
-				<a href="<?php echo JRoute::_("index.php?". http_build_query($query)); ?>">
-					<?php echo $this->escape($item->name); ?>
-				</a>
-			</div>
+		<td class="center">
+			<?php echo $this->escape($item->name); ?>
 		</td>
 
 
@@ -173,19 +172,27 @@ $date      = $container->get('date');
 		<!--CUSTOMER_MEMBER_MAPS-->
 		<td class="center">
 			<?php
-			if($item->type == 'individual')
+
+			$attr = array('target' => '_blank');
+
+			if ('individual' === $item->type)
 			{
-			    echo	'<a class="glyphicon glyphicon-user" href='.
-						JRoute::_('index.php?option=com_schedule&view=members&task=member.edit&id='.(int) $item->id).
-						'>'.
-						$this->escape($item->member_name).
-						'</a>';
-			} else {
-				echo	'<a class="glyphicon glyphicon-home" href='.
-						JRoute::_('index.php?option=com_schedule&view=institues&task=institute.edit&id='.(int) $item->id).
-						'>'.
-						 $this->escape($item->institute_title).
-						'</a>';
+				$url  = 'index.php?option=com_schedule&task=member.edit.edit&id=' . $item->member_id;
+				$text = '<span class="glyphicon glyphicon-user"></span> ' .
+					$item->member_name .
+					' <span class="glyphicon glyphicon-share-alt"></span>';
+
+				echo \JHtml::link($url, $text, $attr);
+			}
+
+			if ('resident' === $item->type)
+			{
+				$url  = 'index.php?option=com_schedule&task=institute.edit.edit&id=' . $item->institute_id;
+				$text = '<span class="glyphicon glyphicon-home"></span> ' .
+					$item->institute_short_title .
+					' <span class="glyphicon glyphicon-share-alt"></span>';
+
+				echo \JHtml::link($url, $text, $attr);
 			}
 			?>
 		</td>
@@ -207,16 +214,15 @@ $date      = $container->get('date');
 
 		<!--SCHEDULE_RECORD-->
 		<td class="center">
-			<a href=<?php JRoute::_('index.php?option=com_schedule&view=schedules');?>><?php echo JTEXT::_('COM_SCHEDULE_RECORD_LINK');?></a>
+			<a href="<?php echo JRoute::_('index.php?option=com_schedule&view=schedules');?>"><?php echo JTEXT::_('COM_SCHEDULE_RECORD_LINK');?></a>
 		</td>
 
 		<!--RESERVE-->
 		<td class="center">
-			<span class="glyphicon glyphicon-plus">
-				<a></a>
-			</span>
+			<a target="_blank" href="<?php echo JRoute::_('index.php?option=com_schedule&view=rxindividual&layout=edit');?>">
+				<span class="glyphicon glyphicon-plus"></span>
+			</a>
 		</td>
-
 	</tr>
 <?php endforeach; ?>
 </tbody>

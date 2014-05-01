@@ -18,16 +18,13 @@ JHtmlBehavior::formvalidation();
  *
  * @var $container Windwalker\DI\Container
  * @var $data      Windwalker\Data\Data
- * @var $item      \stdClass
  */
 $container = $this->getContainer();
 $form      = $data->form;
-$item      = $data->item;
 
-// Setting tabset
-$tabs = array(
-	'tab_basic'
-)
+$fieldsets = $data->form->getFieldsets();
+$fieldset = $fieldsets['information'];
+
 ?>
 <!-- Validate Script -->
 <script type="text/javascript">
@@ -43,17 +40,18 @@ $tabs = array(
 <div id="schedule" class="windwalker drug edit-form row-fluid">
 	<form action="<?php echo JURI::getInstance(); ?>"  method="post" name="adminForm" id="adminForm"
 		class="form-validate" enctype="multipart/form-data">
-
-		<?php echo JHtmlBootstrap::startTabSet('drugEditTab', array('active' => 'tab_basic')); ?>
-
-			<?php
-			foreach ($tabs as $tab)
-			{
-				echo $this->loadTemplate($tab, array('tab' => $tab));
-			}
-			?>
-
-		<?php echo JHtmlBootstrap::endTabSet(); ?>
+		<div class="row-fluid">
+			<div class="span8">
+				<fieldset id="drug-edit-fieldset-<?php echo $fieldset->name ?>" class="form-horizontal">
+					<legend>藥品資訊</legend>
+					<?php foreach ($data->form->getFieldset($fieldset->name) as $field): ?>
+						<div id="control_<?php echo $field->id; ?>">
+							<?php echo $field->getControlGroup() . "\n\n"; ?>
+						</div>
+					<?php endforeach;?>
+				</fieldset>
+			</div>
+		</div>
 
 		<!-- Hidden Inputs -->
 		<div id="hidden-inputs">
