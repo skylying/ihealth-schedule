@@ -50,12 +50,12 @@ $grid->registerTableSort();
 
 		<!--NAME-->
 		<th width="10%" class="center">
-			<?php echo $grid->sortTitle('COM_SCHEDULE_SENDER_ITEM_NAME', 'sender.name'); ?>
+			<?php echo $grid->sortTitle('姓名', 'sender.name'); ?>
 		</th>
 
 		<!--NOTE-->
 		<th class="center">
-			<?php echo $grid->sortTitle('COM_SCHEDULE_SENDER_ITEM_NOTE', 'sender.note'); ?>
+			<?php echo $grid->sortTitle('備註', 'sender.note'); ?>
 		</th>
 
 	</tr>
