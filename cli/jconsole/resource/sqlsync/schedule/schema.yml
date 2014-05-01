@@ -98,8 +98,9 @@
         year: { Field: year, Type: mediumint(8), 'Null': NO, Default: null, Extra: '', Comment: 年份, From: [year] }
         month: { Field: month, Type: tinyint(2), 'Null': NO, Default: null, Extra: '', Comment: 月份, From: [month] }
         day: { Field: day, Type: tinyint(2), 'Null': NO, Default: null, Extra: '', Comment: 國定假日日期, From: [day] }
+        title: { Field: title, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: '假日種類說明', From: [title] }
         state: { Field: state, Type: tinyint(1), 'Null': NO, Default: null, Extra: '', Comment: '假日狀態', From: [state] }
-        params: { Field: params, Type: text, 'Null': NO, Default: null, Extra: '', Comment: '假日種類說明', From: [params] }
+        params: { Field: params, Type: text, 'Null': NO, Default: null, Extra: '', Comment: '', From: [params] }
     index:
         - { Table: '#__schedule_holidays', Non_unique: '0', Key_name: PRIMARY, Seq_in_index: '1', Column_name: id, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
 '#__schedule_hospitals':
