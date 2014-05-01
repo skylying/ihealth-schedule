@@ -217,13 +217,11 @@
 			value_field="name"
 			/>
 
-		<field name="hospital_id"
-			type="hospital_list"
-			label="處方開立醫院"
-			description="處方開立醫院"
-			>
-			<option></option>
-		</field>
+		<field name="birth_date"
+			type="calendar"
+			label="生日"
+			description="生日"
+			/>
 
 		<field name="received"
 			type="radio"
@@ -243,6 +241,14 @@
 			>
 			<option value="1">已電聯</option>
 			<option value="0">未電聯</option>
+		</field>
+
+		<field name="hospital_id"
+			type="hospital_list"
+			label="處方開立醫院"
+			description="處方開立醫院"
+			>
+			<option></option>
 		</field>
 
 		<field name="see_dr_date"
@@ -282,16 +288,11 @@
 			<option value="paper">正本</option>
 		</field>
 
-		<field name="birth_date"
-			type="calendar"
-			label="生日"
-			description="生日"
-			/>
-
-		<field name="note"
-			type="textarea"
-			label="備註"
-			description="備註"
+		<field name="rximages"
+			type="file"
+			label="處方箋檔案"
+			description="處方箋檔案"
+			multiple="multiple"
 			/>
 	</fieldset>
 
