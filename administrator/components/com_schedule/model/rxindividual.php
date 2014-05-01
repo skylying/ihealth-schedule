@@ -72,4 +72,50 @@ class ScheduleModelRxindividual extends AdminModel
 	{
 		parent::setOrderPosition($table, $position);
 	}
+
+	/**
+	 * loadFormData
+	 *
+	 * @return  array
+	 */
+	protected function loadFormData()
+	{
+		$returnVal = parent::loadFormData();
+
+		// 如果沒值就直接回傳
+		if (empty($returnVal))
+		{
+			return $returnVal;
+		}
+
+		foreach (array("1st", "2nd", "3rd") as $val)
+		{
+			// 取得排程 table
+			$schedule = $this->getTable("Schedule");
+
+			// 讀取對應排程
+			$schedule->load(array("rx_id" => $returnVal->id, "deliver_nth" => $val));
+
+			// 如果沒有對應排程執行下一筆
+			if (empty($schedule->id))
+			{
+				continue;
+			}
+
+			// Std Class method
+			$method = "schedules_{$val}";
+
+			// 塞入資料
+			$returnVal->$method = (object) array(
+				"schedule_id"     => $schedule->id,
+				"address_id"      => $schedule->address_id,
+				"drug_empty_date" => $schedule->drug_empty_date,
+				"date"            => $schedule->date,
+				"session"         => $schedule->session,
+				"deliver_nth"     => array($schedule->deliver_nth)
+			);
+		}
+
+		return $returnVal;
+	}
 }

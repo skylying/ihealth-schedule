@@ -51,9 +51,10 @@
 			type="radio"
 			label="處方箋狀態"
 			description="處方箋狀態"
+			class="btn-group"
 			>
-			<option value="0">已取得</option>
-			<option value="1">未取得</option>
+			<option value="1">已取得</option>
+			<option value="0">未取得</option>
 		</field>
 
 		<field name="hospital_title"
@@ -216,19 +217,20 @@
 			value_field="name"
 			/>
 
-		<field name="hospital_id"
-			type="hospital_list"
-			label="處方開立醫院"
-			description="處方開立醫院"
+		<field name="birth_date"
+			type="calendar"
+			label="生日"
+			description="生日"
 			/>
 
 		<field name="received"
 			type="radio"
 			label="處方箋狀態"
 			description="處方箋狀態"
+			class="btn-group"
 			>
-			<option value="0">已取得</option>
-			<option value="1">未取得</option>
+			<option value="1">已取得</option>
+			<option value="0">未取得</option>
 		</field>
 
 		<field name="called"
@@ -239,6 +241,14 @@
 			>
 			<option value="1">已電聯</option>
 			<option value="0">未電聯</option>
+		</field>
+
+		<field name="hospital_id"
+			type="hospital_list"
+			label="處方開立醫院"
+			description="處方開立醫院"
+			>
+			<option></option>
 		</field>
 
 		<field name="see_dr_date"
@@ -278,21 +288,16 @@
 			<option value="paper">正本</option>
 		</field>
 
-		<field name="birth_date"
-			type="calendar"
-			label="生日"
-			description="生日"
-			/>
-
-		<field name="note"
-			type="textarea"
-			label="備註"
-			description="備註"
+		<field name="rximages"
+			type="file"
+			label="處方箋檔案"
+			description="處方箋檔案"
+			multiple="multiple"
 			/>
 	</fieldset>
 
-	<fieldset name="schedules_1st">
-		<field name="deliver_nths"
+	<fields name="schedules_1st">
+		<field name="deliver_nth"
 			type="checkboxes"
 			label="宅配第幾次"
 			description="宅配第幾次"
@@ -301,35 +306,46 @@
 		</field>
 
 		<field
-			name="address"
+			name="address_id"
 			type="text"
 			label="地址"
 			description="地址"
 			/>
 
-		<field name="empty_date"
+		<field name="drug_empty_date"
 			type="calendar"
 			label="吃完藥日"
 			description="吃完藥日"
 			/>
 
 		<field
-			name="send_date"
+			name="date"
 			type="calendar"
 			label="預約宅配日"
 			description="預約宅配日"
 			/>
 
 		<field
-			name="send_time"
+			name="session"
 			type="list"
 			label="時段"
 			description="時段"
-			/>
-	</fieldset>
+			>
+			<option value="daytime">白天皆可 0900-1800</option>
+			<option value="morning">早上 0900-1300</option>
+			<option value="afternoon">下午 1300-1800</option>
+			<option value="night">晚上 1800-2100</option>
+			<option value="other">其他</option>
+		</field>
 
-	<fieldset name="schedules_2nd">
-		<field name="deliver_nths"
+		<field
+			name="schedule_id"
+			type="hidden"
+			/>
+	</fields>
+
+	<fields name="schedules_2nd">
+		<field name="deliver_nth"
 			type="checkboxes"
 			label="宅配第幾次"
 			description="宅配第幾次"
@@ -338,69 +354,91 @@
 		</field>
 
 		<field
-			name="address"
+			name="address_id"
 			type="text"
 			label="地址"
 			description="地址"
 			/>
 
-		<field name="empty_date"
+		<field name="drug_empty_date"
 			type="calendar"
 			label="吃完藥日"
 			description="吃完藥日"
 			/>
 
 		<field
-			name="send_date"
+			name="date"
 			type="calendar"
 			label="預約宅配日"
 			description="預約宅配日"
 			/>
 
 		<field
-			name="send_time"
+			name="session"
 			type="list"
 			label="時段"
 			description="時段"
-			/>
-	</fieldset>
+			>
+			<option value="daytime">白天皆可 0900-1800</option>
+			<option value="morning">早上 0900-1300</option>
+			<option value="afternoon">下午 1300-1800</option>
+			<option value="night">晚上 1800-2100</option>
+			<option value="other">其他</option>
+		</field>
 
-	<fieldset name="schedules_3rd">
-		<field name="deliver_nths"
+		<field
+			name="schedule_id"
+			type="hidden"
+			/>
+	</fields>
+
+	<fields name="schedules_3rd">
+		<field name="deliver_nth"
 			type="checkboxes"
 			label="宅配第幾次"
 			description="宅配第幾次"
 			>
-			<option value="1st">第三次</option>
+			<option value="3rd">第三次</option>
 		</field>
 
 		<field
-			name="address"
+			name="address_id"
 			type="text"
 			label="地址"
 			description="地址"
 			/>
 
-		<field name="empty_date"
+		<field name="drug_empty_date"
 			type="calendar"
 			label="吃完藥日"
 			description="吃完藥日"
 			/>
 
 		<field
-			name="send_date"
+			name="date"
 			type="calendar"
 			label="預約宅配日"
 			description="預約宅配日"
 			/>
 
 		<field
-			name="send_time"
+			name="session"
 			type="list"
 			label="時段"
 			description="時段"
+			>
+			<option value="daytime">白天皆可 0900-1800</option>
+			<option value="morning">早上 0900-1300</option>
+			<option value="afternoon">下午 1300-1800</option>
+			<option value="night">晚上 1800-2100</option>
+			<option value="other">其他</option>
+		</field>
+
+		<field
+			name="schedule_id"
+			type="hidden"
 			/>
-	</fieldset>
+	</fields>
 
 	<fieldset
 		name="schedules_ps">
