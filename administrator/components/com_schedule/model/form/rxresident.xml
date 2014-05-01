@@ -3,7 +3,8 @@
 	<fieldset name="institute">
 		<field name="institute_id"
 			type="text"
-			class="input-xlarge"
+			hint="輸入機構名稱"
+			class="input-large"
 			label="機構名稱"
 			description="機構名稱"
 			/>
@@ -18,6 +19,7 @@
 	<fieldset name="information">
 		<field name="id"
 			type="text"
+			class="fullwidth"
 			label="id"
 			description="id"
 			readonly="true"
@@ -25,38 +27,54 @@
 
 		<field name="customer_id"
 			type="text"
+			class="fullwidth"
 			label="客戶"
 			description="客戶"
 			/>
 
 		<field name="id_number"
 			type="text"
+			class="fullwidth"
 			label="身分證字號"
 			description="身分證字號"
 			/>
 
 		<field name="birth_date"
 			type="DateTimePicker"
-			class="datetimepicker"
+			class="datetimepicker fullwidth"
 			label="生日"
 			description="生日"
 			/>
 
 		<field name="see_dr_date"
 			type="DateTimePicker"
-			class="datetimepicker"
+			class="datetimepicker fullwidth"
 			label="就醫日期"
 			description="就醫日期"
 			/>
 
 		<field name="period"
-			type="text"
+			type="list"
+			class="fullwidth"
 			label="給藥天數"
 			description="給藥天數"
-			/>
+			>
+			<option value="21">21</option>
+			<option value="22">22</option>
+			<option value="23">23</option>
+			<option value="24">24</option>
+			<option value="25">25</option>
+			<option value="26">26</option>
+			<option value="27">27</option>
+			<option value="28">28</option>
+			<option value="29">29</option>
+			<option value="30">30</option>
+			<option value="31">31</option>
+		</field>
 
 		<field name="times"
 			type="list"
+			class="fullwidth"
 			label="可調劑次數"
 			description="可調劑次數"
 			>
@@ -67,6 +85,7 @@
 
 		<field name="deliver_nths"
 			type="checkboxes"
+			class="fullwidth fullwidth-checkboxes"
 			label="處方箋外送次數"
 			description="處方箋外送次數"
 			>
@@ -77,18 +96,21 @@
 
 		<field name="empty_date_1st"
 			type="hidden"
+			class="fullwidth"
 			label="第一次吃完藥日"
 			description="第一次吃完藥日"
 			/>
 
 		<field name="empty_date_2nd"
 			type="hidden"
+			class="fullwidth"
 			label="第二次吃完藥日"
 			description="第二次吃完藥日"
 			/>
 
 		<field name="method"
 			type="list"
+			class="fullwidth"
 			label="處方箋取得方式"
 			description="處方箋取得方式"
 			>
@@ -100,8 +122,16 @@
 			<option value="paper">正本</option>
 		</field>
 
+		<field name="fileuploadplaceholder"
+			type="textarea"
+			class="fullwidth"
+			label="上傳檔案欄位"
+			description="上傳檔案欄位"
+			/>
+
 		<field name="note"
 			type="textarea"
+			class="fullwidth"
 			label="備註"
 			description="備註"
 			/>

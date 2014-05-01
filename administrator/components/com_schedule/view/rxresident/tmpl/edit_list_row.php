@@ -60,6 +60,9 @@ $id    = FieldHelper::resetGroup($form->getField('id'), $group);
 		<?php echo FieldHelper::resetGroup($form->getField('method'), $group)->input; ?>
 	</td>
 	<td>
+		<?php echo FieldHelper::resetGroup($form->getField('fileuploadplaceholder'), $group)->input; ?>
+	</td>
+	<td>
 		<?php echo FieldHelper::resetGroup($form->getField('note'), $group)->input; ?>
 	</td>
 	<td>

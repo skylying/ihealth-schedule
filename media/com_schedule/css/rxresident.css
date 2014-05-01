@@ -1,0 +1,23 @@
+.fullwidth {
+  width: 100%;
+}
+.fullwidth-checkboxes ul {
+  padding: 0;
+}
+.fullwidth-checkboxes ul li {
+  display: inline-block;
+  padding-left: 5px;
+}
+.fullwidth-checkboxes ul li label {
+  display: inline-block;
+  float: left;
+}
+.fullwidth-checkboxes ul li label:hover {
+  cursor: pointer;
+}
+.fullwidth-checkboxes ul li input:hover {
+  cursor: pointer;
+}
+.fullwidth-checkboxes ul:hover {
+  cursor: pointer;
+}
