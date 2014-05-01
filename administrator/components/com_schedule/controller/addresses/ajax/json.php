@@ -7,6 +7,7 @@
  */
 
 use Windwalker\Controller\DisplayController;
+use \Schedule\Table\Table;
 
 /**
  * Class ScheduleControllerAddressesAjaxJson
@@ -30,8 +31,8 @@ class ScheduleControllerAddressesAjaxJson extends DisplayController
 		$query = $db->getQuery(true);
 
 		$query->select('`id`, `city_title`, `area_title`, `address`')
-			->from('#__schedule_addresses AS address')
-			->where("`address`.`customer_id` = {$id}");
+			->from(Table::ADDRESSES . ' AS address')
+			->where("`address`.`customer_id`={$id}");
 
 		echo json_encode($db->setQuery($query)->loadObjectList());
 
