@@ -2,46 +2,43 @@
 <form>
 	<!-- Batch -->
 	<fields name="batch">
-		<field name="access"
-			type="accesslevel"
-			label="JLIB_HTML_BATCH_ACCESS_LABEL"
-			description="JLIB_HTML_BATCH_ACCESS_LABEL_DESC"
-			labelclass="control-label"
-			class="input-xlarge inputbox"
+
+		<field name="delivery_weekday"
+			type="list"
+			label="COM_SCHEDULE_INSTITUTE_DELIVERY_WEEKDAY"
+			description="COM_SCHEDULE_INSTITUTE_DELIVERY_WEEKDAY"
+			class="input-xxlarge required"
 			>
-			<option>JLIB_HTML_BATCH_NOCHANGE</option>
+			<option></option>
+			<option value="MON">MON</option>
+			<option value="TUE">TUE</option>
+			<option value="WED">WED</option>
+			<option value="THU">THU</option>
+			<option value="FRI">FRI</option>
+			<option value="SAT">SAT</option>
+			<option value="SUN">SUN</option>
 		</field>
 
-		<field name="language"
-			type="contentlanguage"
-			label="JLIB_HTML_BATCH_LANGUAGE_LABEL"
-			description="JLIB_HTML_BATCH_LANGUAGE_LABEL_DESC"
-			labelclass="control-label"
-			class="input-xlarge inputbox"
+		<field name="sender_id"
+			type="sender_list"
+			value_field="name"
+			key_field="id"
+			label="COM_SCHEDULE_INSTITUTE_SENDER_NAME"
+			description="COM_SCHEDULE_INSTITUTE_SENDER_NAME"
+			class="input-xxlarge required"
 			>
-			<option>JLIB_HTML_BATCH_LANGUAGE_NOCHANGE</option>
+			<option></option>
 		</field>
 
-		<field name="created_by"
-			type="winduser"
-			label="JAUTHOR"
-			description="JLIB_HTML_BATCH_USER_LABEL_DESC"
-			labelclass="control-label"
-			class="input-xlarge inputbox"
+		<field name="color_id"
+			type="color_list"
+			value_field="title"
+			key_field="id"
+			label="COM_SCHEDULE_INSTITUTE_MARK_COLOR"
+			description="COM_SCHEDULE_INSTITUTE_MARK_COLOR"
+			class="input-xxlarge required"
 			>
-			<option>JSELECT</option>
-		</field>
-
-		<field name="catid"
-			type="category"
-			label="JLIB_HTML_BATCH_MENU_LABEL"
-			description=""
-			extension="com_schedule"
-			labelclass="control-label"
-			class="input-xlarge inputbox"
-			action="true"
-			>
-			<option>JOPTION_SELECT_CATEGORY</option>
+			<option></option>
 		</field>
 
 		<field name="task"
