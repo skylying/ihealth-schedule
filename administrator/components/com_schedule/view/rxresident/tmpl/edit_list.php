@@ -79,7 +79,7 @@ if (count($forms) > 0)
 </form>
 
 <script id="row-template" class="hide" type="text/html">
-	<?php echo $this->loadTemplate('row', array('group' => 'item.new.{{hash}}', 'form' => $templateForm)); ?>
+	<?php echo $this->loadTemplate('row', array('group' => 'item.new.0hash0', 'form' => $templateForm)); ?>
 </script>
 
 <script type="text/javascript">
@@ -112,8 +112,7 @@ if (count($forms) > 0)
 				hash = (hash === newHash) ? newHash + '0' : newHash;
 
 				row = $('#row-template').clone().html();
-				row = row.replace(/{{hash}}/g, hash);
-				row = row.replace(/__hash__/g, hash);
+				row = row.replace(/0hash0/g, hash);
 
 				row = $(row);
 
@@ -139,15 +138,19 @@ if (count($forms) > 0)
 				idReplace = $row.data('id-replace').replace('{{rowHash}}', hash),
 				nameReplace = $row.data('name-replace').replace('{{rowHash}}', hash);
 
+			$row.attr('data-id-prefix', idReplace);
+			$row.attr('data-name-prefix', nameReplace);
+
 			$row.find('[name^="' + namePrefix + '"]').each(function (i, node)
 			{
-				var id = $(this).attr('id'),
-					name = $(this).attr('name'),
+				var $self = $(this),
+					id = $self.attr('id'),
+					name = $self.attr('name'),
 					newId = id.replace(idPrefix, idReplace),
 					newName = name.replace(namePrefix, nameReplace);
 
-				$(this).attr('id', newId);
-				$(this).attr('name', newName);
+				$self.attr('id', newId);
+				$self.attr('name', newName);
 			});
 
 			initialRow($row);
