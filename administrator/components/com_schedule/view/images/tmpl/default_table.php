@@ -46,6 +46,11 @@ $date      = $container->get('date');
 		<?php echo $grid->sortTitle('JGRID_HEADING_ID', 'image.id'); ?>
 	</th>
 
+	<!--EDIT-->
+	<th width="5%" class="center">
+		編輯
+	</th>
+
 	<!--TITLE-->
 	<th class="center">
 		<?php echo $grid->sortTitle('JGLOBAL_TITLE', 'image.title'); ?>
@@ -93,20 +98,19 @@ $date      = $container->get('date');
 			<?php echo (int) $item->id; ?>
 		</td>
 
-		<!--TITLE-->
-		<td class="n/owrap has-context quick-edit-wrap">
-			<div class="item-title text-center">
-				<!-- Checkout -->
-				<?php echo $grid->checkoutButton(); ?>
+		<!--CHECKBOX-->
+		<td class="center">
+			<?php echo \Schedule\Helper\UiHelper::editButton('image', $item->id); ?>
+		</td>
 
-				<!-- Title -->
-				<?php echo $grid->editTitle(); ?>
-			</div>
+		<!--TITLE-->
+		<td class="center">
+			<?php echo $item->title; ?>
 		</td>
 
 		<!--RX_ID-->
 		<td class="center">
-			<a href="<?php echo JRoute::_('index.php?option=com_schedule&view=prescription&layout=edit&id=' . $item->rx_id); ?>"><?php echo $item->rx_id; ?></a>
+			<?php echo \Schedule\Helper\UiHelper::foreignLink('rxindividual', '對應處方' . $item->rx_id, $item->rx_id ); ?>
 		</td>
 
 

@@ -46,6 +46,52 @@
 			label="COM_SCHEDULE_FILTER_NOTE_GENERAL"
 			class="filter-title"
 			/>
+
+		<field
+			name="route.city"
+			type="list"
+			default=""
+			label="縣市"
+			onchange="this.form.submit();"
+			>
+			<option></option>
+		</field>
+
+		<field
+			name="route.area"
+			type="list"
+			default=""
+			label="區域"
+			onchange="this.form.submit();"
+			>
+			<option></option>
+		</field>
+
+		<field
+			name="route.weekday"
+			type="list"
+			default=""
+			label="外送日"
+			onchange="this.form.submit();"
+			>
+			<option></option>
+			<option value="MON">MON</option>
+			<option value="TUE">TUE</option>
+			<option value="WED">WED</option>
+			<option value="THU">THU</option>
+			<option value="FRI">FRI</option>
+		</field>
+
+		<field
+			name="route.sender_id"
+			type="sender_list"
+			value_field="name"
+			default=""
+			label="外送藥師"
+			onchange="this.form.submit();"
+			>
+			<option></option>
+		</field>
 	</fields>
 
 	<fields name="list">

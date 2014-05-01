@@ -46,6 +46,26 @@
 			label="COM_SCHEDULE_FILTER_NOTE_GENERAL"
 			class="filter-title"
 			/>
+
+		<field
+			name="address.city"
+			type="list"
+			default=""
+			label="縣市"
+			onchange="this.form.submit();"
+			>
+			<option></option>
+		</field>
+
+		<field
+			name="address.area"
+			type="list"
+			default=""
+			label="區域"
+			onchange="this.form.submit();"
+			>
+			<option></option>
+		</field>
 	</fields>
 
 	<fields name="list">
