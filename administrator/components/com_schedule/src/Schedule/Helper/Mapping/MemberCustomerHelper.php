@@ -8,6 +8,8 @@
 
 namespace Schedule\Helper\Mapping;
 
+use Schedule\Table\Table;
+
 /**
  * Class MemberCustomerHelper
  *
@@ -29,9 +31,10 @@ class MemberCustomerHelper
 		$db = \JFactory::getDbo();
 		$query = $db->getQuery(true);
 
-		$query->select('*')
-			->from(static::RELATION_TABLE)
-			->where('member_id=' . $memberId);
+		$query->select('customer.*, map.member_id')
+			->from(static::RELATION_TABLE . ' AS map')
+			->leftJoin(Table::CUSTOMERS . ' AS customer ON map.customer_id=customer.id')
+			->where('map.member_id=' . $memberId);
 
 		return $db->setQuery($query)->loadObjectList();
 	}
@@ -48,9 +51,10 @@ class MemberCustomerHelper
 		$db = \JFactory::getDbo();
 		$query = $db->getQuery(true);
 
-		$query->select('*')
-			->from(static::RELATION_TABLE)
-			->where('customer_id=' . $customerId);
+		$query->select('member.*, map.customer_id')
+			->from(static::RELATION_TABLE . ' AS map')
+			->leftJoin(Table::MEMBERS . ' AS member ON map.member_id=member.id')
+			->where('map.customer_id=' . $customerId);
 
 		return $db->setQuery($query)->loadObjectList();
 	}
@@ -58,12 +62,13 @@ class MemberCustomerHelper
 	/**
 	 * Add customers
 	 *
-	 * @param   int    $memberId
-	 * @param   int[]  $customerIds
+	 * @param   int   $memberId
+	 * @param   int[] $customerIds
 	 *
+	 * @throws  \Exception
 	 * @return  bool
 	 */
-	public static function connectCustomers($memberId, $customerIds)
+	public static function connectCustomers($memberId, array $customerIds)
 	{
 		if (empty($customerIds))
 		{
@@ -72,6 +77,7 @@ class MemberCustomerHelper
 
 		$customerIds = array_unique($customerIds);
 
+		$app = \JFactory::getApplication();
 		$db = \JFactory::getDbo();
 		$query = $db->getQuery(true);
 
@@ -83,7 +89,7 @@ class MemberCustomerHelper
 			$query->values($memberId . ', ' . $customerId);
 		}
 
-		$db->transactionStart();
+		$db->transactionStart(true);
 
 		try
 		{
@@ -91,12 +97,19 @@ class MemberCustomerHelper
 		}
 		catch (\Exception $e)
 		{
-			$db->transactionRollback();
+			$db->transactionRollback(true);
+
+			$app->enqueueMessage($e->getMessage());
+
+			if (JDEBUG)
+			{
+				throw $e;
+			}
 
 			return false;
 		}
 
-		$db->transactionCommit();
+		$db->transactionCommit(true);
 
 		return true;
 	}
@@ -104,12 +117,13 @@ class MemberCustomerHelper
 	/**
 	 * Add members
 	 *
-	 * @param   int    $customerId
-	 * @param   int[]  $memberIds
+	 * @param   int   $customerId
+	 * @param   int[] $memberIds
 	 *
+	 * @throws  \Exception
 	 * @return  bool
 	 */
-	public static function connectMembers($customerId, $memberIds)
+	public static function connectMembers($customerId, array $memberIds)
 	{
 		if (empty($memberIds))
 		{
@@ -118,6 +132,7 @@ class MemberCustomerHelper
 
 		$memberIds = array_unique($memberIds);
 
+		$app = \JFactory::getApplication();
 		$db = \JFactory::getDbo();
 		$query = $db->getQuery(true);
 
@@ -129,7 +144,7 @@ class MemberCustomerHelper
 			$query->values($customerId . ', ' . $memberId);
 		}
 
-		$db->transactionStart();
+		$db->transactionStart(true);
 
 		try
 		{
@@ -137,12 +152,19 @@ class MemberCustomerHelper
 		}
 		catch (\Exception $e)
 		{
-			$db->transactionRollback();
+			$db->transactionRollback(true);
+
+			$app->enqueueMessage($e->getMessage());
+
+			if (JDEBUG)
+			{
+				throw $e;
+			}
 
 			return false;
 		}
 
-		$db->transactionCommit();
+		$db->transactionCommit(true);
 
 		return true;
 	}
@@ -150,12 +172,14 @@ class MemberCustomerHelper
 	/**
 	 * Delete customers
 	 *
-	 * @param   int  $memberId
+	 * @param   int $memberId
 	 *
+	 * @throws  \Exception
 	 * @return  bool
 	 */
 	public static function disconnectCustomers($memberId)
 	{
+		$app = \JFactory::getApplication();
 		$db = \JFactory::getDbo();
 
 		$query = $db->getQuery(true);
@@ -163,7 +187,7 @@ class MemberCustomerHelper
 		$query->delete(static::RELATION_TABLE)
 			->where('member_id = ' . $memberId);
 
-		$db->transactionStart();
+		$db->transactionStart(true);
 
 		try
 		{
@@ -171,12 +195,19 @@ class MemberCustomerHelper
 		}
 		catch (\Exception $e)
 		{
-			$db->transactionRollback();
+			$db->transactionRollback(true);
+
+			$app->enqueueMessage($e->getMessage());
+
+			if (JDEBUG)
+			{
+				throw $e;
+			}
 
 			return false;
 		}
 
-		$db->transactionCommit();
+		$db->transactionCommit(true);
 
 		return true;
 	}
@@ -184,12 +215,14 @@ class MemberCustomerHelper
 	/**
 	 * Delete members
 	 *
-	 * @param   int  $customerId
+	 * @param   int $customerId
 	 *
+	 * @throws  \Exception
 	 * @return  bool
 	 */
 	public static function disconnectMembers($customerId)
 	{
+		$app = \JFactory::getApplication();
 		$db = \JFactory::getDbo();
 
 		$query = $db->getQuery(true);
@@ -197,7 +230,7 @@ class MemberCustomerHelper
 		$query->delete(static::RELATION_TABLE)
 			->where('customer_id = ' . $customerId);
 
-		$db->transactionStart();
+		$db->transactionStart(true);
 
 		try
 		{
@@ -205,12 +238,19 @@ class MemberCustomerHelper
 		}
 		catch (\Exception $e)
 		{
-			$db->transactionRollback();
+			$db->transactionRollback(true);
+
+			$app->enqueueMessage($e->getMessage());
+
+			if (JDEBUG)
+			{
+				throw $e;
+			}
 
 			return false;
 		}
 
-		$db->transactionCommit();
+		$db->transactionCommit(true);
 
 		return true;
 	}
@@ -223,7 +263,7 @@ class MemberCustomerHelper
 	 *
 	 * @return  bool
 	 */
-	public static function updateCustomers($memberId, $customerIds = array())
+	public static function updateCustomers($memberId, array $customerIds = array())
 	{
 		if (empty($customerIds))
 		{
@@ -257,7 +297,7 @@ class MemberCustomerHelper
 	 *
 	 * @return  bool
 	 */
-	public static function updateMembers($customerId, $memberIds = array())
+	public static function updateMembers($customerId, array $memberIds = array())
 	{
 		if (empty($memberIds))
 		{
