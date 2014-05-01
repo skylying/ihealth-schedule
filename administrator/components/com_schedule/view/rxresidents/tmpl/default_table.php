@@ -111,12 +111,12 @@ $date      = $container->get('date');
 
 		<!-- checkbox -->
 		<td>
-			<?php echo JHtml::_('grid.id', $i, $item->prescription_id); ?>
+			<?php echo JHtml::_('grid.id', $i, $item->id); ?>
 		</td>
 
 		<!-- id -->
 		<td>
-			<a href="<?php echo JRoute::_('index.php?option=com_schedule&task=rxindividual.edit.edit&id=' . $item->id); ?>">
+			<a href="<?php echo JRoute::_('index.php?option=com_schedule&task=rxresident.edit.edit&id=' . $item->id); ?>">
 				<?php echo $this->escape($item->id); ?>
 			</a>
 		</td>

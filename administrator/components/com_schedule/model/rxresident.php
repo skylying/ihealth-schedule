@@ -72,4 +72,33 @@ class ScheduleModelRxresident extends AdminModel
 	{
 		parent::setOrderPosition($table, $position);
 	}
+
+	/**
+	 * Abstract method for getting the form from the model.
+	 *
+	 * @param   array    $data      Data for the form.
+	 * @param   boolean  $loadData  True if the form is to load its own data (default case), false if not.
+	 *
+	 * @return  JForm  A JForm object on success, false on failure
+	 *
+	 * @since   3.2
+	 */
+	public function getForm($data = array(), $loadData = false)
+	{
+		$config = array(
+			'control'   => 'jform',
+			'load_data' => $loadData,
+		);
+
+		// For form hash. @see \Windwalker\Model\FormModel (line:76)
+		$config['data.id'] = JArrayHelper::getValue($data, 'id', '');
+
+		$key = $this->option . '.' . $this->getName() . '.form.' . $config['data.id'];
+
+		$form = $this->loadForm($key, $this->getName(), $config);
+
+		$form->bind($data);
+
+		return $form;
+	}
 }
