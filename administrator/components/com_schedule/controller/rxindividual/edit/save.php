@@ -52,11 +52,14 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 	{
 		$rx = $model->getItem();
 
+		// TODO: 上傳圖片功能
+
 		// Mappers
 		$customerMapper = new DataMapper(Table::CUSTOMERS);
 		$addressMapper  = new DataMapper(Table::ADDRESSES);
 		$routesMapper   = new DataMapper(Table::ROUTES);
 		$senderMapper   = new DataMapper(Table::SENDERS);
+		$scheduleMapper = new DataMapper(Table::SCHEDULES);
 
 		$customer = $customerMapper->findOne($this->data['customer_id']);
 
@@ -67,25 +70,31 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 		// 更新客戶電話
 		$customerMapper->updateOne($customer);
 
+		// Get model
+		$taskModel     = $this->getModel("task");
+		$scheduleModel = $this->getModel("Schedule");
+
 		// 新增排程
 		foreach (array("1st", "2nd", "3rd") as $val)
 		{
+			// 排程資料
+			$schedule = $this->data["schedules_{$val}"];
+
 			// 沒有需要外送的次數跳過
-			if (empty($this->data["schedules_{$val}"]["deliver_nths"]))
+			if (empty($schedule["deliver_nths"]))
 			{
+				// TODO: 取消勾選時須刪除對應排程
 				continue;
 			}
 
 			// 外送地址比對
-			$address = $addressMapper->findOne($this->data["schedules_{$val}"]["address"]);
+			$address = $addressMapper->findOne($schedule["address"]);
 
 			// 外送路線
-			$routes  = $routesMapper->findOne(array("city" => $address->city, "area" => $address->area));
+			$routes = $routesMapper->findOne(array("city" => $address->city, "area" => $address->area));
 
 			// 外送者
-			$sender  = $senderMapper->findOne($routes->sender_id);
-
-			$task = $this->getModel("task");
+			$sender = $senderMapper->findOne($routes->sender_id);
 
 			// Task data
 			$taskData = array(
@@ -95,12 +104,10 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 			);
 
 			// 新增外送
-			$task->save($taskData);
+			$taskModel->save($taskData);
 
 			// 取出剛剛新增的外送管理
-			$task = $task->getItem();
-
-			$schedule = $this->getModel("Schedule");
+			$task = $taskModel->getItem();
 
 			// Schedule data
 			$scheduleData = array(
@@ -124,20 +131,20 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 				"deliver_nth"     => $val,
 
 				// 排程日期
-				"date"            => $this->data["schedules_{$val}"]["send_date"],
+				"date"            => $schedule["send_date"],
 
 				// 藥品吃完日
-				"drug_empty_date" => $this->data["schedules_{$val}"]["empty_date"],
+				"drug_empty_date" => $schedule["empty_date"],
 
 				// 時段
-				"session"         => $this->data["schedules_{$val}"]["send_time"],
+				"session"         => $schedule["send_time"],
 
 				"status"          => "scheduled",
 				"sorted"          => 0
 			);
 
 			// 新增排程
-			$schedule->save($scheduleData);
+			$scheduleModel->save($scheduleData);
 		}
 	}
 }
