@@ -13,36 +13,36 @@
 
 		<field name="name"
 			type="text"
-			label="COM_SCHEDULE_CUSTOMER_NAME"
-			description="COM_SCHEDULE_CUSTOMER_NAME"
+			label="客戶姓名"
+			description="客戶姓名"
 			required="true"
 			class="input-large required"
 			/>
 
 		<field name="id_number"
 			type="text"
-			label="COM_SCHEDULE_CUSTOMER_ID_NUMBER"
-			description="COM_SCHEDULE_CUSTOMER_ID_NUMBER"
+			label="客戶身份字號"
+			description="客戶身份字號"
 			/>
 
 		<field name="birth_date"
 			type="calendar"
-			label="COM_SCHEDULE_CUSTOMER_BIRTH_DATE"
-			description="COM_SCHEDULE_CUSTOMER_BIRTH_DATE"
+			label="出生日期"
+			description="出生日期"
 			/>
 
 		<field name="age"
 			type="text"
-			label="COM_SCHEDULE_CUSTOMER_AGE"
-			description="COM_SCHEDULE_CUSTOMER_AGE"
+			label="年齡"
+			description="年齡"
 			class="input-small"
 			readonly="true"
 			/>
 
 		<field name="state"
 			type="radio"
-			label="COM_SCHEDULE_CUSTOMER_STATE"
-			description="COM_SCHEDULE_CUSTOMER_STATE"
+			label="服務狀態"
+			description="服務狀態"
 			class="btn-group btn-group-yesno">
 			<option value="0">結案</option>
 			<option value="1">服務中</option>
@@ -52,8 +52,8 @@
 
 	<field name="type"
 		type="radio"
-		label="COM_SCHEDULE_CUSTOMER_TYPE"
-		description="COM_SCHEDULE_CUSTOMER_TYPE"
+		label="客戶類型"
+		description="客戶類型"
 		class="btn-group btn-group-yesno customertype">
 		<option value="resident">住民</option>
 		<option value="individual">散客</option>
@@ -83,22 +83,22 @@
 			type="member_list"
 			value_field="name"
 			multiple="true"
-			label="COM_SCHEDULE_CUSTOMER_MEMBER"
-			description="COM_SCHEDULE_CUSTOMER_MEMBER"
+			label="所屬會員"
+			description="所屬會員"
 			class="input-large"
 			/>
 
 		<field name="hospital_id"
 			type="hospital_list"
-			label="COM_SCHEDULE_CUSTOMER_HOSPITAL_TITLE"
-			description="COM_SCHEDULE_CUSTOMER_HOSPITAL_TITLE"
+			label="開立處方醫院名稱"
+			description="開立處方醫院名稱"
 			class="input-large"
 			/>
 
 		<field name="rx_period"
 			type="list"
-			label="COM_SCHEDULE_RX_PERIOD"
-			description="COM_SCHEDULE_RX_PERIOD">
+			label="給藥天數"
+			description="給藥天數">
 			<option value="21">21天</option>
 			<option value="28">28天</option>
 			<option value="30">30天</option>
@@ -107,8 +107,8 @@
 
 		<field name="rx_time"
 			type="list"
-			label="COM_SCHEDULE_RX_TIME"
-			description="COM_SCHEDULE_RX_TIME">
+			label="可調劑次數"
+			description="可調劑次數">
 			<option value="1">1次</option>
 			<option value="2">2次</option>
 			<option value="3">3次</option>
@@ -116,8 +116,8 @@
 
 		<field name="note"
 			type="textarea"
-			label="COM_SCHEDULE_NOTE"
-			description="COM_SCHEDULE_NOTE"
+			label="備註"
+			description="備註"
 			/>
 	</fieldset>
 
@@ -150,7 +150,7 @@
 
 		<field name="address"
 			type="text"
-			label="COM_SCHEDULE_EDIT_ADDRESS"
+			label="地址"
 			description=""
 			class="pull-left"
 			/>
@@ -159,22 +159,22 @@
 	<fieldset name="phones">
 		<field name="tel_office"
 			type="text"
-			label="COM_SCHEDULE_TEL_OFFICE"
-			description="COM_SCHEDULE_TEL_OFFICE"
+			label="宅配電話(O)"
+			description="填入宅配電話"
 			class="input-large"
 			/>
 
 		<field name="tel_home"
 			type="text"
-			label="COM_SCHEDULE_TEL_HOME"
-			description="COM_SCHEDULE_TEL_HOME"
+			label="宅配電話(H)"
+			description="填入宅配電話(H)"
 			class="input-large"
 			/>
 
 		<field name="mobile"
 			type="text"
-			label="COM_SCHEDULE_TEL_MOBILE"
-			description="COM_SCHEDULE_TEL_MOBILE"
+			label="手機(M)"
+			description="填入手機(M)"
 			class="input-large"
 			/>
 	</fieldset>

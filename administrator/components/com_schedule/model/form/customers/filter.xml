@@ -42,15 +42,9 @@
 	<!-- Filter -->
 	<fields name="filter">
 		<field
-			type="note"
-			label="COM_SCHEDULE_FILTER_NOTE_GENERAL"
-			class="filter-title"
-			/>
-
-		<field
 			name="customer.type"
 			type="list"
-			label="COM_SCHEDULE_CUSTOMER_FILTER_TYPE"
+			label="客戶類別"
 			default=""
 			onchange="this.form.submit();"
 			>
@@ -63,7 +57,7 @@
 		<field
 			name=""
 			type="list"
-			label="COM_SCHEDULE_CUSTOMER_FILTER_INSTITUTE"
+			label="選擇機構"
 			default=""
 			onchange="this.form.submit();"
 			>
@@ -75,7 +69,7 @@
 			name="customer.city_title"
 			type="list"
 			query=""
-			label="COM_SCHEDULE_CUSTOMER_FILTER_CITY_TITLE"
+			label="選擇都市"
 			default=""
 			onchange="this.form.submit();"
 			>
@@ -87,7 +81,7 @@
 			name="customer.area_title"
 			type="list"
 			query=""
-			label="COM_SCHEDULE_CUSTOMER_FILTER_AREA_TITLE"
+			label="選擇區域"
 			default=""
 			onchange="this.form.submit();"
 			>
@@ -98,7 +92,7 @@
 		<field
 			name="customers.age_start"
 			type="input"
-			label="COM_SCHEDULE_CUSTOMER_FILTER_AGE_FROM"
+			label="年齡(從)"
 			default=""
 
 			/>
@@ -106,7 +100,7 @@
 		<field
 			name="customers.age_end"
 			type="input"
-			label="COM_SCHEDULE_CUSTOMER_FILTER_AGE_TO"
+			label="到"
 			default=""
 			onchange="this.form.submit();"
 			/>
@@ -115,7 +109,7 @@
 			name="customer.state"
 			type="list"
 			query=""
-			label="COM_SCHEDULE_CUSTOMER_FILTER_STATE"
+			label="服務狀態"
 			default=""
 			onchange="this.form.submit();"
 			>
