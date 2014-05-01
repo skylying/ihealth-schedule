@@ -410,7 +410,9 @@ jQuery(document).ready(function ()
 		</div>
 	</div>
 
-    <input type="hidden" name="option" value="com_schedule" />
-    <input type="hidden" name="task" value="" />
-    <?php echo JHtml::_('form.token'); ?>
+	<div>
+		<input type="hidden" name="option" value="com_schedule" />
+		<input type="hidden" name="task" value="" />
+		<?php echo JHtml::_('form.token'); ?>
+	</div>
 </form>
