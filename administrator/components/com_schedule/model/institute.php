@@ -72,4 +72,32 @@ class ScheduleModelInstitute extends AdminModel
 	{
 		parent::setOrderPosition($table, $position);
 	}
+
+	/**
+	 * prepareTable
+	 *
+	 * @param JTable $table
+	 *
+	 * @return  void
+	 */
+	public function prepareTable($table)
+	{
+		$tableCity = $this->getTable('City');
+		$tableCity->load($table->city);
+		$table->city_title = $tableCity->title;
+
+		$tableArea = $this->getTable('Area');
+		$tableArea->load($table->area);
+		$table->area_title = $tableArea->title;
+
+		$tableSender = $this->getTable('Sender');
+		$tableSender->load($table->sender_id);
+		$table->sender_name = $tableSender->name;
+
+		$tableColor = $this->getTable('Color');
+		$tableColor->load($table->color_id);
+		$table->color_hex = $tableColor->hex;
+		$table->color_title = $tableColor->title;
+
+	}
 }
