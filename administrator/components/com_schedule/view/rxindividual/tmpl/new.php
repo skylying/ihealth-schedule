@@ -38,7 +38,8 @@ $ps    = $data->form->getFieldset("schedules_ps");
 	}
 </style>
 
-<form name="adminForm" id="adminForm" method="post" action="<?php echo JURI::getInstance(); ?>" class="form-horizontal">
+<form name="adminForm" id="adminForm" method="post" action="<?php echo JURI::getInstance(); ?>" class="form-horizontal"
+	enctype="multipart/form-data">
 	<div class="row-fluid">
 		<div class="col-lg-5">
 			<?php
