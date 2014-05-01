@@ -101,4 +101,29 @@ class ScheduleModelRxresident extends AdminModel
 
 		return $form;
 	}
+
+	/**
+	 * Prepare and sanitise the table data prior to saving.
+	 *
+	 * @param   JTable  $table  A reference to a JTable object.
+	 *
+	 * @return  void
+	 */
+	protected function prepareTable($table)
+	{
+		/*
+		 * TODO: 取得機構簡稱 (institute_short_title)
+		 * TODO: 取得客戶姓名 (customer_name)
+		 * TODO: 取得客戶身分證號碼 (id_number)
+		 * TODO: 取得客戶開立處方醫院編號 (hospital_id)
+		 * TODO: 取得客戶開立處方醫院名稱 (hospital_title)
+		 * TODO: 計算第1次藥吃完日 (empty_date_1st)
+		 * TODO: 計算第2次藥吃完日 (empty_date_2nd)
+		 *
+		 * TODO: 討論註記選項是否要儲存 (remind)
+		 */
+
+		$table->type = 'resident';
+		$table->deliver_nths = implode(',', $table->deliver_nths);
+	}
 }
