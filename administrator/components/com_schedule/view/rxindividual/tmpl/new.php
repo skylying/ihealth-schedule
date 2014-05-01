@@ -20,6 +20,11 @@ $customerID = $data->form->getField('customer_id')->id;
 $telOfficeID = $data->form->getField('tel_office')->id;
 $telHomeID = $data->form->getField('tel_home')->id;
 $mobileID = $data->form->getField('mobile')->id;
+
+$telOfficeName = $data->form->getField('tel_office')->name;
+$telHomeName   = $data->form->getField('tel_home')->name;
+$mobileName    = $data->form->getField('mobile')->name;
+
 $customerIDNumber = $data->form->getField('id_number')->id;
 
 ?>
@@ -373,37 +378,22 @@ jQuery(document).ready(function ()
 				<div class="col-lg-12">
 					<!-- TODO:js -->
 					<div class="control-group">
-						<div class="control-label">
-							<?php echo $data->form->getLabel('tel_office'); ?>
-						</div>
-						<div class="controls">
-							<input type="text"/>
-						</div>
-						<input type="hidden" id="<?php echo $telOfficeID;?>"/>
+						<?php echo $schedules["jform_schedules_{$key}_schedule_id"]->getControlGroup(); ?>
+						<input type="hidden" name="<?php echo $telOfficeName; ?>" id="<?php echo $telOfficeID;?>"/>
 					</div>
 				</div>
 				<div class="col-lg-12">
 					<!-- TODO:js -->
 					<div class="control-group">
-						<div class="control-label">
-							<?php echo $data->form->getLabel('tel_home'); ?>
-						</div>
-						<div class="controls">
-							<input type="text"/>
-						</div>
-						<input type="hidden" id="<?php echo $telHomeID;?>"/>
+						<?php echo $schedules["jform_schedules_{$key}_schedule_id"]->getControlGroup(); ?>
+						<input type="hidden" name="<?php echo $telHomeName; ?>" id="<?php echo $telHomeID;?>"/>
 					</div>
 				</div>
 				<div class="col-lg-12">
 					<!-- TODO:js -->
 					<div class="control-group">
-						<div class="control-label">
-							<?php echo $data->form->getLabel('mobile'); ?>
-						</div>
-						<div class="controls">
-							<input type="text"/>
-						</div>
-						<input type="hidden" id="<?php echo $mobileID;?>"/>
+						<?php echo $schedules["jform_schedules_{$key}_schedule_id"]->getControlGroup(); ?>
+						<input type="hidden" name="<?php echo $mobileName; ?>" id="<?php echo $mobileID;?>"/>
 					</div>
 				</div>
 			</div>
