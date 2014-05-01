@@ -15,14 +15,14 @@
         - { Table: '#__schedule_addresses', Non_unique: '0', Key_name: PRIMARY, Seq_in_index: '1', Column_name: id, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
     data:
         - ['1', '2', '1', 臺北市, '1', 中正區, 中正路100號, 1]
-        - ['2', '2', '1', 臺北市, '1', 中正區, 中正路100號2F, 1]
-        - ['3', '2', '1', 臺北市, '1', 中正區, 中正路100號3F, 1]
+        - ['2', '2', '1', 臺北市, '1', 中正區, 中正路100號2F, 0]
+        - ['3', '2', '1', 臺北市, '1', 中正區, 中正路100號3F, 0]
         - ['4', '4', '1', 臺北市, '10', '內湖區', '內湖路100號20巷5弄4F', 0]
         - ['5', '4', '1', 臺北市, '10', '內湖區', '內湖路100號20巷5弄2F', 1]
         - ['6', '4', '1', 臺北市, '4', 萬華區, 萬華路100號6F, 0]
-        - ['7', '7', '5', 高雄市, '111', 三民區, 三民路20號3F, 0]
+        - ['7', '7', '5', 高雄市, '111', 三民區, 三民路20號3F, 1]
         - ['8', '7', '5', 高雄市, '111', 三民區, 三民路20號1F, 0]
-        - ['9', '8', '7', 新竹市, '370', 東區, 新竹路100號10F, 1]
+        - ['9', '8', '7', 新竹市, '370', 東區, 新竹路100號10F, 0]
         - ['10', '8', '7', 新竹市, '371', 南區, 信義路100號5F, 1]
 '#__schedule_colors':
     name: '#__schedule_colors'
@@ -332,7 +332,7 @@
         type: { Field: type, Type: char(10), 'Null': YES, Default: null, Extra: '', Comment: '處方箋類別 (individual:散客 / resident:住民)', From: [type] }
         birth_date: { Field: birth_date, Type: date, 'Null': YES, Default: null, Extra: '', Comment: 生日, From: [birth_date] }
         see_dr_date: { Field: see_dr_date, Type: date, 'Null': YES, Default: null, Extra: '', Comment: 就醫日期, From: [see_dr_date] }
-        period: { Field: period, Type: tinyint(2), 'Null': YES, Default: null, Extra: '', Comment: '給藥天數 (最大值:31)', From: [period] }
+        period: { Field: period, Type: tinyint(2), 'Null': YES, Default: null, Extra: '', Comment: '給藥天數 (介於 21~31 之間)', From: [period] }
         times: { Field: times, Type: tinyint(1), 'Null': YES, Default: null, Extra: '', Comment: 可調劑次數, From: [times] }
         deliver_nths: { Field: deliver_nths, Type: 'set(''1st'',''2nd'',''3rd'')', 'Null': YES, Default: null, Extra: '', Comment: '宅配第幾次', From: [deliver_nths] }
         method: { Field: method, Type: char(10), 'Null': YES, Default: null, Extra: '', Comment: '處方箋類別 (fax:傳真 / line:Line / form:自行填表 / file:上傳檔案 / photo:拍照 / paper:正本)', From: [method] }
@@ -340,7 +340,7 @@
         empty_date_1st: { Field: empty_date_1st, Type: date, 'Null': YES, Default: null, Extra: '', Comment: 第一次吃完藥日, From: [empty_date_1st] }
         empty_date_2nd: { Field: empty_date_2nd, Type: date, 'Null': YES, Default: null, Extra: '', Comment: 第二次吃完藥日, From: [empty_date_2nd] }
         note: { Field: note, Type: text, 'Null': YES, Default: null, Extra: '', Comment: 備註, From: [note] }
-        remind: { Field: remind, Type: 'set(''checkorigin'' , ''needsplit'' , ''origincollected'' )', 'Null': YES, Default: null, Extra: '', Comment: '需確認正本,藥品需分包,正本已回收', From: [remind] }
+        remind: { Field: remind, Type: 'set(''checkorigin'' , ''needsplit'' , ''origincollected'' )', 'Null': YES, Default: null, Extra: '', Comment: 'checkorigin : 需確認正本, needsplit : 藥品需分包, origincollected : 正本已回收', From: [remind] }
         created: { Field: created, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: 建立時間, From: [created] }
         created_by: { Field: created_by, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: '建立者 user id', From: [created_by] }
         modified: { Field: modified, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: 修改時間, From: [modified] }
