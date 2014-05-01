@@ -7,7 +7,7 @@
 		<field name="id"
 			type="text"
 			default="0"
-			label="COM_SCHEDULE_MEMBER_ITEM_ID"
+			label="會員編號"
 			description="JGLOBAL_FIELD_ID_DESC"
 			readonly="true"
 			class="readonly"
@@ -15,8 +15,8 @@
 
 		<field name="name"
 			type="text"
-			label="COM_SCHEDULE_MEMBER_ITEM_NAME"
-			description="COM_SCHEDULE_MEMBER_ITEM_NAME"
+			label="會員姓名"
+			description="會員姓名"
 			required="true"
 			class="input-xlarge required"
 			/>
@@ -24,8 +24,8 @@
 		<field name="email"
 			type="email"
 			autocomplete="off"
-			label="COM_SCHEDULE_MEMBER_ITEM_EMAIL"
-			description="COM_SCHEDULE_MEMBER_ITEM_EMAIL"
+			label="會員信箱"
+			description="會員信箱"
 			required="true"
 			default=" "
 			class="input-xlarge"
@@ -46,16 +46,16 @@
 			class="validate-password input-xlarge"
 			field="password"
 			filter="raw"
-			label="COM_SCHEDULE_MEMBER_ITEM__PASSWORD2_LABEL"
-			description="COM_SCHEDULE_MEMBER_ITEM__PASSWORD2_LABEL"
+			label="確認密碼"
+			description="確認密碼"
 			preview="true"
 			validate="equals"
 			/>
 
 		<field name="tel"
 			type="tel"
-			label="COM_SCHEDULE_MEMBER_ITEM_TEL"
-			description="COM_SCHEDULE_MEMBER_TEL"
+			label="電話"
+			description="電話"
 			class="input-xlarge"
 			/>
 	</fieldset>
@@ -64,7 +64,7 @@
 		horz="true">
 		<field name="customers"
 			type="customer_list"
-			label="COM_SCHEDULE_MEMBER_RELATED_CUSTOMERS"
+			label="對應散客"
 			value_field="name"
 			multiple="true"
 			>

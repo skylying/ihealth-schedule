@@ -234,14 +234,14 @@ class MemberCustomerHelper
 
 		if (!static::disconnectCustomers($memberId))
 		{
-			$app->enqueueMessage('COM_SCHEDULE_MEMBER_DISCONNECT_MAPPING_FAILED', 'error');
+			$app->enqueueMessage('更新客戶對應時，刪除關聯失敗', 'error');
 
 			return false;
 		}
 
 		if (!static::connectCustomers($memberId, $customerIds))
 		{
-			$app->enqueueMessage('COM_SCHEDULE_MEMBER_CONNECT_MAPPING_FAILED', 'error');
+			$app->enqueueMessage('更新客戶對應時，加入關聯失敗', 'error');
 
 			return false;
 		}

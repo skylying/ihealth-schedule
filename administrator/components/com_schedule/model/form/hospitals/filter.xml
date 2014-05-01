@@ -50,13 +50,13 @@
 		<field
 			name="hospital.has_hicode"
 			type="list"
-			label="COM_SCHEDULE_HOSPITAL_FILTER_HICODE"
+			label="是否有藥品健保碼"
 			default=""
 			onchange="this.form.submit();"
 			>
 			<option></option>
-			<option value="1">COM_SCHEDULE_HOSPITAL_ITEM_HAS_HICODE</option>
-			<option value="0">COM_SCHEDULE_HOSPITAL_ITEM_NO_HICODE</option>
+			<option value="1">有</option>
+			<option value="0">無</option>
 			<option value="*">JALL</option>
 		</field>
 
@@ -64,8 +64,8 @@
 		<field
 			name="hospital.city"
 			type="list"
-			label="COM_SCHEDULE_HOSPITAL_ITEM_CITY_TITLE"
-			description="COM_SCHEDULE_HOSPITAL_ITEM_CITY_TITLE"
+			label="縣市名稱"
+			description="縣市名稱"
 			onchange="this.form.submit();"
 			>
 			<option></option>
@@ -80,8 +80,8 @@
 		<field
 			name="hospital.area"
 			type="list"
-			label="COM_SCHEDULE_HOSPITAL_ITEM_AREA_TITLE"
-			description="COM_SCHEDULE_HOSPITAL_ITEM_AREA_TITLE"
+			label="區域名稱"
+			description="區域名稱"
 			onchange="this.form.submit();"
 			>
 			<option></option>

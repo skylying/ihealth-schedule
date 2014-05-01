@@ -10,7 +10,7 @@
 			>
 			<option value="*">JALL</option>
 			<option value="institute.title">JGLOBAL_TITLE</option>
-			<option value="institute.short_title">COM_SCHEDULE_INSTITUTE_SHORT_TITLE</option>
+			<option value="institute.short_title">機構簡稱</option>
 		</field>
 
 		<field
@@ -50,12 +50,12 @@
 		<field
 			name="institute.delivery_weekday"
 			type="list"
-			label="COM_SCHEDULE_INSTITUTE_DELIVERY_WEEKDAY"
+			label="外送日"
 			default=""
 			onchange="this.form.submit();"
 			>
 			<option></option>
-			<option>COM_SCHEDULE_INSTITUTE_SELECT_DELIVERY_WEEKDAY</option>
+			<option>選擇外送日</option>
 			<option value="MON">MON</option>
 			<option value="TUE">TUE</option>
 			<option value="WED">WED</option>
@@ -72,11 +72,11 @@
 			key_field="title"
 			value_field="title"
 			default=""
-			label="COM_SCHEDULE_INSTITUTE_CITY"
+			label="縣市"
 			onchange="this.form.submit();"
 			>
 			<option></option>
-			<option>COM_SCHEDULE_INSTITUTE_SELECT_CITY</option>
+			<option>選擇縣市</option>
 		</field>
 
 		<field
@@ -86,11 +86,11 @@
 			key_field="title"
 			value_field="title"
 			default=""
-			label="COM_SCHEDULE_INSTITUTE_AREA"
+			label="區域"
 			onchange="this.form.submit();"
 			>
 			<option></option>
-			<option>COM_SCHEDULE_INSTITUTE_SELECT_AREA</option>
+			<option>選擇區域</option>
 		</field>
 
 	</fields>
@@ -105,8 +105,8 @@
 			default="institute.id DESC"
 			>
 			<option value="">JGLOBAL_SORT_BY</option>
-			<option value="institute.id ASC">JGRID_HEADING_ID_ASC</option>
-			<option value="institute.id DESC">JGRID_HEADING_ID_DESC</option>
+			<option value="institute.id ASC">依機構編號升序排列</option>
+			<option value="institute.id DESC">依機構編號降序排列</option>
 		</field>
 
 		<field

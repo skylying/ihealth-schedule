@@ -66,8 +66,8 @@
 
 		<field name="institute_id"
 			type="institute_list"
-			label="COM_SCHEDULE_INSTITUTE_TITLE"
-			description="COM_SCHEDULE_INSTITUTE_TITLE"
+			label="機構名稱"
+			description="機構名稱"
 			class="input-large"
 			/>
 
