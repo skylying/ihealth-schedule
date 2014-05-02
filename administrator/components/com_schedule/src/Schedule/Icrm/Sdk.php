@@ -94,15 +94,31 @@ class Sdk
 		// Prepare Http object
 		$http = \JHttpFactory::getHttp(new \JRegistry, 'Curl');
 
-		if ($method == 'get')
+		try
 		{
-			$this->uri->setQuery($query);
+			if ($method == 'get')
+			{
+				$this->uri->setQuery($query);
 
-			$result = $http->get((string) $this->uri);
+				$result = $http->get((string) $this->uri);
+			}
+			else
+			{
+				$result = $http->$method((string) $this->uri, $query);
+			}
 		}
-		else
+
+		/*
+		 * Http request fail, we just alert user, don't lock the screen.
+		 * Generic exception we let up-level to fetch it.
+		 */
+		catch (\RuntimeException $e)
 		{
-			$result = $http->$method((string) $this->uri, $query);
+			$app = \JFactory::getApplication();
+
+			$app->enqueueMessage($e->getMessage(), 'error');
+
+			return $this->resolveResult('');
 		}
 
 		return $this->resolveResult($result->body);
