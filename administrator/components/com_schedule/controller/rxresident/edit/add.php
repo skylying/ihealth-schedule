@@ -3,9 +3,9 @@
 use Windwalker\Controller\Edit\AddController;
 
 /**
- * Class ScheduleControllerRxResidentEditAdd
+ * Class ScheduleControllerRxresidentEditAdd
  */
-class ScheduleControllerRxResidentEditAdd extends AddController
+class ScheduleControllerRxresidentEditAdd extends AddController
 {
 	/**
 	 * redirectToItem

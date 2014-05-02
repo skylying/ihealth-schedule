@@ -3,9 +3,9 @@
 use Windwalker\Controller\Edit\SaveController;
 
 /**
- * Class ScheduleControllerRxResidentEditSave
+ * Class ScheduleControllerRxresidentEditSave
  */
-class ScheduleControllerRxResidentEditSave extends SaveController
+class ScheduleControllerRxresidentEditSave extends SaveController
 {
 	/**
 	 * preSaveHook
