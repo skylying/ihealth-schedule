@@ -71,12 +71,12 @@ class ScheduleControllerRxresidentEditSave extends SaveController
 
 		foreach ($this->data['item']['new'] as $hash => $item)
 		{
-			$validDataSet['new' . $hash] = $this->_save($item);
+			$validDataSet['new' . $hash] = $this->saveItem($item);
 		}
 
 		foreach ($this->data['item']['old'] as $hash => $item)
 		{
-			$validDataSet['old' . $hash] = $this->_save($item);
+			$validDataSet['old' . $hash] = $this->saveItem($item);
 		}
 
 		return $validDataSet;
@@ -90,7 +90,7 @@ class ScheduleControllerRxresidentEditSave extends SaveController
 	 * @throws  Exception
 	 * @return  array
 	 */
-	private function _save(array $data)
+	private function saveItem(array $data)
 	{
 		// Validate the posted data.
 		// Sometimes the form needs some posted data, such as for plugins and modules.
