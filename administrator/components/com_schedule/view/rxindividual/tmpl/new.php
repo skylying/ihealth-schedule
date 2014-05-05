@@ -173,7 +173,7 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 		var targetID = 'jform_schedules_' + key + '_address_id';
 
 		// ex: jform[schedule_1st][address]
-		var targetName = 'jform[' + 'schedule_' + key + '][address_id]';
+		var targetName = 'jform[' + 'schedules_' + key + '][address_id]';
 
 		// Find its parent, later we will replace it with new select list
 		var targetsParent = $('#' + targetID).parent();
@@ -369,8 +369,6 @@ jQuery(document).ready(function ()
 							</div>
 						</div>
 					</div>
-
-					<?php echo $schedules["jform_schedules_{$key}_schedule_id"]->getControlGroup(); ?>
                 </div>
 			<?php endforeach; ?>
 			<div class="row-fluid well">
