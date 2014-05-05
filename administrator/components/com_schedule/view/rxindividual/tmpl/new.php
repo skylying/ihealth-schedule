@@ -189,7 +189,7 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 		{
 			// Add option tag
 			html += '<option' +
-				' val="' + addressJson[i].id + '">' +
+				' value="' + addressJson[i].id + '">' +
 				addressJson[i].city_title +
 				addressJson[i].area_title +
 				addressJson[i].address +
