@@ -156,7 +156,7 @@
 			/>
 	</fieldset>
 
-	<fieldset name="phones">
+	<fieldset name="office">
 		<field name="tel_office"
 			type="text"
 			label="宅配電話(O)"
@@ -164,6 +164,9 @@
 			class="input-large"
 			/>
 
+	</fieldset>
+
+	<fieldset name="home">
 		<field name="tel_home"
 			type="text"
 			label="宅配電話(H)"
@@ -171,11 +174,17 @@
 			class="input-large"
 			/>
 
+	</fieldset>
+
+	<fieldset name="mobile">
 		<field name="mobile"
 			type="text"
 			label="手機(M)"
 			description="填入手機(M)"
+
 			class="input-large"
 			/>
+
 	</fieldset>
+
 </form>
