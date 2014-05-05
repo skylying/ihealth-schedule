@@ -193,9 +193,11 @@ class JFormFieldRadioinput extends JFormField
 			. htmlspecialchars($this->value, ENT_COMPAT, 'UTF-8') . '"' . $class . $size . $disabled . $readonly . $list
 			. $hint . $onchange . $maxLength . $required . $autocomplete . $autofocus . $spellcheck . $inputmode . $pattern . ' />';
 
+		$jsonString = json_decode($this->value);
+
 		for ($key = 0; $key <= 2; $key++)
 		{
-			if (empty($this->value))
+			if (empty($jsonString))
 			{
 				$html[] = '<div style="margin:10px"><input type="radio"' . ' id="radio' . $this->id . $key . '"' . 'name="radioInput' . $this->id . '" />
 				<input type="text"' . ' id="' . $this->id . $key . '"
@@ -203,8 +205,6 @@ class JFormFieldRadioinput extends JFormField
 					. $hint . $onchange . $maxLength . $required . $autocomplete . $autofocus . $spellcheck . $inputmode . $pattern . ' /></div>';
 			}
 		}
-
-		$jsonString = json_decode($this->value);
 
 		foreach ( (array) $jsonString as $key => $value)
 		{
