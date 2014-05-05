@@ -26,6 +26,9 @@ JHtmlJquery::framework(true);
 $asset->addCSS('rxresident.css');
 $asset->addJS('multi-row-handler.js');
 $asset->addJS('rxresident/edit-list.js');
+
+JHtml::stylesheet('com_schedule/rxresident.css', false, true);
+
 ?>
 <script type="text/javascript">
 	jQuery(document).ready(function() {
@@ -35,11 +38,19 @@ $asset->addJS('rxresident/edit-list.js');
 
 <form id="adminForm" name="adminForm" action="" method="post" class="form-horizontal">
 	<div id="institute-information" class="row-fluid">
-		<div class="col-lg-6">
+		<div class="col-md-4">
 			<?php echo $instituteForm->getField('institute_id')->getControlGroup(); ?>
 		</div>
-		<div class="col-lg-6">
+		<div class="col-md-4 col-md-offset-1">
 			<?php echo $instituteForm->getField('floor')->getControlGroup(); ?>
+		</div>
+	</div>
+	<div class="row-fluid">
+		<div class="col-md-3 deliveryblock">
+			<div class="weekday">外送日：<span id="weekday-from-js"></span></div>
+			<div>
+				<?php echo \Schedule\Helper\ColorHelper::getColorBlock('#ffffff', 30, 'deliverycolor'); ?>
+			</div>
 		</div>
 	</div>
 
