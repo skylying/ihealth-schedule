@@ -305,6 +305,7 @@ jQuery(document).ready(function ()
 	// customer_id's value
 	var customerID = "<?php echo $customerID;?>";
 
+	// Toggle nth schedules
 	jQuery('.js-nth-schedule-check input').bindChangeNthScheduleInfo();
 
 	jQuery('.js-nth-schedule-check input').each( function()
@@ -327,6 +328,14 @@ jQuery(document).ready(function ()
 		jQuery(this).updateHiddenPhoneNumbersInput();
 	});
 
+	jQuery('.js-add-tel').on('click', function()
+	{
+		jQuery(this).closest('.js-tel-wrap').find('.js-tmpl-add-telrow').removeClass('hide');
+	});
+	jQuery('.js-save-tel').on('click', function()
+	{
+		jQuery(this).closest('.js-tmpl-add-telrow').addClass('hide');
+	});
 
 });
 </script>
@@ -361,7 +370,7 @@ jQuery(document).ready(function ()
 	{
 		display: block !important;
 	}
-	.tmpl-tel-row input
+	.js-tmpl-add-telrow input
 	{
 		width: 67%;
 		margin-right: 2%;
@@ -413,7 +422,7 @@ jQuery(document).ready(function ()
                 </div>
 			<?php endforeach; ?>
 			<div class="row-fluid well">
-				<div class="col-lg-12">
+				<div class="col-lg-12 js-tel-wrap">
 					<div class="control-group">
 						<div class="control-label">
 							<?php echo $data->form->getLabel('tel_office'); ?>
@@ -429,7 +438,7 @@ jQuery(document).ready(function ()
 						<input type="hidden" name="<?php echo $telOfficeName; ?>" id="<?php echo $telOfficeID;?>"/>
 					</div>
 					<!-- Add telephone row -->
-					<div class="tmpl-tel-row hide">
+					<div class="js-tmpl-add-telrow hide">
 						<div class="control-group">
 							<div class="controls">
 								<input class="js-tel-row-data pull-left" type="text">
@@ -441,7 +450,7 @@ jQuery(document).ready(function ()
 						</div>
 					</div>
 				</div>
-				<div class="col-lg-12">
+				<div class="col-lg-12 js-tel-wrap">
 					<div class="control-group">
 						<div class="control-label">
 							<?php echo $data->form->getLabel('tel_home'); ?>
@@ -457,7 +466,7 @@ jQuery(document).ready(function ()
 						<input type="hidden" name="<?php echo $telHomeName; ?>" id="<?php echo $telHomeID;?>"/>
 					</div>
 					<!-- Add telephone row -->
-					<div class="tmpl-tel-row hide">
+					<div class="js-tmpl-add-telrow hide">
 						<div class="control-group">
 							<div class="controls">
 								<input class="js-tel-row-data pull-left" type="text">
@@ -469,7 +478,7 @@ jQuery(document).ready(function ()
 						</div>
 					</div>
 				</div>
-				<div class="col-lg-12">
+				<div class="col-lg-12 js-tel-wrap">
 					<div class="control-group">
 						<div class="control-label">
 							<?php echo $data->form->getLabel('mobile'); ?>
@@ -485,7 +494,7 @@ jQuery(document).ready(function ()
 						<input type="hidden" name="<?php echo $mobileName; ?>" id="<?php echo $mobileID;?>"/>
 					</div>
 					<!-- Add telephone row -->
-					<div class="tmpl-tel-row hide">
+					<div class="js-tmpl-add-telrow hide">
 						<div class="control-group">
 							<div class="controls">
 								<input class="js-tel-row-data pull-left" type="text">
