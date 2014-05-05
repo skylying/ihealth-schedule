@@ -225,7 +225,7 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 		//Update rows, append new input rows to target element
 		var html = '';
 
-		html += '<select class="js-select-phone-default">';
+		html += '<select class="js-select-phone-default pull-left">';
 
 		for (var i = 0; i < defaultLength; i++)
 		{
@@ -273,6 +273,26 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 		}
 		hiddenInput.val(JSON.stringify(data));
 	};
+
+	$.fn.bindChangeNthScheduleInfo = function ()
+	{
+		$(this).on('change', function()
+		{
+			$.fn.toggleNthScheduleInfo(this);
+		});
+	}
+	$.fn.toggleNthScheduleInfo = function (that)
+	{
+		that = that || this;
+		if ($(that).prop("checked"))
+		{
+			$(that).closest('.schedules').find('.js-nth-schedule-info').removeClass('hide');
+		}
+		else
+		{
+			$(that).closest('.schedules').find('.js-nth-schedule-info').addClass('hide');
+		}
+	}
 })(jQuery);
 
 jQuery(document).ready(function ()
@@ -285,9 +305,14 @@ jQuery(document).ready(function ()
 	// customer_id's value
 	var customerID = "<?php echo $customerID;?>";
 
-	console.log(customerDropDown.val());
-	// If customer id is not set, select the first option, and update once on load
+	jQuery('.js-nth-schedule-check input').bindChangeNthScheduleInfo();
 
+	jQuery('.js-nth-schedule-check input').each( function()
+	{
+		jQuery(this).toggleNthScheduleInfo();
+	});
+
+	// If customer id is not set, select the first option, and update once on load
 	customerDropDown.customerAjax(customerDropDown.val());
 
 	// Fire ajax request everytime customer_id has been changed
@@ -301,6 +326,8 @@ jQuery(document).ready(function ()
 	{
 		jQuery(this).updateHiddenPhoneNumbersInput();
 	});
+
+
 });
 </script>
 
@@ -329,6 +356,21 @@ jQuery(document).ready(function ()
 	{
 		display: none;
 	}
+
+	input.badge:empty
+	{
+		display: block !important;
+	}
+	.tmpl-tel-row input
+	{
+		width: 67%;
+		margin-right: 2%;
+	}
+	.js-select-phone-default
+	{
+		width: 67%;
+		margin-right: 2%;
+	}
 </style>
 
 <form name="adminForm" id="adminForm" method="post" action="<?php echo JURI::getInstance(); ?>" class="form-horizontal"
@@ -346,12 +388,11 @@ jQuery(document).ready(function ()
 			<?php foreach (array("1st", "2nd", "3rd") as $key): ?>
 				<?php $schedules = $data->form->getGroup("schedules_{$key}"); ?>
 				<div id="schedules_<?php echo $key; ?>" class="row-fluid schedules schedules_<?php echo $key; ?>">
-					<div class="col-lg-3">
-						<!-- TODO: 換成可愛的圓圈圈 -->
+					<div class="col-lg-3 js-nth-schedule-check">
 						<?php echo $schedules["jform_schedules_{$key}_deliver_nth"]->getControlGroup(); ?>
 					</div>
-					<div class="col-lg-9">
-						<div class="row-fluid address">
+					<div class="col-lg-9 js-nth-schedule-info hide">
+						<div class="row-fluid">
 							<div class="col-lg-12">
 								<?php echo $schedules["jform_schedules_{$key}_address_id"]->getControlGroup(); ?>
 							</div>
@@ -377,10 +418,27 @@ jQuery(document).ready(function ()
 						<div class="control-label">
 							<?php echo $data->form->getLabel('tel_office'); ?>
 						</div>
+						<!-- This is where to put select list -->
 						<div class="controls">
 							<input type="text" />
 						</div>
+						<div class="btn btn-small btn-info pull-left js-add-tel">
+							<span class="icon-plus icon-white"></span>
+							新增
+						</div>
 						<input type="hidden" name="<?php echo $telOfficeName; ?>" id="<?php echo $telOfficeID;?>"/>
+					</div>
+					<!-- Add telephone row -->
+					<div class="tmpl-tel-row hide">
+						<div class="control-group">
+							<div class="controls">
+								<input class="js-tel-row-data pull-left" type="text">
+							</div>
+							<div class="btn btn-small btn-success pull-left js-save-tel">
+								<span class="icon-plus icon-white"></span>
+								儲存
+							</div>
+						</div>
 					</div>
 				</div>
 				<div class="col-lg-12">
@@ -388,10 +446,27 @@ jQuery(document).ready(function ()
 						<div class="control-label">
 							<?php echo $data->form->getLabel('tel_home'); ?>
 						</div>
+						<!-- This is where to put select list -->
 						<div class="controls">
 							<input type="text" />
 						</div>
+						<div class="btn btn-small btn-info pull-left js-add-tel">
+							<span class="icon-plus icon-white"></span>
+							新增
+						</div>
 						<input type="hidden" name="<?php echo $telHomeName; ?>" id="<?php echo $telHomeID;?>"/>
+					</div>
+					<!-- Add telephone row -->
+					<div class="tmpl-tel-row hide">
+						<div class="control-group">
+							<div class="controls">
+								<input class="js-tel-row-data pull-left" type="text">
+							</div>
+							<div class="btn btn-small btn-success pull-left js-save-tel">
+								<span class="icon-plus icon-white"></span>
+								儲存
+							</div>
+						</div>
 					</div>
 				</div>
 				<div class="col-lg-12">
@@ -399,10 +474,27 @@ jQuery(document).ready(function ()
 						<div class="control-label">
 							<?php echo $data->form->getLabel('mobile'); ?>
 						</div>
+						<!-- This is where to put select list -->
 						<div class="controls">
 							<input type="text" />
 						</div>
+						<div class="btn btn-small btn-info pull-left js-add-tel">
+							<span class="icon-plus icon-white"></span>
+							新增
+						</div>
 						<input type="hidden" name="<?php echo $mobileName; ?>" id="<?php echo $mobileID;?>"/>
+					</div>
+					<!-- Add telephone row -->
+					<div class="tmpl-tel-row hide">
+						<div class="control-group">
+							<div class="controls">
+								<input class="js-tel-row-data pull-left" type="text">
+							</div>
+							<div class="btn btn-small btn-success pull-left js-save-tel">
+								<span class="icon-plus icon-white"></span>
+								儲存
+							</div>
+						</div>
 					</div>
 				</div>
 				<div class="col-lg-12">
