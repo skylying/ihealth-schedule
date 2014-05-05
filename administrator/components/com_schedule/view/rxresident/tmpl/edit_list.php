@@ -9,17 +9,30 @@
 /**
  * Prepare data for this template.
  *
+ * @var $container    Windwalker\DI\Container
  * @var $data         Windwalker\Data\Data
  * @var $templateForm JForm
  * @var $forms        JForm[]
+ * @var $asset        Windwalker\Helper\AssetHelper
  */
+$container     = $this->getContainer();
 $instituteForm = $data->instituteForm;
 $templateForm  = $data->templateForm;
 $forms         = $data->forms;
+$asset         = $container->get('helper.asset');
 
-JHtml::stylesheet('com_schedule/rxresident.css', false, true);
+JHtmlJquery::framework(true);
 
+$asset->addCSS('rxresident.css');
+$asset->addJS('multi-row-handler.js');
+$asset->addJS('rxresident/edit-list.js');
 ?>
+<script type="text/javascript">
+	jQuery(document).ready(function() {
+		RxResidentEditList.run();
+	});
+</script>
+
 <form id="adminForm" name="adminForm" action="" method="post" class="form-horizontal">
 	<div id="institute-information" class="row-fluid">
 		<div class="col-lg-6">
@@ -52,9 +65,9 @@ JHtml::stylesheet('com_schedule/rxresident.css', false, true);
 <?php
 if (count($forms) > 0)
 {
-	foreach ($forms as $id => $form)
+	foreach ($forms as $hash => $form)
 	{
-		$group = 'item.old.' . $id;
+		$group = 'items.' . $hash;
 
 		echo $this->loadTemplate('row', array('group' => $group, 'form' => $form));
 	}
@@ -79,83 +92,5 @@ if (count($forms) > 0)
 </form>
 
 <script id="row-template" class="hide" type="text/html">
-	<?php echo $this->loadTemplate('row', array('group' => 'item.new.0hash0', 'form' => $templateForm)); ?>
-</script>
-
-<script type="text/javascript">
-	(function ($)
-	{
-		var $panel = $('#rx-list').find('tbody');
-
-		// Initialize each row
-		function initialRow($row)
-		{
-			$row.find('.datetimepicker').datetimepicker({
-				pickTime: false
-			});
-		}
-
-		// Add row
-		$('.button-add-row').click(function ()
-		{
-			var i,
-				row = '',
-				hash = '',
-				newHash = '',
-				amount = $('#new-row-number').val();
-
-			amount = isNaN(amount) ? 0 : amount;
-
-			for (i = 0; i < amount; ++i)
-			{
-				newHash = (new Date).getTime().toString();
-				hash = (hash === newHash) ? newHash + '0' : newHash;
-
-				row = $('#row-template').clone().html();
-				row = row.replace(/0hash0/g, hash);
-
-				row = $(row);
-
-				initialRow(row);
-
-				$panel.append(row);
-			}
-		});
-
-		// Delete row
-		$panel.on('click', '.button-delete-row', function ()
-		{
-			$(this).closest('tr').remove();
-		});
-
-		// Copy row
-		$panel.on('click', '.button-copy-row', function ()
-		{
-			var $row = $(this).closest('tr').clone(),
-				hash = (new Date).getTime().toString(),
-				idPrefix = $row.data('id-prefix'),
-				namePrefix = $row.data('name-prefix'),
-				idReplace = $row.data('id-replace').replace('{{rowHash}}', hash),
-				nameReplace = $row.data('name-replace').replace('{{rowHash}}', hash);
-
-			$row.attr('data-id-prefix', idReplace);
-			$row.attr('data-name-prefix', nameReplace);
-
-			$row.find('[name^="' + namePrefix + '"]').each(function (i, node)
-			{
-				var $self = $(this),
-					id = $self.attr('id'),
-					name = $self.attr('name'),
-					newId = id.replace(idPrefix, idReplace),
-					newName = name.replace(namePrefix, nameReplace);
-
-				$self.attr('id', newId);
-				$self.attr('name', newName);
-			});
-
-			initialRow($row);
-
-			$panel.append($row);
-		});
-	})(jQuery);
+	<?php echo $this->loadTemplate('row', array('group' => 'items.0hash0', 'form' => $templateForm)); ?>
 </script>

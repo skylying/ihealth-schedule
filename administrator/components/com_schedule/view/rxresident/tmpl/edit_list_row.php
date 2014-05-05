@@ -7,7 +7,6 @@
  */
 
 use Schedule\Helper\Form\FieldHelper;
-use Schedule\Helper\Form\MultiRowHelper;
 
 /**
  * Prepare data for this template.
@@ -19,7 +18,7 @@ $form  = $data->form;
 $group = $data->group;
 $id    = FieldHelper::resetGroup($form->getField('id'), $group);
 ?>
-<tr <?php echo MultiRowHelper::getRowDataAttributes($id->id, $id->fieldname, $id->name); ?>>
+<tr>
 	<td>
 		<?php echo $id->input; ?>
 	</td>
