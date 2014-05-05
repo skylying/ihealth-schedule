@@ -73,7 +73,7 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 	 *
 	 * fireAjax
 	 *
-	 * @param id
+	 * @param {int} id
 	 */
 	$.fn.customerAjax.fireAjax = function (id)
 	{
@@ -120,20 +120,20 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 	};
 
 	/**
-	 * Upadate customer id_number input value while change customer_id
+	 * Update customer id_number input value while changing customer_id
 	 *
 	 * updateCustomerIdNumber
 	 *
-	 * @param target Target element id
-	 * @param data Data to update
+	 * @param {string} target Target element id
+	 * @param {object} id customer_id to update
 	 */
-	$.fn.customerAjax.updateCustomerIdNumber = function (target, data)
+	$.fn.customerAjax.updateCustomerIdNumber = function (target, id)
 	{
-		data = data || {};
+		id = id || "";
 
 		var targetElement = $('#' + target);
 
-		targetElement.val(data);
+		targetElement.val(id);
 	};
 
 	/**
@@ -141,8 +141,8 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 	 *
 	 * updateJsonToInputField
 	 *
-	 * @param target Target element id
-	 * @param dataJson Data to update
+	 * @param {string} target Target element id
+	 * @param {json} dataJson Data to update
 	 */
 	$.fn.customerAjax.updateJsonToInputField = function (target, dataJson)
 	{
@@ -162,8 +162,8 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 	 *
 	 * updateAddressHtml
 	 *
-	 * @param key
-	 * @param addressJson
+	 * @param {string} key
+	 * @param {json} addressJson
 	 */
 	$.fn.customerAjax.updateAddressHtml = function (key, addressJson)
 	{
@@ -209,8 +209,8 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 	 *
 	 * updatePhoneHtml
 	 *
-	 * @param tagID
-	 * @param telJson
+	 * @param {int} tagID
+	 * @param {json} telJson
 	 */
 	$.fn.customerAjax.updatePhoneHtml = function (tagID, telJson)
 	{
