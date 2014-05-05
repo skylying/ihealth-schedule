@@ -255,6 +255,7 @@
         area: { Field: area, Type: int(11), 'Null': YES, Default: null, Extra: '', Comment: 區域, From: [area] }
         area_title: { Field: area_title, Type: varchar(255), 'Null': YES, Default: null, Extra: '', Comment: 區域名稱, From: [area_title] }
         address: { Field: address, Type: varchar(255), 'Null': YES, Default: null, Extra: '', Comment: 地址, From: [address] }
+        address_id: { Field: address_id, Type: int(11), 'Null': YES, Default: null, Extra: '', Comment: '地址 id', From: [address_id] }
         sender_name: { Field: sender_name, Type: varchar(255), 'Null': YES, Default: null, Extra: '', Comment: 外送藥師, From: [sender_name] }
         date: { Field: date, Type: date, 'Null': YES, Default: null, Extra: '', Comment: 排程日期, From: [date] }
         sorted: { Field: sorted, Type: tinyint(1), 'Null': YES, Default: null, Extra: '', Comment: '是否完成分藥 (0:否 / 1:是)', From: [sorted] }
