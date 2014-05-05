@@ -58,6 +58,7 @@
 			class="fullwidth"
 			label="給藥天數"
 			description="給藥天數"
+			default="28"
 			>
 			<option value="21">21</option>
 			<option value="22">22</option>
@@ -77,6 +78,7 @@
 			class="fullwidth"
 			label="可調劑次數"
 			description="可調劑次數"
+			default="3"
 			>
 			<option value="1">1</option>
 			<option value="2">2</option>
@@ -88,6 +90,7 @@
 			class="fullwidth fullwidth-checkboxes"
 			label="處方箋外送次數"
 			description="處方箋外送次數"
+			default="2nd,3rd"
 			>
 			<option value="1st">1</option>
 			<option value="2nd">2</option>

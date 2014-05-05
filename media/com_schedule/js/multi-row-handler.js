@@ -116,9 +116,12 @@
 			$row.find(selector).each(function()
 			{
 				var $input = $(this),
+					$targetInput = $target.find('#' + $input.attr('id')),
 					inputInfo = self.inputInfo($input.attr('name')),
 					newName = prefix + '[' + newHash + ']' + '[' + inputInfo.fieldName + ']',
 					newId = newName.replace(/\[|\]/g, '_');
+
+				$input.val($targetInput.val());
 
 				$input.attr('name', newName);
 				$input.attr('id', newId);
