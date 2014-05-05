@@ -2,8 +2,13 @@
 <form>
 	<fieldset name="institute">
 		<field name="institute_id"
-			type="text"
 			hint="輸入機構名稱"
+			type="select2"
+			minimumInputLength="2"
+			apiUrl="index.php?option=com_schedule&amp;task=institutes.search.json"
+			apiQueryKey="filter_search"
+			apiValueField="title"
+			onChangeCallback="updateDeliveryDay"
 			class="input-large"
 			label="機構名稱"
 			description="機構名稱"
@@ -75,7 +80,7 @@
 
 		<field name="times"
 			type="list"
-			class="fullwidth"
+			class="fullwidth times"
 			label="可調劑次數"
 			description="可調劑次數"
 			default="3"
