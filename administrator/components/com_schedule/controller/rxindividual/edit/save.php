@@ -79,8 +79,9 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 		$customerMapper->updateOne($customer);
 
 		// Get model
-		$taskModel     = $this->getModel("task");
+		$taskModel     = $this->getModel("Task");
 		$scheduleModel = $this->getModel("Schedule");
+		$addressModel  = $this->getModel("Address");
 
 		// 新增排程
 		foreach (array("1st", "2nd", "3rd") as $val)
@@ -164,5 +165,8 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 			// 新增排程
 			$scheduleModel->save(array_merge((array) $thisScheduleData, $schedule, $scheduleUpdata));
 		}
+
+		// Flush Default Address
+		$addressModel->flushDefaultAddress($customer->id, $address->id);
 	}
 }

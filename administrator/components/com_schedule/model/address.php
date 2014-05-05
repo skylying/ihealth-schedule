@@ -72,4 +72,27 @@ class ScheduleModelAddress extends AdminModel
 	{
 		parent::setOrderPosition($table, $position);
 	}
+
+	/**
+	 * Flush Default Address
+	 *
+	 * @param integer $customer_id
+	 * @param integer $address_id
+	 *
+	 * @return  $this
+	 */
+	public function flushDefaultAddress($customer_id, $address_id)
+	{
+		$db = JFactory::getDbo();
+
+		$q = $db->getQuery(true);
+
+		$q->update(\Schedule\Table\Table::ADDRESSES)
+			->set("previous = CASE WHEN id = {$address_id} THEN 1 ELSE 0 END")
+			->where("customer_id = {$customer_id}");
+
+		$db->setQuery($q);
+
+		return $this;
+	}
 }
