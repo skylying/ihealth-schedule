@@ -18,6 +18,14 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 	 */
 	protected function preSaveHook()
 	{
+		$customerMapper = new DataMapper(Table::CUSTOMERS);
+		$customer = $customerMapper->findOne($this->data['customer_id']);
+
+		// 處方客人資料
+		$this->data["customer_name"] = $customer->name;
+		$this->data["type"]          = $customer->type;
+
+		// 外送次數
 		$nths = array();
 
 		foreach (array("1st", "2nd", "3rd") as $val)
