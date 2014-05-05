@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "c080f3ea4c9312f5f5f86ed4498f683d",
+    "hash": "79136f844394d3960cc3bcb64b05a1f9",
     "packages": [
         {
             "name": "asika/joomla-console",
@@ -88,24 +88,23 @@
         },
         {
             "name": "filp/whoops",
-            "version": "1.1-rc",
+            "version": "1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filp/whoops.git",
-                "reference": "70e23d1c5225af13f964e78edf38e0c5bef4c20f"
+                "reference": "a5865f8f02947590e36206b08368e5b08289a946"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/filp/whoops/zipball/70e23d1c5225af13f964e78edf38e0c5bef4c20f",
-                "reference": "70e23d1c5225af13f964e78edf38e0c5bef4c20f",
+                "url": "https://api.github.com/repos/filp/whoops/zipball/a5865f8f02947590e36206b08368e5b08289a946",
+                "reference": "a5865f8f02947590e36206b08368e5b08289a946",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.0"
             },
             "require-dev": {
-                "mockery/mockery": "0.9.*",
-                "php": ">=5.3.3"
+                "mockery/mockery": "0.9.*"
             },
             "type": "library",
             "extra": {
@@ -143,7 +142,7 @@
                 "whoops",
                 "zf2"
             ],
-            "time": "2014-03-31 04:21:53"
+            "time": "2014-04-28 04:54:31"
         },
         {
             "name": "joomla/application",
@@ -637,16 +636,16 @@
         },
         {
             "name": "windwalker/framework",
-            "version": "dev-master",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ventoviro/windwalker.git",
-                "reference": "21644eb9ce12e3657a5e20c9ca5410e4727e2ca7"
+                "reference": "036b1031385b5386d21cdf377de5e08124df2047"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ventoviro/windwalker/zipball/21644eb9ce12e3657a5e20c9ca5410e4727e2ca7",
-                "reference": "21644eb9ce12e3657a5e20c9ca5410e4727e2ca7",
+                "url": "https://api.github.com/repos/ventoviro/windwalker/zipball/036b1031385b5386d21cdf377de5e08124df2047",
+                "reference": "036b1031385b5386d21cdf377de5e08124df2047",
                 "shasum": ""
             },
             "require": {
@@ -674,7 +673,7 @@
             ],
             "description": "Rapido de la vento viro.",
             "homepage": "https://github.com/ventoviro/windwalker",
-            "time": "2014-04-15 15:08:07"
+            "time": "2014-05-03 16:31:40"
         }
     ],
     "packages-dev": [
@@ -684,9 +683,9 @@
 
     ],
     "minimum-stability": "beta",
-    "stability-flags": {
-        "windwalker/framework": 20
-    },
+    "stability-flags": [
+
+    ],
     "platform": [
 
     ],
