@@ -27,8 +27,6 @@ $asset->addCSS('rxresident.css');
 $asset->addJS('multi-row-handler.js');
 $asset->addJS('rxresident/edit-list.js');
 
-JHtml::stylesheet('com_schedule/rxresident.css', false, true);
-
 ?>
 <script type="text/javascript">
 	jQuery(document).ready(function() {
