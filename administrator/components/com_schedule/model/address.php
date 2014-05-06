@@ -76,22 +76,20 @@ class ScheduleModelAddress extends AdminModel
 	/**
 	 * Flush Default Address
 	 *
-	 * @param integer $customer_id
-	 * @param integer $address_id
+	 * @param integer $customerId
+	 * @param integer $addressId
 	 *
 	 * @return  $this
 	 */
-	public function flushDefaultAddress($customer_id, $address_id)
+	public function flushDefaultAddress($customerId, $addressId)
 	{
-		$db = JFactory::getDbo();
-
-		$q = $db->getQuery(true);
+		$q = $this->db->getQuery(true);
 
 		$q->update(\Schedule\Table\Table::ADDRESSES)
-			->set("previous = CASE WHEN id = {$address_id} THEN 1 ELSE 0 END")
-			->where("customer_id = {$customer_id}");
+			->set("previous = CASE WHEN id = {$addressId} THEN 1 ELSE 0 END")
+			->where("customer_id = {$customerId}");
 
-		$db->setQuery($q);
+		$this->db->setQuery($q);
 
 		return $this;
 	}
