@@ -60,7 +60,10 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 	{
 		$rx = $model->getItem();
 
-		// TODO: 上傳圖片功能
+		$files = $this->input->files->getVar('jform');
+
+		// 圖片上傳
+		\ScheduleHelperImage::handleUpload($rx->id, $files['rximages']);
 
 		// Mappers
 		$customerMapper = new DataMapper(Table::CUSTOMERS);
