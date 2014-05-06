@@ -122,7 +122,8 @@ class ScheduleViewRxresidentHtml extends EditView
 	{
 		$items = array();
 		$app = JFactory::getApplication();
-		$data = $app->getUserState($this->option . '.rxresident.edit.save.data');
+		$key = $this->option . '.item.edit.save.data';
+		$data = $app->getUserState($key);
 
 		if ($data)
 		{
@@ -131,7 +132,7 @@ class ScheduleViewRxresidentHtml extends EditView
 				$items[$hash] = $item;
 			}
 
-			$app->setUserState($this->option . '.rxresident.edit.save.data', null);
+			$app->setUserState($key, null);
 		}
 		else
 		{

@@ -116,10 +116,19 @@
 			$row.find(selector).each(function()
 			{
 				var $input = $(this),
-					$targetInput = $target.find('#' + $input.attr('id')),
-					inputInfo = self.inputInfo($input.attr('name')),
+					id = $input.attr('id'),
+					name = $input.attr('name'),
+					inputInfo = self.inputInfo(id, name),
+					$targetInput = $target.find('#' + id),
 					newName = prefix + '[' + newHash + ']' + '[' + inputInfo.fieldName + ']',
-					newId = newName.replace(/\[|\]/g, '_');
+					newId = '';
+
+				newId = newName.replace(/\]\[/g, '_');
+				newId = newId.replace(/\[/g, '_');
+				newId = newId.replace(/\]/g, '');
+
+				newName += inputInfo.nameSuffix;
+				newId += inputInfo.idSuffix;
 
 				$input.val($targetInput.val());
 
@@ -157,19 +166,37 @@
 		/**
 		 * Get hash and fieldName information
 		 *
-		 * @param   name  string  Form input name (expect format: prefix[hash][fieldName])
+		 * @param   id    string  Form input id   (expect format: {prefix}_{hash}_{fieldName}{suffix})
+		 * @param   name  string  Form input name (expect format: {prefix}[{hash}][{fieldName}]{suffix})
 		 *
-		 * @return  {{hash:string, fieldName:string}}
+		 * @return  {{hash:string, fieldName:string, idSuffix:string, nameSuffix:string}}
 		 */
-		inputInfo: function(name)
+		inputInfo: function(id, name)
 		{
-			var parts = name.replace(this.options.prefix, '');
+			var parts = name.replace(this.options.prefix, ''),
+				idSuffix = '',
+				nameSuffix = '';
 
 			parts = parts.substr(1, parts.length-2).split('][');
 
+			if (parts.length > 2)
+			{
+				nameSuffix = '[' + parts.slice(2).join('][') + ']';
+
+				var search = name.substr(0, name.length - nameSuffix.length);
+
+				search = search.replace(/\]\[/g, '_');
+				search = search.replace(/\[/g, '_');
+				search = search.replace(/\]/g, '');
+
+				idSuffix = id.replace(search, '');
+			}
+
 			return {
 				hash: parts[0] ? parts[0] : '',
-				fieldName: parts[1] ? parts[1] : ''
+				fieldName: parts[1] ? parts[1] : '',
+				idSuffix: idSuffix,
+				nameSuffix: nameSuffix
 			};
 		},
 
