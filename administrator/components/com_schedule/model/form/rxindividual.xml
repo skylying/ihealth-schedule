@@ -209,12 +209,13 @@
 			/>
 
 		<field name="customer_id"
-			type="sql"
+			type="customer_prescriptionlist"
 			label="客戶姓名"
 			description="客戶姓名"
-			query="SELECT id, name FROM #__schedule_customers WHERE `type` = 'individual'"
+			customer="individual"
 			key_field="id"
 			value_field="name"
+			quickadd="true"
 			/>
 
 		<field name="birth_date"
