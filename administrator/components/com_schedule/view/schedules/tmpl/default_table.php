@@ -159,12 +159,12 @@ $date      = $container->get('date');
 
 		<!-- customer_name -->
 		<td class="center">
-			<?php if ($item->customer_id > 0): ?>
-			<a href="<?php echo JRoute::_('index.php?option=com_schedule&task=customer.edit.edit&id=' . $item->customer_id); ?>" target="_blank">
-				<?php echo $item->customer_name; ?>
-				<span class="glyphicon glyphicon-share-alt"></span>
-			</a>
-			<?php endif; ?>
+			<?php
+			if ($item->customer_id > 0)
+			{
+				echo Schedule\Helper\UiHelper::foreignLink('customer', $item->customer_name, $item->customer_id, '', array('target' => '_blank'));
+			}
+			?>
 		</td>
 
 		<!-- date -->
