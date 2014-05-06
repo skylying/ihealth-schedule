@@ -73,7 +73,7 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 	 *
 	 * fireAjax
 	 *
-	 * @param id
+	 * @param {int} id
 	 */
 	$.fn.customerAjax.fireAjax = function (id)
 	{
@@ -96,6 +96,8 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 
 				// Update hidden input which store phone number json string.
 				$.fn.customerAjax.updateJsonToInputField(telOfficeID, tel_office);
+				$.fn.customerAjax.updateJsonToInputField(telHomeID, tel_office);
+				$.fn.customerAjax.updateJsonToInputField(mobileID, tel_office);
 
 				// Update customer id_number
 				$.fn.customerAjax.updateCustomerIdNumber(customerIDNumber, id_number);
@@ -118,20 +120,20 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 	};
 
 	/**
-	 * Upadate customer id_number input value while change customer_id
+	 * Update customer id_number input value while changing customer_id
 	 *
 	 * updateCustomerIdNumber
 	 *
-	 * @param target Target element id
-	 * @param data Data to update
+	 * @param {string} target Target element id
+	 * @param {object} id customer_id to update
 	 */
-	$.fn.customerAjax.updateCustomerIdNumber = function (target, data)
+	$.fn.customerAjax.updateCustomerIdNumber = function (target, id)
 	{
-		data = data || {};
+		id = id || "";
 
 		var targetElement = $('#' + target);
 
-		targetElement.val(data);
+		targetElement.val(id);
 	};
 
 	/**
@@ -139,14 +141,14 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 	 *
 	 * updateJsonToInputField
 	 *
-	 * @param target Target element id
-	 * @param dataJson Data to update
+	 * @param {string} target Target element id
+	 * @param {json} dataJson Data to update
 	 */
 	$.fn.customerAjax.updateJsonToInputField = function (target, dataJson)
 	{
 		dataJson = dataJson || {};
 
-		var targetElement = $('form #' + target);
+		var targetElement = $('#' + target);
 
 		// Check if selector get null
 		if (targetElement.exists())
@@ -160,18 +162,18 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 	 *
 	 * updateAddressHtml
 	 *
-	 * @param key
-	 * @param addressJson
+	 * @param {string} key
+	 * @param {json} addressJson
 	 */
 	$.fn.customerAjax.updateAddressHtml = function (key, addressJson)
 	{
 		addressJson = addressJson || {};
 
 		// ex: jform_schedule_1st_address
-		var targetID = 'jform_schedules_' + key + '_address';
+		var targetID = 'jform_schedules_' + key + '_address_id';
 
 		// ex: jform[schedule_1st][address]
-		var targetName = 'jform[' + 'schedule_' + key + '][address]';
+		var targetName = 'jform[' + 'schedules_' + key + '][address_id]';
 
 		// Find its parent, later we will replace it with new select list
 		var targetsParent = $('#' + targetID).parent();
@@ -187,7 +189,7 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 		{
 			// Add option tag
 			html += '<option' +
-				' val="' + addressJson[i].id + '">' +
+				' value="' + addressJson[i].id + '">' +
 				addressJson[i].city_title +
 				addressJson[i].area_title +
 				addressJson[i].address +
@@ -207,8 +209,8 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 	 *
 	 * updatePhoneHtml
 	 *
-	 * @param tagID
-	 * @param telJson
+	 * @param {int} tagID
+	 * @param {json} telJson
 	 */
 	$.fn.customerAjax.updatePhoneHtml = function (tagID, telJson)
 	{
@@ -235,7 +237,7 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 			else
 			{
 				html += '<option value="' + i + '" ' +
-					((telJson[i].default == 'true') ? 'checked' : '') + '>' +
+					((telJson[i].default == 'true') ? 'selected' : '') + '>' +
 					(telJson[i].number ? telJson[i].number : '') +
 					'</option>';
 			}
@@ -281,15 +283,12 @@ jQuery(document).ready(function ()
 	var customerDropDown = jQuery("#" + "<?php echo $customerID;?>");
 
 	// customer_id's value
-	var customerID = "<?php $data->form->getInput('customer_id');?>";
+	var customerID = "<?php echo $customerID;?>";
 
+	console.log(customerDropDown.val());
 	// If customer id is not set, select the first option, and update once on load
-	if (!customerID)
-	{
-		customerID = customerDropDown.find('option:first').val();
 
-		customerDropDown.customerAjax(customerID);
-	}
+	customerDropDown.customerAjax(customerDropDown.val());
 
 	// Fire ajax request everytime customer_id has been changed
 	customerDropDown.on('change', function ()
@@ -370,31 +369,45 @@ jQuery(document).ready(function ()
 							</div>
 						</div>
 					</div>
-
-					<?php echo $schedules["jform_schedules_{$key}_schedule_id"]->getControlGroup(); ?>
                 </div>
 			<?php endforeach; ?>
 			<div class="row-fluid well">
 				<div class="col-lg-12">
-					<!-- TODO:js -->
 					<div class="control-group">
-						<?php echo $schedules["jform_schedules_{$key}_schedule_id"]->getControlGroup(); ?>
+						<div class="control-label">
+							<?php echo $data->form->getLabel('tel_office'); ?>
+						</div>
+						<div class="controls">
+							<input type="text" />
+						</div>
 						<input type="hidden" name="<?php echo $telOfficeName; ?>" id="<?php echo $telOfficeID;?>"/>
 					</div>
 				</div>
 				<div class="col-lg-12">
-					<!-- TODO:js -->
 					<div class="control-group">
-						<?php echo $schedules["jform_schedules_{$key}_schedule_id"]->getControlGroup(); ?>
+						<div class="control-label">
+							<?php echo $data->form->getLabel('tel_home'); ?>
+						</div>
+						<div class="controls">
+							<input type="text" />
+						</div>
 						<input type="hidden" name="<?php echo $telHomeName; ?>" id="<?php echo $telHomeID;?>"/>
 					</div>
 				</div>
 				<div class="col-lg-12">
-					<!-- TODO:js -->
 					<div class="control-group">
-						<?php echo $schedules["jform_schedules_{$key}_schedule_id"]->getControlGroup(); ?>
+						<div class="control-label">
+							<?php echo $data->form->getLabel('mobile'); ?>
+						</div>
+						<div class="controls">
+							<input type="text" />
+						</div>
 						<input type="hidden" name="<?php echo $mobileName; ?>" id="<?php echo $mobileID;?>"/>
 					</div>
+				</div>
+				<div class="col-lg-12">
+					<?php echo $data->form->getControlGroup('note'); ?>
+					<?php echo $data->form->getControlGroup('note_list'); ?>
 				</div>
 			</div>
 		</div>
