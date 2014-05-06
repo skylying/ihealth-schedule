@@ -280,7 +280,9 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 		{
 			$.fn.toggleNthScheduleInfo(this);
 		});
-	}
+		$(this).toggleNthScheduleInfo();
+	};
+
 	$.fn.toggleNthScheduleInfo = function (that)
 	{
 		that = that || this;
@@ -306,11 +308,8 @@ jQuery(document).ready(function ()
 	var customerID = "<?php echo $customerID;?>";
 
 	// Toggle nth schedules
-	jQuery('.js-nth-schedule-check input').bindChangeNthScheduleInfo();
-
-	jQuery('.js-nth-schedule-check input').each( function()
-	{
-		jQuery(this).toggleNthScheduleInfo();
+	jQuery('.js-nth-schedule-check input').each(function(){
+		jQuery(this).bindChangeNthScheduleInfo();
 	});
 
 	// If customer id is not set, select the first option, and update once on load
