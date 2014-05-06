@@ -187,4 +187,35 @@
 
 	</fieldset>
 
+	<fieldset name="quickadd">
+		<field name="name"
+			type="text"
+			label="客戶姓名"
+			description="客戶姓名"
+			required="true"
+			class="input-large required"
+			/>
+
+		<field name="id_number"
+			type="text"
+			label="客戶身份字號"
+			description="客戶身份字號"
+			/>
+
+		<field name="birth_date"
+			type="calendar"
+			label="出生日期"
+			description="出生日期"
+			/>
+
+		<field name="type"
+			type="radio"
+			label="客戶類型"
+			description="客戶類型"
+			default="individual"
+			class="btn-group btn-group-yesno">
+			<option value="resident">住民</option>
+			<option value="individual">散客</option>
+		</field>
+	</fieldset>
 </form>
