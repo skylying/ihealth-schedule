@@ -68,6 +68,7 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 		$routesMapper   = new DataMapper(Table::ROUTES);
 		$senderMapper   = new DataMapper(Table::SENDERS);
 		$scheduleMapper = new DataMapper(Table::SCHEDULES);
+		$taskMapper     = new DataMapper(Table::TASKS);
 
 		$customer = $customerMapper->findOne($this->data['customer_id']);
 
@@ -119,19 +120,26 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 			// 外送者
 			$sender = $senderMapper->findOne($routes->sender_id);
 
-			// Task data
-			$taskData = array(
-				"id" => $thisScheduleData->task_id,
-				"sender" => $sender->id,
-				"sender_name" => $sender->name,
-				"status" => 0
-			);
+			// Get task
+			$task = $taskMapper->findOne(array("sender" => $sender->id, "sender_name" => $sender->name));
 
-			// 新增外送
-			$taskModel->save($taskData);
+			// 如果沒取得 , 是新增
+			if (empty($task->id))
+			{
+				// Task data
+				$taskData = array(
+					"id" => $thisScheduleData->task_id,
+					"sender" => $sender->id,
+					"sender_name" => $sender->name,
+					"status" => 0
+				);
 
-			// 取出剛剛新增的外送管理
-			$task = $taskModel->getItem();
+				// 新增外送
+				$taskModel->save($taskData);
+
+				// 取出剛剛新增的外送管理
+				$task = $taskModel->getItem();
+			}
 
 			// 對應處方箋 id
 			$thisScheduleData->rx_id = $rx->id;
