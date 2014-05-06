@@ -7,6 +7,7 @@
 			class="input-large"
 			label="機構名稱"
 			description="機構名稱"
+			required="true"
 			/>
 
 		<field name="floor"
@@ -30,6 +31,7 @@
 			class="fullwidth"
 			label="客戶"
 			description="客戶"
+			required="true"
 			/>
 
 		<field name="id_number"
@@ -51,6 +53,7 @@
 			class="datetimepicker fullwidth"
 			label="就醫日期"
 			description="就醫日期"
+			required="true"
 			/>
 
 		<field name="period"
@@ -59,6 +62,7 @@
 			label="給藥天數"
 			description="給藥天數"
 			default="28"
+			required="true"
 			>
 			<option value="21">21</option>
 			<option value="22">22</option>
@@ -79,6 +83,7 @@
 			label="可調劑次數"
 			description="可調劑次數"
 			default="3"
+			required="true"
 			>
 			<option value="1">1</option>
 			<option value="2">2</option>
@@ -91,6 +96,7 @@
 			label="處方箋外送次數"
 			description="處方箋外送次數"
 			default="2nd,3rd"
+			required="true"
 			>
 			<option value="1st">1</option>
 			<option value="2nd">2</option>
@@ -116,6 +122,8 @@
 			class="fullwidth"
 			label="處方箋取得方式"
 			description="處方箋取得方式"
+			default="paper"
+			required="true"
 			>
 			<option value="fax">傳真</option>
 			<option value="line">line</option>
