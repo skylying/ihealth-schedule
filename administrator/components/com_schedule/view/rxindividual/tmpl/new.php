@@ -420,7 +420,7 @@ jQuery(document).ready(function ()
 		width: 80%;
 	}
 
-	.schedules select
+	.schedules select, input.js-address-row-data
 	{
 		width: 100%;
 	}
@@ -434,7 +434,7 @@ jQuery(document).ready(function ()
 	{
 		display: block !important;
 	}
-	.js-tmpl-add-telrow input
+	input.js-tel-row-data
 	{
 		width: 67%;
 		margin-right: 2%;
@@ -443,6 +443,12 @@ jQuery(document).ready(function ()
 	{
 		width: 67%;
 		margin-right: 2%;
+	}
+
+	.js-add-address
+	{
+		bottom: -30px;
+		position: relative;
 	}
 </style>
 
@@ -467,7 +473,33 @@ jQuery(document).ready(function ()
 					<div class="col-lg-9 js-nth-schedule-info hide">
 						<div class="row-fluid">
 							<div class="col-lg-12">
-								<?php echo $schedules["jform_schedules_{$key}_address_id"]->getControlGroup(); ?>
+								<div class="row-fluid">
+									<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8" style="padding: 0px;">
+										<?php echo $schedules["jform_schedules_{$key}_address_id"]->getControlGroup(); ?>
+									</div>
+									<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4" style="padding: 0px;">
+										<div class="btn btn-small btn-info pull-right js-add-address">
+											<span class="icon-plus icon-white"></span>
+											新增
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- Add telephone row -->
+							<div class="col-lg-12">
+								<div class="js-tmpl-add-telrow">
+									<div class="row-fluid">
+										<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8" style="padding: 0px;">
+											<input class="js-address-row-data pull-left" type="text">
+										</div>
+										<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4" style="padding: 0px;">
+											<div class="btn btn-small btn-success pull-right js-save-address">
+												<span class="icon-plus icon-white"></span>
+												儲存
+											</div>
+										</div>
+									</div>
+								</div>
 							</div>
 						</div>
 						<div class="row-fluid">
@@ -578,6 +610,8 @@ jQuery(document).ready(function ()
 			</div>
 		</div>
 	</div>
+
+	<input type="hidden" id="hiddenAddressToAdd"/>
 
 	<div>
 		<input type="hidden" name="option" value="com_schedule" />
