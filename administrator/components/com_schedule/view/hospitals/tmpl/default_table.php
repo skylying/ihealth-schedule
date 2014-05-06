@@ -47,22 +47,22 @@ $date      = $container->get('date');
 		</th>
 
 		<!--HOSPITA TITLE-->
-		<th width="49%" class="center">
+		<th width="49%" class="left">
 			<?php echo $grid->sortTitle('醫院名稱', 'hospitals.title'); ?>
 		</th>
 
 		<!--CITY_TITLE-->
-		<th width="15%" class="center">
+		<th width="15%" class="left">
 			<?php echo $grid->sortTitle('縣市名稱', 'city.title'); ?>
 		</th>
 
 		<!--AREA_TITLE-->
-		<th width="15%" class="center">
+		<th width="15%" class="left">
 			<?php echo $grid->sortTitle('區域名稱', 'area.title'); ?>
 		</th>
 
 		<!--HAS_HI_CODE-->
-		<th width="15%" class="center">
+		<th width="15%" class="left">
 			<?php echo $grid->sortTitle('藥品健保碼', 'hospitals.hicode'); ?>
 		</th>
 	</tr>
@@ -102,7 +102,7 @@ $date      = $container->get('date');
 
 			<!--HOSPITAL TITLE-->
 			<td class="nowrap quick-edit-wrap">
-				<div class="item-title center">
+				<div class="item-title left">
 					<?php
 					$query = array(
 						'option' => 'com_schedule',
@@ -118,18 +118,18 @@ $date      = $container->get('date');
 			</td>
 
 			<!--CITY TITLE-->
-			<td class="center">
+			<td class="left">
 				<?php echo $this->escape($item->city_title); ?>
 			</td>
 
 			<!--AREA TITLE-->
-			<td class="center">
+			<td class="left">
 				<?php echo $this->escape($item->area_title); ?>
 			</td>
 
 			<!--HAS HI CODE-->
-			<td class="center">
-				<?php echo $item->has_hicode ? JText::_('COM_SCHEDULE_HOSPITAL_ITEM_HAS_HICODE') : JText::_('COM_SCHEDULE_HOSPITAL_ITEM_NO_HICODE'); ?>
+			<td class="left">
+				<?php echo $item->has_hicode ? '<p> 有 </p>': '<p style="color:red;"> 沒有 </p>' ; ?>
 			</td>
 		</tr>
 	<?php endforeach; ?>

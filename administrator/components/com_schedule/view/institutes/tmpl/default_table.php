@@ -42,6 +42,11 @@ $date      = $container->get('date');
 		<?php echo JHtml::_('grid.checkAll'); ?>
 	</th>
 
+	<!--ID-->
+	<th width="1%" class="nowrap center">
+		<?php echo $grid->sortTitle('機構編號', 'institute.id'); ?>
+	</th>
+
 	<!--Short Title-->
 	<th width="5%" class="left">
 		<?php echo $grid->sortTitle('機構簡稱', 'institute.short_title'); ?>
@@ -82,11 +87,6 @@ $date      = $container->get('date');
 		<?php echo $grid->sortTitle('地址', 'institute.address'); ?>
 	</th>
 
-	<!--ID-->
-	<th width="1%" class="nowrap center">
-		<?php echo $grid->sortTitle('機構編號', 'institute.id'); ?>
-	</th>
-
 	<!--Link To Elder List-->
 	<th width="5%" class="nowrap center">
 		<?php echo JText::_('住民清單')?>
@@ -120,6 +120,11 @@ $date      = $container->get('date');
 		<!--CHECKBOX-->
 		<td class="center">
 			<?php echo JHtml::_('grid.id', $i, $item->institute_id); ?>
+		</td>
+
+		<!--ID-->
+		<td class="center">
+			<a href="<?php echo JRoute::_('?option=com_schedule&view=institute&layout=edit&id=' . $item->id);?>"><?php echo $item->id;?></a>
 		</td>
 
 		<!--Short Title-->
@@ -160,11 +165,6 @@ $date      = $container->get('date');
 		<!--Address-->
 		<td class="left">
 			<?php echo $item->address;?>
-		</td>
-
-		<!--ID-->
-		<td class="center">
-			<a href="<?php echo JRoute::_('?option=com_schedule&view=institute&layout=edit&id=' . $item->id);?>"><?php echo $item->id;?></a>
 		</td>
 
 		<!--Link To Elder List-->
