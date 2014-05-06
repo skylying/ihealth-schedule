@@ -295,6 +295,18 @@
 			description="處方箋檔案"
 			multiple="multiple"
 			/>
+
+		<field name="removeImages"
+			type="itemscheckboxes"
+			table="#__schedule_images"
+			id_key="id"
+			where_item_id="rx_id"
+			value_field="id"
+			option_title="title"
+			select="id, title"
+			label="刪除圖片"
+			description="刪除圖片"
+			/>
 	</fieldset>
 
 	<fields name="schedules_1st">
