@@ -26,6 +26,9 @@
 					pickTime: false
 				});
 
+				// TODO: customer_id 目前寫死
+				customer_id.initialize($row.find('.customer-id'));
+
 				// 可調劑次數與處方箋外送次數連動
 				$row.find('.times').on('change', function()
 				{
@@ -69,7 +72,7 @@
 
 							break;
 					}
-				})
+				});
 			});
 
 			// Add row
@@ -100,7 +103,13 @@
 		}
 	};
 
-	// Institute_id select2 onchange handler
+	/**
+	 * Bind onchange handler to update "外送日" column
+	 * Event Triggerer : rxresident.xml => Fieldname = "institute_id"
+	 *
+	 * @param {object}  e
+	 * @param {element} $node
+	 */
 	window.updateDeliveryDay = function(e, $node)
 	{
 		var translateWeek  = {
@@ -124,6 +133,35 @@
 
 		// update delivery_day color
 		colorBlock.css('background', color);
+
+		// Export institute_id
+		window.instituteId = e.added.id;
+
+		// If user change institute, initialize $row with select2 again
+		var panel = $('#rx-list').find('tr');
+
+		$(panel).each(function()
+		{
+			// TODO:customer_id 目前寫死
+			customer_id.initialize($(this).find('.customer-id'));
+		})
+
+	};
+
+	/**
+	 * Bind onchahge handler to update customer id_number and birth_date
+	 * Event Triggerer : rxresident.xml => Fieldname = "customer_id"
+	 *
+	 * @param {object}  e
+	 * @param {element} $node
+	 */
+	window.updateIdBirthday = function(e, $node)
+	{
+		var idNumber = $node.closest('tr').find('.idnumber'),
+			birthDay = $node.closest('tr').find('.birthday input');
+
+		idNumber.val(e.added.id_number);
+		birthDay.val(e.added.birth_date);
 	};
 
 })(jQuery);
