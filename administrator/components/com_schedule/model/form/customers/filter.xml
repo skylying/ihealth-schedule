@@ -9,8 +9,7 @@
 			class="input-small"
 			>
 			<option value="*">JALL</option>
-			<option value="customer.title">JGLOBAL_TITLE</option>
-			<option value="category.title">JCATEGORY</option>
+			<option value="customer.name">客戶姓名</option>
 		</field>
 
 		<field
@@ -55,8 +54,9 @@
 		</field>
 
 		<field
-			name=""
-			type="list"
+			name="customer.institute_id"
+			type="institute_list"
+			value_field="short_title"
 			label="選擇機構"
 			default=""
 			onchange="this.form.submit();"
