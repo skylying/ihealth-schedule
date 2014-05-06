@@ -51,6 +51,11 @@ HTML;
 		return implode($html);
 	}
 
+	/**
+	 * getItems
+	 *
+	 * @return  array
+	 */
 	public function getItems()
 	{
 		$select      = $this->element['sql'] ? (string) $this->element['sql'] : "*";
