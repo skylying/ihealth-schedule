@@ -141,15 +141,16 @@ $date      = $container->get('date');
 							'layout' => 'edit',
 							'id'     => $customers_id[$i]
 						);
+						if(!empty($customers_id[$i])):
 				?>
-					<a href="<?php echo JRoute::_("index.php?" . http_build_query($query));?>">
-						<?php echo $customer; ?>
-					</a>
-				<?php
-					endforeach;
-				?>
+						<a href="<?php echo JRoute::_("index.php?" . http_build_query($query));?>">
+							<?php echo $customer;?>
+						</a>
+							<?php if((count($customers_name)-1) > $i) echo ', ';?>
+						<?php endif;?>
+				<?php endforeach;?>
 			</td>
 		</tr>
-	<?php endforeach; ?>
+	<?php endforeach;?>
 	</tbody>
 </table>
