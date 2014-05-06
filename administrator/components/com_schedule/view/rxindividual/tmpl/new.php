@@ -236,6 +236,15 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 			}
 			else
 			{
+				// Remove whitespace
+				telJson[i].number = telJson[i].number.replace(/\s+/g, '');
+
+				// If no numbers has been found, continue.
+				if(telJson[i].number == '')
+				{
+					continue;
+				}
+
 				html += '<option value="' + i + '" ' +
 					((telJson[i].default == 'true') ? 'selected' : '') + '>' +
 					(telJson[i].number ? telJson[i].number : '') +
@@ -273,8 +282,6 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 		}
 		hiddenInput.val(JSON.stringify(data));
 	};
-
-
 
 	$.fn.bindChangeNthScheduleInfo = function ()
 	{
@@ -333,11 +340,67 @@ jQuery(document).ready(function ()
 	{
 		jQuery(this).closest('.js-tel-wrap').find('.js-tmpl-add-telrow').removeClass('hide');
 	});
-	jQuery('.js-save-tel').on('click', function()
+
+	jQuery('.js-save-tel').on('click', function ()
 	{
+		var wrapperElement = jQuery(this).closest('.js-tel-wrap');
+		var phoneToAdd = wrapperElement.find('.js-tel-row-data');
+
+		// Remove whitespace
+		phoneToAdd.val(phoneToAdd.val().replace(/\s+/g, ''));
+
+		if (phoneToAdd != "")
+		{
+			var data = JSON.parse(wrapperElement.find('input[type=hidden]').val());
+
+			// This value is requirement
+			var limit = 3;
+
+			//Only if the data length smaller than limitation will the insertion being executed
+			if (data.length < limit)
+			{
+				var index = 0;
+				var b_set = false;
+
+				for (index = 0; index < data.length; index++)
+				{
+					// Replace the empty field.
+					data[index].number = data[index].number.replace(/\s+/g, '');
+
+					// If empty, overwrite it
+					if (data[index].number == "")
+					{
+						data[index].number  = phoneToAdd.val();
+						data[index].default = 'true';
+						b_set = true;
+
+						continue;
+					}
+					// If not match, reset every element's default to 'false'
+					data[index].default = 'false';
+				}
+
+				// If no replacement was done, and the length is still not exceed the limit, perform insertion.
+				if (!b_set)
+				{
+					var tagID = wrapperElement.find('input[type=hidden]').prop('id');
+
+					data.push({default: 'true', number: phoneToAdd.val()});
+
+					// Perform html update
+					jQuery(this).customerAjax.updatePhoneHtml(tagID, data);
+
+					// Perform hidden input update
+					jQuery(this).customerAjax.updateJsonToInputField(tagID, data);
+				}
+			}
+		}
+		// Clear the input value
+		phoneToAdd.val("");
+
+		// Hide the input row
 		jQuery(this).closest('.js-tmpl-add-telrow').addClass('hide');
 	});
-
 });
 </script>
 
