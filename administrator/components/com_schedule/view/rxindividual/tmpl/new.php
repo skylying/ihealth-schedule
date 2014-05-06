@@ -274,6 +274,8 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 		hiddenInput.val(JSON.stringify(data));
 	};
 
+
+
 	$.fn.bindChangeNthScheduleInfo = function ()
 	{
 		$(this).on('change', function()
@@ -418,6 +420,7 @@ jQuery(document).ready(function ()
 							</div>
 						</div>
 					</div>
+					<?php echo $schedules["jform_schedules_{$key}_schedule_id"]->getControlGroup(); ?>
                 </div>
 			<?php endforeach; ?>
 			<div class="row-fluid well">
