@@ -16,6 +16,7 @@
 
 		<field name="floor"
 			type="text"
+			hint="ex:2F"
 			label="機構樓層"
 			description="機構樓層"
 			/>
@@ -31,22 +32,30 @@
 			/>
 
 		<field name="customer_id"
-			type="text"
-			class="fullwidth"
+			hint="客戶姓名"
+			type="select2"
+			minimumInputLength="2"
+			apiUrl="index.php?option=com_schedule&amp;task=customer.ajax.json"
+			apiQueryKey="filter_search"
+			apiValueField="name"
+			onChangeCallback="updateIdBirthday"
+			allowNew="true"
+			class="fullwidth customer-id"
 			label="客戶"
 			description="客戶"
 			/>
 
+
 		<field name="id_number"
 			type="text"
-			class="fullwidth"
+			class="fullwidth idnumber"
 			label="身分證字號"
 			description="身分證字號"
 			/>
 
 		<field name="birth_date"
 			type="DateTimePicker"
-			class="datetimepicker fullwidth"
+			class="datetimepicker fullwidth birthday"
 			label="生日"
 			description="生日"
 			/>
