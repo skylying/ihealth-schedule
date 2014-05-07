@@ -27,7 +27,7 @@ class JFormFieldCustomer_Rxlist extends JFormFieldItemlist
 	 *
 	 * @var string
 	 */
-	public $type = 'Customer_rxList';
+	public $type = 'Customer_Rxlist';
 
 	/**
 	 * List name.

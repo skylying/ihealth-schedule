@@ -198,8 +198,8 @@
 
 		<field name="id_number"
 			type="text"
-			label="客戶身份字號"
-			description="客戶身份字號"
+			label="客戶身份證字號"
+			description="客戶身份證字號"
 			/>
 
 		<field name="birth_date"
