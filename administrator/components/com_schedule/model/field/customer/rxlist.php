@@ -7,6 +7,8 @@
  */
 
 use Windwalker\DI\Container;
+use Schedule\Table\Table;
+use Windwalker\Joomla\DataMapper\DataMapper;
 
 // No direct access
 defined('_JEXEC') or die;
@@ -69,75 +71,9 @@ class JFormFieldCustomer_Rxlist extends JFormFieldItemlist
 	 */
 	public function getItems()
 	{
-		$published   = (string) $this->element['published'];
-		$nested      = (string) $this->element['nested'];
-		$key_field   = $this->element['key_field'] ? (string) $this->element['key_field'] : 'id';
-		$value_field = $this->element['value_field'] ? (string) $this->element['value_field'] : 'title';
-		$ordering    = $this->element['ordering'] ? (string) $this->element['ordering'] : null;
 		$customer = $this->element['customer'] ? (string) $this->element['customer'] : null;
 		$table_name  = $this->element['table'] ? (string) $this->element['table'] : '#__' . $this->component . '_' . $this->view_list;
-		$select      = $this->element['select'];
 
-		$container = Container::getInstance();
-		$db    = $container->get('db');
-		$q     = $db->getQuery(true);
-		$input = $container->get('input');
-
-		// Avoid self
-		// ========================================================================
-		$id     = $input->get('id');
-		$option = $input->get('option');
-		$view   = $input->get('view');
-		$layout = $input->get('layout');
-
-		if ($nested && $id)
-		{
-			$table = JTable::getInstance(ucfirst($this->view_item), ucfirst($this->component) . 'Table');
-			$table->load($id);
-			$q->where("id != {$id}");
-			$q->where("lft < {$table->lft} OR rgt > {$table->rgt}");
-		}
-
-		if ($nested)
-		{
-			$q->where("( id != 1 AND `{$value_field}` != 'ROOT' )");
-		}
-
-		// Some filter
-		// ========================================================================
-		if ($published)
-		{
-			$q->where("{$this->published_field} >= 1");
-		}
-
-		// 客戶 type
-		if (! empty($customer))
-		{
-			$q->where("`type` = '{$customer}'");
-		}
-
-		// Ordering
-		$order    = $nested ? 'lft' : 'id';
-		$order    = $this->ordering_field ? $this->ordering_field : $order;
-		$ordering = $ordering ? $ordering : $order;
-
-		if ($ordering != 'false')
-		{
-			$q->order($ordering);
-		}
-
-		// Query
-		// ========================================================================
-		$select = $select ? '*, ' . $select : '*';
-
-		$q->select($select)
-			->from($table_name);
-
-		$db->setQuery($q);
-		$items = $db->loadObjectList();
-
-		$items = $items ? $items : array();
-
-		return $items;
+		return (new DataMapper($table_name))->find(['type' => $customer]);
 	}
 }
