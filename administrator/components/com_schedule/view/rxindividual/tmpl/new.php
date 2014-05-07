@@ -297,11 +297,11 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 		that = that || this;
 		if ($(that).prop("checked"))
 		{
-			$(that).closest('.schedules').find('.js-nth-schedule-info').removeClass('hide');
+			$(that).closest('.schedules').find('.js-nth-schedule-info').removeClass('opaque');
 		}
 		else
 		{
-			$(that).closest('.schedules').find('.js-nth-schedule-info').addClass('hide');
+			$(that).closest('.schedules').find('.js-nth-schedule-info').addClass('opaque');
 		}
 	}
 })(jQuery);
