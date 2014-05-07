@@ -10,7 +10,7 @@ use Joomla\DI\Container;
 use Windwalker\Model\Model;
 use Windwalker\View\Engine\PhpEngine;
 use Windwalker\View\Html\EditView;
-use Joomla\Utilities\ArrayHelper;
+use Windwalker\Helper\ArrayHelper;
 
 // No direct access
 defined('_JEXEC') or die;
@@ -80,14 +80,12 @@ class ScheduleViewRxresidentHtml extends EditView
 	}
 
 	/**
-	 * prepareRender
+	 * prepareData
 	 *
 	 * @return  void
 	 */
-	protected function prepareRender()
+	protected function prepareData()
 	{
-		parent::prepareRender();
-
 		$items = $this->getItems();
 
 		/** @var ScheduleModelRxresident $model */
@@ -127,7 +125,7 @@ class ScheduleViewRxresidentHtml extends EditView
 
 		if ($data)
 		{
-			foreach (ArrayHelper::getValue($data, 'items', array(), 'ARRAY') as $hash => $item)
+			foreach (ArrayHelper::getValue($data, 'items', array()) as $hash => $item)
 			{
 				$items[$hash] = $item;
 			}

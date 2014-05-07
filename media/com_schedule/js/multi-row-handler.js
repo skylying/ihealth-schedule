@@ -12,7 +12,6 @@
 		return;
 	}
 
-	function MultiRowHandler(options)
 	/**
 	 * Class MultiRowHandler
 	 *
@@ -21,22 +20,23 @@
 	 * The "prefix" part can be defined with "options.prefix"
 	 *
 	 * Events:
-	 * - initializeRow    function(row)          Initialize a new row
-	 *                                           row: the new row
-	 * - afterInsert      function(row)          Trigger after insert a new row
-	 *                                           row: the new row
-	 * - afterDuplicate   function(row, from)    Trigger after duplicate a new row
-	 *                                           row: the new row
-	 *                                           form: the original row
+	 * - initializeRow    function($row)          Initialize a new row
+	 *                                              $row: the new row
+	 * - afterInsert      function($row)          Trigger after insert a new row
+	 *                                              $row: the new row
+	 * - afterDuplicate   function($row, $from)   Trigger after duplicate a new row
+	 *                                              $row: the new row
+	 *                                              $form: the original row
 	 *
-	 * @param  options            object               Containing configuration parameters
-	 * @param  options.panel      jQuery               Multi-Row container element
-	 * @param  options.prefix     string               Form input name prefix
-	 * @param  options.insert     function(row)        Overwrite the callback to perform inserting a new row action
-	 * @param  options.duplicate  function(row, from)  Overwrite the callback to perform inserting a duplicated row action
-	 *                                                 row: the new duplicated row
-	 *                                                 from: the original row
+	 * @param  options            object                Containing configuration parameters
+	 * @param  options.$panel     jQuery                Multi-Row container element
+	 * @param  options.prefix     string                Form input name prefix
+	 * @param  options.insert     function($row)        Overwrite the callback to perform inserting a new row action
+	 * @param  options.duplicate  function($row, from)  Overwrite the callback to perform inserting a duplicated row action
+	 *                                                  row: the new duplicated row
+	 *                                                  from: the original row
 	 */
+	function MultiRowHandler(options)
 	{
 		this.listeners = {};
 
