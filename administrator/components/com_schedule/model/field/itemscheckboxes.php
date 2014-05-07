@@ -83,6 +83,12 @@ HTML;
 		// 如果有設定追蹤 item
 		if (! empty($whereItemId))
 		{
+			// 如果有追蹤 id 但現在沒有 id
+			if (empty($id))
+			{
+				return array();
+			}
+
 			// Get where
 			$q->where("{$whereItemId} = {$id}");
 		}

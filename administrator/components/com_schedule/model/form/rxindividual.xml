@@ -209,7 +209,7 @@
 			/>
 
 		<field name="customer_id"
-			type="customer_prescriptionlist"
+			type="customer_rxlist"
 			label="客戶姓名"
 			description="客戶姓名"
 			customer="individual"

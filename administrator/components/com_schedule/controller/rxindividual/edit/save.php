@@ -88,7 +88,7 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 		$addressModel  = $this->getModel("Address");
 
 		// 新增排程次數
-		$scheduleDoTime = 0;
+		$scheduleDoTimes = 0;
 
 		// 新增排程
 		foreach (array("1st", "2nd", "3rd") as $val)
@@ -129,7 +129,7 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 			// Get task
 			$task = $taskMapper->findOne(array("sender" => $sender->id, "sender_name" => $sender->name));
 
-			// 如果沒取得 , 是新增
+			// 如果沒取得 task , 是新增
 			if (empty($task->id))
 			{
 				// Task data
@@ -180,11 +180,11 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 			$scheduleModel->save(array_merge((array) $thisScheduleData, $schedule, $scheduleUpdata));
 
 			// 記錄次數
-			$scheduleDoTime++;
+			$scheduleDoTimes++;
 		}
 
 		// 如果有新增排程
-		if (0 < $scheduleDoTime)
+		if (0 < $scheduleDoTimes)
 		{
 			// Flush Default Address
 			$addressModel->flushDefaultAddress($customer->id, $address->id);

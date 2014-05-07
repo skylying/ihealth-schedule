@@ -20,8 +20,11 @@ use Schedule\Table\Table;
  */
 class ScheduleHelperImage
 {
-	const TABLE = Table::IMAGES;
-
+	/**
+	 * Property extMapper.
+	 *
+	 * @var  array
+	 */
 	static protected $extMapper = array(
 		'image/jpeg' => 'jpg',
 		'image/png'  => 'png'
@@ -30,7 +33,7 @@ class ScheduleHelperImage
 	/**
 	 * Get Images
 	 *
-	 * @param $rxId
+	 * @param integer $rxId
 	 *
 	 * @return  array
 	 */
@@ -41,15 +44,14 @@ class ScheduleHelperImage
 			return array();
 		}
 
-		return (new DataMapper(static::TABLE))
-			->find(array("rx_id" => $rxId));
+		return (new DataMapper(Table::IMAGES))->find(array("rx_id" => $rxId));
 	}
 
 	/**
 	 * handleUpload
 	 *
-	 * @param $rxId
-	 * @param $files
+	 * @param integer $rxId
+	 * @param array   $files
 	 *
 	 * @return  array
 	 */
@@ -91,7 +93,7 @@ class ScheduleHelperImage
 	/**
 	 * getStoragePath
 	 *
-	 * @param $rxId
+	 * @param integer $rxId
 	 *
 	 * @return  string
 	 */
@@ -104,26 +106,38 @@ class ScheduleHelperImage
 	/**
 	 * saveImages
 	 *
-	 * @param $rxId
-	 * @param $images
+	 * @param integer $rxId
+	 * @param array   $images
 	 *
 	 * @return  Data
 	 */
 	public static function saveImages($rxId, $images)
 	{
-		$imageMapper = new DataMapper(static::TABLE);
+		$imageMapper = new DataMapper(Table::IMAGES);
 
 		$data = array();
 
-		foreach($images as $image)
+		foreach ($images as $image)
 		{
 			$data[] = new Data(array("title" => $image["name"], "path" => $image["path"], "rx_id" => $rxId));
 		}
 
-		$datas = new DataSet($data);
+		$dataSet = new DataSet($data);
 
-		$imageMapper->create($datas);
+		$imageMapper->create($dataSet);
 
 		return $data;
+	}
+
+	/**
+	 * removeImages
+	 *
+	 * @param array $cid
+	 *
+	 * @return  void
+	 */
+	public static function removeImages($cid = array())
+	{
+		// TODO: 完成刪除圖片功能
 	}
 }

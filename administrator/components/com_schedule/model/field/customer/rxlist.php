@@ -18,14 +18,14 @@ JFormHelper::loadFieldClass('itemlist');
 /**
  * Supports an HTML select list of categories
  */
-class JFormFieldCustomer_PrescriptionList extends JFormFieldItemlist
+class JFormFieldCustomer_Rxlist extends JFormFieldItemlist
 {
 	/**
 	 * The form field type.
 	 *
 	 * @var string
 	 */
-	public $type = 'Customer_prescriptionList';
+	public $type = 'Customer_rxList';
 
 	/**
 	 * List name.
