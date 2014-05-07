@@ -6,6 +6,8 @@
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
+namespace Schedule\Helper;
+
 use Windwalker\Data\NullData;
 use Windwalker\Helper\StringHelper;
 use Windwalker\Joomla\DataMapper\DataMapper;
@@ -14,11 +16,11 @@ use Windwalker\Data\DataSet;
 use Schedule\Table\Table;
 
 /**
- * Class ScheduleHelperImage
+ * Class ImageHelper
  *
  * @since 1.0
  */
-class ScheduleHelperImage
+class ImageHelper
 {
 	/**
 	 * Property extMapper.
@@ -68,16 +70,16 @@ class ScheduleHelperImage
 
 			$imageName = md5_file($file['tmp_name']);
 
-			$ext = JArrayHelper::getValue(static::$extMapper, $file['type']);
+			$ext = \JArrayHelper::getValue(static::$extMapper, $file['type']);
 
 			if (!is_dir(JPATH_ROOT . '/' . static::getStoragePath($rxId)))
 			{
-				JFolder::create(JPATH_ROOT . '/' . static::getStoragePath($rxId));
+				\JFolder::create(JPATH_ROOT . '/' . static::getStoragePath($rxId));
 			}
 
 			$imagePath  = static::getStoragePath($rxId) . '/' . $imageName . '.' . $ext;
 
-			JFile::upload($file['tmp_name'], JPATH_ROOT . '/' . $imagePath);
+			\JFile::upload($file['tmp_name'], JPATH_ROOT . '/' . $imagePath);
 
 			$images[] = array(
 				"name" => $file['name'],
