@@ -27,5 +27,5 @@ class ScheduleControllerTasksStateDelivery extends \Windwalker\Controller\State\
 	 *
 	 * @var string
 	 */
-	protected $actionText = '已外送';
+	protected $actionText = 'DELIVERED';
 }

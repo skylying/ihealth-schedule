@@ -126,6 +126,25 @@ class ScheduleViewTasksHtml extends GridView
 			$buttonSet['delete']['access'] = true;
 		}
 
+		$buttonSet['completeDelivery']['handler'] = function(){
+			$title = '完成外送';
+			$alt = $title;
+			JHtml::_('behavior.modal');
+			$dHtml = "<button class='btn btn-small' onclick=\"Joomla.submitbutton('tasks.state.delivery')\"><span class='glyphicon glyphicon-ok-circle'></span> " . $title . "</button>";
+
+			$bar = JToolbar::getInstance('toolbar');
+			$bar->appendButton('Custom', $dHtml, $alt);
+		};
+
+		$buttonSet['waitDelivery']['handler'] = function(){
+			$title = '改回待外送';
+			$alt = $title;
+			JHtml::_('behavior.modal');
+			$dHtml = "<button class='btn btn-small' onclick=\"Joomla.submitbutton('tasks.state.undelivery')\"><span class='glyphicon glyphicon-pause'></span> " . $title . "</button>";
+
+			$bar = JToolbar::getInstance('toolbar');
+			$bar->appendButton('Custom', $dHtml, $alt);
+		};
 		return $buttonSet;
 	}
 }
