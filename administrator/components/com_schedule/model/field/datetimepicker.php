@@ -59,6 +59,7 @@ class JFormFieldDateTimePicker extends JFormFieldText
 	</span>
 </div>
 HTML;
+		$doc = JFactory::getDocument();
 
 		$js = <<<JS
 jQuery(function ()
@@ -68,8 +69,18 @@ jQuery(function ()
 	});
 });
 JS;
+		// Hide calendar icon
+		$css = '
+		.input-group-addon
+		{
+			opacity: 0;
+			position: absolute;
+		}
+		';
 
-		JFactory::getDocument()->addScriptDeclaration($js);
+
+		$doc->addScriptDeclaration($js);
+		$doc->addStyleDeclaration($css);
 
 		return $html;
 	}

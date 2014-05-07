@@ -2,8 +2,13 @@
 <form>
 	<fieldset name="institute">
 		<field name="institute_id"
-			type="text"
 			hint="輸入機構名稱"
+			type="select2"
+			minimumInputLength="2"
+			apiUrl="index.php?option=com_schedule&amp;task=institutes.search.json"
+			apiQueryKey="filter_search"
+			apiValueField="title"
+			onChangeCallback="updateDeliveryDay"
 			class="input-large"
 			label="機構名稱"
 			description="機構名稱"
@@ -12,6 +17,7 @@
 
 		<field name="floor"
 			type="text"
+			hint="ex:2F"
 			label="機構樓層"
 			description="機構樓層"
 			/>
@@ -27,30 +33,40 @@
 			/>
 
 		<field name="customer_id"
-			type="text"
-			class="fullwidth"
+			hint="客戶姓名"
+			type="select2"
+			minimumInputLength="2"
+			apiUrl="index.php?option=com_schedule&amp;task=customer.ajax.json"
+			apiQueryKey="filter_search"
+			apiValueField="name"
+			onChangeCallback="updateIdBirthday"
+			allowNew="true"
+			class="fullwidth customer-id"
 			label="客戶"
 			description="客戶"
 			required="true"
 			/>
 
+
 		<field name="id_number"
 			type="text"
-			class="fullwidth"
+			class="fullwidth idnumber"
 			label="身分證字號"
 			description="身分證字號"
 			/>
 
 		<field name="birth_date"
 			type="DateTimePicker"
-			class="datetimepicker fullwidth"
+			hint="選擇日期"
+			class="datetimepicker calendarwidth birthday"
 			label="生日"
 			description="生日"
 			/>
 
 		<field name="see_dr_date"
 			type="DateTimePicker"
-			class="datetimepicker fullwidth"
+			hint="選擇日期"
+			class="datetimepicker calendarwidth seedr"
 			label="就醫日期"
 			description="就醫日期"
 			required="true"
@@ -58,7 +74,7 @@
 
 		<field name="period"
 			type="list"
-			class="fullwidth"
+			class="fullwidth period"
 			label="給藥天數"
 			description="給藥天數"
 			default="28"
@@ -79,7 +95,7 @@
 
 		<field name="times"
 			type="list"
-			class="fullwidth"
+			class="fullwidth times"
 			label="可調劑次數"
 			description="可調劑次數"
 			default="3"
@@ -105,14 +121,14 @@
 
 		<field name="empty_date_1st"
 			type="hidden"
-			class="fullwidth"
+			class="fullwidth emptydate1"
 			label="第一次吃完藥日"
 			description="第一次吃完藥日"
 			/>
 
 		<field name="empty_date_2nd"
 			type="hidden"
-			class="fullwidth"
+			class="fullwidth emptydate2"
 			label="第二次吃完藥日"
 			description="第二次吃完藥日"
 			/>
