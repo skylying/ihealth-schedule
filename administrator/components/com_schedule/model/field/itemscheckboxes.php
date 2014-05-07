@@ -3,6 +3,17 @@
 /**
  * Class JFormFieldSqlcheckboxes
  *
+ * #xml 使用方法
+ *
+ * table         資料表名稱
+ * select        搜尋取得的欄位
+ *
+ * id_key        篩選用的值
+ * where_item_id 篩選的欄位
+ *
+ * value_field   input 值得欄位
+ * option_title  input 顯示的標題
+ *
  * @since 1.0
  */
 class JFormFieldItemscheckboxes extends \JFormField
@@ -58,7 +69,7 @@ HTML;
 	 */
 	public function getItems()
 	{
-		$select      = $this->element['sql'] ? (string) $this->element['sql'] : "*";
+		$select      = $this->element['select'] ? (string) $this->element['select'] : "*";
 		$idKey       = $this->element['id_key'] ? (string) $this->element['id_key'] : "id";
 		$whereItemId = $this->element['where_item_id'] ? (string) $this->element['where_item_id'] : null;
 		$table       = $this->element['table'] ? (string) $this->element['table'] : null;
