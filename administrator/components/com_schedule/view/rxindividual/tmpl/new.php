@@ -353,6 +353,7 @@ jQuery(document).ready(function ()
 		{
 			var data = JSON.parse(wrapperElement.find('input[type=hidden]').val());
 
+			console.log(wrapperElement.find('input[type=hidden]'));
 			// This value is requirement
 			var limit = 3;
 
@@ -395,6 +396,7 @@ jQuery(document).ready(function ()
 				}
 			}
 		}
+
 		// Clear the input value
 		phoneToAdd.val("");
 
@@ -444,12 +446,27 @@ jQuery(document).ready(function ()
 		width: 67%;
 		margin-right: 2%;
 	}
-
 	.js-add-address
 	{
 		bottom: -30px;
 		position: relative;
 	}
+	.opaque
+	{
+		opacity: .3;
+	}
+	.custom-well
+	{
+		margin-bottom: 20px;
+		background-color: #f5f5f5;
+		border: 1px solid #e3e3e3;
+		border-radius: 4px;
+		-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+		-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+		box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+	}
+
+
 </style>
 
 <form name="adminForm" id="adminForm" method="post" action="<?php echo JURI::getInstance(); ?>" class="form-horizontal"
@@ -463,14 +480,14 @@ jQuery(document).ready(function ()
 			}
 			?>
 		</div>
-		<div class="col-lg-5 col-lg-offset-1">
+		<div class="col-lg-7">
 			<?php foreach (array("1st", "2nd", "3rd") as $key): ?>
 				<?php $schedules = $data->form->getGroup("schedules_{$key}"); ?>
 				<div id="schedules_<?php echo $key; ?>" class="row-fluid schedules schedules_<?php echo $key; ?>">
 					<div class="col-lg-3 js-nth-schedule-check">
 						<?php echo $schedules["jform_schedules_{$key}_deliver_nth"]->getControlGroup(); ?>
 					</div>
-					<div class="col-lg-9 js-nth-schedule-info hide">
+					<div class="col-lg-9 js-nth-schedule-info custom-well opaque">
 						<div class="row-fluid">
 							<div class="col-lg-12">
 								<div class="row-fluid">
@@ -494,7 +511,7 @@ jQuery(document).ready(function ()
 										</div>
 										<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4" style="padding: 0px;">
 											<div class="btn btn-small btn-success pull-right js-save-address">
-												<span class="icon-plus icon-white"></span>
+												<span class="icon-ok icon-white"></span>
 												儲存
 											</div>
 										</div>
@@ -541,7 +558,7 @@ jQuery(document).ready(function ()
 								<input class="js-tel-row-data pull-left" type="text">
 							</div>
 							<div class="btn btn-small btn-success pull-left js-save-tel">
-								<span class="icon-plus icon-white"></span>
+								<span class="icon-ok icon-white"></span>
 								儲存
 							</div>
 						</div>
@@ -569,7 +586,7 @@ jQuery(document).ready(function ()
 								<input class="js-tel-row-data pull-left" type="text">
 							</div>
 							<div class="btn btn-small btn-success pull-left js-save-tel">
-								<span class="icon-plus icon-white"></span>
+								<span class="icon-ok icon-white"></span>
 								儲存
 							</div>
 						</div>
