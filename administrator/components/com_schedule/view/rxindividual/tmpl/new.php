@@ -96,8 +96,8 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 
 				// Update hidden input which store phone number json string.
 				$.fn.customerAjax.updateJsonToInputField(telOfficeID, tel_office);
-				$.fn.customerAjax.updateJsonToInputField(telHomeID, tel_office);
-				$.fn.customerAjax.updateJsonToInputField(mobileID, tel_office);
+				$.fn.customerAjax.updateJsonToInputField(telHomeID, tel_home);
+				$.fn.customerAjax.updateJsonToInputField(mobileID, mobile);
 
 				// Update customer id_number
 				$.fn.customerAjax.updateCustomerIdNumber(customerIDNumber, id_number);
