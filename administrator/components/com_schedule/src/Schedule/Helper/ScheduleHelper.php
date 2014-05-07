@@ -49,21 +49,39 @@ class ScheduleHelper
 	}
 
 	/**
-	 * Calculate schedule date
+	 * Calculate schedule date (送藥日期)
 	 *
-	 * 取得排程日期
-	 *   1. 日期 = 就醫日期 + 給藥天數 - 10天 + N天
+	 * 取得送藥日期
+	 *   0. 第一次送藥的日期 = 就醫日期 + 3
+	 *   1. 第二次和第三次送藥的日期 = 就醫日期 + (給藥天數 * (第幾次 - 1)) - 10天 + N天
 	 *   2. N天 = 找最近的星期幾送藥
 	 *   3. 排除假日
 	 *
+	 * @param   string  $nth            第幾次送藥 ('1st','2nd','3rd')
 	 * @param   string  $seeDoctorDate  就醫日期
 	 * @param   int     $period         給藥天數
 	 * @param   string  $weekday        星期幾送藥 ('MON','TUE','WED','THU','FRI','SAT','SUN')
 	 *
-	 * @return  string
+	 * @throws  \Exception
+	 * @return  \JDate  送藥日期
 	 */
-	public static function calculateSendDate($seeDoctorDate, $period, $weekday = '')
+	public static function calculateSendDate($nth, $seeDoctorDate, $period, $weekday = '')
 	{
+		$nth = (int) substr($nth, 0, 1);
+		$date = new \DateTime($seeDoctorDate);
+
+		if ($nth < 0 || $nth > 3)
+		{
+			throw new \Exception('valid nth of delivery is 1, 2, and 3');
+		}
+
+		if (1 === $nth)
+		{
+			$date->modify('+3 day');
+
+			return $date;
+		}
+
 		$db = \JFactory::getDbo();
 		$query = $db->getQuery(true);
 
@@ -71,7 +89,8 @@ class ScheduleHelper
 		$weekdays = array('MON','TUE','WED','THU','FRI','SAT','SUN');
 		$maxHolidays = 3;
 		$maxSearchDays = 30;
-		$startAt = strtotime($seeDoctorDate) + (86400 * ($period - 10));
+
+		$date->modify(sprintf('+%s day', ($period * ($nth - 1)) - 10));
 
 		// Get default weekday
 		if (!in_array($weekday, $weekdays))
@@ -84,7 +103,7 @@ class ScheduleHelper
 			->from(Table::HOLIDAYS)
 			->where('`state`=1')
 			->where('`weekday`=' . $db->q($weekday))
-			->where('`date`>' . $db->q(date('Y-m-d', $startAt)));
+			->where($query->format('`date` > %s', $date->format('Y-m-d')));
 
 		// Convert date string to timestamp
 		$holidays = array_map(
@@ -96,23 +115,27 @@ class ScheduleHelper
 		);
 
 		// Shift to first day
-		for ($i = 0; $i < $maxSearchDays; ++$i, $startAt += 86400)
+		for ($i = 0; $i < $maxSearchDays; ++$i)
 		{
-			if (strtoupper(date('D', $startAt)) === $weekday)
+			if (strtoupper($date->format('D')) === $weekday)
 			{
 				break;
 			}
+
+			$date->modify('+1 day');
 		}
 
 		// Find send date
-		for ($i = 0; $i < $maxSearchDays; ++$i, $startAt += (86400 * 7))
+		for ($i = 0; $i < $maxSearchDays; ++$i)
 		{
-			if (!in_array($startAt, $holidays))
+			if (!in_array($date->getTimestamp(), $holidays))
 			{
+				$date->modify('+7 day');
+
 				break;
 			}
 		}
 
-		return date('Y-m-d', $startAt);
+		return new \JDate($date->format('Y-m-d'));
 	}
 }

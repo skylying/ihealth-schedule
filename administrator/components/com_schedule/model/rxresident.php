@@ -7,6 +7,7 @@
  */
 
 use Windwalker\Model\AdminModel;
+use Schedule\Table\Collection as TableCollection;
 
 // No direct access
 defined('_JEXEC') or die;
@@ -111,19 +112,33 @@ class ScheduleModelRxresident extends AdminModel
 	 */
 	protected function prepareTable($table)
 	{
-		/*
-		 * TODO: 取得機構簡稱 (institute_short_title)
-		 * TODO: 取得客戶姓名 (customer_name)
-		 * TODO: 取得客戶身分證號碼 (id_number)
-		 * TODO: 取得客戶開立處方醫院編號 (hospital_id)
-		 * TODO: 取得客戶開立處方醫院名稱 (hospital_title)
-		 * TODO: 計算第1次藥吃完日 (empty_date_1st)
-		 * TODO: 計算第2次藥吃完日 (empty_date_2nd)
-		 *
-		 * TODO: 討論註記選項是否要儲存 (remind)
-		 */
+		parent::prepareTable($table);
 
-		$table->type = 'resident';
-		$table->deliver_nths = implode(',', $table->deliver_nths);
+		$tableInstitute = TableCollection::loadTable('Institute', $table->institute_id);
+		$tableCustomer  = TableCollection::loadTable('Customer', $table->customer_id);
+
+		$table->type                  = 'resident';
+		$table->delivered             = 0;
+		$table->called                = 0;
+		$table->received              = 1;
+		$table->deliver_nths          = implode(',', (array) $table->deliver_nths);
+		$table->institute_short_title = $tableInstitute->short_title;
+		$table->customer_name         = $tableCustomer->name;
+		$table->id_number             = $tableCustomer->id_number;
+		$table->birth_date            = $tableCustomer->birth_date;
+
+		if (empty($table->empty_date_1st))
+		{
+			$modify = sprintf('+%s day', $table->period);
+
+			$table->empty_date_1st = (new JDate($table->see_dr_date))->modify($modify)->toSql();
+		}
+
+		if (empty($table->empty_date_2nd))
+		{
+			$modify = sprintf('+%s day', $table->period * 2);
+
+			$table->empty_date_2nd = (new JDate($table->see_dr_date))->modify($modify)->toSql();
+		}
 	}
 }
