@@ -1,6 +1,9 @@
 .fullwidth {
   width: 100%;
 }
+.calendarwidth {
+  width: 90px !important;
+}
 .fullwidth-checkboxes ul {
   padding: 0;
 }
