@@ -65,6 +65,11 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 		// 圖片上傳
 		\Schedule\Helper\ImageHelper::handleUpload($rx->id, $files['rximages']);
 
+		$removeCid = isset($this->data['remove_images']) ? $this->data['remove_images'] : array();
+
+		// 刪除圖片
+		\Schedule\Helper\ImageHelper::removeImages($removeCid);
+
 		// Mappers
 		$customerMapper = new DataMapper(Table::CUSTOMERS);
 		$addressMapper  = new DataMapper(Table::ADDRESSES);

@@ -296,7 +296,7 @@
 			multiple="multiple"
 			/>
 
-		<field name="removeImages"
+		<field name="remove_images"
 			type="itemscheckboxes"
 			table="#__schedule_images"
 			id_key="id"

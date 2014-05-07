@@ -136,10 +136,31 @@ class ImageHelper
 	 *
 	 * @param array $cid
 	 *
-	 * @return  void
+	 * @return  bool
 	 */
 	public static function removeImages($cid = array())
 	{
-		// TODO: 完成刪除圖片功能
+		// 非 array 轉換
+		$cid = (array) $cid;
+
+		if (empty($cid))
+		{
+			return true;
+		}
+
+		$imageMapper = new DataMapper(Table::IMAGES);
+
+		$images = $imageMapper->find(array("id" => $cid));
+
+		foreach ($images as $image)
+		{
+			// Remove file
+			\JFile::delete(JPATH_ROOT . '/' . $image->path);
+		}
+
+		// Sql remove
+		$imageMapper->delete(array("id" => $cid));
+
+		return true;
 	}
 }
