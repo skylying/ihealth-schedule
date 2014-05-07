@@ -142,6 +142,8 @@ class Sdk
 		if (!$result && JDEBUG)
 		{
 			$app->enqueueMessage('API return value not JSON.');
+
+			return $this->wrapData(null);
 		}
 
 		$result = new Registry($result);
