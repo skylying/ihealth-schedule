@@ -141,7 +141,7 @@ class Sdk
 
 		if (!$result && JDEBUG)
 		{
-			$app->enqueueMessage('API return value not JSON.');
+			$app->enqueueMessage('API return value not JSON.', 'warning');
 
 			return $this->wrapData(null);
 		}
