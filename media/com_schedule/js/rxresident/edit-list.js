@@ -73,6 +73,107 @@
 							break;
 					}
 				});
+
+				// if "可調劑次數" = 1, hide "第二次藥品吃完日"
+				$row.find('.times').on('change', function(event)
+				{
+					var timesValue = $(event.target).val(),
+						finishDate2Span = $row.find('.emptydisplay2');
+
+					if (timesValue == '1')
+					{
+						finishDate2Span.addClass('hide');
+					}
+					else
+					{
+						finishDate2Span.removeClass('hide');
+					}
+
+				});
+
+				// Bind onchange to "就醫日期" & "給藥天數"
+				$row.find('.seedr').on('change', {row:$row}, updateFinishDate);
+				$row.find('.period').on('change', {row:$row}, updateFinishDate);
+
+				/**
+				 * Update "第一次吃完藥品日" & "第二次吃完藥品日"
+				 *
+				 * @param event
+				 *
+				 * @return void
+				 */
+				function updateFinishDate(event)
+				{
+					var $row = event.data.row;
+
+					var seeDrDateNode  = $row.find('.seedr input'),
+						seeDrDateValue = seeDrDateNode.val();
+
+					// if "就醫日期" not set, return
+					if (seeDrDateValue == 'undefined' || seeDrDateValue == '')
+					{
+						return;
+					}
+
+					var periodNode      = $row.find('.period'),
+						periodValue     = parseInt(periodNode.val());
+
+					var dateObj = new Date(seeDrDateValue);
+
+					// Set finishdate1 & finishdate2
+					var finishDate1 = dateObj.setDate(dateObj.getDate() + periodValue),
+						finishDate2 = dateObj.setDate(dateObj.getDate() + periodValue);
+
+					// update "藥吃完日" view column
+					$row.find('.emptydisplay1').text(getFormat(finishDate1, false));
+					$row.find('.emptydisplay2').text(getFormat(finishDate2, false));
+
+					// update "藥吃完日" form field
+					$row.find('.emptydate1').val(getFormat(finishDate1, true));
+					$row.find('.emptydate2').val(getFormat(finishDate2, true));
+
+					/**
+					 * Create date format MM-DD
+					 *
+					 * @param   {timestamp} date
+					 * @param   {boolean}   type , true => return full format
+					 *
+					 * @returns {string}
+					 */
+					function getFormat(date, type)
+					{
+						var dateObj = new Date(date),
+							year    = dateObj.getFullYear(),
+							month   = dateObj.getMonth() + 1,
+							day     = dateObj.getDate(),
+							short   = ((month < 10) ? '0'+ month : month) + '-' + ((day < 10) ? '0'+ day : day),
+							full    = year + '-' + short,
+							result;
+
+						if (type == true)
+						{
+							result = full;
+						}
+						else
+						{
+							result = short;
+						}
+
+						return result;
+					}
+				}
+
+
+				// Activate calendar by click input itself
+				$row.find('.datetimepicker').each(function()
+				{
+					var calendarIcon = $(this).find('.input-group-addon');
+
+					$(this).find('input').on('click', function()
+					{
+						calendarIcon.click();
+					})
+				});
 			});
 
 			// Add row

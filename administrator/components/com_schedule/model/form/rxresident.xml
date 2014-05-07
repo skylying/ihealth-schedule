@@ -55,21 +55,23 @@
 
 		<field name="birth_date"
 			type="DateTimePicker"
-			class="datetimepicker fullwidth birthday"
+			hint="選擇日期"
+			class="datetimepicker calendarwidth birthday"
 			label="生日"
 			description="生日"
 			/>
 
 		<field name="see_dr_date"
 			type="DateTimePicker"
-			class="datetimepicker fullwidth"
+			hint="選擇日期"
+			class="datetimepicker calendarwidth seedr"
 			label="就醫日期"
 			description="就醫日期"
 			/>
 
 		<field name="period"
 			type="list"
-			class="fullwidth"
+			class="fullwidth period"
 			label="給藥天數"
 			description="給藥天數"
 			default="28"
@@ -113,14 +115,14 @@
 
 		<field name="empty_date_1st"
 			type="hidden"
-			class="fullwidth"
+			class="fullwidth emptydate1"
 			label="第一次吃完藥日"
 			description="第一次吃完藥日"
 			/>
 
 		<field name="empty_date_2nd"
 			type="hidden"
-			class="fullwidth"
+			class="fullwidth emptydate2"
 			label="第二次吃完藥日"
 			description="第二次吃完藥日"
 			/>
