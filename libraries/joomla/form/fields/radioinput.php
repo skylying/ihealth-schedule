@@ -7,6 +7,11 @@
  */
 defined('JPATH_PLATFORM') or die;
 
+/**
+ * Class JFormFieldRadioinput
+ *
+ * @since 1.0
+ */
 class JFormFieldRadioinput extends JFormField
 {
 	/**
@@ -43,113 +48,9 @@ class JFormFieldRadioinput extends JFormField
 	protected $dirname;
 
 	/**
-	 * Method to get certain otherwise inaccessible properties from the form field object.
+	 * getInput
 	 *
-	 * @param   string  $name  The property name for which to the the value.
-	 *
-	 * @return  mixed  The property value or null.
-	 *
-	 * @since   3.2
-	 */
-	public function __get($name)
-	{
-		switch ($name)
-		{
-			case 'maxLength':
-			case 'dirname':
-			case 'inputmode':
-				return $this->$name;
-		}
-
-		return parent::__get($name);
-	}
-
-	/**
-	 * Method to set certain otherwise inaccessible properties of the form field object.
-	 *
-	 * @param   string  $name   The property name for which to the the value.
-	 * @param   mixed   $value  The value of the property.
-	 *
-	 * @return  void
-	 *
-	 * @since   3.2
-	 */
-	public function __set($name, $value)
-	{
-		switch ($name)
-		{
-			case 'maxLength':
-				$this->maxLength = (int) $value;
-				break;
-
-			case 'dirname':
-				$value = (string) $value;
-				$value = ($value == $name || $value == 'true' || $value == '1');
-
-			case 'inputmode':
-				$this->name = (string) $value;
-				break;
-
-			default:
-				parent::__set($name, $value);
-		}
-	}
-
-	/**
-	 * Method to attach a JForm object to the field.
-	 *
-	 * @param   SimpleXMLElement  $element  The SimpleXMLElement object representing the <field /> tag for the form field object.
-	 * @param   mixed             $value    The form field value to validate.
-	 * @param   string            $group    The field name group control value. This acts as as an array container for the field.
-	 *                                      For example if the field has name="foo" and the group value is set to "bar" then the
-	 *                                      full field name would end up being "bar[foo]".
-	 *
-	 * @return  boolean  True on success.
-	 *
-	 * @see     JFormField::setup()
-	 * @since   3.2
-	 */
-	public function setup(SimpleXMLElement $element, $value, $group = null)
-	{
-		$result = parent::setup($element, $value, $group);
-
-		if ($result == true)
-		{
-			$inputmode = (string) $this->element['inputmode'];
-			$dirname = (string) $this->element['dirname'];
-
-			$this->inputmode = '';
-			$inputmode = preg_replace('/\s+/', ' ', trim($inputmode));
-			$inputmode = explode(' ', $inputmode);
-
-			if (!empty($inputmode))
-			{
-				$defaultInputmode = in_array('default', $inputmode) ? JText::_("JLIB_FORM_INPUTMODE") . ' ' : '';
-
-				foreach (array_keys($inputmode, 'default') as $key)
-				{
-					unset($inputmode[$key]);
-				}
-
-				$this->inputmode = $defaultInputmode . implode(" ", $inputmode);
-			}
-
-			// Set the dirname.
-			$dirname = ((string) $dirname == 'dirname' || $dirname == 'true' || $dirname == '1');
-			$this->dirname = $dirname ? $this->getName($this->fieldname . '_dir') : false;
-
-			$this->maxLength = (int) $this->element['maxlength'];
-		}
-
-		return $result;
-	}
-
-	/**
-	 * Method to get the field input markup.
-	 *
-	 * @return  string  The field input markup.
-	 *
-	 * @since   11.1
+	 * @return  string
 	 */
 	protected function getInput()
 	{
@@ -179,9 +80,6 @@ class JFormFieldRadioinput extends JFormField
 		// Including fallback code for HTML5 non supported browsers.
 		JHtml::_('jquery.framework');
 		JHtml::_('script', 'system/html5fallback.js', false, true);
-
-		// Get the field suggestions.
-		$options = (array) $this->getSuggestions();
 
 		if (!empty($options))
 		{
@@ -230,36 +128,5 @@ class JFormFieldRadioinput extends JFormField
 
 		return implode($html);
 
-	}
-
-	/**
-	 * Method to get the field suggestions.
-	 *
-	 * @return  array  The field option objects.
-	 *
-	 * @since   11.1
-	 */
-	protected function getSuggestions()
-	{
-		$options = array();
-
-		foreach ($this->element->children() as $option)
-		{
-			// Only add <option /> elements.
-			if ($option->getName() != 'option')
-			{
-				continue;
-			}
-
-			// Create a new option object based on the <option /> element.
-			$options[] = JHtml::_(
-				'select.option', (string) $option['value'],
-				JText::alt(trim((string) $option), preg_replace('/[^a-zA-Z0-9_\-]/', '_', $this->fieldname)), 'value', 'text'
-			);
-		}
-
-		reset($options);
-
-		return $options;
 	}
 }
