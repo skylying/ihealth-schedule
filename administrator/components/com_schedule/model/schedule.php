@@ -7,6 +7,7 @@
  */
 
 use Windwalker\Model\AdminModel;
+use Schedule\Table\Collection AS TableCollection;
 
 // No direct access
 defined('_JEXEC') or die;
@@ -173,18 +174,16 @@ class ScheduleModelSchedule extends AdminModel
 	 */
 	public function prepareInstituteTable($table)
 	{
-		$tableInstitute = $this->getTable('Institute');
-		$tableInstitute->load($table->institute_id);
-
-		$tableCity = $this->getTable('City');
-		$tableCity->load($table->city);
-
-		$tableArea = $this->getTable('Area');
-		$tableArea->load($table->area);
+		$tableInstitute = TableCollection::loadTable('Institute', $table->institute_id);
 
 		$table->institute_title = $tableInstitute->title;
-		$table->city_title = $tableCity->title;
-		$table->area_title = $tableArea->title;
+		$table->route_id        = $tableInstitute->route_id;
+		$table->city            = $tableInstitute->city;
+		$table->city_title      = $tableInstitute->city_title;
+		$table->area            = $tableInstitute->area;
+		$table->area_title      = $tableInstitute->area_title;
+		$table->address         = $tableInstitute->address;
+		$table->sender_name     = $tableInstitute->sender_name;
 	}
 
 	/**

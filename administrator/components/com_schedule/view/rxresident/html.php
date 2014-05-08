@@ -10,7 +10,7 @@ use Joomla\DI\Container;
 use Windwalker\Model\Model;
 use Windwalker\View\Engine\PhpEngine;
 use Windwalker\View\Html\EditView;
-use Windwalker\Xul\XulEngine;
+use Windwalker\Helper\ArrayHelper;
 
 // No direct access
 defined('_JEXEC') or die;
@@ -80,39 +80,78 @@ class ScheduleViewRxresidentHtml extends EditView
 	}
 
 	/**
-	 * prepareRender
+	 * prepareData
 	 *
 	 * @return  void
 	 */
-	protected function prepareRender()
+	protected function prepareData()
 	{
-		parent::prepareRender();
+		$items = $this->getItems();
 
 		/** @var ScheduleModelRxresident $model */
 		$model = $this->getModel();
-
-		/** @var JInput $input */
-		$input = $this->container->get('input');
 
 		$data = $this->getData();
 		$data->forms = array();
 		$data->instituteForm = $model->getForm(array('id' => -1));
 		$data->templateForm = $model->getForm(array('id' => 0));
 
-		$cid = $input->get('cid', array(), 'ARRAY');
-
-		if (count($cid) > 0)
+		foreach ($items as $item)
 		{
-			$item = (array) $model->getItem($cid[0]);
 			$data->instituteForm->bind($item);
+
+			break;
 		}
 
-		foreach ($cid as $id)
+		foreach ($items as $hash => $item)
 		{
-			$item = (array) $model->getItem($id);
+			$data->forms[$hash] = $model->getForm(array('id' => $hash));
 
-			$data->forms[$id] = $model->getForm($item);
+			$data->forms[$hash]->bind($item);
 		}
+
+		// Check if in edit mode
+		$id = (int) $this->container->get('input')->get('id');
+		$data->isNew = ($id <= 0);
+	}
+
+	/**
+	 * Get items from url query input or session
+	 *
+	 * @return  array
+	 */
+	protected function getItems()
+	{
+		$items = array();
+		$app = JFactory::getApplication();
+		$key = $this->option . '.item.edit.save.data';
+		$data = $app->getUserState($key);
+
+		if ($data)
+		{
+			foreach (ArrayHelper::getValue($data, 'items', array()) as $hash => $item)
+			{
+				$items[$hash] = $item;
+			}
+
+			$app->setUserState($key, null);
+		}
+		else
+		{
+			/** @var ScheduleModelRxresident $model */
+			$model = $this->getModel();
+			/** @var JInput $input */
+			$input = $this->container->get('input');
+
+			$id = $input->get('id');
+
+			if (! empty($id))
+			{
+				$items[$id] = (array) $model->getItem($id);
+			}
+		}
+
+		return $items;
 	}
 
 	/**

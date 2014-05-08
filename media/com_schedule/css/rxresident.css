@@ -1,6 +1,9 @@
 .fullwidth {
   width: 100%;
 }
+.calendarwidth {
+  width: 90px !important;
+}
 .fullwidth-checkboxes ul {
   padding: 0;
 }
@@ -20,4 +23,16 @@
 }
 .fullwidth-checkboxes ul:hover {
   cursor: pointer;
+}
+.deliveryblock div,
+.deliveryblock span {
+  display: inline-block;
+}
+.deliveryblock .weekday {
+  position: relative;
+  bottom: 10px;
+}
+.deliveryblock span {
+  padding-right: 10px;
+  margin-left: 125px;
 }

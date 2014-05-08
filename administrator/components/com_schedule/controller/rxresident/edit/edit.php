@@ -1,11 +1,11 @@
 <?php
 
-use Windwalker\Controller\Edit\AddController;
+use Windwalker\Controller\Edit\EditController;
 
 /**
- * Class ScheduleControllerRxresidentEditAdd
+ * Class ScheduleControllerRxresidentEditEdit
  */
-class ScheduleControllerRxresidentEditAdd extends AddController
+class ScheduleControllerRxresidentEditEdit extends EditController
 {
 	/**
 	 * redirectToItem
