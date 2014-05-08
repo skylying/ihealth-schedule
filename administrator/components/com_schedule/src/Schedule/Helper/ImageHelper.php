@@ -140,7 +140,6 @@ class ImageHelper
 	 */
 	public static function removeImages($cid = array())
 	{
-		// 非 array 轉換
 		$cid = (array) $cid;
 
 		if (empty($cid))
