@@ -7,7 +7,6 @@
  */
 
 use Windwalker\Data\Data;
-
 // No direct access
 defined('_JEXEC') or die;
 
@@ -124,7 +123,7 @@ $date      = $container->get('date');
 
 		<!--ID-->
 		<td class="center">
-			<a href="<?php echo JRoute::_('?option=com_schedule&view=institute&layout=edit&id=' . $item->id);?>"><?php echo $item->id;?></a>
+			<?php echo \Schedule\Helper\UiHelper::editButton('institute', $item->id); ?>
 		</td>
 
 		<!--Short Title-->

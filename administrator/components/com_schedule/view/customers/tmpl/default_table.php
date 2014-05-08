@@ -209,13 +209,13 @@ $date      = $container->get('date');
 
 		<!--STATE-->
 		<td class="center">
-			<?php echo $this->escape($item->state ? JTEXT::_('服務中') : JTEXT::_('結案')); ?>
+			<?php echo $this->escape($item->state ? '服務中' : '結案'); ?>
 		</td>
 
 		<!--SCHEDULE_RECORD-->
 		<td class="center">
 			<a href="<?php echo JRoute::_('index.php?option=com_schedule&view=schedules'); ?>">
-				<?php echo '排程紀錄'; ?>
+				排程紀錄
 			</a>
 		</td>
 

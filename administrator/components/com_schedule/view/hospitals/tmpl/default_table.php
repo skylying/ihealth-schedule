@@ -118,18 +118,18 @@ $date      = $container->get('date');
 			</td>
 
 			<!--CITY TITLE-->
-			<td class="left">
+			<td class="center">
 				<?php echo $this->escape($item->city_title); ?>
 			</td>
 
 			<!--AREA TITLE-->
-			<td class="left">
+			<td class="center">
 				<?php echo $this->escape($item->area_title); ?>
 			</td>
 
 			<!--HAS HI CODE-->
-			<td class="left">
-				<?php echo $item->has_hicode ? '<p> 有 </p>': '<p style="color:red;"> 沒有 </p>' ; ?>
+			<td class="center">
+				<?php echo $item->has_hicode ? '<span class="label label-success"> 有 </span>' : '<span class="label label-danger"> 沒有 </span>' ; ?>
 			</td>
 		</tr>
 	<?php endforeach; ?>
