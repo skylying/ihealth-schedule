@@ -52,17 +52,17 @@ $date      = $container->get('date');
 		</th>
 
 		<!--CITY_TITLE-->
-		<th width="15%" class="left">
+		<th width="15%" class="center">
 			<?php echo $grid->sortTitle('縣市名稱', 'city.title'); ?>
 		</th>
 
 		<!--AREA_TITLE-->
-		<th width="15%" class="left">
+		<th width="15%" class="center">
 			<?php echo $grid->sortTitle('區域名稱', 'area.title'); ?>
 		</th>
 
 		<!--HAS_HI_CODE-->
-		<th width="15%" class="left">
+		<th width="15%" class="center">
 			<?php echo $grid->sortTitle('藥品健保碼', 'hospitals.hicode'); ?>
 		</th>
 	</tr>
