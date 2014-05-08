@@ -109,6 +109,10 @@ class ScheduleViewRxresidentHtml extends EditView
 
 			$data->forms[$hash]->bind($item);
 		}
+
+		// Check if in edit mode
+		$id = (int) $this->container->get('input')->get('id');
+		$data->isNew = ($id <= 0);
 	}
 
 	/**

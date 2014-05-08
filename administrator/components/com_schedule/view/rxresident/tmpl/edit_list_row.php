@@ -23,13 +23,40 @@ $id    = FieldHelper::resetGroup($form->getField('id'), $group);
 		<?php echo $id->input; ?>
 	</td>
 	<td>
-		<?php echo FieldHelper::resetGroup($form->getField('customer_id'), $group)->input; ?>
+		<?php
+		$customerId = FieldHelper::resetGroup($form->getField('customer_id'), $group);
+
+		if (!$data->isNew)
+		{
+			$customerId->readonly = true;
+		}
+
+		echo $customerId->input;
+		?>
 	</td>
 	<td>
-		<?php echo FieldHelper::resetGroup($form->getField('id_number'), $group)->input; ?>
+		<?php
+		$customerName = FieldHelper::resetGroup($form->getField('id_number'), $group);
+
+		if (!$data->isNew)
+		{
+			$customerName->readonly = true;
+		}
+
+		echo $customerName->input;
+		?>
 	</td>
 	<td>
-		<?php echo FieldHelper::resetGroup($form->getField('birth_date'), $group)->input; ?>
+		<?php
+		$birthDate = FieldHelper::resetGroup($form->getField('birth_date'), $group);
+
+		if (!$data->isNew)
+		{
+			$birthDate->readonly = true;
+		}
+
+		echo $birthDate->input;
+		?>
 	</td>
 	<td>
 		<?php echo FieldHelper::resetGroup($form->getField('see_dr_date'), $group)->input; ?>
@@ -64,6 +91,7 @@ $id    = FieldHelper::resetGroup($form->getField('id'), $group);
 	<td>
 		<?php echo FieldHelper::resetGroup($form->getField('note'), $group)->input; ?>
 	</td>
+<?php if ($data->isNew): ?>
 	<td>
 		<div class="btn-group">
 			<button type="button" class="btn btn-default button-copy-row">
@@ -74,4 +102,5 @@ $id    = FieldHelper::resetGroup($form->getField('id'), $group);
 			</button>
 		</div>
 	</td>
+<?php endif; ?>
 </tr>

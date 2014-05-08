@@ -67,7 +67,9 @@ $asset->addJS('rxresident/edit-list.js');
 				<th width="12%">處方箋取得方式</th>
 				<th width="9%">處方箋上傳</th>
 				<th width="8%">備註</th>
+			<?php if ($data->isNew): ?>
 				<th width="4%">複製/刪除</th>
+			<?php endif; ?>
 			</tr>
 		</thead>
 		<tbody>
@@ -85,6 +87,7 @@ if (count($forms) > 0)
 		</tbody>
 	</table>
 
+<?php if ($data->isNew): ?>
 	<p>
 		一次新增 :
 
@@ -95,6 +98,7 @@ if (count($forms) > 0)
 			新增
 		</button>
 	</p>
+<?php endif; ?>
 
 	<input type="hidden" name="task" value="" />
 	<?php echo JHtml::_('form.token'); ?>
