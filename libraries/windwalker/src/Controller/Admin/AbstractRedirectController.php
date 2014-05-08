@@ -8,12 +8,12 @@ use Windwalker\Helper\UriHelper;
 /**
  * Class AbstractRedirectController
  *
- * @since 1.0
+ * @since 2.0
  */
 abstract class AbstractRedirectController extends Controller
 {
 	/**
-	 * Property allowUrlParams.
+	 * Allowed params in url.
 	 *
 	 * @var array
 	 */
@@ -24,33 +24,32 @@ abstract class AbstractRedirectController extends Controller
 	);
 
 	/**
-	 * Property allowReturn.
+	 * Are we allow return?
 	 *
 	 * @var  boolean
 	 */
 	protected $allowReturn = false;
 
 	/**
-	 * Property viewItem.
+	 * View item name.
 	 *
-	 * @var
+	 * @var string
 	 */
-	protected $viewItem;
+	protected $viewItem = null;
 
 	/**
-	 * Property viewList.
+	 * View list name.
 	 *
-	 * @var
+	 * @var string
 	 */
-	protected $viewList;
+	protected $viewList = null;
 
 	/**
 	 * Instantiate the controller.
 	 *
-	 * @param   \JInput           $input  The input object.
-	 * @param   \JApplicationCms  $app    The application object.
-	 *
-	 * @since  12.1
+	 * @param   \JInput          $input   The input object.
+	 * @param   \JApplicationCms $app     The application object.
+	 * @param   array            $config  The config object.
 	 */
 	public function __construct(\JInput $input = null, \JApplicationCms $app = null, $config = array())
 	{
@@ -68,7 +67,7 @@ abstract class AbstractRedirectController extends Controller
 	}
 
 	/**
-	 * prepareExecute
+	 * Prepare execute hook.
 	 *
 	 * @return void
 	 */
@@ -78,14 +77,14 @@ abstract class AbstractRedirectController extends Controller
 	}
 
 	/**
-	 * redirectToItem
+	 * Redirect to item page.
 	 *
-	 * @param null   $recordId
-	 * @param string $urlVar
-	 * @param null   $msg
-	 * @param null   $type
+	 * @param   integer  $recordId  The record item id.
+	 * @param   string   $urlVar    The name of the URL variable if different from the primary key.
+	 * @param   string   $msg       Message to display on redirect. Optional, defaults to value set internally by controller, if any.
+	 * @param   string   $type      Message type. Optional, defaults to 'message' or the type set by a previous call to setMessage.
 	 *
-	 * @return void
+	 * @return  void
 	 */
 	public function redirectToItem($recordId = null, $urlVar = 'id', $msg = null, $type = 'message')
 	{
@@ -93,12 +92,12 @@ abstract class AbstractRedirectController extends Controller
 	}
 
 	/**
-	 * redirectToList
+	 * Redirect to list page.
 	 *
-	 * @param null $msg
-	 * @param null $type
+	 * @param   string  $msg   Message to display on redirect. Optional, defaults to value set internally by controller, if any.
+	 * @param   string  $type  Message type. Optional, defaults to 'message' or the type set by a previous call to setMessage.
 	 *
-	 * @return void
+	 * @return  void
 	 */
 	public function redirectToList($msg = null, $type = 'message')
 	{
@@ -134,21 +133,21 @@ abstract class AbstractRedirectController extends Controller
 	}
 
 	/**
-	 * getRedirectItemUrl
+	 * Get the url of item page redirect.
 	 *
-	 * @param null   $recordId
-	 * @param string $urlVar
+	 * @param   integer  $recordId  The record item id.
+	 * @param   string   $urlVar    The name of the URL variable if different from the primary key.
 	 *
-	 * @return string
+	 * @return  string
 	 */
 	protected function getRedirectItemUrl($recordId = null, $urlVar = 'id')
 	{
-		return 'index.php?option=' . $this->option . '&view=' . strtolower($this->getName())
+		return 'index.php?option=' . $this->option . '&view=' . strtolower($this->viewItem)
 			. $this->getRedirectItemAppend($recordId, $urlVar);
 	}
 
 	/**
-	 * getRedirectListUrl
+	 * Get the url of list page redirect.
 	 *
 	 * @return string
 	 */
@@ -165,8 +164,6 @@ abstract class AbstractRedirectController extends Controller
 	 * @param   string   $urlVar    The name of the URL variable for the id.
 	 *
 	 * @return  string  The arguments to append to the redirect URL.
-	 *
-	 * @since   12.2
 	 */
 	protected function getRedirectItemAppend($recordId = null, $urlVar = 'id')
 	{
@@ -198,8 +195,6 @@ abstract class AbstractRedirectController extends Controller
 	 * Gets the URL arguments to append to a list redirect.
 	 *
 	 * @return  string  The arguments to append to the redirect URL.
-	 *
-	 * @since   12.2
 	 */
 	protected function getRedirectListAppend()
 	{

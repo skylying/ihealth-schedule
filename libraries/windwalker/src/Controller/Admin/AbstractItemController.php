@@ -9,45 +9,43 @@
 namespace Windwalker\Controller\Admin;
 
 /**
- * Class FormController
+ * The Controller to handle single item.
  *
- * @since 1.0
+ * @since 2.0
  */
 abstract class AbstractItemController extends AbstractAdminController
 {
 	/**
-	 * Property recordId.
+	 * Record ID.
 	 *
 	 * @var mixed
 	 */
-	protected $recordId;
+	protected $recordId = null;
 
 	/**
-	 * Property data.
+	 * An array of input data.
 	 *
 	 * @var array
 	 */
-	protected $data;
+	protected $data = null;
 
 	/**
 	 * Instantiate the controller.
 	 *
-	 * @param   \JInput           $input  The input object.
-	 * @param   \JApplicationCms  $app    The application object.
-	 *
-	 * @since  12.1
+	 * @param   \JInput          $input  The input object.
+	 * @param   \JApplicationCms $app    The application object.
+	 * @param   array            $config The config object.
 	 */
 	public function __construct(\JInput $input = null, \JApplicationCms $app = null, $config = array())
 	{
 		parent::__construct($input, $app, $config);
 
 		// Guess the item view as the context.
-		if (empty($this->viewItem))
-		{
-			$this->viewItem = $this->getName();
-		}
+		$this->viewItem = $this->viewItem ? : \JArrayHelper::getValue($config, 'view_item', $this->getName());
 
 		// Guess the list view as the plural of the item view.
+		$this->viewList = $this->viewList ? : \JArrayHelper::getValue($config, 'view_list');
+
 		if (empty($this->viewList))
 		{
 			$inflector = \JStringInflector::getInstance();
@@ -57,7 +55,7 @@ abstract class AbstractItemController extends AbstractAdminController
 	}
 
 	/**
-	 * prepare
+	 * Prepare execute hook.
 	 *
 	 * @return void
 	 */
@@ -82,8 +80,6 @@ abstract class AbstractItemController extends AbstractAdminController
 	 * @param   integer  $id       The ID of the record to add to the edit list.
 	 *
 	 * @return  void
-	 *
-	 * @since   12.2
 	 */
 	protected function holdEditId($context, $id)
 	{
@@ -119,8 +115,6 @@ abstract class AbstractItemController extends AbstractAdminController
 	 * @param   integer  $id       The ID of the record to add to the edit list.
 	 *
 	 * @return  void
-	 *
-	 * @since   12.2
 	 */
 	protected function releaseEditId($context, $id)
 	{
@@ -157,8 +151,6 @@ abstract class AbstractItemController extends AbstractAdminController
 	 * @param   integer  $id       The ID of the record to add to the edit list.
 	 *
 	 * @return  boolean  True if the ID is in the edit list.
-	 *
-	 * @since   12.2
 	 */
 	protected function checkEditId($context, $id)
 	{

@@ -80,7 +80,7 @@ class ScheduleModelInstitute extends AdminModel
 	 *
 	 * @return  void
 	 */
-	public function prepareTable($table)
+	public function prepareTable(JTable $table)
 	{
 		$tableCity = $this->getTable('City');
 		$tableCity->load($table->city);

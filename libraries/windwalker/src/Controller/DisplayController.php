@@ -15,44 +15,57 @@ defined('_JEXEC') or die('Restricted access');
 /**
  * Base Display Controller
  *
- * @package     Joomla.Libraries
- * @subpackage  controller
- * @since       3.2
+ * @since 2.0
  */
 class DisplayController extends Controller
 {
 	/**
-	 * Property defaultView.
+	 * Default View name.
 	 *
 	 * @var string
 	 */
 	protected $defaultView;
 
 	/**
-	 * Property cachable.
+	 * If true, the view output will be cached.
 	 *
 	 * @var boolean
 	 */
 	protected $cachable = false;
 
 	/**
-	 * Property urlParams.
+	 * An array of safe url parameters and their variable types, for valid values see {@link JFilterInput::clean()}.
 	 *
 	 * @var array
 	 */
 	protected $urlParams = array();
 
 	/**
-	 * Execute.
+	 * The view cache.
 	 *
-	 * @return  mixed  A rendered view or true
+	 * @var  \Windwalker\View\AbstractView
 	 */
-	protected function doExecute()
+	protected $view = null;
+
+	/**
+	 * The page type format.
+	 *
+	 * @var  string
+	 */
+	protected $format = 'html';
+
+	/**
+	 * Prepare execute hook.
+	 *
+	 * @throws \LogicException
+	 * @return void
+	 */
+	protected function prepareExecute()
 	{
 		// Get some data.
 		$document   = $this->container->get('document');
 		$viewName   = $this->input->get('view', $this->defaultView);
-		$viewFormat = $document->getType();
+		$viewFormat = $this->format = $document->getType();
 		$layoutName = $this->input->getString('layout', 'default');
 
 		// Get View and register Model to it.
@@ -74,10 +87,21 @@ class DisplayController extends Controller
 		// Push JDocument to View
 		$view->document = $document;
 
+		$this->view = $view;
+	}
+
+
+	/**
+	 * Method to run this controller.
+	 *
+	 * @return  mixed  A rendered view or true
+	 */
+	protected function doExecute()
+	{
 		// Display the view
 		$conf = $this->container->get('joomla.config');
 
-		if ($this->cachable && $viewFormat != 'feed' && $conf->get('caching') >= 1)
+		if ($this->cachable && $this->format != 'feed' && $conf->get('caching') >= 1)
 		{
 			$option = $this->input->get('option');
 			$cache = \JFactory::getCache($option, 'view');
@@ -103,14 +127,14 @@ class DisplayController extends Controller
 				$this->app->registeredurlparams = $registeredurlparams;
 			}
 
-			return $cache->get($view, 'render');
+			return $cache->get($this->view, 'render');
 		}
 
-		return $view->render();
+		return  $this->view->render();
 	}
 
 	/**
-	 * getCachable
+	 * Cachable getter.
 	 *
 	 * @return boolean
 	 */
@@ -120,9 +144,9 @@ class DisplayController extends Controller
 	}
 
 	/**
-	 * setCachable
+	 * Cachable setter.
 	 *
-	 * @param boolean $cachable
+	 * @param boolean $cachable Is Cachable.
 	 *
 	 * @return $this
 	 */
@@ -134,7 +158,7 @@ class DisplayController extends Controller
 	}
 
 	/**
-	 * getUrlParams
+	 * UrlParams getter.
 	 *
 	 * @return array
 	 */
@@ -144,9 +168,9 @@ class DisplayController extends Controller
 	}
 
 	/**
-	 * setUrlParams
+	 * UrlParams setter.
 	 *
-	 * @param array $urlParams
+	 * @param array $urlParams The urlParams property.
 	 *
 	 * @return $this
 	 */
@@ -158,13 +182,14 @@ class DisplayController extends Controller
 	}
 
 	/**
-	 * getView
+	 * Method to get a reference to the current view and load it if necessary.
 	 *
-	 * @param null $name
-	 * @param null $type
-	 * @param bool $forceNew
+	 * @param   string   $name     The view name. Optional, defaults to the controller name.
+	 * @param   string   $type     The view type. Optional.
+	 * @param   array    $config   Configuration array for view. Optional.
+	 * @param   boolean  $forceNew Force new instance.
 	 *
-	 * @return mixed
+	 * @return  \Windwalker\View\AbstractView  Reference to the view or an error.
 	 */
 	public function getView($name = null, $type = null, $config = array(), $forceNew = false)
 	{
@@ -203,33 +228,34 @@ class DisplayController extends Controller
 
 		$config = array_merge($defaultConfig, $config);
 
+		$viewKey = 'view.' . strtolower($name);
+
 		try
 		{
-			$view = $container->get('view.' . strtolower($name), $forceNew);
+			$view = $container->get($viewKey, $forceNew);
 		}
 		catch (\InvalidArgumentException $e)
 		{
-			$container->alias('view.' . strtolower($name), $viewName)
-				->share(
-					$viewName,
-					function($container) use($viewName, $model, $paths, $config)
-					{
-						return new $viewName($model, $container, $config, $paths);
-					}
-				);
+			$container->share(
+				$viewKey,
+				function($container) use($viewName, $model, $paths, $config)
+				{
+					return new $viewName($model, $container, $config, $paths);
+				}
+			);
 
-			$view = $container->get($viewName);
+			$view = $container->get($viewKey);
 		}
 
 		return $view;
 	}
 
 	/**
-	 * getTemplatePath
+	 * Get teplate path.
 	 *
-	 * @param \JView $view
+	 * @param \JView $view The view object.
 	 *
-	 * @return \SplPriorityQueue
+	 * @return \SplPriorityQueue The queue object.
 	 */
 	public function getTemplatePath($view)
 	{
@@ -249,9 +275,9 @@ class DisplayController extends Controller
 	}
 
 	/**
-	 * assignModels
+	 * Assign Models Hook.
 	 *
-	 * @param \JView $view
+	 * @param \JView $view The view object.
 	 *
 	 * @return void
 	 */
@@ -260,7 +286,7 @@ class DisplayController extends Controller
 	}
 
 	/**
-	 * getDefaultView
+	 * Get default view name.
 	 *
 	 * @return string
 	 */

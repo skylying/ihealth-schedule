@@ -140,7 +140,7 @@ class ScheduleModelSchedule extends AdminModel
 	 *
 	 * @return  void
 	 */
-	public function prepareTable($table)
+	public function prepareTable(JTable $table)
 	{
 		$formName = $this->state->get('form.type', 'schedule_institute');
 

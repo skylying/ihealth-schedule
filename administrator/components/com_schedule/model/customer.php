@@ -110,7 +110,7 @@ class ScheduleModelCustomer extends AdminModel
 	 *
 	 * @return  void
 	 */
-	public function prepareTable($table)
+	public function prepareTable(JTable $table)
 	{
 		$jformData = JFactory::getApplication()->input->get('jform', '', 'array');
 
