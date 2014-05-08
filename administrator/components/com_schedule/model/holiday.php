@@ -72,4 +72,22 @@ class ScheduleModelHoliday extends AdminModel
 	{
 		parent::setOrderPosition($table, $position);
 	}
+
+	/**
+	 * prepareTable
+	 *
+	 * @param JTable $table
+	 *
+	 * @return  void
+	 */
+	public function prepareTable(JTable $table)
+	{
+		$makeFullDate = mktime(0 ,0 ,0 ,$table->month, $table->day, $table->year);
+
+		$weekday = strtoupper(date('D', $makeFullDate));
+		$date = date('Y-m-d', $makeFullDate);
+
+		$table->weekday = $weekday;
+		$table->date = $date;
+	}
 }
