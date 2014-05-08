@@ -56,6 +56,13 @@ class ScheduleControllerRxresidentEditSave extends SaveController
 	protected $scheduleState;
 
 	/**
+	 * Property useTransaction.
+	 *
+	 * @var  bool
+	 */
+	protected $useTransaction = true;
+
+	/**
 	 * preSaveHook
 	 *
 	 * @return  void
