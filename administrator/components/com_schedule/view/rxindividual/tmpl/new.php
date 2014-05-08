@@ -13,6 +13,8 @@ JHtmlBootstrap::tooltip();
 JHtmlFormbehavior::chosen('select');
 JHtmlBehavior::formvalidation();
 
+$data->asset->addJS('moment-with-langs.min.js');
+
 $basic = $data->form->getFieldset("basic");
 $ps    = $data->form->getFieldset("schedules_ps");
 
@@ -20,6 +22,8 @@ $customerID = $data->form->getField('customer_id')->id;
 $telOfficeID = $data->form->getField('tel_office')->id;
 $telHomeID = $data->form->getField('tel_home')->id;
 $mobileID = $data->form->getField('mobile')->id;
+$seeDrDateID = $data->form->getField('see_dr_date')->id;
+$periodID = $data->form->getField('period')->id;
 
 $telOfficeName = $data->form->getField('tel_office')->name;
 $telHomeName   = $data->form->getField('tel_home')->name;
@@ -303,12 +307,54 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 		{
 			$(that).closest('.schedules').find('.js-nth-schedule-info').addClass('opaque');
 		}
-	}
+	};
+
+	/**
+	 * Calculate finish drug date, schedule date
+	 *
+	 * updateScheduleDate
+	 *
+	 * @param {string} seeDrDate
+	 * @param {json} period
+	 */
+	$.fn.updateScheduleDate = function( seeDrDate, period )
+	{
+		var moment_date = moment(seeDrDate);
+
+		for (var i = 0; i < addressesKeys.length; i++)
+		{
+			var drugEmptyDateID = '#jform_schedules_' + addressesKeys[i] + '_drug_empty_date';
+			var selectedAddressID = '#jform_schedules_' + addressesKeys[i] + '_address_id';
+
+			// Set finish drug date
+			moment_date.add('days', period);
+			$(drugEmptyDateID).val( moment_date.format("YYYY-MM-DD") );
+
+			// Get send date
+			var addressVal = $(selectedAddressID).val();
+
+			$.ajax({
+				type: "POST",
+				url: "index.php?option=com_schedule&task=rxindividual.ajax.date" +
+					"&address_id=" + addressVal
+
+			}).done(function (cdata)
+				{
+					var cdata = $.parseJSON(cdata);
+					console.log(cdata);
+				});
+		}
+
+	};
 })(jQuery);
 
 jQuery(document).ready(function ()
 {
 	var phoneDropDown = jQuery('.js-select-phone-default');
+
+	var seeDrDateID = "<?php echo $seeDrDateID;?>";
+
+	var periodID = "<?php echo $periodID;?>";
 
 	// customer_id's element id
 	var customerDropDown = jQuery("#" + "<?php echo $customerID;?>");
@@ -469,6 +515,17 @@ jQuery(document).ready(function ()
 
 		// Hide the input row
 		jQuery(this).closest('.js-tmpl-add-telrow').addClass('hide');
+	});
+
+
+	jQuery('#'+seeDrDateID).parent().children().each(function(){
+		jQuery(this).on('focusout', function(){
+			jQuery(this).updateScheduleDate( jQuery('#'+seeDrDateID).val(), jQuery('#'+periodID).val() );
+		});
+	});
+
+	jQuery('#'+periodID).on('change', function(){
+		jQuery(this).updateScheduleDate( jQuery('#'+seeDrDateID).val(), jQuery('#'+periodID).val() );
 	});
 });
 </script>
