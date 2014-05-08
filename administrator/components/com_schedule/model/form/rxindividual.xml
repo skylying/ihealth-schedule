@@ -294,6 +294,7 @@
 			description="處方箋檔案"
 			multiple="multiple"
 			/>
+
 	</fieldset>
 
 	<fields name="schedules_1st">
@@ -311,6 +312,8 @@
 			label="地址"
 			description="地址"
 			/>
+
+
 
 		<field name="drug_empty_date"
 			type="calendar"
@@ -480,6 +483,27 @@
 			<option value="need_real_book">需確認正本</option>
 			<option value="need_breakup">藥品需分包</option>
 			<option value="take_it_back">正本已回收</option>
+		</field>
+	</fieldset>
+
+	<fieldset name="city">
+		<field name="city"
+			type="sql"
+			query="SELECT `id`, `title` FROM #__schedule_cities WHERE published=1"
+			key_field="id"
+			value_field="title"
+			label="縣市"
+			description="縣市">
+			<option>- 請選擇縣市 -</option>
+		</field>
+		<field name="area"
+			type="sql"
+			query="SELECT `id`, `title` FROM #__schedule_areas WHERE published=1"
+			key_field="id"
+			value_field="title"
+			label=""
+			description="區域">
+			<option>- 請選擇區域 -</option>
 		</field>
 	</fieldset>
 </form>

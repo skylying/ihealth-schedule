@@ -336,7 +336,75 @@ jQuery(document).ready(function ()
 		jQuery(this).updateHiddenPhoneNumbersInput();
 	});
 
-	jQuery('.js-add-tel').on('click', function()
+	jQuery('.js-add-address').on('click', function()
+	{
+		jQuery(this).closest('.js-nth-schedule-info').find('.js-tmpl-add-addressrow').removeClass('hide');
+	});
+
+	jQuery('.js-save-address').on('click', function ()
+	{
+		// The dynamic row wrapper
+		var currentWrap = jQuery(this).closest('.js-tmpl-add-addressrow');
+
+		// The hidden input will save the user customized input address, and wait for model to save.
+		var targetHiddenInput = jQuery('#hiddenAddressToAdd');
+
+		// Select all the address drop down list, since we have to update all at once
+		var targetListToUpdate = jQuery('.js-address-wrap select');
+
+		// Store the concatenated string
+		var resultString = '';
+
+		// <option> tag to append
+		var html = '';
+
+		// Data to stored
+		var data;
+
+		if (targetHiddenInput.val() == '')
+		{
+			// initialize with array
+			data = data || [];
+		}
+		else
+		{
+			data = JSON.parse(targetHiddenInput.val());
+		}
+
+		var arrayToAdd = {
+			id: 'hash-' + data.length,
+			city: currentWrap.find('#jform_city').val(),
+			area: currentWrap.find('#jform_area').val(),
+			address: currentWrap.find('.js-address-row-data').val()
+		};
+
+		data.push(arrayToAdd);
+
+		// Concatenate string.
+		resultString = currentWrap.find('#jform_city option:selected').text() +
+			currentWrap.find('#jform_area option:selected').text() +
+			arrayToAdd.address;
+
+		// Form up html <option>
+		html = '<option value="' + arrayToAdd.id + '">' +
+			resultString +
+			'</option>';
+
+		// Update drop down list at once
+		targetListToUpdate.each(function ()
+		{
+			jQuery(this).append(html);
+			jQuery(this).find('option:last').attr('selected', true);
+		});
+
+		// Update to hidden input
+		jQuery(this).customerAjax.updateJsonToInputField('hiddenAddressToAdd', data);
+
+		// Clear current row
+		currentWrap.addClass('hide');
+	});
+
+	jQuery('.js-add-tel').on('click', function ()
 	{
 		jQuery(this).closest('.js-tel-wrap').find('.js-tmpl-add-telrow').removeClass('hide');
 	});
@@ -353,7 +421,6 @@ jQuery(document).ready(function ()
 		{
 			var data = JSON.parse(wrapperElement.find('input[type=hidden]').val());
 
-			console.log(wrapperElement.find('input[type=hidden]'));
 			// This value is requirement
 			var limit = 3;
 
@@ -371,7 +438,7 @@ jQuery(document).ready(function ()
 					// If empty, overwrite it
 					if (data[index].number == "")
 					{
-						data[index].number  = phoneToAdd.val();
+						data[index].number = phoneToAdd.val();
 						data[index].default = 'true';
 						b_set = true;
 
@@ -422,7 +489,12 @@ jQuery(document).ready(function ()
 		width: 80%;
 	}
 
-	.schedules select, input.js-address-row-data
+	.schedules select
+	{
+		width: 100%;
+	}
+
+	input.js-address-row-data
 	{
 		width: 100%;
 	}
@@ -451,6 +523,13 @@ jQuery(document).ready(function ()
 		bottom: -30px;
 		position: relative;
 	}
+
+	.js-tmpl-add-addressrow{
+		padding: 10px 30px;
+		margin: 0px -30px;
+		background-color: #E2E2E2;
+	}
+
 	.opaque
 	{
 		opacity: .3;
@@ -491,7 +570,7 @@ jQuery(document).ready(function ()
 						<div class="row-fluid">
 							<div class="col-lg-12">
 								<div class="row-fluid">
-									<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8" style="padding: 0px;">
+									<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 js-address-wrap" style="padding: 0px;">
 										<?php echo $schedules["jform_schedules_{$key}_address_id"]->getControlGroup(); ?>
 									</div>
 									<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4" style="padding: 0px;">
@@ -502,12 +581,22 @@ jQuery(document).ready(function ()
 									</div>
 								</div>
 							</div>
-							<!-- Add telephone row -->
+							<!-- Add Address Row -->
 							<div class="col-lg-12">
-								<div class="js-tmpl-add-telrow">
+								<div class="js-tmpl-add-addressrow hide">
 									<div class="row-fluid">
 										<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8" style="padding: 0px;">
-											<input class="js-address-row-data pull-left" type="text">
+											<div class="row-fluid">
+												<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4" style="padding: 0px 10px 0px 0px;">
+													<?php echo $data->form->getInput('city') ?>
+												</div>
+												<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4" style="padding: 0px 10px 0px 0px;">
+													<?php echo $data->form->getInput('area') ?>
+												</div>
+												<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4" style="padding: 0px">
+													<input class="js-address-row-data pull-left" type="text">
+												</div>
+											</div>
 										</div>
 										<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4" style="padding: 0px;">
 											<div class="btn btn-small btn-success pull-right js-save-address">
@@ -521,7 +610,6 @@ jQuery(document).ready(function ()
 						</div>
 						<div class="row-fluid">
 							<div class="col-lg-4">
-								<!-- TODO:js -->
 								<?php echo $schedules["jform_schedules_{$key}_drug_empty_date"]->getControlGroup(); ?>
 							</div>
 							<div class="col-lg-4">
