@@ -139,7 +139,9 @@ class ScheduleViewRxresidentHtml extends EditView
 			/** @var JInput $input */
 			$input = $this->container->get('input');
 
-			foreach ($input->get('cid', array(), 'ARRAY') as $id)
+			$id = $input->get('id');
+
+			if (! empty($id))
 			{
 				$items[$id] = (array) $model->getItem($id);
 			}
