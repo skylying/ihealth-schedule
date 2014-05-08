@@ -114,7 +114,7 @@ class ScheduleModelCustomer extends AdminModel
 	{
 		$jformData = JFactory::getApplication()->input->get('jform', '', 'array');
 
-		$customerType = $jformData['type'];
+		$customerType = \Windwalker\Helper\ArrayHelper::getValue($jformData, 'type');
 
 		if ('individual' === $customerType)
 		{

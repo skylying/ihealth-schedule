@@ -98,10 +98,12 @@ class ScheduleControllerRxresidentEditSave extends SaveController
 				);
 
 				/** @var ScheduleModelCustomer $customerModel */
-				$customerModel = $this->getModel('Customer', 'ScheduleModel', array('ignore_request' => true));
+				$customerModel = $this->getModel('Customer', '', array('ignore_request' => true));
 
 				// Create new customer
-				$customer = $customerModel->save($customer);
+				$customerModel->save($customer);
+
+				$customer['id'] = $customerModel->getState()->get('customer.id');
 			}
 			else
 			{
@@ -110,8 +112,8 @@ class ScheduleControllerRxresidentEditSave extends SaveController
 				$customer = $customerMapper->findOne($item['customer_id']);
 			}
 
-			$item['customer_id'] = $customer->id;
-			$item['customer_name'] = $customer->name;
+			$item['customer_id'] = $customer['id'];
+			$item['customer_name'] = $customer['name'];
 		}
 	}
 
