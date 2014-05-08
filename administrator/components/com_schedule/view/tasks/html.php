@@ -127,24 +127,13 @@ class ScheduleViewTasksHtml extends GridView
 		}
 
 		$buttonSet['completeDelivery']['handler'] = function(){
-			$title = '完成外送';
-			$alt = $title;
-			JHtml::_('behavior.modal');
-			$dHtml = "<button class='btn btn-small' onclick=\"Joomla.submitbutton('tasks.state.delivery')\"><span class='glyphicon glyphicon-ok-circle'></span> " . $title . "</button>";
-
-			$bar = JToolbar::getInstance('toolbar');
-			$bar->appendButton('Custom', $dHtml, $alt);
+			JToolbarHelper::custom('tasks.state.delivery', 'checkin', 'checkin', '完成外送');
 		};
 
 		$buttonSet['waitDelivery']['handler'] = function(){
-			$title = '改回待外送';
-			$alt = $title;
-			JHtml::_('behavior.modal');
-			$dHtml = "<button class='btn btn-small' onclick=\"Joomla.submitbutton('tasks.state.undelivery')\"><span class='glyphicon glyphicon-pause'></span> " . $title . "</button>";
-
-			$bar = JToolbar::getInstance('toolbar');
-			$bar->appendButton('Custom', $dHtml, $alt);
+			JToolbarHelper::custom('tasks.state.undelivery', 'pause', 'pause', '改回待外送');
 		};
+
 		return $buttonSet;
 	}
 }
