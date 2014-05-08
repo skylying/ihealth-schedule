@@ -110,7 +110,7 @@ class ScheduleModelRxresident extends AdminModel
 	 *
 	 * @return  void
 	 */
-	protected function prepareTable($table)
+	protected function prepareTable(JTable $table)
 	{
 		parent::prepareTable($table);
 
