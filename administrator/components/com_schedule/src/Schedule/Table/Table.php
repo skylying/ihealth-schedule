@@ -17,6 +17,10 @@ abstract class Table
 {
 	const ADDRESSES = '#__schedule_addresses';
 
+	const CITIES = '#__schedule_cities';
+
+	const AREAS = '#__schedule_areas';
+
 	const COLORS = '#__schedule_colors';
 
 	const CUSTOMERS = '#__schedule_customers';

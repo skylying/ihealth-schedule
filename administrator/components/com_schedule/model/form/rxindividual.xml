@@ -188,6 +188,10 @@
 			label="備註"
 			description="備註"
 			/>
+
+		<field name="create_address"
+			type="hidden"
+			/>
 	</fieldset>
 
 	<fieldset
@@ -209,12 +213,13 @@
 			/>
 
 		<field name="customer_id"
-			type="sql"
+			type="customer_rxlist"
 			label="客戶姓名"
 			description="客戶姓名"
-			query="SELECT id, name FROM #__schedule_customers WHERE `type` = 'individual'"
+			customer="individual"
 			key_field="id"
 			value_field="name"
+			quickadd="true"
 			/>
 
 		<field name="birth_date"
@@ -295,6 +300,17 @@
 			multiple="multiple"
 			/>
 
+		<field name="remove_images"
+			type="itemscheckboxes"
+			table="#__schedule_images"
+			id_key="id"
+			where_item_id="rx_id"
+			value_field="id"
+			option_title="title"
+			select="id, title"
+			label="刪除圖片"
+			description="刪除圖片"
+			/>
 	</fieldset>
 
 	<fields name="schedules_1st">
