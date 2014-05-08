@@ -188,6 +188,10 @@
 			label="備註"
 			description="備註"
 			/>
+
+		<field name="create_address"
+			type="hidden"
+			/>
 	</fieldset>
 
 	<fieldset
