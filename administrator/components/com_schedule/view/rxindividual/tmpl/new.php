@@ -297,9 +297,18 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 	{
 		var key = this.find('option:selected').val();
 		var hiddenInput = this.closest('.control-group').find('input');
+		var data;
 
-		// Parse input string into object
-		var data = JSON.parse(hiddenInput.val());
+		if (hiddenInput.val() == '' || hiddenInput.val() == '{}')
+		{
+			// initialize with array
+			data = data || [];
+		}
+		else
+		{
+			// initialize with input
+			data = JSON.parse(hiddenInput.val());
+		}
 
 		for (var i = 0; i < data.length; i++)
 		{
@@ -433,13 +442,14 @@ jQuery(document).ready(function ()
 		// Data to stored
 		var data;
 
-		if (targetHiddenInput.val() == '')
+		if (targetHiddenInput.val() == '' || targetHiddenInput.val() == '{}')
 		{
 			// initialize with array
 			data = data || [];
 		}
 		else
 		{
+			// initialize with input
 			data = JSON.parse(targetHiddenInput.val());
 		}
 
@@ -496,10 +506,20 @@ jQuery(document).ready(function ()
 
 			var b_set = false;
 
-			var data = JSON.parse(wrapperElement.find('input[type=hidden]').val());
+			var data;
 
-			// If empty, reinitialize.
-			data = (jQuery.isEmptyObject(data)) ? [] : data ;
+			var inputValue = wrapperElement.find('input[type=hidden]').val();
+
+			if (inputValue == '' ||  inputValue == '{}')
+			{
+				// initialize with array
+				data = (jQuery.isEmptyObject(data)) ? [] : data ;
+			}
+			else
+			{
+				// initialize with input
+				data = JSON.parse(inputValue);
+			}
 
 			//Only if the data length smaller than limitation will the insertion being executed
 			if (data.length < limit)
