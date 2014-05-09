@@ -33,7 +33,7 @@ class ScheduleControllerRxresidentEditSave2New extends Save2newController
 
 		$this->app->setUserState($this->context . '.return', $return);
 
-		if (true === $return)
+		if (false !== $return)
 		{
 			$this->app->setUserState($this->context . '.data', null);
 		}
