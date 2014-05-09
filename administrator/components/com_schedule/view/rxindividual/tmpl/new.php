@@ -89,20 +89,45 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 		}).done(function (cdata)
 			{
 				var cdata      = $.parseJSON(cdata);
-				var tel_office = $.parseJSON(cdata.tel_office);
-				var tel_home   = $.parseJSON(cdata.tel_home);
-				var mobile     = $.parseJSON(cdata.mobile);
+
 				var id_number  = cdata.id_number;
-
-				// Update phone numbers
-				$.fn.customerAjax.updatePhoneHtml(telOfficeID, tel_office);
-				$.fn.customerAjax.updatePhoneHtml(telHomeID, tel_home);
-				$.fn.customerAjax.updatePhoneHtml(mobileID, mobile);
-
-				// Update hidden input which store phone number json string.
-				$.fn.customerAjax.updateJsonToInputField(telOfficeID, tel_office);
 				$.fn.customerAjax.updateJsonToInputField(telHomeID, tel_home);
-				$.fn.customerAjax.updateJsonToInputField(mobileID, mobile);
+
+				try{
+					// Update phone numbers
+					var tel_office = $.parseJSON(cdata.tel_office);
+
+					// Update hidden input which store phone number json string.
+					$.fn.customerAjax.updatePhoneHtml(telOfficeID, tel_office);
+				}
+				catch(err){
+					$.fn.customerAjax.updatePhoneHtml(telOfficeID);
+					return;
+				}
+
+				try{
+					// Update phone numbers
+					var tel_home   = $.parseJSON(cdata.tel_home);
+
+					// Update hidden input which store phone number json string.
+					$.fn.customerAjax.updatePhoneHtml(telHomeID, tel_home);
+				}
+				catch(err){
+					$.fn.customerAjax.updatePhoneHtml(telHomeID);
+					return;
+				}
+
+				try{
+					// Update phone numbers
+					var mobile     = $.parseJSON(cdata.mobile);
+
+					// Update hidden input which store phone number json string.
+					$.fn.customerAjax.updatePhoneHtml(mobileID, mobile);
+				}
+				catch(err){
+					$.fn.customerAjax.updatePhoneHtml(mobileID);
+					return;
+				}
 
 				// Update customer id_number
 				$.fn.customerAjax.updateCustomerIdNumber(customerIDNumber, id_number);
