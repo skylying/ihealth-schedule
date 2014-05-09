@@ -51,7 +51,6 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 	 *
 	 * fireAjax
 	 *
-	 * @param id
 	 */
 	$.fn.exists = function ()
 	{
@@ -63,7 +62,7 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 	 *
 	 * customerAjax
 	 *
-	 * @param id
+	 * @param {int}    id
 	 */
 	$.fn.customerAjax = function (id)
 	{
@@ -79,7 +78,7 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 	 *
 	 * fireAjax
 	 *
-	 * @param {int} id
+	 * @param {int}    id
 	 */
 	$.fn.customerAjax.fireAjax = function (id)
 	{
@@ -130,8 +129,8 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 	 *
 	 * updateCustomerIdNumber
 	 *
-	 * @param {string} target Target element id
-	 * @param {object} id customer_id to update
+	 * @param {string}    target  Target element id
+	 * @param {int}    id      customer_id to update
 	 */
 	$.fn.customerAjax.updateCustomerIdNumber = function (target, id)
 	{
@@ -147,8 +146,8 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 	 *
 	 * updateJsonToInputField
 	 *
-	 * @param {string} target Target element id
-	 * @param {json} dataJson Data to update
+	 * @param {string}    target        Target element id
+	 * @param {json}      dataJson      Data to update
 	 */
 	$.fn.customerAjax.updateJsonToInputField = function (target, dataJson)
 	{
@@ -168,8 +167,8 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 	 *
 	 * updateAddressHtml
 	 *
-	 * @param {string} key
-	 * @param {json} addressJson
+	 * @param {string}  key
+	 * @param {json}    addressJson
 	 */
 	$.fn.customerAjax.updateAddressHtml = function (key, addressJson)
 	{
@@ -219,15 +218,15 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 	 *
 	 * updatePhoneHtml
 	 *
-	 * @param {int} tagID
-	 * @param {json} telJson
+	 * @param {string}    tagID
+	 * @param {json}      telJson
 	 */
 	$.fn.customerAjax.updatePhoneHtml = function (tagID, telJson)
 	{
 		telJson = telJson || {};
 
 		var target = $('#' + tagID).parent().find('.controls');
-		var defaultLength = telJson.length ? telJson.length : 3;
+		var defaultLength = telJson.length ? telJson.length : 0;
 
 		//Clear target hook's html first.
 		target.html("");
@@ -320,8 +319,8 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 	 *
 	 * updateScheduleDate
 	 *
-	 * @param {string} seeDrDate
-	 * @param {json} period
+	 * @param {string}    seeDrDate
+	 * @param {json}      period
 	 */
 	$.fn.updateScheduleDate = function( seeDrDate, period )
 	{
@@ -347,7 +346,6 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 			}).done(function (cdata)
 				{
 					var cdata = $.parseJSON(cdata);
-					console.log(cdata);
 				});
 		}
 
@@ -471,18 +469,20 @@ jQuery(document).ready(function ()
 
 		if (phoneToAdd != "")
 		{
+			// This value is a requirement
+			var limit = 3;
+
+			var b_set = false;
+
 			var data = JSON.parse(wrapperElement.find('input[type=hidden]').val());
 
-			// This value is requirement
-			var limit = 3;
+			// If empty, reinitialize.
+			data = (jQuery.isEmptyObject(data)) ? [] : data ;
 
 			//Only if the data length smaller than limitation will the insertion being executed
 			if (data.length < limit)
 			{
-				var index = 0;
-				var b_set = false;
-
-				for (index = 0; index < data.length; index++)
+				for (var index = 0; index < data.length; index++)
 				{
 					// Replace the empty field.
 					data[index].number = data[index].number.replace(/\s+/g, '');
@@ -499,10 +499,10 @@ jQuery(document).ready(function ()
 					// If not match, reset every element's default to 'false'
 					data[index].default = 'false';
 				}
-
 				// If no replacement was done, and the length is still not exceed the limit, perform insertion.
 				if (!b_set)
 				{
+
 					var tagID = wrapperElement.find('input[type=hidden]').prop('id');
 
 					data.push({default: 'true', number: phoneToAdd.val()});
