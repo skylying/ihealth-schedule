@@ -72,22 +72,22 @@ $customerType = $data->item->type;
 		update = function(){
 
 			jsonTelO = [
-				{ "default" : jQuery('#radiojform_tel_office0').is(':checked'), "number" :  jQuery('#jform_tel_office0').val()} ,
-				{ "default" : jQuery('#radiojform_tel_office1').is(':checked'), "number" : jQuery('#jform_tel_office1').val()} ,
-				{ "default" : jQuery('#radiojform_tel_office2').is(':checked'), "number" :  jQuery('#jform_tel_office2').val()},
-			]
+				{ "default" : jQuery('#radiojform_tel_office0').is(':checked'), "number" :  jQuery('#jform_tel_office0').val()},
+				{ "default" : jQuery('#radiojform_tel_office1').is(':checked'), "number" :  jQuery('#jform_tel_office1').val()},
+				{ "default" : jQuery('#radiojform_tel_office2').is(':checked'), "number" :  jQuery('#jform_tel_office2').val()}
+			];
 
 			jsonTelH = [
-				{ "default" : jQuery('#radiojform_tel_home0').is(':checked'), "number" :  jQuery('#jform_tel_home0').val()} ,
-				{ "default" : jQuery('#radiojform_tel_home1').is(':checked'), "number" : jQuery('#jform_tel_home1').val()} ,
-				{ "default" : jQuery('#radiojform_tel_home2').is(':checked'), "number" :  jQuery('#jform_tel_home2').val()},
-			]
+				{ "default" : jQuery('#radiojform_tel_home0').is(':checked'), "number" :  jQuery('#jform_tel_home0').val()},
+				{ "default" : jQuery('#radiojform_tel_home1').is(':checked'), "number" :  jQuery('#jform_tel_home1').val()},
+				{ "default" : jQuery('#radiojform_tel_home2').is(':checked'), "number" :  jQuery('#jform_tel_home2').val()}
+			];
 
 			jsonTelM = [
-				{ "default" : jQuery('#radiojform_mobile0').is(':checked'), "number" :  jQuery('#jform_mobile0').val()} ,
-				{ "default" : jQuery('#radiojform_mobile1').is(':checked'), "number" : jQuery('#jform_mobile1').val()} ,
-				{ "default" : jQuery('#radiojform_mobile2').is(':checked'), "number" :  jQuery('#jform_mobile2').val()},
-			]
+				{ "default" : jQuery('#radiojform_mobile0').is(':checked'), "number" :  jQuery('#jform_mobile0').val()},
+				{ "default" : jQuery('#radiojform_mobile1').is(':checked'), "number" :  jQuery('#jform_mobile1').val()},
+				{ "default" : jQuery('#radiojform_mobile2').is(':checked'), "number" :  jQuery('#jform_mobile2').val()}
+			];
 
 			jQuery('#jform_tel_office').val(JSON.stringify(jsonTelO)),
 			jQuery('#jform_tel_home').val(JSON.stringify(jsonTelH)),
@@ -95,7 +95,7 @@ $customerType = $data->item->type;
 
 		}
 
-		jQuery('#customer-edit-fieldset-phones, #customer-edit-fieldset-home, #customer-edit-fieldset-mobile input').each(function(){
+		jQuery('#customer-edit-fieldset-office, #customer-edit-fieldset-home, #customer-edit-fieldset-mobile input').each(function(){
 			jQuery(this).on('change', update );
 		});
 

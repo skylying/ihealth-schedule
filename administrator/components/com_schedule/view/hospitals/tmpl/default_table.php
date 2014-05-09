@@ -47,7 +47,7 @@ $date      = $container->get('date');
 		</th>
 
 		<!--HOSPITA TITLE-->
-		<th width="49%" class="center">
+		<th width="49%" class="left">
 			<?php echo $grid->sortTitle('醫院名稱', 'hospitals.title'); ?>
 		</th>
 
@@ -102,7 +102,7 @@ $date      = $container->get('date');
 
 			<!--HOSPITAL TITLE-->
 			<td class="nowrap quick-edit-wrap">
-				<div class="item-title center">
+				<div class="item-title left">
 					<?php
 					$query = array(
 						'option' => 'com_schedule',
@@ -129,7 +129,7 @@ $date      = $container->get('date');
 
 			<!--HAS HI CODE-->
 			<td class="center">
-				<?php echo $item->has_hicode ? JText::_('COM_SCHEDULE_HOSPITAL_ITEM_HAS_HICODE') : JText::_('COM_SCHEDULE_HOSPITAL_ITEM_NO_HICODE'); ?>
+				<?php echo $item->has_hicode ? '<span class="label label-success"> 有 </span>' : '<span class="label label-danger"> 沒有 </span>' ; ?>
 			</td>
 		</tr>
 	<?php endforeach; ?>

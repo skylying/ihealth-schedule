@@ -188,10 +188,6 @@
 			label="備註"
 			description="備註"
 			/>
-
-		<field name="create_address"
-			type="hidden"
-			/>
 	</fieldset>
 
 	<fieldset
@@ -310,6 +306,10 @@
 			select="id, title"
 			label="刪除圖片"
 			description="刪除圖片"
+			/>
+
+		<field name="create_address"
+			type="hidden"
 			/>
 	</fieldset>
 

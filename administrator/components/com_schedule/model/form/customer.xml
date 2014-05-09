@@ -6,7 +6,7 @@
 
 		<field name="id"
 			type="text"
-			label="COM_SCHEDULE_CUSTOMER_SERIAL_ID"
+			label="客戶編號"
 			description=""
 			readonly="true"
 			/>
@@ -158,7 +158,7 @@
 
 	<fieldset name="office">
 		<field name="tel_office"
-			type="text"
+			type="radioinput"
 			label="宅配電話(O)"
 			description="填入宅配電話"
 			class="input-large"
@@ -168,7 +168,7 @@
 
 	<fieldset name="home">
 		<field name="tel_home"
-			type="text"
+			type="radioinput"
 			label="宅配電話(H)"
 			description="填入宅配電話(H)"
 			class="input-large"
@@ -178,7 +178,7 @@
 
 	<fieldset name="mobile">
 		<field name="mobile"
-			type="text"
+			type="radioinput"
 			label="手機(M)"
 			description="填入手機(M)"
 

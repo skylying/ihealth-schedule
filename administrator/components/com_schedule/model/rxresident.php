@@ -7,6 +7,7 @@
  */
 
 use Windwalker\Model\AdminModel;
+use Schedule\Table\Collection as TableCollection;
 
 // No direct access
 defined('_JEXEC') or die;
@@ -100,5 +101,44 @@ class ScheduleModelRxresident extends AdminModel
 		$form->bind($data);
 
 		return $form;
+	}
+
+	/**
+	 * Prepare and sanitise the table data prior to saving.
+	 *
+	 * @param   JTable  $table  A reference to a JTable object.
+	 *
+	 * @return  void
+	 */
+	protected function prepareTable(JTable $table)
+	{
+		parent::prepareTable($table);
+
+		$tableInstitute = TableCollection::loadTable('Institute', $table->institute_id);
+		$tableCustomer  = TableCollection::loadTable('Customer', $table->customer_id);
+
+		$table->type                  = 'resident';
+		$table->delivered             = 0;
+		$table->called                = 0;
+		$table->received              = 1;
+		$table->deliver_nths          = implode(',', (array) $table->deliver_nths);
+		$table->institute_short_title = $tableInstitute->short_title;
+		$table->customer_name         = $tableCustomer->name;
+		$table->id_number             = $tableCustomer->id_number;
+		$table->birth_date            = $tableCustomer->birth_date;
+
+		if (empty($table->empty_date_1st))
+		{
+			$modify = sprintf('+%s day', $table->period);
+
+			$table->empty_date_1st = (new JDate($table->see_dr_date))->modify($modify)->toSql();
+		}
+
+		if (empty($table->empty_date_2nd))
+		{
+			$modify = sprintf('+%s day', $table->period * 2);
+
+			$table->empty_date_2nd = (new JDate($table->see_dr_date))->modify($modify)->toSql();
+		}
 	}
 }

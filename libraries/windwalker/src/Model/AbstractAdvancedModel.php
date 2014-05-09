@@ -1,4 +1,10 @@
 <?php
+/**
+ * Part of Windwalker project.
+ *
+ * @copyright  Copyright (C) 2011 - 2014 SMS Taiwan, Inc. All rights reserved.
+ * @license    GNU General Public License version 2 or later; see LICENSE
+ */
 
 namespace Windwalker\Model;
 
@@ -7,43 +13,42 @@ use Windwalker\Joomla\DataMapper\DataMapper;
 use Windwalker\System\ExtensionHelper;
 
 /**
- * Class AbstractAdvancedModel
+ * Advanced Model.
  *
- * @since 1.0
+ * @since 2.0
  */
 abstract class AbstractAdvancedModel extends Model
 {
 	/**
-	 * Property viewItem.
+	 * Item name.
 	 *
 	 * @var  string
 	 */
 	protected $viewItem = null;
 
 	/**
-	 * Property viewList.
+	 * List name.
 	 *
 	 * @var  string
 	 */
 	protected $viewList = null;
 
 	/**
-	 * Property params.
+	 * Params of component.
 	 *
 	 * @var  Registry
 	 */
 	protected $params = null;
 
 	/**
-	 * Property category.
+	 * Category object of item or items.
 	 *
 	 * @var  \Windwalker\Data\Data
 	 */
 	protected $category = null;
 
-
 	/**
-	 * getParams
+	 * Get component params.
 	 *
 	 * @return  Registry
 	 */
@@ -55,7 +60,7 @@ abstract class AbstractAdvancedModel extends Model
 		}
 
 		$app = $this->getContainer()->get('app');
-		$comParams  = ExtensionHelper::getParams('com_flower');
+		$comParams  = ExtensionHelper::getParams($this->option);
 		$menuParams = new Registry;
 
 		if ($menu = $app->getMenu()->getActive())
@@ -69,11 +74,13 @@ abstract class AbstractAdvancedModel extends Model
 	}
 
 	/**
-	 * getCategory
+	 * Get category object.
+	 *
+	 * @param integer $pk Category id.
 	 *
 	 * @return  \Windwalker\Data\Data
 	 */
-	public function getCategory()
+	public function getCategory($pk = null)
 	{
 		if (!empty($this->category))
 		{
@@ -81,11 +88,11 @@ abstract class AbstractAdvancedModel extends Model
 		}
 
 		$input  = $this->getContainer()->get('input');
-		$pk     = $this->state->get('category.id', $input->get('id'));
+		$pk     = $pk ? : $this->state->get('category.id', $input->get('id'));
 		$mapper = new DataMapper('#__categories');
 
 		$data = $mapper->findOne(array('id' => $pk));
-		$data->params = new Registry($data);
+		$data->params = new Registry($data->params);
 
 		return $data;
 	}

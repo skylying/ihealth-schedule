@@ -27,5 +27,5 @@ class ScheduleControllerTasksStateUndelivery extends \Windwalker\Controller\Stat
 	 *
 	 * @var string
 	 */
-	protected $actionText = '待外送';
+	protected $actionText = 'UNDELIVERED';
 }

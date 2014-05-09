@@ -24,6 +24,7 @@ $telHomeID = $data->form->getField('tel_home')->id;
 $mobileID = $data->form->getField('mobile')->id;
 $seeDrDateID = $data->form->getField('see_dr_date')->id;
 $periodID = $data->form->getField('period')->id;
+$createAddressID = $data->form->getField('create_address')->id;
 
 $telOfficeName = $data->form->getField('tel_office')->name;
 $telHomeName   = $data->form->getField('tel_home')->name;
@@ -38,6 +39,7 @@ var telOfficeID = "<?php echo $telOfficeID;?>";
 var telHomeID = "<?php echo $telHomeID;?>";
 var mobileID = "<?php echo $mobileID;?>";
 var customerIDNumber = "<?php echo $customerIDNumber;?>";
+var createAddressID = "<?php echo $createAddressID;?>";
 
 // Update empty rows of addresses inputs
 var addressesKeys = ["1st", "2nd", "3rd"];
@@ -182,6 +184,8 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 		// Find its parent, later we will replace it with new select list
 		var targetsParent = $('#' + targetID).parent();
 
+		var currentSelected = $('#' + targetID).val();
+
 		var html = '';
 
 		// Add select tag
@@ -193,7 +197,9 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 		{
 			// Add option tag
 			html += '<option' +
-				' value="' + addressJson[i].id + '">' +
+				' value="' + addressJson[i].id + '"' +
+				((addressJson[i].id == currentSelected) ? 'selected' : '') +
+				'>' +
 				addressJson[i].city_title +
 				addressJson[i].area_title +
 				addressJson[i].address +
@@ -393,7 +399,7 @@ jQuery(document).ready(function ()
 		var currentWrap = jQuery(this).closest('.js-tmpl-add-addressrow');
 
 		// The hidden input will save the user customized input address, and wait for model to save.
-		var targetHiddenInput = jQuery('#hiddenAddressToAdd');
+		var targetHiddenInput = jQuery("#" + createAddressID);
 
 		// Select all the address drop down list, since we have to update all at once
 		var targetListToUpdate = jQuery('.js-address-wrap select');
@@ -444,7 +450,7 @@ jQuery(document).ready(function ()
 		});
 
 		// Update to hidden input
-		jQuery(this).customerAjax.updateJsonToInputField('hiddenAddressToAdd', data);
+		jQuery(this).customerAjax.updateJsonToInputField(createAddressID, data);
 
 		// Clear current row
 		currentWrap.addClass('hide');
@@ -772,9 +778,6 @@ jQuery(document).ready(function ()
 			</div>
 		</div>
 	</div>
-
-	<input type="hidden" id="hiddenAddressToAdd"/>
-
 	<div>
 		<input type="hidden" name="option" value="com_schedule" />
 		<input type="hidden" name="task" value="" />

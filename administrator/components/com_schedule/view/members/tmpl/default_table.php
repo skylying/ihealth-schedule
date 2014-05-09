@@ -42,27 +42,27 @@ $date      = $container->get('date');
 		</th>
 
 		<!--ID-->
-		<th width="5%" class="center">
+		<th width="10%" class="center">
 			<?php echo $grid->sortTitle('會員編號', 'member.id'); ?>
 		</th>
 
 		<!--NAME-->
-		<th width="8%" class="center">
+		<th width="10%" class="left">
 			<?php echo $grid->sortTitle('會員姓名', 'member.name'); ?>
 		</th>
 
 		<!--EMAIL-->
-		<th width="25%" class="center">
+		<th width="25%" class="left">
 			<?php echo $grid->sortTitle('會員信箱', 'member.email'); ?>
 		</th>
 
 		<!--Customer Amount-->
-		<th width="5%" class="center">
+		<th width="10%" class="center">
 			<?php echo $grid->sortTitle('散客數', 'member.email'); ?>
 		</th>
 
 		<!--Relative Customers-->
-		<th width="35%" class="center">
+		<th width="35%" class="left">
 			<?php echo $grid->sortTitle('對應散客', 'member.email'); ?>
 		</th>
 	</tr>
@@ -102,7 +102,7 @@ $date      = $container->get('date');
 
 			<!--NAME-->
 			<td class="nowrap quick-edit-wrap">
-				<div class="center">
+				<div class="left">
 					<?php
 					$query = array(
 						'option' => 'com_schedule',
@@ -118,7 +118,7 @@ $date      = $container->get('date');
 			</td>
 
 			<!--EMAIL-->
-			<td class="center">
+			<td class="left">
 				<?php echo $this->escape($item->email); ?>
 			</td>
 
@@ -132,7 +132,7 @@ $date      = $container->get('date');
 			</td>
 
 			<!--Relative Customers-->
-			<td class="center">
+			<td class="left">
 				<?php
 					foreach ($customers_name as $i => $customer):
 						$query = array(
@@ -141,15 +141,16 @@ $date      = $container->get('date');
 							'layout' => 'edit',
 							'id'     => $customers_id[$i]
 						);
+						if(!empty($customers_id[$i])):
 				?>
-					<a href="<?php echo JRoute::_("index.php?" . http_build_query($query));?>">
-						<?php echo $customer; ?>
-					</a>
-				<?php
-					endforeach;
-				?>
+						<a href="<?php echo JRoute::_("index.php?" . http_build_query($query));?>">
+							<?php echo $customer;?>
+						</a>
+							<?php if((count($customers_name)-1) > $i) echo ', ';?>
+						<?php endif;?>
+				<?php endforeach;?>
 			</td>
 		</tr>
-	<?php endforeach; ?>
+	<?php endforeach;?>
 	</tbody>
 </table>

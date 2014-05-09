@@ -12,7 +12,7 @@ use Windwalker\Model\CrudModel;
 use Windwalker\Table\Table;
 
 /**
- * Class AdminController
+ * A controller to handle admin operation.
  *
  * @since 1.0
  */
@@ -21,59 +21,58 @@ abstract class AbstractAdminController extends AbstractRedirectController
 	/**
 	 * The context for storing internal data, e.g. record.
 	 *
-	 * @var    string
-	 * @since  12.2
+	 * @var  string
 	 */
-	protected $context;
+	protected $context = null;
 
 	/**
-	 * Property user.
+	 * The user object.
 	 *
 	 * @var \JUser
 	 */
 	protected $user = null;
 
 	/**
-	 * Property textPrefix.
+	 * Text prefix for translate.
 	 *
 	 * @var string
 	 */
 	protected $textPrefix = null;
 
 	/**
-	 * Property key.
+	 * The name of the primary key of the URL variable.
 	 *
 	 * @var string
 	 */
-	protected $key;
+	protected $key = null;
 
 	/**
-	 * Property urlVar.
+	 * The name of the URL variable if different from the primary key.
 	 *
 	 * @var string
 	 */
-	protected $urlVar;
+	protected $urlVar = null;
 
 	/**
-	 * Property table.
+	 * Table object.
 	 *
 	 * @var Table
 	 */
-	protected $table;
+	protected $table = null;
 
 	/**
-	 * Property model.
+	 * Model object, need CrudModel in this controller.
 	 *
 	 * @var CrudModel
 	 */
-	protected $model;
+	protected $model = null;
 
 	/**
-	 * Property lang.
+	 * Language object.
 	 *
 	 * @var \JLanguage
 	 */
-	protected $lang;
+	protected $lang = null;
 
 	/**
 	 * Instantiate the controller.
@@ -82,8 +81,7 @@ abstract class AbstractAdminController extends AbstractRedirectController
 	 * @param   \JApplicationCms $app    The application object.
 	 * @param   array            $config Additional config.
 	 *
-	 * @throws \Exception
-	 * @since  12.1
+	 * @throws  \Exception
 	 */
 	public function __construct(\JInput $input = null, \JApplicationCms $app = null, $config = array())
 	{
@@ -94,7 +92,7 @@ abstract class AbstractAdminController extends AbstractRedirectController
 	}
 
 	/**
-	 * prepareExecute
+	 * Prepare execute hook.
 	 *
 	 * @throws \UnexpectedValueException
 	 * @return void
@@ -115,13 +113,13 @@ abstract class AbstractAdminController extends AbstractRedirectController
 		}
 
 		// Determine the name of the primary key for the data.
-		if (empty($key))
+		if (empty($this->key))
 		{
 			$this->key = $this->table->getKeyName();
 		}
 
 		// To avoid data collisions the urlVar may be different from the primary key.
-		if (empty($urlVar))
+		if (empty($this->urlVar))
 		{
 			$this->urlVar = $this->key;
 		}
@@ -135,8 +133,6 @@ abstract class AbstractAdminController extends AbstractRedirectController
 	 * @param   array  $data  An array of input data.
 	 *
 	 * @return  boolean
-	 *
-	 * @since   12.2
 	 */
 	protected function allowAdd($data = array())
 	{
@@ -155,8 +151,6 @@ abstract class AbstractAdminController extends AbstractRedirectController
 	 * @param   string  $key   The name of the key for the primary key.
 	 *
 	 * @return  boolean
-	 *
-	 * @since   12.2
 	 */
 	protected function allowSave($data, $key = 'id')
 	{
@@ -181,8 +175,6 @@ abstract class AbstractAdminController extends AbstractRedirectController
 	 * @param   string  $key   The name of the key for the primary key; default is id.
 	 *
 	 * @return  boolean
-	 *
-	 * @since   12.2
 	 */
 	protected function allowEdit($data = array(), $key = 'id')
 	{
@@ -190,12 +182,14 @@ abstract class AbstractAdminController extends AbstractRedirectController
 	}
 
 	/**
-	 * allowEditState
+	 * Check update access.
 	 *
-	 * @param array  $data
-	 * @param string $key
+	 * Extended classes can override this if necessary.
 	 *
-	 * @return bool
+	 * @param   array   $data  An array of input data.
+	 * @param   string  $key   The name of the key for the primary key; default is id.
+	 *
+	 * @return  boolean
 	 */
 	protected function allowUpdateState($data = array(), $key = 'id')
 	{
@@ -203,12 +197,14 @@ abstract class AbstractAdminController extends AbstractRedirectController
 	}
 
 	/**
-	 * allowDelete
+	 * Method to check delete access.
 	 *
-	 * @param array  $data
-	 * @param string $key
+	 * Extended classes can override this if necessary.
 	 *
-	 * @return bool
+	 * @param   array   $data  An array of input data.
+	 * @param   string  $key   The name of the key for the primary key; default is id.
+	 *
+	 * @return  boolean
 	 */
 	protected function allowDelete($data = array(), $key = 'id')
 	{
@@ -218,8 +214,8 @@ abstract class AbstractAdminController extends AbstractRedirectController
 	/**
 	 * If category need authorize, we can write in this method.
 	 *
-	 * @param array  $data  Category record.
-	 * @param string $key   Preimary key name.
+	 * @param   array   $data  Category record.
+	 * @param   string  $key   Preimary key name.
 	 *
 	 * @return  boolean Can edit or not.
 	 */

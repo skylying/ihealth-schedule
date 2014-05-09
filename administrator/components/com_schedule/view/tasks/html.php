@@ -126,6 +126,14 @@ class ScheduleViewTasksHtml extends GridView
 			$buttonSet['delete']['access'] = true;
 		}
 
+		$buttonSet['completeDelivery']['handler'] = function(){
+			JToolbarHelper::custom('tasks.state.delivery', 'checkin', 'checkin', '完成外送');
+		};
+
+		$buttonSet['waitDelivery']['handler'] = function(){
+			JToolbarHelper::custom('tasks.state.undelivery', 'pause', 'pause', '改回待外送');
+		};
+
 		return $buttonSet;
 	}
 }

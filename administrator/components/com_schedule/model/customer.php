@@ -110,11 +110,11 @@ class ScheduleModelCustomer extends AdminModel
 	 *
 	 * @return  void
 	 */
-	public function prepareTable($table)
+	public function prepareTable(JTable $table)
 	{
 		$jformData = JFactory::getApplication()->input->get('jform', '', 'array');
 
-		$customerType = $jformData['type'];
+		$customerType = \Windwalker\Helper\ArrayHelper::getValue($jformData, 'type');
 
 		if ('individual' === $customerType)
 		{

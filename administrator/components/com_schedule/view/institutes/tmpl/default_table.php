@@ -7,7 +7,6 @@
  */
 
 use Windwalker\Data\Data;
-
 // No direct access
 defined('_JEXEC') or die;
 
@@ -40,6 +39,16 @@ $date      = $container->get('date');
 	<!--CHECKBOX-->
 	<th width="1%" class="center">
 		<?php echo JHtml::_('grid.checkAll'); ?>
+	</th>
+
+	<!--EDIT-->
+	<th width="5%" class="nowrap center">
+		編輯
+	</th>
+
+	<!--ID-->
+	<th width="1%" class="nowrap center">
+		<?php echo $grid->sortTitle('機構編號', 'institute.id'); ?>
 	</th>
 
 	<!--Short Title-->
@@ -82,11 +91,6 @@ $date      = $container->get('date');
 		<?php echo $grid->sortTitle('地址', 'institute.address'); ?>
 	</th>
 
-	<!--ID-->
-	<th width="1%" class="nowrap center">
-		<?php echo $grid->sortTitle('機構編號', 'institute.id'); ?>
-	</th>
-
 	<!--Link To Elder List-->
 	<th width="5%" class="nowrap center">
 		<?php echo JText::_('住民清單')?>
@@ -120,6 +124,16 @@ $date      = $container->get('date');
 		<!--CHECKBOX-->
 		<td class="center">
 			<?php echo JHtml::_('grid.id', $i, $item->institute_id); ?>
+		</td>
+
+		<!--Edit button-->
+		<td class="center">
+			<?php echo \Schedule\Helper\UiHelper::editButton('institute', $item->id); ?>
+		</td>
+
+		<!--ID-->
+		<td class="center">
+				<?php echo $item->id;?>
 		</td>
 
 		<!--Short Title-->
@@ -160,11 +174,6 @@ $date      = $container->get('date');
 		<!--Address-->
 		<td class="left">
 			<?php echo $item->address;?>
-		</td>
-
-		<!--ID-->
-		<td class="center">
-			<a href="<?php echo JRoute::_('?option=com_schedule&view=institute&layout=edit&id=' . $item->id);?>"><?php echo $item->id;?></a>
 		</td>
 
 		<!--Link To Elder List-->
