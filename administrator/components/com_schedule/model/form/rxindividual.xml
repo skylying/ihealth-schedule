@@ -209,12 +209,13 @@
 			/>
 
 		<field name="customer_id"
-			type="sql"
+			type="customer_rxlist"
 			label="客戶姓名"
 			description="客戶姓名"
-			query="SELECT id, name FROM #__schedule_customers WHERE `type` = 'individual'"
+			customer="individual"
 			key_field="id"
 			value_field="name"
+			quickadd="true"
 			/>
 
 		<field name="birth_date"
@@ -294,6 +295,22 @@
 			description="處方箋檔案"
 			multiple="multiple"
 			/>
+
+		<field name="remove_images"
+			type="itemscheckboxes"
+			table="#__schedule_images"
+			id_key="id"
+			where_item_id="rx_id"
+			value_field="id"
+			option_title="title"
+			select="id, title"
+			label="刪除圖片"
+			description="刪除圖片"
+			/>
+
+		<field name="create_address"
+			type="hidden"
+			/>
 	</fieldset>
 
 	<fields name="schedules_1st">
@@ -311,6 +328,8 @@
 			label="地址"
 			description="地址"
 			/>
+
+
 
 		<field name="drug_empty_date"
 			type="calendar"
@@ -480,6 +499,27 @@
 			<option value="need_real_book">需確認正本</option>
 			<option value="need_breakup">藥品需分包</option>
 			<option value="take_it_back">正本已回收</option>
+		</field>
+	</fieldset>
+
+	<fieldset name="city">
+		<field name="city"
+			type="sql"
+			query="SELECT `id`, `title` FROM #__schedule_cities WHERE published=1"
+			key_field="id"
+			value_field="title"
+			label="縣市"
+			description="縣市">
+			<option>- 請選擇縣市 -</option>
+		</field>
+		<field name="area"
+			type="sql"
+			query="SELECT `id`, `title` FROM #__schedule_areas WHERE published=1"
+			key_field="id"
+			value_field="title"
+			label=""
+			description="區域">
+			<option>- 請選擇區域 -</option>
 		</field>
 	</fieldset>
 </form>
