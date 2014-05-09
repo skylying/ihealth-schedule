@@ -48,57 +48,57 @@ $date      = $container->get('date');
 
 	<!--CUSTOMER_ID-->
 	<th width="5%" class="nowrap center">
-		<?php echo $grid->sortTitle('COM_SCHEDULE_CUSTOMER_ID', 'customer.id'); ?>
+		<?php echo $grid->sortTitle('客戶編號', 'customer.id'); ?>
 	</th>
 
 	<!--CUSTOMER_TYPE-->
 	<th width="5%" class="center">
-		<?php echo $grid->sortTitle('COM_SCHEDULE_CUSTOMER_TYPE', 'customer.type'); ?>
+		<?php echo $grid->sortTitle('類別', 'customer.type'); ?>
 	</th>
 
 	<!--CUSTOMER_NAME-->
 	<th width="7%" class="center">
-		<?php echo $grid->sortTitle('COM_SCHEDULE_CUSTOMER_NAME', 'customer.name'); ?>
+		<?php echo $grid->sortTitle('姓名', 'customer.name'); ?>
 	</th>
 
 	<!--CUSTOMER_ID_NUMBER-->
 	<th width="5%" class="center">
-		<?php echo $grid->sortTitle('COM_SCHEDULE_CUSTOMER_ID_NUMBER', 'customer.id_number'); ?>
+		<?php echo $grid->sortTitle('身份證字號', 'customer.id_number'); ?>
 	</th>
 
 	<!--CUSTOMER_CUSTOMER_AGE-->
 	<th width="5%" class="center">
-		<?php echo $grid->sortTitle('COM_SCHEDULE_CUSTOMER_AGE', 'customer.age'); ?>
+		<?php echo $grid->sortTitle('年齡', 'customer.age'); ?>
 	</th>
 
 	<!--CUSTOMER_CUSTOMER_MEMBER_MAPS-->
 	<th width="10%" class="center">
-		<?php echo $grid->sortTitle('COM_SCHEDULE_CUSTOMER_MEMBER_MAPS', ''); ?>
+		<?php echo $grid->sortTitle('所屬機構/所屬會員', 'customer.type'); ?>
 	</th>
 
 	<!--CITY TITLE-->
 	<th width="5%" class="center">
-		<?php echo $grid->sortTitle('COM_SCHEDULE_CUSTOMER_CITY_TITLE', 'customer.city_title'); ?>
+		<?php echo $grid->sortTitle('外送縣市', 'customer.city_title'); ?>
 	</th>
 
 	<!--AREA TITLE-->
 	<th width="5%" class="center">
-		<?php echo $grid->sortTitle('COM_SCHEDULE_CUSTOMER_AREA_TITLE', 'customer.area_title'); ?>
+		<?php echo $grid->sortTitle('外送區域', 'customer.area_title'); ?>
 	</th>
 
 	<!--STATE-->
 	<th width="5%" class="center">
-		<?php echo $grid->sortTitle('COM_SCHEDULE_CUSTOMER_STATE', 'customer.state'); ?>
+		<?php echo $grid->sortTitle('狀態', 'customer.state'); ?>
 	</th>
 
 	<!--SCHEDULE-->
 	<th width="5%" class="center">
-		<?php echo $grid->sortTitle('COM_SCHEDULE_CUSTOMER_SCHEDULE_RECORD', ''); ?>
+		<?php echo $grid->sortTitle('排程記錄', ''); ?>
 	</th>
 
 	<!--RESERVE-->
 	<th width="4%" class="center">
-		<?php echo $grid->sortTitle('COM_SCHEDULE_CUSTOMER_RESERVE', ''); ?>
+		<?php echo $grid->sortTitle('預約', ''); ?>
 	</th>
 </tr>
 </thead>
@@ -146,9 +146,9 @@ $date      = $container->get('date');
 			<?php
 			if($item->type == 'individual')
 			{
-				echo JTEXT::_('COM_CUSTOMERS_INDIVIDUAL');
+				echo JTEXT::_('散客');
 			} else {
-				echo JTEXT::_('COM_CUSTOMERS_RESIDENT');
+				echo JTEXT::_('住民');
 			}
 			?>
 		</td>
@@ -209,12 +209,14 @@ $date      = $container->get('date');
 
 		<!--STATE-->
 		<td class="center">
-			<?php echo $this->escape($item->state ? JTEXT::_('COM_CUSTOMERS_IN_SERVICE') : JTEXT::_('COM_CUSTOMERS_CLOSE_CASE')); ?>
+			<?php echo $this->escape($item->state ? '服務中' : '結案'); ?>
 		</td>
 
 		<!--SCHEDULE_RECORD-->
 		<td class="center">
-			<a href="<?php echo JRoute::_('index.php?option=com_schedule&view=schedules');?>"><?php echo JTEXT::_('COM_SCHEDULE_RECORD_LINK');?></a>
+			<a href="<?php echo JRoute::_('index.php?option=com_schedule&view=schedules'); ?>">
+				排程紀錄
+			</a>
 		</td>
 
 		<!--RESERVE-->
