@@ -82,5 +82,13 @@ class ScheduleViewRxindividualHtml extends EditView
 	protected function prepareRender()
 	{
 		parent::prepareRender();
+
+		$data = $this->getData();
+
+		$images = \Schedule\Helper\ImageHelper::getImages($data->item->id);
+
+		$data->images = $images;
+
+		$this->setData($data);
 	}
 }
