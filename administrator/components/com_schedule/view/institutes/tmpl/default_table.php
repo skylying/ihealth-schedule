@@ -41,6 +41,11 @@ $date      = $container->get('date');
 		<?php echo JHtml::_('grid.checkAll'); ?>
 	</th>
 
+	<!--EDIT-->
+	<th width="5%" class="nowrap center">
+		編輯
+	</th>
+
 	<!--ID-->
 	<th width="1%" class="nowrap center">
 		<?php echo $grid->sortTitle('機構編號', 'institute.id'); ?>
@@ -121,9 +126,14 @@ $date      = $container->get('date');
 			<?php echo JHtml::_('grid.id', $i, $item->institute_id); ?>
 		</td>
 
-		<!--ID-->
+		<!--Edit button-->
 		<td class="center">
 			<?php echo \Schedule\Helper\UiHelper::editButton('institute', $item->id); ?>
+		</td>
+
+		<!--ID-->
+		<td class="center">
+				<?php echo $item->id;?>
 		</td>
 
 		<!--Short Title-->
