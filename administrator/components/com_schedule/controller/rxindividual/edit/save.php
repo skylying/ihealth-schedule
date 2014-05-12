@@ -141,6 +141,26 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 		$taskModel     = $this->getModel("Task");
 		$scheduleModel = $this->getModel("Schedule");
 		$addressModel  = $this->getModel("Address");
+		$drugModel     = $this->getModel("Drug");
+
+		// 健保 json
+		$drugs = isset($this->data['drug']) ? json_decode($this->data['drug']) : array();
+
+		// 新增健保碼
+		if (! empty($drugs))
+		{
+			foreach ($drugs as $drug)
+			{
+				$drugModel->save(
+					array(
+						"id"       => $drug->id,
+						"rx_id"    => $rx->id,
+						"hicode"   => $drug->hicode,
+						"quantity" => $drug->quantity
+					)
+				);
+			}
+		}
 
 		// 新增排程次數
 		$scheduleDoTimes = 0;

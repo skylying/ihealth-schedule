@@ -7,6 +7,7 @@
  */
 
 use Windwalker\Model\AdminModel;
+use Windwalker\Joomla\DataMapper\DataMapper;
 
 // No direct access
 defined('_JEXEC') or die;
@@ -87,6 +88,9 @@ class ScheduleModelRxindividual extends AdminModel
 		{
 			return $returnVal;
 		}
+
+		// 健保 code
+		$returnVal->drug = json_encode((new DataMapper("#__schedule_drugs"))->find(array("rx_id" => $returnVal->id)));
 
 		foreach (array("1st", "2nd", "3rd") as $val)
 		{

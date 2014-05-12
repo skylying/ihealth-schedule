@@ -99,6 +99,10 @@
 			<option value="paper">正本</option>
 		</field>
 
+		<field name="drug"
+			type="hidden"
+			/>
+
 		<field name="rximages"
 			type="file"
 			label="處方箋檔案"
