@@ -18,6 +18,7 @@
 		<field name="floor"
 			type="text"
 			hint="ex:2F"
+			readonly="true"
 			label="機構樓層"
 			description="機構樓層"
 			/>

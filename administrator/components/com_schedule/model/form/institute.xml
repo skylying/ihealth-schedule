@@ -27,6 +27,35 @@
 			class="input-xxlarge required"
 			/>
 
+		<field name="floor"
+			type="list"
+			label="樓層(可復選)"
+			description="選擇機構所有的樓層(複選)"
+			multiple="true"
+			class="input-xxlarge required"
+			>
+			<option value="1F">1F</option>
+			<option value="2F">2F</option>
+			<option value="3F">3F</option>
+			<option value="4F">4F</option>
+			<option value="5F">5F</option>
+			<option value="6F">6F</option>
+			<option value="7F">7F</option>
+			<option value="8F">8F</option>
+			<option value="9F">9F</option>
+			<option value="10F">10F</option>
+			<option value="11F">11F</option>
+			<option value="12F">12F</option>
+			<option value="13F">13F</option>
+			<option value="14F">14F</option>
+			<option value="15F">15F</option>
+			<option value="16F">16F</option>
+			<option value="17F">17F</option>
+			<option value="18F">18F</option>
+			<option value="19F">19F</option>
+			<option value="20F">20F</option>
+		</field>
+
 		<field name="tel"
 			type="text"
 			label="電話"

@@ -313,7 +313,7 @@ class JFormFieldSelect2 extends JFormField
 			break;
 
 			case 'institutes':
-				$selectString = "`id`, `short_title` AS `dropdowntext`, `color_hex` AS `hex`, `delivery_weekday` AS `delivery_day`";
+				$selectString = "`id`, `short_title` AS `dropdowntext`, `color_hex` AS `hex`, `delivery_weekday` AS `delivery_day`, `floor` AS `floor`";
 
 			break;
 
