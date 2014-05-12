@@ -30,56 +30,62 @@ $date      = $container->get('date');
 ?>
 
 <!-- LIST TABLE -->
-<table id="rxresidentList" class="table table-striped adminlist">
+<table id="rxindividualList" class="table table-striped adminlist">
 
 <!-- TABLE HEADER -->
 <thead>
 <tr>
-	<!--CHECKBOX-->
-	<th class="center">
+	<!-- CHECKBOX -->
+	<th width="1%" class="center">
 		<?php echo JHtml::_('grid.checkAll'); ?>
 	</th>
 
+	<!-- 處方箋編號 -->
 	<th class="center">
-		<?php echo $grid->sortTitle('編號', 'rxresident.id'); ?>
+		<?php echo $grid->sortTitle('處方箋編號', 'rxindividual.id'); ?>
 	</th>
 
+	<!-- 機構名稱 -->
 	<th class="center">
-		<?php echo $grid->sortTitle('散客姓名', 'rxresident.customer_name'); ?>
+		<?php echo $grid->sortTitle('機構名稱', 'rxindividual.institute_short_title'); ?>
 	</th>
 
+	<!-- 住民姓名 -->
 	<th class="center">
-		<?php echo $grid->sortTitle('所屬會員', 'rxresident.member_name'); ?>
+		<?php echo $grid->sortTitle('住民姓名', 'rxindividual.customer_name'); ?>
 	</th>
 
+	<!-- 身分證字號 -->
 	<th class="center">
-		<?php echo $grid->sortTitle('上傳方式', 'rxresident.method'); ?>
+		<?php echo $grid->sortTitle('身分證字號', 'rxindividual.id_number'); ?>
 	</th>
 
+	<!-- 就醫日期 -->
 	<th class="center">
-		<?php echo $grid->sortTitle('處方箋狀態', 'rxresident.received'); ?>
+		<?php echo $grid->sortTitle('就醫日期', 'rxindividual.see_dr_date'); ?>
 	</th>
 
+	<!-- 處方箋天數 -->
 	<th class="center">
-		<?php echo $grid->sortTitle('電聯紀錄', 'rxresident.called'); ?>
+		<?php echo $grid->sortTitle('處方箋天數', 'rxindividual.period'); ?>
 	</th>
 
+	<!-- 可調劑次數 -->
 	<th class="center">
-		<?php echo $grid->sortTitle('就醫日期', 'rxresident.see_dr_date'); ?>
+		<?php echo $grid->sortTitle('可調劑次數', 'rxindividual.times'); ?>
 	</th>
 
+	<!-- 處方箋取得方式 -->
 	<th class="center">
-		<?php echo $grid->sortTitle('可調劑次數', 'rxresident.times'); ?>
+		<?php echo $grid->sortTitle('處方箋取得方式', 'rxindividual.method'); ?>
 	</th>
 
-	<th class="center">
-		<?php echo $grid->sortTitle('宅配次數', 'rxresident.deliver_nths'); ?>
-	</th>
-
+	<!-- 新增人 -->
 	<th class="center">
 		<?php echo $grid->sortTitle('新增人', 'user.created_by'); ?>
 	</th>
 
+	<!-- 最後修改人 -->
 	<th class="center">
 		<?php echo $grid->sortTitle('最後修改人', 'user.modified_by'); ?>
 	</th>
@@ -108,46 +114,35 @@ $date      = $container->get('date');
 	$grid->setItem($item, $i);
 	?>
 	<tr class="prescription-row">
-
-		<!-- checkbox -->
-		<td>
-			<?php echo JHtml::_('grid.id', $i, $item->id); ?>
+		<!--CHECKBOX-->
+		<td class="center">
+			<?php echo JHtml::_('grid.id', $i, $item->prescription_id); ?>
 		</td>
 
-		<!-- id -->
+		<!-- 處方箋編號 -->
 		<td>
-			<a href="<?php echo JRoute::_('index.php?option=com_schedule&task=rxresident.edit.edit&id=' . $item->id); ?>">
-				<?php echo $this->escape($item->id); ?>
+			<a href="<?php echo JRoute::_('index.php?option=com_schedule&task=rxindividual.edit.edit&id=' . $item->id); ?>">
+				<?php echo $item->id; ?>
 			</a>
 		</td>
 
-		<!-- 散客名稱 -->
+		<!-- 機構名稱 -->
+		<td>
+			<a href="<?php echo JRoute::_('index.php?option=com_schedule&task=institute.edit.edit&id=' . $item->institute_id); ?>">
+				<?php echo $this->escape($item->institute_short_title); ?>
+			</a>
+		</td>
+
+		<!-- 住民姓名 -->
 		<td>
 			<a href="<?php echo JRoute::_('index.php?option=com_schedule&task=customer.edit.edit&id=' . $item->customer_id); ?>">
 				<?php echo $this->escape($item->customer_name); ?>
 			</a>
 		</td>
 
-		<!-- 所屬會員 -->
+		<!-- 身分證字號 -->
 		<td>
-			<a href="<?php echo JRoute::_('index.php?option=com_schedule&task=member.edit.edit&id=' . $item->member_id); ?>">
-				<?php echo $this->escape($item->member_name); ?>
-			</a>
-		</td>
-
-		<!-- 上傳方式 -->
-		<td>
-			<?php echo $this->escape($item->method); ?>
-		</td>
-
-		<!-- 處方簽狀態 -->
-		<td>
-			<?php echo ($item->received) ? "已取得" : "未取得"; ?>
-		</td>
-
-		<!-- 電聯狀態 -->
-		<td>
-			<?php echo ($item->called) ? "已電聯" : "未電聯"; ?>
+			<?php echo $this->escape($item->id_number); ?>
 		</td>
 
 		<!-- 就醫日期 -->
@@ -155,14 +150,19 @@ $date      = $container->get('date');
 			<?php echo $this->escape($item->see_dr_date); ?>
 		</td>
 
+		<!-- 處方箋天數 -->
+		<td>
+			<?php echo $this->escape($item->period); ?>
+		</td>
+
 		<!-- 可調劑次數 -->
 		<td>
 			<?php echo $this->escape($item->times); ?>
 		</td>
 
-		<!-- 宅配次數 -->
+		<!-- 處方箋取得方式 -->
 		<td>
-			<?php echo $this->escape($item->deliver_nths); ?>
+			<?php echo $this->escape($item->method); ?>
 		</td>
 
 		<!-- 新增人 -->
