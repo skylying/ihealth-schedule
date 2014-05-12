@@ -82,12 +82,13 @@ class ScheduleModelHoliday extends AdminModel
 	 */
 	public function prepareTable(JTable $table)
 	{
-		$makeFullDate = mktime(0 ,0 ,0 ,$table->month, $table->day, $table->year);
+		$date = new JDate();
+		$date->setDate($table->year, $table->month, $table->day);
 
-		$weekday = strtoupper(date('D', $makeFullDate));
-		$date = date('Y-m-d', $makeFullDate);
+		$weekday = strtoupper($date->format('D', true, false));
+		$dateText = $date->toSql();
 
 		$table->weekday = $weekday;
-		$table->date = $date;
+		$table->date = $dateText;
 	}
 }
