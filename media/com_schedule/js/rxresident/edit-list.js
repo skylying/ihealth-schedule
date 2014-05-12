@@ -75,12 +75,18 @@
 			$panel.on('click', '.button-delete-row', function ()
 			{
 				handler.remove($(this).closest('tr'));
+
+				// Update total number of rows
+				$('#totalrow').text($('#rx-list tr').length - 1);
 			});
 
 			// Copy row
 			$panel.on('click', '.button-copy-row', function ()
 			{
 				handler.duplicate($(this).closest('tr'));
+
+				// Update total number of rows
+				$('#totalrow').text($('#rx-list tr').length - 1);
 			});
 		},
 
@@ -244,10 +250,12 @@
 
 		var weekday = e.added.delivery_day,
 			color   = e.added.color,
+			floor   = e.added.floor,
 			hasInitialValue = e.added.hasInitialValue;
 
 		var weekdaySpan = $('#weekday-from-js'),
-			colorBlock  = $('.deliverycolor');
+			colorBlock  = $('.deliverycolor'),
+			floorInput  = $('#jform_floor');
 
 		// update delivery_day
 		weekdaySpan.text(translateWeek[weekday]);
@@ -255,8 +263,14 @@
 		// update delivery_day color
 		colorBlock.css('background', color);
 
+		// update floor
+		floorInput.val(floor);
+
+		// Replace $node value with real institute id
+		$node.val(e.added.instituteid);
+
 		// Export institute_id
-		window.instituteId = e.added.id;
+		window.instituteId = e.added.instituteid;
 
 		// For view = edit, we don't need to re-initialize select2
 		if (typeof hasInitialValue !== undefined && hasInitialValue == 'true')
