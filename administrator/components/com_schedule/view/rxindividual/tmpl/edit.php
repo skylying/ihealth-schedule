@@ -25,6 +25,7 @@ $mobileID = $data->form->getField('mobile')->id;
 $seeDrDateID = $data->form->getField('see_dr_date')->id;
 $periodID = $data->form->getField('period')->id;
 $createAddressID = $data->form->getField('create_address')->id;
+$methodID = $data->form->getField('method')->id;
 
 $telOfficeName = $data->form->getField('tel_office')->name;
 $telHomeName   = $data->form->getField('tel_home')->name;
@@ -397,6 +398,8 @@ jQuery(document).ready(function ()
 
 	var periodID = "<?php echo $periodID;?>";
 
+	var methodID = "<?php echo $methodID;?>";
+
 	// customer_id's element id
 	var customerDropDown = jQuery("#" + "<?php echo $customerID;?>");
 
@@ -423,11 +426,13 @@ jQuery(document).ready(function ()
 		jQuery(this).updateHiddenPhoneNumbersInput();
 	});
 
+	// Bind add new address
 	jQuery('.js-add-address').on('click', function()
 	{
 		jQuery(this).closest('.js-nth-schedule-info').find('.js-tmpl-add-addressrow').removeClass('hide');
 	});
 
+	// Bind save new address
 	jQuery('.js-save-address').on('click', function ()
 	{
 		// The dynamic row wrapper
@@ -492,11 +497,13 @@ jQuery(document).ready(function ()
 		currentWrap.addClass('hide');
 	});
 
+	// Bind add new telephone
 	jQuery('.js-add-tel').on('click', function ()
 	{
 		jQuery(this).closest('.js-tel-wrap').find('.js-tmpl-add-telrow').removeClass('hide');
 	});
 
+	// Bind save new telephon
 	jQuery('.js-save-tel').on('click', function ()
 	{
 		var wrapperElement = jQuery(this).closest('.js-tel-wrap');
@@ -571,15 +578,109 @@ jQuery(document).ready(function ()
 		jQuery(this).closest('.js-tmpl-add-telrow').addClass('hide');
 	});
 
-
+	// Bind See Doctor Date
 	jQuery('#'+seeDrDateID).parent().children().each(function(){
 		jQuery(this).on('focusout', function(){
 			jQuery(this).updateScheduleDate( jQuery('#'+seeDrDateID).val(), jQuery('#'+periodID).val() );
 		});
 	});
 
+	// Bind Drug Period
 	jQuery('#'+periodID).on('change', function(){
 		jQuery(this).updateScheduleDate( jQuery('#'+seeDrDateID).val(), jQuery('#'+periodID).val() );
+	});
+
+	var methodElement = jQuery('#'+methodID);
+
+	// Copy the HiCode template.
+	var tableTmpl = jQuery('.js-hicode-tmpl');
+
+	// Append after method options
+	tableTmpl.insertAfter(methodElement.closest('.control-group'));
+
+	// Bind prescription method
+	methodElement.on('change', function(){
+		if (jQuery(this).val() == 'form')
+		{
+			tableTmpl.removeClass('hide');
+		}
+		else
+		{
+			tableTmpl.addClass('hide');
+		}
+	});
+
+	var combinedHicodeElem = jQuery('.js-hicode-code').add(jQuery('.js-hicode-quantity'));
+
+	jQuery(combinedHicodeElem).on('change', function(){
+		var newRowCounter = 0;
+		// Find where to store hicodes
+		var targetHiddenInput = jQuery('#jform_hicodes_json');
+		// Data to stored
+		var data;
+
+		if (targetHiddenInput.val() == '' || targetHiddenInput.val() == '{}')
+		{
+			data = [];
+		}
+		else
+		{
+			data = JSON.parse(targetHiddenInput.val());
+		}
+
+		// Go through every row, and push it into hidden input
+		jQuery('.js-hicode-row').each(function(){
+			// Retrieve hicode
+			var code = jQuery(this).find('.js-hicode-code').val();
+			// Retrieve quantity
+			var quantity = jQuery(this).find('.js-hicode-quantity').val();
+			// Retrieve id
+			var id = jQuery(this).find('.js-hicode-id').val();
+
+			// Check if hash Exist
+			if (id.indexOf("hash-") > -1)
+			{
+				// indexOf returns the position of the string in the other string.
+				// If not found, it will return -1:
+
+				// Make sure every info is provided
+				if ((code != '') && (quantity!=''))
+				{
+					data.push({id: 'hash-' + newRowCounter, hicode: code, quantity: quantity});
+					newRowCounter++;
+				}
+			}
+			// if hash- doesn't exist, and id doesn't exist => blank new row
+			else if(id.indexOf("hash-") == -1 && id == '')
+			{
+				// Make sure every info is provided
+				if ((code != '') && (quantity!=''))
+				{
+					data.push({id: 'hash-' + newRowCounter, hicode: code, quantity: quantity});
+					newRowCounter++;
+				}
+			}
+			// if hash- doesn't exist, and id exist
+			else if((id.indexOf("hash-") == -1) && (id != ''))
+			{
+				data.push({id: id, hicode: code, quantity: quantity});
+			}
+
+			// Perform hidden input update
+			jQuery(this).customerAjax.updateJsonToInputField('jform_hicodes_json', data);
+		});
+	});
+
+	jQuery('.js-hicode-add-row').on('click', function(){
+		var cloneRow = jQuery(".js-hicode-row").first().clone();
+		// Retrieve hicode
+		cloneRow.find('.js-hicode-code').val('');
+		// Retrieve quantity
+		cloneRow.find('.js-hicode-quantity').val('');
+		// Retrieve id
+		cloneRow.find('.js-hicode-id').val('');
+
+		jQuery('.js-hicode-tmpl tbody').append(cloneRow);
 	});
 });
 </script>
@@ -662,7 +763,7 @@ jQuery(document).ready(function ()
 <form name="adminForm" id="adminForm" method="post" action="<?php echo JURI::getInstance(); ?>" class="form-horizontal"
 	enctype="multipart/form-data">
 	<div class="row-fluid">
-		<div class="col-lg-5">
+		<div class="col-lg-5 col-md-5 col-sm-12">
 			<?php
 			foreach ($basic as $field)
 			{
@@ -670,7 +771,7 @@ jQuery(document).ready(function ()
 			}
 			?>
 		</div>
-		<div class="col-lg-7">
+		<div class="col-lg-7 col-md-7 col-sm-12">
 			<?php foreach (array("1st", "2nd", "3rd") as $key): ?>
 				<?php $schedules = $data->form->getGroup("schedules_{$key}"); ?>
 				<div id="schedules_<?php echo $key; ?>" class="row-fluid schedules schedules_<?php echo $key; ?>">
@@ -826,6 +927,54 @@ jQuery(document).ready(function ()
 			</div>
 		</div>
 	</div>
+
+	<div class="control-group custom-well js-hicode-tmpl hide">
+		<table class="table table-striped">
+			<thead>
+			<tr>
+				<th class="text-center">健保碼</th>
+				<th class="text-center">總量</th>
+				<th class="text-center">刪除</th>
+				<th class="text-center">總數小計</th>
+			</tr>
+			</thead>
+
+			<tfoot>
+			<td colspan="3">
+				<a class="btn btn-default btn-success js-hicode-add-row">
+					<i class="glyphicon glyphicon-plus"></i>
+					新增欄位
+				</a>
+			</td>
+			<td colspan="1">
+				<h4 class="text-center"> 2 </h4>
+			</td>
+			</tfoot>
+
+			<tbody>
+				<tr class="js-hicode-row">
+					<td>
+						<input class="js-hicode-code" style="width:100%;" type="text">
+					</td>
+					<td>
+						<input class="js-hicode-quantity" style="width:100%;" type="text">
+					</td>
+					<td>
+						<button type="button" class="btn btn-default btn-sm js-hicode-delete-row">
+							<span class="glyphicon glyphicon-trash"></span>
+						</button>
+					</td>
+					<td>
+						<input class="js-hicode-id" style="width:100%;" type="hidden">
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+	<!-- This hidden input only for temperately testing-->
+	<input type="hidden" id="jform_hicodes_json"/>
+
 	<div>
 		<input type="hidden" name="option" value="com_schedule" />
 		<input type="hidden" name="task" value="" />
