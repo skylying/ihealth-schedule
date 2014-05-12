@@ -93,36 +93,42 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 				var id_number  = cdata.id_number;
 				$.fn.customerAjax.updateJsonToInputField(telHomeID, tel_home);
 
-				try{
+				try
+				{
 					// Update phone numbers
 					var tel_office = $.parseJSON(cdata.tel_office);
 
 					// Update hidden input which store phone number json string.
 					$.fn.customerAjax.updatePhoneHtml(telOfficeID, tel_office);
 				}
-				catch(err){
+				catch(err)
+				{
 					$.fn.customerAjax.updatePhoneHtml(telOfficeID);
 				}
 
-				try{
+				try
+				{
 					// Update phone numbers
-					var tel_home   = $.parseJSON(cdata.tel_home);
+					var tel_home = $.parseJSON(cdata.tel_home);
 
 					// Update hidden input which store phone number json string.
 					$.fn.customerAjax.updatePhoneHtml(telHomeID, tel_home);
 				}
-				catch(err){
+				catch(err)
+				{
 					$.fn.customerAjax.updatePhoneHtml(telHomeID);
 				}
 
-				try{
+				try
+				{
 					// Update phone numbers
-					var mobile     = $.parseJSON(cdata.mobile);
+					var mobile = $.parseJSON(cdata.mobile);
 
 					// Update hidden input which store phone number json string.
 					$.fn.customerAjax.updatePhoneHtml(mobileID, mobile);
 				}
-				catch(err){
+				catch(err)
+				{
 					$.fn.customerAjax.updatePhoneHtml(mobileID);
 				}
 
@@ -302,7 +308,7 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 		if (hiddenInput.val() == '' || hiddenInput.val() == '{}')
 		{
 			// initialize with array
-			data = data || [];
+			data = [];
 		}
 		else
 		{
@@ -445,7 +451,7 @@ jQuery(document).ready(function ()
 		if (targetHiddenInput.val() == '' || targetHiddenInput.val() == '{}')
 		{
 			// initialize with array
-			data = data || [];
+			data = [];
 		}
 		else
 		{
@@ -513,7 +519,7 @@ jQuery(document).ready(function ()
 			if (inputValue == '' ||  inputValue == '{}')
 			{
 				// initialize with array
-				data = (jQuery.isEmptyObject(data)) ? [] : data ;
+				data = [];
 			}
 			else
 			{
