@@ -590,7 +590,7 @@ jQuery(document).ready(function ()
 		jQuery(this).updateScheduleDate( jQuery('#'+seeDrDateID).val(), jQuery('#'+periodID).val() );
 	});
 
-	var methodElement = jQuery('#'+methodID);
+	var methodElement = jQuery('#' + methodID);
 
 	// Copy the HiCode template.
 	var tableTmpl = jQuery('.js-hicode-tmpl');
@@ -599,7 +599,8 @@ jQuery(document).ready(function ()
 	tableTmpl.insertAfter(methodElement.closest('.control-group'));
 
 	// Bind prescription method
-	methodElement.on('change', function(){
+	methodElement.on('change', function ()
+	{
 		if (jQuery(this).val() == 'form')
 		{
 			tableTmpl.removeClass('hide');
@@ -612,7 +613,8 @@ jQuery(document).ready(function ()
 
 	var combinedHicodeElem = jQuery('.js-hicode-code').add(jQuery('.js-hicode-quantity'));
 
-	jQuery(combinedHicodeElem).on('change', function(){
+	jQuery(combinedHicodeElem).on('change', function ()
+	{
 		var newRowCounter = 0;
 		// Find where to store hicodes
 		var targetHiddenInput = jQuery('#jform_hicodes_json');
@@ -629,7 +631,8 @@ jQuery(document).ready(function ()
 		}
 
 		// Go through every row, and push it into hidden input
-		jQuery('.js-hicode-row').each(function(){
+		jQuery('.js-hicode-row').each(function ()
+		{
 			// Retrieve hicode
 			var code = jQuery(this).find('.js-hicode-code').val();
 			// Retrieve quantity
@@ -644,24 +647,24 @@ jQuery(document).ready(function ()
 				// If not found, it will return -1:
 
 				// Make sure every info is provided
-				if ((code != '') && (quantity!=''))
+				if ((code != '') && (quantity != ''))
 				{
 					data.push({id: 'hash-' + newRowCounter, hicode: code, quantity: quantity});
 					newRowCounter++;
 				}
 			}
 			// if hash- doesn't exist, and id doesn't exist => blank new row
-			else if(id.indexOf("hash-") == -1 && id == '')
+			else if (id.indexOf("hash-") == -1 && id == '')
 			{
 				// Make sure every info is provided
-				if ((code != '') && (quantity!=''))
+				if ((code != '') && (quantity != ''))
 				{
 					data.push({id: 'hash-' + newRowCounter, hicode: code, quantity: quantity});
 					newRowCounter++;
 				}
 			}
 			// if hash- doesn't exist, and id exist
-			else if((id.indexOf("hash-") == -1) && (id != ''))
+			else if ((id.indexOf("hash-") == -1) && (id != ''))
 			{
 				data.push({id: id, hicode: code, quantity: quantity});
 			}
@@ -671,7 +674,8 @@ jQuery(document).ready(function ()
 		});
 	});
 
-	jQuery('.js-hicode-add-row').on('click', function(){
+	jQuery('.js-hicode-add-row').on('click', function ()
+	{
 		var cloneRow = jQuery(".js-hicode-row").first().clone();
 		// Retrieve hicode
 		cloneRow.find('.js-hicode-code').val('');
