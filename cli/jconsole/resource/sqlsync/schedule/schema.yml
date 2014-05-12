@@ -99,6 +99,8 @@
         month: { Field: month, Type: tinyint(2), 'Null': NO, Default: null, Extra: '', Comment: 月份, From: [month] }
         day: { Field: day, Type: tinyint(2), 'Null': NO, Default: null, Extra: '', Comment: 國定假日日期, From: [day] }
         title: { Field: title, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: '假日種類說明', From: [title] }
+        weekday: { Field: weekday, Type: 'enum(''MON'',''TUE'',''WED'',''THU'',''FRI'',''SAT'',''SUN'')', 'Null': NO, Default: null, Extra: '', Comment: 星期幾, From: [weekday] }
+        date: { Field: date, Type: date, 'Null': NO, Default: null, Extra: '', Comment: 日期, From: [date] }
         state: { Field: state, Type: tinyint(1), 'Null': NO, Default: null, Extra: '', Comment: '假日狀態', From: [state] }
         params: { Field: params, Type: text, 'Null': NO, Default: null, Extra: '', Comment: '', From: [params] }
     index:
