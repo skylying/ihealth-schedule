@@ -119,12 +119,13 @@ class ScheduleViewRxindividualsHtml extends GridView
 		// Get default button set.
 		$buttonSet = parent::configureToolbar($buttonSet, $canDo);
 
-		// In debug mode, we remove trash button but use delete button instead.
-		if (JDEBUG)
-		{
-			$buttonSet['trash']['access']  = false;
-			$buttonSet['delete']['access'] = true;
-		}
+		$buttonSet['duplicate']['access'] = false;
+		$buttonSet['publish']['access']   = false;
+		$buttonSet['unpublish']['access'] = false;
+		$buttonSet['checkin']['access']   = false;
+		$buttonSet['trash']['access']     = false;
+		$buttonSet['batch']['access']     = false;
+		$buttonSet['delete']['access']    = true;
 
 		return $buttonSet;
 	}
