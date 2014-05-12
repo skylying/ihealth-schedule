@@ -94,8 +94,10 @@ class ScheduleModelRxindividuals extends ListModel
 		$queryHelper = $this->getContainer()->get('model.rxindividuals.helper.query', Container::FORCE_NEW);
 
 		$queryHelper->addTable('rxindividual', '#__schedule_prescriptions')
-			->addTable('author',   '#__users', 'rxindividual.created_by = author.id')
-			->addTable('modifier', '#__users', 'rxindividual.modified_by = modifier.id');
+			->addTable('memberMap', '#__schedule_customer_member_maps', 'memberMap.customer_id    = rxindividual.customer_id')
+			->addTable('member',    '#__schedule_members',              'member.id                = memberMap.member_id')
+			->addTable('author',    '#__users',                         'rxindividual.created_by  = author.id')
+			->addTable('modifier',  '#__users',                         'rxindividual.modified_by = modifier.id');
 
 		$this->filterFields = array_merge($this->filterFields, $queryHelper->getFilterFields());
 	}
