@@ -20,9 +20,6 @@ $id    = FieldHelper::resetGroup($form->getField('id'), $group);
 ?>
 <tr>
 	<td>
-		<?php echo $id->input; ?>
-	</td>
-	<td>
 		<?php
 		$customerId = FieldHelper::resetGroup($form->getField('customer_id'), $group);
 

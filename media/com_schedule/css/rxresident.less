@@ -19,16 +19,21 @@
 			padding-left: 5px;
 			label
 			{
-				display: inline-block;
+				display: block;
 				float: left;
 				&:hover
 				{
 					cursor: pointer;
 				}
 			}
-			input:hover
+			input
 			{
-				cursor: pointer;
+				float: none;
+				display: block;
+				&:hover
+				{
+					cursor: pointer;
+				}
 			}
 		}
 		&:hover
