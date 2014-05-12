@@ -260,7 +260,7 @@ class JFormFieldSelect2 extends JFormField
 			'hint'               => XmlHelper::get($this->element, 'hint'),
 			'apiUrl'             => XmlHelper::get($this->element, 'apiUrl'),
 			'apiDataType'        => XmlHelper::get($this->element, 'apiDataType', 'json'),
-			'consoleResult'      => XmlHelper::get($this->element, 'consoleResult', 'false'),
+			'consoleResult'      => XmlHelper::get($this->element, 'apiConsoleResult', 'false'),
 			'apiQueryKey'        => XmlHelper::get($this->element, 'apiQueryKey'),
 			'allowNew'           => XmlHelper::get($this->element, 'allowNew', 'false'),
 			'onChangeCallback'   => XmlHelper::get($this->element, 'onChangeCallback')
