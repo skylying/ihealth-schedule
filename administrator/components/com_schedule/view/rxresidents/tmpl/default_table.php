@@ -121,7 +121,7 @@ $date      = $container->get('date');
 
 		<!-- 處方箋編號 -->
 		<td>
-			<a href="<?php echo JRoute::_('index.php?option=com_schedule&task=rxindividual.edit.edit&id=' . $item->id); ?>">
+			<a href="<?php echo JRoute::_('index.php?option=com_schedule&task=rxresident.edit.edit&id=' . $item->id); ?>">
 				<?php echo $item->id; ?>
 			</a>
 		</td>
