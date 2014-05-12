@@ -73,6 +73,18 @@ class ScheduleModelRxresidents extends ListModel
 	);
 
 	/**
+	 * Get List Query
+	 *
+	 * @return  JDatabaseQuery
+	 */
+	protected function getListQuery()
+	{
+		$q = parent::getListQuery();
+
+		return $q->where("rxresident.`type` = 'resident'");
+	}
+
+	/**
 	 * configureTables
 	 *
 	 * @return  void

@@ -73,6 +73,18 @@ class ScheduleModelRxindividuals extends ListModel
 	);
 
 	/**
+	 * Get List Query
+	 *
+	 * @return  JDatabaseQuery
+	 */
+	protected function getListQuery()
+	{
+		$q = parent::getListQuery();
+
+		return $q->where("rxindividual.`type` = 'individual'");
+	}
+
+	/**
 	 * configureTables
 	 *
 	 * @return  void
