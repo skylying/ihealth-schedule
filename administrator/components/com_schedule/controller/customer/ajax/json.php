@@ -65,6 +65,12 @@ class ScheduleControllerCustomerAjaxJson extends DisplayController
 			$state->set('search', array('customer.name' => $queryString));
 
 			$data = $model->getItems();
+
+			// Put in porperty "dropdowntext" that select2 need
+			foreach ($data as $item)
+			{
+				$item->dropdowntext = $item->name;
+			}
 		}
 
 		echo json_encode($data);

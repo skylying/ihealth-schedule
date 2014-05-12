@@ -30,9 +30,9 @@ class ScheduleControllerInstitutesSearchJson extends DisplayController
 			{
 				return array(
 					'id'           => $item->id,
-					'title'        => $item->institute_short_title,
+					'dropdowntext' => $item->institute_short_title,
 					'color'        => $item->color_hex,
-					'delivery_day' => $item->delivery_weekday
+					'delivery_day' => $item->delivery_weekday,
 				);
 			},
 			$model->getItems()
