@@ -148,6 +148,7 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 		$taskModel     = $this->getModel("Task");
 		$scheduleModel = $this->getModel("Schedule");
 		$addressModel  = $this->getModel("Address");
+		$routeModel    = $this->getModel("Route");
 		$drugModel     = $this->getModel("Drug");
 
 		// 健保 json
@@ -199,6 +200,37 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 
 			// 外送路線
 			$routes = $routesMapper->findOne(array("city" => $address->city, "area" => $address->area));
+
+			// 沒有路線的時候新增路線
+			if (! isset($routes->id))
+			{
+				// 用設定的 id 取出 sender
+				$sender = $senderMapper->findOne($schedule['sender_id']);
+
+				// 沒取到 sender
+				if (! isset($sender->id))
+				{
+					throw new \Exception("error sender id");
+				}
+
+				// 整理存入資料
+				$routeData = array(
+					"city"        => $address->city,
+					"area"        => $address->area,
+					"city_title"  => $address->city_title,
+					"area_title"  => $address->area_title,
+					"sender_id"   => $sender->id,
+					"sender_name" => $sender->name,
+					"weekday"     => $schedule['weekday']
+				);
+
+				$routeModel->save($routeData);
+
+				$routeId = $routeModel->getItem()->id;
+
+				// 更新 route 變數給下面使用
+				$routes = $routesMapper->findOne($routeId);
+			}
 
 			// 外送者
 			$sender = $senderMapper->findOne($routes->sender_id);

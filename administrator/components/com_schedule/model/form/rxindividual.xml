@@ -155,8 +155,6 @@
 			description="地址"
 			/>
 
-
-
 		<field name="drug_empty_date"
 			type="calendar"
 			label="吃完藥日"
@@ -187,6 +185,28 @@
 			name="schedule_id"
 			type="hidden"
 			/>
+
+		<field
+			name="sender_id"
+			type="sender_list"
+			label="配送藥師"
+			description="配送藥師"
+			/>
+
+		<field
+			name="weekday"
+			type="list"
+			label="配送日"
+			description="配送日"
+			>
+			<option value="MON">星期一</option>
+			<option value="TUE">星期二</option>
+			<option value="WED">星期三</option>
+			<option value="THU">星期四</option>
+			<option value="FRI">星期五</option>
+			<option value="SAT">星期六</option>
+			<option value="SUN">星期日</option>
+		</field>
 	</fields>
 
 	<fields name="schedules_2nd">
@@ -235,6 +255,28 @@
 			name="schedule_id"
 			type="hidden"
 			/>
+
+		<field
+			name="sender_id"
+			type="sender_list"
+			label="配送藥師"
+			description="配送藥師"
+			/>
+
+		<field
+			name="weekday"
+			type="list"
+			label="配送日"
+			description="配送日"
+			>
+			<option value="MON">星期一</option>
+			<option value="TUE">星期二</option>
+			<option value="WED">星期三</option>
+			<option value="THU">星期四</option>
+			<option value="FRI">星期五</option>
+			<option value="SAT">星期六</option>
+			<option value="SUN">星期日</option>
+		</field>
 	</fields>
 
 	<fields name="schedules_3rd">
@@ -283,6 +325,28 @@
 			name="schedule_id"
 			type="hidden"
 			/>
+
+		<field
+			name="sender_id"
+			type="sender_list"
+			label="配送藥師"
+			description="配送藥師"
+			/>
+
+		<field
+			name="weekday"
+			type="list"
+			label="配送日"
+			description="配送日"
+			>
+			<option value="MON">星期一</option>
+			<option value="TUE">星期二</option>
+			<option value="WED">星期三</option>
+			<option value="THU">星期四</option>
+			<option value="FRI">星期五</option>
+			<option value="SAT">星期六</option>
+			<option value="SUN">星期日</option>
+		</field>
 	</fields>
 
 	<fieldset
