@@ -454,9 +454,10 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 			});
 
 			// Bind Delete event
-			$('.js-hicode-delete-row').on('click', function()
+			$('.js-hicode-delete-row').on('click', function ()
 			{
-				if (confirm('您確定要刪除嗎？')) {
+				if (confirm('您確定要刪除嗎？'))
+				{
 					if ($(".js-hicode-row").size() > 1)
 					{
 						// Delete row
@@ -482,7 +483,7 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 		});
 	};
 
-	$.fn.methodForm.updateHicodeHiddenInput = function()
+	$.fn.methodForm.updateHicodeHiddenInput = function ()
 	{
 		var newRowCounter = 0;
 		var totalRowCounter = 0;
@@ -597,7 +598,8 @@ jQuery(document).ready(function ()
 	var customerID = "<?php echo $customerID;?>";
 
 	// Toggle nth schedules
-	jQuery('.js-nth-schedule-check input').each(function(){
+	jQuery('.js-nth-schedule-check input').each(function ()
+	{
 		jQuery(this).bindChangeNthScheduleInfo();
 	});
 
@@ -617,7 +619,7 @@ jQuery(document).ready(function ()
 	});
 
 	// Bind add new address
-	jQuery('.js-add-address').on('click', function()
+	jQuery('.js-add-address').on('click', function ()
 	{
 		jQuery(this).closest('.js-nth-schedule-info').find('.js-tmpl-add-addressrow').removeClass('hide');
 	});
@@ -713,7 +715,7 @@ jQuery(document).ready(function ()
 
 			var inputValue = wrapperElement.find('input[type=hidden]').val();
 
-			if (inputValue == '' ||  inputValue == '{}')
+			if (inputValue == '' || inputValue == '{}')
 			{
 				// initialize with array
 				data = [];
@@ -769,15 +771,18 @@ jQuery(document).ready(function ()
 	});
 
 	// Bind See Doctor Date
-	jQuery('#'+seeDrDateID).parent().children().each(function(){
-		jQuery(this).on('focusout', function(){
-			jQuery(this).updateScheduleDate( jQuery('#'+seeDrDateID).val(), jQuery('#'+periodID).val() );
+	jQuery('#' + seeDrDateID).parent().children().each(function ()
+	{
+		jQuery(this).on('focusout', function ()
+		{
+			jQuery(this).updateScheduleDate(jQuery('#' + seeDrDateID).val(), jQuery('#' + periodID).val());
 		});
 	});
 
 	// Bind Drug Period
-	jQuery('#'+periodID).on('change', function(){
-		jQuery(this).updateScheduleDate( jQuery('#'+seeDrDateID).val(), jQuery('#'+periodID).val() );
+	jQuery('#' + periodID).on('change', function ()
+	{
+		jQuery(this).updateScheduleDate(jQuery('#' + seeDrDateID).val(), jQuery('#' + periodID).val());
 	});
 
 	// Method list
