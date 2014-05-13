@@ -151,14 +151,9 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 		{
 			foreach ($drugs as $drug)
 			{
-				$drugModel->save(
-					array(
-						"id"       => $drug->id,
-						"rx_id"    => $rx->id,
-						"hicode"   => $drug->hicode,
-						"quantity" => $drug->quantity
-					)
-				);
+				$drug->rx_id = $rx->id;
+
+				$drugModel->save((array) $drug);
 			}
 		}
 
