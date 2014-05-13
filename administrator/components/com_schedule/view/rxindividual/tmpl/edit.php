@@ -621,11 +621,15 @@ jQuery(document).ready(function ()
 	// Bind add new address
 	jQuery('.js-add-address').on('click', function ()
 	{
-		jQuery(this).closest('.js-nth-schedule-info').find('.js-tmpl-add-addressrow').removeClass('hide');
+		// Find the address template row
+		var element = jQuery('.js-tmpl-add-addressrow').removeClass('hide');
+
+		// Insert to target position, one should know that only one '.js-tmpl-add-addressrow' exist since appendTo method
+		element.appendTo(jQuery(this).closest('.js-nth-schedule-info').find('.js-add-address-position'));
 	});
 
 	// Bind save new address
-	jQuery('.js-save-address').on('click', function ()
+	jQuery('.js-nth-schedule-info').on('click', '.js-save-address',function ()
 	{
 		// The dynamic row wrapper
 		var currentWrap = jQuery(this).closest('.js-tmpl-add-addressrow');
@@ -663,30 +667,42 @@ jQuery(document).ready(function ()
 			address: currentWrap.find('.js-address-row-data').val()
 		};
 
-		data.push(arrayToAdd);
-
-		// Concatenate string.
-		resultString = currentWrap.find('#jform_city option:selected').text() +
-			currentWrap.find('#jform_area option:selected').text() +
-			arrayToAdd.address;
-
-		// Form up html <option>
-		html = '<option value="' + arrayToAdd.id + '">' +
-			resultString +
-			'</option>';
-
-		// Update drop down list at once
-		targetListToUpdate.each(function ()
+		if ((arrayToAdd.city == '')
+			|| (arrayToAdd.area == '')
+			|| (arrayToAdd.address == ''))
 		{
-			jQuery(this).append(html);
-			jQuery(this).find('option:last').attr('selected', true);
-		});
+			// Notify user to make sure they input correctly
+			Joomla.renderMessages([['欄位輸入不完整']]);
+		}
+		else if ((arrayToAdd.city != '')
+			|| (arrayToAdd.area != '')
+			|| (arrayToAdd.address != ''))
+		{
+			data.push(arrayToAdd);
 
-		// Update to hidden input
-		jQuery(this).customerAjax.updateJsonToInputField(createAddressID, data);
+			// Concatenate string.
+			resultString = currentWrap.find('#jform_city option:selected').text() +
+				currentWrap.find('#jform_area option:selected').text() +
+				arrayToAdd.address;
 
-		// Clear current row
-		currentWrap.addClass('hide');
+			// Form up html <option>
+			html = '<option value="' + arrayToAdd.id + '">' +
+				resultString +
+				'</option>';
+
+			// Update drop down list at once
+			targetListToUpdate.each(function ()
+			{
+				jQuery(this).append(html);
+				jQuery(this).find('option:last').attr('selected', true);
+			});
+
+			// Update to hidden input
+			jQuery(this).customerAjax.updateJsonToInputField(createAddressID, data);
+
+			// Clear current row
+			currentWrap.addClass('hide');
+		}
 	});
 
 	// Bind add new telephone
@@ -695,7 +711,7 @@ jQuery(document).ready(function ()
 		jQuery(this).closest('.js-tel-wrap').find('.js-tmpl-add-telrow').removeClass('hide');
 	});
 
-	// Bind save new telephon
+	// Bind save new telephone
 	jQuery('.js-save-tel').on('click', function ()
 	{
 		var wrapperElement = jQuery(this).closest('.js-tel-wrap');
@@ -749,7 +765,6 @@ jQuery(document).ready(function ()
 				// If no replacement was done, and the length is still not exceed the limit, perform insertion.
 				if (!b_set)
 				{
-
 					var tagID = wrapperElement.find('input[type=hidden]').prop('id');
 
 					data.push({default: 'true', number: phoneToAdd.val()});
@@ -899,30 +914,8 @@ jQuery(document).ready(function ()
 								</div>
 							</div>
 							<!-- Add Address Row -->
-							<div class="col-lg-12">
-								<div class="js-tmpl-add-addressrow hide">
-									<div class="row-fluid">
-										<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8" style="padding: 0px;">
-											<div class="row-fluid">
-												<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4" style="padding: 0px 10px 0px 0px;">
-													<?php echo $data->form->getInput('city') ?>
-												</div>
-												<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4" style="padding: 0px 10px 0px 0px;">
-													<?php echo $data->form->getInput('area') ?>
-												</div>
-												<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4" style="padding: 0px">
-													<input class="js-address-row-data pull-left" type="text">
-												</div>
-											</div>
-										</div>
-										<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4" style="padding: 0px;">
-											<div class="btn btn-small btn-success pull-right js-save-address">
-												<span class="icon-ok icon-white"></span>
-												儲存
-											</div>
-										</div>
-									</div>
-								</div>
+							<div class="col-lg-12 js-add-address-position">
+
 							</div>
 						</div>
 						<div class="row-fluid">
@@ -1033,6 +1026,7 @@ jQuery(document).ready(function ()
 		</div>
 	</div>
 
+	<!-- HICODE TEMPLATE-->
 	<div class="control-group custom-well js-hicode-tmpl hide">
 		<table class="table table-striped">
 			<thead>
@@ -1075,6 +1069,31 @@ jQuery(document).ready(function ()
 				</tr>
 			</tbody>
 		</table>
+	</div>
+
+	<!-- ADD ADDRESS ROW TEMPLATE -->
+	<div class="js-tmpl-add-addressrow hide">
+		<div class="row-fluid">
+			<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8" style="padding: 0px;">
+				<div class="row-fluid">
+					<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4" style="padding: 0px 10px 0px 0px;">
+						<?php echo $data->form->getInput('city') ?>
+					</div>
+					<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4" style="padding: 0px 10px 0px 0px;">
+						<?php echo $data->form->getInput('area') ?>
+					</div>
+					<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4" style="padding: 0px">
+						<input class="js-address-row-data pull-left" type="text">
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4" style="padding: 0px;">
+				<div class="btn btn-small btn-success pull-right js-save-address">
+					<span class="icon-ok icon-white"></span>
+					儲存
+				</div>
+			</div>
+		</div>
 	</div>
 
 	<!-- This hidden input only for temperately testing-->
