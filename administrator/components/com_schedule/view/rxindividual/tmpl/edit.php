@@ -395,6 +395,7 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 			// Find where to store hicodes
 			var targetHiddenInput = $('#jform_hicodes_json');
 
+			// Update while hicode date already exist on the very first time
 			if (targetHiddenInput.val() != '' && targetHiddenInput.val() != '{}')
 			{
 				$.fn.methodForm.insertHicodeTableRow(JSON.parse(targetHiddenInput.val()));
@@ -423,6 +424,9 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 					tableTmpl.addClass('hide');
 				}
 			});
+
+			// Trigger once
+			$(this).trigger('change');
 
 			// Combine two selector.
 			var hicodeElement = $('.js-hicode-code');
@@ -453,10 +457,26 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 			$('.js-hicode-delete-row').on('click', function()
 			{
 				if (confirm('您確定要刪除嗎？')) {
-					// Delete row
-					$(this).closest('.js-hicode-row').remove();
-					// Update Hidden Input
-					$.fn.methodForm.updateHicodeHiddenInput();
+					if ($(".js-hicode-row").size() > 1)
+					{
+						// Delete row
+						$(this).closest('.js-hicode-row').remove();
+						// Update Hidden Input
+						$.fn.methodForm.updateHicodeHiddenInput();
+					}
+					else
+					{
+						var row = $(".js-hicode-row").first();
+						// Retrieve hicode
+						row.find('.js-hicode-code').val('');
+						// Retrieve quantity
+						row.find('.js-hicode-quantity').val('');
+						// Retrieve id
+						row.find('.js-hicode-id').val('');
+
+						// Update Hidden Input
+						$.fn.methodForm.updateHicodeHiddenInput();
+					}
 				}
 			});
 		});
@@ -1027,7 +1047,7 @@ jQuery(document).ready(function ()
 				</a>
 			</td>
 			<td colspan="1">
-				<p><span class="text-center js-hicode-amount" style="font-size: 2.5rem;"></span></p>
+				<p class="text-center"><span class="js-hicode-amount" style="font-size: 2.5rem;"></span></p>
 			</td>
 			</tfoot>
 
@@ -1053,7 +1073,7 @@ jQuery(document).ready(function ()
 	</div>
 
 	<!-- This hidden input only for temperately testing-->
-	<input type="hidden" id="jform_hicodes_json" value='[{"id":"hash-0","hicode":"123123","quantity":"12312312"},{"id":"hash-1","hicode":"33","quantity":"1233"},{"id":"hash-2","hicode":"3222","quantity":"22"}]'/>
+	<input type="hidden" id="jform_hicodes_json"/>
 
 	<div>
 		<input type="hidden" name="option" value="com_schedule" />
