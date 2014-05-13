@@ -19,15 +19,33 @@
 			var $panel = $('#rx-list').find('tbody'),
 				handler = new MultiRowHandler({$panel:$panel});
 
+			// Bind afterInsert event
+			handler.on('afterInsert', function ($row)
+			{
+				$row.find('input.customer-id').each(function()
+				{
+					customer_id.initialize($(this));
+				});
+			});
+
+			// Bind afterDuplicate event
+			handler.on('afterDuplicate', function ($row)
+			{
+				// Remove exists select2 element
+				$row.find('div.customer-id').remove();
+
+				$row.find('input.customer-id').each(function ()
+				{
+					customer_id.initialize($(this));
+				});
+			});
+
 			// Bind initialize event
 			handler.on('initializeRow', function ($row)
 			{
 				$row.find('.datetimepicker').datetimepicker({
 					pickTime: false
 				});
-
-				// TODO: customer_id 目前寫死
-				customer_id.initialize($row.find('.customer-id'));
 
 				// 可調劑次數與處方箋外送次數連動
 				$row.find('.times').on('change', function()
