@@ -76,8 +76,8 @@ class JFormFieldSelect2 extends JFormField
 		{
 			$initialItem = $this->getInitialItem($initialValue);
 
-			$params['hasInitialValue']   = 'true';
-			$params['tableName']   = $this->table_name;
+			$params['hasInitialValue'] = 'true';
+			$params['tableName'] = $this->table_name;
 
 			foreach ($initialItem as $key => $value)
 			{
@@ -140,8 +140,8 @@ class JFormFieldSelect2 extends JFormField
                             if (option.hasInitialValue == "true")
                             {
                             	callback({
-									id: option.id,
-									dropdowntext: option.dropdowntext
+                            		id: option.id,
+                            		dropdowntext: option.dropdowntext
                             	});
                             }
                         },

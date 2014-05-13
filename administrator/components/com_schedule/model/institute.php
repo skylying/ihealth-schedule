@@ -105,7 +105,7 @@ class ScheduleModelInstitute extends AdminModel
 	}
 
 	/**
-	 * Preoare floor data
+	 * Prepare floor data
 	 *
 	 * @return  array
 	 */
