@@ -386,8 +386,178 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 					var cdata = $.parseJSON(cdata);
 				});
 		}
-
 	};
+
+	$.fn.methodForm = function ()
+	{
+		return this.each(function ()
+		{
+			// Find where to store hicodes
+			var targetHiddenInput = $('#jform_hicodes_json');
+
+			if (targetHiddenInput.val() != '' && targetHiddenInput.val() != '{}')
+			{
+				$.fn.methodForm.insertHicodeTableRow(JSON.parse(targetHiddenInput.val()));
+			}
+
+			// Copy the HiCode template.
+			var tableTmpl = $('.js-hicode-tmpl');
+
+			// Append tabel after method select list
+			tableTmpl.insertAfter($(this).closest('.control-group'));
+
+			// Bind Prescription method change detection
+			$(this).on('change', function ()
+			{
+				if ($(this).val() == 'form')
+				{
+					// Update from input
+					$.fn.methodForm.updateHicodeHiddenInput();
+					// Show table
+					tableTmpl.removeClass('hide');
+				}
+				else
+				{
+					var targetHiddenInput = $('#jform_hicodes_json');
+					targetHiddenInput.val('');
+					tableTmpl.addClass('hide');
+				}
+			});
+
+			// Combine two selector.
+			var hicodeElement = $('.js-hicode-code');
+			var quantityElement = $('.js-hicode-quantity');
+			var combinedHicodeElem = hicodeElement.add(quantityElement);
+
+			// Every time when 'hicode' and 'quantity' being changed.
+			tableTmpl.on('change', combinedHicodeElem, function ()
+			{
+				$.fn.methodForm.updateHicodeHiddenInput();
+			});
+
+			// Bind Add event
+			$('.js-hicode-add-row').on('click', function ()
+			{
+				var cloneRow = $(".js-hicode-row").first().clone();
+				// Retrieve hicode
+				cloneRow.find('.js-hicode-code').val('');
+				// Retrieve quantity
+				cloneRow.find('.js-hicode-quantity').val('');
+				// Retrieve id
+				cloneRow.find('.js-hicode-id').val('');
+
+				$('.js-hicode-tmpl tbody').append(cloneRow);
+			});
+
+			// Bind Delete event
+			$('.js-hicode-delete-row').on('click', function()
+			{
+				if (confirm('您確定要刪除嗎？')) {
+					// Delete row
+					$(this).closest('.js-hicode-row').remove();
+					// Update Hidden Input
+					$.fn.methodForm.updateHicodeHiddenInput();
+				}
+			});
+		});
+	};
+
+	$.fn.methodForm.updateHicodeHiddenInput = function()
+	{
+		var newRowCounter = 0;
+		var totalRowCounter = 0;
+
+		// Data to stored
+		var data = [];
+
+		// Go through every row, and push it into hidden input
+		$('.js-hicode-row').each(function ()
+		{
+			// Retrieve hicode
+			var code = $(this).find('.js-hicode-code').val();
+			// Retrieve quantity
+			var quantity = $(this).find('.js-hicode-quantity').val();
+			// Retrieve id
+			var id = $(this).find('.js-hicode-id').val();
+
+			// Check if hash Exist
+			if (id.indexOf("hash-") > -1)
+			{
+				// indexOf returns the position of the string in the other string.
+				// If not found, it will return -1:
+
+				// Make sure every info is provided
+				if ((code != '') && (quantity != ''))
+				{
+					data.push({id: 'hash-' + newRowCounter, hicode: code, quantity: quantity});
+					newRowCounter++;
+					totalRowCounter++;
+				}
+			}
+			// if hash- doesn't exist, and id doesn't exist => blank new row
+			else if (id.indexOf("hash-") == -1 && id == '')
+			{
+				// Make sure every info is provided
+				if ((code != '') && (quantity != ''))
+				{
+					data.push({id: 'hash-' + newRowCounter, hicode: code, quantity: quantity});
+					newRowCounter++;
+					totalRowCounter++;
+				}
+			}
+			// if hash- doesn't exist, and id exist
+			else if ((id.indexOf("hash-") == -1) && (id != ''))
+			{
+				// Make sure every info is provided
+				if ((code != '') && (quantity != ''))
+				{
+					data.push({id: id, hicode: code, quantity: quantity});
+					totalRowCounter++;
+				}
+			}
+
+			// Perform hidden input update
+			$(this).customerAjax.updateJsonToInputField('jform_hicodes_json', data);
+
+			// Update Counter
+			$('.js-hicode-amount').text(totalRowCounter);
+		});
+	};
+
+	$.fn.methodForm.insertHicodeTableRow = function (data)
+	{
+		var tableTbody = $('.js-hicode-tmpl tbody');
+		var cloneRow = $(".js-hicode-row").first().clone();
+
+		// Retrieve hicode
+		cloneRow.find('.js-hicode-code').val('');
+		// Retrieve quantity
+		cloneRow.find('.js-hicode-quantity').val('');
+		// Retrieve id
+		cloneRow.find('.js-hicode-id').val('');
+
+		// Clear tbody
+		tableTbody.html('');
+
+		for (var i = 0; i < data.length; i++)
+		{
+			var insertRow = cloneRow.clone();
+
+			insertRow.find('.js-hicode-code').val(data[i].hicode);
+			// Retrieve quantity
+			insertRow.find('.js-hicode-quantity').val(data[i].quantity);
+			// Retrieve id
+			insertRow.find('.js-hicode-id').val(data[i].id);
+
+			tableTbody.append(insertRow);
+		}
+
+		if (data.length != 0)
+		{
+			tableTbody.append(cloneRow);
+		}
+	};
+
 })(jQuery);
 
 jQuery(document).ready(function ()
@@ -590,102 +760,8 @@ jQuery(document).ready(function ()
 		jQuery(this).updateScheduleDate( jQuery('#'+seeDrDateID).val(), jQuery('#'+periodID).val() );
 	});
 
-	var methodElement = jQuery('#' + methodID);
-
-	// Copy the HiCode template.
-	var tableTmpl = jQuery('.js-hicode-tmpl');
-
-	// Append after method options
-	tableTmpl.insertAfter(methodElement.closest('.control-group'));
-
-	// Bind prescription method
-	methodElement.on('change', function ()
-	{
-		if (jQuery(this).val() == 'form')
-		{
-			tableTmpl.removeClass('hide');
-		}
-		else
-		{
-			tableTmpl.addClass('hide');
-		}
-	});
-
-	var combinedHicodeElem = jQuery('.js-hicode-code').add(jQuery('.js-hicode-quantity'));
-
-	jQuery(combinedHicodeElem).on('change', function ()
-	{
-		var newRowCounter = 0;
-		// Find where to store hicodes
-		var targetHiddenInput = jQuery('#jform_hicodes_json');
-		// Data to stored
-		var data;
-
-		if (targetHiddenInput.val() == '' || targetHiddenInput.val() == '{}')
-		{
-			data = [];
-		}
-		else
-		{
-			data = JSON.parse(targetHiddenInput.val());
-		}
-
-		// Go through every row, and push it into hidden input
-		jQuery('.js-hicode-row').each(function ()
-		{
-			// Retrieve hicode
-			var code = jQuery(this).find('.js-hicode-code').val();
-			// Retrieve quantity
-			var quantity = jQuery(this).find('.js-hicode-quantity').val();
-			// Retrieve id
-			var id = jQuery(this).find('.js-hicode-id').val();
-
-			// Check if hash Exist
-			if (id.indexOf("hash-") > -1)
-			{
-				// indexOf returns the position of the string in the other string.
-				// If not found, it will return -1:
-
-				// Make sure every info is provided
-				if ((code != '') && (quantity != ''))
-				{
-					data.push({id: 'hash-' + newRowCounter, hicode: code, quantity: quantity});
-					newRowCounter++;
-				}
-			}
-			// if hash- doesn't exist, and id doesn't exist => blank new row
-			else if (id.indexOf("hash-") == -1 && id == '')
-			{
-				// Make sure every info is provided
-				if ((code != '') && (quantity != ''))
-				{
-					data.push({id: 'hash-' + newRowCounter, hicode: code, quantity: quantity});
-					newRowCounter++;
-				}
-			}
-			// if hash- doesn't exist, and id exist
-			else if ((id.indexOf("hash-") == -1) && (id != ''))
-			{
-				data.push({id: id, hicode: code, quantity: quantity});
-			}
-
-			// Perform hidden input update
-			jQuery(this).customerAjax.updateJsonToInputField('jform_hicodes_json', data);
-		});
-	});
-
-	jQuery('.js-hicode-add-row').on('click', function ()
-	{
-		var cloneRow = jQuery(".js-hicode-row").first().clone();
-		// Retrieve hicode
-		cloneRow.find('.js-hicode-code').val('');
-		// Retrieve quantity
-		cloneRow.find('.js-hicode-quantity').val('');
-		// Retrieve id
-		cloneRow.find('.js-hicode-id').val('');
-
-		jQuery('.js-hicode-tmpl tbody').append(cloneRow);
-	});
+	// Method list
+	jQuery('#' + methodID).methodForm();
 });
 </script>
 
@@ -951,7 +1027,7 @@ jQuery(document).ready(function ()
 				</a>
 			</td>
 			<td colspan="1">
-				<h4 class="text-center"> 2 </h4>
+				<p><span class="text-center js-hicode-amount" style="font-size: 2.5rem;"></span></p>
 			</td>
 			</tfoot>
 
@@ -977,7 +1053,7 @@ jQuery(document).ready(function ()
 	</div>
 
 	<!-- This hidden input only for temperately testing-->
-	<input type="hidden" id="jform_hicodes_json"/>
+	<input type="hidden" id="jform_hicodes_json" value='[{"id":"hash-0","hicode":"123123","quantity":"12312312"},{"id":"hash-1","hicode":"33","quantity":"1233"},{"id":"hash-2","hicode":"3222","quantity":"22"}]'/>
 
 	<div>
 		<input type="hidden" name="option" value="com_schedule" />
