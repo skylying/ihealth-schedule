@@ -454,7 +454,7 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 			});
 
 			// Bind Delete event
-			$('.js-hicode-delete-row').on('click', function ()
+			$('.js-hicode-tmpl').on('click', '.js-hicode-delete-row',function ()
 			{
 				if (confirm('您確定要刪除嗎？'))
 				{
