@@ -36,7 +36,7 @@ use Schedule\Table\Table;
  *     // administrator\components\com_schedule\view\institute\tmpl\edit.php
  *     // Add lines below in this view layout
  *     <?php
- *         Schedule\Helper\AddressHelper::init();
+ *         Schedule\Helper\AddressHelper::init(true);
  *     ?>
  *
  *     jQuery(function($)
@@ -103,7 +103,9 @@ abstract class AddressHelper
 	/**
 	 * Initialize
 	 *
-	 * @param   bool  $chosen  Enable chosen selection or not
+	 * @param   bool  $chosen  Enable Chosen support or not
+	 *
+	 * @see http://harvesthq.github.io/chosen/
 	 *
 	 * @return  void
 	 */
