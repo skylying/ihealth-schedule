@@ -57,8 +57,6 @@
 			// Initialize area selection when city value is changed
 			$city.chosen().change(function(e)
 			{
-				console.log(e.target.value);
-
 				var cityId = e.target.value,
 					areaOptions = self.areas[cityId] || '';
 
