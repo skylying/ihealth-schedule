@@ -12,6 +12,13 @@ use Schedule\Table\Table;
 class ScheduleControllerRxindividualEditSave extends SaveController
 {
 	/**
+	 * Use DB transaction or not.
+	 *
+	 * @var  boolean
+	 */
+	protected $useTransaction = true;
+
+	/**
 	 * preSaveHook
 	 *
 	 * @return  void
