@@ -12,8 +12,7 @@
 	 *
 	 * @see http://harvesthq.github.io/chosen/
 	 */
-	window.Address =
-	{
+	window.Address = {
 		/**
 		 * Area HTML selection options
 		 *

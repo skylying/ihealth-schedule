@@ -10,8 +10,7 @@
 	/**
 	 * Address Object
 	 */
-	window.Address =
-	{
+	window.Address = {
 		/**
 		 * Area HTML selection options
 		 *
