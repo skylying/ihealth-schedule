@@ -62,13 +62,6 @@ abstract class AddressHelper
 	protected static $addresses = array();
 
 	/**
-	 * Property cities.
-	 *
-	 * @var  array
-	 */
-	protected static $cities = array();
-
-	/**
 	 * Get city HTML selection list
 	 *
 	 * @param   string   $name       The value of the HTML name attribute.
@@ -97,7 +90,7 @@ abstract class AddressHelper
 	{
 		static::init();
 
-		return \JHtmlSelect::genericlist(static::$cities, $name, $attribs, $optKey, $optText, $selected, $idtag, $translate);
+		return \JHtmlSelect::genericlist(static::$addresses, $name, $attribs, $optKey, $optText, $selected, $idtag, $translate);
 	}
 
 	/**
@@ -158,7 +151,6 @@ abstract class AddressHelper
 		$db = \JFactory::getDbo();
 		$query = $db->getQuery(true);
 		$address = array();
-		$cities = array();
 
 		$query->select('id, title')
 			->from(Table::CITIES)
@@ -172,14 +164,6 @@ abstract class AddressHelper
 					'value' => $city->id,
 					'text' => $city->title,
 					'areas' => array(),
-				);
-			}
-
-			if (! isset($cities[$city->id]))
-			{
-				$cities[$city->id] = array(
-					'value' => $city->id,
-					'text' => $city->title,
 				);
 			}
 		}
@@ -206,6 +190,5 @@ abstract class AddressHelper
 		}
 
 		static::$addresses = $address;
-		static::$cities = $cities;
 	}
 }
