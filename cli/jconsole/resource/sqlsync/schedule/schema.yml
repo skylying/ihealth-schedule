@@ -146,6 +146,7 @@
         route_id: { Field: route_id, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: '路線 id', From: [route_id] }
         title: { Field: title, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: '機構全名', From: [title] }
         short_title: { Field: short_title, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 機構簡稱, From: [short_title] }
+        floor: { Field: floor, Type: text, 'Null': NO, Default: null, Extra: '', Comment: 樓層(逗號分隔), From: [floor] }
         delivery_weekday: { Field: delivery_weekday, Type: 'enum(''MON'',''TUE'',''WED'',''THU'',''FRI'',''SAT'',''SUN'')', 'Null': NO, Default: null, Extra: '', Comment: 外送日, From: [delivery_weekday] }
         last_delivery_date: { Field: last_delivery_date, Type: date, 'Null': NO, Default: null, Extra: '', Comment: 上次外送日, From: [last_delivery_date] }
         color_id: { Field: color_id, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: '顏色 id', From: [color_id] }
