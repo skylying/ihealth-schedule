@@ -10,11 +10,25 @@
 defined('_JEXEC') or die;
 
 use Windwalker\DI\Container;
+use Windwalker\Helper\XmlHelper;
 
 /**
  * Class JFormFieldDateTimePicker
+ *
+ * XML properties:
+ * - show_button: (optional) is whether to show calendar button (true / false).
+ *                If set to false will hide calendar button.
+ *                Else set to true will show calendar button.
+ *                Default is false.
+ * - date_format: (optional) Setup datetimepicker's date format. Default is "YYYY-MM-DD".
+ * - width:       (optional) Setup input width (in px).
+ * - readonly:    (optional) The field cannot be changed and will automatically inherit the default value.
+ * - disabled:    (optional) is whether the text box is disabled (true or false).
+ *                If the text box is disabled, the date cannot be changed, selected or copied.
+ * - hint:        (optional) is placeholder attribute.
+ * - required:    (optional) The field must be filled before submitting the form.
  */
-class JFormFieldDateTimePicker extends JFormFieldText
+class JFormFieldDateTimePicker extends JFormField
 {
 	/**
 	 * The form field type.
@@ -40,26 +54,55 @@ class JFormFieldDateTimePicker extends JFormFieldText
 		$this->init();
 
 		$id = $this->id;
+		$showButton = XmlHelper::getBool($this->element, 'show_button', false);
+		$readonly = XmlHelper::getBool($this->element, 'readonly', false);
+		$readonly = $readonly ? ' readonly' : '';
+		$disabled = XmlHelper::getBool($this->element, 'disabled', false);
+		$disabled = $disabled ? ' disabled' : '';
+		$hint = XmlHelper::get($this->element, 'hint', '');
+		$hint = empty($hint) ? '' : ' placeholder="' . $hint . '"';
+		$required = XmlHelper::get($this->element, 'required', '');
+		$required = empty($required) ? '' : ' required="required"';
+		$dateFormat = ' data-date-format="' . XmlHelper::get($this->element, 'date_format', 'YYYY-MM-DD') . '"';
+		$inputClass = 'form-control';
+		$attr = '';
 		$style = $this->getStyle();
+		$doc = JFactory::getDocument();
 
-		$class = $this->class;
+		if (false === $showButton)
+		{
+			$inputClass .= ' ' . $this->class;
+			$attr .= $dateFormat;
+		}
 
-		// Set input class
-		$this->class = ' form-control';
-		$input = parent::getInput();
+		$input = '<input type="text" name="' . $this->name . '" id="' . $this->id . '" class="' . $inputClass . '"' .
+			' value="' . htmlspecialchars($this->value, ENT_COMPAT, 'UTF-8') . '"' .
+			$readonly . $disabled . $hint . $required . $attr . ' />';
 
-		$dateFormat = (string) $this->element['dateFormat'];
-		$dateFormat = empty($dateFormat) ? 'YYYY-MM-DD' : $dateFormat;
+		if (true === $showButton)
+		{
+			$class = $this->class;
+			$id .= '_container';
 
-		$html = <<<HTML
-<div class='input-group date {$class}' id='{$id}' style="{$style}" data-date-format="{$dateFormat}">
+			$this->class .= ' form-control';
+
+			$html = <<<HTML
+<div class='input-group date {$class}' id='{$id}' style="{$style}" {$dateFormat}>
 	{$input}
 	<span class="input-group-addon">
 		<span class="glyphicon glyphicon-calendar"></span>
 	</span>
 </div>
 HTML;
-		$doc = JFactory::getDocument();
+		}
+		else
+		{
+			$html = <<<HTML
+<div style="{$style}">
+	{$input}
+</div>
+HTML;
+		}
 
 		$js = <<<JS
 jQuery(function ()
@@ -69,18 +112,7 @@ jQuery(function ()
 	});
 });
 JS;
-		// Hide calendar icon
-		$css = '
-		.input-group-addon
-		{
-			opacity: 0;
-			position: absolute;
-		}
-		';
-
-
 		$doc->addScriptDeclaration($js);
-		$doc->addStyleDeclaration($css);
 
 		return $html;
 	}
@@ -116,7 +148,7 @@ JS;
 	{
 		$styles = array();
 
-		$width = (int) $this->element['width'];
+		$width = (int) XmlHelper::get($this->element, 'width');
 		$width = ($width > 0 ? $width : 130);
 
 		$styles[] = 'width:' . $width . 'px;';
