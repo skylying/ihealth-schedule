@@ -16,6 +16,34 @@ use Schedule\Table\Table;
 
 /**
  * Class AddressHelper
+ *
+ * - Usage 1 (use simple "list" filed type):
+ * <code>
+ *     // administrator\components\com_schedule\view\institute\tmpl\edit.php
+ *     // Add lines below in this view layout
+ *     <?php
+ *         Schedule\Helper\AddressHelper::init();
+ *     ?>
+ *
+ *     jQuery(function($)
+ *     {
+ *         Address.bind('jform_city', 'jform_area', $('jform_area').val());
+ *     });
+ * </code>
+ *
+ * - Usage 2 (use JHtmlFormbehavior::chosen('select')):
+ * <code>
+ *     // administrator\components\com_schedule\view\institute\tmpl\edit.php
+ *     // Add lines below in this view layout
+ *     <?php
+ *         Schedule\Helper\AddressHelper::init();
+ *     ?>
+ *
+ *     jQuery(function($)
+ *     {
+ *         Address.bind('jform_city', 'jform_area', $('jform_area').val());
+ *     });
+ * </code>
  */
 abstract class AddressHelper
 {
