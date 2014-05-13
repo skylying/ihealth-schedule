@@ -75,9 +75,11 @@ abstract class AddressHelper
 	/**
 	 * Initialize
 	 *
+	 * @param   bool  $chosen  Enable chosen selection or not
+	 *
 	 * @return  void
 	 */
-	public static function init()
+	public static function init($chosen = false)
 	{
 		if (true === self::$initialized)
 		{
@@ -97,7 +99,15 @@ abstract class AddressHelper
 		/** @var \Windwalker\Helper\AssetHelper $asset */
 		$asset = Container::getInstance('com_schedule')->get('helper.asset');
 
-		$asset->addJS('address.js');
+		if (true === $chosen)
+		{
+			$asset->addJS('address-chosen.js');
+		}
+		else
+		{
+			$asset->addJS('address.js');
+		}
+
 		$asset->internalJS('
 			jQuery(function()
 			{
