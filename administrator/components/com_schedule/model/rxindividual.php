@@ -93,8 +93,16 @@ class ScheduleModelRxindividual extends AdminModel
 		// 健保 code
 		$drugs = (new DataMapper(Table::DRUGS))->find(array("rx_id" => $returnVal->id));
 
+		$drugDataSet = array();
+
+		// 把 object->data 整理成 array
+		foreach ($drugs as $drug)
+		{
+			$drugDataSet[] = $drug;
+		}
+
 		// Set json
-		$returnVal->drug = json_encode($drugs);
+		$returnVal->drug = json_encode($drugDataSet);
 
 		foreach (array("1st", "2nd", "3rd") as $val)
 		{
