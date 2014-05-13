@@ -1,4 +1,7 @@
-(function($, undefined)
+/**
+ * Address Helper
+ */
+;(function($, undefined)
 {
 	"use strict";
 
