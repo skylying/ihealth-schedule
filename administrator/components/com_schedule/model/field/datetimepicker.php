@@ -53,31 +53,30 @@ class JFormFieldDateTimePicker extends JFormField
 	{
 		$this->init();
 
-		$id = $this->id;
+		$id         = $this->id;
 		$showButton = XmlHelper::getBool($this->element, 'show_button', false);
-		$readonly = XmlHelper::getBool($this->element, 'readonly', false);
-		$readonly = $readonly ? ' readonly' : '';
-		$disabled = XmlHelper::getBool($this->element, 'disabled', false);
-		$disabled = $disabled ? ' disabled' : '';
-		$hint = XmlHelper::get($this->element, 'hint', '');
-		$hint = empty($hint) ? '' : ' placeholder="' . $hint . '"';
-		$required = XmlHelper::get($this->element, 'required', '');
-		$required = empty($required) ? '' : ' required="required"';
+		$readonly   = XmlHelper::getBool($this->element, 'readonly', false);
+		$disabled   = XmlHelper::getBool($this->element, 'disabled', false);
+		$hint       = XmlHelper::get($this->element, 'hint', '');
+		$required   = XmlHelper::get($this->element, 'required', '');
 		$dateFormat = ' data-date-format="' . XmlHelper::get($this->element, 'date_format', 'YYYY-MM-DD') . '"';
+
+		$readonly   = $readonly ? ' readonly' : '';
+		$disabled   = $disabled ? ' disabled' : '';
+		$hint       = empty($hint) ? '' : ' placeholder="' . $hint . '"';
+		$required   = empty($required) ? '' : ' required="required"';
 		$inputClass = 'form-control';
-		$attr = '';
-		$style = $this->getStyle();
-		$doc = JFactory::getDocument();
+		$style      = $this->getStyle();
 
 		if (false === $showButton)
 		{
 			$inputClass .= ' ' . $this->class;
-			$attr .= $dateFormat;
+			$dateFormat = '';
 		}
 
 		$input = '<input type="text" name="' . $this->name . '" id="' . $this->id . '" class="' . $inputClass . '"' .
 			' value="' . htmlspecialchars($this->value, ENT_COMPAT, 'UTF-8') . '"' .
-			$readonly . $disabled . $hint . $required . $attr . ' />';
+			$readonly . $disabled . $hint . $required . $dateFormat . ' />';
 
 		if (true === $showButton)
 		{
@@ -112,7 +111,7 @@ jQuery(function ()
 	});
 });
 JS;
-		$doc->addScriptDeclaration($js);
+		JFactory::getDocument()->addScriptDeclaration($js);
 
 		return $html;
 	}
