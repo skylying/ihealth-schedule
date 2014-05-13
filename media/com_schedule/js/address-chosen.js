@@ -51,8 +51,7 @@
 				$area.html(areaOptions);
 				$area.val(areaValue);
 
-				$area.chosen('destroy');
-				$area.chosen();
+				$area.trigger('liszt:updated');
 			}
 
 			// Initialize area selection when city value is changed
@@ -66,8 +65,7 @@
 				$area.html(areaOptions);
 				$area.val('');
 
-				$area.chosen('destroy');
-				$area.chosen();
+				$area.trigger('liszt:updated');
 			});
 		}
 	};
