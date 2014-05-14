@@ -54,6 +54,13 @@ abstract class AddressHelper
 	protected static $addresses = array();
 
 	/**
+	 * Property bindList.
+	 *
+	 * @var  array
+	 */
+	protected static $bindList = array();
+
+	/**
 	 * Get city HTML selection list
 	 *
 	 * @param   string   $name       The value of the HTML name attribute.
@@ -95,6 +102,15 @@ abstract class AddressHelper
 	 */
 	public static function bind($cityId, $areaId)
 	{
+		$bindPair = $cityId . ':' . $areaId;
+
+		if (empty($cityId)
+			|| empty($areaId)
+			|| isset(static::$bindList[$bindPair]))
+		{
+			return;
+		}
+
 		static::init();
 
 		/** @var \Windwalker\Helper\AssetHelper $asset */
@@ -107,6 +123,8 @@ jQuery(function($)
 });
 JS;
 		$asset->internalJS($js);
+
+		static::$bindList[$bindPair] = true;
 	}
 
 	/**
