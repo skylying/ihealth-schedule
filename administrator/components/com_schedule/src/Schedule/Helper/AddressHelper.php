@@ -11,6 +11,7 @@ namespace Schedule\Helper;
 // No direct access
 defined('_JEXEC') or die;
 
+use Whoops\Example\Exception;
 use Windwalker\DI\Container;
 use Schedule\Table\Table;
 
@@ -98,15 +99,19 @@ abstract class AddressHelper
 	 * @param   string  $cityId  City selection element id
 	 * @param   string  $areaId  Area selection element id
 	 *
+	 * @throws  \Whoops\Example\Exception
 	 * @return  void
 	 */
 	public static function bind($cityId, $areaId)
 	{
+		if (empty($cityId) || empty($areaId))
+		{
+			throw new Exception('city id and area id should not be empty.');
+		}
+
 		$bindPair = $cityId . ':' . $areaId;
 
-		if (empty($cityId)
-			|| empty($areaId)
-			|| isset(static::$bindList[$bindPair]))
+		if (isset(static::$bindList[$bindPair]))
 		{
 			return;
 		}
