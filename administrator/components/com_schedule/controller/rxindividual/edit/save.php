@@ -12,6 +12,13 @@ use Schedule\Table\Table;
 class ScheduleControllerRxindividualEditSave extends SaveController
 {
 	/**
+	 * Use DB transaction or not.
+	 *
+	 * @var  boolean
+	 */
+	protected $useTransaction = true;
+
+	/**
 	 * preSaveHook
 	 *
 	 * @return  void
@@ -110,37 +117,22 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 	{
 		$rx = $model->getItem();
 
-		$files = $this->input->files->getVar('jform');
-
-		// 圖片上傳
-		\Schedule\Helper\ImageHelper::handleUpload($rx->id, $files['rximages']);
-
-		$removeCid = isset($this->data['remove_images']) ? $this->data['remove_images'] : array();
-
-		// 刪除圖片
-		\Schedule\Helper\ImageHelper::removeImages($removeCid);
-
 		// Mappers
-		$customerMapper = new DataMapper(Table::CUSTOMERS);
 		$addressMapper  = new DataMapper(Table::ADDRESSES);
-		$routesMapper   = new DataMapper(Table::ROUTES);
 		$senderMapper   = new DataMapper(Table::SENDERS);
-		$scheduleMapper = new DataMapper(Table::SCHEDULES);
-		$taskMapper     = new DataMapper(Table::TASKS);
-
-		$customer = $customerMapper->findOne($this->data['customer_id']);
-
-		$customer->tel_office = $this->data['tel_office'];
-		$customer->tel_home   = $this->data['tel_home'];
-		$customer->mobile     = $this->data['mobile'];
-
-		// 更新客戶電話
-		$customerMapper->updateOne($customer);
 
 		// Get model
-		$taskModel     = $this->getModel("Task");
 		$scheduleModel = $this->getModel("Schedule");
 		$addressModel  = $this->getModel("Address");
+
+		// 圖片處理
+		$this->rxImageHeader();
+
+		// 客戶處理
+		$customer = $this->customerHeader($this->data['customer_id']);
+
+		// 健保處理
+		$this->drugHeader();
 
 		// 新增排程次數
 		$scheduleDoTimes = 0;
@@ -152,22 +144,12 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 			$schedule = $this->data["schedules_{$val}"];
 
 			// 現在這筆排程的資料
-			if (empty($schedule['schedule_id']))
-			{
-				$thisScheduleData = new \Windwalker\Data\Data;
-			}
-			else
-			{
-				$thisScheduleData = $scheduleMapper->findOne($schedule['schedule_id']);
-			}
+			$thisScheduleData = $this->getSchedule($schedule['schedule_id']);
 
 			// 沒有需要外送的次數跳過
 			if (empty($schedule["deliver_nth"]) || ! isset($schedule["deliver_nth"]))
 			{
-				if (! empty($schedule['schedule_id']))
-				{
-					$scheduleMapper->delete(['id' => $schedule['schedule_id']]);
-				}
+				$this->deleteSchedule($schedule['schedule_id']);
 
 				continue;
 			}
@@ -176,63 +158,26 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 			$address = $addressMapper->findOne($schedule["address_id"]);
 
 			// 外送路線
-			$routes = $routesMapper->findOne(array("city" => $address->city, "area" => $address->area));
+			$routes = $this->routeHeader($address, $schedule);
 
 			// 外送者
 			$sender = $senderMapper->findOne($routes->sender_id);
 
 			// Get task
-			$task = $taskMapper->findOne(array("sender" => $sender->id, "sender_name" => $sender->name));
+			$task = $this->taskHeader($thisScheduleData, $sender);
 
-			// 如果沒取得 task , 是新增
-			if (empty($task->id))
-			{
-				// Task data
-				$taskData = array(
-					"id" => $thisScheduleData->task_id,
-					"sender" => $sender->id,
-					"sender_name" => $sender->name,
-					"status" => 0
-				);
-
-				// 新增外送
-				$taskModel->save($taskData);
-
-				// 取出剛剛新增的外送管理
-				$task = $taskModel->getItem();
-			}
-
-			// 對應處方箋 id
-			$thisScheduleData->rx_id = $rx->id;
-
-			// Schedule data
-			$scheduleUpdata = array(
-				// Rx id
-				"rx_id"           => $rx->id,
-
-				// 對應外送 id
-				"task_id"         => $task->id,
-				"type"            => $customer->type,
-				"customer_id"     => $customer->id,
-				"customer_name"   => $customer->name,
-
-				"address_id"      => $address->id,
-				"city"            => $address->city,
-				"city_title"      => $address->city_title,
-				"area"            => $address->area,
-				"area_title"      => $address->area_title,
-				"address"         => $address->address,
-
-				// 第幾次宅配
-				"deliver_nth"     => $val,
-
-				// Default
-				"status"          => "scheduled",
-				"sorted"          => 0
+			$option = array(
+				"rx"       => $rx,
+				"task"     => $task,
+				"customer" => $customer,
+				"address"  => $address,
+				"nth"      => $val
 			);
 
 			// 新增排程
-			$scheduleModel->save(array_merge((array) $thisScheduleData, $schedule, $scheduleUpdata));
+			$scheduleModel->save(
+				$this->getScheduleUploadData($thisScheduleData, $schedule, $option)
+			);
 
 			// 記錄次數
 			$scheduleDoTimes++;
@@ -244,5 +189,253 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 			// Flush Default Address
 			$addressModel->flushDefaultAddress($customer->id, $address->id);
 		}
+	}
+
+	/**
+	 * Drug herder
+	 *
+	 * @return  object
+	 */
+	protected function drugHeader()
+	{
+		$rx = $this->model->getItem();
+		$drugModel = $this->getModel("Drug");
+
+		// 健保 json
+		$drugs = isset($this->data['drug']) ? json_decode($this->data['drug']) : array();
+
+		// 新增健保碼
+		if (! empty($drugs))
+		{
+			foreach ($drugs as $drug)
+			{
+				$drug->rx_id = $rx->id;
+
+				$drugModel->save((array) $drug);
+			}
+		}
+
+		return $drugModel;
+	}
+
+	/**
+	 * Get Schedule
+	 *
+	 * @param integer $id
+	 *
+	 * @return  \Windwalker\Data\Data
+	 */
+	protected function getSchedule($id = null)
+	{
+		$scheduleMapper = new DataMapper(Table::SCHEDULES);
+
+		if (empty($id))
+		{
+			return new \Windwalker\Data\Data;
+		}
+
+		return $scheduleMapper->findOne($id);
+	}
+
+	/**
+	 * Delete Schedule
+	 *
+	 * @param integer $id
+	 *
+	 * @return  DataMapper
+	 */
+	protected function deleteSchedule($id = null)
+	{
+		$scheduleMapper = new DataMapper(Table::SCHEDULES);
+
+		if (empty($id))
+		{
+			return $scheduleMapper;
+		}
+
+		$scheduleMapper->delete(array('id' => $id));
+
+		return $scheduleMapper;
+	}
+
+	/**
+	 * Route Header
+	 *
+	 * @param object $address
+	 * @param array  $option
+	 *
+	 * @return object
+	 *
+	 * @throws Exception
+	 */
+	protected function routeHeader($address, $option)
+	{
+		$routeModel   = $this->getModel("Route");
+		$routesMapper = new DataMapper(Table::ROUTES);
+		$senderMapper = new DataMapper(Table::SENDERS);
+
+		// 外送路線
+		$routes = $routesMapper->findOne(array("city" => $address->city, "area" => $address->area));
+
+		// 沒有路線的時候新增路線
+		if (! isset($routes->id))
+		{
+			// 用設定的 id 取出 sender
+			$sender = $senderMapper->findOne($option['sender_id']);
+
+			// 沒取到 sender
+			if (! isset($sender->id))
+			{
+				throw new \Exception("error sender id");
+			}
+
+			// 整理存入資料
+			$routeData = array(
+				"city"        => $address->city,
+				"area"        => $address->area,
+				"city_title"  => $address->city_title,
+				"area_title"  => $address->area_title,
+				"sender_id"   => $sender->id,
+				"sender_name" => $sender->name,
+				"weekday"     => $option['weekday']
+			);
+
+			$routeModel->save($routeData);
+
+			$routeId = $routeModel->getItem()->id;
+
+			// 更新 route 變數給下面使用
+			$routes = $routesMapper->findOne($routeId);
+		}
+
+		return $routes;
+	}
+
+	/**
+	 * Task Header
+	 *
+	 * @param object $schedule
+	 * @param object $sender
+	 *
+	 * @return object
+	 */
+	protected function taskHeader($schedule, $sender)
+	{
+		$taskModel  = $this->getModel("Task");
+		$taskMapper = new DataMapper(Table::TASKS);
+
+		// Get task
+		$task = $taskMapper->findOne(array("sender" => $sender->id, "sender_name" => $sender->name));
+
+		// 如果沒取得 task , 是新增
+		if (empty($task->id))
+		{
+			// Task data
+			$taskData = array(
+				"id" => $schedule->task_id,
+				"sender" => $sender->id,
+				"sender_name" => $sender->name,
+				"status" => 0
+			);
+
+			// 新增外送
+			$taskModel->save($taskData);
+
+			// 取出剛剛新增的外送管理
+			$task = $taskModel->getItem();
+		}
+
+		return $task;
+	}
+
+	/**
+	 * Customer Header
+	 *
+	 * @param integer $id
+	 *
+	 * @return mixed
+	 *
+	 * @throws Exception
+	 */
+	protected function customerHeader($id)
+	{
+		$customerMapper = new DataMapper(Table::CUSTOMERS);
+
+		$customer = $customerMapper->findOne($id);
+
+		// 找不到客戶
+		if (! isset($customer->id))
+		{
+			throw new \Exception("error customer id");
+		}
+
+		$customer->tel_office = $this->data['tel_office'];
+		$customer->tel_home   = $this->data['tel_home'];
+		$customer->mobile     = $this->data['mobile'];
+
+		// 更新客戶電話
+		$customerMapper->updateOne($customer);
+
+		return $customer;
+	}
+
+	/**
+	 * Get Schedule Upload Data
+	 *
+	 * @param mixed $oldData
+	 * @param mixed $formData
+	 * @param array $option
+	 *
+	 * @return  array
+	 */
+	protected function getScheduleUploadData($oldData, $formData, array $option)
+	{
+		// Schedule data
+		$scheduleUpdata = array(
+			// Rx id
+			"rx_id"           => $option['rx']->id,
+
+			// 對應外送 id
+			"task_id"         => $option['task']->id,
+			"type"            => $option['customer']->type,
+			"customer_id"     => $option['customer']->id,
+			"customer_name"   => $option['customer']->name,
+
+			"address_id"      => $option['address']->id,
+			"city"            => $option['address']->city,
+			"city_title"      => $option['address']->city_title,
+			"area"            => $option['address']->area,
+			"area_title"      => $option['address']->area_title,
+			"address"         => $option['address']->address,
+
+			// 第幾次宅配
+			"deliver_nth"     => $option['nth'],
+
+			// Default
+			"status"          => "scheduled",
+			"sorted"          => 0
+		);
+
+		return array_merge((array) $oldData, (array) $formData, $scheduleUpdata);
+	}
+
+	/**
+	 * Rx Image Header
+	 *
+	 * @return void
+	 */
+	protected function rxImageHeader()
+	{
+		$rx = $this->model->getItem();
+
+		$files = $this->input->files->getVar('jform');
+
+		// 圖片上傳
+		\Schedule\Helper\ImageHelper::handleUpload($rx->id, $files['rximages']);
+
+		$removeCid = isset($this->data['remove_images']) ? $this->data['remove_images'] : array();
+
+		// 刪除圖片
+		\Schedule\Helper\ImageHelper::removeImages($removeCid);
 	}
 }
