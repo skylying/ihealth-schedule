@@ -81,7 +81,7 @@
         route_id: { Field: route_id, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: '路線 id', From: [route_id] }
         id_number: { Field: id_number, Type: char(15), 'Null': NO, Default: null, Extra: '', Comment: 身分證字號, From: [id_number] }
         name: { Field: name, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 客戶姓名, From: [name] }
-        type: { Field: type, Type: char(20), 'Null': NO, Default: null, Extra: '', Comment: 客戶類別, From: [type] }
+        type: { Field: type, Type: char(20), 'Null': NO, Default: null, Extra: '', Comment: 客戶類別(住民/散客), From: [type] }
         birth_date: { Field: birth_date, Type: date, 'Null': NO, Default: null, Extra: '', Comment: 出生年月日, From: [birth_date] }
         age: { Field: age, Type: tinyint(3), 'Null': NO, Default: null, Extra: '', Comment: 年齡, From: [age] }
         state: { Field: state, Type: tinyint(2), 'Null': NO, Default: null, Extra: '', Comment: '服務狀態', From: [state] }
