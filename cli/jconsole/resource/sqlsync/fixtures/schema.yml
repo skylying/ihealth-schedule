@@ -81,7 +81,7 @@
         route_id: { Field: route_id, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: '路線 id', From: [route_id] }
         id_number: { Field: id_number, Type: char(15), 'Null': NO, Default: null, Extra: '', Comment: 身分證字號, From: [id_number] }
         name: { Field: name, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 客戶姓名, From: [name] }
-        type: { Field: type, Type: char(20), 'Null': NO, Default: null, Extra: '', Comment: 客戶類別(住民/散客), From: [type] }
+        type: { Field: type, Type: char(20), 'Null': NO, Default: null, Extra: '', Comment: 客戶類別 (resident: 住民 / individual: 散客), From: [type] }
         birth_date: { Field: birth_date, Type: date, 'Null': NO, Default: null, Extra: '', Comment: 出生年月日, From: [birth_date] }
         age: { Field: age, Type: tinyint(3), 'Null': NO, Default: null, Extra: '', Comment: 年齡, From: [age] }
         state: { Field: state, Type: tinyint(2), 'Null': NO, Default: null, Extra: '', Comment: '服務狀態', From: [state] }
@@ -387,6 +387,8 @@
     columns:
         id: { Field: id, Type: 'int(11) unsigned', 'Null': NO, Default: null, Extra: auto_increment, Comment: 'Primary Key', From: [id] }
         sender_id: { Field: sender_id, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: '外送藥師 id', From: [sender_id] }
+        institute_id: { Field: institute_id, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: '機構 id', From: [institute_id] }
+        type: { Field: type, Type: char(10), 'Null': NO, Default: null, Extra: '', Comment: '路線種類 (institute: 機構路線 / customer: 散客路線)', From: [type] }
         city: { Field: city, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: '縣市 id', From: [city] }
         city_title: { Field: city_title, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 縣市名稱, From: [city_title] }
         area: { Field: area, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: '區域 id', From: [area] }
@@ -396,17 +398,17 @@
     index:
         - { Table: '#__schedule_routes', Non_unique: '0', Key_name: PRIMARY, Seq_in_index: '1', Column_name: id, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
     data:
-        - ['1', '10', '6', 基隆市, '10', 文山區, MON, 王藥師]
-        - ['2', '10', '1', 台北市, '11', '內湖區', TUE, 王藥師]
-        - ['3', '4', '1', 台北市, '12', 信義區, WED, 王藥師]
-        - ['4', '10', '1', 台北市, '13', 中山區, MON, 王藥師]
-        - ['5', '10', '1', 台北市, '14', 萬華區, TUE, 王藥師]
-        - ['6', '10', '2', 新北市, '20', 板橋區, FRI, 王藥師]
-        - ['7', '10', '2', 新北市, '21', 新裝區, TUE, 王藥師]
-        - ['8', '10', '2', 新北市, '22', 三重區, WED, 王藥師]
-        - ['9', '10', '2', 新北市, '23', 新店區, FRI, 王藥師]
-        - ['10', '10', '2', 新北市, '24', 三峽區, THU, 王藥師]
-        - ['11', '1', '4', 臺南市, '1', '', MON, '']
+        - ['1', '10', '4', 'customer', '6', 基隆市, '10', 文山區, MON, 王藥師]
+        - ['2', '10', '5', 'customer','1', 台北市, '11', '內湖區', TUE, 王藥師]
+        - ['3', '4', '6', 'customer','1', 台北市, '12', 信義區, WED, 王藥師]
+        - ['4', '10','7', 'institute', '1', 台北市, '13', 中山區, MON, 王藥師]
+        - ['5', '10', '7', 'customer','1', 台北市, '14', 萬華區, TUE, 王藥師]
+        - ['6', '10', '7', 'customer','2', 新北市, '20', 板橋區, FRI, 王藥師]
+        - ['7', '10', '8', 'institute','2', 新北市, '21', 新裝區, TUE, 王藥師]
+        - ['8', '10', '8', 'customer','2', 新北市, '22', 三重區, WED, 王藥師]
+        - ['9', '10', '9', 'institute','2', 新北市, '23', 新店區, FRI, 王藥師]
+        - ['10', '10', '10', 'institute','2', 新北市, '24', 三峽區, THU, 王藥師]
+        - ['11', '1', '11', 'customer','4', 臺南市, '1', '', MON, '']
 '#__schedule_schedules':
     name: '#__schedule_schedules'
     from:
