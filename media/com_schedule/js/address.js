@@ -51,6 +51,12 @@
 			{
 				$area.html(areaOptions);
 				$area.val(areaValue);
+
+				// Trigger Chosen update event
+				if ($area.data('chosen'))
+				{
+					$area.trigger('liszt:updated');
+				}
 			}
 
 			// Initialize area selection when city value is changed
@@ -61,6 +67,12 @@
 
 				$area.html(areaOptions);
 				$area.val('');
+
+				// Trigger Chosen update event
+				if ($area.data('chosen'))
+				{
+					$area.trigger('liszt:updated');
+				}
 			});
 		}
 	};

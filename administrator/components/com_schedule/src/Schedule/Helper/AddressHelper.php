@@ -17,26 +17,18 @@ use Schedule\Table\Table;
 /**
  * Class AddressHelper
  *
- * - Usage 1 (use simple "list" filed type):
+ * - Usage 1: (PHP example)
  * <code>
- *     // administrator\components\com_schedule\view\institute\tmpl\edit.php
- *     // Add lines below in this view layout
  *     <?php
- *         Schedule\Helper\AddressHelper::init();
- *     ?>
- *
- *     jQuery(function($)
- *     {
- *         Address.bind('jform_city', 'jform_area', $('jform_area').val());
- *     });
+ *         Schedule\Helper\AddressHelper::bind('jform_city', 'jform_area');
+ *     <?
  * </code>
  *
- * - Usage 2 (use JHtmlFormbehavior::chosen('select')):
+ * - Usage 2: (Javascript example)
  * <code>
- *     // administrator\components\com_schedule\view\institute\tmpl\edit.php
- *     // Add lines below in this view layout
  *     <?php
- *         Schedule\Helper\AddressHelper::init(true);
+ *         // You must initialize helper first
+ *         Schedule\Helper\AddressHelper::init();
  *     ?>
  *
  *     jQuery(function($)
@@ -94,15 +86,35 @@ abstract class AddressHelper
 	}
 
 	/**
-	 * Initialize
+	 * Bind events with city and area selection elements
 	 *
-	 * @param   bool  $chosen  Enable Chosen support or not
-	 *
-	 * @see http://harvesthq.github.io/chosen/
+	 * @param   string  $cityId  City selection element id
+	 * @param   string  $areaId  Area selection element id
 	 *
 	 * @return  void
 	 */
-	public static function init($chosen = false)
+	public static function bind($cityId, $areaId)
+	{
+		static::init();
+
+		/** @var \Windwalker\Helper\AssetHelper $asset */
+		$asset = Container::getInstance('com_schedule')->get('helper.asset');
+
+		$js = <<<JS
+jQuery(function($)
+{
+	Address.bind('{$cityId}', '{$areaId}', $('#{$areaId}').val());
+});
+JS;
+		$asset->internalJS($js);
+	}
+
+	/**
+	 * Initialize
+	 *
+	 * @return  void
+	 */
+	public static function init()
 	{
 		if (true === self::$initialized)
 		{
@@ -122,14 +134,7 @@ abstract class AddressHelper
 		/** @var \Windwalker\Helper\AssetHelper $asset */
 		$asset = Container::getInstance('com_schedule')->get('helper.asset');
 
-		if (true === $chosen)
-		{
-			$asset->addJS('address-chosen.js');
-		}
-		else
-		{
-			$asset->addJS('address.js');
-		}
+		$asset->addJS('address.js');
 
 		$asset->internalJS('
 			jQuery(function()
