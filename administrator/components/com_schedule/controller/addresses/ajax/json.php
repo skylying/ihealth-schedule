@@ -30,7 +30,7 @@ class ScheduleControllerAddressesAjaxJson extends DisplayController
 		$db    = \JFactory::getDbo();
 		$query = $db->getQuery(true);
 
-		$query->select('`id`, `city_title`, `area_title`, `address`')
+		$query->select('`id`, `city`, `city_title`, `area`, `area_title`, `address`')
 			->from(Table::ADDRESSES . ' AS address')
 			->where("`address`.`customer_id`={$id}");
 

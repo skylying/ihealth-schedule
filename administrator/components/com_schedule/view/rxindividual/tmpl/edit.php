@@ -9,6 +9,8 @@
 // No direct access
 defined('_JEXEC') or die;
 
+use Schedule\Helper\ScheduleHelper;
+
 JHtmlBootstrap::tooltip();
 JHtmlFormbehavior::chosen('select');
 JHtmlBehavior::formvalidation();
@@ -197,6 +199,8 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 		{
 			// Add option tag
 			html += '<option' +
+				' city="' + addressJson[i].city + '"' +
+				' area="' + addressJson[i].area + '"' +
 				' value="' + addressJson[i].id + '"' +
 				((addressJson[i].id == currentSelected) ? 'selected' : '') +
 				'>' +
@@ -438,7 +442,10 @@ jQuery(document).ready(function ()
 			arrayToAdd.address;
 
 		// Form up html <option>
-		html = '<option value="' + arrayToAdd.id + '">' +
+		html = '<option' +
+			' city="' + arrayToAdd.city + '"' +
+			' area="' + arrayToAdd.area + '"' +
+			' value="' + arrayToAdd.id + '">' +
 			resultString +
 			'</option>';
 
