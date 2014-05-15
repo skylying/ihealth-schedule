@@ -356,7 +356,7 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 	 *
 	 * @param integer $id
 	 *
-	 * @return object
+	 * @return \Windwalker\Data\Data
 	 *
 	 * @throws \Exception
 	 */
@@ -372,14 +372,19 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 			throw new \Exception("error customer id");
 		}
 
-		$customer->tel_office = $this->data['tel_office'];
-		$customer->tel_home   = $this->data['tel_home'];
-		$customer->mobile     = $this->data['mobile'];
+		$customerModel = $this->getModel("Customer");
+
+		$customerUpdata = array(
+			"id"         => $id,
+			"tel_office" => $this->data['tel_office'],
+			"tel_home"   => $this->data['tel_home'],
+			"mobile"     => $this->data['mobile']
+		);
 
 		// 更新客戶電話
-		$customerMapper->updateOne($customer);
+		$customerModel->save($customerUpdata);
 
-		return $customer;
+		return new Data($customerModel->getItem());
 	}
 
 	/**
