@@ -27,6 +27,7 @@ $mobileID = $data->form->getField('mobile')->id;
 $seeDrDateID = $data->form->getField('see_dr_date')->id;
 $periodID = $data->form->getField('period')->id;
 $createAddressID = $data->form->getField('create_address')->id;
+$timesID = $data->form->getField('times')->id;
 
 $telOfficeName = $data->form->getField('tel_office')->name;
 $telHomeName   = $data->form->getField('tel_home')->name;
@@ -42,6 +43,9 @@ var telHomeID = "<?php echo $telHomeID;?>";
 var mobileID = "<?php echo $mobileID;?>";
 var customerIDNumber = "<?php echo $customerIDNumber;?>";
 var createAddressID = "<?php echo $createAddressID;?>";
+var timesID = "<?php echo $timesID;?>";
+var seeDrDateID = "<?php echo $seeDrDateID;?>";
+var periodID = "<?php echo $periodID;?>";
 
 // Update empty rows of addresses inputs
 var addressesKeys = ["1st", "2nd", "3rd"];
@@ -300,15 +304,30 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 		hiddenInput.val(JSON.stringify(data));
 	};
 
+	/**
+	 * Bind change schedules' cheboxes
+	 *
+	 * bindChangeNthScheduleInfo
+	 *
+	 * return void
+	 */
 	$.fn.bindChangeNthScheduleInfo = function ()
 	{
 		$(this).on('change', function()
 		{
 			$.fn.toggleNthScheduleInfo(this);
+
 		});
 		$(this).toggleNthScheduleInfo();
 	};
 
+	/**
+	 * Bind schedules' checkboxes on 'toggle' opaque effect and 'update sender date' method
+	 *
+	 * toggleNthScheduleInfo
+	 *
+	 * return void
+	 */
 	$.fn.toggleNthScheduleInfo = function (that)
 	{
 		that = that || this;
@@ -386,15 +405,65 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 			}
 		}
 	};
+
+	/**
+	 * Show and hide schedules edit box by changing send drug times
+	 *
+	 * updateScupdateSchedulesEditBoxheduleDate
+	 *
+	 * return void
+	 *
+	 */
+	$.fn.showSchedulesEditBlock = function ()
+	{
+		var schedules1 = $('.schedules').eq(0);
+		var schedules2 = $('.schedules').eq(1);
+		var schedules3 = $('.schedules').eq(2);
+
+		var checkbox1 = schedules1.find('.js-nth-schedule-check input');
+		var checkbox2 = schedules2.find('.js-nth-schedule-check input');
+		var checkbox3 = schedules3.find('.js-nth-schedule-check input');
+
+		switch($(this).val()){
+			case '1':
+				// Check 1
+				checkbox1.attr('checked', true).trigger('change');
+				checkbox2.attr('checked', false).trigger('change');
+				checkbox3.attr('checked', false).trigger('change');
+				// Show 1
+				schedules1.removeClass('hide');
+				schedules2.addClass('hide');
+				schedules3.addClass('hide');
+				break;
+			case '2':
+				// Check 2
+				checkbox1.attr('checked', false).trigger('change');
+				checkbox2.attr('checked', true).trigger('change');
+				checkbox3.attr('checked', false).trigger('change');
+				// Show 1, 2
+				schedules1.removeClass('hide');
+				schedules2.removeClass('hide');
+				schedules3.addClass('hide');
+				break;
+			case '3':
+				// Check 2,3
+				checkbox1.attr('checked', false).trigger('change');
+				checkbox2.attr('checked', true).trigger('change');
+				checkbox3.attr('checked', true).trigger('change');
+				// Show all
+				schedules1.removeClass('hide');
+				schedules2.removeClass('hide');
+				schedules3.removeClass('hide');
+				break;
+			default:
+				break;
+		}
+	};
 })(jQuery);
 
 jQuery(document).ready(function ()
 {
 	var phoneDropDown = jQuery('.js-select-phone-default');
-
-	var seeDrDateID = "<?php echo $seeDrDateID;?>";
-
-	var periodID = "<?php echo $periodID;?>";
 
 	// customer_id's element id
 	var customerDropDown = jQuery("#" + "<?php echo $customerID;?>");
@@ -582,6 +651,7 @@ jQuery(document).ready(function ()
 		jQuery(this).updateScheduleDate(jQuery('#' + seeDrDateID).val(), jQuery('#' + periodID).val());
 	});
 
+	// Combine selector, whenever schedule's checkboxes are changed, fire get sender date update.
 	var $scheduleOne = jQuery('#jform_schedules_1st_deliver_nth0');
 	var $scheduleTwo = $scheduleOne.add('#jform_schedules_2nd_deliver_nth0');
 	var $scheduleAll = $scheduleTwo.add('#jform_schedules_3rd_deliver_nth0');
@@ -590,6 +660,16 @@ jQuery(document).ready(function ()
 	{
 		jQuery(this).updateScheduleDate(jQuery('#' + seeDrDateID).val(), jQuery('#' + periodID).val());
 	});
+
+	// simultaneously show and hide schedules
+	jQuery('#' + timesID).on('change', function ()
+	{
+		jQuery(this).showSchedulesEditBlock();
+	});
+
+	// show and hide schedules once on load
+	jQuery('#' + timesID).showSchedulesEditBlock();
+
 });
 </script>
 
