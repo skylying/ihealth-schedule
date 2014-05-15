@@ -190,10 +190,13 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 
 		var html = '';
 
+		var addressListClass = 'js-address-list';
+
 		// Add select tag
 		html += '<select' +
-			' name="' + targetName + '"' +
-			' id="'   + targetID   + '">';
+			' name="'  + targetName + '"' +
+			' id="'    + targetID   + '"' +
+			' class="' + addressListClass + '">';
 
 		for (var i = 0; i < addressJson.length; i++)
 		{
@@ -335,26 +338,53 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 		{
 			var drugEmptyDateID = '#jform_schedules_' + addressesKeys[i] + '_drug_empty_date';
 			var selectedAddressID = '#jform_schedules_' + addressesKeys[i] + '_address_id';
+			var deliveredNth = '#jform_schedules_' + addressesKeys[i] + '_deliver_nth0';
 
 			// Set finish drug date
 			moment_date.add('days', period);
 			$(drugEmptyDateID).val( moment_date.format("YYYY-MM-DD") );
 
-			// Get send date
-			var addressVal = $(selectedAddressID).val();
+			if ($(deliveredNth).is(":checked"))
+			{
+				var address = $(selectedAddressID).val();
+				var city = $(selectedAddressID).find('option:selected').attr('city');
+				var area = $(selectedAddressID).find('option:selected').attr('area');
 
-			$.ajax({
-				type: "POST",
-				url: "index.php?option=com_schedule&task=rxindividual.ajax.date" +
-					"&address_id=" + addressVal
+				$.ajax({
+					type: "POST",
+					url: "index.php?option=com_schedule&task=rxindividual.ajax.date" +
+						"&nth=" + addressesKeys[i] +
+						"&city_id=" + city +
+						"&area_id=" + area +
+						"&see_dr_date=" + seeDrDate +
+						"&period=" + period
+				}).done(function (cdata)
+					{
+						var data = JSON.parse(cdata);
 
-			}).done(function (cdata)
-				{
-					var cdata = $.parseJSON(cdata);
-					console.log(cdata);
-				});
+						var sendDateId = '#jform_schedules_' + data['nth'] + '_date';
+
+						if( data['date'] != null)
+						{
+							$(sendDateId).closest('.js-nth-schedule-info').find('.js-route-wrap').addClass('hide');
+
+							$(sendDateId).val(data['date']);
+						}
+						else
+						{
+							if (data['type']=='2')
+							{
+								console.log(sendDateId);
+
+								$(sendDateId).closest('.js-nth-schedule-info').find('.js-route-wrap').removeClass('hide');
+
+								$(sendDateId).val('');
+								Joomla.renderMessages([[data['message']]]);
+							}
+						}
+					});
+			}
 		}
-
 	};
 })(jQuery);
 
@@ -532,7 +562,6 @@ jQuery(document).ready(function ()
 		// Hide the input row
 		jQuery(this).closest('.js-tmpl-add-telrow').addClass('hide');
 	});
-
 
 	jQuery('#'+seeDrDateID).parent().children().each(function(){
 		jQuery(this).on('focusout', function(){
