@@ -273,8 +273,11 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 
 			$routeModel->save($routeData);
 
+			// 補上 id
+			$routeData['id'] = $routeModel->getState()->get("route.id");
+
 			// 更新 route 變數給下面使用
-			$route = new Data($routeModel->getItem());
+			$route = new Data($routeData);
 		}
 
 		return $route;
