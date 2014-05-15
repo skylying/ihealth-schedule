@@ -9,12 +9,10 @@
 // No direct access
 defined('_JEXEC') or die;
 
-$tab       = $data->tab;
-$fieldsets = $data->form->getFieldsets();
-
-$typeField = $data->form->getField('type');
-$customerType = $data->item->type;
-$data->asset->addJS('moment-with-langs.min.js');
+$tab       		= $data->tab;
+$fieldsets 		= $data->form->getFieldsets();
+$typeField 		= $data->form->getField('type');
+$customerType 	= $data->item->type;
 
 ?>
 <div class="row-fluid">
@@ -100,11 +98,12 @@ $data->asset->addJS('moment-with-langs.min.js');
 			jQuery(this).on('change', update );
 		});
 
-		$('#jform_birth_date').on('focusout', function()
+		//calculate age
+		jQuery('#jform_birth_date').on('focusout', function()
 		{
-			var birthday = moment(jQuery(this).val()).format('YYYY');
+			var birthday = (new Date(jQuery(this).val())).getFullYear();
 
-			var now = moment().format('YYYY');
+			var now = (new Date()).getFullYear();
 
 			var age = now - birthday;
 
