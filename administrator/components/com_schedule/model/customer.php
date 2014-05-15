@@ -7,6 +7,7 @@
  */
 
 use Windwalker\Model\AdminModel;
+use Windwalker\Joomla\DataMapper\DataMapper;
 
 // No direct access
 defined('_JEXEC') or die;
@@ -163,4 +164,27 @@ class ScheduleModelCustomer extends AdminModel
 		$table->area_title = $tableInstitute->area_title;
 
 	}
+
+	protected function loadFormData()
+	{
+		$returnVal = parent::loadFormData();
+
+		$addressMapper = new DataMapper(\Schedule\Table\Table::ADDRESSES);
+
+		$addressDataSet = $addressMapper->find(array("customer_id" => $returnVal->id));
+
+		$addressReturnData = array();
+
+		foreach ($addressDataSet as $addressData)
+		{
+			$addressReturnData[] = $addressData;
+		}
+
+		$returnVal->address = json_encode($addressReturnData);
+
+		show($returnVal->id);
+
+		return $returnVal;
+	}
+
 }

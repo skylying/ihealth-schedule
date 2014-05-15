@@ -2,6 +2,8 @@
 
 use Schedule\Helper\Mapping\MemberCustomerHelper;
 use Windwalker\Controller\Edit\SaveController;
+use Windwalker\Joomla\DataMapper\DataMapper;
+use Schedule\Table\Table;
 
 /**
  * Class ScheduleControllerCustomerEditSave
@@ -10,6 +12,50 @@ use Windwalker\Controller\Edit\SaveController;
  */
 class ScheduleControllerCustomerEditSave extends SaveController
 {
+	/**
+	 * preSaveHook
+	 *
+	 * @return  void
+	 */
+	protected function preSaveHook()
+	{
+		$customerMapper = new DataMapper(Table::CUSTOMERS);
+		$cityMapper     = new DataMapper(Table::CITIES);
+		$areaMapper     = new DataMapper(Table::AREAS);
+		$addressMapper  = new DataMapper(Table::ADDRESSES);
+
+		$addressModel  = $this->getModel("Address");
+
+		$createAddress = isset($this->data['address']) ? json_decode($this->data['address']) : array();
+
+		$customer = $customerMapper->findOne($this->data['id']);
+
+		$addressMapper->delete(array('customer_id' => $this->data['id']));
+
+		if (! empty($createAddress))
+		{
+			show("in");
+			// 新增地址資料
+			foreach ($createAddress as $addressTmp)
+			{
+				$city = $cityMapper->findOne($addressTmp->city);
+				$area = $areaMapper->findOne($addressTmp->area);
+
+				$addressModel->save(
+					array(
+						"customer_id" => $customer->id,
+						"city"        => $city->id,
+						"city_title"  => $city->title,
+						"area"        => $area->id,
+						"area_title"  => $area->title,
+						"address"     => $addressTmp->address
+					)
+				);
+			}
+		}
+
+	}
+
 	/**
 	 * postSaveHook
 	 *
