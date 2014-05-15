@@ -139,13 +139,10 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 		$scheduleDoTimes = 0;
 
 		// 新增排程
-		foreach (array("1st", "2nd", "3rd") as $val)
+		foreach (array("1st", "2nd", "3rd") as $nth)
 		{
 			// 使用者上傳的排程資料
-			$schedule = $this->data["schedules_{$val}"];
-
-			// 現在這筆排程的資料
-			$thisScheduleData = $this->getSchedule($schedule['schedule_id']);
+			$schedule = $this->data["schedules_{$nth}"];
 
 			// 沒有需要外送的次數跳過
 			if (empty($schedule["deliver_nth"]) || ! isset($schedule["deliver_nth"]))
@@ -167,17 +164,9 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 			// Get task
 			$task = $this->getScheduleTask($sender, $schedule);
 
-			$option = array(
-				"rx"       => $rx,
-				"task"     => $task,
-				"customer" => $customer,
-				"address"  => $address,
-				"nth"      => $val
-			);
-
 			// 新增排程
 			$scheduleModel->save(
-				$this->getScheduleUploadData($thisScheduleData, $schedule, $option)
+				$this->getScheduleUploadData($rx, $task, $customer, $address, $nth, $schedule)
 			);
 
 			// 記錄次數
@@ -390,41 +379,47 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 	/**
 	 * 取得 Schedule 更新的資料
 	 *
-	 * @param mixed $oldData
-	 * @param mixed $formData
-	 * @param array $option
+	 * @param \Windwalker\Data\Data $rx
+	 * @param \Windwalker\Data\Data $task
+	 * @param \Windwalker\Data\Data $customer
+	 * @param \Windwalker\Data\Data $address
+	 * @param \Windwalker\Data\Data $nth
+	 * @param \Windwalker\Data\Data $formData
 	 *
 	 * @return  array
 	 */
-	protected function getScheduleUploadData($oldData, $formData, array $option)
+	protected function getScheduleUploadData($rx, $task, $customer, $address, $nth, $formData)
 	{
 		// Schedule data
 		$scheduleUpdata = array(
+			// Id
+			"id"            => $formData['schedule_id'],
+
 			// Rx id
-			"rx_id"         => $option['rx']->id,
+			"rx_id"         => $rx->id,
 
 			// 對應外送 id
-			"task_id"       => $option['task']->id,
-			"type"          => $option['customer']->type,
-			"customer_id"   => $option['customer']->id,
-			"customer_name" => $option['customer']->name,
+			"task_id"       => $task->id,
+			"type"          => $customer->type,
+			"customer_id"   => $customer->id,
+			"customer_name" => $customer->name,
 
-			"address_id"    => $option['address']->id,
-			"city"          => $option['address']->city,
-			"city_title"    => $option['address']->city_title,
-			"area"          => $option['address']->area,
-			"area_title"    => $option['address']->area_title,
-			"address"       => $option['address']->address,
+			"address_id"    => $address->id,
+			"city"          => $address->city,
+			"city_title"    => $address->city_title,
+			"area"          => $address->area,
+			"area_title"    => $address->area_title,
+			"address"       => $address->address,
 
 			// 第幾次宅配
-			"deliver_nth"   => $option['nth'],
+			"deliver_nth"   => $nth,
 
 			// Default
 			"status"        => "scheduled",
 			"sorted"        => 0
 		);
 
-		return array_merge((array) $oldData, (array) $formData, $scheduleUpdata);
+		return $scheduleUpdata;
 	}
 
 	/**
