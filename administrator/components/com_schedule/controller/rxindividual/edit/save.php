@@ -173,8 +173,8 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 			$lastAddress = $address;
 		}
 
-		// 如果有新增排程
-		if (empty($lastAddress))
+		// 如果有最後地址
+		if (! empty($lastAddress))
 		{
 			// Flush Default Address
 			$addressModel->flushDefaultAddress($customer->id, $lastAddress->id);
