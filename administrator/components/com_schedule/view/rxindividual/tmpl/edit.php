@@ -374,8 +374,6 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 						{
 							if (data['type'] == '2')
 							{
-								console.log(sendDateId);
-
 								$(sendDateId).closest('.js-nth-schedule-info').find('.js-route-wrap').removeClass('hide');
 
 								$(sendDateId).val('');
