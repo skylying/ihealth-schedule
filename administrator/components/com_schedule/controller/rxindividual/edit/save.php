@@ -265,10 +265,10 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 		$senderMapper = new DataMapper(Table::SENDERS);
 
 		// 外送路線
-		$routes = $routesMapper->findOne(array("city" => $address->city, "area" => $address->area, "type" => "institute"));
+		$route = $routesMapper->findOne(array("city" => $address->city, "area" => $address->area, "type" => "institute"));
 
 		// 沒有路線的時候新增路線
-		if (! isset($routes->id))
+		if (! isset($route->id))
 		{
 			// 用設定的 id 取出 sender
 			$sender = $senderMapper->findOne($option['sender_id']);
@@ -295,10 +295,10 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 			$routeId = $routeModel->getItem()->id;
 
 			// 更新 route 變數給下面使用
-			$routes = $routesMapper->findOne($routeId);
+			$route = $routesMapper->findOne($routeId);
 		}
 
-		return $routes;
+		return $route;
 	}
 
 	/**
