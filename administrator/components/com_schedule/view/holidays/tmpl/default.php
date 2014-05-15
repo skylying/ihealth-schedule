@@ -12,7 +12,6 @@ use Windwalker\View\Layout\FileLayout;
 defined('_JEXEC') or die;
 
 // Prepare script
-JHtmlBootstrap::tooltip();
 JHtmlFormbehavior::chosen('select');
 JHtmlDropdown::init();
 
@@ -22,6 +21,27 @@ JHtmlDropdown::init();
  * @var Windwalker\DI\Container $container
  */
 $container = $this->getContainer();
+
+$doc = \JFactory::getDocument();
+
+// ==================
+// Add table style
+$css = <<<CSS
+td:hover
+{
+	cursor:pointer;
+}
+.off
+{
+	background: #FFE5E5;
+	color: #9E9393;
+}
+CSS;
+
+$doc->addStyleDeclaration($css);
+
+$filters = $this->data['filterForm']->getGroup('filter');
+
 ?>
 
 <div id="schedule" class="windwalker holidays tablelist row-fluid">
@@ -37,11 +57,20 @@ $container = $this->getContainer();
 		<div id="j-main-container">
 		<?php endif;?>
 
-			<?php echo with(new FileLayout('joomla.searchtools.default'))->render(array('view' => $this->data)); ?>
+			<div class="row">
+				<div class="col-md-4 col-md-offset-8">
+					<?php
+					foreach ($filters as $filter)
+					{
+						echo $filter->input;
+					}
+					?>
+				</div>
+			</div>
 
-			<?php echo $this->loadTemplate('table'); ?>
+			<br />
 
-			<?php echo with(new FileLayout('joomla.batchtools.modal'))->render(array('view' => $this->data, 'task_prefix' => 'holidays.')); ?>
+			<?php echo $this->loadTemplate('fullcalendar'); ?>
 
 			<!-- Hidden Inputs -->
 			<div id="hidden-inputs">

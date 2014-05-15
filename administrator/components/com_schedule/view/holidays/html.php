@@ -104,6 +104,66 @@ class ScheduleViewHolidaysHtml extends GridView
 	 */
 	protected function prepareData()
 	{
+		// Get current year from filter value
+		$this->data->currentYear = $this->data->filterForm->getValue('holiday.year', 'filter', date("Y"));
+
+		// Extract information we need
+		$dates = array_map(
+			function ($item)
+			{
+				return array(
+					'id'      => $item->id,
+					'year'    => $item->year,
+					'month'   => $item->month,
+					'day'     => $item->day,
+					'title'   => $item->title,
+					'weekday' => $item->weekday,
+					'date'    => $item->date,
+					'state'   => $item->state
+				);
+			},
+			$this->data->items
+		);
+
+		$offDays = array();
+
+		/**
+		 * Sort all holidays data by same month, output will look like :
+		 * Array
+		 * (
+		 *     [4] => Array
+		 *     (
+		 *         [26] => stdClass Object
+		 *         (
+		 *             [id] => 1
+		 *             [title] => 週末
+		 *             [weekday] => MON
+		 *         )
+		 *         [27] => stdClass Object
+		 *         (
+		 *             [id] => 2
+		 *             [title] => 週末
+		 *             [weekday] => TUE
+		 *         )
+		 *     )
+		 * )
+		 */
+		foreach ($dates as $date)
+		{
+			$month = $date['month'];
+			$day   = $date['day'];
+
+			$offDays[$month][$day] = (object) array(
+				'id'      => $date['id'],
+				'title'   => $date['title'],
+				'weekday' => $date['weekday'],
+				'date'    => $date['date'],
+				'state'   => $date['state']
+			);
+		}
+
+		// Export to global
+		$this->data->offDays = $offDays;
 	}
 
 	/**
@@ -119,12 +179,18 @@ class ScheduleViewHolidaysHtml extends GridView
 		// Get default button set.
 		$buttonSet = parent::configureToolbar($buttonSet, $canDo);
 
-		// In debug mode, we remove trash button but use delete button instead.
-		if (JDEBUG)
-		{
-			$buttonSet['trash']['access']  = false;
-			$buttonSet['delete']['access'] = true;
-		}
+		// Remove all buttons we do not need
+		$buttonSet['edit']['access']        = false;
+		$buttonSet['duplicate']['access']   = false;
+		$buttonSet['publish']['access']     = false;
+		$buttonSet['unpublish']['access']   = false;
+		$buttonSet['checkin']['access']     = false;
+		$buttonSet['delete']['access']      = false;
+		$buttonSet['trash']['access']       = false;
+		$buttonSet['batch']['access']       = false;
+		$buttonSet['preferences']['access'] = false;
+
+		$buttonSet['add']['args'] = array($this->viewItem . '.edit.save', 'title' => '儲存變更');
 
 		return $buttonSet;
 	}
