@@ -330,7 +330,7 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 	 * @param {string} seeDrDate
 	 * @param {json} period
 	 */
-	$.fn.updateScheduleDate = function( seeDrDate, period )
+	$.fn.updateScheduleDate = function (seeDrDate, period)
 	{
 		var moment_date = moment(seeDrDate);
 
@@ -342,7 +342,7 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 
 			// Set finish drug date
 			moment_date.add('days', period);
-			$(drugEmptyDateID).val( moment_date.format("YYYY-MM-DD") );
+			$(drugEmptyDateID).val(moment_date.format("YYYY-MM-DD"));
 
 			if ($(deliveredNth).is(":checked"))
 			{
@@ -364,7 +364,7 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 
 						var sendDateId = '#jform_schedules_' + data['nth'] + '_date';
 
-						if( data['date'] != null)
+						if (data['date'] != null)
 						{
 							$(sendDateId).closest('.js-nth-schedule-info').find('.js-route-wrap').addClass('hide');
 
@@ -372,14 +372,16 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 						}
 						else
 						{
-							if (data['type']=='2')
+							if (data['type'] == '2')
 							{
 								console.log(sendDateId);
 
 								$(sendDateId).closest('.js-nth-schedule-info').find('.js-route-wrap').removeClass('hide');
 
 								$(sendDateId).val('');
-								Joomla.renderMessages([[data['message']]]);
+								Joomla.renderMessages([
+									[data['message']]
+								]);
 							}
 						}
 					});
@@ -403,7 +405,8 @@ jQuery(document).ready(function ()
 	var customerID = "<?php echo $customerID;?>";
 
 	// Toggle nth schedules
-	jQuery('.js-nth-schedule-check input').each(function(){
+	jQuery('.js-nth-schedule-check input').each(function ()
+	{
 		jQuery(this).bindChangeNthScheduleInfo();
 	});
 
@@ -422,7 +425,7 @@ jQuery(document).ready(function ()
 		jQuery(this).updateHiddenPhoneNumbersInput();
 	});
 
-	jQuery('.js-add-address').on('click', function()
+	jQuery('.js-add-address').on('click', function ()
 	{
 		jQuery(this).closest('.js-nth-schedule-info').find('.js-tmpl-add-addressrow').removeClass('hide');
 	});
@@ -493,7 +496,7 @@ jQuery(document).ready(function ()
 		currentWrap.addClass('hide');
 
 		// Update Schedule date once
-		jQuery(this).updateScheduleDate( jQuery('#'+seeDrDateID).val(), jQuery('#'+periodID).val() );
+		jQuery(this).updateScheduleDate(jQuery('#' + seeDrDateID).val(), jQuery('#' + periodID).val());
 	});
 
 	jQuery('.js-add-tel').on('click', function ()
@@ -563,26 +566,31 @@ jQuery(document).ready(function ()
 		jQuery(this).closest('.js-tmpl-add-telrow').addClass('hide');
 	});
 
-	jQuery('#'+seeDrDateID).parent().children().each(function(){
-		jQuery(this).on('focusout', function(){
-			jQuery(this).updateScheduleDate( jQuery('#'+seeDrDateID).val(), jQuery('#'+periodID).val() );
+	jQuery('#' + seeDrDateID).parent().children().each(function ()
+	{
+		jQuery(this).on('focusout', function ()
+		{
+			jQuery(this).updateScheduleDate(jQuery('#' + seeDrDateID).val(), jQuery('#' + periodID).val());
 		});
 	});
 
-	jQuery('#'+periodID).on('change', function(){
-		jQuery(this).updateScheduleDate( jQuery('#'+seeDrDateID).val(), jQuery('#'+periodID).val() );
+	jQuery('#' + periodID).on('change', function ()
+	{
+		jQuery(this).updateScheduleDate(jQuery('#' + seeDrDateID).val(), jQuery('#' + periodID).val());
 	});
 
-	jQuery('.js-address-wrap').on('change', '.js-address-list', function(){
-		jQuery(this).updateScheduleDate( jQuery('#'+seeDrDateID).val(), jQuery('#'+periodID).val() );
+	jQuery('.js-address-wrap').on('change', '.js-address-list', function ()
+	{
+		jQuery(this).updateScheduleDate(jQuery('#' + seeDrDateID).val(), jQuery('#' + periodID).val());
 	});
 
 	var $scheduleOne = jQuery('#jform_schedules_1st_deliver_nth0');
 	var $scheduleTwo = $scheduleOne.add('#jform_schedules_2nd_deliver_nth0');
 	var $scheduleAll = $scheduleTwo.add('#jform_schedules_3rd_deliver_nth0');
 
-	$scheduleAll.on('change', function(){
-		jQuery(this).updateScheduleDate( jQuery('#'+seeDrDateID).val(), jQuery('#'+periodID).val() );
+	$scheduleAll.on('change', function ()
+	{
+		jQuery(this).updateScheduleDate(jQuery('#' + seeDrDateID).val(), jQuery('#' + periodID).val());
 	});
 });
 </script>
