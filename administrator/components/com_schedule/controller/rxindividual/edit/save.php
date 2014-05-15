@@ -2,6 +2,7 @@
 
 use Windwalker\Controller\Edit\SaveController;
 use Windwalker\Joomla\DataMapper\DataMapper;
+use Windwalker\Data\Data;
 use Schedule\Table\Table;
 
 /**
@@ -132,7 +133,7 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 		$customer = $this->getCustomer($this->data['customer_id']);
 
 		// 健保處理
-		$this->drugHeader();
+		$this->drugHandler();
 
 		// 新增排程次數
 		$scheduleDoTimes = 0;
@@ -192,11 +193,11 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 	}
 
 	/**
-	 * Drug herder
+	 * Drug 處理
 	 *
-	 * @return  object
+	 * @return  stdClass
 	 */
-	protected function drugHeader()
+	protected function drugHandler()
 	{
 		$rx = $this->model->getItem();
 		$drugModel = $this->getModel("Drug");
@@ -261,10 +262,10 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 	/**
 	 * Get Route 如果沒有對應 route 新增
 	 *
-	 * @param object $address
-	 * @param array  $option
+	 * @param stdClass $address
+	 * @param array    $option
 	 *
-	 * @return object
+	 * @return \Windwalker\Data\Data
 	 *
 	 * @throws Exception
 	 */
@@ -317,7 +318,7 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 	 * @param object $sender
 	 * @param array  $option
 	 *
-	 * @return  mixed
+	 * @return  \Windwalker\Data\Data
 	 */
 	protected function getScheduleTask($sender, $option)
 	{
@@ -345,7 +346,7 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 		$taskModel->save($taskData);
 
 		// 取出剛剛新增的外送管理
-		$task = $taskModel->getItem();
+		$task = new Data($taskModel->getItem());
 
 		return $task;
 	}
@@ -357,7 +358,7 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 	 *
 	 * @return object
 	 *
-	 * @throws Exception
+	 * @throws \Exception
 	 */
 	protected function getCustomer($id)
 	{
@@ -395,27 +396,27 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 		// Schedule data
 		$scheduleUpdata = array(
 			// Rx id
-			"rx_id"           => $option['rx']->id,
+			"rx_id"         => $option['rx']->id,
 
 			// 對應外送 id
-			"task_id"         => $option['task']->id,
-			"type"            => $option['customer']->type,
-			"customer_id"     => $option['customer']->id,
-			"customer_name"   => $option['customer']->name,
+			"task_id"       => $option['task']->id,
+			"type"          => $option['customer']->type,
+			"customer_id"   => $option['customer']->id,
+			"customer_name" => $option['customer']->name,
 
-			"address_id"      => $option['address']->id,
-			"city"            => $option['address']->city,
-			"city_title"      => $option['address']->city_title,
-			"area"            => $option['address']->area,
-			"area_title"      => $option['address']->area_title,
-			"address"         => $option['address']->address,
+			"address_id"    => $option['address']->id,
+			"city"          => $option['address']->city,
+			"city_title"    => $option['address']->city_title,
+			"area"          => $option['address']->area,
+			"area_title"    => $option['address']->area_title,
+			"address"       => $option['address']->address,
 
 			// 第幾次宅配
-			"deliver_nth"     => $option['nth'],
+			"deliver_nth"   => $option['nth'],
 
 			// Default
-			"status"          => "scheduled",
-			"sorted"          => 0
+			"status"        => "scheduled",
+			"sorted"        => 0
 		);
 
 		return array_merge((array) $oldData, (array) $formData, $scheduleUpdata);
