@@ -189,6 +189,7 @@
 		<field
 			name="sender_id"
 			type="sender_list"
+			value_field="name"
 			label="配送藥師"
 			description="配送藥師"
 			/>
@@ -259,6 +260,7 @@
 		<field
 			name="sender_id"
 			type="sender_list"
+			value_field="name"
 			label="配送藥師"
 			description="配送藥師"
 			/>
@@ -329,6 +331,7 @@
 		<field
 			name="sender_id"
 			type="sender_list"
+			value_field="name"
 			label="配送藥師"
 			description="配送藥師"
 			/>
