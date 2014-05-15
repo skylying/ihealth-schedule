@@ -55,15 +55,19 @@
 			onchange="this.form.submit();"
 			>
 			<option></option>
-			<option value="">選擇年份</option>
-			<option value="2014">2014</option>
-			<option value="2015">2015</option>
-			<option value="*">JALL</option>
+			<option value="">選擇年度</option>
+			<option value="2014">2014 年度</option>
+			<option value="2015">2015 年度</option>
+			<option value="2016">2016 年度</option>
+			<option value="2017">2017 年度</option>
+			<option value="2018">2018 年度</option>
+			<option value="2019">2019 年度</option>
+			<option value="2020">2020 年度</option>
 		</field>
 
 		<field
 			name="holiday.month"
-			type="list"
+			type="hidden"
 			label="月份"
 			default=""
 			onchange="this.form.submit();"
