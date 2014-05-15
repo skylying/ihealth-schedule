@@ -118,8 +118,8 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 		$rx = $model->getItem();
 
 		// Mappers
-		$addressMapper  = new DataMapper(Table::ADDRESSES);
-		$senderMapper   = new DataMapper(Table::SENDERS);
+		$addressMapper = new DataMapper(Table::ADDRESSES);
+		$senderMapper  = new DataMapper(Table::SENDERS);
 
 		// Get model
 		$scheduleModel = $this->getModel("Schedule");
@@ -129,7 +129,7 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 		$this->rxImageHeader();
 
 		// 客戶處理
-		$customer = $this->customerHeader($this->data['customer_id']);
+		$customer = $this->getCustomer($this->data['customer_id']);
 
 		// 健保處理
 		$this->drugHeader();
@@ -158,13 +158,13 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 			$address = $addressMapper->findOne($schedule["address_id"]);
 
 			// 外送路線
-			$routes = $this->routeHeader($address, $schedule);
+			$routes = $this->getRoute($address, $schedule);
 
 			// 外送者
 			$sender = $senderMapper->findOne($routes->sender_id);
 
 			// Get task
-			$task = $this->taskHeader($thisScheduleData, $sender);
+			$task = $this->getScheduleTask($thisScheduleData, $sender);
 
 			$option = array(
 				"rx"       => $rx,
@@ -227,12 +227,12 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 	 */
 	protected function getSchedule($id = null)
 	{
-		$scheduleMapper = new DataMapper(Table::SCHEDULES);
-
 		if (empty($id))
 		{
 			return new \Windwalker\Data\Data;
 		}
+
+		$scheduleMapper = new DataMapper(Table::SCHEDULES);
 
 		return $scheduleMapper->findOne($id);
 	}
@@ -242,24 +242,24 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 	 *
 	 * @param integer $id
 	 *
-	 * @return  DataMapper
+	 * @return  boolean
 	 */
 	protected function deleteSchedule($id = null)
 	{
-		$scheduleMapper = new DataMapper(Table::SCHEDULES);
-
 		if (empty($id))
 		{
-			return $scheduleMapper;
+			return true;
 		}
+
+		$scheduleMapper = new DataMapper(Table::SCHEDULES);
 
 		$scheduleMapper->delete(array('id' => $id));
 
-		return $scheduleMapper;
+		return true;
 	}
 
 	/**
-	 * Route Header
+	 * Get Route 如果沒有對應 route 新增
 	 *
 	 * @param object $address
 	 * @param array  $option
@@ -268,7 +268,7 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 	 *
 	 * @throws Exception
 	 */
-	protected function routeHeader($address, $option)
+	protected function getRoute($address, $option)
 	{
 		$routeModel   = $this->getModel("Route");
 		$routesMapper = new DataMapper(Table::ROUTES);
@@ -312,14 +312,14 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 	}
 
 	/**
-	 * Task Header
+	 * 取得 Task 沒有對應 task 時 新增
 	 *
 	 * @param object $schedule
 	 * @param object $sender
 	 *
 	 * @return object
 	 */
-	protected function taskHeader($schedule, $sender)
+	protected function getScheduleTask($schedule, $sender)
 	{
 		$taskModel  = $this->getModel("Task");
 		$taskMapper = new DataMapper(Table::TASKS);
@@ -349,15 +349,15 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 	}
 
 	/**
-	 * Customer Header
+	 * 取得 Customer
 	 *
 	 * @param integer $id
 	 *
-	 * @return mixed
+	 * @return object
 	 *
 	 * @throws Exception
 	 */
-	protected function customerHeader($id)
+	protected function getCustomer($id)
 	{
 		$customerMapper = new DataMapper(Table::CUSTOMERS);
 
@@ -380,7 +380,7 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 	}
 
 	/**
-	 * Get Schedule Upload Data
+	 * 取得 Schedule 更新的資料
 	 *
 	 * @param mixed $oldData
 	 * @param mixed $formData
@@ -420,7 +420,7 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 	}
 
 	/**
-	 * Rx Image Header
+	 * 圖片資料處理
 	 *
 	 * @return void
 	 */
