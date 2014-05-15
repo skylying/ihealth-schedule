@@ -109,10 +109,10 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 	/**
 	 * postSaveHook
 	 *
-	 * @param \Windwalker\Model\CrudModel $model
-	 * @param array                       $validData
+	 * @param   \Windwalker\Model\CrudModel $model
+	 * @param   array                       $validData
 	 *
-	 * @return void
+	 * @return  void
 	 */
 	protected function postSaveHook($model, $validData)
 	{
@@ -211,35 +211,33 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 	/**
 	 * Delete Schedule
 	 *
-	 * @param integer $id
+	 * @param   integer $id
 	 *
-	 * @return  boolean
+	 * @return  void
 	 */
 	protected function deleteSchedule($id = null)
 	{
 		if (empty($id))
 		{
-			return true;
+			return;
 		}
 
 		$scheduleMapper = new DataMapper(Table::SCHEDULES);
 
 		$scheduleMapper->delete(array('id' => $id));
-
-		return true;
 	}
 
 	/**
 	 * Get Route 如果沒有對應 route 新增
 	 *
-	 * @param stdClass $address
-	 * @param array    $option
+	 * @param   stdClass $address
+	 * @param   array    $schedule
 	 *
-	 * @return \Windwalker\Data\Data
+	 * @return  \Windwalker\Data\Data
 	 *
-	 * @throws Exception
+	 * @throws  Exception
 	 */
-	protected function getRoute($address, $option)
+	protected function getRoute($address, $schedule)
 	{
 		$routeModel   = $this->getModel("Route");
 		$routesMapper = new DataMapper(Table::ROUTES);
@@ -252,7 +250,7 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 		if ($route->isNull())
 		{
 			// 用設定的 id 取出 sender
-			$sender = $senderMapper->findOne($option['sender_id']);
+			$sender = $senderMapper->findOne($schedule['sender_id']);
 
 			// 沒取到 sender
 			if ($sender->isNull())
@@ -268,16 +266,14 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 				"area_title"  => $address->area_title,
 				"sender_id"   => $sender->id,
 				"sender_name" => $sender->name,
-				"weekday"     => $option['weekday'],
+				"weekday"     => $schedule['weekday'],
 				"type"        => "institute"
 			);
 
 			$routeModel->save($routeData);
 
-			$routeId = $routeModel->getItem()->id;
-
 			// 更新 route 變數給下面使用
-			$route = $routesMapper->findOne($routeId);
+			$route = new Data($routeModel->getItem());
 		}
 
 		return $route;
@@ -286,18 +282,18 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 	/**
 	 * 取得 Task 沒有對應 task 時 新增
 	 *
-	 * @param object $sender
-	 * @param array  $option
+	 * @param   object $sender
+	 * @param   array  $schedule
 	 *
 	 * @return  integer
 	 */
-	protected function getScheduleTask($sender, $option)
+	protected function getScheduleTask($sender, $schedule)
 	{
 		$taskModel  = $this->getModel("Task");
 		$taskMapper = new DataMapper(Table::TASKS);
 
 		// 同日期同藥師取得 外送
-		$task = $taskMapper->findOne(array("sender" => $sender->id, "date" => $option['date']));
+		$task = $taskMapper->findOne(array("sender" => $sender->id, "date" => $schedule['date']));
 
 		// 如果有取得對應 外送
 		if ($task->isNull())
@@ -307,7 +303,7 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 
 		// 沒有外送時 新增
 		$taskData = array(
-			"date"        => $option['date'],
+			"date"        => $schedule['date'],
 			"sender"      => $sender->id,
 			"sender_name" => $sender->name,
 			"status"      => 0
@@ -322,11 +318,11 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 	/**
 	 * 取得 Customer
 	 *
-	 * @param integer $id
+	 * @param   integer $id
 	 *
-	 * @return \Windwalker\Data\Data
+	 * @return  \Windwalker\Data\Data
 	 *
-	 * @throws \Exception
+	 * @throws  \Exception
 	 */
 	protected function getCustomer($id)
 	{
@@ -358,12 +354,12 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 	/**
 	 * 取得 Schedule 更新的資料
 	 *
-	 * @param \Windwalker\Data\Data $rx
-	 * @param integer               $taskId
-	 * @param \Windwalker\Data\Data $customer
-	 * @param \Windwalker\Data\Data $address
-	 * @param \Windwalker\Data\Data $nth
-	 * @param \Windwalker\Data\Data $formData
+	 * @param   \Windwalker\Data\Data $rx
+	 * @param   integer               $taskId
+	 * @param   \Windwalker\Data\Data $customer
+	 * @param   \Windwalker\Data\Data $address
+	 * @param   \Windwalker\Data\Data $nth
+	 * @param   \Windwalker\Data\Data $formData
 	 *
 	 * @return  array
 	 */
@@ -404,7 +400,7 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 	/**
 	 * 圖片資料處理
 	 *
-	 * @return void
+	 * @return  void
 	 */
 	protected function rxImageHandler()
 	{
