@@ -66,10 +66,10 @@ class JFormFieldDateTimePicker extends JFormField
 			'value'            => $this->value,
 			'style'            => $style,
 			'class'            => 'form-control ' . (false === $showButton ? $this->class : ''),
-			'readonly'         => XmlHelper::getBool($this->element, 'readonly', false),
-			'disabled'         => XmlHelper::getBool($this->element, 'disabled', false),
-			'placeholder'      => XmlHelper::get($this->element, 'hint', ''),
-			'required'         => XmlHelper::get($this->element, 'required', ''),
+			'readonly'         => $this->readonly,
+			'disabled'         => $this->disabled,
+			'placeholder'      => $this->hint,
+			'required'         => $this->required,
 			'data-date-format' => (false === $showButton ? $dateFormat : ''),
 		);
 
