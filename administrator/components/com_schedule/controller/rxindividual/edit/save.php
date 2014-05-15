@@ -268,13 +268,13 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 		$route = $routesMapper->findOne(array("city" => $address->city, "area" => $address->area, "type" => "institute"));
 
 		// 沒有路線的時候新增路線
-		if (! isset($route->id))
+		if ($route->isNull())
 		{
 			// 用設定的 id 取出 sender
 			$sender = $senderMapper->findOne($option['sender_id']);
 
 			// 沒取到 sender
-			if (! isset($sender->id))
+			if ($sender->isNull())
 			{
 				throw new \Exception("error sender id");
 			}
@@ -319,7 +319,7 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 		$task = $taskMapper->findOne(array("sender" => $sender->id, "date" => $option['date']));
 
 		// 如果有取得對應 外送
-		if (! empty($task->id))
+		if ($task->isNull())
 		{
 			return $task->id;
 		}
@@ -354,7 +354,7 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 		$customer = $customerMapper->findOne($id);
 
 		// 找不到客戶
-		if (! isset($customer->id))
+		if ($customer->isNull())
 		{
 			throw new \Exception("error customer id");
 		}
