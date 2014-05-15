@@ -164,7 +164,7 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 			$sender = $senderMapper->findOne($routes->sender_id);
 
 			// Get task
-			$task = $this->getScheduleTask($thisScheduleData, $sender);
+			$task = $this->getScheduleTask($sender, $schedule);
 
 			$option = array(
 				"rx"       => $rx,
@@ -314,36 +314,38 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 	/**
 	 * 取得 Task 沒有對應 task 時 新增
 	 *
-	 * @param object $schedule
 	 * @param object $sender
+	 * @param array  $option
 	 *
-	 * @return object
+	 * @return  mixed
 	 */
-	protected function getScheduleTask($schedule, $sender)
+	protected function getScheduleTask($sender, $option)
 	{
 		$taskModel  = $this->getModel("Task");
 		$taskMapper = new DataMapper(Table::TASKS);
 
-		// Get task
-		$task = $taskMapper->findOne(array("sender" => $sender->id, "sender_name" => $sender->name));
+		// 同日期同藥師取得 外送
+		$task = $taskMapper->findOne(array("sender" => $sender->id, "date" => $option['date']));
 
-		// 如果沒取得 task , 是新增
-		if (empty($task->id))
+		// 如果有取得對應 外送
+		if (! empty($task->id))
 		{
-			// Task data
-			$taskData = array(
-				"id" => $schedule->task_id,
-				"sender" => $sender->id,
-				"sender_name" => $sender->name,
-				"status" => 0
-			);
-
-			// 新增外送
-			$taskModel->save($taskData);
-
-			// 取出剛剛新增的外送管理
-			$task = $taskModel->getItem();
+			return $task;
 		}
+
+		// 沒有外送時 新增
+		$taskData = array(
+			"date"        => $option['date'],
+			"sender"      => $sender->id,
+			"sender_name" => $sender->name,
+			"status"      => 0
+		);
+
+		// 新增外送
+		$taskModel->save($taskData);
+
+		// 取出剛剛新增的外送管理
+		$task = $taskModel->getItem();
 
 		return $task;
 	}
