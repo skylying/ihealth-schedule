@@ -96,8 +96,14 @@ class JFormFieldSelect2 extends JFormField
 				// Inject xml params
 				var option = ' . $option . ';
 
-				function select2Initialize($node)
+				function select2Initialize($node, initialText)
 				{
+					if (typeof initialText != "undefined")
+					{
+						option.hasInitialValue = "true";
+						option.dropdowntext = initialText;
+					}
+
 					var lastResults = [];
 
 					$node.select2({
@@ -160,8 +166,7 @@ class JFormFieldSelect2 extends JFormField
 							}
 						}
 					});
-
-					if (option.hasInitialValue == "true")
+					if (option.hasInitialValue == "true" && typeof initialText == "undefined")
 					{
 						$node.select2("readonly", true);
 

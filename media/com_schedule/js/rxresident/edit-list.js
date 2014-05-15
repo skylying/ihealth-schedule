@@ -24,19 +24,23 @@
 			{
 				$row.find('input.customer-id').each(function()
 				{
-					customer_id.initialize($(this));
+					customer_id.select2Initialize($(this));
 				});
 			});
 
 			// Bind afterDuplicate event
 			handler.on('afterDuplicate', function ($row)
 			{
+				var select2s = $row.find('div.customer-id');
+
+				var dropdowntext = $(select2s[1]).find('.select2-chosen').text();
+
 				// Remove exists select2 element
 				$row.find('div.customer-id').remove();
 
 				$row.find('input.customer-id').each(function ()
 				{
-					customer_id.initialize($(this));
+					customer_id.select2Initialize($(this), dropdowntext);
 				});
 			});
 
@@ -170,7 +174,7 @@
 			{
 				var $row = $($(this).closest('tr'));
 
-				var seeDrDateNode  = $row.find('.seedr input'),
+				var seeDrDateNode  = $row.find('.seedr'),
 					seeDrDateValue = seeDrDateNode.val();
 
 				// if "就醫日期" not set, return
@@ -263,9 +267,6 @@
 		// update delivery_day color
 		colorBlock.css('background', color);
 
-		// update floor
-		floorInput.val(floor);
-
 		// Replace $node value with real institute id
 		$node.val(e.added.instituteid);
 
@@ -277,6 +278,9 @@
 		{
 			return;
 		}
+
+		// update floor
+		floorInput.val(floor);
 
 		// If user change institute, initialize $row with select2 again
 		var panel = $('#rx-list').find('tr');
