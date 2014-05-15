@@ -11,32 +11,10 @@ namespace Schedule\Helper;
 // No direct access
 defined('_JEXEC') or die;
 
-use Whoops\Example\Exception;
-use Windwalker\DI\Container;
 use Schedule\Table\Table;
 
 /**
  * Class AddressHelper
- *
- * - Usage 1: (PHP example)
- * <code>
- *     <?php
- *         Schedule\Helper\AddressHelper::bind('jform_city', 'jform_area');
- *     <?
- * </code>
- *
- * - Usage 2: (Javascript example)
- * <code>
- *     <?php
- *         // You must initialize helper first
- *         Schedule\Helper\AddressHelper::init();
- *     ?>
- *
- *     jQuery(function($)
- *     {
- *         Address.bind('jform_city', 'jform_area', $('jform_area').val());
- *     });
- * </code>
  */
 abstract class AddressHelper
 {
@@ -55,11 +33,18 @@ abstract class AddressHelper
 	protected static $addresses = array();
 
 	/**
-	 * Property bindList.
+	 * Property areas.
 	 *
 	 * @var  array
 	 */
-	protected static $bindList = array();
+	protected static $areas = array();
+
+	/**
+	 * Property areaOptions.
+	 *
+	 * @var  array
+	 */
+	protected static $areaOptions = array();
 
 	/**
 	 * Get city HTML selection list
@@ -94,88 +79,91 @@ abstract class AddressHelper
 	}
 
 	/**
-	 * Bind events with city and area selection elements
+	 * Get area HTML selection list
 	 *
-	 * @param   string  $cityId  City selection element id
-	 * @param   string  $areaId  Area selection element id
+	 * @param   string   $cityId     City id
+	 * @param   string   $name       The value of the HTML name attribute.
+	 * @param   mixed    $attribs    Additional HTML attributes for the <select> tag. This
+	 *                               can be an array of attributes, or an array of options. Treated as options
+	 *                               if it is the last argument passed. Valid options are:
+	 *                               Format options, see {@see JHtml::$formatOptions}.
+	 *                               Selection options, see {@see JHtmlSelect::options()}.
+	 *                               list.attr, string|array: Additional attributes for the select
+	 *                               element.
+	 *                               id, string: Value to use as the select element id attribute.
+	 *                               Defaults to the same as the name.
+	 *                               list.select, string|array: Identifies one or more option elements
+	 *                               to be selected, based on the option key values.
+	 * @param   string   $optKey     The name of the object variable for the option value. If
+	 *                               set to null, the index of the value array is used.
+	 * @param   string   $optText    The name of the object variable for the option text.
+	 * @param   mixed    $selected   The key that is selected (accepts an array or a string).
+	 * @param   mixed    $idtag      Value of the field id or null by default
+	 * @param   boolean  $translate  True to translate
 	 *
-	 * @throws  \Whoops\Example\Exception
-	 * @return  void
+	 * @return  string HTML for the select list.
 	 */
-	public static function bind($cityId, $areaId)
+	public static function getAreaList($cityId, $name, $attribs = null, $optKey = 'value', $optText = 'text', $selected = null, $idtag = false,
+		$translate = false)
 	{
-		if (empty($cityId) || empty($areaId))
-		{
-			throw new Exception('city id and area id should not be empty.');
-		}
-
-		$bindPair = $cityId . ':' . $areaId;
-
-		if (isset(static::$bindList[$bindPair]))
-		{
-			return;
-		}
-
 		static::init();
 
-		/** @var \Windwalker\Helper\AssetHelper $asset */
-		$asset = Container::getInstance('com_schedule')->get('helper.asset');
+		if (! isset(static::$addresses[$cityId]))
+		{
+			return '';
+		}
 
-		$js = <<<JS
-jQuery(function($)
-{
-	Address.bind('{$cityId}', '{$areaId}', $('#{$areaId}').val());
-});
-JS;
-		$asset->internalJS($js);
-
-		static::$bindList[$bindPair] = true;
+		return \JHtmlSelect::genericlist(static::$addresses[$cityId]['areas'], $name, $attribs, $optKey, $optText, $selected, $idtag, $translate);
 	}
 
 	/**
-	 * Initialize
+	 * getCities
+	 *
+	 * @return  array
+	 */
+	public static function getCities()
+	{
+		static::init();
+
+		return static::$addresses;
+	}
+
+	/**
+	 * getAreas
+	 *
+	 * @return  array
+	 */
+	public static function getAreas()
+	{
+		static::init();
+
+		return static::$areas;
+	}
+
+	/**
+	 * getAreaOptions
+	 *
+	 * @return  array
+	 */
+	public static function getAreaOptions()
+	{
+		static::init();
+
+		return static::$areaOptions;
+	}
+
+	/**
+	 * Initialization
 	 *
 	 * @return  void
 	 */
-	public static function init()
+	protected static function init()
 	{
 		if (true === self::$initialized)
 		{
 			return;
 		}
 
-		static::initAddressData();
-
-		// Area lists
-		$areas = array();
-
-		foreach (static::$addresses as $cityId => $address)
-		{
-			$areas[$cityId] = \JHtmlSelect::options($address['areas']);
-		}
-
-		/** @var \Windwalker\Helper\AssetHelper $asset */
-		$asset = Container::getInstance('com_schedule')->get('helper.asset');
-
-		$asset->addJS('address.js');
-
-		$asset->internalJS('
-			jQuery(function()
-			{
-				Address.setAreas(' . json_encode($areas) . ');
-			});
-		');
-
-		self::$initialized = true;
-	}
-
-	/**
-	 * getAddressData
-	 *
-	 * @return  array
-	 */
-	protected static function initAddressData()
-	{
 		$db = \JFactory::getDbo();
 		$query = $db->getQuery(true);
 		$address = array();
@@ -218,5 +206,14 @@ JS;
 		}
 
 		static::$addresses = $address;
+
+		foreach (static::$addresses as $cityId => $address)
+		{
+			static::$areas[$cityId] = $address['areas'];
+
+			static::$areaOptions[$cityId] = \JHtmlSelect::options($address['areas']);
+		}
+
+		self::$initialized = true;
 	}
 }
