@@ -127,7 +127,7 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 		$addressModel  = $this->getModel("Address");
 
 		// 圖片處理
-		$this->rxImageHeader();
+		$this->rxImageHandler();
 
 		// 客戶處理
 		$customer = $this->getCustomer($this->data['customer_id']);
@@ -427,7 +427,7 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 	 *
 	 * @return void
 	 */
-	protected function rxImageHeader()
+	protected function rxImageHandler()
 	{
 		$rx = $this->model->getItem();
 
