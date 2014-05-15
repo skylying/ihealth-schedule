@@ -162,11 +162,11 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 			$sender = $senderMapper->findOne($routes->sender_id);
 
 			// Get task
-			$task = $this->getScheduleTask($sender, $schedule);
+			$taskId = $this->getScheduleTask($sender, $schedule);
 
 			// 新增排程
 			$scheduleModel->save(
-				$this->getScheduleUploadData($rx, $task, $customer, $address, $nth, $schedule)
+				$this->getScheduleUploadData($rx, $taskId, $customer, $address, $nth, $schedule)
 			);
 
 			// 最後更改地址
@@ -308,7 +308,7 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 	 * @param object $sender
 	 * @param array  $option
 	 *
-	 * @return  \Windwalker\Data\Data
+	 * @return  integer
 	 */
 	protected function getScheduleTask($sender, $option)
 	{
@@ -321,7 +321,7 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 		// 如果有取得對應 外送
 		if (! empty($task->id))
 		{
-			return $task;
+			return $task->id;
 		}
 
 		// 沒有外送時 新增
@@ -335,10 +335,7 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 		// 新增外送
 		$taskModel->save($taskData);
 
-		// 取出剛剛新增的外送管理
-		$task = new Data($taskModel->getItem());
-
-		return $task;
+		return $taskModel->getState()->get("task.id");
 	}
 
 	/**
@@ -381,7 +378,7 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 	 * 取得 Schedule 更新的資料
 	 *
 	 * @param \Windwalker\Data\Data $rx
-	 * @param \Windwalker\Data\Data $task
+	 * @param integer               $taskId
 	 * @param \Windwalker\Data\Data $customer
 	 * @param \Windwalker\Data\Data $address
 	 * @param \Windwalker\Data\Data $nth
@@ -389,7 +386,7 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 	 *
 	 * @return  array
 	 */
-	protected function getScheduleUploadData($rx, $task, $customer, $address, $nth, $formData)
+	protected function getScheduleUploadData($rx, $taskId, $customer, $address, $nth, $formData)
 	{
 		// Schedule data
 		$scheduleUpdata = array(
@@ -400,7 +397,7 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 			"rx_id"         => $rx->id,
 
 			// 對應外送 id
-			"task_id"       => $task->id,
+			"task_id"       => $taskId,
 			"type"          => $customer->type,
 			"customer_id"   => $customer->id,
 			"customer_name" => $customer->name,
