@@ -135,8 +135,8 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 		// 健保處理
 		$this->drugHandler();
 
-		// 新增排程次數
-		$scheduleDoTimes = 0;
+		// 最後更改地址
+		$lastAddress = null;
 
 		// 新增排程
 		foreach (array("1st", "2nd", "3rd") as $nth)
@@ -169,15 +169,15 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 				$this->getScheduleUploadData($rx, $task, $customer, $address, $nth, $schedule)
 			);
 
-			// 記錄次數
-			$scheduleDoTimes++;
+			// 最後更改地址
+			$lastAddress = $address;
 		}
 
 		// 如果有新增排程
-		if (0 < $scheduleDoTimes)
+		if (empty($lastAddress))
 		{
 			// Flush Default Address
-			$addressModel->flushDefaultAddress($customer->id, $address->id);
+			$addressModel->flushDefaultAddress($customer->id, $lastAddress->id);
 		}
 	}
 
