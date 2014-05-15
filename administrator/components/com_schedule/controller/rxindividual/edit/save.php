@@ -162,11 +162,11 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 			$sender = $senderMapper->findOne($routes->sender_id);
 
 			// Get task
-			$taskId = $this->getScheduleTask($sender, $schedule);
+			$task = $this->getScheduleTask($sender, $schedule);
 
 			// 新增排程
 			$scheduleModel->save(
-				$this->getScheduleUploadData($rx, $taskId, $customer, $address, $nth, $schedule)
+				$this->getScheduleUploadData($rx, $task, $customer, $address, $nth, $schedule)
 			);
 
 			// 最後更改地址
@@ -285,7 +285,7 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 	 * @param   object $sender
 	 * @param   array  $schedule
 	 *
-	 * @return  integer
+	 * @return  \Windwalker\Data\Data
 	 */
 	protected function getScheduleTask($sender, $schedule)
 	{
@@ -296,23 +296,24 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 		$task = $taskMapper->findOne(array("sender" => $sender->id, "date" => $schedule['date']));
 
 		// 如果有取得對應 外送
-		if ($task->isNull())
+		if (! $task->isNull())
 		{
-			return $task->id;
+			return $task;
 		}
 
 		// 沒有外送時 新增
-		$taskData = array(
-			"date"        => $schedule['date'],
-			"sender"      => $sender->id,
-			"sender_name" => $sender->name,
-			"status"      => 0
-		);
+		$task->date        = $schedule['date'];
+		$task->sender      = $sender->id;
+		$task->sender_name = $sender->name;
+		$task->status      = 0;
 
 		// 新增外送
-		$taskModel->save($taskData);
+		$taskModel->save((array) $task);
 
-		return $taskModel->getState()->get("task.id");
+		// 塞回 id
+		$task->id = $taskModel->getState()->get("task.id");
+
+		return $task;
 	}
 
 	/**
@@ -355,7 +356,7 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 	 * 取得 Schedule 更新的資料
 	 *
 	 * @param   \Windwalker\Data\Data $rx
-	 * @param   integer               $taskId
+	 * @param   integer               $task
 	 * @param   \Windwalker\Data\Data $customer
 	 * @param   \Windwalker\Data\Data $address
 	 * @param   \Windwalker\Data\Data $nth
@@ -363,7 +364,7 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 	 *
 	 * @return  array
 	 */
-	protected function getScheduleUploadData($rx, $taskId, $customer, $address, $nth, $formData)
+	protected function getScheduleUploadData($rx, $task, $customer, $address, $nth, $formData)
 	{
 		// Schedule data
 		$scheduleUpdata = array(
@@ -374,7 +375,7 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 			"rx_id"         => $rx->id,
 
 			// 對應外送 id
-			"task_id"       => $taskId,
+			"task_id"       => $task,
 			"type"          => $customer->type,
 			"customer_id"   => $customer->id,
 			"customer_name" => $customer->name,
