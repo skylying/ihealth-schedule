@@ -651,6 +651,16 @@ jQuery(document).ready(function ()
 									</div>
 								</div>
 							</div>
+							<div class="col-lg-12 js-route-wrap hide">
+								<div class="row-fluid">
+									<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4" style="padding: 0px 10px 0px 0px;">
+										<?php echo $schedules["jform_schedules_{$key}_sender_id"]->getControlGroup(); ?>
+									</div>
+									<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4" style="padding: 0px 10px 0px 0px;">
+										<?php echo $schedules["jform_schedules_{$key}_weekday"]->getControlGroup(); ?>
+									</div>
+								</div>
+							</div>
 							<!-- Add Address Row -->
 							<div class="col-lg-12">
 								<div class="js-tmpl-add-addressrow hide">
