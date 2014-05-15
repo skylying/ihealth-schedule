@@ -11,6 +11,7 @@ defined('_JEXEC') or die;
 
 use Windwalker\DI\Container;
 use Windwalker\Helper\XmlHelper;
+use Windwalker\Html\HtmlElement;
 
 /**
  * Class JFormFieldDateTimePicker
@@ -55,38 +56,31 @@ class JFormFieldDateTimePicker extends JFormField
 
 		$id         = $this->id;
 		$showButton = XmlHelper::getBool($this->element, 'show_button', false);
-		$readonly   = XmlHelper::getBool($this->element, 'readonly', false);
-		$disabled   = XmlHelper::getBool($this->element, 'disabled', false);
-		$hint       = XmlHelper::get($this->element, 'hint', '');
-		$required   = XmlHelper::get($this->element, 'required', '');
-		$dateFormat = ' data-date-format="' . XmlHelper::get($this->element, 'date_format', 'YYYY-MM-DD') . '"';
-
-		$readonly   = $readonly ? ' readonly' : '';
-		$disabled   = $disabled ? ' disabled' : '';
-		$hint       = empty($hint) ? '' : ' placeholder="' . $hint . '"';
-		$required   = empty($required) ? '' : ' required="required"';
-		$inputClass = 'form-control';
 		$style      = $this->getStyle();
+		$dateFormat = XmlHelper::get($this->element, 'date_format', 'YYYY-MM-DD');
 
-		if (false === $showButton)
-		{
-			$inputClass .= ' ' . $this->class;
-			$dateFormat = '';
-		}
+		$attr = array(
+			'type'             => 'text',
+			'name'             => $this->name,
+			'id'               => $this->id . (false === $showButton ? '' : '_input'),
+			'value'            => $this->value,
+			'style'            => $style,
+			'class'            => 'form-control ' . (false === $showButton ? $this->class : ''),
+			'readonly'         => XmlHelper::getBool($this->element, 'readonly', false),
+			'disabled'         => XmlHelper::getBool($this->element, 'disabled', false),
+			'placeholder'      => XmlHelper::get($this->element, 'hint', ''),
+			'required'         => XmlHelper::get($this->element, 'required', ''),
+			'data-date-format' => (false === $showButton ? $dateFormat : ''),
+		);
 
-		$input = '<input type="text" name="' . $this->name . '" id="' . $this->id . '" class="' . $inputClass . '"' .
-			' value="' . htmlspecialchars($this->value, ENT_COMPAT, 'UTF-8') . '"' .
-			$readonly . $disabled . $hint . $required . $dateFormat . ' />';
+		$input = (string) new HtmlElement('input', '', $attr);
 
 		if (true === $showButton)
 		{
 			$class = $this->class;
-			$id .= '_container';
-
-			$this->class .= ' form-control';
 
 			$html = <<<HTML
-<div class='input-group date {$class}' id='{$id}' style="{$style}" {$dateFormat}>
+<div class='input-group date {$class}' id='{$id}' style="{$style}" data-date-format="{$dateFormat}">
 	{$input}
 	<span class="input-group-addon">
 		<span class="glyphicon glyphicon-calendar"></span>
@@ -96,11 +90,7 @@ HTML;
 		}
 		else
 		{
-			$html = <<<HTML
-<div style="{$style}">
-	{$input}
-</div>
-HTML;
+			$html = $input;
 		}
 
 		$js = <<<JS
