@@ -209,25 +209,6 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 	}
 
 	/**
-	 * Get Schedule
-	 *
-	 * @param integer $id
-	 *
-	 * @return  \Windwalker\Data\Data
-	 */
-	protected function getSchedule($id = null)
-	{
-		if (empty($id))
-		{
-			return new \Windwalker\Data\Data;
-		}
-
-		$scheduleMapper = new DataMapper(Table::SCHEDULES);
-
-		return $scheduleMapper->findOne($id);
-	}
-
-	/**
 	 * Delete Schedule
 	 *
 	 * @param integer $id
