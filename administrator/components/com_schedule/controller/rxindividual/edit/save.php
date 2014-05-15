@@ -4,6 +4,7 @@ use Windwalker\Controller\Edit\SaveController;
 use Windwalker\Joomla\DataMapper\DataMapper;
 use Windwalker\Data\Data;
 use Schedule\Table\Table;
+use Schedule\Helper\ImageHelper;
 
 /**
  * Class SaveController
@@ -233,7 +234,7 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 	 * @param   stdClass $address
 	 * @param   array    $schedule
 	 *
-	 * @return  \Windwalker\Data\Data
+	 * @return  Data
 	 *
 	 * @throws  Exception
 	 */
@@ -285,7 +286,7 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 	 * @param   object $sender
 	 * @param   array  $schedule
 	 *
-	 * @return  \Windwalker\Data\Data
+	 * @return  Data
 	 */
 	protected function getScheduleTask($sender, $schedule)
 	{
@@ -321,7 +322,7 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 	 *
 	 * @param   integer $id
 	 *
-	 * @return  \Windwalker\Data\Data
+	 * @return  Data
 	 *
 	 * @throws  \Exception
 	 */
@@ -352,12 +353,12 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 	/**
 	 * 取得 Schedule 更新的資料
 	 *
-	 * @param   \Windwalker\Data\Data $rx
-	 * @param   integer               $task
-	 * @param   \Windwalker\Data\Data $customer
-	 * @param   \Windwalker\Data\Data $address
-	 * @param   \Windwalker\Data\Data $nth
-	 * @param   \Windwalker\Data\Data $formData
+	 * @param   Data    $rx
+	 * @param   integer $task
+	 * @param   Data    $customer
+	 * @param   Data    $address
+	 * @param   Data    $nth
+	 * @param   Data    $formData
 	 *
 	 * @return  array
 	 */
@@ -407,11 +408,11 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 		$files = $this->input->files->getVar('jform');
 
 		// 圖片上傳
-		\Schedule\Helper\ImageHelper::handleUpload($rx->id, $files['rximages']);
+		ImageHelper::handleUpload($rx->id, $files['rximages']);
 
 		$removeCid = isset($this->data['remove_images']) ? $this->data['remove_images'] : array();
 
 		// 刪除圖片
-		\Schedule\Helper\ImageHelper::removeImages($removeCid);
+		ImageHelper::removeImages($removeCid);
 	}
 }
