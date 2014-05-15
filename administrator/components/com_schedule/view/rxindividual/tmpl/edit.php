@@ -25,6 +25,7 @@ $mobileID = $data->form->getField('mobile')->id;
 $seeDrDateID = $data->form->getField('see_dr_date')->id;
 $periodID = $data->form->getField('period')->id;
 $createAddressID = $data->form->getField('create_address')->id;
+$methodID = $data->form->getField('method')->id;
 
 $telOfficeName = $data->form->getField('tel_office')->name;
 $telHomeName   = $data->form->getField('tel_home')->name;
@@ -51,7 +52,6 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 	 *
 	 * fireAjax
 	 *
-	 * @param id
 	 */
 	$.fn.exists = function ()
 	{
@@ -63,7 +63,7 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 	 *
 	 * customerAjax
 	 *
-	 * @param id
+	 * @param {int} id
 	 */
 	$.fn.customerAjax = function (id)
 	{
@@ -90,20 +90,48 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 		}).done(function (cdata)
 			{
 				var cdata      = $.parseJSON(cdata);
-				var tel_office = $.parseJSON(cdata.tel_office);
-				var tel_home   = $.parseJSON(cdata.tel_home);
-				var mobile     = $.parseJSON(cdata.mobile);
+
 				var id_number  = cdata.id_number;
-
-				// Update phone numbers
-				$.fn.customerAjax.updatePhoneHtml(telOfficeID, tel_office);
-				$.fn.customerAjax.updatePhoneHtml(telHomeID, tel_home);
-				$.fn.customerAjax.updatePhoneHtml(mobileID, mobile);
-
-				// Update hidden input which store phone number json string.
-				$.fn.customerAjax.updateJsonToInputField(telOfficeID, tel_office);
 				$.fn.customerAjax.updateJsonToInputField(telHomeID, tel_home);
-				$.fn.customerAjax.updateJsonToInputField(mobileID, mobile);
+
+				try
+				{
+					// Update phone numbers
+					var tel_office = $.parseJSON(cdata.tel_office);
+
+					// Update hidden input which store phone number json string.
+					$.fn.customerAjax.updatePhoneHtml(telOfficeID, tel_office);
+				}
+				catch(err)
+				{
+					$.fn.customerAjax.updatePhoneHtml(telOfficeID);
+				}
+
+				try
+				{
+					// Update phone numbers
+					var tel_home = $.parseJSON(cdata.tel_home);
+
+					// Update hidden input which store phone number json string.
+					$.fn.customerAjax.updatePhoneHtml(telHomeID, tel_home);
+				}
+				catch(err)
+				{
+					$.fn.customerAjax.updatePhoneHtml(telHomeID);
+				}
+
+				try
+				{
+					// Update phone numbers
+					var mobile = $.parseJSON(cdata.mobile);
+
+					// Update hidden input which store phone number json string.
+					$.fn.customerAjax.updatePhoneHtml(mobileID, mobile);
+				}
+				catch(err)
+				{
+					$.fn.customerAjax.updatePhoneHtml(mobileID);
+				}
 
 				// Update customer id_number
 				$.fn.customerAjax.updateCustomerIdNumber(customerIDNumber, id_number);
@@ -130,8 +158,8 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 	 *
 	 * updateCustomerIdNumber
 	 *
-	 * @param {string} target Target element id
-	 * @param {object} id customer_id to update
+	 * @param {string} target  Target element id
+	 * @param {int}    id      customer_id to update
 	 */
 	$.fn.customerAjax.updateCustomerIdNumber = function (target, id)
 	{
@@ -147,8 +175,8 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 	 *
 	 * updateJsonToInputField
 	 *
-	 * @param {string} target Target element id
-	 * @param {json} dataJson Data to update
+	 * @param {string} target    Target element id
+	 * @param {json}   dataJson  Data to update
 	 */
 	$.fn.customerAjax.updateJsonToInputField = function (target, dataJson)
 	{
@@ -168,8 +196,8 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 	 *
 	 * updateAddressHtml
 	 *
-	 * @param {string} key
-	 * @param {json} addressJson
+	 * @param {string}  key
+	 * @param {json}    addressJson
 	 */
 	$.fn.customerAjax.updateAddressHtml = function (key, addressJson)
 	{
@@ -219,15 +247,15 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 	 *
 	 * updatePhoneHtml
 	 *
-	 * @param {int} tagID
-	 * @param {json} telJson
+	 * @param {string}  tagID
+	 * @param {json}    telJson
 	 */
 	$.fn.customerAjax.updatePhoneHtml = function (tagID, telJson)
 	{
 		telJson = telJson || {};
 
 		var target = $('#' + tagID).parent().find('.controls');
-		var defaultLength = telJson.length ? telJson.length : 3;
+		var defaultLength = telJson.length ? telJson.length : 0;
 
 		//Clear target hook's html first.
 		target.html("");
@@ -276,9 +304,18 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 	{
 		var key = this.find('option:selected').val();
 		var hiddenInput = this.closest('.control-group').find('input');
+		var data;
 
-		// Parse input string into object
-		var data = JSON.parse(hiddenInput.val());
+		if (hiddenInput.val() == '' || hiddenInput.val() == '{}')
+		{
+			// initialize with array
+			data = [];
+		}
+		else
+		{
+			// initialize with input
+			data = JSON.parse(hiddenInput.val());
+		}
 
 		for (var i = 0; i < data.length; i++)
 		{
@@ -320,8 +357,8 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 	 *
 	 * updateScheduleDate
 	 *
-	 * @param {string} seeDrDate
-	 * @param {json} period
+	 * @param {string}    seeDrDate
+	 * @param {json}      period
 	 */
 	$.fn.updateScheduleDate = function( seeDrDate, period )
 	{
@@ -347,11 +384,201 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 			}).done(function (cdata)
 				{
 					var cdata = $.parseJSON(cdata);
-					console.log(cdata);
 				});
 		}
-
 	};
+
+	$.fn.methodForm = function ()
+	{
+		return this.each(function ()
+		{
+			// Find where to store hicodes
+			var targetHiddenInput = $('#jform_hicodes_json');
+
+			// Update while hicode date already exist on the very first time
+			if (targetHiddenInput.val() != '' && targetHiddenInput.val() != '{}')
+			{
+				$.fn.methodForm.insertHicodeTableRow(JSON.parse(targetHiddenInput.val()));
+			}
+
+			// Copy the HiCode template.
+			var tableTmpl = $('.js-hicode-tmpl');
+
+			// Append tabel after method select list
+			tableTmpl.insertAfter($(this).closest('.control-group'));
+
+			// Bind Prescription method change detection
+			$(this).on('change', function ()
+			{
+				if ($(this).val() == 'form')
+				{
+					// Update from input
+					$.fn.methodForm.updateHicodeHiddenInput();
+					// Show table
+					tableTmpl.removeClass('hide');
+				}
+				else
+				{
+					var targetHiddenInput = $('#jform_hicodes_json');
+					targetHiddenInput.val('');
+					tableTmpl.addClass('hide');
+				}
+			});
+
+			// Trigger once
+			$(this).trigger('change');
+
+			// Combine two selector.
+			var hicodeElement = $('.js-hicode-code');
+			var quantityElement = $('.js-hicode-quantity');
+			var combinedHicodeElem = hicodeElement.add(quantityElement);
+
+			// Every time when 'hicode' and 'quantity' being changed.
+			tableTmpl.on('change', combinedHicodeElem, function ()
+			{
+				$.fn.methodForm.updateHicodeHiddenInput();
+			});
+
+			// Bind Add event
+			$('.js-hicode-add-row').on('click', function ()
+			{
+				var cloneRow = $(".js-hicode-row").first().clone();
+				// Retrieve hicode
+				cloneRow.find('.js-hicode-code').val('');
+				// Retrieve quantity
+				cloneRow.find('.js-hicode-quantity').val('');
+				// Retrieve id
+				cloneRow.find('.js-hicode-id').val('');
+
+				$('.js-hicode-tmpl tbody').append(cloneRow);
+			});
+
+			// Bind Delete event
+			$('.js-hicode-tmpl').on('click', '.js-hicode-delete-row',function ()
+			{
+				if (confirm('您確定要刪除嗎？'))
+				{
+					if ($(".js-hicode-row").size() > 1)
+					{
+						// Delete row
+						$(this).closest('.js-hicode-row').remove();
+						// Update Hidden Input
+						$.fn.methodForm.updateHicodeHiddenInput();
+					}
+					else
+					{
+						var row = $(".js-hicode-row").first();
+						// Retrieve hicode
+						row.find('.js-hicode-code').val('');
+						// Retrieve quantity
+						row.find('.js-hicode-quantity').val('');
+						// Retrieve id
+						row.find('.js-hicode-id').val('');
+
+						// Update Hidden Input
+						$.fn.methodForm.updateHicodeHiddenInput();
+					}
+				}
+			});
+		});
+	};
+
+	$.fn.methodForm.updateHicodeHiddenInput = function ()
+	{
+		var newRowCounter = 0;
+		var totalRowCounter = 0;
+
+		// Data to stored
+		var data = [];
+
+		// Go through every row, and push it into hidden input
+		$('.js-hicode-row').each(function ()
+		{
+			// Retrieve hicode
+			var code = $(this).find('.js-hicode-code').val();
+			// Retrieve quantity
+			var quantity = $(this).find('.js-hicode-quantity').val();
+			// Retrieve id
+			var id = $(this).find('.js-hicode-id').val();
+
+			// Check if hash Exist
+			if (id.indexOf("hash-") > -1)
+			{
+				// indexOf returns the position of the string in the other string.
+				// If not found, it will return -1:
+
+				// Make sure every info is provided
+				if ((code != '') && (quantity != ''))
+				{
+					data.push({id: 'hash-' + newRowCounter, hicode: code, quantity: quantity});
+					newRowCounter++;
+					totalRowCounter++;
+				}
+			}
+			// if hash- doesn't exist, and id doesn't exist => blank new row
+			else if (id.indexOf("hash-") == -1 && id == '')
+			{
+				// Make sure every info is provided
+				if ((code != '') && (quantity != ''))
+				{
+					data.push({id: 'hash-' + newRowCounter, hicode: code, quantity: quantity});
+					newRowCounter++;
+					totalRowCounter++;
+				}
+			}
+			// if hash- doesn't exist, and id exist
+			else if ((id.indexOf("hash-") == -1) && (id != ''))
+			{
+				// Make sure every info is provided
+				if ((code != '') && (quantity != ''))
+				{
+					data.push({id: id, hicode: code, quantity: quantity});
+					totalRowCounter++;
+				}
+			}
+
+			// Perform hidden input update
+			$(this).customerAjax.updateJsonToInputField('jform_hicodes_json', data);
+
+			// Update Counter
+			$('.js-hicode-amount').text(totalRowCounter);
+		});
+	};
+
+	$.fn.methodForm.insertHicodeTableRow = function (data)
+	{
+		var tableTbody = $('.js-hicode-tmpl tbody');
+		var cloneRow = $(".js-hicode-row").first().clone();
+
+		// Retrieve hicode
+		cloneRow.find('.js-hicode-code').val('');
+		// Retrieve quantity
+		cloneRow.find('.js-hicode-quantity').val('');
+		// Retrieve id
+		cloneRow.find('.js-hicode-id').val('');
+
+		// Clear tbody
+		tableTbody.html('');
+
+		for (var i = 0; i < data.length; i++)
+		{
+			var insertRow = cloneRow.clone();
+
+			insertRow.find('.js-hicode-code').val(data[i].hicode);
+			// Retrieve quantity
+			insertRow.find('.js-hicode-quantity').val(data[i].quantity);
+			// Retrieve id
+			insertRow.find('.js-hicode-id').val(data[i].id);
+
+			tableTbody.append(insertRow);
+		}
+
+		if (data.length != 0)
+		{
+			tableTbody.append(cloneRow);
+		}
+	};
+
 })(jQuery);
 
 jQuery(document).ready(function ()
@@ -362,6 +589,8 @@ jQuery(document).ready(function ()
 
 	var periodID = "<?php echo $periodID;?>";
 
+	var methodID = "<?php echo $methodID;?>";
+
 	// customer_id's element id
 	var customerDropDown = jQuery("#" + "<?php echo $customerID;?>");
 
@@ -369,7 +598,8 @@ jQuery(document).ready(function ()
 	var customerID = "<?php echo $customerID;?>";
 
 	// Toggle nth schedules
-	jQuery('.js-nth-schedule-check input').each(function(){
+	jQuery('.js-nth-schedule-check input').each(function ()
+	{
 		jQuery(this).bindChangeNthScheduleInfo();
 	});
 
@@ -388,12 +618,18 @@ jQuery(document).ready(function ()
 		jQuery(this).updateHiddenPhoneNumbersInput();
 	});
 
-	jQuery('.js-add-address').on('click', function()
+	// Bind add new address
+	jQuery('.js-add-address').on('click', function ()
 	{
-		jQuery(this).closest('.js-nth-schedule-info').find('.js-tmpl-add-addressrow').removeClass('hide');
+		// Find the address template row
+		var element = jQuery('.js-tmpl-add-addressrow').removeClass('hide');
+
+		// Insert to target position, one should know that only one '.js-tmpl-add-addressrow' exist since appendTo method
+		element.appendTo(jQuery(this).closest('.js-nth-schedule-info').find('.js-add-address-position'));
 	});
 
-	jQuery('.js-save-address').on('click', function ()
+	// Bind save new address
+	jQuery('.js-nth-schedule-info').on('click', '.js-save-address',function ()
 	{
 		// The dynamic row wrapper
 		var currentWrap = jQuery(this).closest('.js-tmpl-add-addressrow');
@@ -413,13 +649,14 @@ jQuery(document).ready(function ()
 		// Data to stored
 		var data;
 
-		if (targetHiddenInput.val() == '')
+		if (targetHiddenInput.val() == '' || targetHiddenInput.val() == '{}')
 		{
 			// initialize with array
-			data = data || [];
+			data = [];
 		}
 		else
 		{
+			// initialize with input
 			data = JSON.parse(targetHiddenInput.val());
 		}
 
@@ -430,37 +667,51 @@ jQuery(document).ready(function ()
 			address: currentWrap.find('.js-address-row-data').val()
 		};
 
-		data.push(arrayToAdd);
-
-		// Concatenate string.
-		resultString = currentWrap.find('#jform_city option:selected').text() +
-			currentWrap.find('#jform_area option:selected').text() +
-			arrayToAdd.address;
-
-		// Form up html <option>
-		html = '<option value="' + arrayToAdd.id + '">' +
-			resultString +
-			'</option>';
-
-		// Update drop down list at once
-		targetListToUpdate.each(function ()
+		if ((arrayToAdd.city == '')
+			|| (arrayToAdd.area == '')
+			|| (arrayToAdd.address == ''))
 		{
-			jQuery(this).append(html);
-			jQuery(this).find('option:last').attr('selected', true);
-		});
+			// Notify user to make sure they input correctly
+			Joomla.renderMessages([['欄位輸入不完整']]);
+		}
+		else if ((arrayToAdd.city != '')
+			|| (arrayToAdd.area != '')
+			|| (arrayToAdd.address != ''))
+		{
+			data.push(arrayToAdd);
 
-		// Update to hidden input
-		jQuery(this).customerAjax.updateJsonToInputField(createAddressID, data);
+			// Concatenate string.
+			resultString = currentWrap.find('#jform_city option:selected').text() +
+				currentWrap.find('#jform_area option:selected').text() +
+				arrayToAdd.address;
 
-		// Clear current row
-		currentWrap.addClass('hide');
+			// Form up html <option>
+			html = '<option value="' + arrayToAdd.id + '">' +
+				resultString +
+				'</option>';
+
+			// Update drop down list at once
+			targetListToUpdate.each(function ()
+			{
+				jQuery(this).append(html);
+				jQuery(this).find('option:last').attr('selected', true);
+			});
+
+			// Update to hidden input
+			jQuery(this).customerAjax.updateJsonToInputField(createAddressID, data);
+
+			// Clear current row
+			currentWrap.addClass('hide');
+		}
 	});
 
+	// Bind add new telephone
 	jQuery('.js-add-tel').on('click', function ()
 	{
 		jQuery(this).closest('.js-tel-wrap').find('.js-tmpl-add-telrow').removeClass('hide');
 	});
 
+	// Bind save new telephone
 	jQuery('.js-save-tel').on('click', function ()
 	{
 		var wrapperElement = jQuery(this).closest('.js-tel-wrap');
@@ -471,18 +722,30 @@ jQuery(document).ready(function ()
 
 		if (phoneToAdd != "")
 		{
-			var data = JSON.parse(wrapperElement.find('input[type=hidden]').val());
-
-			// This value is requirement
+			// This value is a requirement
 			var limit = 3;
+
+			var b_set = false;
+
+			var data;
+
+			var inputValue = wrapperElement.find('input[type=hidden]').val();
+
+			if (inputValue == '' || inputValue == '{}')
+			{
+				// initialize with array
+				data = [];
+			}
+			else
+			{
+				// initialize with input
+				data = JSON.parse(inputValue);
+			}
 
 			//Only if the data length smaller than limitation will the insertion being executed
 			if (data.length < limit)
 			{
-				var index = 0;
-				var b_set = false;
-
-				for (index = 0; index < data.length; index++)
+				for (var index = 0; index < data.length; index++)
 				{
 					// Replace the empty field.
 					data[index].number = data[index].number.replace(/\s+/g, '');
@@ -499,7 +762,6 @@ jQuery(document).ready(function ()
 					// If not match, reset every element's default to 'false'
 					data[index].default = 'false';
 				}
-
 				// If no replacement was done, and the length is still not exceed the limit, perform insertion.
 				if (!b_set)
 				{
@@ -523,16 +785,23 @@ jQuery(document).ready(function ()
 		jQuery(this).closest('.js-tmpl-add-telrow').addClass('hide');
 	});
 
-
-	jQuery('#'+seeDrDateID).parent().children().each(function(){
-		jQuery(this).on('focusout', function(){
-			jQuery(this).updateScheduleDate( jQuery('#'+seeDrDateID).val(), jQuery('#'+periodID).val() );
+	// Bind See Doctor Date
+	jQuery('#' + seeDrDateID).parent().children().each(function ()
+	{
+		jQuery(this).on('focusout', function ()
+		{
+			jQuery(this).updateScheduleDate(jQuery('#' + seeDrDateID).val(), jQuery('#' + periodID).val());
 		});
 	});
 
-	jQuery('#'+periodID).on('change', function(){
-		jQuery(this).updateScheduleDate( jQuery('#'+seeDrDateID).val(), jQuery('#'+periodID).val() );
+	// Bind Drug Period
+	jQuery('#' + periodID).on('change', function ()
+	{
+		jQuery(this).updateScheduleDate(jQuery('#' + seeDrDateID).val(), jQuery('#' + periodID).val());
 	});
+
+	// Method list
+	jQuery('#' + methodID).methodForm();
 });
 </script>
 
@@ -614,7 +883,7 @@ jQuery(document).ready(function ()
 <form name="adminForm" id="adminForm" method="post" action="<?php echo JURI::getInstance(); ?>" class="form-horizontal"
 	enctype="multipart/form-data">
 	<div class="row-fluid">
-		<div class="col-lg-5">
+		<div class="col-lg-5 col-md-5 col-sm-12">
 			<?php
 			foreach ($basic as $field)
 			{
@@ -622,7 +891,7 @@ jQuery(document).ready(function ()
 			}
 			?>
 		</div>
-		<div class="col-lg-7">
+		<div class="col-lg-7 col-md-7 col-sm-12">
 			<?php foreach (array("1st", "2nd", "3rd") as $key): ?>
 				<?php $schedules = $data->form->getGroup("schedules_{$key}"); ?>
 				<div id="schedules_<?php echo $key; ?>" class="row-fluid schedules schedules_<?php echo $key; ?>">
@@ -645,30 +914,8 @@ jQuery(document).ready(function ()
 								</div>
 							</div>
 							<!-- Add Address Row -->
-							<div class="col-lg-12">
-								<div class="js-tmpl-add-addressrow hide">
-									<div class="row-fluid">
-										<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8" style="padding: 0px;">
-											<div class="row-fluid">
-												<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4" style="padding: 0px 10px 0px 0px;">
-													<?php echo $data->form->getInput('city') ?>
-												</div>
-												<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4" style="padding: 0px 10px 0px 0px;">
-													<?php echo $data->form->getInput('area') ?>
-												</div>
-												<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4" style="padding: 0px">
-													<input class="js-address-row-data pull-left" type="text">
-												</div>
-											</div>
-										</div>
-										<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4" style="padding: 0px;">
-											<div class="btn btn-small btn-success pull-right js-save-address">
-												<span class="icon-ok icon-white"></span>
-												儲存
-											</div>
-										</div>
-									</div>
-								</div>
+							<div class="col-lg-12 js-add-address-position">
+
 							</div>
 						</div>
 						<div class="row-fluid">
@@ -684,7 +931,7 @@ jQuery(document).ready(function ()
 						</div>
 					</div>
 					<?php echo $schedules["jform_schedules_{$key}_schedule_id"]->getControlGroup(); ?>
-                </div>
+				</div>
 			<?php endforeach; ?>
 			<div class="row-fluid well">
 				<div class="col-lg-12 js-tel-wrap">
@@ -778,6 +1025,80 @@ jQuery(document).ready(function ()
 			</div>
 		</div>
 	</div>
+
+	<!-- HICODE TEMPLATE-->
+	<div class="control-group custom-well js-hicode-tmpl hide">
+		<table class="table table-striped">
+			<thead>
+			<tr>
+				<th class="text-center">健保碼</th>
+				<th class="text-center">總量</th>
+				<th class="text-center">刪除</th>
+				<th class="text-center">總數小計</th>
+			</tr>
+			</thead>
+
+			<tfoot>
+			<td colspan="3">
+				<a class="btn btn-default btn-success js-hicode-add-row">
+					<i class="glyphicon glyphicon-plus"></i>
+					新增欄位
+				</a>
+			</td>
+			<td colspan="1">
+				<p class="text-center"><span class="js-hicode-amount" style="font-size: 2.5rem;"></span></p>
+			</td>
+			</tfoot>
+
+			<tbody>
+				<tr class="js-hicode-row">
+					<td>
+						<input class="js-hicode-code" style="width:100%;" type="text">
+					</td>
+					<td>
+						<input class="js-hicode-quantity" style="width:100%;" type="text">
+					</td>
+					<td>
+						<button type="button" class="btn btn-default btn-sm js-hicode-delete-row">
+							<span class="glyphicon glyphicon-trash"></span>
+						</button>
+					</td>
+					<td>
+						<input class="js-hicode-id" style="width:100%;" type="hidden">
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+	<!-- ADD ADDRESS ROW TEMPLATE -->
+	<div class="js-tmpl-add-addressrow hide">
+		<div class="row-fluid">
+			<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8" style="padding: 0px;">
+				<div class="row-fluid">
+					<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4" style="padding: 0px 10px 0px 0px;">
+						<?php echo $data->form->getInput('city') ?>
+					</div>
+					<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4" style="padding: 0px 10px 0px 0px;">
+						<?php echo $data->form->getInput('area') ?>
+					</div>
+					<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4" style="padding: 0px">
+						<input class="js-address-row-data pull-left" type="text">
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4" style="padding: 0px;">
+				<div class="btn btn-small btn-success pull-right js-save-address">
+					<span class="icon-ok icon-white"></span>
+					儲存
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- This hidden input only for temperately testing-->
+	<input type="hidden" id="jform_hicodes_json"/>
+
 	<div>
 		<input type="hidden" name="option" value="com_schedule" />
 		<input type="hidden" name="task" value="" />
