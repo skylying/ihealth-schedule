@@ -93,7 +93,10 @@ HTML;
 			$html = $input;
 		}
 
-		$js = <<<JS
+		// Do not load datetimepicker when readonly or disabled
+		if (! $this->readonly && ! $this->disabled)
+		{
+			$js = <<<JS
 jQuery(function ()
 {
 	jQuery('#{$id}').datetimepicker({
@@ -101,7 +104,8 @@ jQuery(function ()
 	});
 });
 JS;
-		JFactory::getDocument()->addScriptDeclaration($js);
+			JFactory::getDocument()->addScriptDeclaration($js);
+		}
 
 		return $html;
 	}
