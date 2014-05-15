@@ -339,17 +339,14 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 
 		$customerModel = $this->getModel("Customer");
 
-		$customerUpdata = array(
-			"id"         => $id,
-			"tel_office" => $this->data['tel_office'],
-			"tel_home"   => $this->data['tel_home'],
-			"mobile"     => $this->data['mobile']
-		);
+		$customer->tel_office = $this->data['tel_office'];
+		$customer->tel_home   = $this->data['tel_home'];
+		$customer->mobile     = $this->data['mobile'];
 
 		// 更新客戶電話
-		$customerModel->save($customerUpdata);
+		$customerModel->save((array) $customer);
 
-		return new Data($customerModel->getItem());
+		return $customer;
 	}
 
 	/**
