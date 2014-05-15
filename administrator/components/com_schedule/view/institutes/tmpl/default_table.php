@@ -173,7 +173,7 @@ $date      = $container->get('date');
 
 		<!--Link To Elder List-->
 		<td class="center">
-			<a href="<?php echo JRoute::_('?option=com_schedule&view=customers&filter[customer.institute_id]=' . $item->id);?>" target="_blank">
+			<a href="<?php echo JRoute::_('?option=com_schedule&view=customers&filter[customer.type]=resident&filter[customer.institute_id]=' . $item->id);?>" target="_blank">
 				住民清單
 				<i class="glyphicon glyphicon-share-alt"></i>
 			</a>
