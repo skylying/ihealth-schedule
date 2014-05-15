@@ -180,18 +180,6 @@
 						return result;
 					}
 				}
-
-
-				// Activate calendar by click input itself
-				$row.find('.datetimepicker').each(function()
-				{
-					var calendarIcon = $(this).find('.input-group-addon');
-
-					$(this).find('input').on('click', function()
-					{
-						calendarIcon.click();
-					})
-				});
 			});
 
 			// Add row
