@@ -265,7 +265,7 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 		$senderMapper = new DataMapper(Table::SENDERS);
 
 		// 外送路線
-		$routes = $routesMapper->findOne(array("city" => $address->city, "area" => $address->area));
+		$routes = $routesMapper->findOne(array("city" => $address->city, "area" => $address->area, "type" => "institute"));
 
 		// 沒有路線的時候新增路線
 		if (! isset($routes->id))
