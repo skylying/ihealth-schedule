@@ -287,7 +287,8 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 				"area_title"  => $address->area_title,
 				"sender_id"   => $sender->id,
 				"sender_name" => $sender->name,
-				"weekday"     => $option['weekday']
+				"weekday"     => $option['weekday'],
+				"type"        => "institute"
 			);
 
 			$routeModel->save($routeData);
