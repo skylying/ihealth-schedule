@@ -540,6 +540,18 @@ jQuery(document).ready(function ()
 	jQuery('#'+periodID).on('change', function(){
 		jQuery(this).updateScheduleDate( jQuery('#'+seeDrDateID).val(), jQuery('#'+periodID).val() );
 	});
+
+	jQuery('.js-address-wrap').on('change', '.js-address-list', function(){
+		jQuery(this).updateScheduleDate( jQuery('#'+seeDrDateID).val(), jQuery('#'+periodID).val() );
+	});
+
+	var $scheduleOne = jQuery('#jform_schedules_1st_deliver_nth0');
+	var $scheduleTwo = $scheduleOne.add('#jform_schedules_2nd_deliver_nth0');
+	var $scheduleAll = $scheduleTwo.add('#jform_schedules_3rd_deliver_nth0');
+
+	$scheduleAll.on('change', function(){
+		jQuery(this).updateScheduleDate( jQuery('#'+seeDrDateID).val(), jQuery('#'+periodID).val() );
+	});
 });
 </script>
 
