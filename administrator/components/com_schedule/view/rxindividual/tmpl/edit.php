@@ -461,6 +461,9 @@ jQuery(document).ready(function ()
 
 		// Clear current row
 		currentWrap.addClass('hide');
+
+		// Update Schedule date once
+		jQuery(this).updateScheduleDate( jQuery('#'+seeDrDateID).val(), jQuery('#'+periodID).val() );
 	});
 
 	jQuery('.js-add-tel').on('click', function ()
