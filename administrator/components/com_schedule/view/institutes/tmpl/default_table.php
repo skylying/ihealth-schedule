@@ -41,13 +41,8 @@ $date      = $container->get('date');
 		<?php echo JHtml::_('grid.checkAll'); ?>
 	</th>
 
-	<!--EDIT-->
-	<th width="5%" class="nowrap center">
-		編輯
-	</th>
-
 	<!--ID-->
-	<th width="1%" class="nowrap center">
+	<th width="1%" class="nowrap center" colspan="2">
 		<?php echo $grid->sortTitle('機構編號', 'institute.id'); ?>
 	</th>
 
@@ -133,7 +128,7 @@ $date      = $container->get('date');
 
 		<!--ID-->
 		<td class="center">
-				<?php echo $item->id;?>
+			<?php echo $item->id;?>
 		</td>
 
 		<!--Short Title-->
@@ -178,7 +173,7 @@ $date      = $container->get('date');
 
 		<!--Link To Elder List-->
 		<td class="center">
-			<a href="<?php echo JRoute::_('?option=com_schedule&view=customers');?>">
+			<a href="<?php echo JRoute::_('?option=com_schedule&view=customers&filter[customer.type]=resident&filter[customer.institute_id]=' . $item->id);?>" target="_blank">
 				住民清單
 				<i class="glyphicon glyphicon-share-alt"></i>
 			</a>
