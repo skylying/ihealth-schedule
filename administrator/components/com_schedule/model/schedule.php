@@ -212,4 +212,88 @@ class ScheduleModelSchedule extends AdminModel
 		$table->city_title = $tableCity->title;
 		$table->area_title = $tableArea->title;
 	}
+
+	/**
+	 * Overwrite save method
+	 *
+	 * @param array $data
+	 *
+	 * @return  bool
+	 *
+	 * @throws Exception
+	 */
+	public function save($data)
+	{
+		// Workaround: deliver_nth cannot be saved in array format, possibly because the table structure is enum?
+		$data['deliver_nth'] = $data['deliver_nth'][0];
+
+		$container  = $this->getContainer();
+		$table      = $this->getTable();
+		$dispatcher = $container->get('event.dispatcher');
+
+		if ((!empty($data['tags']) && $data['tags'][0] != ''))
+		{
+			$table->newTags = $data['tags'];
+		}
+
+		$key = $table->getKeyName();
+		$pk  = \JArrayHelper::getValue($data, $key, $this->getState($this->getName() . '.id'));
+
+		$isNew = true;
+
+		// Include the content plugins for the on save events.
+		\JPluginHelper::importPlugin('content');
+
+		// Load the row if saving an existing record.
+		if ($pk)
+		{
+			$table->load($pk);
+			$isNew = false;
+		}
+
+		// Bind the data.
+		$table->bind($data);
+
+		// Prepare the row for saving
+		$this->prepareTable($table);
+
+		// Check the data.
+		if (!$table->check())
+		{
+			throw new \Exception($table->getError());
+		}
+
+		// Trigger the onContentBeforeSave event.
+		$result = $dispatcher->trigger($this->eventBeforeSave, array($this->option . '.' . $this->name, $table, $isNew));
+
+		if (in_array(false, $result, true))
+		{
+			throw new \Exception($table->getError());
+		}
+
+		// Store the data.
+		if (!$table->store())
+		{
+			throw new \Exception($table->getError());
+		}
+
+		// Clean the cache.
+		$this->cleanCache();
+
+		// Trigger the onContentAfterSave event.
+		$dispatcher->trigger($this->eventAfterSave, array($this->option . '.' . $this->name, $table, $isNew));
+
+		$pkName = $table->getKeyName();
+
+		if (isset($table->$pkName))
+		{
+			$this->state->set($this->getName() . '.id', $table->$pkName);
+		}
+
+		$this->state->set($this->getName() . '.new', $isNew);
+
+		$this->postSaveHook($table);
+
+		return true;
+	}
 }

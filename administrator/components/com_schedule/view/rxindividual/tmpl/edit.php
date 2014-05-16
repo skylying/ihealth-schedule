@@ -9,6 +9,8 @@
 // No direct access
 defined('_JEXEC') or die;
 
+use Schedule\Helper\ScheduleHelper;
+
 JHtmlBootstrap::tooltip();
 JHtmlFormbehavior::chosen('select');
 JHtmlBehavior::formvalidation();
@@ -25,6 +27,7 @@ $mobileID = $data->form->getField('mobile')->id;
 $seeDrDateID = $data->form->getField('see_dr_date')->id;
 $periodID = $data->form->getField('period')->id;
 $createAddressID = $data->form->getField('create_address')->id;
+$timesID = $data->form->getField('times')->id;
 $methodID = $data->form->getField('method')->id;
 
 $telOfficeName = $data->form->getField('tel_office')->name;
@@ -41,6 +44,9 @@ var telHomeID = "<?php echo $telHomeID;?>";
 var mobileID = "<?php echo $mobileID;?>";
 var customerIDNumber = "<?php echo $customerIDNumber;?>";
 var createAddressID = "<?php echo $createAddressID;?>";
+var timesID = "<?php echo $timesID;?>";
+var seeDrDateID = "<?php echo $seeDrDateID;?>";
+var periodID = "<?php echo $periodID;?>";
 
 // Update empty rows of addresses inputs
 var addressesKeys = ["1st", "2nd", "3rd"];
@@ -90,16 +96,14 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 		}).done(function (cdata)
 			{
 				var cdata      = $.parseJSON(cdata);
-
 				var id_number  = cdata.id_number;
-				$.fn.customerAjax.updateJsonToInputField(telHomeID, tel_home);
 
 				try
 				{
 					// Update phone numbers
 					var tel_office = $.parseJSON(cdata.tel_office);
 
-					// Update hidden input which store phone number json string.
+					// Update phone select list
 					$.fn.customerAjax.updatePhoneHtml(telOfficeID, tel_office);
 				}
 				catch(err)
@@ -112,7 +116,7 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 					// Update phone numbers
 					var tel_home = $.parseJSON(cdata.tel_home);
 
-					// Update hidden input which store phone number json string.
+					// Update phone select list
 					$.fn.customerAjax.updatePhoneHtml(telHomeID, tel_home);
 				}
 				catch(err)
@@ -125,7 +129,7 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 					// Update phone numbers
 					var mobile = $.parseJSON(cdata.mobile);
 
-					// Update hidden input which store phone number json string.
+					// Update phone select list
 					$.fn.customerAjax.updatePhoneHtml(mobileID, mobile);
 				}
 				catch(err)
@@ -216,15 +220,20 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 
 		var html = '';
 
+		var addressListClass = 'js-address-list';
+
 		// Add select tag
 		html += '<select' +
-			' name="' + targetName + '"' +
-			' id="'   + targetID   + '">';
+			' name="'  + targetName + '"' +
+			' id="'    + targetID   + '"' +
+			' class="' + addressListClass + '">';
 
 		for (var i = 0; i < addressJson.length; i++)
 		{
 			// Add option tag
 			html += '<option' +
+				' city="' + addressJson[i].city + '"' +
+				' area="' + addressJson[i].area + '"' +
 				' value="' + addressJson[i].id + '"' +
 				((addressJson[i].id == currentSelected) ? 'selected' : '') +
 				'>' +
@@ -330,15 +339,30 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 		hiddenInput.val(JSON.stringify(data));
 	};
 
+	/**
+	 * Bind change schedules' cheboxes
+	 *
+	 * bindChangeNthScheduleInfo
+	 *
+	 * return void
+	 */
 	$.fn.bindChangeNthScheduleInfo = function ()
 	{
 		$(this).on('change', function()
 		{
 			$.fn.toggleNthScheduleInfo(this);
+
 		});
 		$(this).toggleNthScheduleInfo();
 	};
 
+	/**
+	 * Bind schedules' checkboxes on 'toggle' opaque effect and 'update sender date' method
+	 *
+	 * toggleNthScheduleInfo
+	 *
+	 * return void
+	 */
 	$.fn.toggleNthScheduleInfo = function (that)
 	{
 		that = that || this;
@@ -360,7 +384,7 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 	 * @param {string}    seeDrDate
 	 * @param {json}      period
 	 */
-	$.fn.updateScheduleDate = function( seeDrDate, period )
+	$.fn.updateScheduleDate = function (seeDrDate, period)
 	{
 		var moment_date = moment(seeDrDate);
 
@@ -368,23 +392,106 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 		{
 			var drugEmptyDateID = '#jform_schedules_' + addressesKeys[i] + '_drug_empty_date';
 			var selectedAddressID = '#jform_schedules_' + addressesKeys[i] + '_address_id';
+			var deliveredNth = '#jform_schedules_' + addressesKeys[i] + '_deliver_nth0';
 
 			// Set finish drug date
 			moment_date.add('days', period);
-			$(drugEmptyDateID).val( moment_date.format("YYYY-MM-DD") );
+			$(drugEmptyDateID).val(moment_date.format("YYYY-MM-DD"));
 
-			// Get send date
-			var addressVal = $(selectedAddressID).val();
+			if ($(deliveredNth).is(":checked"))
+			{
+				var address = $(selectedAddressID).val();
+				var city = $(selectedAddressID).find('option:selected').attr('city');
+				var area = $(selectedAddressID).find('option:selected').attr('area');
 
-			$.ajax({
-				type: "POST",
-				url: "index.php?option=com_schedule&task=rxindividual.ajax.date" +
-					"&address_id=" + addressVal
+				$.ajax({
+					type: "POST",
+					url: "index.php?option=com_schedule&task=rxindividual.ajax.date" +
+						"&nth=" + addressesKeys[i] +
+						"&city_id=" + city +
+						"&area_id=" + area +
+						"&see_dr_date=" + seeDrDate +
+						"&period=" + period
+				}).done(function (cdata)
+					{
+						var data = JSON.parse(cdata);
 
-			}).done(function (cdata)
-				{
-					var cdata = $.parseJSON(cdata);
-				});
+						var sendDateId = '#jform_schedules_' + data['nth'] + '_date';
+
+						if (data['date'] != null)
+						{
+							$(sendDateId).closest('.js-nth-schedule-info').find('.js-route-wrap').addClass('hide');
+
+							$(sendDateId).val(data['date']);
+						}
+						else
+						{
+							if (data['type'] == '2')
+							{
+								$(sendDateId).closest('.js-nth-schedule-info').find('.js-route-wrap').removeClass('hide');
+
+								$(sendDateId).val('');
+								Joomla.renderMessages([
+									[data['message']]
+								]);
+							}
+						}
+					});
+			}
+		}
+	};
+
+	/**
+	 * Show and hide schedules edit box by changing send drug times
+	 *
+	 * updateScupdateSchedulesEditBoxheduleDate
+	 *
+	 * return void
+	 *
+	 */
+	$.fn.showSchedulesEditBlock = function ()
+	{
+		var schedules1 = $('.schedules').eq(0);
+		var schedules2 = $('.schedules').eq(1);
+		var schedules3 = $('.schedules').eq(2);
+
+		var checkbox1 = schedules1.find('.js-nth-schedule-check input');
+		var checkbox2 = schedules2.find('.js-nth-schedule-check input');
+		var checkbox3 = schedules3.find('.js-nth-schedule-check input');
+
+		switch($(this).val()){
+			case '1':
+				// Check 1
+				checkbox1.attr('checked', true).trigger('change');
+				checkbox2.attr('checked', false).trigger('change');
+				checkbox3.attr('checked', false).trigger('change');
+				// Show 1
+				schedules1.removeClass('hide');
+				schedules2.addClass('hide');
+				schedules3.addClass('hide');
+				break;
+			case '2':
+				// Check 2
+				checkbox1.attr('checked', false).trigger('change');
+				checkbox2.attr('checked', true).trigger('change');
+				checkbox3.attr('checked', false).trigger('change');
+				// Show 1, 2
+				schedules1.removeClass('hide');
+				schedules2.removeClass('hide');
+				schedules3.addClass('hide');
+				break;
+			case '3':
+				// Check 2,3
+				checkbox1.attr('checked', false).trigger('change');
+				checkbox2.attr('checked', true).trigger('change');
+				checkbox3.attr('checked', true).trigger('change');
+				// Show all
+				schedules1.removeClass('hide');
+				schedules2.removeClass('hide');
+				schedules3.removeClass('hide');
+				break;
+			default:
+				break;
 		}
 	};
 
@@ -660,33 +767,36 @@ jQuery(document).ready(function ()
 			data = JSON.parse(targetHiddenInput.val());
 		}
 
-		var arrayToAdd = {
+		var objectToAdd = {
 			id: 'hash-' + data.length,
 			city: currentWrap.find('#jform_city').val(),
 			area: currentWrap.find('#jform_area').val(),
 			address: currentWrap.find('.js-address-row-data').val()
 		};
 
-		if ((arrayToAdd.city == '')
-			|| (arrayToAdd.area == '')
-			|| (arrayToAdd.address == ''))
+		if ((objectToAdd.city == '')
+			|| (objectToAdd.area == '')
+			|| (objectToAdd.address == ''))
 		{
 			// Notify user to make sure they input correctly
 			Joomla.renderMessages([['欄位輸入不完整']]);
 		}
-		else if ((arrayToAdd.city != '')
-			|| (arrayToAdd.area != '')
-			|| (arrayToAdd.address != ''))
+		else if ((objectToAdd.city != '')
+			|| (objectToAdd.area != '')
+			|| (objectToAdd.address != ''))
 		{
-			data.push(arrayToAdd);
+			data.push(objectToAdd);
 
 			// Concatenate string.
 			resultString = currentWrap.find('#jform_city option:selected').text() +
 				currentWrap.find('#jform_area option:selected').text() +
-				arrayToAdd.address;
+				objectToAdd.address;
 
 			// Form up html <option>
-			html = '<option value="' + arrayToAdd.id + '">' +
+			html = '<option' +
+				' city="' + objectToAdd.city + '"' +
+				' area="' + objectToAdd.area + '"' +
+				' value="' + objectToAdd.id + '">' +
 				resultString +
 				'</option>';
 
@@ -702,6 +812,9 @@ jQuery(document).ready(function ()
 
 			// Clear current row
 			currentWrap.addClass('hide');
+
+			// Update Schedule date once
+			jQuery(this).updateScheduleDate(jQuery('#' + seeDrDateID).val(), jQuery('#' + periodID).val());
 		}
 	});
 
@@ -792,6 +905,32 @@ jQuery(document).ready(function ()
 		{
 			jQuery(this).updateScheduleDate(jQuery('#' + seeDrDateID).val(), jQuery('#' + periodID).val());
 		});
+	});
+
+	jQuery('#' + periodID).on('change', function ()
+	{
+		jQuery(this).updateScheduleDate(jQuery('#' + seeDrDateID).val(), jQuery('#' + periodID).val());
+	});
+
+	jQuery('.js-address-wrap').on('change', '.js-address-list', function ()
+	{
+		jQuery(this).updateScheduleDate(jQuery('#' + seeDrDateID).val(), jQuery('#' + periodID).val());
+	});
+
+	// Combine selector, whenever schedule's checkboxes are changed, fire get sender date update.
+	var $scheduleOne = jQuery('#jform_schedules_1st_deliver_nth0');
+	var $scheduleTwo = $scheduleOne.add('#jform_schedules_2nd_deliver_nth0');
+	var $scheduleAll = $scheduleTwo.add('#jform_schedules_3rd_deliver_nth0');
+
+	$scheduleAll.on('change', function ()
+	{
+		jQuery(this).updateScheduleDate(jQuery('#' + seeDrDateID).val(), jQuery('#' + periodID).val());
+	});
+
+	// simultaneously show and hide schedules
+	jQuery('#' + timesID).on('change', function ()
+	{
+		jQuery(this).showSchedulesEditBlock();
 	});
 
 	// Bind Drug Period
@@ -910,6 +1049,16 @@ jQuery(document).ready(function ()
 											<span class="icon-plus icon-white"></span>
 											新增
 										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-12 js-route-wrap hide">
+								<div class="row-fluid">
+									<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4" style="padding: 0px 10px 0px 0px;">
+										<?php echo $schedules["jform_schedules_{$key}_sender_id"]->getControlGroup(); ?>
+									</div>
+									<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4" style="padding: 0px 10px 0px 0px;">
+										<?php echo $schedules["jform_schedules_{$key}_weekday"]->getControlGroup(); ?>
 									</div>
 								</div>
 							</div>
@@ -1051,22 +1200,22 @@ jQuery(document).ready(function ()
 			</tfoot>
 
 			<tbody>
-				<tr class="js-hicode-row">
-					<td>
-						<input class="js-hicode-code" style="width:100%;" type="text">
-					</td>
-					<td>
-						<input class="js-hicode-quantity" style="width:100%;" type="text">
-					</td>
-					<td>
-						<button type="button" class="btn btn-default btn-sm js-hicode-delete-row">
-							<span class="glyphicon glyphicon-trash"></span>
-						</button>
-					</td>
-					<td>
-						<input class="js-hicode-id" style="width:100%;" type="hidden">
-					</td>
-				</tr>
+			<tr class="js-hicode-row">
+				<td>
+					<input class="js-hicode-code" style="width:100%;" type="text">
+				</td>
+				<td>
+					<input class="js-hicode-quantity" style="width:100%;" type="text">
+				</td>
+				<td>
+					<button type="button" class="btn btn-default btn-sm js-hicode-delete-row">
+						<span class="glyphicon glyphicon-trash"></span>
+					</button>
+				</td>
+				<td>
+					<input class="js-hicode-id" style="width:100%;" type="hidden">
+				</td>
+			</tr>
 			</tbody>
 		</table>
 	</div>
