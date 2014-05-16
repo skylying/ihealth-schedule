@@ -139,6 +139,11 @@
 			/>
 	</fieldset>
 
+	<field name="deliver_nths"
+		type="hidden"
+		>
+	</field>
+
 	<fields name="schedules_1st">
 		<field name="deliver_nth"
 			type="checkboxes"
