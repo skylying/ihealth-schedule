@@ -127,6 +127,9 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 		$scheduleModel = $this->getModel("Schedule");
 		$addressModel  = $this->getModel("Address");
 
+		$scheduleState = $scheduleModel->getState();
+		$scheduleState->set('form.type', 'schedule_individule');
+
 		// 圖片處理
 		$this->rxImageHandler();
 
@@ -167,7 +170,7 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 
 			// 新增排程
 			$scheduleModel->save(
-				$this->getScheduleUploadData($rx, $task, $customer, $address, $nth, $schedule)
+				$this->getScheduleUploadData($rx, $task->id, $customer, $address, $nth, $schedule, $routes)
 			);
 
 			// 最後更改地址
@@ -362,10 +365,11 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 	 * @param   Data    $address
 	 * @param   Data    $nth
 	 * @param   array   $formData
+	 * @param   Data    $routes
 	 *
 	 * @return  array
 	 */
-	protected function getScheduleUploadData($rx, $task, $customer, $address, $nth, $formData)
+	protected function getScheduleUploadData($rx, $task, $customer, $address, $nth, $formData, $routes)
 	{
 		// Schedule data
 		$scheduleUpdata = array(
@@ -374,6 +378,8 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 
 			// Rx id
 			"rx_id"         => $rx->id,
+			"route_id"      => $routes->id,
+			"sender_name"   => $routes->sender_name,
 
 			// 對應外送 id
 			"task_id"       => $task,
