@@ -933,9 +933,6 @@ jQuery(document).ready(function ()
 		jQuery(this).showSchedulesEditBlock();
 	});
 
-	// show and hide schedules once on load
-	jQuery('#' + timesID).showSchedulesEditBlock();
-
 	// Bind Drug Period
 	jQuery('#' + periodID).on('change', function ()
 	{
