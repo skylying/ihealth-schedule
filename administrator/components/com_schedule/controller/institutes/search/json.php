@@ -13,6 +13,24 @@ class ScheduleControllerInstitutesSearchJson extends DisplayController
 	/**
 	 * This will create json response and return it
 	 *
+	 *  - Api format :
+	 *   - base url : index.php?option=com_schedule
+	 *   - api keys :
+	 *     - task = institutes.search.json
+	 *     - filter_search = {institute name}
+	 *
+	 *   EX : index.php?option=com_schedule&task=institutes.search.json&filter_search=新北
+	 *
+	 * - Returned data : (JSON FORMAT)
+	 *  - "id"           = institute id + floor title (for select2 use)
+	 *  - "instituteid   = institute id
+	 *  - "dropdowntext" = institute shorttitle
+	 *  - "color"        = color hex code
+	 *  - "delivery_day" = delivery weekday
+	 *  - "floor"        = floor title
+	 *  - "city"         = city id
+	 *  - "area"         = area id
+	 *
 	 * @return  mixed|void
 	 */
 	protected function doExecute()
@@ -33,13 +51,15 @@ class ScheduleControllerInstitutesSearchJson extends DisplayController
 					'dropdowntext' => $item->institute_short_title,
 					'color'        => $item->color_hex,
 					'delivery_day' => $item->delivery_weekday,
-					'floor'        => $item->floor
+					'floor'        => $item->floor,
+					'city'         => $item->city,
+					'area'         => $item->area
 				);
 			},
 			$model->getItems()
 		);
 
-		// Preoare floor data that select2 need
+		// Prepare floor data
 		$itemsWithFloors = array();
 
 		foreach ($items as $item)
@@ -66,7 +86,9 @@ class ScheduleControllerInstitutesSearchJson extends DisplayController
 					'dropdowntext' => $item['dropdowntext'] . ' ' . $value,
 					'color'        => $item['color'],
 					'delivery_day' => $item['delivery_day'],
-					'floor'        => $value
+					'floor'        => $value,
+					'city'         => $item['city'],
+					'area'         => $item['area']
 				);
 			}
 		}
