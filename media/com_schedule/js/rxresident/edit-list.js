@@ -29,18 +29,18 @@
 			});
 
 			// Bind afterDuplicate event
-			handler.on('afterDuplicate', function ($row)
+			handler.on('afterDuplicate', function ($row, $from)
 			{
-				var select2s = $row.find('div.customer-id');
-
-				var dropdowntext = $(select2s[1]).find('.select2-chosen').text();
-
 				// Remove exists select2 element
 				$row.find('div.customer-id').remove();
 
-				$row.find('input.customer-id').each(function ()
+				var originCustomerIds = $from.find('input.customer-id');
+
+				$row.find('input.customer-id').each(function (i, val)
 				{
-					customer_id.select2Initialize($(this), dropdowntext);
+					var data = $(originCustomerIds[i]).select2('data') || {id:'', customer_name:''};
+
+					customer_id.select2Initialize($(this), data.customer_name);
 				});
 			});
 
@@ -268,7 +268,10 @@
 		colorBlock.css('background', color);
 
 		// Replace $node value with real institute id
-		$node.val(e.added.instituteid);
+		if (e.added.instituteid)
+		{
+			$node.val(e.added.instituteid);
+		}
 
 		// Export institute_id
 		window.instituteId = e.added.instituteid;
@@ -293,7 +296,7 @@
 			customer_id.select2Initialize($row.find('.customer-id'));
 
 			$row.find('.idnumber').val('');
-			$row.find('.birthday input').val('');
+			$row.find('.birthday').val('');
 		})
 	};
 

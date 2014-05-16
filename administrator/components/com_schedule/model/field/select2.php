@@ -221,7 +221,8 @@ class JFormFieldSelect2 extends JFormField
 		$attrs = array(
 			'id'    => $this->id,
 			'name'  => $this->name,
-			'class' => $this->class
+			'class' => $this->class,
+			'value' => $this->value,
 		);
 
 		$html = new \Windwalker\Html\HtmlElement('input', '', $attrs);
