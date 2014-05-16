@@ -125,18 +125,25 @@ $data->asset->addJS('multi-row-handler.js');
 		});
 
 		//calculate age
-		jQuery('#jform_birth_date').on('focusout', function()
-		{
-			var birthday = (new Date(jQuery(this).val())).getFullYear();
+		var birthday = jQuery('#jform_birth_date').val();
 
-			var now = (new Date()).getFullYear();
+		var birthTime = (new Date(birthday)).getTime();
 
-			var age = now - birthday;
+		var now = (new Date()).getTime();
+
+		if(birthday == '' || birthTime >= now){
+
+			var age = '';
 
 			jQuery('#jform_age').val(age);
 
-		});
+		} else {
 
+			age = Math.floor((now - birthTime) / 86400 / 365000);
+
+			jQuery('#jform_age').val(age);
+
+		}
 
 		var addrJson = jQuery('#jform_address').val();
 
