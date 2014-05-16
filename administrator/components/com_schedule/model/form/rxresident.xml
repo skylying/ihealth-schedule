@@ -26,7 +26,7 @@
 
 	<fieldset name="information">
 		<field name="id"
-			type="text"
+			type="hidden"
 			class="fullwidth"
 			label="id"
 			description="id"

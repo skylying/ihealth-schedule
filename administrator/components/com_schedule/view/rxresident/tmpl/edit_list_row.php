@@ -19,6 +19,9 @@ $group = $data->group;
 $id    = FieldHelper::resetGroup($form->getField('id'), $group);
 ?>
 <tr>
+	<td class="hide">
+		<?php echo $id->input; ?>
+	</td>
 	<td>
 		<?php
 		$customerId = FieldHelper::resetGroup($form->getField('customer_id'), $group);

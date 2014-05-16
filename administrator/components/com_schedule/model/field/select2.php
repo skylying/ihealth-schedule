@@ -28,7 +28,7 @@ use \Windwalker\Helper\XmlHelper;
  *  - this function need to be declared in your own js code with excatly the same name
  *  - EX : "updateDeliveryDay"
  *
- * - apiTableNam : table name where initialValue came from
+ * - apiTableName : table name where initialValue came from
  *  - EX : institutes
  *
  * - allowNew : allow select2 field enter value which not included in dropdown list
@@ -70,7 +70,7 @@ class JFormFieldSelect2 extends JFormField
 		$params = $this->getXmlField($initialValue);
 
 		// Tell javascript we don't have initial value
-		$params['hasInitialValue']   = 'false';
+		$params['hasInitialValue'] = 'false';
 
 		if (isset($initialValue) && '' != $initialValue)
 		{
@@ -200,7 +200,7 @@ class JFormFieldSelect2 extends JFormField
 			})(jQuery);
 		';
 
-		$jsToInitializeInstitueSelect2 = '
+		$jsToInitializeInstituteSelect2 = '
 			(function ($) {
 				$(document).ready(function() {
 
@@ -216,7 +216,7 @@ class JFormFieldSelect2 extends JFormField
 
 		$asset->internalJS($script);
 
-		$asset->internalJS($jsToInitializeInstitueSelect2);
+		$asset->internalJS($jsToInitializeInstituteSelect2);
 
 		$attrs = array(
 			'id'    => $this->id,
@@ -268,7 +268,7 @@ class JFormFieldSelect2 extends JFormField
 			'consoleResult'      => XmlHelper::get($this->element, 'apiConsoleResult', 'false'),
 			'apiQueryKey'        => XmlHelper::get($this->element, 'apiQueryKey'),
 			'allowNew'           => XmlHelper::get($this->element, 'allowNew', 'false'),
-			'onChangeCallback'   => XmlHelper::get($this->element, 'onChangeCallback')
+			'onChangeCallback'   => XmlHelper::get($this->element, 'onChangeCallback', 'function(){}')
 		);
 
 		return $params;
