@@ -130,9 +130,16 @@ $date      = $container->get('date');
 
 		<!-- 所屬會員 -->
 		<td>
-			<a href="<?php echo JRoute::_('index.php?option=com_schedule&task=member.edit.edit&id=' . $item->member_id); ?>">
-				<?php echo $this->escape($item->member_name); ?>
-			</a>
+			<?php $members = empty($item->member_json) ? array() : json_decode("[" . $item->member_json . "]"); ?>
+			<?php
+				foreach ($members as $member):
+					?>
+					<a href="<?php echo JRoute::_('index.php?option=com_schedule&task=member.edit.edit&id=' . $member->id); ?>">
+						<?php echo $this->escape($member->name); ?>
+					</a>
+					<?php
+				endforeach;
+			?>
 		</td>
 
 		<!-- 上傳方式 -->

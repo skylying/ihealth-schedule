@@ -105,6 +105,36 @@ class ScheduleModelRxindividuals extends ListModel
 	}
 
 	/**
+	 * Post Get Query
+	 *
+	 * @param JDatabaseQuery $query
+	 *
+	 * @return  void
+	 */
+	protected function postGetQuery(\JDatabaseQuery $query)
+	{
+		$sql = <<<SQLALIAS
+group_concat(
+	CONCAT(
+		'{',
+			'"id": "',
+				`member`.`id`,
+			'",',
+
+			'"name": "',
+				`member`.`name`,
+			'"',
+		'}'
+	)
+) AS `member_json`
+SQLALIAS;
+
+		$query->select($sql);
+
+		parent::postGetQuery($query);
+	}
+
+	/**
 	 * populateState
 	 *
 	 * @param null $ordering
