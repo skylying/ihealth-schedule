@@ -1169,7 +1169,7 @@ jQuery(document).ready(function ()
 				</div>
 				<div class="col-lg-12">
 					<?php echo $data->form->getControlGroup('note'); ?>
-					<?php echo $data->form->getControlGroup('note_list'); ?>
+					<?php echo $data->form->getControlGroup('remind'); ?>
 				</div>
 			</div>
 		</div>
