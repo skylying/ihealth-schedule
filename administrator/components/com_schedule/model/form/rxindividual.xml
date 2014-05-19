@@ -114,6 +114,9 @@
 		<field name="drug"
 			type="hidden"
 			/>
+		<field name="delete_drug"
+			type="hidden"
+			/>
 
 		<field name="rximages"
 			type="file"

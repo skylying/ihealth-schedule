@@ -30,6 +30,7 @@ $createAddressID = $data->form->getField('create_address')->id;
 $timesID = $data->form->getField('times')->id;
 $methodID = $data->form->getField('method')->id;
 $drugID = $data->form->getField('drug')->id;
+$deleteDrugID = $data->form->getField('delete_drug')->id;
 
 $telOfficeName = $data->form->getField('tel_office')->name;
 $telHomeName   = $data->form->getField('tel_home')->name;
@@ -49,6 +50,7 @@ var timesID = "<?php echo $timesID;?>";
 var seeDrDateID = "<?php echo $seeDrDateID;?>";
 var periodID = "<?php echo $periodID;?>";
 var drugID = "<?php echo $drugID;?>";
+var deleteDrugID = "<?php echo $deleteDrugID;?>";
 
 // Update empty rows of addresses inputs
 var addressesKeys = ["1st", "2nd", "3rd"];
@@ -507,7 +509,6 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 			// Update while hicode date already exist on the very first time
 			if (targetHiddenInput.val() != '' && targetHiddenInput.val() != '{}' && targetHiddenInput.val() != '[]')
 			{
-				console.log(targetHiddenInput.val());
 				$.fn.methodForm.insertHicodeTableRow(JSON.parse(targetHiddenInput.val()));
 			}
 
@@ -565,10 +566,28 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 			// Bind Delete event
 			$('.js-hicode-tmpl').on('click', '.js-hicode-delete-row',function ()
 			{
+				// Stores id to delete
+				// ex: [1, 2]
+				var data = [];
+				var targetInput = $('#' + deleteDrugID);
+
+				if (targetInput.val() && targetInput.val() != '[]')
+				{
+					data = JSON.parse(targetInput.val());
+				}
+
 				if (confirm('您確定要刪除嗎？'))
 				{
 					if ($(".js-hicode-row").size() > 1)
 					{
+						var idToDelete = $(this).closest('.js-hicode-row').find('.js-hicode-id').val();
+
+						// Colect deleted IDs
+						if (!idToDelete)
+						{
+							data.push(idToDelete);
+						}
+
 						// Delete row
 						$(this).closest('.js-hicode-row').remove();
 						// Update Hidden Input
@@ -576,6 +595,14 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 					}
 					else
 					{
+						var idToDelete = $(this).closest('.js-hicode-row').find('.js-hicode-id').val();
+
+						// Colect deleted IDs
+						if (!idToDelete)
+						{
+							data.push(idToDelete);
+						}
+
 						var row = $(".js-hicode-row").first();
 						// Retrieve hicode
 						row.find('.js-hicode-code').val('');
@@ -587,6 +614,9 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 						// Update Hidden Input
 						$.fn.methodForm.updateHicodeHiddenInput();
 					}
+
+					// Update deleted IDs
+					targetInput.val(JSON.stringify(data));
 				}
 			});
 		});
