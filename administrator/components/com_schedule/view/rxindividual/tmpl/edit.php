@@ -29,6 +29,8 @@ $periodID = $data->form->getField('period')->id;
 $createAddressID = $data->form->getField('create_address')->id;
 $timesID = $data->form->getField('times')->id;
 $methodID = $data->form->getField('method')->id;
+$drugID = $data->form->getField('drug')->id;
+$deleteDrugID = $data->form->getField('delete_drug')->id;
 
 $telOfficeName = $data->form->getField('tel_office')->name;
 $telHomeName   = $data->form->getField('tel_home')->name;
@@ -47,6 +49,8 @@ var createAddressID = "<?php echo $createAddressID;?>";
 var timesID = "<?php echo $timesID;?>";
 var seeDrDateID = "<?php echo $seeDrDateID;?>";
 var periodID = "<?php echo $periodID;?>";
+var drugID = "<?php echo $drugID;?>";
+var deleteDrugID = "<?php echo $deleteDrugID;?>";
 
 // Update empty rows of addresses inputs
 var addressesKeys = ["1st", "2nd", "3rd"];
@@ -500,10 +504,10 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 		return this.each(function ()
 		{
 			// Find where to store hicodes
-			var targetHiddenInput = $('#jform_hicodes_json');
+			var targetHiddenInput = $('#' + drugID);
 
 			// Update while hicode date already exist on the very first time
-			if (targetHiddenInput.val() != '' && targetHiddenInput.val() != '{}')
+			if (targetHiddenInput.val() != '' && targetHiddenInput.val() != '{}' && targetHiddenInput.val() != '[]')
 			{
 				$.fn.methodForm.insertHicodeTableRow(JSON.parse(targetHiddenInput.val()));
 			}
@@ -526,7 +530,6 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 				}
 				else
 				{
-					var targetHiddenInput = $('#jform_hicodes_json');
 					targetHiddenInput.val('');
 					tableTmpl.addClass('hide');
 				}
@@ -563,10 +566,28 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 			// Bind Delete event
 			$('.js-hicode-tmpl').on('click', '.js-hicode-delete-row',function ()
 			{
+				// Stores id to delete
+				// ex: [1, 2]
+				var data = [];
+				var targetInput = $('#' + deleteDrugID);
+
+				if (targetInput.val() && targetInput.val() != '[]')
+				{
+					data = JSON.parse(targetInput.val());
+				}
+
 				if (confirm('您確定要刪除嗎？'))
 				{
 					if ($(".js-hicode-row").size() > 1)
 					{
+						var idToDelete = $(this).closest('.js-hicode-row').find('.js-hicode-id').val();
+
+						// Colect deleted IDs
+						if (idToDelete)
+						{
+							data.push(idToDelete);
+						}
+
 						// Delete row
 						$(this).closest('.js-hicode-row').remove();
 						// Update Hidden Input
@@ -574,6 +595,14 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 					}
 					else
 					{
+						var idToDelete = $(this).closest('.js-hicode-row').find('.js-hicode-id').val();
+
+						// Colect deleted IDs
+						if (idToDelete)
+						{
+							data.push(idToDelete);
+						}
+
 						var row = $(".js-hicode-row").first();
 						// Retrieve hicode
 						row.find('.js-hicode-code').val('');
@@ -585,6 +614,9 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 						// Update Hidden Input
 						$.fn.methodForm.updateHicodeHiddenInput();
 					}
+
+					// Update deleted IDs
+					targetInput.val(JSON.stringify(data));
 				}
 			});
 		});
@@ -608,33 +640,19 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 			// Retrieve id
 			var id = $(this).find('.js-hicode-id').val();
 
-			// Check if hash Exist
-			if (id.indexOf("hash-") > -1)
-			{
-				// indexOf returns the position of the string in the other string.
-				// If not found, it will return -1:
-
-				// Make sure every info is provided
-				if ((code != '') && (quantity != ''))
-				{
-					data.push({id: 'hash-' + newRowCounter, hicode: code, quantity: quantity});
-					newRowCounter++;
-					totalRowCounter++;
-				}
-			}
-			// if hash- doesn't exist, and id doesn't exist => blank new row
-			else if (id.indexOf("hash-") == -1 && id == '')
+			// blank new row
+			if (id == '')
 			{
 				// Make sure every info is provided
 				if ((code != '') && (quantity != ''))
 				{
-					data.push({id: 'hash-' + newRowCounter, hicode: code, quantity: quantity});
+					data.push({id: '', hicode: code, quantity: quantity});
 					newRowCounter++;
 					totalRowCounter++;
 				}
 			}
-			// if hash- doesn't exist, and id exist
-			else if ((id.indexOf("hash-") == -1) && (id != ''))
+			// if 'create' doesn't exist, and id exist
+			else
 			{
 				// Make sure every info is provided
 				if ((code != '') && (quantity != ''))
@@ -645,7 +663,7 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 			}
 
 			// Perform hidden input update
-			$(this).customerAjax.updateJsonToInputField('jform_hicodes_json', data);
+			$(this).customerAjax.updateJsonToInputField(drugID, data);
 
 			// Update Counter
 			$('.js-hicode-amount').text(totalRowCounter);
@@ -1179,43 +1197,43 @@ jQuery(document).ready(function ()
 	<div class="control-group custom-well js-hicode-tmpl hide">
 		<table class="table table-striped">
 			<thead>
-			<tr>
-				<th class="text-center">健保碼</th>
-				<th class="text-center">總量</th>
-				<th class="text-center">刪除</th>
-				<th class="text-center">總數小計</th>
-			</tr>
+				<tr>
+					<th class="text-center">健保碼</th>
+					<th class="text-center">總量</th>
+					<th class="text-center">刪除</th>
+					<th class="text-center">總數小計</th>
+				</tr>
 			</thead>
 
 			<tfoot>
-			<td colspan="3">
-				<a class="btn btn-default btn-success js-hicode-add-row">
-					<i class="glyphicon glyphicon-plus"></i>
-					新增欄位
-				</a>
-			</td>
-			<td colspan="1">
-				<p class="text-center"><span class="js-hicode-amount" style="font-size: 2.5rem;"></span></p>
-			</td>
+				<td colspan="3">
+					<a class="btn btn-default btn-success js-hicode-add-row">
+						<i class="glyphicon glyphicon-plus"></i>
+						新增欄位
+					</a>
+				</td>
+				<td colspan="1">
+					<p class="text-center"><span class="js-hicode-amount" style="font-size: 2.5rem;"></span></p>
+				</td>
 			</tfoot>
 
 			<tbody>
-			<tr class="js-hicode-row">
-				<td>
-					<input class="js-hicode-code" style="width:100%;" type="text">
-				</td>
-				<td>
-					<input class="js-hicode-quantity" style="width:100%;" type="text">
-				</td>
-				<td>
-					<button type="button" class="btn btn-default btn-sm js-hicode-delete-row">
-						<span class="glyphicon glyphicon-trash"></span>
-					</button>
-				</td>
-				<td>
-					<input class="js-hicode-id" style="width:100%;" type="hidden">
-				</td>
-			</tr>
+				<tr class="js-hicode-row">
+					<td>
+						<input class="js-hicode-code" style="width:100%;" type="text">
+					</td>
+					<td>
+						<input class="js-hicode-quantity" style="width:100%;" type="text">
+					</td>
+					<td>
+						<button type="button" class="btn btn-default btn-sm js-hicode-delete-row">
+							<span class="glyphicon glyphicon-trash"></span>
+						</button>
+					</td>
+					<td>
+						<input class="js-hicode-id" style="width:100%;" type="hidden">
+					</td>
+				</tr>
 			</tbody>
 		</table>
 	</div>
@@ -1244,9 +1262,6 @@ jQuery(document).ready(function ()
 			</div>
 		</div>
 	</div>
-
-	<!-- This hidden input only for temperately testing-->
-	<input type="hidden" id="jform_hicodes_json"/>
 
 	<div>
 		<input type="hidden" name="option" value="com_schedule" />
