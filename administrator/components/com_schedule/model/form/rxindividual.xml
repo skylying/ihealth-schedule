@@ -28,6 +28,14 @@
 			quickadd="true"
 			/>
 
+		<field name="type"
+			type="hidden"
+			/>
+
+		<field name="customer_name"
+			type="hidden"
+			/>
+
 		<field name="birth_date"
 			type="calendar"
 			label="生日"
@@ -61,6 +69,10 @@
 			>
 			<option></option>
 		</field>
+
+		<field name="hospital_title"
+			type="hidden"
+			/>
 
 		<field name="see_dr_date"
 			type="calendar"
@@ -118,6 +130,10 @@
 			type="hidden"
 			/>
 
+		<field name="delete_drug"
+			type="hidden"
+			/>
+
 		<field name="rximages"
 			type="file"
 			label="處方箋檔案"
@@ -138,6 +154,14 @@
 			/>
 
 		<field name="create_address"
+			type="hidden"
+			/>
+
+		<field name="empty_date_1st"
+			type="hidden"
+			/>
+
+		<field name="empty_date_2nd"
 			type="hidden"
 			/>
 	</fieldset>
@@ -392,14 +416,14 @@
 			/>
 
 		<field
-			name="note_list"
+			name="remind"
 			type="checkboxes"
 			label="註記選項"
 			description="註記選項"
 			>
-			<option value="need_real_book">需確認正本</option>
-			<option value="need_breakup">藥品需分包</option>
-			<option value="take_it_back">正本已回收</option>
+			<option value="checkorigin">需確認正本</option>
+			<option value="needsplit">藥品需分包</option>
+			<option value="origincollected">正本已回收</option>
 		</field>
 	</fieldset>
 

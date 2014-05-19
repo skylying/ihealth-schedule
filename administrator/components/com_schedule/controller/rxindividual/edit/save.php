@@ -28,14 +28,17 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 	protected function preSaveHook()
 	{
 		$customerMapper = new DataMapper(Table::CUSTOMERS);
+		$hospitalMapper = new DataMapper(Table::HOSPITALS);
 		$cityMapper     = new DataMapper(Table::CITIES);
 		$areaMapper     = new DataMapper(Table::AREAS);
 
 		$addressModel  = $this->getModel("Address");
 
 		$createAddress = isset($this->data['create_address']) ? json_decode($this->data['create_address']) : array();
+		$remind        = isset($this->data['remind']) ? $this->data['remind'] : array();
 
 		$customer = $customerMapper->findOne($this->data['customer_id']);
+		$hospital = $hospitalMapper->findOne($this->data['hospital_id']);
 
 		if (! empty($createAddress))
 		{
@@ -83,6 +86,16 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 		// 處方客人資料
 		$this->data["customer_name"] = $customer->name;
 		$this->data["type"]          = $customer->type;
+
+		// 醫院資料
+		$this->data["hospital_title"] = $hospital->title;
+
+		// Rx 吃完藥日
+		$this->data["empty_date_1st"] = $this->data["schedules_1st"]["drug_empty_date"];
+		$this->data["empty_date_2nd"] = $this->data["schedules_2nd"]["drug_empty_date"];
+
+		// Remind
+		$this->data["remind"] = implode(",", $remind);
 
 		// 外送次數
 		$nths = array();
@@ -194,9 +207,11 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 	{
 		$rx = $this->model->getItem();
 		$drugModel = $this->getModel("Drug");
+		$drugMapper = new DataMapper(Table::DRUGS);
 
 		// 健保 json
 		$drugs = isset($this->data['drug']) ? json_decode($this->data['drug']) : array();
+		$deleteDrugIds = isset($this->data['delete_drug']) ? json_decode($this->data['delete_drug']) : array();
 
 		// 新增健保碼
 		if (! empty($drugs))
@@ -207,6 +222,12 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 
 				$drugModel->save((array) $drug);
 			}
+		}
+
+		// 刪除健保碼
+		if (! empty($deleteDrugIds))
+		{
+			$drugMapper->delete(array("id" => $deleteDrugIds));
 		}
 
 		return $drugModel;
@@ -363,7 +384,7 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 	 * @param   integer $task
 	 * @param   Data    $customer
 	 * @param   Data    $address
-	 * @param   Data    $nth
+	 * @param   string  $nth
 	 * @param   array   $formData
 	 * @param   Data    $routes
 	 *
@@ -402,7 +423,7 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 			"sorted"        => 0
 		);
 
-		return array_merge($scheduleUpdata, $formData);
+		return array_merge($formData, $scheduleUpdata);
 	}
 
 	/**

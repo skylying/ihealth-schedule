@@ -90,11 +90,14 @@ class ScheduleModelRxindividual extends AdminModel
 			return $returnVal;
 		}
 
-		// 健保 code
-		$drugs = (new DataMapper(Table::DRUGS))->find(array("rx_id" => $returnVal->id));
+		if (! empty($returnVal->id))
+		{
+			// 健保 code
+			$drugs = (new DataMapper(Table::DRUGS))->find(array("rx_id" => $returnVal->id));
 
-		// Set json
-		$returnVal->drug = json_encode(iterator_to_array($drugs));
+			// Set json
+			$returnVal->drug = json_encode(iterator_to_array($drugs));
+		}
 
 		foreach (array("1st", "2nd", "3rd") as $val)
 		{

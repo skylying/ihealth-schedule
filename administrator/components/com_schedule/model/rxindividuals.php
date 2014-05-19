@@ -81,6 +81,8 @@ class ScheduleModelRxindividuals extends ListModel
 	{
 		$q = parent::getListQuery();
 
+		$q->group("rxindividual.id");
+
 		return $q->where("rxindividual.`type` = 'individual'");
 	}
 
@@ -100,6 +102,36 @@ class ScheduleModelRxindividuals extends ListModel
 			->addTable('modifier',  '#__users',                         'rxindividual.modified_by = modifier.id');
 
 		$this->filterFields = array_merge($this->filterFields, $queryHelper->getFilterFields());
+	}
+
+	/**
+	 * Post Get Query
+	 *
+	 * @param JDatabaseQuery $query
+	 *
+	 * @return  void
+	 */
+	protected function postGetQuery(\JDatabaseQuery $query)
+	{
+		$sql = <<<SQLALIAS
+group_concat(
+	CONCAT(
+		'{',
+			'"id": "',
+				`member`.`id`,
+			'",',
+
+			'"name": "',
+				`member`.`name`,
+			'"',
+		'}'
+	)
+) AS `member_json`
+SQLALIAS;
+
+		$query->select($sql);
+
+		parent::postGetQuery($query);
 	}
 
 	/**
