@@ -610,8 +610,8 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 			// Retrieve id
 			var id = $(this).find('.js-hicode-id').val();
 
-			// Check if hash Exist
-			if (id.indexOf("hash-") > -1)
+			// Check if 'create' Exist, 'create' stands for new data
+			if (id.indexOf("create") > -1)
 			{
 				// indexOf returns the position of the string in the other string.
 				// If not found, it will return -1:
@@ -619,24 +619,24 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 				// Make sure every info is provided
 				if ((code != '') && (quantity != ''))
 				{
-					data.push({id: 'hash-' + newRowCounter, hicode: code, quantity: quantity});
+					data.push({id: 'create', hicode: code, quantity: quantity});
 					newRowCounter++;
 					totalRowCounter++;
 				}
 			}
-			// if hash- doesn't exist, and id doesn't exist => blank new row
-			else if (id.indexOf("hash-") == -1 && id == '')
+			// if 'create' doesn't exist, and id doesn't exist => blank new row
+			else if (id.indexOf("create") == -1 && id == '')
 			{
 				// Make sure every info is provided
 				if ((code != '') && (quantity != ''))
 				{
-					data.push({id: 'hash-' + newRowCounter, hicode: code, quantity: quantity});
+					data.push({id: 'create', hicode: code, quantity: quantity});
 					newRowCounter++;
 					totalRowCounter++;
 				}
 			}
-			// if hash- doesn't exist, and id exist
-			else if ((id.indexOf("hash-") == -1) && (id != ''))
+			// if 'create' doesn't exist, and id exist
+			else if ((id.indexOf("create") == -1) && (id != ''))
 			{
 				// Make sure every info is provided
 				if ((code != '') && (quantity != ''))
