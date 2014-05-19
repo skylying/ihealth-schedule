@@ -610,33 +610,19 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 			// Retrieve id
 			var id = $(this).find('.js-hicode-id').val();
 
-			// Check if 'create' Exist, 'create' stands for new data
-			if (id.indexOf("create") > -1)
-			{
-				// indexOf returns the position of the string in the other string.
-				// If not found, it will return -1:
-
-				// Make sure every info is provided
-				if ((code != '') && (quantity != ''))
-				{
-					data.push({id: 'create', hicode: code, quantity: quantity});
-					newRowCounter++;
-					totalRowCounter++;
-				}
-			}
-			// if 'create' doesn't exist, and id doesn't exist => blank new row
-			else if (id.indexOf("create") == -1 && id == '')
+			// blank new row
+			if (id == '')
 			{
 				// Make sure every info is provided
 				if ((code != '') && (quantity != ''))
 				{
-					data.push({id: 'create', hicode: code, quantity: quantity});
+					data.push({id: '', hicode: code, quantity: quantity});
 					newRowCounter++;
 					totalRowCounter++;
 				}
 			}
 			// if 'create' doesn't exist, and id exist
-			else if ((id.indexOf("create") == -1) && (id != ''))
+			else
 			{
 				// Make sure every info is provided
 				if ((code != '') && (quantity != ''))
