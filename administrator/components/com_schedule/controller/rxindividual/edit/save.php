@@ -227,7 +227,7 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 		// 刪除健保碼
 		if (! empty($deleteDrugIds))
 		{
-			$drugMapper->delete($deleteDrugIds);
+			$drugMapper->delete(array("id" => $deleteDrugIds));
 		}
 
 		return $drugModel;
