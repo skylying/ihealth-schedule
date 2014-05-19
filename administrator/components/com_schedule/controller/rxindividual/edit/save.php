@@ -207,9 +207,11 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 	{
 		$rx = $this->model->getItem();
 		$drugModel = $this->getModel("Drug");
+		$drugMapper = new DataMapper(Table::DRUGS);
 
 		// 健保 json
 		$drugs = isset($this->data['drug']) ? json_decode($this->data['drug']) : array();
+		$deleteDrugIds = isset($this->data['delete_drug']) ? json_decode($this->data['delete_drug']) : array();
 
 		// 新增健保碼
 		if (! empty($drugs))
@@ -220,6 +222,12 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 
 				$drugModel->save((array) $drug);
 			}
+		}
+
+		// 刪除健保碼
+		if (! empty($deleteDrugIds))
+		{
+			$drugMapper->delete($deleteDrugIds);
 		}
 
 		return $drugModel;
