@@ -583,7 +583,7 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 						var idToDelete = $(this).closest('.js-hicode-row').find('.js-hicode-id').val();
 
 						// Colect deleted IDs
-						if (!idToDelete)
+						if (idToDelete)
 						{
 							data.push(idToDelete);
 						}
@@ -598,7 +598,7 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 						var idToDelete = $(this).closest('.js-hicode-row').find('.js-hicode-id').val();
 
 						// Colect deleted IDs
-						if (!idToDelete)
+						if (idToDelete)
 						{
 							data.push(idToDelete);
 						}
