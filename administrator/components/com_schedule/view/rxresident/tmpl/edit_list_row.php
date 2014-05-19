@@ -19,7 +19,7 @@ $group = $data->group;
 $id    = FieldHelper::resetGroup($form->getField('id'), $group);
 ?>
 <tr>
-	<td>
+	<td class="hide">
 		<?php echo $id->input; ?>
 	</td>
 	<td>

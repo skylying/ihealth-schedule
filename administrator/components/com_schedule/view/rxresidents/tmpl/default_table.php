@@ -114,13 +114,14 @@ $date      = $container->get('date');
 	$grid->setItem($item, $i);
 	?>
 	<tr class="prescription-row">
-		<!--CHECKBOX-->
+
+		<!-- checkbox -->
 		<td class="center">
-			<?php echo JHtml::_('grid.id', $i, $item->prescription_id); ?>
+			<?php echo JHtml::_('grid.id', $i, $item->id); ?>
 		</td>
 
 		<!-- 處方箋編號 -->
-		<td>
+		<td class="center">
 			<a href="<?php echo JRoute::_('index.php?option=com_schedule&task=rxresident.edit.edit&id=' . $item->id); ?>">
 				<?php echo $item->id; ?>
 			</a>
@@ -134,44 +135,44 @@ $date      = $container->get('date');
 		</td>
 
 		<!-- 住民姓名 -->
-		<td>
+		<td class="center">
 			<a href="<?php echo JRoute::_('index.php?option=com_schedule&task=customer.edit.edit&id=' . $item->customer_id); ?>">
 				<?php echo $this->escape($item->customer_name); ?>
 			</a>
 		</td>
 
 		<!-- 身分證字號 -->
-		<td>
+		<td class="center">
 			<?php echo $this->escape($item->id_number); ?>
 		</td>
 
 		<!-- 就醫日期 -->
-		<td>
+		<td class="center">
 			<?php echo $this->escape($item->see_dr_date); ?>
 		</td>
 
 		<!-- 處方箋天數 -->
-		<td>
+		<td class="center">
 			<?php echo $this->escape($item->period); ?>
 		</td>
 
 		<!-- 可調劑次數 -->
-		<td>
+		<td class="center">
 			<?php echo $this->escape($item->times); ?>
 		</td>
 
 		<!-- 處方箋取得方式 -->
-		<td>
+		<td class="center">
 			<?php echo $this->escape($item->method); ?>
 		</td>
 
 		<!-- 新增人 -->
-		<td>
+		<td class="center">
 			<?php echo $this->escape($item->author_name); ?>
 		</td>
 
 		<!-- 修改人 -->
-		<td>
+		<td class="center">
 			<?php echo $this->escape($item->modifier_name); ?>
 		</td>
 	</tr>
