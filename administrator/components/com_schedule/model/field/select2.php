@@ -299,7 +299,7 @@ class JFormFieldSelect2 extends JFormField
 
 		$db->setQuery($q);
 
-		return new JData($db->loadObject());
+		return new \Windwalker\Data\Data($db->loadObject());
 	}
 
 	/**
