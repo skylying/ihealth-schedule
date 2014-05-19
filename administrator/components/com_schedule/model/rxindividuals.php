@@ -81,6 +81,8 @@ class ScheduleModelRxindividuals extends ListModel
 	{
 		$q = parent::getListQuery();
 
+		$q->group("rxindividual.id");
+
 		return $q->where("rxindividual.`type` = 'individual'");
 	}
 
