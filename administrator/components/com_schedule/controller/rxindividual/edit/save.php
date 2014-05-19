@@ -216,6 +216,12 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 		{
 			foreach ($drugs as $drug)
 			{
+				if ("create" == $drug->id)
+				{
+					// Create 不需要 id
+					unset($drug->id);
+				}
+
 				$drug->rx_id = $rx->id;
 
 				$drugModel->save((array) $drug);
