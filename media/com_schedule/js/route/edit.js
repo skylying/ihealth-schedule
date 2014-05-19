@@ -9,7 +9,11 @@
 		return;
 	}
 
-	// Exports class RouteEdit
+	/**
+	 * The Route edit control object.
+	 *
+	 * @since  1.0
+	 */
 	window.RouteEdit = {
 		/**
 		 * Run
@@ -20,39 +24,60 @@
 				isEdit: false
 			}, options);
 
-			function updateInstituteNode(condition)
-			{
-				var $node = $('#control_jform_institute_id');
+			// Prepare element cache
+			this.$typeField  = $('#jform_type.radio');
+			this.$typeRadios = this.$typeField.find('input');
+			this.$instituteControl  = $('#control_jform_institute_id');
+			this.$instituteSelector = $('#jform_institute_id');
 
-				if ('institute' === condition)
-				{
-					if ($node.hasClass('hide'))
-					{
-						$node.removeClass('hide');
-					}
-				}
-				else
-				{
-					if (! $node.hasClass('hide'))
-					{
-						$node.addClass('hide');
+			// Register events
+			this.registerEvents();
 
-						$('#jform_institute_id').select2('val', '');
-					}
-				}
-			}
+			// init selector
+			this.toggleInstituteSelector(this.$typeRadios.find(':checked').val());
 
-			$('input[name="jform[type]"]').click(function()
-			{
-				updateInstituteNode($(this).val());
-			});
-
-			updateInstituteNode($('input[name="jform[type]"]:checked').val());
-
+			// Disable some fields in edit page
 			if (options.isEdit)
 			{
 				// Disable "type" radio box
-				$('#jform_type').find('.btn').attr('disabled', true);
+				this.$typeField.find('.btn').attr('disabled', true);
+			}
+		},
+
+		/**
+		 * Register events.
+		 *
+		 * @return  void
+		 */
+		registerEvents: function()
+		{
+			var self = this;
+
+			// Toggle institute selector show or hide.
+			this.$typeRadios.click(function()
+			{
+				self.toggleInstituteSelector($(this).val());
+			});
+		},
+
+		/**
+		 * Toggle institute selector show or hide.
+		 *
+		 * @param   {string}  condition  The string of route type.
+		 *
+		 * @return  void
+		 */
+		toggleInstituteSelector: function(condition)
+		{
+			if ('institute' === condition)
+			{
+				this.$instituteControl.show();
+			}
+			else
+			{
+				this.$instituteControl.hide();
+
+				this.$instituteSelector.select2('val', '');
 			}
 		}
 	};
