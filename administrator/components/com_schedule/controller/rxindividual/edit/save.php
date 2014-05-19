@@ -363,7 +363,7 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 	 * @param   integer $task
 	 * @param   Data    $customer
 	 * @param   Data    $address
-	 * @param   Data    $nth
+	 * @param   string  $nth
 	 * @param   array   $formData
 	 * @param   Data    $routes
 	 *
@@ -402,7 +402,7 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 			"sorted"        => 0
 		);
 
-		return array_merge($scheduleUpdata, $formData);
+		return array_merge($formData, $scheduleUpdata);
 	}
 
 	/**
