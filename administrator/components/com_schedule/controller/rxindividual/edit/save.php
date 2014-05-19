@@ -35,6 +35,7 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 		$addressModel  = $this->getModel("Address");
 
 		$createAddress = isset($this->data['create_address']) ? json_decode($this->data['create_address']) : array();
+		$remind        = isset($this->data['remind']) ? $this->data['remind'] : array();
 
 		$customer = $customerMapper->findOne($this->data['customer_id']);
 		$hospital = $hospitalMapper->findOne($this->data['hospital_id']);
@@ -94,7 +95,7 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 		$this->data["empty_date_2nd"] = $this->data["schedules_2nd"]["drug_empty_date"];
 
 		// Remind
-		$this->data["remind"] = implode(",", $this->data["remind"]);
+		$this->data["remind"] = implode(",", $remind);
 
 		// 外送次數
 		$nths = array();
