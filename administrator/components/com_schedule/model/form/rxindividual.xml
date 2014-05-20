@@ -26,8 +26,9 @@
 			key_field="id"
 			value_field="name"
 			quickadd="true"
-			/>
-
+			>
+			<option></option>
+		</field>
 		<field name="type"
 			type="hidden"
 			/>
@@ -75,7 +76,7 @@
 			/>
 
 		<field name="see_dr_date"
-			type="calendar"
+			type="DateTimepicker"
 			label="就醫日期"
 			description="就醫日期"
 			/>
@@ -103,8 +104,8 @@
 			type="list"
 			label="可調劑次數"
 			description="可調劑次數"
-			default="2"
 			>
+			<option></option>
 			<option value="1">1</option>
 			<option value="2">2</option>
 			<option value="3">3</option>

@@ -728,7 +728,7 @@ jQuery(document).ready(function ()
 		jQuery(this).bindChangeNthScheduleInfo();
 	});
 
-	// If customer id is not set, select the first option, and update once on load
+	// Fire update onload.
 	customerDropDown.customerAjax(customerDropDown.val());
 
 	// Fire ajax request everytime customer_id has been changed
@@ -917,12 +917,9 @@ jQuery(document).ready(function ()
 	});
 
 	// Bind See Doctor Date
-	jQuery('#' + seeDrDateID).parent().children().each(function ()
+	jQuery('#' + seeDrDateID).on('change', function ()
 	{
-		jQuery(this).on('focusout', function ()
-		{
-			jQuery(this).updateScheduleDate(jQuery('#' + seeDrDateID).val(), jQuery('#' + periodID).val());
-		});
+		jQuery(this).updateScheduleDate(jQuery('#' + seeDrDateID).val(), jQuery('#' + periodID).val());
 	});
 
 	jQuery('#' + periodID).on('change', function ()
