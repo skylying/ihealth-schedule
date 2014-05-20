@@ -26,7 +26,8 @@
 			/>
 
 		<field name="birth_date"
-			type="calendar"
+			type="DateTimePicker"
+			class="datetimepicker calendarwidth birthday"
 			label="出生日期"
 			description="出生日期"
 			/>
@@ -35,7 +36,6 @@
 			type="text"
 			label="年齡"
 			description="年齡"
-			class="input-small"
 			readonly="true"
 			/>
 
@@ -165,6 +165,7 @@
 			/>
 	</fieldset>
 
+
 	<fieldset name="office">
 		<field name="tel_office"
 			type="radioinput"
@@ -184,6 +185,7 @@
 			/>
 
 	</fieldset>
+
 
 	<fieldset name="mobile">
 		<field name="mobile"
