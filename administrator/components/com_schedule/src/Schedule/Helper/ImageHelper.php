@@ -102,7 +102,7 @@ class ImageHelper
 	public static function getStoragePath($rxId)
 	{
 		// TODO: 設定到 xml 的設定檔
-		return 'images/upload/' . $rxId;
+		return 'media/com_schedule/upload/' . $rxId;
 	}
 
 	/**
@@ -161,5 +161,44 @@ class ImageHelper
 		$imageMapper->delete(array("id" => $cid));
 
 		return true;
+	}
+
+	/**
+	 * Reset Images RxId
+	 *
+	 * @param   array   $cid
+	 * @param   integer $rxId
+	 *
+	 * @return  void
+	 */
+	public static function resetImagesRxId(array $cid, $rxId)
+	{
+		$imageMapper = new DataMapper(Table::IMAGES);
+
+		$images = $imageMapper->find(array("id" => $cid));
+
+		foreach ($images as $image)
+		{
+			$newJoomlaDir      = static::getStoragePath($rxId);
+			$newSystemPath     = JPATH_ROOT . '/' . $newJoomlaDir;
+			$oldSystemFilePath = JPATH_ROOT . '/' . $image->path;
+			$fileName          = basename($oldSystemFilePath);
+
+			// If dir not set yet
+			if (! is_dir($newSystemPath))
+			{
+				\JFolder::create($newSystemPath);
+			}
+
+			// File move
+			\JFile::move($oldSystemFilePath, "{$newSystemPath}/{$fileName}");
+
+			// Flush database
+			$image->rx_id = $rxId;
+			$image->path  = "{$newJoomlaDir}/{$fileName}";
+
+			// Save data
+			$imageMapper->updateOne($image);
+		}
 	}
 }

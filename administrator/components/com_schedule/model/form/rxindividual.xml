@@ -135,23 +135,22 @@
 			type="hidden"
 			/>
 
-		<field name="rximages"
-			type="file"
-			label="處方箋檔案"
-			description="處方箋檔案"
-			multiple="multiple"
+		<field name="ajax_image1"
+			type="image"
+			label="圖片1"
+			description="圖片1"
 			/>
 
-		<field name="remove_images"
-			type="itemscheckboxes"
-			table="#__schedule_images"
-			id_key="id"
-			where_item_id="rx_id"
-			value_field="id"
-			option_title="title"
-			select="id, title"
-			label="刪除圖片"
-			description="刪除圖片"
+		<field name="ajax_image2"
+			type="image"
+			label="圖片2"
+			description="圖片2"
+			/>
+
+		<field name="ajax_image3"
+			type="image"
+			label="圖片3"
+			description="圖片3"
 			/>
 
 		<field name="create_address"

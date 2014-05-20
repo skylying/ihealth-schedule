@@ -435,14 +435,16 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 	{
 		$rx = $this->model->getItem();
 
-		$files = $this->input->files->getVar('jform');
+		$resetId = array();
 
-		// 圖片上傳
-		ImageHelper::handleUpload($rx->id, $files['rximages']);
+		for ($i = 1; $i <= 3; $i++)
+		{
+			if (isset($this->data["ajax_image{$i}"]))
+			{
+				$resetId[] = $this->data["ajax_image{$i}"];
+			}
+		}
 
-		$removeCid = isset($this->data['remove_images']) ? $this->data['remove_images'] : array();
-
-		// 刪除圖片
-		ImageHelper::removeImages($removeCid);
+		ImageHelper::resetImagesRxId($resetId, $rx->id);
 	}
 }
