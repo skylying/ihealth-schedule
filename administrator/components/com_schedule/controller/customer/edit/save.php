@@ -19,23 +19,28 @@ class ScheduleControllerCustomerEditSave extends SaveController
 	 */
 	protected function preSaveHook()
 	{
+		// Prepare tables
 		$customerMapper = new DataMapper(Table::CUSTOMERS);
 		$cityMapper     = new DataMapper(Table::CITIES);
 		$areaMapper     = new DataMapper(Table::AREAS);
 		$addressMapper  = new DataMapper(Table::ADDRESSES);
 
-		$addressModel  = $this->getModel("Address");
+		// Get address model
+		$addressModel = $this->getModel("Address");
 
+		// Get address json data from form
 		$createAddress = isset($this->data['address']) ? json_decode($this->data['address']) : array();
 
+		// Get customer id
 		$customer = $customerMapper->findOne($this->data['id']);
 
+		// Delete all the addresses with customer id
 		$addressMapper->delete(array('customer_id' => $this->data['id']));
 
-		if (! empty($createAddress))
+		if (!empty($createAddress))
 		{
-			show("in");
-			// 新增地址資料
+
+			// Save addresses
 			foreach ($createAddress as $addressTmp)
 			{
 				$city = $cityMapper->findOne($addressTmp->city);
@@ -48,12 +53,12 @@ class ScheduleControllerCustomerEditSave extends SaveController
 						"city_title"  => $city->title,
 						"area"        => $area->id,
 						"area_title"  => $area->title,
-						"address"     => $addressTmp->address
+						"address"     => $addressTmp->address,
+						"previous"    => $addressTmp->previous
 					)
 				);
 			}
 		}
-
 	}
 
 	/**

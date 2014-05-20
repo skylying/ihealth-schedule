@@ -9,10 +9,10 @@
 // No direct access
 defined('_JEXEC') or die;
 
-$tab       		= $data->tab;
-$fieldsets 		= $data->form->getFieldsets();
-$typeField 		= $data->form->getField('type');
-$customerType 	= $data->item->type;
+$tab = $data->tab;
+$fieldsets = $data->form->getFieldsets();
+$typeField = $data->form->getField('type');
+$customerType = $data->item->type;
 $data->asset->addJS('moment-with-langs.min.js');
 $data->asset->addJS('multi-row-handler.js');
 
@@ -27,13 +27,10 @@ $data->asset->addJS('multi-row-handler.js');
 		<div id="individualdiv" class="<?php echo $customerType == 'individual' ? '' : 'hide'; ?>">
 			<?php echo $this->loadTemplate('fieldset', array('fieldset' => $fieldsets['rxindividual'], 'class' => 'form-horizontal')); ?>
 			<?php echo $data->form->getControlGroup('address'); ?>
-			<div id="appendArea">
-			</div>
-			<div>
-				<div class="btn btn-small btn-info button-add-addr">
-					<span class="icon-plus icon-white"></span>
-					新增地址
-				</div>
+			<div id="appendArea"></div>
+			<div class="btn btn-md btn-info button-add-addr pull right">
+				<span class="icon-plus icon-white"></span>
+				新增地址
 			</div>
 			<?php echo $this->loadTemplate('fieldset', array('fieldset' => $fieldsets['office'], 'class' => 'form-horizontal')); ?>
 			<?php echo $this->loadTemplate('fieldset', array('fieldset' => $fieldsets['home'], 'class' => 'form-horizontal')); ?>
@@ -42,207 +39,234 @@ $data->asset->addJS('multi-row-handler.js');
 		<div id="residentdiv" class="<?php echo $customerType == 'resident' ? '' : 'hide'; ?>">
 			<?php echo $this->loadTemplate('fieldset', array('fieldset' => $fieldsets['institute'], 'class' => 'form-horizontal')); ?>
 		</div>
-		<tr>
-		<div class="row-fluid js-address-row-tmpl hide ">
-			<input class="addr_id hide" type="text" />
+	</div>
+</div>
 
-			<div class="col-lg-6">
-				<?php echo $data->form->getControlGroup('city'); ?>
-			</div>
-			<div class="col-lg-6">
-				<?php echo $data->form->getControlGroup('area'); ?>
-			</div>
-			<div class="col-lg-11">
-				<?php echo $data->form->getControlGroup('address2'); ?>
-			</div>
-			<button type="button" class="btn btn-default button-delete-addr">
-					<span class="glyphicon glyphicon-remove">
-
-					</span>
-			</button>
+<div class="row-fluid js-address-row-tmpl hide">
+	<div class="row-fluid alert alert-success">
+		<input class="addr_id hide" type="text" />
+		<div class="col-lg-2 panel-info">
+			<input type="radio" name="previous" class="previous" />
+			主要
 		</div>
-		</tr>
+		<div class="col-lg-5">
+			<?php echo $data->form->getControlGroup('city'); ?>
+		</div>
+		<div class="col-lg-5">
+			<?php echo $data->form->getControlGroup('area'); ?>
+		</div>
+		<div class="col-lg-12">
+			<?php echo $data->form->getControlGroup('address2'); ?>
+		</div>
+		<button type="button" class="btn btn-default button-delete-addr pull right">
+			<span class="glyphicon glyphicon-remove"></span>
+		</button>
 	</div>
 </div>
 
 <script type="text/javascript">
-
-	(function($)
+(function ($)
+{
+	$('.customertype input').on('click', function ()
 	{
-		$('.customertype input').on('click', function()
+		var individualDiv = $('#individualdiv'),
+			residentDiv = $('#residentdiv');
+
+		if ($(this).val() == 'individual')
 		{
-			var individualDiv = $('#individualdiv'),
-				residentDiv   = $('#residentdiv');
-
-			if($(this).val() == 'individual')
-			{
-				individualDiv.removeClass('hide');
-				residentDiv.addClass('hide');
-			}
-			else
-			{
-				individualDiv.addClass('hide');
-				residentDiv.removeClass('hide');
-			}
-		});
-
- 		var telOffice = jQuery('#jform_tel_office').val();
-		var	telHome = jQuery('#jform_tel_home').val();
-		var	telMobile = jQuery('#jform_mobile').val();
-
-		var	jsonTelO = jQuery.parseJSON(telOffice);
-		var	jsonTelH = jQuery.parseJSON(telHome);
-		var	jsonTelM = jQuery.parseJSON(telMobile);
-
-		update = function(){
-
-			jsonTelO = [
-				{ "default" : jQuery('#radiojform_tel_office0').is(':checked'), "number" :  jQuery('#jform_tel_office0').val()},
-				{ "default" : jQuery('#radiojform_tel_office1').is(':checked'), "number" :  jQuery('#jform_tel_office1').val()},
-				{ "default" : jQuery('#radiojform_tel_office2').is(':checked'), "number" :  jQuery('#jform_tel_office2').val()}
-			];
-
-			jsonTelH = [
-				{ "default" : jQuery('#radiojform_tel_home0').is(':checked'), "number" :  jQuery('#jform_tel_home0').val()},
-				{ "default" : jQuery('#radiojform_tel_home1').is(':checked'), "number" :  jQuery('#jform_tel_home1').val()},
-				{ "default" : jQuery('#radiojform_tel_home2').is(':checked'), "number" :  jQuery('#jform_tel_home2').val()}
-			];
-
-			jsonTelM = [
-				{ "default" : jQuery('#radiojform_mobile0').is(':checked'), "number" :  jQuery('#jform_mobile0').val()},
-				{ "default" : jQuery('#radiojform_mobile1').is(':checked'), "number" :  jQuery('#jform_mobile1').val()},
-				{ "default" : jQuery('#radiojform_mobile2').is(':checked'), "number" :  jQuery('#jform_mobile2').val()}
-			];
-
-			jQuery('#jform_tel_office').val(JSON.stringify(jsonTelO)),
-			jQuery('#jform_tel_home').val(JSON.stringify(jsonTelH)),
-			jQuery('#jform_mobile').val(JSON.stringify(jsonTelM));
-
+			alert('您確定要更換身份?，住民資料將不會儲存。');
+			individualDiv.removeClass('hide');
+			residentDiv.addClass('hide');
 		}
+		else
+		{
+			alert('您確定要更換身份?，散客資料將不會儲存。');
+			individualDiv.addClass('hide');
+			residentDiv.removeClass('hide');
+		}
+	});
 
-		jQuery('#customer-edit-fieldset-office, #customer-edit-fieldset-home, #customer-edit-fieldset-mobile input').each(function(){
-			jQuery(this).on('change', update );
-		});
+	// Get telephone jsonDatas
+	var jsonTelO = $.parseJSON($('#jform_tel_office').val());
+	var jsonTelH = $.parseJSON($('#jform_tel_home').val());
+	var jsonTelM = $.parseJSON($('#jform_mobile').val());
 
-		//calculate age
-		var birthday = jQuery('#jform_birth_date').val();
+	/**
+	 * 複寫電話欄位    Json並判斷default值
+	 */
+	update = function ()
+	{
+
+		jsonTelO = [
+			{ "default": $('#radiojform_tel_office0').is(':checked'), "number": $('#jform_tel_office0').val()},
+			{ "default": $('#radiojform_tel_office1').is(':checked'), "number": $('#jform_tel_office1').val()},
+			{ "default": $('#radiojform_tel_office2').is(':checked'), "number": $('#jform_tel_office2').val()}
+		];
+
+		jsonTelH = [
+			{ "default": $('#radiojform_tel_home0').is(':checked'), "number": $('#jform_tel_home0').val()},
+			{ "default": $('#radiojform_tel_home1').is(':checked'), "number": $('#jform_tel_home1').val()},
+			{ "default": $('#radiojform_tel_home2').is(':checked'), "number": $('#jform_tel_home2').val()}
+		];
+
+		jsonTelM = [
+			{ "default": $('#radiojform_mobile0').is(':checked'), "number": $('#jform_mobile0').val()},
+			{ "default": $('#radiojform_mobile1').is(':checked'), "number": $('#jform_mobile1').val()},
+			{ "default": $('#radiojform_mobile2').is(':checked'), "number": $('#jform_mobile2').val()}
+		];
+
+		$('#jform_tel_office').val(JSON.stringify(jsonTelO));
+		$('#jform_tel_home').val(JSON.stringify(jsonTelH));
+		$('#jform_mobile').val(JSON.stringify(jsonTelM));
+
+	}
+
+	$('#customer-edit-fieldset-office, ' + '#customer-edit-fieldset-home, ' + '#customer-edit-fieldset-mobile input').each(function ()
+	{
+		$(this).on('change', update);
+	});
+
+	//calculate age
+	$('#jform_birth_date').on('dp.change', function ()
+	{
+
+		var birthday = $('#jform_birth_date').val();
 
 		var birthTime = (new Date(birthday)).getTime();
 
 		var now = (new Date()).getTime();
 
-		if(birthday == '' || birthTime >= now){
-
-			var age = '';
-
-			jQuery('#jform_age').val(age);
-
-		} else {
-
-			age = Math.floor((now - birthTime) / 86400 / 365000);
-
-			jQuery('#jform_age').val(age);
-
-		}
-
-		var addrJson = jQuery('#jform_address').val();
-
-		var addr = JSON.parse(addrJson);
-
-		function updateaddr()
+		if (birthday == '' || birthTime >= now)
 		{
-			var target = jQuery('#jform_address');
-			var data = [];
-
-			handler.remove($(this).closest('div'));
-
-			var addrTmpl = jQuery('.js-address-row');
-
-			addrTmpl.each(function(){
-				var arrayToAdd =
-				{
-					id		: jQuery(this).find('.addr_id').val(),
-					city	: jQuery(this).find('.addr_city').val(),
-					area	: jQuery(this).find('.addr_area').val(),
-					address	: jQuery(this).find('.addr_addr').val()
-				};
-				data.push(arrayToAdd);
-			});
-
-			target.val(JSON.stringify(data));
+			$('#jform_age').val();
 		}
-
-		function updateadd()
+		else
 		{
-			var target = jQuery('#jform_address');
-			var data = [];
+			var age = Math.floor((now - birthTime) / 86400 / 365000);
 
-			var addrTmpl = jQuery('.js-address-row');
-
-			addrTmpl.each(function(){
-				var arrayToAdd =
-				{
-					id		: jQuery(this).find('.addr_id').val(),
-					city	: jQuery(this).find('.addr_city').val(),
-					area	: jQuery(this).find('.addr_area').val(),
-					address	: jQuery(this).find('.addr_addr').val()
-				};
-				data.push(arrayToAdd);
-			});
-
-			target.val(JSON.stringify(data));
+			$('#jform_age').val(age);
 		}
+	});
 
-
-		for(var i = 0; i < addr.length; i++)
-		{
-			var address = addr[i].address;
-			var city 	= addr[i].city;
-			var area 	= addr[i].area;
-			var id 		= addr[i].id;
-
-			var element = jQuery('.js-address-row-tmpl').clone();
-				element.removeClass('js-address-row-tmpl');
-				element.removeClass('hide');
-				element.addClass('js-address-row');
-				element.appendTo('#appendArea');
-
-			element.find('#jform_city').val(city);
-			element.find('#jform_area').val(area);
-			element.find('#jform_address2').val(address);
-			element.find('.addr_id').val(id);
-
-
-		}
-
-		//Add Addr
-
+	/**
+	 * Delete addresses function
+	 */
+	function deleteAddr()
+	{
+		var target = $('#jform_address');
+		var addrTmpl = $('.js-address-row');
+		var data = [];
 		var $panel = $('#appendArea'),
-			handler = new MultiRowHandler({$panel:$panel});
+			handler = new MultiRowHandler({$panel: $panel});
 
-		jQuery('.button-add-addr').click(function()
+		handler.remove($(this).closest('.js-address-row'));
+
+		addrTmpl.each(function ()
 		{
-			var target = jQuery('#jform_address');
+			var ifChecked = $(this).find('.previous').prop('checked') ? '1' : '0';
 
-			$('.js-address-row').chosen();
+			var objectToAdd =
+			{
+				id: $(this).find('.addr_id').val(),
+				city: $(this).find('.addr_city').val(),
+				area: $(this).find('.addr_area').val(),
+				address: $(this).find('.addr_addr').val(),
+				previous: ifChecked
+			};
 
-			$(".chzn-select").val('').trigger("liszt:updated");
-
-
-			handler.insert($('.js-address-row-tmpl').html());
-
+			data.push(objectToAdd);
 		});
 
-		// Delete Addr
+		target.val(JSON.stringify(data));
+	}
 
-		jQuery('.button-delete-addr').click(updateaddr);
+	/**
+	 * Update addresses function
+	 */
+	function updateAddr()
+	{
+		var target = $('#jform_address');
+		var data = [];
+		var addrTmpl = $('.js-address-row');
 
-		jQuery('js-address-row').find('input, select').each( jQuery(this).on('change', updateadd));
+		//Get new address data
+		addrTmpl.each(function ()
+		{
+			var ifChecked = $(this).find('.previous').prop('checked') ? '1' : '0';
+			var objectToAdd =
+			{
+				id: $(this).find('.addr_id').val(),
+				city: $(this).find('.addr_city').val(),
+				area: $(this).find('.addr_area').val(),
+				address: $(this).find('.addr_addr').val(),
+				previous: ifChecked
+			};
 
-	})(jQuery);
+			//Push json data back
+			data.push(objectToAdd);
+		});
 
-</script>
+		target.val(JSON.stringify(data));
+	}
 
-<script>
+	//Parse地址Json欄位
+	var addrJson = $('#jform_address').val();
 
+	var addr = JSON.parse(addrJson);
+
+	//塞資料到每個新的tmpl
+	for (var i = 0; i < addr.length; i++)
+	{
+		var address = addr[i].address;
+		var city = addr[i].city;
+		var area = addr[i].area;
+		var id = addr[i].id;
+		var previous = addr[i].previous;
+
+		//Clone tmpl
+		var element = $('.js-address-row-tmpl').clone();
+		element.removeClass('js-address-row-tmpl');
+		element.removeClass('hide');
+		element.addClass('js-address-row');
+		element.appendTo('#appendArea');
+
+		//Insert data into all the columns
+		element.find('#jform_city').val(city);
+		element.find('#jform_area').val(area);
+		element.find('#jform_address2').val(address);
+		element.find('.addr_id').val(id);
+
+		//Check radiobox
+		if (previous == '1')
+		{
+			element.find('.previous').prop('checked', true);
+		}
+
+	}
+
+	/**
+	 * Add new address button
+	 */
+	$('.button-add-addr').click(function ()
+	{
+		var element = $('.js-address-row-tmpl').clone();
+		element.removeClass('js-address-row-tmpl hide');
+		element.addClass('js-address-row');
+		element.appendTo('#appendArea');
+
+		$('#appendArea select').chosen();
+
+		//Close second descendant div from select
+		$('#appendArea select').next().next().remove();
+	});
+
+	// Delete Addr
+	$('#appendArea').on('click', '.button-delete-addr', deleteAddr);
+
+	//Update address
+	$('#appendArea').on('change', 'select[name="jform[city]"]', updateAddr);
+	$('#appendArea').on('change', 'select[name="jform[area]"]', updateAddr);
+	$('#appendArea').on('change', 'input[name="jform[address2]"]', updateAddr);
+
+})(jQuery);
 </script>

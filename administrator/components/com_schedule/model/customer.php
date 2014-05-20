@@ -165,6 +165,11 @@ class ScheduleModelCustomer extends AdminModel
 
 	}
 
+	/**
+	 * Prepare address json data from form
+	 *
+	 * @return  array
+	 */
 	protected function loadFormData()
 	{
 		$returnVal = parent::loadFormData();
@@ -182,9 +187,6 @@ class ScheduleModelCustomer extends AdminModel
 
 		$returnVal->address = json_encode($addressReturnData);
 
-		show($returnVal->id);
-
 		return $returnVal;
 	}
-
 }
