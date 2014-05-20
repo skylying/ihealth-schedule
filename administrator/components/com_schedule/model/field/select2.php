@@ -11,29 +11,28 @@ use \Windwalker\Helper\XmlHelper;
  * hint               @ placeholder
  * EX : "輸入機構名稱"
  *
- * minimumInputLength @ required input words to trigger ajax search
- * EX : 2
+ * - minimumInputLength : required input words to trigger ajax search
+ *  - EX : 2
  *
- * apiUrl             @ ajax request url, MUST replace "&" with "&amp;"
- * EX : "index.php?option=com_schedule&amp;task=institutes.search.json"
+ * - apiUrl : ajax request url, MUST replace "&" with "&amp;"
+ *  - EX : "index.php?option=com_schedule&amp;task=institutes.search.json"
  *
- * apiQueryKey        @ query key name attached after ajax request url
- * EX : "filter_search"
- * Ajax request will become "index.php?option=com_schedule&task=institutes.search.json&filter_search="
+ * - apiQueryKey : query key name attached after ajax request url
+ *  - EX : "filter_search"
+ *  - Ajax request will become "index.php?option=com_schedule&task=institutes.search.json&filter_search="
  *
- * apiValueField      @ property name you want to show in dropdown list
- * EX : if you have json response like { "id" : "1", "name" : "" }
- *      you should put "name" in this field
+ * - apiConsoleResult : Auto console.log ajax response
+ *  - EX : "true"
  *
- * apiConsoleResult   @ Auto console.log ajax response
- * EX : "true"
+ * - onChangeCallback : callback function when select2 activated elememnt changed
+ *  - this function need to be declared in your own js code with excatly the same name
+ *  - EX : "updateDeliveryDay"
  *
- * onChangeCallback   @ callback function when select2 activated elememnt changed
- *                      this function need to be declared in your own js code with excatly the same name
- * EX : "updateDeliveryDay"
+ * - apiTableName : table name where initialValue came from
+ *  - EX : institutes
  *
- * allowNew           @ allow select2 field enter value which not included in dropdown list
- * EX : "true"
+ * - allowNew : allow select2 field enter value which not included in dropdown list
+ *  - EX : "true"
  *
  */
 class JFormFieldSelect2 extends JFormField
@@ -65,7 +64,31 @@ class JFormFieldSelect2 extends JFormField
 		// Check if js/css library are included or not
 		$this->init();
 
-		$option = self::getXmlField();
+		// Check if select2 has initial value
+		$initialValue = $this->value;
+
+		$params = $this->getXmlField($initialValue);
+
+		// Tell javascript we don't have initial value
+		$params['hasInitialValue'] = 'false';
+
+		if (isset($initialValue) && '' != $initialValue)
+		{
+			$initialItem = $this->getInitialItem($initialValue);
+
+			$params['hasInitialValue'] = 'true';
+			$params['tableName'] = $this->table_name;
+
+			foreach ($initialItem as $key => $value)
+			{
+				$params[$key] = $value;
+			}
+
+			// This is select2 bug, we have to remove hint to get initial value
+			unset($params['hint']);
+		}
+
+		$option = json_encode($params);
 
 		$script = '
 			(function($) {
@@ -73,8 +96,14 @@ class JFormFieldSelect2 extends JFormField
 				// Inject xml params
 				var option = ' . $option . ';
 
-				function initialize($node)
+				function select2Initialize($node, initialText)
 				{
+					if (typeof initialText != "undefined")
+					{
+						option.hasInitialValue = "true";
+						option.dropdowntext = initialText;
+					}
+
 					var lastResults = [];
 
 					$node.select2({
@@ -105,29 +134,59 @@ class JFormFieldSelect2 extends JFormField
 								console.log(result);
 							}
 
-							return  result[option.apiValueField];
+							return  result.dropdowntext;
 						},
 						formatSelection : function(result)
 						{
-							return result[option.apiValueField];
+							return result.dropdowntext;
 						},
 						dropdownCssClass: "bigdrop",
+						initSelection : function (element, callback) {
 
+                            if (option.hasInitialValue == "true")
+                            {
+                            	callback({
+                            		id: option.id,
+                            		dropdowntext: option.dropdowntext
+                            	});
+                            }
+                        },
 						// Allow user to add new customer
 						createSearchChoice: function (term)
 						{
 							if (option.allowNew == "true")
 							{
-								var text = term + (lastResults.some(function(r) { return r.text == term }) ? "" : " (new)");
+								var text = term + (lastResults.some(function(r) { return r.text == term }) ? "" : " (新)");
 									obj = {};
 
 								obj["id"] = term;
-								obj[option.apiValueField] = text;
+								obj.dropdowntext = text;
 
 								return obj;
 							}
 						}
 					});
+					if (option.hasInitialValue == "true" && typeof initialText == "undefined")
+					{
+						$node.select2("readonly", true);
+
+						if (option.tableName == "institutes")
+						{
+							// update "外送日" & "外送顏色" in edit view on document load
+							$(document).ready(function(){
+								var instituteData = {
+									added : {
+										"delivery_day" : option.delivery_day,
+										"color" : option.hex,
+										"hasInitialValue" : option.hasInitialValue
+										}
+									};
+
+								// Call $node onchange callback
+								window[option.onChangeCallback](instituteData, $node);
+							})
+						};
+					};
 
 					$node.on("change", function(e)
 					{
@@ -137,11 +196,11 @@ class JFormFieldSelect2 extends JFormField
 
 				// Export function
 				window[option.fieldName] = {};
-				window[option.fieldName].initialize = initialize;
+				window[option.fieldName].select2Initialize = select2Initialize;
 			})(jQuery);
 		';
 
-		$jsToInitializeInstitueSelect2 = '
+		$jsToInitializeInstituteSelect2 = '
 			(function ($) {
 				$(document).ready(function() {
 
@@ -150,18 +209,20 @@ class JFormFieldSelect2 extends JFormField
 					// Inject xml params
 					option = ' . $option . ';
 
-					window[option.fieldName].initialize($node);
+					window[option.fieldName].select2Initialize($node);
 				});
 			})(jQuery);
 		';
 
 		$asset->internalJS($script);
-		$asset->internalJS($jsToInitializeInstitueSelect2);
+
+		$asset->internalJS($jsToInitializeInstituteSelect2);
 
 		$attrs = array(
 			'id'    => $this->id,
 			'name'  => $this->name,
-			'class' => $this->class
+			'class' => $this->class,
+			'value' => $this->value,
 		);
 
 		$html = new \Windwalker\Html\HtmlElement('input', '', $attrs);
@@ -191,27 +252,81 @@ class JFormFieldSelect2 extends JFormField
 	}
 
 	/**
-	 * Get all xml field value
+	 * Get all xml form field value
 	 *
-	 * @return string (json format)
+	 * @param  integer $fieldNameSpace
+	 *
+	 * @return array
 	 */
-	public function getXmlField()
+	public function getXmlField($fieldNameSpace)
 	{
 		$params = array(
-			'fieldName'          => $this->fieldname,
+			'fieldName'          => $this->fieldname . $fieldNameSpace,
 			'minimumInputLength' => XmlHelper::get($this->element, 'minimumInputLength', 2),
 			'hint'               => XmlHelper::get($this->element, 'hint'),
 			'apiUrl'             => XmlHelper::get($this->element, 'apiUrl'),
 			'apiDataType'        => XmlHelper::get($this->element, 'apiDataType', 'json'),
-			'consoleResult'      => XmlHelper::get($this->element, 'consoleResult', 'false'),
+			'consoleResult'      => XmlHelper::get($this->element, 'apiConsoleResult', 'false'),
 			'apiQueryKey'        => XmlHelper::get($this->element, 'apiQueryKey'),
-			'apiValueField'      => XmlHelper::get($this->element, 'apiValueField'),
 			'allowNew'           => XmlHelper::get($this->element, 'allowNew', 'false'),
-			'onChangeCallback'   => XmlHelper::get($this->element, 'onChangeCallback')
+			'onChangeCallback'   => XmlHelper::get($this->element, 'onChangeCallback', 'function(){}')
 		);
 
-		$option = json_encode($params);
+		return $params;
+	}
 
-		return $option;
+	/**
+	 * Get select2 initial value in edit view
+	 *
+	 * @param integer $queryId
+	 *
+	 * @return mixed
+	 */
+	public function getInitialItem($queryId)
+	{
+		// Prepare database object
+		$container = Container::getInstance();
+		$db        = $container->get('db');
+		$q         = $db->getQuery(true);
+
+		$this->table_name  = XmlHelper::get($this->element, 'apiTableName');
+		$selectString = $this->getSelectString($this->table_name);
+
+		// Do query
+		$q->select($selectString)
+			->from("#__schedule_" . $this->table_name)
+			->where("id = {$queryId}");
+
+		$db->setQuery($q);
+
+		return new \Windwalker\Data\Data($db->loadObject());
+	}
+
+	/**
+	 * getTableField according to apiTableName input
+	 *
+	 * @param  string $table_name
+	 *
+	 * @return string
+	 */
+	public function getSelectString($table_name)
+	{
+		switch ($table_name)
+		{
+			case 'customers':
+				$selectString = "`id`, `name` AS `dropdowntext`";
+
+			break;
+
+			case 'institutes':
+				$selectString = "`id`, `short_title` AS `dropdowntext`, `color_hex` AS `hex`, `delivery_weekday` AS `delivery_day`, `floor` AS `floor`";
+
+			break;
+
+			default:
+				$selectString = "`id`, `title` AS `dropdowntext`";
+		}
+
+		return $selectString;
 	}
 }

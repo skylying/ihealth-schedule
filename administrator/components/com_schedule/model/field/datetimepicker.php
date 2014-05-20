@@ -10,11 +10,26 @@
 defined('_JEXEC') or die;
 
 use Windwalker\DI\Container;
+use Windwalker\Helper\XmlHelper;
+use Windwalker\Html\HtmlElement;
 
 /**
  * Class JFormFieldDateTimePicker
+ *
+ * XML properties:
+ * - show_button: (optional) is whether to show calendar button (true / false).
+ *                If set to false will hide calendar button.
+ *                Else set to true will show calendar button.
+ *                Default is false.
+ * - date_format: (optional) Setup datetimepicker's date format. Default is "YYYY-MM-DD".
+ * - width:       (optional) Setup input width (in px).
+ * - readonly:    (optional) The field cannot be changed and will automatically inherit the default value.
+ * - disabled:    (optional) is whether the text box is disabled (true or false).
+ *                If the text box is disabled, the date cannot be changed, selected or copied.
+ * - hint:        (optional) is placeholder attribute.
+ * - required:    (optional) The field must be filled before submitting the form.
  */
-class JFormFieldDateTimePicker extends JFormFieldText
+class JFormFieldDateTimePicker extends JFormField
 {
 	/**
 	 * The form field type.
@@ -39,19 +54,32 @@ class JFormFieldDateTimePicker extends JFormFieldText
 	{
 		$this->init();
 
-		$id = $this->id;
-		$style = $this->getStyle();
+		$id         = $this->id;
+		$showButton = XmlHelper::getBool($this->element, 'show_button', false);
+		$style      = $this->getStyle();
+		$dateFormat = XmlHelper::get($this->element, 'date_format', 'YYYY-MM-DD');
 
-		$class = $this->class;
+		$attr = array(
+			'type'             => 'text',
+			'name'             => $this->name,
+			'id'               => $this->id . (false === $showButton ? '' : '_input'),
+			'value'            => $this->value,
+			'style'            => $style,
+			'class'            => 'form-control ' . (false === $showButton ? $this->class : ''),
+			'readonly'         => $this->readonly,
+			'disabled'         => $this->disabled,
+			'placeholder'      => $this->hint,
+			'required'         => $this->required,
+			'data-date-format' => (false === $showButton ? $dateFormat : ''),
+		);
 
-		// Set input class
-		$this->class = ' form-control';
-		$input = parent::getInput();
+		$input = (string) new HtmlElement('input', '', $attr);
 
-		$dateFormat = (string) $this->element['dateFormat'];
-		$dateFormat = empty($dateFormat) ? 'YYYY-MM-DD' : $dateFormat;
+		if (true === $showButton)
+		{
+			$class = $this->class;
 
-		$html = <<<HTML
+			$html = <<<HTML
 <div class='input-group date {$class}' id='{$id}' style="{$style}" data-date-format="{$dateFormat}">
 	{$input}
 	<span class="input-group-addon">
@@ -59,9 +87,16 @@ class JFormFieldDateTimePicker extends JFormFieldText
 	</span>
 </div>
 HTML;
-		$doc = JFactory::getDocument();
+		}
+		else
+		{
+			$html = $input;
+		}
 
-		$js = <<<JS
+		// Do not load datetimepicker when readonly or disabled
+		if (! $this->readonly && ! $this->disabled)
+		{
+			$js = <<<JS
 jQuery(function ()
 {
 	jQuery('#{$id}').datetimepicker({
@@ -69,18 +104,8 @@ jQuery(function ()
 	});
 });
 JS;
-		// Hide calendar icon
-		$css = '
-		.input-group-addon
-		{
-			opacity: 0;
-			position: absolute;
+			JFactory::getDocument()->addScriptDeclaration($js);
 		}
-		';
-
-
-		$doc->addScriptDeclaration($js);
-		$doc->addStyleDeclaration($css);
 
 		return $html;
 	}
@@ -116,7 +141,7 @@ JS;
 	{
 		$styles = array();
 
-		$width = (int) $this->element['width'];
+		$width = (int) XmlHelper::get($this->element, 'width');
 		$width = ($width > 0 ? $width : 130);
 
 		$styles[] = 'width:' . $width . 'px;';

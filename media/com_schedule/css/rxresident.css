@@ -12,11 +12,15 @@
   padding-left: 5px;
 }
 .fullwidth-checkboxes ul li label {
-  display: inline-block;
+  display: block;
   float: left;
 }
 .fullwidth-checkboxes ul li label:hover {
   cursor: pointer;
+}
+.fullwidth-checkboxes ul li input {
+  float: none;
+  display: block;
 }
 .fullwidth-checkboxes ul li input:hover {
   cursor: pointer;

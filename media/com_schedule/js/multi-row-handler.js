@@ -28,13 +28,13 @@
 	 *                                              $row: the new row
 	 *                                              $form: the original row
 	 *
-	 * @param  options            object                Containing configuration parameters
-	 * @param  options.$panel     jQuery                Multi-Row container element
-	 * @param  options.prefix     string                Form input name prefix
-	 * @param  options.insert     function($row)        Overwrite the callback to perform inserting a new row action
-	 * @param  options.duplicate  function($row, from)  Overwrite the callback to perform inserting a duplicated row action
-	 *                                                  row: the new duplicated row
-	 *                                                  from: the original row
+	 * @param  options            object                 Containing configuration parameters
+	 * @param  options.$panel     jQuery                 Multi-Row container element
+	 * @param  options.prefix     string                 Form input name prefix
+	 * @param  options.insert     function($row)         Overwrite the callback to perform inserting a new row action
+	 * @param  options.duplicate  function($row, $from)  Overwrite the callback to perform inserting a duplicated row action
+	 *                                                   row: the new duplicated row
+	 *                                                   from: the original row
 	 */
 	function MultiRowHandler(options)
 	{
@@ -95,7 +95,7 @@
 				$target.after($row);
 			}
 
-			this.trigger('afterDuplicate', $row);
+			this.trigger('afterDuplicate', $row, $target);
 		},
 
 		/**

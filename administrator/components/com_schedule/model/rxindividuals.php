@@ -73,6 +73,20 @@ class ScheduleModelRxindividuals extends ListModel
 	);
 
 	/**
+	 * Get List Query
+	 *
+	 * @return  JDatabaseQuery
+	 */
+	protected function getListQuery()
+	{
+		$q = parent::getListQuery();
+
+		$q->group("rxindividual.id");
+
+		return $q->where("rxindividual.`type` = 'individual'");
+	}
+
+	/**
 	 * configureTables
 	 *
 	 * @return  void
@@ -82,10 +96,42 @@ class ScheduleModelRxindividuals extends ListModel
 		$queryHelper = $this->getContainer()->get('model.rxindividuals.helper.query', Container::FORCE_NEW);
 
 		$queryHelper->addTable('rxindividual', '#__schedule_prescriptions')
-			->addTable('author',   '#__users', 'rxindividual.created_by = author.id')
-			->addTable('modifier', '#__users', 'rxindividual.modified_by = modifier.id');
+			->addTable('memberMap', '#__schedule_customer_member_maps', 'memberMap.customer_id    = rxindividual.customer_id')
+			->addTable('member',    '#__schedule_members',              'member.id                = memberMap.member_id')
+			->addTable('author',    '#__users',                         'rxindividual.created_by  = author.id')
+			->addTable('modifier',  '#__users',                         'rxindividual.modified_by = modifier.id');
 
 		$this->filterFields = array_merge($this->filterFields, $queryHelper->getFilterFields());
+	}
+
+	/**
+	 * Post Get Query
+	 *
+	 * @param JDatabaseQuery $query
+	 *
+	 * @return  void
+	 */
+	protected function postGetQuery(\JDatabaseQuery $query)
+	{
+		$sql = <<<SQLALIAS
+group_concat(
+	CONCAT(
+		'{',
+			'"id": "',
+				`member`.`id`,
+			'",',
+
+			'"name": "',
+				`member`.`name`,
+			'"',
+		'}'
+	)
+) AS `member_json`
+SQLALIAS;
+
+		$query->select($sql);
+
+		parent::postGetQuery($query);
 	}
 
 	/**

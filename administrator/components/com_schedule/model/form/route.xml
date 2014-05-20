@@ -13,6 +13,28 @@
 			description="JGLOBAL_FIELD_ID_DESC"
 			/>
 
+		<field name="type"
+			type="radio"
+			label="路線種類"
+			description="路線種類"
+			class="btn-group"
+			default="customer">
+			<option value="customer">散客路線</option>
+			<option value="institute">機構路線</option>
+		</field>
+
+		<field name="institute_id"
+			type="select2"
+			apiUrl="index.php?option=com_schedule&amp;task=institutes.search.json"
+			apiQueryKey="filter_search"
+			apiValueField="title"
+			minimumInputLength="1"
+			hint="輸入機構名稱"
+			class="input-large"
+			label="機構名稱"
+			description="機構名稱"
+			/>
+
 		<field name="city"
 			type="sql"
 			query="SELECT id AS value, title AS title FROM #__schedule_cities"
@@ -20,9 +42,8 @@
 			key_field="value"
 			label="縣市"
 			description="選擇外送縣市"
-			required="true"
-			class="required"
 			>
+			<option></option>
 		</field>
 
 		<field name="area"
@@ -32,9 +53,8 @@
 			key_field="value"
 			label="區域"
 			description="選擇外送區域"
-			required="true"
-			class="required"
 			>
+			<option></option>
 		</field>
 
 		<field name="weekday"
@@ -44,9 +64,9 @@
 			>
 			<option value="MON">MON</option>
 			<option value="TUE">TUE</option>
-			<option value="WED">週三</option>
-			<option value="THU">週四</option>
-			<option value="FRI">週五</option>
+			<option value="WED">WED</option>
+			<option value="THU">THU</option>
+			<option value="FRI">FRI</option>
 		</field>
 
 		<field name="sender_id"

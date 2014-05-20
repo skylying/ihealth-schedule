@@ -65,6 +65,7 @@ class ScheduleControllerRxresidentEditSave extends SaveController
 	/**
 	 * preSaveHook
 	 *
+	 * @throws  Windwalker\Model\Exception\ValidateFailException
 	 * @return  void
 	 */
 	protected function preSaveHook()
@@ -73,7 +74,21 @@ class ScheduleControllerRxresidentEditSave extends SaveController
 		{
 			$item = $this->data;
 
-			$this->data = array('items' => array($item));
+			$this->data = array(
+				'institute_id' => $this->data['institute_id'],
+				'floor' => $this->data['floor'],
+				'items' => array(),
+			);
+
+			if (! empty($item['customer_id']))
+			{
+				$this->data['items'][$item['id']] = $item;
+			}
+		}
+
+		if (empty($this->data['items']))
+		{
+			throw new ValidateFailException(array('empty items'));
 		}
 
 		foreach ($this->data['items'] as &$item)

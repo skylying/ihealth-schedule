@@ -82,6 +82,7 @@ class ScheduleModelInstitute extends AdminModel
 	 */
 	public function prepareTable(JTable $table)
 	{
+		// Prepare address title from addres table
 		$tableCity = $this->getTable('City');
 		$tableCity->load($table->city);
 		$table->city_title = $tableCity->title;
@@ -98,5 +99,23 @@ class ScheduleModelInstitute extends AdminModel
 		$tableColor->load($table->color_id);
 		$table->color_hex = $tableColor->hex;
 		$table->color_title = $tableColor->title;
+
+		// Prepare floor data
+		$table->floor = implode(',', $table->floor);
+	}
+
+	/**
+	 * Prepare floor data
+	 *
+	 * @return  array
+	 */
+	protected function loadFormData()
+	{
+		// Prepare floor data
+		$data = parent::loadFormData();
+
+		$data->floor = explode(',', $data->floor);
+
+		return $data;
 	}
 }
