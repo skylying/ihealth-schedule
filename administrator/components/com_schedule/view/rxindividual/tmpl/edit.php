@@ -381,6 +381,48 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 	};
 
 	/**
+	 * Calculate finish drug date by specifying weekday
+	 *
+	 * updateScheduleDate
+	 *
+	 * @param {string}    weekday
+	 * @param {string}      nth
+	 */
+	$.fn.updateScheduleDateByWeekday = function (weekday, nth)
+	{
+		var seeDrDate = jQuery('#' + seeDrDateID).val();
+		var period = jQuery('#' + periodID).val();
+
+		$.ajax({
+			type: "POST",
+			url: "index.php?option=com_schedule&task=rxindividual.ajax.senddate" +
+				"&nth=" + nth +
+				"&see_dr_date=" + seeDrDate +
+				"&period=" + period +
+				"&weekday=" + weekday
+		}).done(function (cdata)
+			{
+				var data = JSON.parse(cdata);
+
+				var sendDateId = '#jform_schedules_' + data['nth'] + '_date';
+
+				if (data['date'] != null)
+				{
+					$(sendDateId).val(data['date']);
+				}
+				else
+				{
+					if (data['type'] == '2')
+					{
+						$(sendDateId).closest('.js-nth-schedule-info').find('.js-route-wrap').removeClass('hide');
+
+						$(sendDateId).val('');
+					}
+				}
+			});
+	};
+
+	/**
 	 * Calculate finish drug date, schedule date
 	 *
 	 * updateScheduleDate
@@ -410,7 +452,7 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 
 				$.ajax({
 					type: "POST",
-					url: "index.php?option=com_schedule&task=rxindividual.ajax.date" +
+					url: "index.php?option=com_schedule&task=rxindividual.ajax.senddate" +
 						"&nth=" + addressesKeys[i] +
 						"&city_id=" + city +
 						"&area_id=" + area +
@@ -433,8 +475,6 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 							if (data['type'] == '2')
 							{
 								$(sendDateId).closest('.js-nth-schedule-info').find('.js-route-wrap').removeClass('hide');
-
-								$(sendDateId).val('');
 							}
 						}
 					});
@@ -955,6 +995,30 @@ jQuery(document).ready(function ()
 
 	// Method list
 	jQuery('#' + methodID).methodForm();
+
+	// Bind 'change' evnet to 'weekday of new route data'
+	jQuery('.js-route-wrap .js-route-weekday select').each(function()
+	{
+		jQuery(this).on( 'change', function(){
+			var weekday = jQuery(this).val();
+			var nth = jQuery(this).attr('id');
+
+			if (nth.indexOf("1st") > -1)
+			{
+				nth = '1st';
+			}
+			else if (nth.indexOf("2nd") > -1)
+			{
+				nth = '2nd';
+			}
+			else if (nth.indexOf("3rd") > -1)
+			{
+				nth = '3rd';
+			}
+
+			jQuery(this).updateScheduleDateByWeekday(weekday, nth);
+		});
+	});
 });
 </script>
 
@@ -1072,7 +1136,7 @@ jQuery(document).ready(function ()
 									<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4" style="padding: 0px 10px 0px 0px;">
 										<?php echo $schedules["jform_schedules_{$key}_sender_id"]->getControlGroup(); ?>
 									</div>
-									<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4" style="padding: 0px 10px 0px 0px;">
+									<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 js-route-weekday" style="padding: 0px 10px 0px 0px;">
 										<?php echo $schedules["jform_schedules_{$key}_weekday"]->getControlGroup(); ?>
 									</div>
 								</div>
