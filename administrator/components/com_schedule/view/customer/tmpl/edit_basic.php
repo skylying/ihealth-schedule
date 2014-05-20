@@ -45,6 +45,7 @@ $data->asset->addJS('multi-row-handler.js');
 <div class="row-fluid js-address-row-tmpl hide">
 	<div class="row-fluid alert alert-success">
 		<input class="addr_id hide" type="text" />
+
 		<div class="col-lg-2 panel-info">
 			<input type="radio" name="previous" class="previous" />
 			主要
@@ -92,7 +93,7 @@ $data->asset->addJS('multi-row-handler.js');
 	var jsonTelM = $.parseJSON($('#jform_mobile').val());
 
 	/**
-	 * 複寫電話欄位    Json並判斷default值
+	 * 複寫Json回電話欄位
 	 */
 	update = function ()
 	{
@@ -260,10 +261,10 @@ $data->asset->addJS('multi-row-handler.js');
 		$('#appendArea select').next().next().remove();
 	});
 
-	// Delete Addr
+	// Delete addresses
 	$('#appendArea').on('click', '.button-delete-addr', deleteAddr);
 
-	//Update address
+	// Update addresses
 	$('#appendArea').on('change', 'select[name="jform[city]"]', updateAddr);
 	$('#appendArea').on('change', 'select[name="jform[area]"]', updateAddr);
 	$('#appendArea').on('change', 'input[name="jform[address2]"]', updateAddr);
