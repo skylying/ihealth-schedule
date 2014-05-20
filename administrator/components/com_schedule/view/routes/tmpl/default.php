@@ -22,24 +22,74 @@ JHtmlDropdown::init();
  * @var Windwalker\DI\Container $container
  */
 $container = $this->getContainer();
+
+$doc = JFactory::getDocument();
+$css = <<<CSS
+.route-outer
+{
+	display:inline-block;
+	border-radius: 5px;
+	border: 1px solid #A8A6A6;
+	margin-top:5px;
+}
+.route-outer div
+{
+	padding: 0 5px;
+}
+.route-outer div label
+{
+	display:inline-block;
+	padding-top:5px;
+
+}
+.route-outer div label:hover
+{
+	cursor: pointer;
+}
+.customer-bg
+{
+	background: #eea786;
+}
+.institute-bg
+{
+	background: #A8F8FF;
+}
+CSS;
+
+$doc->addStyleDeclaration($css);
+
+$routeUpdater = $this->data->filterForm->getGroup('routeupdater');
+$senderForm   = $routeUpdater['routeupdater_sender_id'];
+$weekdayForm  = $routeUpdater['routeupdater_weekday'];
+
 ?>
 
 <div id="schedule" class="windwalker routes tablelist row-fluid">
 	<form action="<?php echo JURI::getInstance(); ?>" method="post" name="adminForm" id="adminForm" enctype="multipart/form-data">
 
-		<?php if (!empty($this->data->sidebar)): ?>
-		<div id="j-sidebar-container" class="span2">
-			<h4 class="page-header"><?php echo JText::_('JOPTION_MENUS'); ?></h4>
-			<?php echo $this->data->sidebar; ?>
-		</div>
-		<div id="j-main-container" class="span10">
-		<?php else: ?>
 		<div id="j-main-container">
-		<?php endif;?>
 
-			<?php echo with(new FileLayout('joomla.searchtools.default'))->render(array('view' => $this->data)); ?>
+			<div class="row">
+				<div class="col-md-1">
+					<div class="route-outer institute-bg" style="padding: 4px">機構路線</div>
+				</div>
+				<div class="col-md-1">
+					<div class="route-outer customer-bg" style="padding: 4px">散客路線</div>
+				</div>
+				<div class="col-md-3 col-md-offset-1">
+					<?php echo $senderForm->getControlGroup(); ?>
+				</div>
+				<div class="col-md-3">
+					<?php echo $weekdayForm->getControlGroup(); ?>
+				</div>
+				<div class="col-md-2 col-md-offset-1">
+					<button class="btn btn-success">預覽結果</button>
+				</div>
+			</div>
 
-			<?php echo $this->loadTemplate('table'); ?>
+			<hr />
+
+			<?php echo $this->loadTemplate('overview'); ?>
 
 			<?php echo with(new FileLayout('joomla.batchtools.modal'))->render(array('view' => $this->data, 'task_prefix' => 'routes.')); ?>
 
@@ -53,3 +103,13 @@ $container = $this->getContainer();
 		</div>
 	</form>
 </div>
+
+<script>
+	(function($)
+	{
+		$('#routeupdater_sender_id').on('change', function()
+		{
+			alert('媽我在這裡 ._./~');
+		})
+	})(jQuery)
+</script>
