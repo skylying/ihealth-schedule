@@ -435,9 +435,6 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 								$(sendDateId).closest('.js-nth-schedule-info').find('.js-route-wrap').removeClass('hide');
 
 								$(sendDateId).val('');
-								Joomla.renderMessages([
-									[data['message']]
-								]);
 							}
 						}
 					});
@@ -833,6 +830,8 @@ jQuery(document).ready(function ()
 
 			// Update Schedule date once
 			jQuery(this).updateScheduleDate(jQuery('#' + seeDrDateID).val(), jQuery('#' + periodID).val());
+
+			Joomla.renderMessages([['提醒您，您已新增散客電話或地址，記得按儲存喲。']]);
 		}
 	});
 
@@ -1068,6 +1067,7 @@ jQuery(document).ready(function ()
 								</div>
 							</div>
 							<div class="col-lg-12 js-route-wrap hide">
+								<p><span class="label label-warning">宅配區域路線不存在，請指定外送藥師，外送日。</span></p>
 								<div class="row-fluid">
 									<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4" style="padding: 0px 10px 0px 0px;">
 										<?php echo $schedules["jform_schedules_{$key}_sender_id"]->getControlGroup(); ?>
