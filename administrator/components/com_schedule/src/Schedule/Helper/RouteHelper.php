@@ -35,8 +35,13 @@ class RouteHelper
 		'sender_name'
 	);
 
-
-	//todo:docblock
+	/**
+	 * Get view = overview table
+	 *
+	 * @param object $data
+	 *
+	 * @return \JGrid
+	 */
 	public static function getTable($data)
 	{
 		$grid = new \JGrid;
@@ -98,7 +103,11 @@ class RouteHelper
 		return $grid;
 	}
 
-
+	/**
+	 * Get sender name list
+	 *
+	 * @return  array
+	 */
 	private static function getSenders()
 	{
 		$result = [];
@@ -115,6 +124,13 @@ class RouteHelper
 		return $result;
 	}
 
+	/**
+	 * Sort data in order of [外送藥師][外送日][路線 id] = array('路線名稱', '路線種類')
+	 *
+	 * @param array $data
+	 *
+	 * @return  array
+	 */
 	private static function getSortedData($data)
 	{
 		$result = [];
@@ -148,23 +164,43 @@ class RouteHelper
 		return $result;
 	}
 
-
+	/**
+	 * Pack route information with html element, will render them on table
+	 *
+	 * Template look like :
+	 *
+	 * <div class="route-outer">
+	 * 	<div>
+	 * 		<input />
+	 * 		<label>
+	 * 	</div>
+	 * </div>
+	 *
+	 * @param array $aliasArray
+	 *
+	 * @return  string
+	 */
 	private static function getRouteStyle(array $aliasArray)
 	{
 		$html = '';
+
 		foreach ($aliasArray as $key => $value)
 		{
 			// Saparate different route type
 			$bgColor = ($value['type'] == 'customer') ? 'route-outer customer-bg' : 'route-outer institute-bg';
 
+			// Create <input>
 			$inputAttr = array('id' => $key, 'type' => 'checkbox');
 			$input = new HtmlElement('input', '', $inputAttr);
 
+			// Create <label>
 			$labelAttr = array('for' => $key);
 			$label = new HtmlElement('label', $value['title'], $labelAttr);
 
+			// Create inner <div>, and insert <label> & <input>
 			$innerDiv = new HtmlElement('div', $input . $label);
 
+			// Create outer <div>, and insert inner <div>
 			$outerDivAttr = array('class' => $bgColor);
 			$outerDiv = new HtmlElement('div', $innerDiv, $outerDivAttr);
 
