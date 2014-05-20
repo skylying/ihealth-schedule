@@ -12,11 +12,11 @@ use \Schedule\Helper\ScheduleHelper;
 use Windwalker\Joomla\DataMapper\DataMapper;
 
 /**
- * Class ScheduleControllerRxindividualAjaxDate
+ * Class ScheduleControllerRxindividualAjaxSendDate
  *
  * @since 1.0
  */
-class ScheduleControllerRxindividualAjaxDate extends DisplayController
+class ScheduleControllerRxindividualAjaxSendDate extends DisplayController
 {
 	/**
 	 * doExecute
@@ -30,27 +30,42 @@ class ScheduleControllerRxindividualAjaxDate extends DisplayController
 		$areaId = $this->input->get('area_id');
 		$nth = $this->input->get('nth');
 		$period = $this->input->get('period');
+		$weekday = $this->input->get('weekday');
 
 		$routeMapper   = new DataMapper(Table::ROUTES);
 
-		$route = $routeMapper->findOne(array("city" => $cityId, "area" => $areaId));
-
-		if (! empty($route->id))
+		// 撈路線
+		if (! empty($cityId) && ! empty($areaId))
 		{
-			if (!empty($seeDrDate))
+			$route = $routeMapper->findOne(array("city" => $cityId, "area" => $areaId));
+		}
+
+		// 沒有就醫日期 直接回傳message
+		if (empty($seeDrDate))
+		{
+			echo json_encode((object) array("message" => "請指定就醫日期", "type" => "1", "nth" => $nth));
+		}
+
+		if (! empty($weekday))
+		{
+			$result = ScheduleHelper::calculateSendDate($nth, $seeDrDate, $period, $weekday);
+
+			echo json_encode((object) array("date" => $result->format("Y-m-d"), "type" => "0", "nth" => $nth));
+		}
+		else
+		{
+			if (! empty($route->id))
 			{
+				// 不給weekday 但撈到路線
 				$result = ScheduleHelper::calculateSendDate($nth, $seeDrDate, $period, $route->weekday);
 
 				echo json_encode((object) array("date" => $result->format("Y-m-d"), "type" => "0", "nth" => $nth));
 			}
 			else
 			{
-				echo json_encode((object) array("message" => "請指定就醫日期", "type" => "1", "nth" => $nth));
+				// 又不給weekday 又撈不到路線
+				echo json_encode((object) array("message" => "宅配區域路線不存在，請指定外送藥師，外送日。", "type" => "2", "nth" => $nth));
 			}
-		}
-		else
-		{
-			echo json_encode((object) array("message" => "宅配區域路線不存在，請指定外送藥師，外送日。", "type" => "2", "nth" => $nth));
 		}
 
 		jexit();
