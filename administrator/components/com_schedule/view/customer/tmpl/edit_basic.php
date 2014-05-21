@@ -28,7 +28,7 @@ $data->asset->addJS('multi-row-handler.js');
 			<?php echo $this->loadTemplate('fieldset', array('fieldset' => $fieldsets['rxindividual'], 'class' => 'form-horizontal')); ?>
 			<?php echo $data->form->getControlGroup('address'); ?>
 			<div id="appendArea"></div>
-			<div class="btn btn-md btn-info button-add-addr pull right">
+			<div class="btn btn-md btn-info button-add-addr">
 				<span class="icon-plus icon-white"></span>
 				新增地址
 			</div>
@@ -95,7 +95,7 @@ $data->asset->addJS('multi-row-handler.js');
 	/**
 	 * 複寫Json回電話欄位
 	 */
-	update = function ()
+	function update()
 	{
 
 		jsonTelO = [
@@ -226,8 +226,7 @@ $data->asset->addJS('multi-row-handler.js');
 
 		//Clone tmpl
 		var element = $('.js-address-row-tmpl').clone();
-		element.removeClass('js-address-row-tmpl');
-		element.removeClass('hide');
+		element.removeClass('js-address-row-tmpl hide');
 		element.addClass('js-address-row');
 		element.appendTo('#appendArea');
 
@@ -242,7 +241,6 @@ $data->asset->addJS('multi-row-handler.js');
 		{
 			element.find('.previous').prop('checked', true);
 		}
-
 	}
 
 	/**

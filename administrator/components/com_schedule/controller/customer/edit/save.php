@@ -39,7 +39,6 @@ class ScheduleControllerCustomerEditSave extends SaveController
 
 		if (!empty($createAddress))
 		{
-
 			// Save addresses
 			foreach ($createAddress as $addressTmp)
 			{
