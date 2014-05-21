@@ -126,10 +126,18 @@ class ScheduleViewRoutesHtml extends GridView
 			$buttonSet['delete']['access'] = true;
 		}
 
-		$buttonSet['publish']['access'] = false;
-		$buttonSet['edit']['access'] = false;
-		$buttonSet['unpublish']['access'] = false;
-		$buttonSet['checkin']['access'] = false;
+		// Remove all buttons we do not need
+		$buttonSet['edit']['access']        = false;
+		$buttonSet['duplicate']['access']   = false;
+		$buttonSet['publish']['access']     = false;
+		$buttonSet['unpublish']['access']   = false;
+		$buttonSet['checkin']['access']     = false;
+		$buttonSet['delete']['access']      = false;
+		$buttonSet['trash']['access']       = false;
+		$buttonSet['batch']['access']       = false;
+		$buttonSet['preferences']['access'] = false;
+
+		$buttonSet['add']['args'] = array($this->viewItem . '.edit.save', 'title' => '儲存變更');
 
 		return $buttonSet;
 	}
