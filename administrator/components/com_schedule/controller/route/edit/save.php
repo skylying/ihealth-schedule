@@ -41,9 +41,9 @@ class ScheduleControllerRouteEditSave extends SaveController
 		// Attempt to save the data.
 		try
 		{
-			foreach ($cid as $id)
+			foreach ($cid as $value)
 			{
-				$validDataSet[] = $this->saveItem($id);
+				$validDataSet[] = $this->saveItem($value);
 			}
 		}
 		catch (ValidateFailException $e)
@@ -100,18 +100,19 @@ class ScheduleControllerRouteEditSave extends SaveController
 	/**
 	 * saveAll
 	 *
-	 * @param   int  $id
+	 * @param  array $value
 	 *
-	 * @return  array
+	 * @return array
 	 */
-	private function saveItem($id)
+	private function saveItem($value)
 	{
-		$data = $this->data;
+		// Get sender id and weekday from input value
+		$data = $this->input->get('routeupdater', array(), 'ARRAY');
 
-		if (! empty($id))
-		{
-			$data['id'] = $id;
-		}
+		$decodedData = (array) json_decode($value);
+
+		// Add $id to be updated as first element
+		$data = $decodedData + $data;
 
 		// Validate the posted data.
 		// Sometimes the form needs some posted data, such as for plugins and modules.
