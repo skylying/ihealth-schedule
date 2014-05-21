@@ -31,6 +31,7 @@ $css = <<<CSS
 	border-radius: 5px;
 	border: 1px solid #A8A6A6;
 	margin-top:5px;
+	opacity: 0.7;
 }
 .route-outer div
 {
@@ -40,7 +41,7 @@ $css = <<<CSS
 {
 	display:inline-block;
 	padding-top:5px;
-
+	padding-left:4px;
 }
 .route-outer div label:hover
 {
@@ -53,6 +54,18 @@ $css = <<<CSS
 .institute-bg
 {
 	background: #A8F8FF;
+}
+.mask
+{
+	width: 200px;
+	height: 30px;
+	position: absolute;
+	opacity: 0;
+}
+.checkall
+{
+	display:none;
+	text-align: center;
 }
 CSS;
 
@@ -83,7 +96,7 @@ $weekdayForm  = $routeUpdater['routeupdater_weekday'];
 					<?php echo $weekdayForm->getControlGroup(); ?>
 				</div>
 				<div class="col-md-2 col-md-offset-1">
-					<button class="btn btn-success">預覽結果</button>
+					<span id="uncheckall" class="btn btn-danger">取消選取所有</span>
 				</div>
 			</div>
 
@@ -105,11 +118,215 @@ $weekdayForm  = $routeUpdater['routeupdater_weekday'];
 </div>
 
 <script>
+
+	//todo: move RouteJs to external file link
 	(function($)
 	{
-		$('#routeupdater_sender_id').on('change', function()
+		// Check global conflict
+		if (typeof window.RouteJs !== "undefined")
 		{
-			alert('媽我在這裡 ._./~');
-		})
-	})(jQuery)
+			return;
+		}
+
+		"use strict";
+
+		// Register RouteJs
+		window.RouteJs = {
+
+			// Prepare all element we need
+			initialize : function()
+			{
+				this.senderInput = $('#routeupdater_sender_id');
+				this.weekInput   = $('#routeupdater_weekday');
+				this.routeBlocks = $('.routeinput');
+				this.hiddenArea  = $('#hidden-inputs');
+
+				// Uncheckall button
+				this.uncheckall  = $('#uncheckall');
+				this.checkall    = $('.checkall');
+
+				// Checkall button
+				this.mask        = $('.mask');
+
+				// Register $this name space for routeJs self
+				window.$this = this;
+
+				// Bind all events we need
+				$this.bindEvent();
+			},
+
+			/**
+			 *
+			 */
+			bindEvent : function()
+			{
+				// Bind onchange event to sender dropdown list
+				$this.senderInput.on('change', function()
+				{
+					var senderId = $(this).val();
+
+					// @ 施工中
+					//$this.updateHiddehInputs(senderId, null);
+				});
+
+				// Bind onchange event to weekday dropdown list
+				$this.weekInput.on('change', function()
+				{
+					var weekDay = $(this).val();
+
+					// @ 施工中
+					//$this.updateHiddehInputs(null, weekDay);
+				});
+
+				// Bind onchange event to each routeBlock checkbox
+				$this.routeBlocks.on('change', function()
+				{
+					var routeId = $(this).attr('id');
+
+					// Create new input for each route
+					if (this.checked)
+					{
+						var inputHtml = $this.createInputElement($(this));
+
+						// Emphasize selected target
+						$(this).closest('.route-outer').css('opacity', '1');
+
+						// Append route hidden inputs
+						$this.hiddenArea.append(inputHtml);
+					}
+					// If user uncheck route, remove input to be sent
+					else
+					{
+						$(this).closest('.route-outer').css('opacity', '0.7');
+
+						$this.hiddenArea.find('input[title="' + routeId + '"]').remove();
+					}
+				});
+
+				// Bind uncheckall button event
+				$this.uncheckall.on('click', function()
+				{
+					var allInputs = $('.routeinput');
+
+					allInputs.each(function()
+					{
+						$(this).prop('checked', false);
+
+						// execute routeBlocks onchange event
+						$this.routeBlocks.trigger('change');
+					})
+				});
+
+				// Bind checkall button event
+				$this.mask.hover(
+
+				// Hover in effect
+				function()
+				{
+					$(this).css('opacity', '1');
+					$(this).css('position', 'relative');
+					$(this).find('.checkall').css('display', 'block');
+				},
+
+				// Hover out effect
+				function()
+				{
+					//$(this).css('opacity', '0');
+					//$(this).css('position', 'absolute');
+					//$(this).find('.checkall').css('display', 'none');
+				});
+
+				// Bind checkall button event
+				$this.checkall.on('click', function()
+				{
+					// Find all checkboxes in current <td>
+					var checkboxes = $(this).closest('td').find('input[type="checkbox"]');
+
+					$(checkboxes).prop('checked', true);
+
+					// Execute routeBlocks onchange event
+					$this.routeBlocks.trigger('change');
+				});
+
+			},
+
+			/**
+			 * Create <input> with route id as its value
+			 *
+			 * @param {object} checkbox
+			 *
+			 * @return HTML object
+			 */
+			createInputElement : function(checkbox)
+			{
+				// Get input attributes
+				var attributes = $this.configureInput(checkbox);
+
+				var input = $('<input/>', {
+					'id'    : attributes.elementId,
+					'type'  : attributes.type,
+					'name'  : attributes.name,
+					'title' : attributes.title,
+					'class' : attributes.class,
+					'value' : JSON.stringify(attributes.value)
+				});
+
+				return input;
+			},
+
+			/**
+			 * Generate each unique input attributes
+			 *
+			 * @param {object} checkbox
+			 *
+			 * @returns object
+			 */
+			configureInput : function(checkbox)
+			{
+				var routeId       = checkbox.attr('id'),
+					routeValueObj = $.parseJSON(checkbox.val());
+
+				var date = new Date,
+					timeStamp = date.getTime(),
+					inputConfig = {};
+					inputConfig.value = {};
+
+				// Give each dynamically created input an unique id
+				inputConfig.elementId = 'date-' + timeStamp;
+				inputConfig.type      = 'hidden';
+				inputConfig.name      = 'cid[]';
+				inputConfig.title     = routeId;
+				inputConfig.class     = 'hidden-route-inputs';
+
+				// Put route value back
+				inputConfig.value.id           = routeId;
+				inputConfig.value.type         = routeValueObj.type;
+				inputConfig.value.institute_id = routeValueObj.institute_id;
+
+				return inputConfig;
+			},
+
+			/** @ 施工中
+			 * Update all hidden input value
+			 *
+			 * @param {int}    senderId
+			 * @param {string} weekDay
+			 */
+			updateHiddehInputs : function(senderId, weekDay)
+			{
+				var hiddenInputs = $('.hidden-route-inputs');
+
+				hiddenInputs.each(function()
+				{
+					// 施工中
+				})
+			}
+		};
+	})(jQuery);
+
+	// Initialize RouteJs
+	jQuery(document).ready(function()
+	{
+		RouteJs.initialize();
+	});
 </script>
