@@ -126,6 +126,8 @@ class ScheduleViewSendersHtml extends GridView
 			$buttonSet['delete']['access'] = true;
 		}
 
+		$buttonSet['edit']['access']  = false;
+
 		return $buttonSet;
 	}
 }

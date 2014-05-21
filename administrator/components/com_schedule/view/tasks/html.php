@@ -134,6 +134,13 @@ class ScheduleViewTasksHtml extends GridView
 			JToolbarHelper::custom('tasks.state.undelivery', 'pause', 'pause', '改回待外送');
 		};
 
+		$buttonSet['edit']['access']  = false;
+		$buttonSet['duplicate']['access']  = false;
+		$buttonSet['publish']['access']  = false;
+		$buttonSet['unpublish']['access']  = false;
+		$buttonSet['checkin']['access']  = false;
+		$buttonSet['new']['access']  = false;
+
 		return $buttonSet;
 	}
 }
