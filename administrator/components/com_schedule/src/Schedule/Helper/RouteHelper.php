@@ -91,7 +91,7 @@ class RouteHelper
 					// Render html elements with route info inside
 					$cellContent = self::getRouteStyle((array) $routeData[$sender][$weekDay]);
 
-					$grid->setRowCell($weekDay, $cellContent);
+					$grid->setRowCell($weekDay, $cellContent, array('style' => 'position:relative'));
 				}
 				else
 				{
@@ -158,7 +158,11 @@ class RouteHelper
 			$name = $value->sender_name;
 			$weekDay = $value->weekday;
 
-			$result[$name][$weekDay][$value->route_id] = array('title' => $title, 'type' => $value->type);
+			$result[$name][$weekDay][$value->route_id] = array(
+				'title' => $title,
+				'type' => $value->type,
+				'institute_id' => $value->institute_id,
+			);
 		}
 
 		return $result;
@@ -182,15 +186,21 @@ class RouteHelper
 	 */
 	private static function getRouteStyle(array $aliasArray)
 	{
-		$html = '';
+		// Creat selectall and its mask
+		$html =	<<<HTML
+<span class="mask"><span class="checkall">全選</span></span>
+HTML;
 
 		foreach ($aliasArray as $key => $value)
 		{
+			// Prepare input value we need
+			$jsonValue = json_encode($value);
+
 			// Saparate different route type
 			$bgColor = ($value['type'] == 'customer') ? 'route-outer customer-bg' : 'route-outer institute-bg';
 
 			// Create <input>
-			$inputAttr = array('id' => $key, 'type' => 'checkbox');
+			$inputAttr = array('id' => $key, 'type' => 'checkbox', 'class' => 'routeinput', "value" => htmlspecialchars($jsonValue));
 			$input = new HtmlElement('input', '', $inputAttr);
 
 			// Create <label>
