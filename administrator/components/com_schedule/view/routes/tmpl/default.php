@@ -145,7 +145,7 @@ $weekdayForm  = $routeUpdater['routeupdater_weekday'];
 				this.uncheckall  = $('#uncheckall');
 				this.checkall    = $('.checkall');
 
-				// Checkall button
+				// Checkall button's mask
 				this.mask        = $('.mask');
 
 				// Register $this name space for routeJs self
@@ -156,7 +156,7 @@ $weekdayForm  = $routeUpdater['routeupdater_weekday'];
 			},
 
 			/**
-			 *
+			 * Bind all HTML events we need
 			 */
 			bindEvent : function()
 			{
@@ -247,6 +247,8 @@ $weekdayForm  = $routeUpdater['routeupdater_weekday'];
 					// Execute routeBlocks onchange event
 					$this.routeBlocks.trigger('change');
 				});
+
+				//TODO : uncheckall button (only for <td>)
 
 			},
 
