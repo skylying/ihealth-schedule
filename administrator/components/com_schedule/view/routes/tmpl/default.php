@@ -61,11 +61,27 @@ $css = <<<CSS
 	height: 30px;
 	position: absolute;
 	opacity: 0;
+	display: block;
 }
-.checkall
+.batchbutton
 {
 	display:none;
 	text-align: center;
+	color: #ffffff;
+	border-radius: 4px;
+	padding: 3px;
+}
+.batchbutton:hover
+{
+	cursor: pointer;
+}
+.checkall
+{
+	background: #5cb85c;
+}
+.uncheckall
+{
+	background: #d9534f;
 }
 CSS;
 
@@ -96,7 +112,7 @@ $weekdayForm  = $routeUpdater['routeupdater_weekday'];
 					<?php echo $weekdayForm->getControlGroup(); ?>
 				</div>
 				<div class="col-md-2 col-md-offset-1">
-					<span id="uncheckall" class="btn btn-danger">取消選取所有</span>
+					<span id="uncheckalltable" class="btn btn-danger">取消選取所有</span>
 				</div>
 			</div>
 

@@ -188,7 +188,10 @@ class RouteHelper
 	{
 		// Creat selectall and its mask
 		$html =	<<<HTML
-<span class="mask"><span class="checkall">全選</span></span>
+<span class="mask">
+	<span class="batchbutton checkall glyphicon glyphicon-ok-sign"></span>
+	<span class="batchbutton uncheckall glyphicon glyphicon-remove-sign"></span>
+</span>
 HTML;
 
 		foreach ($aliasArray as $key => $value)
