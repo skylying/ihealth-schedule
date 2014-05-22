@@ -18,10 +18,10 @@ JHtmlBehavior::multiselect('adminForm');
 /**
  * Prepare data for this template.
  *
- * @var $container Windwalker\DI\Container
- * @var $data      Windwalker\Data\Data
- * @var $asset     Windwalker\Helper\AssetHelper
- * @var $grid      Windwalker\View\Helper\GridHelper
+ * @var $container \Windwalker\DI\Container
+ * @var $data      \Windwalker\Data\Data
+ * @var $asset     \Windwalker\Helper\AssetHelper
+ * @var $grid      \Windwalker\View\Helper\GridHelper
  * @var $date      \JDate
  */
 $container = $this->getContainer();
@@ -29,7 +29,8 @@ $asset     = $container->get('helper.asset');
 $grid      = $data->grid;
 $date      = $container->get('date');
 
+$asset->addJS('route/overview.js');
+
 ?>
 
 <?php echo RouteHelper::getTable($data->items); ?>
-

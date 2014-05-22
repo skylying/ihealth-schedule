@@ -110,18 +110,13 @@ class RouteHelper
 	 */
 	private static function getSenders()
 	{
-		$result = [];
+		$db = \JFactory::getDbo();
 
-		$mapper = new DataMapper(Table::SENDERS);
+		$query = $db->getQuery(true)
+			->select('name')
+			->from(TABLE::SENDERS);
 
-		$senders = $mapper->findAll();
-
-		foreach ($senders as $sender)
-		{
-			$result[] = $sender->name;
-		}
-
-		return $result;
+		return $db->setQuery($query)->loadColumn();
 	}
 
 	/**
@@ -148,7 +143,7 @@ class RouteHelper
 			// Different type has different route name
 			if ($value->type == 'customer')
 			{
-				$title = mb_substr($value->city_title, 0, 2) . mb_substr($value->area_title, 0, 2) . '散客';
+				$title = \JString::substr($value->city_title, 0, 2) . \JString::substr($value->area_title, 0, 2) . '散客';
 			}
 			else
 			{
