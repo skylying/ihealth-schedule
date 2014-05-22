@@ -100,8 +100,11 @@ var ERROR_NO_SEE_DR_DATE = "<?php echo ApiReturnCodeHelper::ERROR_NO_SEE_DR_DATE
 	{
 		// Fire ajax to Customer
 		$.ajax({
-			type: "POST",
-			url: "index.php?option=com_schedule&task=customer.ajax.json&id=" + id
+			type : "POST",
+			url  : "index.php?option=com_schedule&task=customer.ajax.json",
+			data : {
+				id : id
+			}
 		}).done(function (cdata)
 			{
 				var cdata      = $.parseJSON(cdata);
@@ -152,8 +155,11 @@ var ERROR_NO_SEE_DR_DATE = "<?php echo ApiReturnCodeHelper::ERROR_NO_SEE_DR_DATE
 
 		//Fire ajax to Addresses
 		$.ajax({
-			type: "POST",
-			url: "index.php?option=com_schedule&task=addresses.ajax.json&id=" + id
+			type : "POST",
+			url  : "index.php?option=com_schedule&task=addresses.ajax.json",
+			data : {
+				id : id
+			}
 		}).done(function (cdata)
 			{
 				var cdata = $.parseJSON(cdata);
@@ -400,11 +406,13 @@ var ERROR_NO_SEE_DR_DATE = "<?php echo ApiReturnCodeHelper::ERROR_NO_SEE_DR_DATE
 
 		$.ajax({
 			type: "POST",
-			url: "index.php?option=com_schedule&task=rxindividual.ajax.senddate" +
-				"&nth=" + nth +
-				"&see_dr_date=" + seeDrDate +
-				"&period=" + period +
-				"&weekday=" + weekday
+			url : "index.php?option=com_schedule&task=rxindividual.ajax.senddate",
+			data: {
+				nth : nth,
+				see_dr_date : seeDrDate ,
+				period : period ,
+				weekday : weekday
+			}
 		}).done(function (cdata)
 			{
 				var data = JSON.parse(cdata);
@@ -456,13 +464,15 @@ var ERROR_NO_SEE_DR_DATE = "<?php echo ApiReturnCodeHelper::ERROR_NO_SEE_DR_DATE
 				var area = $(selectedAddressID).find('option:selected').attr('area');
 
 				$.ajax({
-					type: "POST",
-					url: "index.php?option=com_schedule&task=rxindividual.ajax.senddate" +
-						"&nth=" + addressesKeys[i] +
-						"&city_id=" + city +
-						"&area_id=" + area +
-						"&see_dr_date=" + seeDrDate +
-						"&period=" + period
+					type : "POST",
+					url  : "index.php?option=com_schedule&task=rxindividual.ajax.senddate",
+					data : {
+						nth : addressesKeys[i],
+						city_id : city,
+						area_id : area,
+						see_dr_date : seeDrDate,
+						period : period
+					}
 				}).done(function (cdata)
 					{
 						var data = JSON.parse(cdata);
