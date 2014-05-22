@@ -97,7 +97,6 @@ $data->asset->addJS('multi-row-handler.js');
 	 */
 	function update()
 	{
-
 		jsonTelO = [
 			{ "default": $('#radiojform_tel_office0').is(':checked'), "number": $('#jform_tel_office0').val()},
 			{ "default": $('#radiojform_tel_office1').is(':checked'), "number": $('#jform_tel_office1').val()},
@@ -119,7 +118,6 @@ $data->asset->addJS('multi-row-handler.js');
 		$('#jform_tel_office').val(JSON.stringify(jsonTelO));
 		$('#jform_tel_home').val(JSON.stringify(jsonTelH));
 		$('#jform_mobile').val(JSON.stringify(jsonTelM));
-
 	}
 
 	$('#customer-edit-fieldset-office, ' + '#customer-edit-fieldset-home, ' + '#customer-edit-fieldset-mobile input').each(function ()

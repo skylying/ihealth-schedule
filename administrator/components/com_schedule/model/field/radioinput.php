@@ -53,7 +53,7 @@ class JFormFieldRadioinput extends JFormField
 		for ($key = 0; $key <= 2; $key++)
 		{
 			// Get radio input html
-			$inputAttr = array('id' => $key, 'type' => 'radio', 'name' => "radioInput" . $this->id);
+			$inputAttr = array('id' => "radio" . $this->id . $key, 'type' => 'radio', 'name' => "radio" . $this->id);
 			$Unchecked = new HtmlElement('input', '', $inputAttr);
 
 			if (empty($jsonString))
@@ -69,10 +69,10 @@ class JFormFieldRadioinput extends JFormField
 		foreach ((array) $jsonString as $key => $value)
 		{
 			// Get radio input html
-			$inputAttr = array('id' => $key, 'type' => 'radio', 'checked' => 'checked', 'name' => "radioInput" . $this->id);
+			$inputAttr = array('id' => "radio" . $this->id . $key, 'type' => 'radio', 'checked' => 'checked', 'name' => "radio" . $this->id);
 			$Checked = new HtmlElement('input', '', $inputAttr);
 
-			$inputAttr = array('id' => $key, 'type' => 'radio', 'name' => "radioInput" . $this->id);
+			$inputAttr = array('id' => "radio" . $this->id . $key, 'type' => 'radio', 'name' => "radio" . $this->id);
 			$Unchecked = new HtmlElement('input', '', $inputAttr);
 
 			$default = $value->default;
