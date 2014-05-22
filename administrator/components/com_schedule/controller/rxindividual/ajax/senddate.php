@@ -33,7 +33,7 @@ class ScheduleControllerRxindividualAjaxSendDate extends DisplayController
 		$period = $this->input->get('period');
 		$weekday = $this->input->get('weekday');
 
-		$routeMapper   = new DataMapper(Table::ROUTES);
+		$routeMapper = new DataMapper(Table::ROUTES);
 
 		// 撈路線
 		if (! empty($cityId) && ! empty($areaId))

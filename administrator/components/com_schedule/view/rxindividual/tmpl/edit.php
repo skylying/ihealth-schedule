@@ -107,8 +107,8 @@ var ERROR_NO_SEE_DR_DATE = "<?php echo ApiReturnCodeHelper::ERROR_NO_SEE_DR_DATE
 			}
 		}).done(function (cdata)
 			{
-				var cdata      = $.parseJSON(cdata);
-				var id_number  = cdata.id_number;
+				var cdata     = $.parseJSON(cdata);
+				var id_number = cdata.id_number;
 
 				try
 				{
@@ -1012,7 +1012,7 @@ jQuery(document).ready(function ()
 	jQuery('#' + methodID).methodForm();
 
 	// Bind 'change' evnet to 'weekday of new route data'
-	jQuery('.js-route-weekday select').on( 'change', function()
+	jQuery('.js-route-weekday select').on('change', function()
 	{
 		var weekday = jQuery(this).val();
 		var nth = jQuery(this).attr('id');
