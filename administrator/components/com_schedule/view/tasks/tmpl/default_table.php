@@ -98,7 +98,7 @@ $date      = $container->get('date');
 
 			<!-- EDIT BUTTON -->
 			<td class="center">
-				<?php echo \Schedule\Helper\UiHelper::editButton('hospital', $item->task_id); ?>
+				<?php echo \Schedule\Helper\UiHelper::editButton('task', $item->task_id); ?>
 			</td>
 
 			<!--TASK DATE-->
