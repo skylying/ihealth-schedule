@@ -88,9 +88,19 @@ class ScheduleControllerRouteEditSave extends SaveController
 			{
 				$updateData = array(
 					'id' => $data['institute_id'],
-					'sender_id' => $data['sender_id'],
-					'delivery_weekday' => $data['weekday'],
 				);
+
+				// Prevent not set data
+				if (isset($data['sender_id']))
+				{
+					$updateData['sender_id'] = $data['sender_id'];
+				}
+
+				// Prevent not set data
+				if (isset($data['weekday']))
+				{
+					$updateData['delivery_weekday'] = $data['weekday'];
+				}
 
 				$modelInstitute->save($updateData);
 			}
@@ -100,18 +110,28 @@ class ScheduleControllerRouteEditSave extends SaveController
 	/**
 	 * saveAll
 	 *
-	 * @param  array $value
+	 * @param  array $singleCid
 	 *
 	 * @return array
 	 */
-	private function saveItem($value)
+	private function saveItem($singleCid)
 	{
-		// Get sender id and weekday from input value
+		// Get sender id and weekday from post input value
 		$data = $this->input->get('routeupdater', array(), 'ARRAY');
 
-		$decodedData = (array) json_decode($value);
+		// If no sender_id or weekday, unset the empty value
+		foreach ($data as $key => $value)
+		{
+			if (empty($value))
+			{
+				unset($data[$key]);
+			}
+		}
 
-		// Add $id to be updated as first element
+		// Get route type, institute_id
+		$decodedData = (array) json_decode($singleCid);
+
+		// Combine all route information
 		$data = $decodedData + $data;
 
 		// Validate the posted data.
