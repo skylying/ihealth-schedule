@@ -133,7 +133,7 @@ $date      = $container->get('date');
 		</td>
 
 		<!-- id -->
-		<td>
+		<td class="center">
 			<?php echo $item->id; ?>
 		</td>
 
