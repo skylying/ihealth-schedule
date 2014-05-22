@@ -132,6 +132,7 @@ class ScheduleViewSchedulesHtml extends GridView
 		$buttonSet['edit']['access'] = false;
 		$buttonSet['unpublish']['access'] = false;
 		$buttonSet['checkin']['access'] = false;
+		$buttonSet['batch']['access'] = false;
 
 		// Add a print popup button
 		$buttonSet['print'] = array(
@@ -144,6 +145,11 @@ class ScheduleViewSchedulesHtml extends GridView
 					#modal-print iframe {
 						border: 0;
 					}
+
+					/* fix float problem */
+					#toolbar-popup-print .btn-group {
+						float: none;
+					}
 				');
 
 				$printUrl = 'index.php?option=com_schedule&view=schedules&layout=print&tmpl=component';
@@ -151,7 +157,6 @@ class ScheduleViewSchedulesHtml extends GridView
 				// See JToolbarButtonPopup::fetchButton()
 				JToolbar::getInstance('toolbar')->appendButton('Popup', 'print', '列印排程統計表', $printUrl);
 			},
-			'priority' => 190,
 		);
 
 		return $buttonSet;
