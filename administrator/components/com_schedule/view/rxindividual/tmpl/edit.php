@@ -388,10 +388,10 @@ var ERROR_NO_SEE_DR_DATE = "<?php echo ApiReturnCodeHelper::ERROR_NO_SEE_DR_DATE
 	/**
 	 * Calculate finish drug date by specifying weekday
 	 *
-	 * updateScheduleDate
+	 * updateScheduleDateByWeekday
 	 *
 	 * @param {string}    weekday
-	 * @param {string}      nth
+	 * @param {string}    nth
 	 */
 	$.fn.updateScheduleDateByWeekday = function (weekday, nth)
 	{
@@ -1002,27 +1002,25 @@ jQuery(document).ready(function ()
 	jQuery('#' + methodID).methodForm();
 
 	// Bind 'change' evnet to 'weekday of new route data'
-	jQuery('.js-route-wrap .js-route-weekday select').each(function()
+	jQuery('.js-route-weekday select').on( 'change', function()
 	{
-		jQuery(this).on( 'change', function(){
-			var weekday = jQuery(this).val();
-			var nth = jQuery(this).attr('id');
+		var weekday = jQuery(this).val();
+		var nth = jQuery(this).attr('id');
 
-			if (nth.indexOf("1st") > -1)
-			{
-				nth = '1st';
-			}
-			else if (nth.indexOf("2nd") > -1)
-			{
-				nth = '2nd';
-			}
-			else if (nth.indexOf("3rd") > -1)
-			{
-				nth = '3rd';
-			}
+		if (nth.indexOf("1st") > -1)
+		{
+			nth = '1st';
+		}
+		else if (nth.indexOf("2nd") > -1)
+		{
+			nth = '2nd';
+		}
+		else if (nth.indexOf("3rd") > -1)
+		{
+			nth = '3rd';
+		}
 
-			jQuery(this).updateScheduleDateByWeekday(weekday, nth);
-		});
+		jQuery(this).updateScheduleDateByWeekday(weekday, nth);
 	});
 });
 </script>
