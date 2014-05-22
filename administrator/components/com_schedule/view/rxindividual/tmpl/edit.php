@@ -10,6 +10,7 @@
 defined('_JEXEC') or die;
 
 use Schedule\Helper\ScheduleHelper;
+use Schedule\Helper\ApiReturnCodeHelper;
 
 JHtmlBootstrap::tooltip();
 JHtmlFormbehavior::chosen('select');
@@ -54,6 +55,10 @@ var deleteDrugID = "<?php echo $deleteDrugID;?>";
 
 // Update empty rows of addresses inputs
 var addressesKeys = ["1st", "2nd", "3rd"];
+
+var SUCCESS_ROUTE_EXIST = "<?php echo ApiReturnCodeHelper::SUCCESS_ROUTE_EXIST;?>";
+var ERROR_NO_ROUTE = "<?php echo ApiReturnCodeHelper::ERROR_NO_ROUTE;?>";
+var ERROR_NO_SEE_DR_DATE = "<?php echo ApiReturnCodeHelper::ERROR_NO_SEE_DR_DATE;?>";
 
 (function ($)
 {
@@ -406,13 +411,13 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 
 				var sendDateId = '#jform_schedules_' + data['nth'] + '_date';
 
-				if (data['date'] != null)
+				if (data['type'] == SUCCESS_ROUTE_EXIST )
 				{
 					$(sendDateId).val(data['date']);
 				}
 				else
 				{
-					if (data['type'] == '2')
+					if (data['type'] == ERROR_NO_ROUTE)
 					{
 						$(sendDateId).closest('.js-nth-schedule-info').find('.js-route-wrap').removeClass('hide');
 
@@ -464,7 +469,7 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 
 						var sendDateId = '#jform_schedules_' + data['nth'] + '_date';
 
-						if (data['date'] != null)
+						if (data['type'] == SUCCESS_ROUTE_EXIST)
 						{
 							$(sendDateId).closest('.js-nth-schedule-info').find('.js-route-wrap').addClass('hide');
 
@@ -472,7 +477,7 @@ var addressesKeys = ["1st", "2nd", "3rd"];
 						}
 						else
 						{
-							if (data['type'] == '2')
+							if (data['type'] == ERROR_NO_ROUTE)
 							{
 								$(sendDateId).closest('.js-nth-schedule-info').find('.js-route-wrap').removeClass('hide');
 							}
