@@ -126,6 +126,11 @@ class ScheduleViewRoutesHtml extends GridView
 			$buttonSet['delete']['access'] = true;
 		}
 
+		$buttonSet['publish']['access'] = false;
+		$buttonSet['edit']['access'] = false;
+		$buttonSet['unpublish']['access'] = false;
+		$buttonSet['checkin']['access'] = false;
+
 		return $buttonSet;
 	}
 }

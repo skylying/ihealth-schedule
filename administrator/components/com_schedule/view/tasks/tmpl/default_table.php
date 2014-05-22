@@ -96,6 +96,7 @@ $date      = $container->get('date');
 				<?php echo JHtml::_('grid.id', $i, $item->task_id); ?>
 			</td>
 
+			<!-- EDIT BUTTON -->
 			<td class="center">
 				<?php echo \Schedule\Helper\UiHelper::editButton('hospital', $item->task_id); ?>
 			</td>

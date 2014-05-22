@@ -41,6 +41,11 @@ $date      = $container->get('date');
 			<?php echo JHtml::_('grid.checkAll'); ?>
 		</th>
 
+		<!-- EDIT -->
+		<th width="3%" class="center nowrap">
+			編輯
+		</th>
+
 		<!--ID-->
 		<th width="10%" class="center">
 			<?php echo $grid->sortTitle('會員編號', 'member.id'); ?>
@@ -95,6 +100,11 @@ $date      = $container->get('date');
 				<?php echo JHtml::_('grid.id', $i, $item->id); ?>
 			</td>
 
+			<!-- EDIT BUTTON -->
+			<td class="center">
+				<?php echo \Schedule\Helper\UiHelper::editButton('member', $item->id); ?>
+			</td>
+
 			<!--ID-->
 			<td class="center">
 				<?php echo $item->id; ?>
@@ -103,17 +113,7 @@ $date      = $container->get('date');
 			<!--NAME-->
 			<td class="nowrap quick-edit-wrap">
 				<div class="left">
-					<?php
-					$query = array(
-						'option' => 'com_schedule',
-						'view'   => 'member',
-						'layout' => 'edit',
-						'id'     => $item->id
-					);
-					?>
-					<a href="<?php echo JRoute::_("index.php?" . http_build_query($query)); ?>">
-						<?php echo $this->escape($item->name); ?>
-					</a>
+					<?php echo $this->escape($item->name); ?>
 				</div>
 			</td>
 
@@ -134,21 +134,15 @@ $date      = $container->get('date');
 			<!--Relative Customers-->
 			<td class="left">
 				<?php
-					foreach ($customers_name as $i => $customer):
-						$query = array(
-							'option' => 'com_schedule',
-							'view'   => 'customer',
-							'layout' => 'edit',
-							'id'     => $customers_id[$i]
-						);
-						if(!empty($customers_id[$i])):
+				foreach ($customers_name as $i => $customer)
+				{
+					if(!empty($customers_id[$i]))
+					{
+						echo Schedule\Helper\UiHelper::foreignLink('customer', $customer, $customers_id[$i], '', array('target' => '_blank'));
+						if((count($customers_name)-1) > $i) echo ', ';
+					}
+				}
 				?>
-						<a href="<?php echo JRoute::_("index.php?" . http_build_query($query));?>">
-							<?php echo $customer;?>
-						</a>
-							<?php if((count($customers_name)-1) > $i) echo ', ';?>
-						<?php endif;?>
-				<?php endforeach;?>
 			</td>
 		</tr>
 	<?php endforeach;?>

@@ -40,6 +40,11 @@ $date      = $container->get('date');
 		<?php echo JHtml::_('grid.checkAll'); ?>
 	</th>
 
+	<!--EDIT BUTTON-->
+	<th width="10%" class="center">
+		編輯
+	</th>
+
 	<!-- 處方箋編號 -->
 	<th class="center">
 		<?php echo $grid->sortTitle('處方箋編號', 'rxindividual.id'); ?>
@@ -120,25 +125,24 @@ $date      = $container->get('date');
 			<?php echo JHtml::_('grid.id', $i, $item->id); ?>
 		</td>
 
+		<!-- EDIT BUTTON -->
+		<td class="center">
+			<?php echo \Schedule\Helper\UiHelper::editButton('hospital', $item->id); ?>
+		</td>
+
 		<!-- 處方箋編號 -->
 		<td class="center">
-			<a href="<?php echo JRoute::_('index.php?option=com_schedule&task=rxresident.edit.edit&id=' . $item->id); ?>">
-				<?php echo $item->id; ?>
-			</a>
+			<?php echo $item->id; ?>
 		</td>
 
 		<!-- 機構名稱 -->
 		<td>
-			<a href="<?php echo JRoute::_('index.php?option=com_schedule&task=institute.edit.edit&id=' . $item->institute_id); ?>">
-				<?php echo $this->escape($item->institute_short_title); ?>
-			</a>
+			<?php echo Schedule\Helper\UiHelper::foreignLink('institute', $item->institute_short_title, $item->institute_id, '', array('target' => '_blank')); ?>
 		</td>
 
 		<!-- 住民姓名 -->
 		<td class="center">
-			<a href="<?php echo JRoute::_('index.php?option=com_schedule&task=customer.edit.edit&id=' . $item->customer_id); ?>">
-				<?php echo $this->escape($item->customer_name); ?>
-			</a>
+			<?php echo Schedule\Helper\UiHelper::foreignLink('customer', $item->customer_name, $item->customer_id, '', array('target' => '_blank')); ?>
 		</td>
 
 		<!-- 身分證字號 -->

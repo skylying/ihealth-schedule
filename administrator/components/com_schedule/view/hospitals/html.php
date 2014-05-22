@@ -126,7 +126,11 @@ class ScheduleViewHospitalsHtml extends GridView
 			$buttonSet['delete']['access'] = true;
 		}
 
-		$buttonSet['edit']['access']  = false;
+		$buttonSet['publish']['access'] = false;
+		$buttonSet['edit']['access'] = false;
+		$buttonSet['unpublish']['access'] = false;
+		$buttonSet['checkin']['access'] = false;
+		$buttonSet['batch']['access'] = false;
 
 		return $buttonSet;
 	}
