@@ -26,7 +26,8 @@
 			/>
 
 		<field name="birth_date"
-			type="calendar"
+			type="DateTimePicker"
+			class="datetimepicker calendarwidth birthday"
 			label="出生日期"
 			description="出生日期"
 			/>
@@ -35,7 +36,6 @@
 			type="text"
 			label="年齡"
 			description="年齡"
-			class="input-small"
 			readonly="true"
 			/>
 
@@ -131,6 +131,7 @@
 			label="縣市"
 			description="縣市"
 			readonly="false"
+			class="addr_city"
 			>
 			<option></option>
 		</field>
@@ -143,18 +144,27 @@
 			value_field="title"
 			label="區域"
 			description="區域"
+			class="addr_area"
 			readonly="false"
 			>
 			<option></option>
 		</field>
 
 		<field name="address"
-			type="text"
+			type="hidden"
 			label="地址"
 			description=""
 			class="pull-left"
 			/>
+
+		<field name="address2"
+			type="text"
+			label="地址"
+			description=""
+			class="col-lg-12 addr_addr"
+			/>
 	</fieldset>
+
 
 	<fieldset name="office">
 		<field name="tel_office"
@@ -175,6 +185,7 @@
 			/>
 
 	</fieldset>
+
 
 	<fieldset name="mobile">
 		<field name="mobile"
