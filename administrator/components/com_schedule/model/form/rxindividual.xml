@@ -193,6 +193,7 @@
 			class="js-drug-empty-date"
 			label="吃完藥日"
 			description="吃完藥日"
+			readonly="true"
 			/>
 
 		<field
@@ -267,6 +268,7 @@
 			class="js-drug-empty-date"
 			label="吃完藥日"
 			description="吃完藥日"
+			readonly="true"
 			/>
 
 		<field
@@ -341,6 +343,7 @@
 			class="js-drug-empty-date"
 			label="吃完藥日"
 			description="吃完藥日"
+			readonly="true"
 			/>
 
 		<field
