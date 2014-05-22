@@ -137,12 +137,24 @@ class ScheduleViewTasksHtml extends GridView
 		$buttonSet['delete']['access'] = false;
 		$buttonSet['add']['access'] = false;
 
-		$buttonSet['waitDelivery']['handler'] = function(){
-			JToolbarHelper::custom('tasks.state.undelivery', 'pause', 'pause', '改回待外送');
+		// Add custom controller redirect to routes overview layout
+		$buttonSet['route']['handler'] = function()
+		{
+			$html = <<<HTML
+<button class="btn btn-info" onclick="Joomla.submitbutton('tasks.redirect')">
+	<span class="glyphicon glyphicon-random"></span> 路線管理
+</button>
+HTML;
+			$bar = JToolbar::getInstance('toolbar');
+			$bar->appendButton('Custom', $html);
 		};
 
 		$buttonSet['completeDelivery']['handler'] = function(){
-			JToolbarHelper::custom('tasks.state.delivery', 'apply', 'apply', '完成外送');
+			JToolbarHelper::custom('tasks.state.delivery', 'checkin', 'checkin', '完成外送');
+		};
+
+		$buttonSet['waitDelivery']['handler'] = function(){
+			JToolbarHelper::custom('tasks.state.undelivery', 'pause', 'pause', '改回待外送');
 		};
 
 		return $buttonSet;
