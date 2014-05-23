@@ -1,0 +1,6 @@
+{
+	"member": {
+		"pattern": "member",
+		"view" : "member"
+	}
+}
