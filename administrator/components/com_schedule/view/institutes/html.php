@@ -122,11 +122,11 @@ class ScheduleViewInstitutesHtml extends GridView
 		// In debug mode, we remove trash button but use delete button instead.
 		if (JDEBUG)
 		{
-			$buttonSet['trash']['access']  = false;
+			$buttonSet['trash']['access'] = false;
 			$buttonSet['delete']['access'] = true;
 		}
 
-		$buttonSet['trash']['access']  = false;
+		$buttonSet['trash']['access'] = false;
 		$buttonSet['delete']['access'] = true;
 		$buttonSet['publish']['access'] = false;
 		$buttonSet['unpublish']['access'] = false;

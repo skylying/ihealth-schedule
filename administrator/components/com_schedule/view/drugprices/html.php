@@ -122,7 +122,7 @@ class ScheduleViewDrugpricesHtml extends GridView
 		// In debug mode, we remove trash button but use delete button instead.
 		if (JDEBUG)
 		{
-			$buttonSet['trash']['access']  = false;
+			$buttonSet['trash']['access'] = false;
 			$buttonSet['delete']['access'] = true;
 		}
 
