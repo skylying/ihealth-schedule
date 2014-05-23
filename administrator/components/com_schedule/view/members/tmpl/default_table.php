@@ -123,8 +123,8 @@ $date      = $container->get('date');
 			</td>
 
 			<?php
-			$customers_name = explode(',', $item->customers_name);
-			$customers_id = explode(',', $item->customers_id);
+			$customerNames = explode(',', $item->customers_name);
+			$customerIds= explode(',', $item->customers_id);
 			?>
 			<!--Customer Amount-->
 			<td class="center">
@@ -134,12 +134,12 @@ $date      = $container->get('date');
 			<!--Relative Customers-->
 			<td class="left">
 				<?php
-				foreach ($customers_name as $i => $customer)
+				foreach ($customerNames as $i => $customer)
 				{
-					if(!empty($customers_id[$i]))
+					if(!empty($customerIds[$i]))
 					{
-						echo Schedule\Helper\UiHelper::foreignLink('customer', $customer, $customers_id[$i], '', array('target' => '_blank'));
-						if((count($customers_name)-1) > $i) echo ', ';
+						echo Schedule\Helper\UiHelper::foreignLink('customer', $customer, $customerIds[$i], '', array('target' => '_blank'));
+						if((count($customerNames)-1) > $i) echo ', ';
 					}
 				}
 				?>
