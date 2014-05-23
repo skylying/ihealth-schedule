@@ -460,13 +460,14 @@ var ERROR_NO_SEE_DR_DATE = "<?php echo ApiReturnCodeHelper::ERROR_NO_SEE_DR_DATE
 			var selectedAddressID = '#jform_schedules_' + addressesKeys[i] + '_address_id';
 			var deliveredNth = '#jform_schedules_' + addressesKeys[i] + '_deliver_nth0';
 
+			var address = $(selectedAddressID).val();
+
 			// Set finish drug date
 			moment_date.add('days', period);
 			$(drugEmptyDateID).val(moment_date.format("YYYY-MM-DD"));
 
-			if ($(deliveredNth).is(":checked"))
+			if ($(deliveredNth).is(":checked") && address != '')
 			{
-				var address = $(selectedAddressID).val();
 				var city = $(selectedAddressID).find('option:selected').attr('city');
 				var area = $(selectedAddressID).find('option:selected').attr('area');
 
