@@ -122,20 +122,20 @@ class ScheduleViewTasksHtml extends GridView
 		// In debug mode, we remove trash button but use delete button instead.
 		if (JDEBUG)
 		{
-			$buttonSet['trash']['access']  = false;
+			$buttonSet['trash']['access'] = false;
 			$buttonSet['delete']['access'] = true;
-			$buttonSet['edit']['access']  = true;
-			$buttonSet['add']['access']  = true;
+			$buttonSet['edit']['access'] = true;
+			$buttonSet['add']['access'] = true;
 		}
 
-		$buttonSet['edit']['access']  = false;
-		$buttonSet['duplicate']['access']  = false;
-		$buttonSet['publish']['access']  = false;
-		$buttonSet['unpublish']['access']  = false;
-		$buttonSet['checkin']['access']  = false;
-		$buttonSet['batch']['access']  = false;
-		$buttonSet['delete']['access']  = false;
-		$buttonSet['add']['access']  = false;
+		$buttonSet['edit']['access'] = false;
+		$buttonSet['duplicate']['access'] = false;
+		$buttonSet['publish']['access'] = false;
+		$buttonSet['unpublish']['access'] = false;
+		$buttonSet['checkin']['access'] = false;
+		$buttonSet['batch']['access'] = false;
+		$buttonSet['delete']['access'] = false;
+		$buttonSet['add']['access'] = false;
 
 		$buttonSet['waitDelivery']['handler'] = function(){
 			JToolbarHelper::custom('tasks.state.undelivery', 'pause', 'pause', '改回待外送');

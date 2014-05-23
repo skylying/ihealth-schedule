@@ -121,12 +121,12 @@ class ScheduleViewRxindividualsHtml extends GridView
 
 		$buttonSet['duplicate']['access'] = false;
 		$buttonSet['edit']['access'] = false;
-		$buttonSet['publish']['access']   = false;
+		$buttonSet['publish']['access']  = false;
 		$buttonSet['unpublish']['access'] = false;
-		$buttonSet['checkin']['access']   = false;
-		$buttonSet['trash']['access']     = false;
-		$buttonSet['batch']['access']     = false;
-		$buttonSet['delete']['access']    = true;
+		$buttonSet['checkin']['access'] = false;
+		$buttonSet['trash']['access'] = false;
+		$buttonSet['batch']['access'] = false;
+		$buttonSet['delete']['access'] = true;
 
 		return $buttonSet;
 	}
