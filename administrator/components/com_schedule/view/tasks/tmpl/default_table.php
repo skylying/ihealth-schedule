@@ -41,6 +41,11 @@ $date      = $container->get('date');
 			<?php echo JHtml::_('grid.checkAll'); ?>
 		</th>
 
+		<!--EDIT BUTTON-->
+		<th width="10%" class="center">
+			編輯
+		</th>
+
 		<!--TASK DATE-->
 		<th width="20%" class="nowrap center">
 			<?php echo $grid->sortTitle('COM_SCHEDULE_TASK_TITLE_LIST_DATE', 'task.date'); ?>
@@ -91,6 +96,11 @@ $date      = $container->get('date');
 				<?php echo JHtml::_('grid.id', $i, $item->task_id); ?>
 			</td>
 
+			<!-- EDIT BUTTON -->
+			<td class="center">
+				<?php echo \Schedule\Helper\UiHelper::editButton('task', $item->task_id); ?>
+			</td>
+
 			<!--TASK DATE-->
 			<td class="center">
 				<?php
@@ -101,13 +111,10 @@ $date      = $container->get('date');
 					'id'     => $item->id
 				);
 				?>
-				<a href="<?php echo JRoute::_("index.php?" . http_build_query($query)); ?>">
-
 					<?php
 					$weekday = JDate::getInstance($item->date);
 					echo sprintf('%s (%s)', $weekday->format('Y-m-d'), JText::_($weekday->format('D')));
 					?>
-				</a>
 			</td>
 
 			<!--SENDER NAME-->

@@ -120,6 +120,7 @@ class ScheduleViewRxindividualsHtml extends GridView
 		$buttonSet = parent::configureToolbar($buttonSet, $canDo);
 
 		$buttonSet['duplicate']['access'] = false;
+		$buttonSet['edit']['access'] = false;
 		$buttonSet['publish']['access']   = false;
 		$buttonSet['unpublish']['access'] = false;
 		$buttonSet['checkin']['access']   = false;

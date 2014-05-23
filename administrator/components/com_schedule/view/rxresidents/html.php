@@ -119,6 +119,7 @@ class ScheduleViewRxresidentsHtml extends GridView
 		// Get default button set.
 		$buttonSet = parent::configureToolbar($buttonSet, $canDo);
 
+		$buttonSet['edit']['access'] = false;
 		$buttonSet['duplicate']['access'] = false;
 		$buttonSet['publish']['access'] = false;
 		$buttonSet['unpublish']['access'] = false;

@@ -124,14 +124,25 @@ class ScheduleViewTasksHtml extends GridView
 		{
 			$buttonSet['trash']['access']  = false;
 			$buttonSet['delete']['access'] = true;
+			$buttonSet['edit']['access']  = true;
+			$buttonSet['add']['access']  = true;
 		}
 
-		$buttonSet['completeDelivery']['handler'] = function(){
-			JToolbarHelper::custom('tasks.state.delivery', 'checkin', 'checkin', '完成外送');
-		};
+		$buttonSet['edit']['access']  = false;
+		$buttonSet['duplicate']['access']  = false;
+		$buttonSet['publish']['access']  = false;
+		$buttonSet['unpublish']['access']  = false;
+		$buttonSet['checkin']['access']  = false;
+		$buttonSet['batch']['access']  = false;
+		$buttonSet['delete']['access']  = false;
+		$buttonSet['add']['access']  = false;
 
 		$buttonSet['waitDelivery']['handler'] = function(){
 			JToolbarHelper::custom('tasks.state.undelivery', 'pause', 'pause', '改回待外送');
+		};
+
+		$buttonSet['completeDelivery']['handler'] = function(){
+			JToolbarHelper::custom('tasks.state.delivery', 'apply', 'apply', '完成外送');
 		};
 
 		return $buttonSet;

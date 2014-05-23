@@ -40,46 +40,62 @@ $date      = $container->get('date');
 		<?php echo JHtml::_('grid.checkAll'); ?>
 	</th>
 
+	<!-- EDIT -->
+	<th width="3%" class="center nowrap">
+		編輯
+	</th>
+
+	<!-- 編號 -->
 	<th class="center">
 		<?php echo $grid->sortTitle('編號', 'rxresident.id'); ?>
 	</th>
 
+	<!-- 散客姓名 -->
 	<th class="center">
 		<?php echo $grid->sortTitle('散客姓名', 'rxresident.customer_name'); ?>
 	</th>
 
+	<!-- 所屬會員 -->
 	<th class="center">
 		<?php echo $grid->sortTitle('所屬會員', 'rxresident.member_name'); ?>
 	</th>
 
+	<!-- 上傳方式 -->
 	<th class="center">
 		<?php echo $grid->sortTitle('上傳方式', 'rxresident.method'); ?>
 	</th>
 
+	<!-- 處方箋狀態 -->
 	<th class="center">
 		<?php echo $grid->sortTitle('處方箋狀態', 'rxresident.received'); ?>
 	</th>
 
+	<!-- 電聯紀錄 -->
 	<th class="center">
 		<?php echo $grid->sortTitle('電聯紀錄', 'rxresident.called'); ?>
 	</th>
 
+	<!-- 就醫日期 -->
 	<th class="center">
 		<?php echo $grid->sortTitle('就醫日期', 'rxresident.see_dr_date'); ?>
 	</th>
 
+	<!-- 可調劑次數 -->
 	<th class="center">
 		<?php echo $grid->sortTitle('可調劑次數', 'rxresident.times'); ?>
 	</th>
 
+	<!-- 宅配次數 -->
 	<th class="center">
 		<?php echo $grid->sortTitle('宅配次數', 'rxresident.deliver_nths'); ?>
 	</th>
 
+	<!-- 新增人 -->
 	<th class="center">
 		<?php echo $grid->sortTitle('新增人', 'user.created_by'); ?>
 	</th>
 
+	<!-- 最後修改人 -->
 	<th class="center">
 		<?php echo $grid->sortTitle('最後修改人', 'user.modified_by'); ?>
 	</th>
@@ -114,31 +130,28 @@ $date      = $container->get('date');
 			<?php echo JHtml::_('grid.id', $i, $item->id); ?>
 		</td>
 
+		<td class="center">
+			<?php echo \Schedule\Helper\UiHelper::editButton('rxindividual', $item->id); ?>
+		</td>
+
 		<!-- id -->
 		<td>
-			<a href="<?php echo JRoute::_('index.php?option=com_schedule&task=rxindividual.edit.edit&id=' . $item->id); ?>">
-				<?php echo $this->escape($item->id); ?>
-			</a>
+			<?php echo $this->escape($item->id); ?>
 		</td>
 
 		<!-- 散客名稱 -->
 		<td>
-			<a href="<?php echo JRoute::_('index.php?option=com_schedule&task=customer.edit.edit&id=' . $item->customer_id); ?>">
-				<?php echo $this->escape($item->customer_name); ?>
-			</a>
+			<?php echo Schedule\Helper\UiHelper::foreignLink('customer', $item->customer_name, $item->customer_id, '', array('target' => '_blank'));?>
 		</td>
 
 		<!-- 所屬會員 -->
 		<td>
-			<?php $members = empty($item->member_json) ? array() : json_decode("[" . $item->member_json . "]"); ?>
 			<?php
-				foreach ($members as $member):
-					?>
-					<a href="<?php echo JRoute::_('index.php?option=com_schedule&task=member.edit.edit&id=' . $member->id); ?>">
-						<?php echo $this->escape($member->name); ?>
-					</a>
-					<?php
-				endforeach;
+				$members = empty($item->member_json) ? array() : json_decode("[" . $item->member_json . "]");
+				foreach ($members as $member)
+				{
+					echo Schedule\Helper\UiHelper::foreignLink('member', $member->name, $member->id, '', array('target' => '_blank'));
+				}
 			?>
 		</td>
 

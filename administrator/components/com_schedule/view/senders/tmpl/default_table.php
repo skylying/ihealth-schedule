@@ -43,6 +43,11 @@ $grid->registerTableSort();
 			<?php echo JHtml::_('grid.checkAll'); ?>
 		</th>
 
+		<!-- EDIT BUTTON -->
+		<th width="10%" class="center">
+			編輯
+		</th>
+
 		<!--ID-->
 		<th width="1%" class="nowrap center">
 			<?php echo $grid->sortTitle('JGLOBAL_FIELD_ID_LABEL', 'sender.id'); ?>
@@ -88,6 +93,11 @@ $grid->registerTableSort();
 				<?php echo JHtml::_('grid.id', $i, $item->sender_id); ?>
 			</td>
 
+			<!-- EDIT BUTTON -->
+			<td class="center">
+				<?php echo \Schedule\Helper\UiHelper::editButton('sender', $item->sender_id); ?>
+			</td>
+
 			<!--ID-->
 			<td class="center">
 				<?php echo (int) $item->id; ?>
@@ -104,9 +114,7 @@ $grid->registerTableSort();
 						'id'     => $item->id
 					);
 					?>
-					<a href="<?php echo JRoute::_("index.php?" . http_build_query($query)); ?>">
 						<?php echo $this->escape($item->name); ?>
-					</a>
 				</div>
 			</td>
 
