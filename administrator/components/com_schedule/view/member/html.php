@@ -79,8 +79,17 @@ class ScheduleViewMemberHtml extends EditView
 		parent::__construct($model, $container, $config, $paths);
 	}
 
-	protected function prepareRender()
+	/**
+	 * Prepare data hook.
+	 *
+	 * @return  void
+	 */
+	protected function prepareData()
 	{
-		parent::prepareRender();
+		$data = $this->getData();
+		$form = $data->form;
+
+		$form->setValue('password', null);
+		$form->setValue('password2', null);
 	}
 }

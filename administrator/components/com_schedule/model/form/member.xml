@@ -27,7 +27,6 @@
 			label="會員信箱"
 			description="會員信箱"
 			required="true"
-			default=" "
 			class="input-xlarge"
 			/>
 

@@ -59,6 +59,19 @@ class ScheduleTableMember extends Table
 	 */
 	public function bind($src, $ignore = array())
 	{
+		// Check the password and create the crypted password
+		if (!empty($src['password']) && !empty($src['password2']))
+		{
+			$src['password'] = JUserHelper::hashPassword($src['password']);
+		}
+		else
+		{
+			if (!empty($this->password))
+			{
+				$src['password'] = $this->password;
+			}
+		}
+
 		return parent::bind($src, $ignore);
 	}
 
