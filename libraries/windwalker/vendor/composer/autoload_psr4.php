@@ -21,6 +21,8 @@ return array(
     'Joomla\\Filter\\' => array($vendorDir . '/joomla/filter/src'),
     'Joomla\\Filesystem\\Tests\\' => array($vendorDir . '/joomla/filesystem/Tests'),
     'Joomla\\Filesystem\\' => array($vendorDir . '/joomla/filesystem/src'),
+    'Joomla\\Event\\Tests\\' => array($vendorDir . '/joomla/event/Tests'),
+    'Joomla\\Event\\' => array($vendorDir . '/joomla/event/src'),
     'Joomla\\Database\\Tests\\' => array($vendorDir . '/joomla/database/Tests'),
     'Joomla\\Database\\' => array($vendorDir . '/joomla/database/src'),
     '' => array($baseDir . '/../../cli/windwalker'),

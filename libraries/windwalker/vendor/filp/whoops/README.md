@@ -36,7 +36,8 @@ If you use Laravel 4, you already have Whoops. There are also community-provided
 [Phalcon](docs/Framework%20Integration.md#integrating-with-phalcon),
 [Laravel 3](https://gist.github.com/hugomrdias/5169713#file-start-php),
 [CakePHP](https://github.com/oldskool/WhoopsCakephp),
-[Zend Framework 2](https://github.com/ghislainf/zf2-whoops).
+[Zend Framework 2](https://github.com/ghislainf/zf2-whoops),
+[Yii 1](https://github.com/igorsantos07/yii-whoops).
 
 If you are not using any of these frameworks, here's a very simple way to install:
 
@@ -54,7 +55,7 @@ If you are not using any of these frameworks, here's a very simple way to instal
     $whoops->register();
     ```
 
-For more options, have a look at the **example files** in `examples/` to get a feel for how things work. Also take a look at the [API Documentation](docs/Framework%20Integration.md#API%20Documentation) and the list of available handers below.
+For more options, have a look at the **example files** in `examples/` to get a feel for how things work. Also take a look at the [API Documentation](docs/API%20Documentation.md) and the list of available handers below.
 
 ### Available Handlers
 
