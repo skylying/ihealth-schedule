@@ -26,8 +26,9 @@
 			key_field="id"
 			value_field="name"
 			quickadd="true"
-			/>
-
+			>
+			<option></option>
+		</field>
 		<field name="type"
 			type="hidden"
 			/>
@@ -75,7 +76,7 @@
 			/>
 
 		<field name="see_dr_date"
-			type="calendar"
+			type="DateTimepicker"
 			label="就醫日期"
 			description="就醫日期"
 			/>
@@ -103,8 +104,8 @@
 			type="list"
 			label="可調劑次數"
 			description="可調劑次數"
-			default="2"
 			>
+			<option></option>
 			<option value="1">1</option>
 			<option value="2">2</option>
 			<option value="3">3</option>
@@ -189,8 +190,10 @@
 
 		<field name="drug_empty_date"
 			type="calendar"
+			class="js-drug-empty-date"
 			label="吃完藥日"
 			description="吃完藥日"
+			readonly="true"
 			/>
 
 		<field
@@ -223,8 +226,9 @@
 			type="sender_list"
 			value_field="name"
 			label="配送藥師"
-			description="配送藥師"
-			/>
+			description="配送藥師">
+			<option></option>
+		</field>
 
 		<field
 			name="weekday"
@@ -232,6 +236,7 @@
 			label="配送日"
 			description="配送日"
 			>
+			<option></option>
 			<option value="MON">星期一</option>
 			<option value="TUE">星期二</option>
 			<option value="WED">星期三</option>
@@ -260,8 +265,10 @@
 
 		<field name="drug_empty_date"
 			type="calendar"
+			class="js-drug-empty-date"
 			label="吃完藥日"
 			description="吃完藥日"
+			readonly="true"
 			/>
 
 		<field
@@ -294,8 +301,9 @@
 			type="sender_list"
 			value_field="name"
 			label="配送藥師"
-			description="配送藥師"
-			/>
+			description="配送藥師">
+			<option></option>
+		</field>
 
 		<field
 			name="weekday"
@@ -303,6 +311,7 @@
 			label="配送日"
 			description="配送日"
 			>
+			<option></option>
 			<option value="MON">星期一</option>
 			<option value="TUE">星期二</option>
 			<option value="WED">星期三</option>
@@ -331,8 +340,10 @@
 
 		<field name="drug_empty_date"
 			type="calendar"
+			class="js-drug-empty-date"
 			label="吃完藥日"
 			description="吃完藥日"
+			readonly="true"
 			/>
 
 		<field
@@ -365,8 +376,9 @@
 			type="sender_list"
 			value_field="name"
 			label="配送藥師"
-			description="配送藥師"
-			/>
+			description="配送藥師">
+			<option></option>
+		</field>
 
 		<field
 			name="weekday"
@@ -374,6 +386,7 @@
 			label="配送日"
 			description="配送日"
 			>
+			<option></option>
 			<option value="MON">星期一</option>
 			<option value="TUE">星期二</option>
 			<option value="WED">星期三</option>
