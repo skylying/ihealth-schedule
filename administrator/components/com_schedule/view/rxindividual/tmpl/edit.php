@@ -83,10 +83,17 @@ var ERROR_NO_SEE_DR_DATE = "<?php echo ApiReturnCodeHelper::ERROR_NO_SEE_DR_DATE
 	$.fn.customerAjax = function (id)
 	{
 		id = id || this.val();
-		return this.each(function ()
+		if(id=='')
 		{
-			$.fn.customerAjax.fireAjax(id);
-		});
+			return 0;
+		}
+		else
+		{
+			return this.each(function ()
+			{
+				$.fn.customerAjax.fireAjax(id);
+			});
+		}
 	};
 
 	/**
