@@ -41,7 +41,7 @@ $date      = $container->get('date');
 	</th>
 
 	<!--EDIT BUTTON-->
-	<th width="10%" class="center">
+	<th width="5%" class="center">
 		編輯
 	</th>
 
@@ -127,7 +127,7 @@ $date      = $container->get('date');
 
 		<!-- EDIT BUTTON -->
 		<td class="center">
-			<?php echo \Schedule\Helper\UiHelper::editButton('hospital', $item->id); ?>
+			<?php echo \Schedule\Helper\UiHelper::editButton('rxresident', $item->id); ?>
 		</td>
 
 		<!-- 處方箋編號 -->
