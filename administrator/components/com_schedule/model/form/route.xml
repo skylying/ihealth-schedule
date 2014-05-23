@@ -28,6 +28,7 @@
 			apiUrl="index.php?option=com_schedule&amp;task=institutes.search.json"
 			apiQueryKey="filter_search"
 			apiValueField="title"
+			apiTableName="institutes"
 			minimumInputLength="1"
 			hint="輸入機構名稱"
 			class="input-large"

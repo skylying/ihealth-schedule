@@ -126,10 +126,30 @@ class ScheduleViewRoutesHtml extends GridView
 			$buttonSet['delete']['access'] = true;
 		}
 
-		$buttonSet['publish']['access'] = false;
-		$buttonSet['edit']['access'] = false;
-		$buttonSet['unpublish']['access'] = false;
-		$buttonSet['checkin']['access'] = false;
+		// Remove all buttons we do not need
+		$buttonSet['edit']['access']        = false;
+		$buttonSet['duplicate']['access']   = false;
+		$buttonSet['publish']['access']     = false;
+		$buttonSet['unpublish']['access']   = false;
+		$buttonSet['checkin']['access']     = false;
+		$buttonSet['delete']['access']      = false;
+		$buttonSet['trash']['access']       = false;
+		$buttonSet['batch']['access']       = false;
+		$buttonSet['preferences']['access'] = false;
+
+		$buttonSet['add']['args'] = array($this->viewItem . '.edit.save', 'title' => '儲存變更');
+
+		// Add custom controller redirect to 外送管理
+		$buttonSet['route']['handler'] = function()
+		{
+			$html = <<<HTML
+<button class="btn btn-info" onclick="Joomla.submitbutton('routes.redirect')">
+	<span class="glyphicon glyphicon-random"></span> 回到外送管理
+</button>
+HTML;
+			$bar = JToolbar::getInstance('toolbar');
+			$bar->appendButton('Custom', $html);
+		};
 
 		return $buttonSet;
 	}

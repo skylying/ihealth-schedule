@@ -101,7 +101,7 @@ class ScheduleModelInstitute extends AdminModel
 		$table->color_title = $tableColor->title;
 
 		// Prepare floor data
-		$table->floor = implode(',', $table->floor);
+		$table->floor = implode(',', (array) $table->floor);
 	}
 
 	/**

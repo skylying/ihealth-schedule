@@ -41,9 +41,9 @@ class ScheduleControllerRouteEditSave extends SaveController
 		// Attempt to save the data.
 		try
 		{
-			foreach ($cid as $id)
+			foreach ($cid as $value)
 			{
-				$validDataSet[] = $this->saveItem($id);
+				$validDataSet[] = $this->saveItem($value);
 			}
 		}
 		catch (ValidateFailException $e)
@@ -88,9 +88,19 @@ class ScheduleControllerRouteEditSave extends SaveController
 			{
 				$updateData = array(
 					'id' => $data['institute_id'],
-					'sender_id' => $data['sender_id'],
-					'delivery_weekday' => $data['weekday'],
 				);
+
+				// Prevent not set data
+				if (isset($data['sender_id']))
+				{
+					$updateData['sender_id'] = $data['sender_id'];
+				}
+
+				// Prevent not set data
+				if (isset($data['weekday']))
+				{
+					$updateData['delivery_weekday'] = $data['weekday'];
+				}
 
 				$modelInstitute->save($updateData);
 			}
@@ -100,18 +110,29 @@ class ScheduleControllerRouteEditSave extends SaveController
 	/**
 	 * saveAll
 	 *
-	 * @param   int  $id
+	 * @param  array $singleCid
 	 *
-	 * @return  array
+	 * @return array
 	 */
-	private function saveItem($id)
+	private function saveItem($singleCid)
 	{
-		$data = $this->data;
+		// Get sender id and weekday from post input value
+		$data = $this->input->get('routeupdater', array(), 'ARRAY');
 
-		if (! empty($id))
+		// If no sender_id or weekday, unset the empty value
+		foreach ($data as $key => $value)
 		{
-			$data['id'] = $id;
+			if (empty($value))
+			{
+				unset($data[$key]);
+			}
 		}
+
+		// Get route type, institute_id
+		$decodedData = (array) json_decode($singleCid);
+
+		// Combine all route information
+		$data = $decodedData + $data;
 
 		// Validate the posted data.
 		// Sometimes the form needs some posted data, such as for plugins and modules.

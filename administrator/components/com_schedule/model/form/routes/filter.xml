@@ -39,6 +39,33 @@
 		-->
 	</fields>
 
+	<!-- RouteUpdater -->
+	<fields name="routeupdater">
+		<field
+			name="sender_id"
+			type="sender_list"
+			value_field="name"
+			default=""
+			label="外送藥師"
+			>
+			<option></option>
+		</field>
+
+		<field
+			name="weekday"
+			type="list"
+			default=""
+			label="外送日"
+			>
+			<option></option>
+			<option value="MON">MON</option>
+			<option value="TUE">TUE</option>
+			<option value="WED">WED</option>
+			<option value="THU">THU</option>
+			<option value="FRI">FRI</option>
+		</field>
+	</fields>
+
 	<!-- Filter -->
 	<fields name="filter">
 		<field

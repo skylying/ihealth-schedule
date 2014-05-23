@@ -144,6 +144,15 @@
 			class="input-xxlarge required"
 			/>
 
+		<!--Presave hook form to update Route table after save institute-->
+
+		<field name="route_id"
+			type="hidden"
+			description="路線 id"
+			/>
+
+		<!--Presave hook form to update Route table after save institute-->
+
 	</fieldset>
 
 	<!-- For Quick Ajax AddNew -->
