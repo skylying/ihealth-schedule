@@ -39,7 +39,11 @@ class ApplyController extends AbstractItemController
 		// Set the record data in the session.
 		$this->recordId = $this->model->getState()->get($this->getName() . '.id');
 		$this->holdEditId($this->context, $this->recordId);
-		$this->app->setUserState($this->context . '.data', null);
+
+		if (false !== $return)
+		{
+			$this->app->setUserState($this->context . '.data', null);
+		}
 
 		// Redirect back to the edit screen.
 		$this->redirectToItem($this->recordId, $this->urlVar);
