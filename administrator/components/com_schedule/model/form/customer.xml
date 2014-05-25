@@ -34,7 +34,7 @@
 
 		<field name="age"
 			type="text"
-			label="年齡"
+			label="年齡 (實歲)"
 			description="年齡"
 			readonly="true"
 			/>
@@ -43,6 +43,7 @@
 			type="radio"
 			label="服務狀態"
 			description="服務狀態"
+			default="1"
 			class="btn-group btn-group-yesno">
 			<option value="0">結案</option>
 			<option value="1">服務中</option>
@@ -122,54 +123,32 @@
 	</fieldset>
 
 	<fieldset name="address">
+		<!--These hidden form are for the purpose of form data required-->
 		<field name="city"
-			type="sql"
-			default=""
-			query="SELECT id, title FROM #__schedule_cities"
-			key_field="id"
-			value_field="title"
-			label="縣市"
-			description="縣市"
-			readonly="false"
-			class="addr_city"
+			type="hidden"
+			description="散客外送縣市"
 			>
-			<option></option>
 		</field>
 
 		<field name="area"
-			type="sql"
-			default=""
-			query="SELECT id, title FROM #__schedule_areas"
-			key_field="id"
-			value_field="title"
-			label="區域"
-			description="區域"
-			class="addr_area"
-			readonly="false"
+			type="hidden"
+			description="散客外送區域"
 			>
-			<option></option>
 		</field>
 
 		<field name="address"
 			type="hidden"
-			label="地址"
-			description=""
-			class="pull-left"
+			description="對應地址(json)"
 			/>
-
-		<field name="address2"
-			type="text"
-			label="地址"
-			description=""
-			class="col-lg-12 addr_addr"
-			/>
+		<!--These hidden form are for the purpose of form data required-->
 	</fieldset>
 
 
 	<fieldset name="office">
 		<field name="tel_office"
 			type="radioinput"
-			label="宅配電話(O)"
+			rows="3"
+			label="宅配電話 (Office)"
 			description="填入宅配電話"
 			class="input-large"
 			/>
@@ -179,7 +158,8 @@
 	<fieldset name="home">
 		<field name="tel_home"
 			type="radioinput"
-			label="宅配電話(H)"
+			rows="3"
+			label="宅配電話 (Home)"
 			description="填入宅配電話(H)"
 			class="input-large"
 			/>
@@ -190,8 +170,9 @@
 	<fieldset name="mobile">
 		<field name="mobile"
 			type="radioinput"
-			label="手機(M)"
-			description="填入手機(M)"
+			rows="3"
+			label="手機號碼"
+			description="填入手機"
 
 			class="input-large"
 			/>
