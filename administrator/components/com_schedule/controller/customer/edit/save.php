@@ -13,29 +13,43 @@ use Schedule\Table\Table;
 class ScheduleControllerCustomerEditSave extends SaveController
 {
 	/**
-	 * preSaveHook
+	 * postSaveHook
+	 *
+	 * @param \Windwalker\Model\CrudModel $model
+	 * @param array                       $validData
 	 *
 	 * @return  void
 	 */
-	protected function preSaveHook()
+	protected function postSaveHook($model, $validData)
 	{
+		// Update members
+		$members = JArrayHelper::getValue($validData, 'members', array());
+
+		if (empty($validData['id']))
+		{
+			$validData['id'] = $model->getState()->get('customer.id');
+		}
+
+		MemberCustomerHelper::updateMembers($validData['id'], $members);
+
 		// Prepare tables
-		$customerMapper = new DataMapper(Table::CUSTOMERS);
 		$cityMapper     = new DataMapper(Table::CITIES);
 		$areaMapper     = new DataMapper(Table::AREAS);
 		$addressMapper  = new DataMapper(Table::ADDRESSES);
+
+		$state = $model->getState();
 
 		// Get address model
 		$addressModel = $this->getModel("Address");
 
 		// Get address json data from form
-		$createAddress = isset($this->data['address']) ? json_decode($this->data['address']) : array();
+		$createAddress = isset($validData['address']) ? json_decode($validData['address']) : array();
 
 		// Get customer id
-		$customer = $customerMapper->findOne($this->data['id']);
+		$customerId = $state->get('customer.id');
 
 		// Delete all the addresses with customer id
-		$addressMapper->delete(array('customer_id' => $this->data['id']));
+		$addressMapper->delete(array('customer_id' => $customerId));
 
 		if (!empty($createAddress))
 		{
@@ -47,7 +61,7 @@ class ScheduleControllerCustomerEditSave extends SaveController
 
 				$addressModel->save(
 					array(
-						"customer_id" => $customer->id,
+						"customer_id" => $customerId,
 						"city"        => $city->id,
 						"city_title"  => $city->title,
 						"area"        => $area->id,
@@ -58,26 +72,6 @@ class ScheduleControllerCustomerEditSave extends SaveController
 				);
 			}
 		}
-	}
-
-	/**
-	 * postSaveHook
-	 *
-	 * @param \Windwalker\Model\CrudModel $model
-	 * @param array                       $validData
-	 *
-	 * @return  void
-	 */
-	protected function postSaveHook($model, $validData)
-	{
-		$members = JArrayHelper::getValue($validData, 'members', array());
-
-		if (empty($validData['id']))
-		{
-			$validData['id'] = $model->getState()->get('customer.id');
-		}
-
-		MemberCustomerHelper::updateMembers($validData['id'], $members);
 
 		parent::postSaveHook($model, $validData);
 	}
