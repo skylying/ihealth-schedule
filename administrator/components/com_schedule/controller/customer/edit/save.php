@@ -22,6 +22,7 @@ class ScheduleControllerCustomerEditSave extends SaveController
 	 */
 	protected function postSaveHook($model, $validData)
 	{
+		// ================
 		// Update members
 		$members = JArrayHelper::getValue($validData, 'members', array());
 
@@ -32,7 +33,8 @@ class ScheduleControllerCustomerEditSave extends SaveController
 
 		MemberCustomerHelper::updateMembers($validData['id'], $members);
 
-		// Prepare tables
+		// ================
+		// Update address
 		$cityMapper     = new DataMapper(Table::CITIES);
 		$areaMapper     = new DataMapper(Table::AREAS);
 		$addressMapper  = new DataMapper(Table::ADDRESSES);

@@ -98,7 +98,6 @@
 
 				$(this).attr('title', 'true');
 				$(this).addClass('default');
-
 			});
 
 			// When user type new phone number, auto default this one
@@ -113,7 +112,7 @@
 				}
 			});
 
-			// Flush defaultSwitch
+			// Reset defaultSwitch
 			this.visibleInputs.on('focusout', function()
 			{
 				self.defaultSwitch = false;
@@ -126,7 +125,7 @@
 
 				self.addressAppendArea.append(template);
 
-				// Trigger afterAjax event, later .address-row will catch it
+				// Trigger afterInsert event, later .address-row will catch it
 				$('.address-row').trigger('afterInsert');
 			});
 
@@ -197,7 +196,7 @@
 
 					addressRow.find('.glyphicon-ok').trigger('click');
 
-					// Stop triggering any keyup event, until user manually click any default icon
+					// Stop triggering keyup event
 					self.defaultSwitch = true;
 				}
 			});
@@ -325,5 +324,4 @@
 			this.hiddenAddressInput.val(JSON.stringify(result));
 		}
 	};
-
 })(jQuery);

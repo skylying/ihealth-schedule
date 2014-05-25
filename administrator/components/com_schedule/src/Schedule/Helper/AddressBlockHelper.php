@@ -17,7 +17,6 @@ use \Schedule\Helper\AddressHelper;
  */
 class AddressBlockHelper
 {
-
 	/**
 	 * Render single address row
 	 *

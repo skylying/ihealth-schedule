@@ -46,7 +46,6 @@ CSS;
 $doc->addStyleDeclaration($css);
 
 // Incluce all js external file
-$data->asset->addJS('multi-row-handler.js');
 $data->asset->addJS('customer/customer.js');
 
 // Prepare all field we need
