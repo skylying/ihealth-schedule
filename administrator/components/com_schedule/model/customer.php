@@ -176,16 +176,22 @@ class ScheduleModelCustomer extends AdminModel
 
 		$addressMapper = new DataMapper(\Schedule\Table\Table::ADDRESSES);
 
-		$addressDataSet = $addressMapper->find(array("customer_id" => $returnVal->id));
+		// Prepare empty string as json format
+		$returnVal->address = '[]';
 
-		$addressReturnData = array();
-
-		foreach ($addressDataSet as $addressData)
+		if (!empty($returnVal->id))
 		{
-			$addressReturnData[] = $addressData;
-		}
+			$addressDataSet = $addressMapper->find(array("customer_id" => $returnVal->id));
 
-		$returnVal->address = json_encode($addressReturnData);
+			$addressReturnData = array();
+
+			foreach ($addressDataSet as $addressData)
+			{
+				$addressReturnData[] = $addressData;
+			}
+
+			$returnVal->address = json_encode($addressReturnData);
+		}
 
 		return $returnVal;
 	}
