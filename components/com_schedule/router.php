@@ -54,20 +54,39 @@ function ScheduleBuildRoute(&$query)
  */
 function ScheduleParseRoute($segments)
 {
-	$router = CmsRouter::getInstance('com_schedule');
+	$input = \JFactory::getApplication()->input;
 
 	// Strip "/api"
 	array_shift($segments);
 
-	$segments = implode('/', $segments);
+	$query = array();
 
-	// OK, let's fetch view name.
-	$view = $router->getView(str_replace(':', '-', $segments));
-
-	if ($view)
+	// Set class (View or Controller)
+	if (! empty($segments[0]))
 	{
-		return array('view' => $view);
+		$method = $input->get('_method', $input->getMethod());
+		$method = strtolower($method);
+
+		// Prepare RESTful
+		if ('get' == $method)
+		{
+			$query['view'] = $segments[0];
+		}
+		elseif ('post' == $method || 'put' == $method)
+		{
+			$query['task'] = $segments[0] . '.edit.save';
+		}
+		elseif ('delete' == $method)
+		{
+			$query['task'] = $segments[0] . '.state.delete';
+		}
 	}
 
-	return array();
+	// Set id if exists
+	if (! empty($segments[1]))
+	{
+		$query['id'] = $segments[1];
+	}
+
+	return $query;
 }
