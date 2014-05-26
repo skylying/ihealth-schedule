@@ -36,30 +36,26 @@
 			class="input-xlarge required"
 			/>
 		<field name="city"
-			type="list"
+			type="sql"
+			query="SELECT id,title FROM #__schedule_cities"
+			key_field="id"
+			value_field="title"
 			label="醫院所在縣市"
 			description="醫院所在縣市">
 			<option>- 請選擇縣市 -</option>
-			<option value="1">台北市</option>
-			<option value="2">新北市</option>
-			<option value="3">台中市</option>
-			<option value="4">高雄市</option>
-			<option value="5">台灣市</option>
 		</field>
 		<field name="city_title"
 			type="hidden"
 			label="縣市標題"
 			description="標題" />
 		<field name="area"
-			type="list"
+			type="sql"
+			query="SELECT id,title FROM #__schedule_areas"
+			key_field="id"
+			value_field="title"
 			label="醫院所在區域"
 			description="醫院所在區域">
 			<option>- 請選擇區域 -</option>
-			<option value="1">大同區</option>
-			<option value="2">中正區</option>
-			<option value="3">阿瑪茸區</option>
-			<option value="4">天龍區</option>
-			<option value="5">三角洲區</option>
 		</field>
 		<field name="area_title"
 			type="hidden"
