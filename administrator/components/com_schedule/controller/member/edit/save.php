@@ -20,6 +20,12 @@ class ScheduleControllerMemberEditSave extends \Windwalker\Controller\Edit\SaveC
 	{
 		parent::preSaveHook();
 
+		// When creating a new member, require passwords
+		if (! empty($this->data['id']) && empty($this->data['password']))
+		{
+			throw new ValidateFailException(array('Require password'));
+		}
+
 		// Check the password
 		if (isset($this->data['password2']) && $this->data['password'] != $this->data['password2'])
 		{
