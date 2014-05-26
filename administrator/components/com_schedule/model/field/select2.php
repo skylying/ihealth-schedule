@@ -107,7 +107,7 @@ class JFormFieldSelect2 extends JFormField
 					var lastResults = [];
 
 					$node.select2({
-						minimumInputLength : option.minimumInputLength,
+						minimumInputLength : (option.fieldName == "institute_id") ? option.minimumInputLength : 0,
 						placeholder : option.hint,
 						ajax : {
 							url : option.apiUrl,
@@ -166,6 +166,7 @@ class JFormFieldSelect2 extends JFormField
 							}
 						}
 					});
+
 					if (option.hasInitialValue == "true" && typeof initialText == "undefined")
 					{
 						$node.select2("readonly", true);
