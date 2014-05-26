@@ -1,7 +1,8 @@
 /**
  * MethodFieldHandler Javascript Library v1.0
  */
-;(function($, undefined)
+;
+(function ($, undefined)
 {
 	"use strict";
 
@@ -18,14 +19,14 @@
 
 		// Overwrite with user's options
 		this.options = $.extend(true, {
-			methodID             : null,
-			drugID               : null,
-			deleteDrugID         : null
+			methodID     : null,
+			drugID       : null,
+			deleteDrugID : null
 		}, options);
 	}
 
 	MethodFieldHandler.prototype = {
-		run : function ()
+		run: function ()
 		{
 			var self = this;
 
@@ -91,7 +92,7 @@
 			});
 
 			// Bind Delete event
-			$('.js-hicode-tmpl').on('click', '.js-hicode-delete-row',function ()
+			$('.js-hicode-tmpl').on('click', '.js-hicode-delete-row', function ()
 			{
 				// Stores id to delete
 				// ex: [1, 2]
@@ -148,7 +149,7 @@
 			});
 		},
 
-		updateHicodeHiddenInput : function ()
+		updateHicodeHiddenInput: function ()
 		{
 			var self = this;
 			var newRowCounter = 0;
@@ -197,7 +198,7 @@
 			});
 		},
 
-		insertHicodeTableRow : function(data)
+		insertHicodeTableRow: function (data)
 		{
 			var tableTbody = $('.js-hicode-tmpl tbody');
 			var cloneRow = $(".js-hicode-row").first().clone();
@@ -231,7 +232,7 @@
 			}
 		},
 
-		updateJsonToInputField : function(target, dataJson)
+		updateJsonToInputField: function (target, dataJson)
 		{
 			dataJson = dataJson || {};
 

@@ -1,4 +1,5 @@
-;(function($, undefined)
+;
+(function ($, undefined)
 {
 	"use strict";
 
@@ -11,13 +12,13 @@
 
 	// Exports class RxResidentEditList
 	window.RxIndividualEdit = {
-		init: function(options)
+		init: function (options)
 		{
 			this.listeners = {};
 
 			// Overwrite with user's options
 			this.options = $.extend(true, {
-				customerID 	         : null,
+				customerID           : null,
 				customerIDNumber     : null,
 
 				seeDrDateID          : null,
@@ -43,19 +44,19 @@
 		/**
 		 * Run
 		 */
-		run: function()
+		run: function ()
 		{
 			var self = this;
 
 			var method = new MethodFieldHandler({
-				methodID     : self.options.methodID,
-				drugID       : self.options.drugID,
-				deleteDrugID : self.options.deleteDrugID
+				methodID: self.options.methodID,
+				drugID: self.options.drugID,
+				deleteDrugID: self.options.deleteDrugID
 			});
 			method.run();
 
 			// Bind 'change' event to 'weekday of new route data'
-			$('.js-route-weekday select').on('change', function()
+			$('.js-route-weekday select').on('change', function ()
 			{
 				var weekday = $(this).val();
 				var nth = $(this).attr('id');
@@ -91,7 +92,7 @@
 		 * return void
 		 *
 		 */
-		showSchedulesEditBlock : function (times)
+		showSchedulesEditBlock: function (times)
 		{
 			var schedules1 = $('.schedules').eq(0);
 			var schedules2 = $('.schedules').eq(1);
@@ -101,7 +102,8 @@
 			var checkbox2 = schedules2.find('.js-nth-schedule-check input');
 			var checkbox3 = schedules3.find('.js-nth-schedule-check input');
 
-			switch(times){
+			switch (times)
+			{
 				case '1':
 					// Check 1
 					checkbox1.attr('checked', true).trigger('change');
@@ -145,7 +147,7 @@
 		 * @param {string}    weekday
 		 * @param {string}    nth
 		 */
-		updateScheduleDateByWeekday : function (weekday, nth)
+		updateScheduleDateByWeekday: function (weekday, nth)
 		{
 			var self = this;
 			var seeDrDate = $('#' + this.options.seeDrDateID).val();
@@ -153,12 +155,12 @@
 
 			$.ajax({
 				type: "POST",
-				url : "index.php?option=com_schedule&task=rxindividual.ajax.senddate",
+				url: "index.php?option=com_schedule&task=rxindividual.ajax.senddate",
 				data: {
-					nth : nth,
-					see_dr_date : seeDrDate ,
-					period : period ,
-					weekday : weekday
+					nth: nth,
+					see_dr_date: seeDrDate,
+					period: period,
+					weekday: weekday
 				}
 			}).done(function (cdata)
 				{
@@ -166,7 +168,7 @@
 
 					var sendDateId = '#jform_schedules_' + data['nth'] + '_date';
 
-					if (data['type'] == self.options.SUCCESS_ROUTE_EXIST )
+					if (data['type'] == self.options.SUCCESS_ROUTE_EXIST)
 					{
 						$(sendDateId).val(data['date']);
 					}
@@ -182,6 +184,5 @@
 				});
 		}
 	};
-
 
 })(jQuery);
