@@ -70,5 +70,7 @@ class ScheduleViewMemberJson extends ApiView
 		$data = $this->getData();
 
 		$data['item'] = $this->get('Item');
+
+		unset($data['item']->password);
 	}
 }

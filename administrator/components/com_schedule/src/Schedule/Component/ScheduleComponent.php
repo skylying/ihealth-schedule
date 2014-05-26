@@ -32,7 +32,7 @@ abstract class ScheduleComponent extends Component
 	 */
 	protected function prepare()
 	{
-		if (JDEBUG)
+		if (JDEBUG && 'html' == \JFactory::getDocument()->getType())
 		{
 			Debugger::registerWhoops();
 		}
