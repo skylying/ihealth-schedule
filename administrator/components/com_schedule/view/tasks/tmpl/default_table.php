@@ -72,7 +72,7 @@ $date      = $container->get('date');
 	<!--PAGINATION-->
 	<tfoot>
 	<tr>
-		<td colspan="10">
+		<td colspan="10%">
 			<div class="pull-left">
 				<?php echo $data->pagination->getListFooter(); ?>
 			</div>
