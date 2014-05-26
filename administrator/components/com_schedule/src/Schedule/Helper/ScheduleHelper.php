@@ -58,7 +58,7 @@ class ScheduleHelper
 	public static function calculateSendDate($nth, $seeDoctorDate, $period, $weekday = '')
 	{
 		$nth = (int) substr($nth, 0, 1);
-		$date = new \DateTime($seeDoctorDate);
+		$date = new \JDate($seeDoctorDate);
 
 		if ($nth < 0 || $nth > 3)
 		{
