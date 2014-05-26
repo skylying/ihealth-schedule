@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fieldset name="information"
+		align="left"
+		horz="true">
+
+		<field name="id"
+			type="text"
+			default="0"
+			label="醫院編號"
+			description="醫院編號"
+			readonly="true"
+			class="readonly"
+			/>
+		<field name="title"
+			type="text"
+			label="醫院名稱"
+			description="醫院名稱"
+			required="true"
+			class="input-xlarge required"
+			/>
+		<field name="has_hicode"
+			type="radio"
+			class="btn-group btn-group-yesno"
+			label="藥品健保碼"
+			description="藥品健保碼"
+			default="0"
+			required="true">
+			<option value="0">無</option>
+			<option value="1">有</option>
+		</field>
+		<field name="title"
+			type="text"
+			label="醫院名稱"
+			description="醫院名稱"
+			class="input-xlarge required"
+			/>
+		<field name="city"
+			type="list"
+			label="醫院所在縣市"
+			description="醫院所在縣市">
+			<option>- 請選擇縣市 -</option>
+			<option value="1">台北市</option>
+			<option value="2">新北市</option>
+			<option value="3">台中市</option>
+			<option value="4">高雄市</option>
+			<option value="5">台灣市</option>
+		</field>
+		<field name="city_title"
+			type="hidden"
+			label="縣市標題"
+			description="標題" />
+		<field name="area"
+			type="list"
+			label="醫院所在區域"
+			description="醫院所在區域">
+			<option>- 請選擇區域 -</option>
+			<option value="1">大同區</option>
+			<option value="2">中正區</option>
+			<option value="3">阿瑪茸區</option>
+			<option value="4">天龍區</option>
+			<option value="5">三角洲區</option>
+		</field>
+		<field name="area_title"
+			type="hidden"
+			label="區域名稱"
+			description="區域名稱" />
+		<field name="images"
+				type="file"
+				label="處方箋上傳"
+				description="處方箋上傳"
+				size="40"
+				class="inputbox"/>
+	</fieldset>
+</form>

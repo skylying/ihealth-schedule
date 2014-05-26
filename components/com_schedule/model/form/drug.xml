@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fieldset name="information"
+		align="left"
+		horz="true">
+
+		<field name="id"
+			type="text"
+			default="0"
+			label="JGLOBAL_FIELD_ID_LABEL"
+			readonly="true"
+			class="readonly"
+			description="JGLOBAL_FIELD_ID_DESC"
+			/>
+
+		<field name="rx_id"
+			type="text"
+			label="對應處方箋"
+			description="對應處方箋 id"
+			readonly="true"
+			/>
+
+		<field name="hicode"
+			type="text"
+			label="藥品健保碼"
+			description="藥品健保碼"
+			/>
+
+		<field name="quantity"
+			type="number"
+			label="數量"
+			description="單一藥品總數"
+			/>
+	</fieldset>
+</form>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fieldset name="information"
+		align="left"
+		horz="true">
+
+		<field name="id"
+			type="text"
+			default="0"
+			label="JGLOBAL_FIELD_ID_LABEL"
+			readonly="true"
+			class="readonly"
+			description="JGLOBAL_FIELD_ID_DESC"
+			/>
+
+		<field name="year"
+			type="list"
+			label="年份"
+			description="輸入年份"
+			default="2014"
+			>
+			<option value="2014">2014</option>
+			<option value="2015">2015</option>
+			<option value="2016">2016</option>
+			<option value="2017">2017</option>
+			<option value="2018">2018</option>
+			<option value="2019">2019</option>
+		</field>
+
+		<field name="month"
+			type="list"
+			label="月份"
+			description="月份"
+			>
+			<option value="1">JAN</option>
+			<option value="2">FEB</option>
+			<option value="3">MAR</option>
+			<option value="4">APR</option>
+			<option value="5">MAY</option>
+			<option value="6">JUN</option>
+			<option value="7">JUL</option>
+			<option value="8">AUG</option>
+			<option value="9">SEP</option>
+			<option value="10">OCT</option>
+			<option value="11">NOV</option>
+			<option value="12">DEC</option>
+		</field>
+
+		<field name="day"
+			type="number"
+			label="日期"
+			description="日期"
+			/>
+	</fieldset>
+</form>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fieldset name="basic">
+		<field name="institute_id"
+			type="institute_list"
+			default=""
+			label="機構名稱"
+			description="機構名稱"
+			>
+			<option></option>
+		</field>
+
+		<field id="institute_city"
+			name="city"
+			type="sql"
+			default=""
+			query="SELECT id, title FROM #__schedule_cities"
+			key_field="id"
+			value_field="title"
+			label="縣市"
+			description="縣市"
+			readonly="false"
+			>
+			<option></option>
+		</field>
+
+		<field id="institute_area"
+			name="area"
+			type="sql"
+			default=""
+			query="SELECT id, title FROM #__schedule_areas"
+			key_field="id"
+			value_field="title"
+			label="區域"
+			description="區域"
+			readonly="false"
+			>
+			<option></option>
+		</field>
+
+		<field name="address"
+			type="text"
+			default=""
+			class="input-xlarge"
+			label="地址"
+			description="地址"
+			readonly="false"
+			/>
+
+		<field name="type"
+			type="radio"
+			default=""
+			class=""
+			label="排程類別"
+			description="排程類別"
+			required="true"
+			>
+			<option value="speech">演講</option>
+			<option value="discuss">討論</option>
+			<option value="collect">收單</option>
+			<option value="visit">新簽約後拜訪</option>
+			<option value="other">其他</option>
+		</field>
+
+		<field name="note"
+			type="textarea"
+			default=""
+			label="備註說明"
+			description="備註說明"
+			/>
+
+		<field id="institute_date"
+			name="date"
+			type="calendar"
+			default=""
+			format="%Y-%m-%d"
+			label="拜訪日期"
+			description="拜訪日期"
+			/>
+
+		<field id="institute_sender_id"
+			name="sender_id"
+			type="sender_list"
+			key_field="id"
+			value_field="name"
+			label="負責藥師"
+			description="負責藥師"
+			onchange="jQuery('input[name=sender_id]').val(jQuery(this).val());"
+			>
+			<option></option>
+		</field>
+	</fieldset>
+</form>

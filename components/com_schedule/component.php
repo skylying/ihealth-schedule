@@ -32,6 +32,6 @@ final class ScheduleComponent extends \Schedule\Component\ScheduleComponent
 	{
 		parent::prepare();
 
-		\Schedule\Json\JsonResponse::registerErrorHandler();
+		\Windwalker\Api\Response\JsonResponse::registerErrorHandler();
 	}
 }
