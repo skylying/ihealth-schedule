@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fieldset name="information"
+		align="left"
+		horz="true">
+
+		<field name="id"
+			type="text"
+			label="機構編號"
+			readonly="true"
+			class="readonly"
+			description="機構編號"
+			/>
+
+		<field name="title"
+			type="text"
+			label="機構名稱"
+			description="機構名稱"
+			class="input-xxlarge required"
+			/>
+
+		<field name="short_title"
+			type="text"
+			label="機構簡稱"
+			description="機構簡稱"
+			required="true"
+			class="input-xxlarge required"
+			/>
+
+		<field name="floor"
+			type="list"
+			label="樓層(可複選)"
+			description="選擇機構所有的樓層(複選)"
+			multiple="true"
+			class="input-xxlarge required"
+			>
+			<option value="1F">1F</option>
+			<option value="2F">2F</option>
+			<option value="3F">3F</option>
+			<option value="4F">4F</option>
+			<option value="5F">5F</option>
+			<option value="6F">6F</option>
+			<option value="7F">7F</option>
+			<option value="8F">8F</option>
+			<option value="9F">9F</option>
+			<option value="10F">10F</option>
+			<option value="11F">11F</option>
+			<option value="12F">12F</option>
+			<option value="13F">13F</option>
+			<option value="14F">14F</option>
+			<option value="15F">15F</option>
+			<option value="16F">16F</option>
+			<option value="17F">17F</option>
+			<option value="18F">18F</option>
+			<option value="19F">19F</option>
+			<option value="20F">20F</option>
+		</field>
+
+		<field name="tel"
+			type="text"
+			label="電話"
+			description="電話"
+			required="true"
+			class="input-xxlarge required"
+			/>
+
+		<field name="fax"
+			type="text"
+			label="傳真"
+			description="傳真"
+			class="input-xxlarge required"
+			/>
+
+		<field name="city"
+			type="sql"
+			query="SELECT id,title FROM #__schedule_cities"
+			key_field="id"
+			value_field="title"
+			label="縣市"
+			description="縣市"
+			required="true"
+			class="input-xxlarge required"
+			/>
+
+		<field name="area"
+			type="sql"
+			query="SELECT id,title FROM #__schedule_areas"
+			key_field="id"
+			value_field="title"
+			label="區域"
+			description="區域"
+			required="true"
+			class="input-xxlarge required"
+			/>
+
+		<field name="address"
+			type="text"
+			label="地址"
+			description="地址"
+			required="true"
+			class="input-xxlarge required"
+			/>
+
+		<field name="sender_id"
+			type="sender_list"
+			key_field="id"
+			value_field="name"
+			label="外送藥師"
+			description="外送藥師"
+			required="true"
+			class="input-xxlarge required"
+			/>
+
+		<field name="delivery_weekday"
+			type="list"
+			label="外送日"
+			description="外送日"
+			required="true"
+			class="input-xxlarge required"
+			>
+			<option value="MON">MON</option>
+			<option value="TUE">TUE</option>
+			<option value="WED">WED</option>
+			<option value="THU">THU</option>
+			<option value="FRI">FRI</option>
+			<option value="SAT">SAT</option>
+			<option value="SUN">SUN</option>
+		</field>
+
+		<field name="color_id"
+			type="color_list"
+			key_field="id"
+			value_field="title"
+			label="註記顏色"
+			description="註記顏色"
+			required="true"
+			class="input-xxlarge required"
+			/>
+
+		<field name="note"
+			type="textarea"
+			label="備註"
+			description="備註"
+			class="input-xxlarge required"
+			/>
+
+		<!--Presave hook form to update Route table after save institute-->
+
+		<field name="route_id"
+			type="hidden"
+			description="路線 id"
+			/>
+
+		<!--Presave hook form to update Route table after save institute-->
+
+	</fieldset>
+
+	<!-- For Quick Ajax AddNew -->
+	<fieldset name="quickadd">
+		<field name="title"
+			type="text"
+			label="JGLOBAL_TITLE"
+			description="JFIELD_TITLE_DESC"
+			required="true"
+			size="50"
+			labelclass=""
+			class="input-xlarge"
+			/>
+
+		<field name="catid"
+			type="category"
+			label="JCATEGORY"
+			description="JFIELD_CATEGORY_DESC"
+			extension="com_schedule"
+			labelclass=""
+			>
+			<option value="0">COM_SCHEDULE_TITLE_UNCATEGORISED</option>
+		</field>
+
+		<!--<field name="parent_id"
+			type="institute_list"
+			label="COM_SCHEDULE_PARENT_ITEM"
+			description="COM_SCHEDULE_PARENT_ITEM_DESC"
+			labelclass=""
+			class="input-xlarge inputbox"
+			access="true"
+		>
+			<option>JSELECT</option>
+			<option value="1">JLIB_HTML_ADD_TO_ROOT</option>
+		</field>-->
+	</fieldset>
+
+</form>

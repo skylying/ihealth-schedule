@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form autocomplete="off">
+	<fieldset name="information"
+		align="left"
+		horz="true">
+
+		<field name="id"
+			type="text"
+			default="0"
+			label="會員編號"
+			description="JGLOBAL_FIELD_ID_DESC"
+			readonly="true"
+			class="readonly"
+			/>
+
+		<field name="name"
+			type="text"
+			label="會員姓名"
+			description="會員姓名"
+			required="true"
+			class="input-xlarge required"
+			/>
+
+		<field name="email"
+			type="email"
+			autocomplete="off"
+			label="會員信箱"
+			description="會員信箱"
+			required="true"
+			class="input-xlarge"
+			/>
+
+		<field name="password"
+			type="password"
+			autocomplete="off"
+			class="validate-password input-xlarge"
+			filter="raw"
+			label="JGLOBAL_PASSWORD"
+			description="JGLOBAL_PASSWORD"
+			validate="password"
+			/>
+		<field name="password2"
+			type="password"
+			autocomplete="off"
+			class="validate-password input-xlarge"
+			field="password"
+			filter="raw"
+			label="確認密碼"
+			description="確認密碼"
+			preview="true"
+			validate="equals"
+			/>
+
+		<field name="tel"
+			type="tel"
+			label="電話"
+			description="電話"
+			class="input-xlarge"
+			/>
+	</fieldset>
+	<fieldset name="related_customers"
+		align="left"
+		horz="true">
+		<field name="customer_id_list"
+			type="customer_list"
+			label="對應散客"
+			value_field="name"
+			multiple="true"
+			>
+		</field>
+	</fieldset>
+		<!--<field name="parent_id"
+			type="member_list"
+			label="COM_SCHEDULE_PARENT_ITEM"
+			description="COM_SCHEDULE_PARENT_ITEM_DESC"
+			labelclass=""
+			class="input-xlarge inputbox"
+			access="true"
+		>
+			<option>JSELECT</option>
+			<option value="1">JLIB_HTML_ADD_TO_ROOT</option>
+		</field>-->
+</form>

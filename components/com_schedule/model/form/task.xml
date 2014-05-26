@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fieldset name="information"
+		align="left"
+		horz="true">
+		<field name="id"
+			type="text"
+			label="id"
+			description="id"
+			class="input-xlarge readonly"
+			readonly="true"
+			/>
+		<field name="date"
+			type="calendar"
+			label="外送日期"
+			description="外送日期"
+			class="input-xlarge"
+			/>
+		<field name="sender"
+			type="sender_list"
+			label="外送藥師"
+			description="外送藥師"
+			value_field="name"
+			class="input-xlarge">
+			<option></option>
+		</field>
+		<field name="sender_name"
+			type="hidden"
+			default=""
+			label="外送藥師名稱"
+			description="外送藥師名稱"
+			readonly="true"
+			/>
+		<field name="status"
+			type="radio"
+			class="btn-group btn-group-yesno"
+			label="外送狀態"
+			description="外送狀態"
+			default="0"
+			required="true">
+			<option value="0">未外送</option>
+			<option value="1">已外送</option>
+		</field>
+	</fieldset>
+</form>

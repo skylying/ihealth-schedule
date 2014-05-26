@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fieldset name="information"
+		align="left"
+		horz="true">
+
+		<field name="id"
+			type="text"
+			default="0"
+			label="JGLOBAL_FIELD_ID_LABEL"
+			readonly="true"
+			class="readonly"
+			description="JGLOBAL_FIELD_ID_DESC"
+			/>
+
+		<field name="customer_id"
+			type="customer_list"
+			value_field="name"
+			label="對應客戶"
+			description="對應客戶id"
+			/>
+
+		<field name="city"
+			type="sql"
+			query="SELECT id AS value, title AS title FROM #__schedule_cities"
+			value_field="title"
+			key_field="value"
+			label="縣市"
+			description="選擇外送縣市"
+			required="true"
+			class="required"
+			>
+		</field>
+
+		<field name="area"
+			type="sql"
+			query="SELECT id AS value, title AS title FROM #__schedule_areas"
+			value_field="title"
+			key_field="value"
+			label="區域"
+			description="選擇外送區域"
+			required="true"
+			class="required"
+			>
+		</field>
+
+		<field name="address"
+			type="text"
+			label="路名"
+			description="除了縣市區域以外的地址"
+			class="input-xxlarge" />
+	</fieldset>
+</form>
