@@ -25,7 +25,8 @@ class ScheduleControllerCustomerAjaxJson extends DisplayController
 		\JFactory::getDocument()->setMimeEncoding('application/json');
 
 		$id = $this->input->get('id');
-		$queryString = $this->input->getString('filter_search');
+
+		$instituteId = $this->input->get('institute_id');
 
 		// 盧立偉要用的部分, 暫時用 if 包起來, 裡面沒動到
 		if (!empty($id))
@@ -35,11 +36,8 @@ class ScheduleControllerCustomerAjaxJson extends DisplayController
 			$data = $model->getItem($id);
 		}
 
-		if (!empty($queryString))
+		if (!empty($instituteId))
 		{
-			// Get institute_id
-			$instituteId = $this->input->get('institute_id');
-
 			$model = $this->getModel('Customers', '', array('ignore_request' => true));
 
 			$state = $model->getState();
@@ -61,15 +59,28 @@ class ScheduleControllerCustomerAjaxJson extends DisplayController
 				$state->set('filter', array('customer.institute_id' => $instituteId));
 			}
 
-			// Set search keyword from ajax request
-			$state->set('search', array('customer.name' => $queryString));
+			// Get customer name query string
+			$queryString = $this->input->getString('filter_search');
 
-			$data = $model->getItems();
+			if (!empty($queryString))
+			{
+				// Set search keyword from ajax request
+				$state->set('search', array('customer.name' => $queryString));
+			}
+
+			$items = $model->getItems();
+
+			$data = array();
 
 			// Put in porperty "dropdowntext" that select2 need
-			foreach ($data as $item)
+			foreach ($items as $i => $item)
 			{
-				$item->dropdowntext = $item->name;
+				$data[$i] = new stdClass;
+
+				$data[$i]->id           = $item->id;
+				$data[$i]->dropdowntext = $item->name;
+				$data[$i]->id_number    = $item->id_number;
+				$data[$i]->birth_date   = $item->birth_date;
 			}
 		}
 
