@@ -28,22 +28,14 @@ $item      = $data->item;
 <script type="text/javascript">
 	Joomla.submitbutton = function(task)
 	{
-		// Remove unnecessary form to be saved
-		(function($)
-		{
-			var customerType = $('.customertype input:checked').val(),
-				individualDiv = $('#individualdiv'),
-				residentDiv  = $('#residentdiv');
+		// Remove unnecessary form
+		window.CustomerJs.removeForm();
 
-			if (customerType == 'individual')
-			{
-				residentDiv.remove();
-			}
-			else
-			{
-				individualDiv.remove();
-			}
-		})(jQuery);
+		// Update hidden json inputs (for phone numbers)
+		window.CustomerJs.updatePhoneJson();
+
+		// Update hidden json inputs (for addresses)
+		window.CustomerJs.updateAddressJson();
 
 		if (task == 'customer.edit.cancel' || document.formvalidator.isValid(document.id('adminForm')))
 		{

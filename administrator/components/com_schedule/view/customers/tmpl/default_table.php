@@ -144,11 +144,13 @@ $date      = $container->get('date');
 		<!--CUSTOMER_TYPE-->
 		<td class="center">
 			<?php
-			if($item->type == 'individual')
+			if ($item->type == 'individual')
 			{
-				echo JTEXT::_('散客');
-			} else {
-				echo JTEXT::_('住民');
+				echo '<button type="button" style="padding: 3px 8px;" class="btn btn-info">散客</button>';
+			}
+			else
+			{
+				echo '<button type="button" style="padding: 3px 8px;" class="btn btn-warning">住民</button>';
 			}
 			?>
 		</td>
@@ -173,24 +175,19 @@ $date      = $container->get('date');
 		<td class="center">
 			<?php
 
-			$attr = array('target' => '_blank');
+			$attr = array('target' => '_blank', 'class' => 'text-muted');
 
 			if ('individual' === $item->type)
 			{
 				$url  = 'index.php?option=com_schedule&task=member.edit.edit&id=' . $item->member_id;
-				$text = '<span class="glyphicon glyphicon-user"></span> ' .
-					$item->member_name .
-					' <span class="glyphicon glyphicon-share-alt"></span>';
+				$text = '<span class="glyphicon glyphicon-user"></span> ' .	$item->member_name;
 
 				echo \JHtml::link($url, $text, $attr);
 			}
-
-			if ('resident' === $item->type)
+			else
 			{
 				$url  = 'index.php?option=com_schedule&task=institute.edit.edit&id=' . $item->institute_id;
-				$text = '<span class="glyphicon glyphicon-home"></span> ' .
-					$item->institute_short_title .
-					' <span class="glyphicon glyphicon-share-alt"></span>';
+				$text = '<span class="glyphicon glyphicon-home"></span> ' .	$item->institute_short_title;
 
 				echo \JHtml::link($url, $text, $attr);
 			}

@@ -1,6 +1,7 @@
 <?php
 
-use Windwalker\Html\HtmlElement;
+use \Windwalker\Html\HtmlElement;
+use \Windwalker\Helper\XmlHelper;
 
 /**
  * Part of ihealth project. 
@@ -12,6 +13,28 @@ defined('JPATH_PLATFORM') or die;
 
 /**
  * Class JFormFieldRadioinput
+ *
+ * XML Property list :
+ *
+ * - rows : total number of rows that user can use
+ *  - EX : 3
+ *
+ * - label : The <legend> content
+ *  - EX : 宅配電話 (Office)
+ *
+ *
+ * HTML output :
+ *
+ * <input class="hide" name="jform[tel_office]">
+ * <div class="visibleinput">
+ * 	<span class="glyphicon glyphicon-ok"><span>
+ * 	<input name="tel_office_input1" />
+ *  ...
+ *  ..
+ * </div>
+ *
+ *  - The class="hide" input will be load and save as string with json format
+ *  - The name="tel_office_input1" is where user can actually put phone numbers
  *
  * @since 1.0
  */
@@ -33,63 +56,86 @@ class JFormFieldRadioinput extends JFormField
 	 */
 	protected function getInput()
 	{
-		// Initialize some field attributes.
-		$class        = !empty($this->class) ? ' class="' . $this->class . '"' : '';
+		// Prepare html string
+		$html = '';
+		$hiddenInput = $this->renderHiddenInput();
+		$visibleInputs = '';
 
-		// Initialize JavaScript field attributes.
-		$onchange = !empty($this->onchange) ? ' onchange="' . $this->onchange . '"' : '';
+		// Prepare empty object in case when no phone numbers exist (because we still need empty row)
+		$emptyNumberSet = new stdClass;
+		$emptyNumberSet->default = false;
+		$emptyNumberSet->number = '';
 
-		// Including fallback code for HTML5 non supported browsers.
-		JHtml::_('jquery.framework');
+		// Prepare XML params
+		$params = $this->getParams();
 
-		// Invisible json telephone input
-		$html[] = '<input type="text" style="display:none;" name="' . $this->name . '" id="' . $this->id . '"' . ' value="'
-			. htmlspecialchars($this->value, ENT_COMPAT, 'UTF-8') . '"' . $class
-			. $onchange . ' />';
+		// Prepare input data
+		$numberSets = isset($this->value) ? json_decode($this->value) : array();
 
-		$jsonString = json_decode($this->value);
+		// Start building HTML
+		$html .= '<fieldset><legend>' . $params->label . '</legend>';
+		$html .= $hiddenInput;
 
-		// Use loops to load json data to into empty html input
-		for ($key = 0; $key <= 2; $key++)
+		for ($i = 0; $i < $params->rows; $i++)
 		{
-			// Get radio input html
-			$inputAttr = array('id' => "radio" . $this->id . $key, 'type' => 'radio', 'name' => "radio" . $this->id);
-			$Unchecked = new HtmlElement('input', '', $inputAttr);
-
-			if (empty($jsonString))
+			if (empty($numberSets[$i]))
 			{
-				$html[] = '<div class="form-group"> 預設 ' . $Unchecked .
-				' <input type="text" id="' . $this->id . $key . '"
-				name="textInput' . $this->id . '" value="' . '"' . $class
-				. $onchange . ' /></div>';
-			}
-		}
-
-		// Use loops to load html if the json data is not empty
-		foreach ((array) $jsonString as $key => $value)
-		{
-			// Get radio input html
-			$inputAttr = array('id' => "radio" . $this->id . $key, 'type' => 'radio', 'checked' => 'checked', 'name' => "radio" . $this->id);
-			$Checked = new HtmlElement('input', '', $inputAttr);
-
-			$inputAttr = array('id' => "radio" . $this->id . $key, 'type' => 'radio', 'name' => "radio" . $this->id);
-			$Unchecked = new HtmlElement('input', '', $inputAttr);
-
-			$default = $value->default;
-
-			$checkbox = $Unchecked;
-
-			// Check if the checkbox is checked
-			if ($default == '1')
-			{
-				$checkbox = $Checked;
+				$numberSets[$i] = $emptyNumberSet;
 			}
 
-			$html[] = '<div class="form-group"> 預設 ' . $checkbox . ' <input type="text" id="' . $this->id . $key . '"
-				name="textInput' . $this->id . '" value="' . $value->number . '"' . $class
-				. $onchange . ' /></div>';
+			// Prepare each input's attributes
+			$spanClass = $numberSets[$i]->default ? 'default' : '';
+			$default   = $numberSets[$i]->default ? 'true' : 'false';
+			$number    = $numberSets[$i]->number ? $numberSets[$i]->number : '';
+
+			$tmpHtmlString = <<<HTML
+<div class="visibleinput">
+	<span class="glyphicon glyphicon-ok {$spanClass}" title="{$default}" style="margin-right:20px"></span>
+	<input type="text" class="{$params->shortName}_number" value="{$number}" placeholder="輸入電話號碼"/>
+</div>
+HTML;
+			$visibleInputs .= $tmpHtmlString;
 		}
 
-		return implode($html);
+		$html .= $visibleInputs . '</fieldset>';
+
+		return $html;
+	}
+
+	/**
+	 * Render hidden input with Windwalker HtmlElement
+	 *
+	 * @return  array
+	 */
+	public function renderHiddenInput()
+	{
+		$configure = array(
+			'id'    => $this->id,
+			'type'  => 'text',
+			'name'  => $this->name,
+			'value' => htmlspecialchars($this->value, ENT_COMPAT, 'UTF-8'),
+			'class' => 'hide hiddenjson',
+		);
+
+		$html = new HtmlElement('input', '', $configure);
+
+		return (string) $html;
+	}
+
+	/**
+	 * Get all xml params
+	 *
+	 * @return  stdClass
+	 */
+	public function getParams()
+	{
+		$params = new stdClass;
+
+		// Take only "tel_office" instead of "jform[tel_office]" as shortName
+		$params->shortName = XmlHelper::get($this->element, 'name');
+		$params->rows      = XmlHelper::get($this->element, 'rows', 3);
+		$params->label     = XmlHelper::get($this->element, 'label', '宅配電話');
+
+		return $params;
 	}
 }
