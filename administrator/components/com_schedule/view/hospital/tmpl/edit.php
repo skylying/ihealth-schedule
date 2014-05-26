@@ -13,6 +13,8 @@ JHtmlBootstrap::tooltip();
 JHtmlFormbehavior::chosen('select');
 JHtmlBehavior::formvalidation();
 
+Schedule\Script\AddressScript::bind('jform_city', 'jform_area');
+
 /**
  * Prepare data for this template.
  *
