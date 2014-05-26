@@ -39,6 +39,9 @@ $mobileName    = $data->form->getField('mobile')->name;
 
 $customerIDNumber = $data->form->getField('id_number')->id;
 
+$data->asset->addJS('rxindividual/method-field-handler.js');
+$data->asset->addJS('rxindividual/edit.js');
+
 ?>
 
 <script type="text/javascript">
@@ -399,50 +402,6 @@ var ERROR_NO_SEE_DR_DATE = "<?php echo ApiReturnCodeHelper::ERROR_NO_SEE_DR_DATE
 	};
 
 	/**
-	 * Calculate finish drug date by specifying weekday
-	 *
-	 * updateScheduleDateByWeekday
-	 *
-	 * @param {string}    weekday
-	 * @param {string}    nth
-	 */
-	$.fn.updateScheduleDateByWeekday = function (weekday, nth)
-	{
-		var seeDrDate = jQuery('#' + seeDrDateID).val();
-		var period = jQuery('#' + periodID).val();
-
-		$.ajax({
-			type: "POST",
-			url : "index.php?option=com_schedule&task=rxindividual.ajax.senddate",
-			data: {
-				nth : nth,
-				see_dr_date : seeDrDate ,
-				period : period ,
-				weekday : weekday
-			}
-		}).done(function (cdata)
-			{
-				var data = JSON.parse(cdata);
-
-				var sendDateId = '#jform_schedules_' + data['nth'] + '_date';
-
-				if (data['type'] == SUCCESS_ROUTE_EXIST )
-				{
-					$(sendDateId).val(data['date']);
-				}
-				else
-				{
-					if (data['type'] == ERROR_NO_ROUTE)
-					{
-						$(sendDateId).closest('.js-nth-schedule-info').find('.js-route-wrap').removeClass('hide');
-
-						$(sendDateId).val('');
-					}
-				}
-			});
-	};
-
-	/**
 	 * Calculate finish drug date, schedule date
 	 *
 	 * updateScheduleDate
@@ -505,264 +464,8 @@ var ERROR_NO_SEE_DR_DATE = "<?php echo ApiReturnCodeHelper::ERROR_NO_SEE_DR_DATE
 		}
 	};
 
-	/**
-	 * Show and hide schedules edit box by changing send drug times
-	 *
-	 * updateScupdateSchedulesEditBoxheduleDate
-	 *
-	 * return void
-	 *
-	 */
-	$.fn.showSchedulesEditBlock = function ()
-	{
-		var schedules1 = $('.schedules').eq(0);
-		var schedules2 = $('.schedules').eq(1);
-		var schedules3 = $('.schedules').eq(2);
 
-		var checkbox1 = schedules1.find('.js-nth-schedule-check input');
-		var checkbox2 = schedules2.find('.js-nth-schedule-check input');
-		var checkbox3 = schedules3.find('.js-nth-schedule-check input');
 
-		switch($(this).val()){
-			case '1':
-				// Check 1
-				checkbox1.attr('checked', true).trigger('change');
-				checkbox2.attr('checked', false).trigger('change');
-				checkbox3.attr('checked', false).trigger('change');
-				// Show 1
-				schedules1.removeClass('hide');
-				schedules2.addClass('hide');
-				schedules3.addClass('hide');
-				break;
-			case '2':
-				// Check 2
-				checkbox1.attr('checked', false).trigger('change');
-				checkbox2.attr('checked', true).trigger('change');
-				checkbox3.attr('checked', false).trigger('change');
-				// Show 1, 2
-				schedules1.removeClass('hide');
-				schedules2.removeClass('hide');
-				schedules3.addClass('hide');
-				break;
-			case '3':
-				// Check 2,3
-				checkbox1.attr('checked', false).trigger('change');
-				checkbox2.attr('checked', true).trigger('change');
-				checkbox3.attr('checked', true).trigger('change');
-				// Show all
-				schedules1.removeClass('hide');
-				schedules2.removeClass('hide');
-				schedules3.removeClass('hide');
-				break;
-			default:
-				break;
-		}
-	};
-
-	$.fn.methodForm = function ()
-	{
-		return this.each(function ()
-		{
-			// Find where to store hicodes
-			var targetHiddenInput = $('#' + drugID);
-
-			// Update while hicode date already exist on the very first time
-			if (targetHiddenInput.val() != '' && targetHiddenInput.val() != '{}' && targetHiddenInput.val() != '[]')
-			{
-				$.fn.methodForm.insertHicodeTableRow(JSON.parse(targetHiddenInput.val()));
-			}
-
-			// Copy the HiCode template.
-			var tableTmpl = $('.js-hicode-tmpl');
-
-			// Append tabel after method select list
-			tableTmpl.insertAfter($(this).closest('.control-group'));
-
-			// Bind Prescription method change detection
-			$(this).on('change', function ()
-			{
-				if ($(this).val() == 'form')
-				{
-					// Update from input
-					$.fn.methodForm.updateHicodeHiddenInput();
-					// Show table
-					tableTmpl.removeClass('hide');
-				}
-				else
-				{
-					targetHiddenInput.val('');
-					tableTmpl.addClass('hide');
-				}
-			});
-
-			// Trigger once
-			$(this).trigger('change');
-
-			// Combine two selector.
-			var hicodeElement = $('.js-hicode-code');
-			var quantityElement = $('.js-hicode-quantity');
-			var combinedHicodeElem = hicodeElement.add(quantityElement);
-
-			// Every time when 'hicode' and 'quantity' being changed.
-			tableTmpl.on('change', combinedHicodeElem, function ()
-			{
-				$.fn.methodForm.updateHicodeHiddenInput();
-			});
-
-			// Bind Add event
-			$('.js-hicode-add-row').on('click', function ()
-			{
-				var cloneRow = $(".js-hicode-row").first().clone();
-				// Retrieve hicode
-				cloneRow.find('.js-hicode-code').val('');
-				// Retrieve quantity
-				cloneRow.find('.js-hicode-quantity').val('');
-				// Retrieve id
-				cloneRow.find('.js-hicode-id').val('');
-
-				$('.js-hicode-tmpl tbody').append(cloneRow);
-			});
-
-			// Bind Delete event
-			$('.js-hicode-tmpl').on('click', '.js-hicode-delete-row',function ()
-			{
-				// Stores id to delete
-				// ex: [1, 2]
-				var data = [];
-				var targetInput = $('#' + deleteDrugID);
-
-				if (targetInput.val() && targetInput.val() != '[]')
-				{
-					data = JSON.parse(targetInput.val());
-				}
-
-				if (confirm('您確定要刪除嗎？'))
-				{
-					if ($(".js-hicode-row").size() > 1)
-					{
-						var idToDelete = $(this).closest('.js-hicode-row').find('.js-hicode-id').val();
-
-						// Colect deleted IDs
-						if (idToDelete)
-						{
-							data.push(idToDelete);
-						}
-
-						// Delete row
-						$(this).closest('.js-hicode-row').remove();
-						// Update Hidden Input
-						$.fn.methodForm.updateHicodeHiddenInput();
-					}
-					else
-					{
-						var idToDelete = $(this).closest('.js-hicode-row').find('.js-hicode-id').val();
-
-						// Colect deleted IDs
-						if (idToDelete)
-						{
-							data.push(idToDelete);
-						}
-
-						var row = $(".js-hicode-row").first();
-						// Retrieve hicode
-						row.find('.js-hicode-code').val('');
-						// Retrieve quantity
-						row.find('.js-hicode-quantity').val('');
-						// Retrieve id
-						row.find('.js-hicode-id').val('');
-
-						// Update Hidden Input
-						$.fn.methodForm.updateHicodeHiddenInput();
-					}
-
-					// Update deleted IDs
-					targetInput.val(JSON.stringify(data));
-				}
-			});
-		});
-	};
-
-	$.fn.methodForm.updateHicodeHiddenInput = function ()
-	{
-		var newRowCounter = 0;
-		var totalRowCounter = 0;
-
-		// Data to stored
-		var data = [];
-
-		// Go through every row, and push it into hidden input
-		$('.js-hicode-row').each(function ()
-		{
-			// Retrieve hicode
-			var code = $(this).find('.js-hicode-code').val();
-			// Retrieve quantity
-			var quantity = $(this).find('.js-hicode-quantity').val();
-			// Retrieve id
-			var id = $(this).find('.js-hicode-id').val();
-
-			// blank new row
-			if (id == '')
-			{
-				// Make sure every info is provided
-				if ((code != '') && (quantity != ''))
-				{
-					data.push({id: '', hicode: code, quantity: quantity});
-					newRowCounter++;
-					totalRowCounter++;
-				}
-			}
-			// if 'create' doesn't exist, and id exist
-			else
-			{
-				// Make sure every info is provided
-				if ((code != '') && (quantity != ''))
-				{
-					data.push({id: id, hicode: code, quantity: quantity});
-					totalRowCounter++;
-				}
-			}
-
-			// Perform hidden input update
-			$(this).customerAjax.updateJsonToInputField(drugID, data);
-
-			// Update Counter
-			$('.js-hicode-amount').text(totalRowCounter);
-		});
-	};
-
-	$.fn.methodForm.insertHicodeTableRow = function (data)
-	{
-		var tableTbody = $('.js-hicode-tmpl tbody');
-		var cloneRow = $(".js-hicode-row").first().clone();
-
-		// Retrieve hicode
-		cloneRow.find('.js-hicode-code').val('');
-		// Retrieve quantity
-		cloneRow.find('.js-hicode-quantity').val('');
-		// Retrieve id
-		cloneRow.find('.js-hicode-id').val('');
-
-		// Clear tbody
-		tableTbody.html('');
-
-		for (var i = 0; i < data.length; i++)
-		{
-			var insertRow = cloneRow.clone();
-
-			insertRow.find('.js-hicode-code').val(data[i].hicode);
-			// Retrieve quantity
-			insertRow.find('.js-hicode-quantity').val(data[i].quantity);
-			// Retrieve id
-			insertRow.find('.js-hicode-id').val(data[i].id);
-
-			tableTbody.append(insertRow);
-		}
-
-		if (data.length != 0)
-		{
-			tableTbody.append(cloneRow);
-		}
-	};
 
 })(jQuery);
 
@@ -1004,42 +707,37 @@ jQuery(document).ready(function ()
 		jQuery(this).updateScheduleDate(jQuery('#' + seeDrDateID).val(), jQuery('#' + periodID).val());
 	});
 
-	// simultaneously show and hide schedules
-	jQuery('#' + timesID).on('change', function ()
-	{
-		jQuery(this).showSchedulesEditBlock();
-	});
-
 	// Bind Drug Period
 	jQuery('#' + periodID).on('change', function ()
 	{
 		jQuery(this).updateScheduleDate(jQuery('#' + seeDrDateID).val(), jQuery('#' + periodID).val());
 	});
 
-	// Method list
-	jQuery('#' + methodID).methodForm();
-
-	// Bind 'change' evnet to 'weekday of new route data'
-	jQuery('.js-route-weekday select').on('change', function()
-	{
-		var weekday = jQuery(this).val();
-		var nth = jQuery(this).attr('id');
-
-		if (nth.indexOf("1st") > -1)
+	RxIndividualEdit.init(
 		{
-			nth = '1st';
-		}
-		else if (nth.indexOf("2nd") > -1)
-		{
-			nth = '2nd';
-		}
-		else if (nth.indexOf("3rd") > -1)
-		{
-			nth = '3rd';
-		}
+			customerID 	         : "<?php echo $customerID;?>" ,
+			customerIDNumber     : "<?php echo $customerIDNumber;?>",
 
-		jQuery(this).updateScheduleDateByWeekday(weekday, nth);
-	});
+			seeDrDateID          : "<?php echo $seeDrDateID;?>",
+			periodID             : "<?php echo $periodID;?>",
+			methodID             : "<?php echo $methodID;?>",
+
+			telOfficeID          : "<?php echo $telOfficeID;?>",
+ 			telHomeID            : "<?php echo $telHomeID;?>",
+ 			mobileID             : "<?php echo $mobileID;?>",
+
+			createAddressID      : "<?php echo $createAddressID;?>",
+ 			timesID              : "<?php echo $timesID;?>",
+ 			drugID               : "<?php echo $drugID;?>",
+ 			deleteDrugID         : "<?php echo $deleteDrugID;?>",
+	 		addressesKeys        : ["1st", "2nd", "3rd"],
+
+			SUCCESS_ROUTE_EXIST  : "<?php echo ApiReturnCodeHelper::SUCCESS_ROUTE_EXIST;?>",
+	 		ERROR_NO_ROUTE       : "<?php echo ApiReturnCodeHelper::ERROR_NO_ROUTE;?>",
+	 		ERROR_NO_SEE_DR_DATE : "<?php echo ApiReturnCodeHelper::ERROR_NO_SEE_DR_DATE;?>"
+		}
+	);
+	RxIndividualEdit.run();
 });
 </script>
 
