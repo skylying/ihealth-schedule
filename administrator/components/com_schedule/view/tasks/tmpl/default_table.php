@@ -37,32 +37,32 @@ $date      = $container->get('date');
 	<thead>
 	<tr>
 		<!--CHECKBOX-->
-		<th width="1%" class="center">
+		<th width="10%" class="center">
 			<?php echo JHtml::_('grid.checkAll'); ?>
 		</th>
 
 		<!--EDIT BUTTON-->
-		<th width="10%" class="center">
+		<th width="8%" class="center">
 			編輯
 		</th>
 
 		<!--TASK DATE-->
-		<th width="20%" class="nowrap center">
+		<th width="15%" class="nowrap center">
 			<?php echo $grid->sortTitle('COM_SCHEDULE_TASK_TITLE_LIST_DATE', 'task.date'); ?>
 		</th>
 
 		<!--SENDER NAME-->
-		<th width="20%" class="center">
+		<th width="15%" class="center">
 			<?php echo $grid->sortTitle('COM_SCHEDULE_TASK_TITLE_LIST_SENDER_NAME', 'task.sender_name'); ?>
 		</th>
 
 		<!--STATE-->
-		<th width="5%" class="nowrap center">
+		<th width="21%" class="nowrap center">
 			<?php echo $grid->sortTitle('COM_SCHEDULE_TASK_TITLE_LIST_STATUS', 'task.status'); ?>
 		</th>
 
-		<!--LANGUAGE-->
-		<th width="64%" class="center">
+		<!--Print-->
+		<th width="21%" class="center">
 			<?php echo JText::_('COM_SCHEDULE_TASK_TITLE_LIST_PRINT'); ?>
 		</th>
 
@@ -72,7 +72,7 @@ $date      = $container->get('date');
 	<!--PAGINATION-->
 	<tfoot>
 	<tr>
-		<td colspan="5">
+		<td colspan="10">
 			<div class="pull-left">
 				<?php echo $data->pagination->getListFooter(); ?>
 			</div>
