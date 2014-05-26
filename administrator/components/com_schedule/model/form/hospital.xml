@@ -12,6 +12,7 @@
 			readonly="true"
 			class="readonly"
 			/>
+
 		<field name="title"
 			type="text"
 			label="醫院名稱"
@@ -19,6 +20,7 @@
 			required="true"
 			class="input-xlarge required"
 			/>
+
 		<field name="has_hicode"
 			type="radio"
 			class="btn-group btn-group-yesno"
@@ -29,12 +31,14 @@
 			<option value="0">無</option>
 			<option value="1">有</option>
 		</field>
+
 		<field name="title"
 			type="text"
 			label="醫院名稱"
 			description="醫院名稱"
 			class="input-xlarge required"
 			/>
+
 		<field name="city"
 			type="sql"
 			query="SELECT id,title FROM #__schedule_cities"
@@ -44,10 +48,12 @@
 			description="醫院所在縣市">
 			<option>- 請選擇縣市 -</option>
 		</field>
+
 		<field name="city_title"
 			type="hidden"
 			label="縣市標題"
 			description="標題" />
+
 		<field name="area"
 			type="sql"
 			query="SELECT id,title FROM #__schedule_areas"
@@ -57,15 +63,17 @@
 			description="醫院所在區域">
 			<option>- 請選擇區域 -</option>
 		</field>
+
 		<field name="area_title"
 			type="hidden"
 			label="區域名稱"
 			description="區域名稱" />
+
 		<field name="images"
-				type="file"
-				label="處方箋上傳"
-				description="處方箋上傳"
-				size="40"
-				class="inputbox"/>
+			type="file"
+			label="處方箋上傳"
+			description="處方箋上傳"
+			size="40"
+			class="inputbox" />
 	</fieldset>
 </form>
