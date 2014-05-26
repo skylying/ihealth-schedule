@@ -63,7 +63,7 @@ abstract class ScheduleComponent extends Component
 	protected function postExecute($result)
 	{
 		// Debug profiler
-		if (JDEBUG)
+		if (JDEBUG && 'html' == \JFactory::getDocument()->getType())
 		{
 			$result .= "<hr />" . ProfilerHelper::render('Windwalker', true);
 		}
