@@ -47,7 +47,6 @@
 			required="true"
 			/>
 
-
 		<field name="id_number"
 			type="text"
 			class="fullwidth idnumber"

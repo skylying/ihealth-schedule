@@ -315,5 +315,4 @@
 		idNumber.val(e.added.id_number);
 		birthDay.val(e.added.birth_date);
 	};
-
 })(jQuery);
