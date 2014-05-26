@@ -98,7 +98,7 @@ $date      = $container->get('date');
 
 		<!--EDIT-->
 		<td class="center">
-			<?php echo \Schedule\Helper\UiHelper::editButton('address', $item->id); ?>
+			<?php echo \Schedule\Helper\UiHelper::editButton('color', $item->id); ?>
 		</td>
 
 		<!--TITLE-->
@@ -108,7 +108,7 @@ $date      = $container->get('date');
 
 		<!--Hex block-->
 		<td class="center">
-			<div style=" margin:0 auto; width: 25px; height: 25px; background: <?php echo $item->hex; ?>"></div>
+			<?php echo \Schedule\Helper\ColorHelper::getColorBlock($item->hex, 25); ?>
 		</td>
 	</tr>
 <?php endforeach; ?>
