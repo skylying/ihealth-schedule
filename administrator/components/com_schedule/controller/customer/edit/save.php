@@ -13,6 +13,18 @@ use Schedule\Table\Table;
 class ScheduleControllerCustomerEditSave extends SaveController
 {
 	/**
+	 * preSaveHook
+	 *
+	 * @return  void
+	 */
+	protected function preSaveHook()
+	{
+		$this->data['id_number'] = isset($this->data['id_number']) ? ucfirst($this->data['id_number']) : "";
+
+		parent::preSaveHook();
+	}
+
+	/**
 	 * postSaveHook
 	 *
 	 * @param \Windwalker\Model\CrudModel $model
