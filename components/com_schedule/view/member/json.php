@@ -6,21 +6,17 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-use Joomla\DI\Container;
-use Windwalker\Model\Model;
-use Windwalker\View\Engine\PhpEngine;
-use Windwalker\View\Html\EditView;
-use Windwalker\Xul\XulEngine;
+use Schedule\View\ApiView;
 
 // No direct access
 defined('_JEXEC') or die;
 
 /**
- * Class MembersHtmlView
+ * Class ScheduleViewMemberJson
  *
  * @since 1.0
  */
-class ScheduleViewMemberHtml extends EditView
+class ScheduleViewMemberJson extends ApiView
 {
 	/**
 	 * Property prefix.
@@ -65,31 +61,14 @@ class ScheduleViewMemberHtml extends EditView
 	protected $viewList = 'members';
 
 	/**
-	 * Method to instantiate the view.
-	 *
-	 * @param Model            $model     The model object.
-	 * @param Container        $container DI Container.
-	 * @param array            $config    View config.
-	 * @param SplPriorityQueue $paths     Paths queue.
-	 */
-	public function __construct(Model $model = null, Container $container = null, $config = array(), \SplPriorityQueue $paths = null)
-	{
-		$this->engine = new PhpEngine;
-
-		parent::__construct($model, $container, $config, $paths);
-	}
-
-	/**
-	 * Prepare data hook.
+	 * prepareData
 	 *
 	 * @return  void
 	 */
 	protected function prepareData()
 	{
 		$data = $this->getData();
-		$form = $data->form;
 
-		$form->setValue('password', null);
-		$form->setValue('password2', null);
+		$data['item'] = $this->get('Item');
 	}
 }

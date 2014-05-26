@@ -8,6 +8,8 @@
 
 defined('_JEXEC') or die;
 
+use Schedule\Json\JsonResponse;
+
 /**
  * Class PlgSystemDev
  *
@@ -62,7 +64,11 @@ class PlgSystemDev extends JPlugin
 		$uri = JURI::getInstance();
 		$user = JFactory::getUser();
 		$query = $uri->getQuery();
-		// $method = $app->input->getMethod();
+
+		if ($this->setupApiRoute())
+		{
+			return;
+		}
 
 		// Redirect to component
 		if (empty($query) && !$user->guest)
@@ -82,6 +88,63 @@ class PlgSystemDev extends JPlugin
 
 			exit();
 		}
+	}
+
+	/**
+	 * Setup up API route rule
+	 *
+	 * @return  bool  After setup an API route, return true. Return false when the route is not an API.
+	 */
+	protected function setupApiRoute()
+	{
+		$app   = JFactory::getApplication();
+		$uri   = JURI::getInstance();
+		$path  = $uri->getPath();
+		$root  = JUri::root(true);
+		$route = substr($path, strlen($root));
+
+		include_once JPATH_ADMINISTRATOR . '/components/com_schedule/src/init.php';
+
+		// Start using json format if uri path begin with `/api`
+		if (strpos($route, '/api') === 0)
+		{
+			JsonResponse::registerErrorHandler();
+
+			$input = $app->input;
+
+			// Set Format to JSON
+			$input->set('format', 'json');
+
+			// Store JDocumentJson to Factory
+			\JFactory::$document = JDocument::getInstance('json');
+
+			$router = $app->getRouter();
+
+			// Attach a hook to Router
+			$router->attachParseRule(
+				function(JRouter $router, JUri $uri)
+				{
+					$path = $uri->getPath();
+
+					// No path & method, return 404.
+					if (trim($path, '/') == 'api')
+					{
+						throw new InvalidArgumentException('No method.', 404);
+					}
+
+					// Direct our URI to schedule
+					$path = 'component/schedule/' . $path;
+					$uri->setPath($path);
+					$uri->setVar('format', 'json');
+
+					return array();
+				}
+			);
+
+			return true;
+		}
+
+		return false;
 	}
 
 	/**

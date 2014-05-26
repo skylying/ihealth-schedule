@@ -1,0 +1,16 @@
+{
+	"member": {
+		"pattern": "member/:id",
+		"view" : "member"
+	},
+
+	"mamber_post": {
+		"pattern": "member",
+		"view" : "member"
+	},
+
+	"mambers": {
+		"pattern": "members",
+		"view" : "members"
+	}
+}
