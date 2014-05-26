@@ -68,6 +68,7 @@
 
 		<field name="institute_id"
 			type="institute_list"
+			value_field="short_title"
 			label="機構名稱"
 			description="機構名稱"
 			class="input-large"
