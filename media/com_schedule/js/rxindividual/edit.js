@@ -18,28 +18,54 @@
 
 			// Overwrite with user's options
 			this.options = $.extend(true, {
-				customerID           : null,
-				customerIDNumber     : null,
+				customerId           : null,
+				customerIdNumber     : null,
 
-				seeDrDateID          : null,
-				periodID             : null,
-				methodID             : null,
+				seeDrDateId          : null,
+				periodId             : null,
+				methodId             : null,
 
-				telOfficeID          : null,
-				telHomeID            : null,
-				mobileID             : null,
+				telOfficeId          : null,
+				telHomeId            : null,
+				mobileId             : null,
 
 				addressesKeys        : ["1st", "2nd", "3rd"],
-				createAddressID      : null,
-				timesID              : null,
+				createAddressId      : null,
+				timesId              : null,
 
-				drugID               : null,
-				deleteDrugID         : null,
+				drugId               : null,
+				deleteDrugId         : null,
 
 				SUCCESS_ROUTE_EXIST  : 0,
 				ERROR_NO_ROUTE       : 1,
 				ERROR_NO_SEE_DR_DATE : 2
 			}, options);
+
+			// init method class
+			window.MethodFieldHandler.setOptions({
+				methodId             : this.options.methodId,
+				drugId               : this.options.drugId,
+				deleteDrugId         : this.options.deleteDrugId
+			});
+
+			window.DeliverScheduleHandler.setOptions({
+				addressesKeys        : this.options.addressesKeys,
+				SUCCESS_ROUTE_EXIST  : this.options.SUCCESS_ROUTE_EXIST,
+				ERROR_NO_ROUTE       : this.options.ERROR_NO_ROUTE,
+				ERROR_NO_SEE_DR_DATE : this.options.ERROR_NO_SEE_DR_DATE
+			});
+
+			window.CustomerFieldHandler.setOptions({
+				customerId           : this.options.customerId,
+				customerIdNumber     : this.options.customerIdNumber,
+				telOfficeId          : this.options.telOfficeId,
+				telHomeId            : this.options.telHomeId,
+				mobileId             : this.options.mobileId,
+				addressesKeys        : this.options.addressesKeys,
+				createAddressId      : this.options.createAddressId,
+				seeDrDateId          : this.options.seeDrDateId,
+				periodId             : this.options.periodId
+			});
 		},
 		/**
 		 * Run
@@ -48,12 +74,9 @@
 		{
 			var self = this;
 
-			var method = new MethodFieldHandler({
-				methodID: self.options.methodID,
-				drugID: self.options.drugID,
-				deleteDrugID: self.options.deleteDrugID
-			});
-			method.run();
+			window.MethodFieldHandler.run();
+
+			window.CustomerFieldHandler.run();
 
 			// Bind 'change' event to 'weekday of new route data'
 			$('.js-route-weekday select').on('change', function ()
@@ -77,66 +100,64 @@
 				self.updateScheduleDateByWeekday(weekday, nth);
 			});
 
-			// Bind 'times' event to 'show nth prescriptions'
-			$('#' + self.options.timesID).on('change', function ()
+			// Toggle nth schedules
+			$('.js-nth-schedule-check input[type=checkbox]').on('change', function ()
 			{
-				self.showSchedulesEditBlock($(this).val());
+				window.DeliverScheduleHandler.bindChangeNthScheduleInfo($(this));
 			});
-		},
 
-		/**
-		 * Show and hide schedules edit box by changing send drug times
-		 *
-		 * showSchedulesEditBlock
-		 *
-		 * return void
-		 *
-		 */
-		showSchedulesEditBlock: function (times)
-		{
-			var schedules1 = $('.schedules').eq(0);
-			var schedules2 = $('.schedules').eq(1);
-			var schedules3 = $('.schedules').eq(2);
-
-			var checkbox1 = schedules1.find('.js-nth-schedule-check input');
-			var checkbox2 = schedules2.find('.js-nth-schedule-check input');
-			var checkbox3 = schedules3.find('.js-nth-schedule-check input');
-
-			switch (times)
+			// Bind 'times' event to 'show nth prescriptions'
+			$('#' + self.options.timesId).on('change', function ()
 			{
-				case '1':
-					// Check 1
-					checkbox1.attr('checked', true).trigger('change');
-					checkbox2.attr('checked', false).trigger('change');
-					checkbox3.attr('checked', false).trigger('change');
-					// Show 1
-					schedules1.removeClass('hide');
-					schedules2.addClass('hide');
-					schedules3.addClass('hide');
-					break;
-				case '2':
-					// Check 2
-					checkbox1.attr('checked', false).trigger('change');
-					checkbox2.attr('checked', true).trigger('change');
-					checkbox3.attr('checked', false).trigger('change');
-					// Show 1, 2
-					schedules1.removeClass('hide');
-					schedules2.removeClass('hide');
-					schedules3.addClass('hide');
-					break;
-				case '3':
-					// Check 2,3
-					checkbox1.attr('checked', false).trigger('change');
-					checkbox2.attr('checked', true).trigger('change');
-					checkbox3.attr('checked', true).trigger('change');
-					// Show all
-					schedules1.removeClass('hide');
-					schedules2.removeClass('hide');
-					schedules3.removeClass('hide');
-					break;
-				default:
-					break;
-			}
+				window.DeliverScheduleHandler.showSchedulesEditBlock($(this).val());
+			});
+
+			// After 'times' event binding, update edit block once.
+			window.DeliverScheduleHandler.showSchedulesEditBlock($('#' + self.options.timesId).val());
+
+			// Bind See Doctor Date on change, update schedule date
+			$('#' + self.options.seeDrDateId).on('change', function ()
+			{
+				window.DeliverScheduleHandler.updateScheduleDate(
+					$('#' + self.options.seeDrDateId).val(),
+					$('#' + self.options.periodId).val(),
+					self.options.addressesKeys
+				);
+			});
+
+			// Bind Drug period on change, update schedule date
+			$('#' + self.options.periodId).on('change', function ()
+			{
+				window.DeliverScheduleHandler.updateScheduleDate(
+					$('#' + self.options.seeDrDateId).val(),
+					$('#' + self.options.periodId).val(),
+					self.options.addressesKeys
+				);
+			});
+
+			// Bind address list on change, update schedule date
+			$('.js-address-wrap').on('change', '.js-address-list', function ()
+			{
+				window.DeliverScheduleHandler.updateScheduleDate(
+					$('#' + self.options.seeDrDateId).val(),
+					$('#' + self.options.periodId).val(),
+					self.options.addressesKeys
+				);
+			});
+
+			// Combine selector, whenever schedule's checkboxes are changed, update 'send date'
+			var $scheduleOne = jQuery('#jform_schedules_1st_deliver_nth0');
+			var $scheduleTwo = $scheduleOne.add('#jform_schedules_2nd_deliver_nth0');
+			var $scheduleAll = $scheduleTwo.add('#jform_schedules_3rd_deliver_nth0');
+
+			$scheduleAll.on('change', function ()
+			{
+				window.DeliverScheduleHandler.updateScheduleDate(
+					$('#' + self.options.seeDrDateId).val(),
+					$('#' + self.options.periodId).val(),
+					self.options.addressesKeys
+				);
+			});
 		},
 
 		/**
@@ -150,8 +171,8 @@
 		updateScheduleDateByWeekday: function (weekday, nth)
 		{
 			var self = this;
-			var seeDrDate = $('#' + this.options.seeDrDateID).val();
-			var period = $('#' + this.options.period).val();
+			var seeDrDate = $('#' + this.options.seeDrDateId).val();
+			var period = $('#' + this.options.periodId).val();
 
 			$.ajax({
 				type: "POST",
