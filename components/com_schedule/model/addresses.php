@@ -24,8 +24,9 @@ class ScheduleModelAddresses extends \Windwalker\Model\ListModel
 	 *
 	 * @var  array
 	 */
-	protected $filteerFields = array(
+	protected $filterFields = array(
 		'customer_id',
+		'address.customer_id'
 	);
 
 	/**
