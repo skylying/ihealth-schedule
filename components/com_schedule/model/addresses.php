@@ -20,6 +20,15 @@ defined('_JEXEC') or die;
 class ScheduleModelAddresses extends \Windwalker\Model\ListModel
 {
 	/**
+	 * Property filteerFields.
+	 *
+	 * @var  array
+	 */
+	protected $filteerFields = array(
+		'customer_id',
+	);
+
+	/**
 	 * configureTables
 	 *
 	 * @return  void
@@ -27,6 +36,33 @@ class ScheduleModelAddresses extends \Windwalker\Model\ListModel
 	protected function configureTables()
 	{
 		$this->addTable('address', Table::ADDRESSES);
+	}
+
+	/**
+	 * populateState
+	 *
+	 * @param string $ordering
+	 * @param string $direction
+	 *
+	 * @return  void
+	 */
+	protected function populateState($ordering = null, $direction = null)
+	{
+		parent::populateState($ordering, $direction);
+
+		$container = $this->getContainer();
+		$input = $container->get('input');
+
+		$customerId = (int) $input->get('customer_id');
+
+		$filters = $this->state->get('filter', array());
+
+		if (! empty($customerId))
+		{
+			$filters['customer_id'] = $customerId;
+		}
+
+		$this->state->set('filter', $filters);
 	}
 
 	/**
@@ -43,5 +79,26 @@ class ScheduleModelAddresses extends \Windwalker\Model\ListModel
 		// Reset select to avoid redundant columns
 		$query->clear('select')
 			->select($queryHelper->getSelectFields(QueryHelper::COLS_WITH_FIRST));
+	}
+
+	/**
+	 * configureFilters
+	 *
+	 * @param \Windwalker\Model\Filter\FilterHelper $filterHelper
+	 *
+	 * @return  void
+	 */
+	protected function configureFilters($filterHelper)
+	{
+		$filterHelper->setHandler(
+			'customer_id',
+			function ($query, $field, $value)
+			{
+				/** @var $query \JDatabaseQuery */
+				$query->where('`address`.`customer_id`=' . (int) $value);
+			}
+		);
+
+		parent::configureFilters($filterHelper);
 	}
 }
