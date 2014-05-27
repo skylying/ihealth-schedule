@@ -139,7 +139,21 @@ $date      = $container->get('date');
 
 		<!-- type -->
 		<td>
-			<?php echo JText::_('COM_SCHEDULE_SCHEDULE_FIELD_TYPE_' . strtoupper($item->type)); ?>
+			<?php
+			if ($item->type == 'individual')
+			{
+				$buttonStyle = 'btn-info';
+			}
+			elseif($item->type == 'resident')
+			{
+				$buttonStyle = 'btn-warning';
+			}
+			else
+			{
+				$buttonStyle = 'btn-inverse';
+			}
+			?>
+			<button type="button" style="padding: 3px 8px;" class="btn <?php echo $buttonStyle?>"><?php echo JText::_('COM_SCHEDULE_SCHEDULE_FIELD_TYPE_' . $item->type);?></button>
 		</td>
 
 		<!-- customer_name | institute_name -->

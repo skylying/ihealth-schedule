@@ -176,7 +176,7 @@ class ScheduleModelSchedule extends AdminModel
 	{
 		$tableInstitute = TableCollection::loadTable('Institute', $table->institute_id);
 
-		$table->institute_title = $tableInstitute->title;
+		$table->institute_title = $tableInstitute->short_title;
 		$table->route_id        = $tableInstitute->route_id;
 		$table->city            = $tableInstitute->city;
 		$table->city_title      = $tableInstitute->city_title;
