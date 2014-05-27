@@ -13,6 +13,28 @@ use Schedule\Table\Table;
 class ScheduleControllerCustomerEditSave extends SaveController
 {
 	/**
+	 * preSaveHook
+	 *
+	 * @return  void
+	 */
+	protected function preSaveHook()
+	{
+		$addresses = isset($this->data['address']) ? json_decode($this->data['address']) : array();
+
+		// 預設地址存入客戶資料
+		foreach ($addresses as $address)
+		{
+			if ($address->previous)
+			{
+				$this->data['city'] = $address->city;
+				$this->data['area'] = $address->area;
+			}
+		}
+
+		parent::preSaveHook();
+	}
+
+	/**
 	 * postSaveHook
 	 *
 	 * @param \Windwalker\Model\CrudModel $model
