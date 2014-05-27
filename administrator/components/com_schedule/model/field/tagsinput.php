@@ -52,10 +52,15 @@ class JFormFieldTagsInput extends JFormFieldList
 		JFactory::getDocument()->addScriptDeclaration("
 			(function($) {
 				$(document).ready(function() {
+					var selection = $('" . $cssId . "');
+						options = $('" . $cssId . " option'),
+						chosen = $('" . $cssId . "_chzn');
+
 					// Removed selected options
-					$('" . $cssId . " option').each(function()
+					options.each(function()
 					{
 						var option = $(this);
+
 						if (option.text() === '')
 						{
 							option.remove();
@@ -63,24 +68,24 @@ class JFormFieldTagsInput extends JFormFieldList
 					});
 
 					// Method to add tags pressing enter
-					$('" . $cssId . "_chzn input').keyup(function(event)
+					chosen.find('input').keyup(function(event)
 					{
 						// Tag is greater than " . $minimumInputLength . " chars and enter (or ',') key pressed
 						if (this.value.length >= " . $minimumInputLength . " && (event.which === 13 || event.which === 188))
 						{
 							// Search an highlighted result
-							var highlighted = $('" . $cssId . "_chzn').find('li.active-result.highlighted').first();
+							var highlighted = chosen.find('li.active-result.highlighted').first();
 
 							// Add the highlighted option
 							if (event.which === 13 && highlighted.text() !== '')
 							{
 								// Extra check. If we have added a custom tag with this text remove it
-								$('" . $cssId . " option').filter(function() { return $(this).val() == highlighted.text(); }).remove();
+								options.filter(function() { return $(this).val() == highlighted.text(); }).remove();
 
 								// Select the highlighted result
-								var tagOption = $('" . $cssId . " option').filter(function() { return $(this).html() == highlighted.text(); });
+								var tagOption = options.filter(function() { return $(this).html() == highlighted.text(); });
 
-								tagOption.attr('selected', 'selected');console.log('highlighted');
+								tagOption.attr('selected', 'selected');
 							}
 							// Add the custom tag option
 							else
@@ -91,7 +96,7 @@ class JFormFieldTagsInput extends JFormFieldList
 								var customTag = this.value;
 
 								// Extra check. Search if the custom tag already exists (typed faster than AJAX ready)
-								var tagOption = $('" . $cssId . " option').filter(function() { return $(this).html() == customTag; });
+								var tagOption = options.filter(function() { return $(this).html() == customTag; });
 
 								if (tagOption.text() !== '')
 								{
@@ -105,13 +110,13 @@ class JFormFieldTagsInput extends JFormFieldList
 									option.attr('selected', 'selected');
 
 									// Append the option an repopulate the chosen field
-									$('" . $cssId . "').append(option);
+									selection.append(option);
 								}
 							}
 
 							this.value = '';
 
-							$('" . $cssId . "').trigger('liszt:updated');
+							selection.trigger('liszt:updated');
 
 							event.preventDefault();
 						}
