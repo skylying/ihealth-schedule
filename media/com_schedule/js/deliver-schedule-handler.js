@@ -16,6 +16,8 @@
 			// Overwrite with user's options
 			this.options = $.extend(true, {
 				addressesKeys        : ["1st", "2nd", "3rd"],
+				seeDrDateId          : null,
+				periodId             : null,
 				SUCCESS_ROUTE_EXIST  : 0,
 				ERROR_NO_ROUTE       : 1,
 				ERROR_NO_SEE_DR_DATE : 2
@@ -172,6 +174,51 @@
 				default:
 					break;
 			}
+		},
+
+		/**
+		 * Calculate finish drug date by specifying weekday
+		 *
+		 * updateScheduleDateByWeekday
+		 *
+		 * @param {string}    weekday
+		 * @param {string}    nth
+		 */
+		updateScheduleDateByWeekday: function (weekday, nth)
+		{
+			var self = this;
+			var seeDrDate = $('#' + this.options.seeDrDateId).val();
+			var period = $('#' + this.options.periodId).val();
+
+			$.ajax({
+				type: "POST",
+				url: "index.php?option=com_schedule&task=rxindividual.ajax.senddate",
+				data: {
+					nth: nth,
+					see_dr_date: seeDrDate,
+					period: period,
+					weekday: weekday
+				}
+			}).done(function (cdata)
+				{
+					var data = JSON.parse(cdata);
+
+					var sendDateId = '#jform_schedules_' + data['nth'] + '_date';
+
+					if (data['type'] == self.options.SUCCESS_ROUTE_EXIST)
+					{
+						$(sendDateId).val(data['date']);
+					}
+					else
+					{
+						if (data['type'] == self.options.ERROR_NO_ROUTE)
+						{
+							$(sendDateId).closest('.js-nth-schedule-info').find('.js-route-wrap').removeClass('hide');
+
+							$(sendDateId).val('');
+						}
+					}
+				});
 		}
 	};
 })(jQuery);

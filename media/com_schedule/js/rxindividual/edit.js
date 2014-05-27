@@ -50,6 +50,8 @@
 
 			window.DeliverScheduleHandler.setOptions({
 				addressesKeys        : this.options.addressesKeys,
+				seeDrDateId          : this.options.seeDrDateId,
+				periodId             : this.options.periodId,
 				SUCCESS_ROUTE_EXIST  : this.options.SUCCESS_ROUTE_EXIST,
 				ERROR_NO_ROUTE       : this.options.ERROR_NO_ROUTE,
 				ERROR_NO_SEE_DR_DATE : this.options.ERROR_NO_SEE_DR_DATE
@@ -97,7 +99,7 @@
 					nth = '3rd';
 				}
 
-				self.updateScheduleDateByWeekday(weekday, nth);
+				window.DeliverScheduleHandler.updateScheduleDateByWeekday(weekday, nth);
 			});
 
 			// Toggle nth schedules
@@ -158,51 +160,6 @@
 					self.options.addressesKeys
 				);
 			});
-		},
-
-		/**
-		 * Calculate finish drug date by specifying weekday
-		 *
-		 * updateScheduleDateByWeekday
-		 *
-		 * @param {string}    weekday
-		 * @param {string}    nth
-		 */
-		updateScheduleDateByWeekday: function (weekday, nth)
-		{
-			var self = this;
-			var seeDrDate = $('#' + this.options.seeDrDateId).val();
-			var period = $('#' + this.options.periodId).val();
-
-			$.ajax({
-				type: "POST",
-				url: "index.php?option=com_schedule&task=rxindividual.ajax.senddate",
-				data: {
-					nth: nth,
-					see_dr_date: seeDrDate,
-					period: period,
-					weekday: weekday
-				}
-			}).done(function (cdata)
-				{
-					var data = JSON.parse(cdata);
-
-					var sendDateId = '#jform_schedules_' + data['nth'] + '_date';
-
-					if (data['type'] == self.options.SUCCESS_ROUTE_EXIST)
-					{
-						$(sendDateId).val(data['date']);
-					}
-					else
-					{
-						if (data['type'] == self.options.ERROR_NO_ROUTE)
-						{
-							$(sendDateId).closest('.js-nth-schedule-info').find('.js-route-wrap').removeClass('hide');
-
-							$(sendDateId).val('');
-						}
-					}
-				});
 		}
 	};
 

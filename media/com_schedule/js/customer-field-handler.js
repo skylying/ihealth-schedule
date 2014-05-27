@@ -21,7 +21,9 @@
 				telHomeId            : null,
 				mobileId             : null,
 				addressesKeys        : ["1st", "2nd", "3rd"],
-				createAddressId      : null
+				createAddressId      : null,
+				seeDrDateId          : null,
+				periodId             : null
 			}, options);
 		},
 
