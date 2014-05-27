@@ -1,8 +1,4 @@
-/**
- * MethodFieldHandler Javascript Library v1.0
- */
-;
-(function ($, undefined)
+;(function($, undefined)
 {
 	"use strict";
 
@@ -13,26 +9,24 @@
 		return;
 	}
 
-	function MethodFieldHandler(options)
-	{
-		this.listeners = {};
+	window.MethodFieldHandler = {
+		setOptions : function(options)
+		{
+			// Overwrite with user's options
+			this.options = $.extend(true, {
+				methodId     : null,
+				drugId       : null,
+				deleteDrugId : null
+			}, options);
+		},
 
-		// Overwrite with user's options
-		this.options = $.extend(true, {
-			methodID     : null,
-			drugID       : null,
-			deleteDrugID : null
-		}, options);
-	}
-
-	MethodFieldHandler.prototype = {
 		run: function ()
 		{
 			var self = this;
 
-			var methodElement = $('#' + self.options.methodID);
+			var methodElement = $('#' + self.options.methodId);
 			// Find where to store hicodes
-			var targetHiddenInput = $('#' + self.options.drugID);
+			var targetHiddenInput = $('#' + self.options.drugId);
 
 			// Update while hicode date already exist on the very first time
 			if (targetHiddenInput.val() != '' && targetHiddenInput.val() != '{}' && targetHiddenInput.val() != '[]')
@@ -97,7 +91,7 @@
 				// Stores id to delete
 				// ex: [1, 2]
 				var data = [];
-				var targetInput = $('#' + self.options.deleteDrugID);
+				var targetInput = $('#' + self.options.deleteDrugId);
 
 				if (targetInput.val() && targetInput.val() != '[]')
 				{
@@ -110,7 +104,7 @@
 					{
 						var idToDelete = $(this).closest('.js-hicode-row').find('.js-hicode-id').val();
 
-						// Colect deleted IDs
+						// Colect deleted Ids
 						if (idToDelete)
 						{
 							data.push(idToDelete);
@@ -125,7 +119,7 @@
 					{
 						var idToDelete = $(this).closest('.js-hicode-row').find('.js-hicode-id').val();
 
-						// Colect deleted IDs
+						// Colect deleted Ids
 						if (idToDelete)
 						{
 							data.push(idToDelete);
@@ -143,7 +137,7 @@
 						self.updateHicodeHiddenInput();
 					}
 
-					// Update deleted IDs
+					// Update deleted Ids
 					targetInput.val(JSON.stringify(data));
 				}
 			});
@@ -191,7 +185,7 @@
 				}
 
 				// Perform hidden input update
-				self.updateJsonToInputField(self.options.drugID, data);
+				self.updateJsonToInputField(self.options.drugId, data);
 
 				// Update Counter
 				$('.js-hicode-amount').text(totalRowCounter);
@@ -226,10 +220,7 @@
 				tableTbody.append(insertRow);
 			}
 
-			if (data.length != 0)
-			{
-				tableTbody.append(cloneRow);
-			}
+			tableTbody.append(cloneRow);
 		},
 
 		updateJsonToInputField: function (target, dataJson)
@@ -245,7 +236,4 @@
 			}
 		}
 	};
-
-	// Exports
-	window.MethodFieldHandler = MethodFieldHandler;
 })(jQuery);
