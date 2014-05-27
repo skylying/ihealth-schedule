@@ -7,6 +7,7 @@
  */
 
 use Schedule\Table\Table;
+use Windwalker\DI\Container;
 use Windwalker\Model\Helper\QueryHelper;
 
 // No direct access
@@ -24,8 +25,9 @@ class ScheduleModelAddresses extends \Windwalker\Model\ListModel
 	 *
 	 * @var  array
 	 */
-	protected $filteerFields = array(
+	protected $filterFields = array(
 		'customer_id',
+		'address.customer_id'
 	);
 
 	/**
@@ -35,7 +37,11 @@ class ScheduleModelAddresses extends \Windwalker\Model\ListModel
 	 */
 	protected function configureTables()
 	{
+		$queryHelper = $this->getContainer()->get('model.addresses.helper.query', Container::FORCE_NEW);
+
 		$this->addTable('address', Table::ADDRESSES);
+
+		$this->filterFields = array_merge($this->filterFields, $queryHelper->getFilterFields());
 	}
 
 	/**
