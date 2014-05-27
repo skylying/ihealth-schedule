@@ -63,9 +63,27 @@ abstract class ScheduleComponent extends Component
 	protected function postExecute($result)
 	{
 		// Debug profiler
-		if (JDEBUG && 'html' == \JFactory::getDocument()->getType())
+		if (JDEBUG)
 		{
-			$result .= "<hr />" . ProfilerHelper::render('Windwalker', true);
+			$type = \JFactory::getDocument()->getType();
+
+			if ('html' == $type)
+			{
+				$result .= "<hr />" . ProfilerHelper::render('Windwalker', true);
+			}
+			elseif ('json' == $type)
+			{
+				/* Uncomment if you need this.
+
+				$result = json_decode($result);
+
+				$profiler = \JProfiler::getInstance('Windwalker');
+
+				$result->profiler = $profiler->getBuffer();
+
+				$result = json_encode($result);
+				*/
+			}
 		}
 
 		return parent::postExecute($result);

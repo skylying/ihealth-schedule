@@ -7,6 +7,7 @@
  */
 
 use Schedule\Table\Table;
+use Windwalker\Model\Helper\QueryHelper;
 
 // No direct access
 defined('_JEXEC') or die;
@@ -26,5 +27,21 @@ class ScheduleModelMembers extends \Windwalker\Model\ListModel
 	protected function configureTables()
 	{
 		$this->addTable('mamber', Table::MEMBERS);
+	}
+
+	/**
+	 * postGetQuery
+	 *
+	 * @param JDatabaseQuery $query
+	 *
+	 * @return  void
+	 */
+	protected function postGetQuery(\JDatabaseQuery $query)
+	{
+		$queryHelper = $this->container->get('model.' . $this->getName() . '.helper.query');
+
+		// Reset select to avoid redundant columns
+		$query->clear('select')
+			->select($queryHelper->getSelectFields(QueryHelper::COLS_WITH_FIRST));
 	}
 }
