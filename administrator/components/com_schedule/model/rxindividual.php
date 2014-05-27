@@ -99,6 +99,17 @@ class ScheduleModelRxindividual extends AdminModel
 			$returnVal->drug = json_encode(iterator_to_array($drugs));
 		}
 
+		if (! empty($returnVal->id))
+		{
+			// 健保 code
+			$image = (new DataMapper(Table::IMAGES))->find(array("rx_id" => $returnVal->id));
+
+			// Set json
+			$returnVal->ajax_image1 = isset($image[0]) ? $image[0]->id : null;
+			$returnVal->ajax_image2 = isset($image[1]) ? $image[1]->id : null;
+			$returnVal->ajax_image3 = isset($image[2]) ? $image[2]->id : null;
+		}
+
 		foreach (array("1st", "2nd", "3rd") as $val)
 		{
 			// 取得排程 table

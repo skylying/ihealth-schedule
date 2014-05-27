@@ -17,5 +17,9 @@ Thumbs.db
 !/tmp/index.html
 /configuration.php
 
+# Upload image
+/media/com_schedule/upload/*
+!/media/com_schedule/upload/index.html
+
 # Akeeba Backup
 /administrator/components/com_akeeba/backup/*
