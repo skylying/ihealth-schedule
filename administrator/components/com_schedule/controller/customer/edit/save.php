@@ -19,9 +19,6 @@ class ScheduleControllerCustomerEditSave extends SaveController
 	 */
 	protected function preSaveHook()
 	{
-		// 身分證字號大寫
-		$this->data['id_number'] = isset($this->data['id_number']) ? ucfirst($this->data['id_number']) : "";
-
 		$addresses = isset($this->data['address']) ? json_decode($this->data['address']) : array();
 
 		// 預設地址存入客戶資料

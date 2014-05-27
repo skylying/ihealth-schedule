@@ -113,6 +113,9 @@ class ScheduleModelCustomer extends AdminModel
 	 */
 	public function prepareTable(JTable $table)
 	{
+		// 身分證字號大寫
+		$table->id_number = isset($table->id_number) ? ucfirst($table->id_number) : "";
+
 		$jformData = JFactory::getApplication()->input->get('jform', '', 'array');
 
 		$customerType = \Windwalker\Helper\ArrayHelper::getValue($jformData, 'type');
