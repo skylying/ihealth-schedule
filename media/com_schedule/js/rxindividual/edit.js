@@ -1,5 +1,5 @@
 ;
-(function ($, undefined)
+(function($, undefined)
 {
 	"use strict";
 
@@ -12,7 +12,7 @@
 
 	// Exports class RxResidentEditList
 	window.RxIndividualEdit = {
-		init: function (options)
+		init: function(options)
 		{
 			this.listeners = {};
 
@@ -72,7 +72,7 @@
 		/**
 		 * Run
 		 */
-		run: function ()
+		run: function()
 		{
 			var self = this;
 
@@ -81,7 +81,7 @@
 			window.CustomerFieldHandler.run();
 
 			// Bind 'change' event to 'weekday of new route data'
-			$('.js-route-weekday select').on('change', function ()
+			$('.js-route-weekday select').on('change', function()
 			{
 				var weekday = $(this).val();
 				var nth = $(this).attr('id');
@@ -103,13 +103,13 @@
 			});
 
 			// Toggle nth schedules
-			$('.js-nth-schedule-check input[type=checkbox]').on('change', function ()
+			$('.js-nth-schedule-check input[type=checkbox]').on('change', function()
 			{
 				window.DeliverScheduleHandler.bindChangeNthScheduleInfo($(this));
 			});
 
 			// Bind 'times' event to 'show nth prescriptions'
-			$('#' + self.options.timesId).on('change', function ()
+			$('#' + self.options.timesId).on('change', function()
 			{
 				window.DeliverScheduleHandler.showSchedulesEditBlock($(this).val());
 			});
@@ -118,7 +118,7 @@
 			window.DeliverScheduleHandler.showSchedulesEditBlock($('#' + self.options.timesId).val());
 
 			// Bind See Doctor Date on change, update schedule date
-			$('#' + self.options.seeDrDateId).on('change', function ()
+			$('#' + self.options.seeDrDateId).on('change', function()
 			{
 				window.DeliverScheduleHandler.updateScheduleDate(
 					$('#' + self.options.seeDrDateId).val(),
@@ -128,7 +128,7 @@
 			});
 
 			// Bind Drug period on change, update schedule date
-			$('#' + self.options.periodId).on('change', function ()
+			$('#' + self.options.periodId).on('change', function()
 			{
 				window.DeliverScheduleHandler.updateScheduleDate(
 					$('#' + self.options.seeDrDateId).val(),
@@ -138,7 +138,7 @@
 			});
 
 			// Bind address list on change, update schedule date
-			$('.js-address-wrap').on('change', '.js-address-list', function ()
+			$('.js-address-wrap').on('change', '.js-address-list', function()
 			{
 				window.DeliverScheduleHandler.updateScheduleDate(
 					$('#' + self.options.seeDrDateId).val(),
@@ -152,7 +152,7 @@
 			var $scheduleTwo = $scheduleOne.add('#jform_schedules_2nd_deliver_nth0');
 			var $scheduleAll = $scheduleTwo.add('#jform_schedules_3rd_deliver_nth0');
 
-			$scheduleAll.on('change', function ()
+			$scheduleAll.on('change', function()
 			{
 				window.DeliverScheduleHandler.updateScheduleDate(
 					$('#' + self.options.seeDrDateId).val(),

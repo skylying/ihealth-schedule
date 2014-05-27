@@ -1,4 +1,5 @@
-;(function($, undefined)
+;
+(function($, undefined)
 {
 	"use strict";
 
@@ -11,7 +12,7 @@
 
 	// Exports class RxResidentEditList
 	window.DeliverScheduleHandler = {
-		setOptions : function(options)
+		setOptions: function(options)
 		{
 			// Overwrite with user's options
 			this.options = $.extend(true, {
@@ -31,7 +32,7 @@
 		 *
 		 * return void
 		 */
-		bindChangeNthScheduleInfo : function ($cheboxes)
+		bindChangeNthScheduleInfo: function($cheboxes)
 		{
 			$cheboxes.on('change', toggleNthScheduleInfo($(this)));
 
@@ -65,7 +66,7 @@
 		 * @param {string}    seeDrDate
 		 * @param {json}      period
 		 */
-		updateScheduleDate : function (seeDrDate, period, addressesKeys)
+		updateScheduleDate: function(seeDrDate, period, addressesKeys)
 		{
 			var self = this;
 			var moment_date = moment(seeDrDate);
@@ -88,16 +89,16 @@
 					var area = $(selectedAddressId).find('option:selected').attr('area');
 
 					$.ajax({
-						type : "POST",
-						url  : "index.php?option=com_schedule&task=rxindividual.ajax.senddate",
-						data : {
-							nth : addressesKeys[i],
-							city_id : city,
-							area_id : area,
-							see_dr_date : seeDrDate,
-							period : period
+						type: "POST",
+						url: "index.php?option=com_schedule&task=rxindividual.ajax.senddate",
+						data: {
+							nth: addressesKeys[i],
+							city_id: city,
+							area_id: area,
+							see_dr_date: seeDrDate,
+							period: period
 						}
-					}).done(function (cdata)
+					}).done(function(cdata)
 						{
 							var data = JSON.parse(cdata);
 
@@ -129,7 +130,7 @@
 		 * return void
 		 *
 		 */
-		showSchedulesEditBlock: function (times)
+		showSchedulesEditBlock: function(times)
 		{
 			var schedules1 = $('.schedules').eq(0);
 			var schedules2 = $('.schedules').eq(1);
@@ -184,7 +185,7 @@
 		 * @param {string}    weekday
 		 * @param {string}    nth
 		 */
-		updateScheduleDateByWeekday: function (weekday, nth)
+		updateScheduleDateByWeekday: function(weekday, nth)
 		{
 			var self = this;
 			var seeDrDate = $('#' + this.options.seeDrDateId).val();
@@ -199,7 +200,7 @@
 					period: period,
 					weekday: weekday
 				}
-			}).done(function (cdata)
+			}).done(function(cdata)
 				{
 					var data = JSON.parse(cdata);
 

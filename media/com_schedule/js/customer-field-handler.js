@@ -1,4 +1,5 @@
-;(function($, undefined)
+;
+(function($, undefined)
 {
 	"use strict";
 
@@ -11,7 +12,7 @@
 
 	// Exports class RxResidentEditList
 	window.CustomerFieldHandler = {
-		setOptions : function(options)
+		setOptions: function(options)
 		{
 			// Overwrite with user's options
 			this.options = $.extend(true, {
@@ -27,7 +28,7 @@
 			}, options);
 		},
 
-		run : function()
+		run: function()
 		{
 			var self = this;
 			var customerDropDown = jQuery("#" + this.options.customerId);
@@ -35,19 +36,19 @@
 			this.fireAjax(customerDropDown.val());
 
 			// Fire ajax request every time customer_id has been changed
-			customerDropDown.on('change', function ()
+			customerDropDown.on('change', function()
 			{
 				self.fireAjax(customerDropDown.val());
 			});
 
 			// Every time user select different phone number, the default will be overwritten
-			$('form').on('change', '.js-select-phone-default', function ()
+			$('form').on('change', '.js-select-phone-default', function()
 			{
 				$(this).updateHiddenPhoneNumbersInput();
 			});
 
 			// Bind add new address
-			$('.js-add-address').on('click', function ()
+			$('.js-add-address').on('click', function()
 			{
 				// Find the address template row
 				var element = $('.js-tmpl-add-addressrow').removeClass('hide');
@@ -57,7 +58,7 @@
 			});
 
 			// Bind save new address
-			$('.js-nth-schedule-info').on('click', '.js-save-address',function ()
+			$('.js-nth-schedule-info').on('click', '.js-save-address', function()
 			{
 				// The dynamic row wrapper
 				var currentWrap = $(this).closest('.js-tmpl-add-addressrow');
@@ -100,7 +101,9 @@
 					|| (objectToAdd.address == ''))
 				{
 					// Notify user to make sure they input correctly
-					Joomla.renderMessages([['欄位輸入不完整']]);
+					Joomla.renderMessages([
+						['欄位輸入不完整']
+					]);
 				}
 				else if ((objectToAdd.city != '')
 					|| (objectToAdd.area != '')
@@ -122,7 +125,7 @@
 						'</option>';
 
 					// Update drop down list at once
-					targetListToUpdate.each(function ()
+					targetListToUpdate.each(function()
 					{
 						$(this).append(html);
 						$(this).find('option:last').attr('selected', true);
@@ -141,18 +144,20 @@
 						self.options.addressesKeys
 					);
 
-					Joomla.renderMessages([['提醒您，您已新增散客電話或地址，記得按儲存喲。']]);
+					Joomla.renderMessages([
+						['提醒您，您已新增散客電話或地址，記得按儲存喲。']
+					]);
 				}
 			});
 
 			// Bind add new telephone
-			$('.js-add-tel').on('click', function ()
+			$('.js-add-tel').on('click', function()
 			{
 				$(this).closest('.js-tel-wrap').find('.js-tmpl-add-telrow').removeClass('hide');
 			});
 
 			// Bind save new telephone
-			$('.js-save-tel').on('click', function ()
+			$('.js-save-tel').on('click', function()
 			{
 				var wrapperElement = $(this).closest('.js-tel-wrap');
 				var phoneToAdd = wrapperElement.find('.js-tel-row-data');
@@ -233,19 +238,19 @@
 		 *
 		 * @param {int} id
 		 */
-		fireAjax : function (id)
+		fireAjax: function(id)
 		{
 			var self = this;
 			// Fire ajax to Customer
 			$.ajax({
-				type : "POST",
-				url  : "index.php?option=com_schedule&task=customer.ajax.json",
-				data : {
-					id : id
+				type: "POST",
+				url: "index.php?option=com_schedule&task=customer.ajax.json",
+				data: {
+					id: id
 				}
-			}).done(function (cdata)
+			}).done(function(cdata)
 				{
-					var cdata     = $.parseJSON(cdata);
+					var cdata = $.parseJSON(cdata);
 					var id_number = cdata.id_number;
 
 					try
@@ -256,7 +261,7 @@
 						// Update phone select list
 						self.updatePhoneHtml(self.options.telOfficeId, tel_office);
 					}
-					catch(err)
+					catch (err)
 					{
 						self.updatePhoneHtml(self.options.telOfficeId);
 					}
@@ -269,7 +274,7 @@
 						// Update phone select list
 						self.updatePhoneHtml(self.options.telHomeId, tel_home);
 					}
-					catch(err)
+					catch (err)
 					{
 						self.updatePhoneHtml(self.options.telHomeId);
 					}
@@ -282,7 +287,7 @@
 						// Update phone select list
 						self.updatePhoneHtml(self.options.mobileId, mobile);
 					}
-					catch(err)
+					catch (err)
 					{
 						self.updatePhoneHtml(self.options.mobileId);
 					}
@@ -293,12 +298,12 @@
 
 			//Fire ajax to Addresses
 			$.ajax({
-				type : "POST",
-				url  : "index.php?option=com_schedule&task=addresses.ajax.json",
-				data : {
-					id : id
+				type: "POST",
+				url: "index.php?option=com_schedule&task=addresses.ajax.json",
+				data: {
+					id: id
 				}
-			}).done(function (cdata)
+			}).done(function(cdata)
 				{
 					var cdata = $.parseJSON(cdata);
 
@@ -318,7 +323,7 @@
 		 * @param {string} target  Target element id
 		 * @param {int}    id      customer_id to update
 		 */
-		updateCustomerIdNumber : function (target, id)
+		updateCustomerIdNumber: function(target, id)
 		{
 			id = id || "";
 
@@ -335,7 +340,7 @@
 		 * @param {string} target    Target element id
 		 * @param {json}   dataJson  Data to update
 		 */
-		updateJsonToInputField : function (target, dataJson)
+		updateJsonToInputField: function(target, dataJson)
 		{
 			dataJson = dataJson || {};
 
@@ -356,7 +361,7 @@
 		 * @param {string}  key
 		 * @param {json}    addressJson
 		 */
-		updateAddressHtml : function (key, addressJson)
+		updateAddressHtml: function(key, addressJson)
 		{
 			addressJson = addressJson || {};
 
@@ -377,8 +382,8 @@
 
 			// Add select tag
 			html += '<select' +
-				' name="'  + targetName + '"' +
-				' id="'    + targetId   + '"' +
+				' name="' + targetName + '"' +
+				' id="' + targetId + '"' +
 				' class="' + addressListClass + '">';
 
 			for (var i = 0; i < addressJson.length; i++)
@@ -412,7 +417,7 @@
 		 * @param {string}  tagId
 		 * @param {json}    telJson
 		 */
-		updatePhoneHtml : function (tagId, telJson)
+		updatePhoneHtml: function(tagId, telJson)
 		{
 			telJson = telJson || {};
 
@@ -440,7 +445,7 @@
 					telJson[i].number = telJson[i].number.replace(/\s+/g, '');
 
 					// If no numbers has been found, continue.
-					if(telJson[i].number == '')
+					if (telJson[i].number == '')
 					{
 						continue;
 					}
@@ -462,7 +467,7 @@
 		 *
 		 * return void
 		 */
-		updateHiddenPhoneNumbersInput : function ()
+		updateHiddenPhoneNumbersInput: function()
 		{
 			var key = this.find('option:selected').val();
 			var hiddenInput = this.closest('.control-group').find('input');

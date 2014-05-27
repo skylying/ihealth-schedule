@@ -1,4 +1,5 @@
-;(function($, undefined)
+;
+(function($, undefined)
 {
 	"use strict";
 
@@ -10,7 +11,7 @@
 	}
 
 	window.MethodFieldHandler = {
-		setOptions : function(options)
+		setOptions: function(options)
 		{
 			// Overwrite with user's options
 			this.options = $.extend(true, {
@@ -20,7 +21,7 @@
 			}, options);
 		},
 
-		run: function ()
+		run: function()
 		{
 			var self = this;
 
@@ -41,7 +42,7 @@
 			tableTmpl.insertAfter(methodElement.closest('.control-group'));
 
 			// Bind Prescription method change detection
-			methodElement.on('change', function ()
+			methodElement.on('change', function()
 			{
 				if ($(this).val() == 'form')
 				{
@@ -66,13 +67,13 @@
 			var combinedHicodeElem = hicodeElement.add(quantityElement);
 
 			// Every time when 'hicode' and 'quantity' being changed.
-			tableTmpl.on('change', combinedHicodeElem, function ()
+			tableTmpl.on('change', combinedHicodeElem, function()
 			{
 				self.updateHicodeHiddenInput();
 			});
 
 			// Bind Add event
-			$('.js-hicode-add-row').on('click', function ()
+			$('.js-hicode-add-row').on('click', function()
 			{
 				var cloneRow = $(".js-hicode-row").first().clone();
 				// Retrieve hicode
@@ -86,7 +87,7 @@
 			});
 
 			// Bind Delete event
-			$('.js-hicode-tmpl').on('click', '.js-hicode-delete-row', function ()
+			$('.js-hicode-tmpl').on('click', '.js-hicode-delete-row', function()
 			{
 				// Stores id to delete
 				// ex: [1, 2]
@@ -143,7 +144,7 @@
 			});
 		},
 
-		updateHicodeHiddenInput: function ()
+		updateHicodeHiddenInput: function()
 		{
 			var self = this;
 			var newRowCounter = 0;
@@ -153,7 +154,7 @@
 			var data = [];
 
 			// Go through every row, and push it into hidden input
-			$('.js-hicode-row').each(function ()
+			$('.js-hicode-row').each(function()
 			{
 				// Retrieve hicode
 				var code = $(this).find('.js-hicode-code').val();
@@ -192,7 +193,7 @@
 			});
 		},
 
-		insertHicodeTableRow: function (data)
+		insertHicodeTableRow: function(data)
 		{
 			var tableTbody = $('.js-hicode-tmpl tbody');
 			var cloneRow = $(".js-hicode-row").first().clone();
@@ -223,7 +224,7 @@
 			tableTbody.append(cloneRow);
 		},
 
-		updateJsonToInputField: function (target, dataJson)
+		updateJsonToInputField: function(target, dataJson)
 		{
 			dataJson = dataJson || {};
 
