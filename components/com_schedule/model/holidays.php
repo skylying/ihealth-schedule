@@ -7,6 +7,7 @@
  */
 
 use Schedule\Table\Table;
+use Windwalker\DI\Container;
 use Windwalker\Model\Helper\QueryHelper;
 
 // No direct access
@@ -35,7 +36,11 @@ class ScheduleModelHolidays extends \Windwalker\Model\ListModel
 	 */
 	protected function configureTables()
 	{
-		$this->addTable('holiday', Table::HOLIDAYS);
+		$queryHelper = $this->getContainer()->get('model.holidays.helper.query', Container::FORCE_NEW);
+
+		$queryHelper->addTable('holiday', Table::HOLIDAYS);
+
+		$this->filterFields = array_merge($this->filterFields, $queryHelper->getFilterFields());
 	}
 
 	/**
