@@ -21,24 +21,63 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 	protected $useTransaction = true;
 
 	/**
+	 * Mappers
+	 *
+	 * @var  array
+	 */
+	protected $mapper = array();
+
+	/**
+	 * Instantiate the controller.
+	 *
+	 * @param \JInput          $input
+	 * @param \JApplicationCms $app
+	 * @param array            $config
+	 */
+	public function __construct(\JInput $input = null, \JApplicationCms $app = null, $config = array())
+	{
+		$this->initMapper();
+
+		parent::__construct($input, $app, $config);
+	}
+
+	/**
+	 * 初始化 Mapper
+	 *
+	 * @return  void
+	 */
+	protected function initMapper()
+	{
+		if (empty($this->mapper))
+		{
+			$this->mapper['customer'] = new DataMapper(Table::CUSTOMERS);
+			$this->mapper['hospital'] = new DataMapper(Table::HOSPITALS);
+			$this->mapper['city']     = new DataMapper(Table::CITIES);
+			$this->mapper['area']     = new DataMapper(Table::AREAS);
+			$this->mapper['customer'] = new DataMapper(Table::CUSTOMERS);
+			$this->mapper['address']  = new DataMapper(Table::ADDRESSES);
+			$this->mapper['sender']   = new DataMapper(Table::SENDERS);
+			$this->mapper['drug']     = new DataMapper(Table::DRUGS);
+			$this->mapper['task']     = new DataMapper(Table::TASKS);
+			$this->mapper['routes']   = new DataMapper(Table::ROUTES);
+			$this->mapper['schedule'] = new DataMapper(Table::SCHEDULES);
+		}
+	}
+
+	/**
 	 * preSaveHook
 	 *
 	 * @return  void
 	 */
 	protected function preSaveHook()
 	{
-		$customerMapper = new DataMapper(Table::CUSTOMERS);
-		$hospitalMapper = new DataMapper(Table::HOSPITALS);
-		$cityMapper     = new DataMapper(Table::CITIES);
-		$areaMapper     = new DataMapper(Table::AREAS);
-
 		$addressModel  = $this->getModel("Address");
 
 		$createAddress = isset($this->data['create_address']) ? json_decode($this->data['create_address']) : array();
 		$remind        = isset($this->data['remind']) ? $this->data['remind'] : array();
 
-		$customer = $customerMapper->findOne($this->data['customer_id']);
-		$hospital = $hospitalMapper->findOne($this->data['hospital_id']);
+		$customer = $this->mapper['customer']->findOne($this->data['customer_id']);
+		$hospital = $this->mapper['hospital']->findOne($this->data['hospital_id']);
 
 		if (! empty($createAddress))
 		{
@@ -47,8 +86,8 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 			// 新增地址資料
 			foreach ($createAddress as $addressTmp)
 			{
-				$city = $cityMapper->findOne($addressTmp->city);
-				$area = $areaMapper->findOne($addressTmp->area);
+				$city = $this->mapper['city']->findOne($addressTmp->city);
+				$area = $this->mapper['area']->findOne($addressTmp->area);
 
 				$addressModel->save(
 					array(
@@ -132,10 +171,6 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 	{
 		$rx = $model->getItem();
 
-		// Mappers
-		$addressMapper = new DataMapper(Table::ADDRESSES);
-		$senderMapper  = new DataMapper(Table::SENDERS);
-
 		// Get model
 		$scheduleModel = $this->getModel("Schedule");
 		$addressModel  = $this->getModel("Address");
@@ -170,13 +205,13 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 			}
 
 			// 外送地址比對
-			$address = $addressMapper->findOne($schedule["address_id"]);
+			$address = $this->mapper['address']->findOne($schedule["address_id"]);
 
 			// 外送路線
 			$routes = $this->getRoute($address, $schedule);
 
 			// 外送者
-			$sender = $senderMapper->findOne($routes->sender_id);
+			$sender = $this->mapper['address']->findOne($routes->sender_id);
 
 			// Get task
 			$task = $this->getScheduleTask($sender, $schedule);
@@ -207,7 +242,6 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 	{
 		$rx = $this->model->getItem();
 		$drugModel = $this->getModel("Drug");
-		$drugMapper = new DataMapper(Table::DRUGS);
 
 		// 健保 json
 		$drugs = isset($this->data['drug']) ? json_decode($this->data['drug']) : array();
@@ -227,7 +261,7 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 		// 刪除健保碼
 		if (! empty($deleteDrugIds))
 		{
-			$drugMapper->delete(array("id" => $deleteDrugIds));
+			$this->mapper['drug']->delete(array("id" => $deleteDrugIds));
 		}
 
 		return $drugModel;
@@ -247,9 +281,7 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 			return;
 		}
 
-		$scheduleMapper = new DataMapper(Table::SCHEDULES);
-
-		$scheduleMapper->delete(array('id' => $id));
+		$this->mapper['schedule']->delete(array('id' => $id));
 	}
 
 	/**
@@ -265,17 +297,15 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 	protected function getRoute($address, $schedule)
 	{
 		$routeModel   = $this->getModel("Route");
-		$routesMapper = new DataMapper(Table::ROUTES);
-		$senderMapper = new DataMapper(Table::SENDERS);
 
 		// 外送路線
-		$route = $routesMapper->findOne(array("city" => $address->city, "area" => $address->area, "type" => "institute"));
+		$route = $this->mapper['routes']->findOne(array("city" => $address->city, "area" => $address->area, "type" => "institute"));
 
 		// 沒有路線的時候新增路線
 		if ($route->isNull())
 		{
 			// 用設定的 id 取出 sender
-			$sender = $senderMapper->findOne($schedule['sender_id']);
+			$sender = $this->mapper['sender']->findOne($schedule['sender_id']);
 
 			// 沒取到 sender
 			if ($sender->isNull())
@@ -318,10 +348,9 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 	protected function getScheduleTask($sender, $schedule)
 	{
 		$taskModel  = $this->getModel("Task");
-		$taskMapper = new DataMapper(Table::TASKS);
 
 		// 同日期同藥師取得 外送
-		$task = $taskMapper->findOne(array("sender" => $sender->id, "date" => $schedule['date']));
+		$task = $this->mapper['task']->findOne(array("sender" => $sender->id, "date" => $schedule['date']));
 
 		// 如果有取得對應 外送
 		if (! $task->isNull())
@@ -355,9 +384,7 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 	 */
 	protected function getCustomer($id)
 	{
-		$customerMapper = new DataMapper(Table::CUSTOMERS);
-
-		$customer = $customerMapper->findOne($id);
+		$customer = $this->mapper['customer']->findOne($id);
 
 		// 找不到客戶
 		if ($customer->isNull())
