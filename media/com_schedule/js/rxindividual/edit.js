@@ -111,7 +111,11 @@
 			$('.js-nth-schedule-check input[type=checkbox]').on('change', function()
 			{
 				window.DeliverScheduleHandler.bindChangeNthScheduleInfo($(this));
+
 			});
+
+			// Trigger once to update show schedule info box
+			$('.js-nth-schedule-check input[type=checkbox]').change();
 
 			// Bind 'times' event to 'show nth prescriptions'
 			$('#' + self.options.timesId).on('change', function()

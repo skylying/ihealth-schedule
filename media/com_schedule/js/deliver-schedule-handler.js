@@ -32,26 +32,17 @@
 		 */
 		bindChangeNthScheduleInfo: function($cheboxes)
 		{
-			$cheboxes.on('change', toggleNthScheduleInfo($(this)));
-
-			toggleNthScheduleInfo($cheboxes);
-
-			/**
-			 * Bind schedules' checkboxes on 'toggle' opaque effect and 'update sender date' method
-			 *
-			 * return void
-			 */
-			function toggleNthScheduleInfo($cheboxes)
+			$cheboxes.on('change', function()
 			{
-				if ($cheboxes.prop("checked"))
+				if ($(this).prop("checked"))
 				{
-					$cheboxes.closest('.schedules').find('.js-nth-schedule-info').removeClass('opaque');
+					$(this).closest('.schedules').find('.js-nth-schedule-info').removeClass('opaque');
 				}
 				else
 				{
-					$cheboxes.closest('.schedules').find('.js-nth-schedule-info').addClass('opaque');
+					$(this).closest('.schedules').find('.js-nth-schedule-info').addClass('opaque');
 				}
-			}
+			});
 		},
 
 		/**
