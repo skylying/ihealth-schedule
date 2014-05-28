@@ -7,6 +7,7 @@
  */
 
 use Windwalker\Data\Data;
+use Windwalker\Helper\ArrayHelper;
 
 // No direct access
 defined('_JEXEC') or die;
@@ -140,18 +141,8 @@ $date      = $container->get('date');
 		<!-- type -->
 		<td>
 			<?php
-			if ($item->type == 'individual')
-			{
-				$buttonStyle = 'btn-info';
-			}
-			elseif($item->type == 'resident')
-			{
-				$buttonStyle = 'btn-warning';
-			}
-			else
-			{
-				$buttonStyle = 'btn-inverse';
-			}
+			$styles = array('individual' => 'btn-info', 'resident' => 'btn-warning');
+			$buttonStyle = ArrayHelper::getValue($styles, $item->type, 'btn-inverse');
 			?>
 			<button type="button" style="padding: 3px 8px;" class="btn <?php echo $buttonStyle?>"><?php echo JText::_('COM_SCHEDULE_SCHEDULE_FIELD_TYPE_' . $item->type);?></button>
 		</td>
