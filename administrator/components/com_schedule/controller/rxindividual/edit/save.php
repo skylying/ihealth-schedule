@@ -69,51 +69,14 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 	 */
 	protected function preSaveHook()
 	{
-		$addressModel  = $this->getModel("Address");
+		$remind = isset($this->data['remind']) ? $this->data['remind'] : array();
 
-		$createAddress = isset($this->data['create_address']) ? json_decode($this->data['create_address']) : array();
-		$remind        = isset($this->data['remind']) ? $this->data['remind'] : array();
+		$this->createAddress();
+
+		$this->buildNthOfScheduleToRxData();
 
 		$customer = $this->mapper['customer']->findOne($this->data['customer_id']);
 		$hospital = $this->mapper['hospital']->findOne($this->data['hospital_id']);
-
-		if (! empty($createAddress))
-		{
-			$hashId = array();
-
-			// 新增地址資料
-			foreach ($createAddress as $addressTmp)
-			{
-				$addressModel->save(
-					array(
-						"customer_id" => $customer->id,
-						"city"        => $addressTmp->id,
-						"area"        => $addressTmp->id,
-						"address"     => $addressTmp->address
-					)
-				);
-
-				$address = $addressModel->getItem();
-
-				// Hash id map
-				$hashId[$addressTmp->id] = $address->id;
-			}
-
-			// 塞回資料
-			foreach (array("1st", "2nd", "3rd") as $val)
-			{
-				$schedule = $this->data["schedules_{$val}"];
-
-				$addressId = $schedule["address_id"];
-
-				// 如果 address id 在 hash map 有記錄 更新 id
-				if (isset($hashId[$addressId]))
-				{
-					// 塞回資料
-					$this->data["schedules_{$val}"]["address_id"] = $hashId[$addressId];
-				}
-			}
-		}
 
 		// 處方客人資料
 		$this->data["customer_name"] = $customer->name;
@@ -128,26 +91,6 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 
 		// Remind
 		$this->data["remind"] = implode(",", $remind);
-
-		// 外送次數
-		$nths = array();
-
-		foreach (array("1st", "2nd", "3rd") as $val)
-		{
-			// 沒有值跳過
-			if (empty($this->data["schedules_{$val}"]["deliver_nth"]))
-			{
-				continue;
-			}
-
-			$nths[] = $val;
-		}
-
-		// 組好他有勾選的值
-		$nths = implode(",", $nths);
-
-		// 塞入資料
-		$this->data["deliver_nths"] = $nths;
 
 		parent::preSaveHook();
 	}
@@ -460,5 +403,83 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 		}
 
 		ImageHelper::resetImagesRxId($resetId, $rx->id);
+	}
+
+	/**
+	 * Create Address
+	 *
+	 * @return  void
+	 */
+	protected function createAddress()
+	{
+		$addressModel  = $this->getModel("Address");
+
+		$createAddress = isset($this->data['create_address']) ? json_decode($this->data['create_address']) : array();
+
+		if (! empty($createAddress))
+		{
+			$hashId = array();
+
+			// 新增地址資料
+			foreach ($createAddress as $addressTmp)
+			{
+				$addressModel->save(
+					array(
+						"customer_id" => $customer->id,
+						"city"        => $addressTmp->id,
+						"area"        => $addressTmp->id,
+						"address"     => $addressTmp->address
+					)
+				);
+
+				$address = $addressModel->getItem();
+
+				// Hash id map
+				$hashId[$addressTmp->id] = $address->id;
+			}
+
+			// 塞回資料
+			foreach (array("1st", "2nd", "3rd") as $val)
+			{
+				$schedule = $this->data["schedules_{$val}"];
+
+				$addressId = $schedule["address_id"];
+
+				// 如果 address id 在 hash map 有記錄 更新 id
+				if (isset($hashId[$addressId]))
+				{
+					// 塞回資料
+					$this->data["schedules_{$val}"]["address_id"] = $hashId[$addressId];
+				}
+			}
+		}
+	}
+
+	/**
+	 * 把 schedule 有選擇的 nth 組起來給 rx 儲存用
+	 *
+	 * @return  void
+	 */
+	protected function buildNthOfScheduleToRxData()
+	{
+		// 外送次數
+		$nths = array();
+
+		foreach (array("1st", "2nd", "3rd") as $val)
+		{
+			// 沒有值跳過
+			if (empty($this->data["schedules_{$val}"]["deliver_nth"]))
+			{
+				continue;
+			}
+
+			$nths[] = $val;
+		}
+
+		// 組好他有勾選的值
+		$nths = implode(",", $nths);
+
+		// 塞入資料
+		$this->data["deliver_nths"] = $nths;
 	}
 }
