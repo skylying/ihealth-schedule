@@ -310,10 +310,9 @@
 	window.updateIdBirthday = function(e, $node)
 	{
 		var idNumber = $node.closest('tr').find('.idnumber'),
-			birthDay = $node.closest('tr').find('.birthday input');
+			birthDay = $node.closest('tr').find('.birthday');
 
 		idNumber.val(e.added.id_number);
 		birthDay.val(e.added.birth_date);
 	};
-
 })(jQuery);
