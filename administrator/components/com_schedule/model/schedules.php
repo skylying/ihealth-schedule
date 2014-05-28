@@ -73,6 +73,20 @@ class ScheduleModelSchedules extends ListModel
 	);
 
 	/**
+	 * Get List Query
+	 *
+	 * @return  JDatabaseQuery
+	 */
+	protected function getListQuery()
+	{
+		$q = parent::getListQuery();
+
+		$q->group("schedule.id");
+
+		return $q;
+	}
+
+	/**
 	 * configureTables
 	 *
 	 * @return  void
@@ -82,9 +96,41 @@ class ScheduleModelSchedules extends ListModel
 		$queryHelper = $this->getContainer()->get('model.schedules.helper.query', Container::FORCE_NEW);
 
 		$queryHelper->addTable('schedule', '#__schedule_schedules')
-			->addTable('route', '#__schedule_routes', 'schedule.route_id = route.id');
+			->addTable('route', '#__schedule_routes', 'schedule.route_id = route.id')
+			->addTable('memberMap', '#__schedule_customer_member_maps', 'memberMap.customer_id = schedule.customer_id')
+			->addTable('member', '#__schedule_members', 'member.id = memberMap.member_id');
 
 		$this->filterFields = array_merge($this->filterFields, $queryHelper->getFilterFields());
+	}
+
+	/**
+	 * Post Get Query
+	 *
+	 * @param JDatabaseQuery $query
+	 *
+	 * @return  void
+	 */
+	protected function postGetQuery(\JDatabaseQuery $query)
+	{
+		$sql = <<<SQLALIAS
+group_concat(
+	CONCAT(
+		'{',
+			'"id": "',
+				`member`.`id`,
+			'",',
+
+			'"name": "',
+				`member`.`name`,
+			'"',
+		'}'
+	)
+) AS `member_json`
+SQLALIAS;
+
+		$query->select($sql);
+
+		parent::postGetQuery($query);
 	}
 
 	/**
