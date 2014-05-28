@@ -56,15 +56,10 @@ class ScheduleModelMember extends Member
 			return array();
 		}
 
-		$db     = \JFactory::getDbo();
-		$query  = $db->getQuery(true);
-		$select = 'customer.id, customer.route_id, customer.id_number,
-			customer.name, customer.type, customer.birth_date, customer.state,
-			customer.city, customer.city_title, customer.area, customer.area_title,
-			customer.hospital, customer.hospital_title, customer.tel_office,
-			customer.tel_home, customer.mobile, customer.note, customer.params';
+		$db    = \JFactory::getDbo();
+		$query = $db->getQuery(true);
 
-		$query->select($select)
+		$query->select('customer.*')
 			->from(Table::CUSTOMERS . ' AS customer')
 			->leftJoin(Table::CUSTOMER_MEMBER_MAPS . ' AS map ON customer.id = map.customer_id')
 			->where('`map`.`member_id`=' . $memberId);
@@ -112,12 +107,10 @@ class ScheduleModelMember extends Member
 			return array();
 		}
 
-		$db     = \JFactory::getDbo();
-		$query  = $db->getQuery(true);
-		$select = 'address.id, address.customer_id, address.city, address.area,
-			address.address, address.city_title, address.area_title, address.previous';
+		$db    = \JFactory::getDbo();
+		$query = $db->getQuery(true);
 
-		$query->select($select)
+		$query->select('address.*')
 			->from(Table::ADDRESSES . ' AS address')
 			->where('address.customer_id IN (' . implode(',', $customerIds) . ')');
 
