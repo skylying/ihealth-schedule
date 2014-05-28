@@ -10,7 +10,7 @@
 		return;
 	}
 
-	// Exports class RxResidentEditList
+	// Exports class CustomerFieldHandler
 	window.CustomerFieldHandler = {
 		setOptions: function(options)
 		{
@@ -246,8 +246,6 @@
 		/**
 		 * Fire ajax request and get from Customer model and Addresses modl
 		 *
-		 * fireAjax
-		 *
 		 * @param {int} id
 		 */
 		fireAjax: function(id)
@@ -353,8 +351,6 @@
 		/**
 		 * Update customer Birth Date
 		 *
-		 * updateCustomerBirthDate
-		 *
 		 * @param {string} target  Target element id
 		 * @param {string} date    birthday
 		 */
@@ -369,8 +365,6 @@
 
 		/**
 		 * Update customer Hospital
-		 *
-		 * updateCustomerHospital
 		 *
 		 * @param {string} target  Target element id
 		 * @param {string} id      Hospital id
@@ -388,8 +382,6 @@
 
 		/**
 		 * Update the hidden input jason file
-		 *
-		 * updateJsonToInputField
 		 *
 		 * @param {string} target    Target element id
 		 * @param {json}   dataJson  Data to update
@@ -409,8 +401,6 @@
 
 		/**
 		 * Update address select list row
-		 *
-		 * updateAddressHtml
 		 *
 		 * @param {string}  key
 		 * @param {json}    addressJson
@@ -466,8 +456,6 @@
 		/**
 		 * Update phone input list row
 		 *
-		 * updatePhoneHtml
-		 *
 		 * @param {string}  tagId
 		 * @param {json}    telJson
 		 */
@@ -516,8 +504,6 @@
 
 		/**
 		 * Every time user select different phone number, the default will be overwritten
-		 *
-		 * updateHiddenPhoneNumbersInput
 		 *
 		 * return void
 		 */

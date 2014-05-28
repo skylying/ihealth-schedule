@@ -10,7 +10,7 @@
 		return;
 	}
 
-	// Exports class RxResidentEditList
+	// Exports class DeliverScheduleHandler
 	window.DeliverScheduleHandler = {
 		setOptions: function(options)
 		{
@@ -28,8 +28,6 @@
 		/**
 		 * Bind change schedules' cheboxes
 		 *
-		 * bindChangeNthScheduleInfo
-		 *
 		 * return void
 		 */
 		bindChangeNthScheduleInfo: function($cheboxes)
@@ -40,8 +38,6 @@
 
 			/**
 			 * Bind schedules' checkboxes on 'toggle' opaque effect and 'update sender date' method
-			 *
-			 * toggleNthScheduleInfo
 			 *
 			 * return void
 			 */
@@ -61,10 +57,9 @@
 		/**
 		 * Calculate finish drug date, schedule date
 		 *
-		 * updateScheduleDate
-		 *
 		 * @param {string}    seeDrDate
 		 * @param {json}      period
+		 * @param {array}     addressesKeys
 		 */
 		updateScheduleDate: function(seeDrDate, period, addressesKeys)
 		{
@@ -129,8 +124,6 @@
 		/**
 		 * Show and hide schedules edit box by changing deliver_nth
 		 *
-		 * showSchedulesEditBlock
-		 *
 		 * return void
 		 *
 		 */
@@ -151,6 +144,7 @@
 					checkbox1.attr('checked', true).trigger('change');
 					checkbox2.attr('checked', false).trigger('change');
 					checkbox3.attr('checked', false).trigger('change');
+
 					// Show 1
 					schedules1.removeClass('hide');
 					schedules2.addClass('hide');
@@ -161,6 +155,7 @@
 					checkbox1.attr('checked', false).trigger('change');
 					checkbox2.attr('checked', true).trigger('change');
 					checkbox3.attr('checked', false).trigger('change');
+
 					// Show 1, 2
 					schedules1.removeClass('hide');
 					schedules2.removeClass('hide');
@@ -171,6 +166,7 @@
 					checkbox1.attr('checked', false).trigger('change');
 					checkbox2.attr('checked', true).trigger('change');
 					checkbox3.attr('checked', true).trigger('change');
+
 					// Show all
 					schedules1.removeClass('hide');
 					schedules2.removeClass('hide');
@@ -183,8 +179,6 @@
 
 		/**
 		 * Calculate finish drug date by specifying weekday
-		 *
-		 * updateScheduleDateByWeekday
 		 *
 		 * @param {string}    weekday
 		 * @param {string}    nth
