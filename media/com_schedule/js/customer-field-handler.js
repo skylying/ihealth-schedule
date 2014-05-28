@@ -24,7 +24,9 @@
 				addressesKeys        : ["1st", "2nd", "3rd"],
 				createAddressId      : null,
 				seeDrDateId          : null,
-				periodId             : null
+				periodId             : null,
+				hospitalId           : null,
+				birthDateId          : null
 			}, options);
 		},
 
@@ -58,7 +60,18 @@
 			});
 
 			// Bind save new address
-			$('.js-nth-schedule-info').on('click', '.js-save-address', function()
+			$('.js-nth-schedule-info').on('click', '.js-save-address', saveAddress);
+
+			// Bind add new telephone
+			$('.js-add-tel').on('click', function()
+			{
+				$(this).closest('.js-tel-wrap').find('.js-tmpl-add-telrow').removeClass('hide');
+			});
+
+			// Bind save new telephone
+			$('.js-save-tel').on('click', saveTel);
+
+			function saveAddress()
 			{
 				// The dynamic row wrapper
 				var currentWrap = $(this).closest('.js-tmpl-add-addressrow');
@@ -148,16 +161,9 @@
 						['提醒您，您已新增散客電話或地址，記得按儲存喲。']
 					]);
 				}
-			});
+			}
 
-			// Bind add new telephone
-			$('.js-add-tel').on('click', function()
-			{
-				$(this).closest('.js-tel-wrap').find('.js-tmpl-add-telrow').removeClass('hide');
-			});
-
-			// Bind save new telephone
-			$('.js-save-tel').on('click', function()
+			function saveTel()
 			{
 				var wrapperElement = $(this).closest('.js-tel-wrap');
 				var phoneToAdd = wrapperElement.find('.js-tel-row-data');
@@ -215,10 +221,10 @@
 							data.push({default: 'true', number: phoneToAdd.val()});
 
 							// Perform html update
-							$(this).customerAjax.updatePhoneHtml(tagId, data);
+							self.updatePhoneHtml(tagId, data);
 
 							// Perform hidden input update
-							$(this).customerAjax.updateJsonToInputField(tagId, data);
+							self.updateJsonToInputField(tagId, data);
 						}
 					}
 				}
@@ -228,7 +234,7 @@
 
 				// Hide the input row
 				$(this).closest('.js-tmpl-add-telrow').addClass('hide');
-			});
+			}
 		},
 
 		/**
@@ -294,6 +300,12 @@
 
 					// Update customer id_number
 					self.updateCustomerIdNumber(self.options.customerIdNumber, id_number);
+
+					// Update Birth Date
+					self.updateCustomerBirthDate(self.options.birthDateId, cdata.birth_date);
+
+					// Update Hospital
+					self.updateCustomerHospital(self.options.hospitalId, cdata.hospital);
 				});
 
 			//Fire ajax to Addresses
@@ -324,6 +336,40 @@
 		 * @param {int}    id      customer_id to update
 		 */
 		updateCustomerIdNumber: function(target, id)
+		{
+			id = id || "";
+
+			var targetElement = $('#' + target);
+
+			targetElement.val(id);
+		},
+
+		/**
+		 * Update customer Birth Date
+		 *
+		 * updateCustomerBirthDate
+		 *
+		 * @param {string} target  Target element id
+		 * @param {string} date    birthday
+		 */
+		updateCustomerBirthDate: function(target, date)
+		{
+			date = date || "";
+
+			var targetElement = $('#' + target);
+
+			targetElement.val(date);
+		},
+
+		/**
+		 * Update customer Hospital
+		 *
+		 * updateCustomerHospital
+		 *
+		 * @param {string} target  Target element id
+		 * @param {string} id      Hospital id
+		 */
+		updateCustomerHospital: function(target, id)
 		{
 			id = id || "";
 

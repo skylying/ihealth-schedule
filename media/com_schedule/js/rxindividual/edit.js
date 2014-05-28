@@ -36,6 +36,9 @@
 				drugId               : null,
 				deleteDrugId         : null,
 
+				hospitalId           : null,
+				birthDateId          : null,
+
 				SUCCESS_ROUTE_EXIST  : 0,
 				ERROR_NO_ROUTE       : 1,
 				ERROR_NO_SEE_DR_DATE : 2
@@ -66,7 +69,9 @@
 				addressesKeys        : this.options.addressesKeys,
 				createAddressId      : this.options.createAddressId,
 				seeDrDateId          : this.options.seeDrDateId,
-				periodId             : this.options.periodId
+				periodId             : this.options.periodId,
+				hospitalId           : this.options.hospitalId,
+				birthDateId          : this.options.birthDateId
 			});
 		},
 		/**
