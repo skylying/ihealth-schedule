@@ -72,7 +72,7 @@ class ScheduleControllerCustomerAjaxJson extends DisplayController
 
 			$data = array();
 
-			// Put in porperty "dropdowntext" that select2 need
+			// Put in property "dropdowntext" that select2 need
 			foreach ($items as $i => $item)
 			{
 				$data[$i] = new stdClass;
