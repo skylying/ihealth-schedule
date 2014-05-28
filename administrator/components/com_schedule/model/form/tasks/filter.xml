@@ -102,6 +102,8 @@
 			<option value="task.title DESC">JGLOBAL_TITLE_DESC</option>
 			<option value="task.id ASC">JGRID_HEADING_ID_ASC</option>
 			<option value="task.id DESC">JGRID_HEADING_ID_DESC</option>
+			<option value="task.date ASC">外送日期升冪排序</option>
+			<option value="task.date DESC">外送日期降冪排序</option>
 		</field>
 
 		<field
