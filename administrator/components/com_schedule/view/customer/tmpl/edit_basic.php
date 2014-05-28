@@ -59,7 +59,7 @@ $mobilePhones = $data->form->getField('mobile');
 $customerType = $data->item->type;
 
 // Get hidden address value
-$addresses = json_decode($data->item->address);
+$addresses = isset($data->item->address) ? json_decode($data->item->address) : array();
 
 ?>
 

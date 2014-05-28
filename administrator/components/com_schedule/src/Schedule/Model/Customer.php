@@ -111,20 +111,13 @@ class Customer extends AdminModel
 		$addressMapper = new DataMapper(Table::ADDRESSES);
 
 		// Prepare empty string as json format
-		$this->item->address = '[]';
+		$this->item->addresses = '[]';
 
 		if (!empty($this->item->id))
 		{
 			$addressDataSet = $addressMapper->find(array("customer_id" => $this->item->id));
 
-			$addressReturnData = array();
-
-			foreach ($addressDataSet as $addressData)
-			{
-				$addressReturnData[] = $addressData;
-			}
-
-			$this->item->address = json_encode($addressReturnData);
+			$this->item->addresses = json_encode(iterator_to_array($addressDataSet));
 		}
 
 		return $this->item;
@@ -139,11 +132,7 @@ class Customer extends AdminModel
 	 */
 	public function prepareTable(\JTable $table)
 	{
-		$jformData = \JFactory::getApplication()->input->get('jform', '', 'array');
-
-		$customerType = \Windwalker\Helper\ArrayHelper::getValue($jformData, 'type');
-
-		if ('individual' === $customerType)
+		if ('individual' === $table->type)
 		{
 			$this->prepareCityTable($table);
 		}

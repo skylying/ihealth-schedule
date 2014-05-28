@@ -72,7 +72,7 @@ class ScheduleViewCustomerJson extends ApiView
 
 		$data['item'] = $this->get('Item');
 
-		if (! $data['item']->id)
+		if (empty($data['item']->id))
 		{
 			throw new \Exception('Item not found', 404);
 		}
