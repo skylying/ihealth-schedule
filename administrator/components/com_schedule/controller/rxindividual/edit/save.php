@@ -52,8 +52,6 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 		{
 			$this->mapper['customer'] = new DataMapper(Table::CUSTOMERS);
 			$this->mapper['hospital'] = new DataMapper(Table::HOSPITALS);
-			$this->mapper['city']     = new DataMapper(Table::CITIES);
-			$this->mapper['area']     = new DataMapper(Table::AREAS);
 			$this->mapper['customer'] = new DataMapper(Table::CUSTOMERS);
 			$this->mapper['address']  = new DataMapper(Table::ADDRESSES);
 			$this->mapper['sender']   = new DataMapper(Table::SENDERS);
@@ -86,16 +84,11 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 			// 新增地址資料
 			foreach ($createAddress as $addressTmp)
 			{
-				$city = $this->mapper['city']->findOne($addressTmp->city);
-				$area = $this->mapper['area']->findOne($addressTmp->area);
-
 				$addressModel->save(
 					array(
 						"customer_id" => $customer->id,
-						"city"        => $city->id,
-						"city_title"  => $city->title,
-						"area"        => $area->id,
-						"area_title"  => $area->title,
+						"city"        => $addressTmp->id,
+						"area"        => $addressTmp->id,
 						"address"     => $addressTmp->address
 					)
 				);
@@ -317,8 +310,6 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 			$routeData = array(
 				"city"        => $address->city,
 				"area"        => $address->area,
-				"city_title"  => $address->city_title,
-				"area_title"  => $address->area_title,
 				"sender_id"   => $sender->id,
 				"sender_name" => $sender->name,
 				"weekday"     => $schedule['weekday'],
@@ -436,10 +427,6 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 			"customer_name" => $customer->name,
 
 			"address_id"    => $address->id,
-			"city"          => $address->city,
-			"city_title"    => $address->city_title,
-			"area"          => $address->area,
-			"area_title"    => $address->area_title,
 			"address"       => $address->address,
 
 			// 第幾次宅配
