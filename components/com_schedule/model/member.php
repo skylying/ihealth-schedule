@@ -66,21 +66,16 @@ class ScheduleModelMember extends Member
 
 		$customers = $db->setQuery($query)->loadObjectList();
 		$addresses = $this->getAddresses(JArrayHelper::getColumn($customers, 'id'));
-		$registry  = new \JRegistry;
+
+		$jsonFields = array('tel_office', 'tel_home', 'mobile', 'params');
 
 		foreach ($customers as &$customer)
 		{
-			$registry->loadString($customer->tel_office);
-			$customer->tel_office = $registry->toArray();
-
-			$registry->loadString($customer->tel_home);
-			$customer->tel_home = $registry->toArray();
-
-			$registry->loadString($customer->mobile);
-			$customer->mobile = $registry->toArray();
-
-			$registry->loadString($customer->params);
-			$customer->params = $registry->toArray();
+			// Convert JSON format fields
+			foreach ($jsonFields as $field)
+			{
+				$customer->$field = (array) json_decode($customer->$field);
+			}
 
 			$customer->addresses = array();
 
