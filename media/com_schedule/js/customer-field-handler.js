@@ -37,6 +37,12 @@
 			// Fire update onload.
 			this.fireAjax(customerDropDown.val());
 
+			// Fire ajax request while using modal to add new customer
+			customerDropDown.on('liszt:updated', function()
+			{
+				self.fireAjax(customerDropDown.val());
+			});
+
 			// Fire ajax request every time customer_id has been changed
 			customerDropDown.on('change', function()
 			{
@@ -376,6 +382,8 @@
 			var targetElement = $('#' + target);
 
 			targetElement.val(id);
+
+			targetElement.trigger('liszt:updated');
 		},
 
 		/**

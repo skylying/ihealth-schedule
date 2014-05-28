@@ -88,36 +88,40 @@
 					var city = $(selectedAddressId).find('option:selected').attr('city');
 					var area = $(selectedAddressId).find('option:selected').attr('area');
 
-					$.ajax({
-						type: "POST",
-						url: "index.php?option=com_schedule&task=rxindividual.ajax.senddate",
-						data: {
-							nth: addressesKeys[i],
-							city_id: city,
-							area_id: area,
-							see_dr_date: seeDrDate,
-							period: period
-						}
-					}).done(function(cdata)
-						{
-							var data = JSON.parse(cdata);
-
-							var sendDateId = '#jform_schedules_' + data['nth'] + '_date';
-
-							if (data['type'] == self.options.SUCCESS_ROUTE_EXIST)
-							{
-								$(sendDateId).closest('.js-nth-schedule-info').find('.js-route-wrap').addClass('hide');
-
-								$(sendDateId).val(data['date']);
+					// fire ajax only if address info is sufficient
+					if(city && area)
+					{
+						$.ajax({
+							type: "POST",
+							url: "index.php?option=com_schedule&task=rxindividual.ajax.senddate",
+							data: {
+								nth: addressesKeys[i],
+								city_id: city,
+								area_id: area,
+								see_dr_date: seeDrDate,
+								period: period
 							}
-							else
+						}).done(function(cdata)
 							{
-								if (data['type'] == self.options.ERROR_NO_ROUTE)
+								var data = JSON.parse(cdata);
+
+								var sendDateId = '#jform_schedules_' + data['nth'] + '_date';
+
+								if (data['type'] == self.options.SUCCESS_ROUTE_EXIST)
 								{
-									$(sendDateId).closest('.js-nth-schedule-info').find('.js-route-wrap').removeClass('hide');
+									$(sendDateId).closest('.js-nth-schedule-info').find('.js-route-wrap').addClass('hide');
+
+									$(sendDateId).val(data['date']);
 								}
-							}
-						});
+								else
+								{
+									if (data['type'] == self.options.ERROR_NO_ROUTE)
+									{
+										$(sendDateId).closest('.js-nth-schedule-info').find('.js-route-wrap').removeClass('hide');
+									}
+								}
+							});
+					}
 				}
 			}
 		},
