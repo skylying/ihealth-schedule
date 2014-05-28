@@ -215,7 +215,12 @@ class ScheduleControllerRxresidentEditSave extends SaveController
 			$rx['period'],
 			$instituteTable->delivery_weekday
 		);
-		$task = $this->getTaskData($sendDate, $instituteTable);
+		$task = $this->taskMapper->findOne(array('date' => $sendDate->toSql()));
+
+		if (empty($task->id))
+		{
+			$task = $this->createTaskData($sendDate, $instituteTable);
+		}
 
 		$newSchedule = $this->getScheduleData($rx, $schedule->deliver_nth, $task['id'], $sendDate);
 		$newSchedule = array_merge((array) $schedule, $newSchedule);
@@ -240,7 +245,13 @@ class ScheduleControllerRxresidentEditSave extends SaveController
 			$rx['period'],
 			$instituteTable->delivery_weekday
 		);
-		$task = $this->getTaskData($sendDate, $instituteTable);
+		$task = $this->taskMapper->findOne(array('date' => $sendDate->toSql()));
+
+		if (empty($task->id))
+		{
+			$task = $this->createTaskData($sendDate, $instituteTable);
+		}
+
 		$schedule = $this->getScheduleData($rx, $nth, $task['id'], $sendDate);
 
 		$this->scheduleState->set('schedule.id', 0);
@@ -248,33 +259,28 @@ class ScheduleControllerRxresidentEditSave extends SaveController
 	}
 
 	/**
-	 * getTaskData
+	 * createTaskData
 	 *
 	 * @param   JDate                   $sendDate
 	 * @param   ScheduleTableInstitute  $instituteTable
 	 *
-	 * @return  array
+	 * @return  Data
 	 */
-	protected function getTaskData($sendDate, $instituteTable)
+	protected function createTaskData(JDate $sendDate, $instituteTable)
 	{
-		$task = $this->taskMapper->findOne(array('date' => $sendDate->toSql()));
+		$task = array(
+			'status' => 0,
+			'sender' => $instituteTable->sender_id,
+			'sender_name' => $instituteTable->sender_name,
+			'date' => $sendDate->toSql(),
+		);
 
-		if (empty($task->id))
-		{
-			$task = array(
-				'status' => 0,
-				'sender' => $instituteTable->sender_id,
-				'sender_name' => $instituteTable->sender_name,
-				'date' => $sendDate->toSql(),
-			);
+		$this->taskState->set('task.id', 0);
+		$this->taskModel->save($task);
 
-			$this->taskState->set('task.id', 0);
-			$this->taskModel->save($task);
+		$task['id'] = $this->taskState->get('task.id');
 
-			$task['id'] = $this->taskState->get('task.id');
-		}
-
-		return $task;
+		return new Data($task);
 	}
 
 	/**
