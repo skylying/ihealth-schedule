@@ -69,7 +69,7 @@ class ScheduleModelMember extends Member
 
 		$jsonFields = array('tel_office', 'tel_home', 'mobile', 'params');
 
-		foreach ($customers as &$customer)
+		foreach ($customers as $customer)
 		{
 			// Convert JSON format fields
 			foreach ($jsonFields as $field)
