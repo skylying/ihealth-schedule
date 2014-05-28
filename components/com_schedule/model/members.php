@@ -26,7 +26,7 @@ class ScheduleModelMembers extends \Windwalker\Model\ListModel
 	 */
 	protected function configureTables()
 	{
-		$this->addTable('mamber', Table::MEMBERS);
+		$this->addTable('member', Table::MEMBERS);
 	}
 
 	/**
