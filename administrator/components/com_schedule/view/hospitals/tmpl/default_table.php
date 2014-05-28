@@ -42,32 +42,32 @@ $date      = $container->get('date');
 		</th>
 
 		<!-- EDIT BUTTON-->
-		<th width="5%" class="nowrap center">
+		<th width="2.5%" class="nowrap center">
 			編輯
 		</th>
 
 		<!--HOSPITAL ID-->
-		<th width="5%" class="nowrap center">
+		<th width="2.5%" class="nowrap center">
 			<?php echo $grid->sortTitle('醫院編號', 'hospitals.id'); ?>
 		</th>
 
 		<!--HOSPITA TITLE-->
-		<th width="49%" class="left">
+		<th width="40%" class="left">
 			<?php echo $grid->sortTitle('醫院名稱', 'hospitals.title'); ?>
 		</th>
 
 		<!--CITY_TITLE-->
-		<th width="15%" class="center">
+		<th width="11%" class="center">
 			<?php echo $grid->sortTitle('縣市名稱', 'city.title'); ?>
 		</th>
 
 		<!--AREA_TITLE-->
-		<th width="15%" class="center">
+		<th width="11%" class="center">
 			<?php echo $grid->sortTitle('區域名稱', 'area.title'); ?>
 		</th>
 
 		<!--HAS_HI_CODE-->
-		<th width="15%" class="center">
+		<th width="11%" class="center">
 			<?php echo $grid->sortTitle('藥品健保碼', 'hospitals.hicode'); ?>
 		</th>
 	</tr>
@@ -76,7 +76,7 @@ $date      = $container->get('date');
 	<!--PAGINATION-->
 	<tfoot>
 	<tr>
-		<td colspan="6">
+		<td colspan="11%">
 			<div class="pull-left">
 				<?php echo $data->pagination->getListFooter(); ?>
 			</div>

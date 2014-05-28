@@ -37,12 +37,12 @@ $date      = $container->get('date');
 	<thead>
 	<tr>
 		<!--CHECKBOX-->
-		<th width="1%" class="center">
+		<th width="3%" class="center">
 			<?php echo JHtml::_('grid.checkAll'); ?>
 		</th>
 
 		<!-- EDIT -->
-		<th width="3%" class="center nowrap">
+		<th width="7%" class="center nowrap">
 			編輯
 		</th>
 
@@ -57,7 +57,7 @@ $date      = $container->get('date');
 		</th>
 
 		<!--EMAIL-->
-		<th width="25%" class="left">
+		<th width="20%" class="left">
 			<?php echo $grid->sortTitle('會員信箱', 'member.email'); ?>
 		</th>
 
@@ -67,7 +67,7 @@ $date      = $container->get('date');
 		</th>
 
 		<!--Relative Customers-->
-		<th width="35%" class="left">
+		<th width="30%" class="left">
 			<?php echo $grid->sortTitle('對應散客', 'member.email'); ?>
 		</th>
 	</tr>
@@ -76,7 +76,7 @@ $date      = $container->get('date');
 	<!--PAGINATION-->
 	<tfoot>
 	<tr>
-		<td colspan="6">
+		<td colspan="10%">
 			<div class="pull-left">
 				<?php echo $data->pagination->getListFooter(); ?>
 			</div>

@@ -39,7 +39,7 @@ $grid->registerTableSort();
 	<thead>
 	<tr>
 		<!--CHECKBOX-->
-		<th width="1%" class="center">
+		<th width="5%" class="center">
 			<?php echo JHtml::_('grid.checkAll'); ?>
 		</th>
 
@@ -49,7 +49,7 @@ $grid->registerTableSort();
 		</th>
 
 		<!--ID-->
-		<th width="1%" class="nowrap center">
+		<th width="5%" class="nowrap center">
 			<?php echo $grid->sortTitle('JGLOBAL_FIELD_ID_LABEL', 'sender.id'); ?>
 		</th>
 
@@ -59,7 +59,7 @@ $grid->registerTableSort();
 		</th>
 
 		<!--NOTE-->
-		<th class="center">
+		<th width="60%" class="center">
 			<?php echo $grid->sortTitle('備註', 'sender.note'); ?>
 		</th>
 
@@ -69,7 +69,7 @@ $grid->registerTableSort();
 	<!--PAGINATION-->
 	<tfoot>
 	<tr>
-		<td colspan="4">
+		<td colspan="10%">
 			<div class="pull-left">
 				<?php echo $data->pagination->getListFooter(); ?>
 			</div>
