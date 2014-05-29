@@ -28,6 +28,20 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 	protected $mapper = array();
 
 	/**
+	 * Property addressModel.
+	 *
+	 * @var  ScheduleModelAddress
+	 */
+	protected $addressModel;
+
+	/**
+	 * Property scheduleModel.
+	 *
+	 * @var  ScheduleModelSchedule
+	 */
+	protected $scheduleModel;
+
+	/**
 	 * Instantiate the controller.
 	 *
 	 * @param \JInput          $input
@@ -37,6 +51,9 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 	public function __construct(\JInput $input = null, \JApplicationCms $app = null, $config = array())
 	{
 		$this->initMapper();
+
+		$this->addressModel  = $this->getModel("Address");
+		$this->scheduleModel = $this->getModel("Schedule");
 
 		parent::__construct($input, $app, $config);
 	}
@@ -69,8 +86,6 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 	 */
 	protected function preSaveHook()
 	{
-		$remind = isset($this->data['remind']) ? $this->data['remind'] : array();
-
 		$this->createAddress();
 
 		$this->buildNthOfScheduleToRxData();
@@ -90,7 +105,7 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 		$this->data["empty_date_2nd"] = $this->data["schedules_2nd"]["drug_empty_date"];
 
 		// Remind
-		$this->data["remind"] = implode(",", $remind);
+		$this->data["remind"] = isset($this->data['remind']) ? implode(",", $this->data['remind']) : "";
 
 		parent::preSaveHook();
 	}
@@ -107,11 +122,7 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 	{
 		$this->data['id'] = $model->getState()->get("rxindividual.id");
 
-		// Get model
-		$scheduleModel = $this->getModel("Schedule");
-		$addressModel  = $this->getModel("Address");
-
-		$scheduleState = $scheduleModel->getState();
+		$scheduleState = $this->scheduleModel->getState();
 		$scheduleState->set('form.type', 'schedule_individule');
 
 		// 圖片處理
@@ -153,7 +164,7 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 			$task = $this->getScheduleTask($sender, $schedule);
 
 			// 新增排程
-			$scheduleModel->save(
+			$this->scheduleModel->save(
 				$this->getScheduleUploadData($task->id, $customer, $address, $nth, $schedule, $routes)
 			);
 
@@ -165,7 +176,7 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 		if (! empty($lastAddress))
 		{
 			// Flush Default Address
-			$addressModel->flushDefaultAddress($customer->id, $lastAddress->id);
+			$this->addressModel->flushDefaultAddress($customer->id, $lastAddress->id);
 		}
 	}
 
@@ -408,8 +419,6 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 	 */
 	protected function createAddress()
 	{
-		$addressModel  = $this->getModel("Address");
-
 		$createAddress = isset($this->data['create_address']) ? json_decode($this->data['create_address']) : array();
 
 		if (! empty($createAddress))
@@ -419,7 +428,7 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 			// 新增地址資料
 			foreach ($createAddress as $addressTmp)
 			{
-				$addressModel->save(
+				$this->addressModel->save(
 					array(
 						"customer_id" => $customer->id,
 						"city"        => $addressTmp->id,
@@ -429,7 +438,7 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 				);
 
 				// Hash id map
-				$hashId[$addressTmp->id] = $addressModel->getState()->get("address.id");
+				$hashId[$addressTmp->id] = $this->addressModel->getState()->get("address.id");
 			}
 
 			// 塞回資料
