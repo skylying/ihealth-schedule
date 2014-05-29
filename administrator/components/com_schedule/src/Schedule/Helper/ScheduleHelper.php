@@ -125,14 +125,14 @@ class ScheduleHelper
 		}
 
 		// Find send date
-		for ($i = 0; $i < $maxSearchDays; ++$i)
+		for ($i = 0; $i < $maxSearchDays; $i += 7)
 		{
 			if (!in_array($date->getTimestamp(), $holidays))
 			{
-				$date->modify('+7 day');
-
 				break;
 			}
+
+			$date->modify('+7 day');
 		}
 
 		return new \JDate($date->format('Y-m-d'));
