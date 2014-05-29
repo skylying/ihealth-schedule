@@ -23,16 +23,9 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 	/**
 	 * Mappers
 	 *
-	 * @var  array
+	 * @var  DataMapper[]
 	 */
 	protected $mapper = array();
-
-	/**
-	 * Property rxId.
-	 *
-	 * @var  integer
-	 */
-	protected $rxId = 0;
 
 	/**
 	 * Instantiate the controller.
@@ -112,7 +105,7 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 	 */
 	protected function postSaveHook($model, $validData)
 	{
-		$this->rxId = $model->getState()->get("rxindividual.id");
+		$this->data['id'] = $model->getState()->get("rxindividual.id");
 
 		// Get model
 		$scheduleModel = $this->getModel("Schedule");
@@ -161,7 +154,7 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 
 			// 新增排程
 			$scheduleModel->save(
-				$this->getScheduleUploadData($this->rxId, $task->id, $customer, $address, $nth, $schedule, $routes)
+				$this->getScheduleUploadData($task->id, $customer, $address, $nth, $schedule, $routes)
 			);
 
 			// 最後更改地址
@@ -194,7 +187,7 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 		{
 			foreach ($drugs as $drug)
 			{
-				$drug->rx_id = $this->rxId;
+				$drug->rx_id = $this->data['id'];
 
 				$drugModel->save((array) $drug);
 			}
@@ -347,7 +340,6 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 	/**
 	 * 取得 Schedule 更新的資料
 	 *
-	 * @param   integer $rxId
 	 * @param   integer $task
 	 * @param   Data    $customer
 	 * @param   Data    $address
@@ -357,7 +349,7 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 	 *
 	 * @return  array
 	 */
-	protected function getScheduleUploadData($rxId, $task, $customer, $address, $nth, $formData, $routes)
+	protected function getScheduleUploadData($task, $customer, $address, $nth, $formData, $routes)
 	{
 		// Schedule data
 		$scheduleUpdata = array(
@@ -365,7 +357,7 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 			"id"            => $formData['schedule_id'],
 
 			// Rx id
-			"rx_id"         => $rxId,
+			"rx_id"         => $this->data['id'],
 			"route_id"      => $routes->id,
 			"sender_name"   => $routes->sender_name,
 
@@ -406,7 +398,7 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 			}
 		}
 
-		ImageHelper::resetImagesRxId($resetId, $this->rxId);
+		ImageHelper::resetImagesRxId($resetId, $this->data['id']);
 	}
 
 	/**
