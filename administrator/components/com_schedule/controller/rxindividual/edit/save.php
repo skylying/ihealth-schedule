@@ -429,7 +429,7 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 				);
 
 				// Hash id map
-				$hashId[$addressTmp->id] = $addressModel->getState()->get("address.id");;
+				$hashId[$addressTmp->id] = $addressModel->getState()->get("address.id");
 			}
 
 			// 塞回資料
