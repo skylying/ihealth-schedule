@@ -2,7 +2,10 @@
 <form>
 	<fieldset name="basic">
 		<field name="institute_id"
-			type="institute_list"
+			type="sql"
+			query="SELECT id, short_title FROM #__schedule_institutes"
+			key_field="id"
+			value_field="short_title"
 			default=""
 			label="機構名稱"
 			description="機構名稱"

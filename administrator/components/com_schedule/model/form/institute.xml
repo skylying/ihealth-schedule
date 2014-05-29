@@ -16,6 +16,7 @@
 			type="text"
 			label="機構名稱"
 			description="機構名稱"
+			required="true"
 			class="input-xxlarge required"
 			/>
 
@@ -46,7 +47,7 @@
 			type="text"
 			label="傳真"
 			description="傳真"
-			class="input-xxlarge required"
+			class="input-xxlarge"
 			/>
 
 		<field name="city"
@@ -101,8 +102,6 @@
 			<option value="WED">WED</option>
 			<option value="THU">THU</option>
 			<option value="FRI">FRI</option>
-			<option value="SAT">SAT</option>
-			<option value="SUN">SUN</option>
 		</field>
 
 		<field name="color_id"
@@ -119,7 +118,7 @@
 			type="textarea"
 			label="備註"
 			description="備註"
-			class="input-xxlarge required"
+			class="input-xxlarge"
 			/>
 
 		<!--Presave hook form to update Route table after save institute-->

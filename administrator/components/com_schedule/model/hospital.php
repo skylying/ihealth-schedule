@@ -72,4 +72,22 @@ class ScheduleModelHospital extends AdminModel
 	{
 		parent::setOrderPosition($table, $position);
 	}
+
+	/**
+	 * prepareTable
+	 *
+	 * @param JTable $table
+	 *
+	 * @return  void
+	 */
+	public function prepareTable(JTable $table)
+	{
+		$tableCity = $this->getTable('City');
+		$tableCity->load($table->city);
+		$table->city_title = $tableCity->title;
+
+		$tableArea = $this->getTable('Area');
+		$tableArea->load($table->area);
+		$table->area_title = $tableArea->title;
+	}
 }
