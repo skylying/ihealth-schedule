@@ -371,8 +371,8 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 			"type"          => "individual",
 			"customer_id"   => $this->customer->id,
 
+			// 地址
 			"address_id"    => $address->id,
-			"address"       => $address->address,
 
 			// 第幾次宅配
 			"deliver_nth"   => $nth,

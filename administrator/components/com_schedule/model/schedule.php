@@ -205,10 +205,11 @@ class ScheduleModelSchedule extends AdminModel
 		$tableMember->load($table->member_id);
 
 		$table->customer_name = $tableCustomer->name;
-		$table->member_name = $tableMember->name;
-		$table->city       = $tableAddress->city;
-		$table->area       = $tableAddress->area;
-		$table->city_title = $tableAddress->city_title;
-		$table->area_title = $tableAddress->area_title;
+		$table->member_name   = $tableMember->name;
+		$table->address       = $tableAddress->address;
+		$table->city          = $tableAddress->city;
+		$table->area          = $tableAddress->area;
+		$table->city_title    = $tableAddress->city_title;
+		$table->area_title    = $tableAddress->area_title;
 	}
 }
