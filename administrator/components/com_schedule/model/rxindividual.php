@@ -76,6 +76,31 @@ class ScheduleModelRxindividual extends AdminModel
 	}
 
 	/**
+	 * prepareTable
+	 *
+	 * @param JTable $table
+	 *
+	 * @return  void
+	 */
+	public function prepareTable(JTable $table)
+	{
+		$customer = (new DataMapper(Table::CUSTOMERS))->findOne($table->customer_id);
+
+		// 客戶名
+		$table->customer_name = $customer->name;
+
+		$hospital = (new DataMapper(Table::HOSPITALS))->findOne($table->hospital_id);
+
+		// 醫院名
+		$table->hospital_title = $hospital->title;
+
+		// 客戶類型
+		$table->type = "individual";
+
+		parent::prepareTable($table);
+	}
+
+	/**
 	 * loadFormData
 	 *
 	 * @return  array
