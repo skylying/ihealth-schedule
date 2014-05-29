@@ -102,7 +102,7 @@ class ScheduleHelper
 			->from(Table::HOLIDAYS)
 			->where('`state`=1')
 			->where('`weekday`=' . $db->q($weekday))
-			->where($query->format('`date` > %s', $date->format('Y-m-d')));
+			->where('`date`>' . $db->q($date->format('Y-m-d', false, false)));
 
 		// Convert date string to timestamp
 		$holidays = array_map(
@@ -116,7 +116,7 @@ class ScheduleHelper
 		// Shift to first day
 		for ($i = 0; $i < $maxSearchDays; ++$i)
 		{
-			if (strtoupper($date->format('D')) === $weekday)
+			if (strtoupper($date->format('D', false, false)) === $weekday)
 			{
 				break;
 			}
