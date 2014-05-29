@@ -59,9 +59,6 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 	{
 		$this->initMapper();
 
-		$this->addressModel  = $this->getModel("Address");
-		$this->scheduleModel = $this->getModel("Schedule");
-
 		parent::__construct($input, $app, $config);
 	}
 
@@ -92,11 +89,13 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 	 */
 	protected function preSaveHook()
 	{
+		$this->addressModel = $this->getModel("Address");
+
+		$this->customer = $this->getUpdateCustomerData($this->data['customer_id']);
+
 		$this->createAddress();
 
 		$this->buildNthOfScheduleToRxData();
-
-		$this->customer = $this->getUpdateCustomerData($this->data['customer_id']);
 
 		// Rx 吃完藥日
 		$this->data["empty_date_1st"] = $this->data["schedules_1st"]["drug_empty_date"];
@@ -119,6 +118,8 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 	protected function postSaveHook($model, $validData)
 	{
 		$this->data['id'] = $model->getState()->get("rxindividual.id");
+
+		$this->scheduleModel = $this->getModel("Schedule");
 
 		$scheduleState = $this->scheduleModel->getState();
 		$scheduleState->set('form.type', 'schedule_individule');
@@ -422,9 +423,9 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 			{
 				$this->addressModel->save(
 					array(
-						"customer_id" => $customer->id,
-						"city"        => $addressTmp->id,
-						"area"        => $addressTmp->id,
+						"customer_id" => $this->customer->id,
+						"city"        => $addressTmp->city,
+						"area"        => $addressTmp->area,
 						"address"     => $addressTmp->address
 					)
 				);

@@ -198,18 +198,17 @@ class ScheduleModelSchedule extends AdminModel
 		$tableCustomer = $this->getTable('Customer');
 		$tableCustomer->load($table->customer_id);
 
+		$tableAddress = $this->getTable('Address');
+		$tableAddress->load($table->address_id);
+
 		$tableMember = $this->getTable('Member');
 		$tableMember->load($table->member_id);
 
-		$tableCity = $this->getTable('City');
-		$tableCity->load($table->city);
-
-		$tableArea = $this->getTable('Area');
-		$tableArea->load($table->area);
-
 		$table->customer_name = $tableCustomer->name;
 		$table->member_name = $tableMember->name;
-		$table->city_title = $tableCity->title;
-		$table->area_title = $tableArea->title;
+		$table->city       = $tableAddress->city;
+		$table->area       = $tableAddress->area;
+		$table->city_title = $tableAddress->city_title;
+		$table->area_title = $tableAddress->area_title;
 	}
 }
