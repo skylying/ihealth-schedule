@@ -367,6 +367,7 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 
 		$customerModel = $this->getModel("Customer");
 
+		$customer->hospital   = $this->data['hospital_id'];
 		$customer->tel_office = $this->data['tel_office'];
 		$customer->tel_home   = $this->data['tel_home'];
 		$customer->mobile     = $this->data['mobile'];
