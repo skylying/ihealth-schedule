@@ -4,13 +4,18 @@
 		"view" : "member"
 	},
 
-	"mamber_post": {
+	"member_post": {
 		"pattern": "member",
 		"view" : "member"
 	},
 
-	"mambers": {
+	"members": {
 		"pattern": "members",
 		"view" : "members"
+	},
+
+	"rxindividual_post": {
+		"pattern": "prescription",
+		"view" : "rxindividual"
 	}
 }
