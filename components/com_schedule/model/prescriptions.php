@@ -21,7 +21,7 @@ defined('_JEXEC') or die;
 class ScheduleModelPrescriptions extends \Windwalker\Model\ListModel
 {
 	/**
-	 * Property filteerFields.
+	 * Property filterFields.
 	 *
 	 * @var  array
 	 */
@@ -46,7 +46,7 @@ class ScheduleModelPrescriptions extends \Windwalker\Model\ListModel
 	/**
 	 * Override query string, because we don't need all the fileds in prescription
 	 *
-	 * @param JDatabaseQuery $query
+	 * @param   JDatabaseQuery $query
 	 *
 	 * @return  void
 	 */
@@ -81,20 +81,20 @@ class ScheduleModelPrescriptions extends \Windwalker\Model\ListModel
 	{
 		$this->items = parent::getItems();
 
-		foreach ($this->items as $singleRx)
+		foreach ($this->items as $rx)
 		{
-			$singleRx->schedules = $this->getSchedules($singleRx->id);
+			$rx->schedules = $this->getSchedules($rx->id);
 
-			$singleRx->drugs = $this->getDrugs($singleRx->id);
+			$rx->drugs = $this->getDrugs($rx->id);
 		}
 
 		return $this->items;
 	}
 
 	/**
-	 * Get schedules using $rxid
+	 * Get schedules by $rxId
 	 *
-	 * @param int $rxId
+	 * @param   int $rxId
 	 *
 	 * @return  array
 	 */
@@ -127,9 +127,9 @@ class ScheduleModelPrescriptions extends \Windwalker\Model\ListModel
 	}
 
 	/**
-	 * Get drugs using $rxId
+	 * Get drugs by $rxId
 	 *
-	 * @param int $rxId
+	 * @param   int $rxId
 	 *
 	 * @return  array
 	 */
@@ -147,12 +147,11 @@ class ScheduleModelPrescriptions extends \Windwalker\Model\ListModel
 		return $db->setQuery($query)->loadObjectList();
 	}
 
-
 	/**
 	 * populateState
 	 *
-	 * @param string $ordering
-	 * @param string $direction
+	 * @param   string $ordering
+	 * @param   string $direction
 	 *
 	 * @return  void
 	 */
@@ -164,7 +163,7 @@ class ScheduleModelPrescriptions extends \Windwalker\Model\ListModel
 		$input = $container->get('input');
 
 		// "id" here actually means "customer_id"
-		$customerId = (int) $input->get('id');
+		$customerId = (int) $input->get('customer_id');
 
 		$filters = $this->state->get('filter', array());
 
@@ -174,26 +173,5 @@ class ScheduleModelPrescriptions extends \Windwalker\Model\ListModel
 		}
 
 		$this->state->set('filter', $filters);
-	}
-
-	/**
-	 * configureFilters
-	 *
-	 * @param \Windwalker\Model\Filter\FilterHelper $filterHelper
-	 *
-	 * @return  void
-	 */
-	protected function configureFilters($filterHelper)
-	{
-		$filterHelper->setHandler(
-			'customer_id',
-			function ($query, $field, $value)
-			{
-				/** @var $query \JDatabaseQuery */
-				$query->where('`prescription`.`customer_id`=' . (int) $value);
-			}
-		);
-
-		parent::configureFilters($filterHelper);
 	}
 }
