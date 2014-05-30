@@ -458,6 +458,9 @@
         member_name: { Field: member_name, Type: varchar(255), 'Null': YES, Default: null, Extra: '', Comment: 會員姓名, From: [member_name] }
         customer_id: { Field: customer_id, Type: int(11), 'Null': YES, Default: null, Extra: '', Comment: '客戶 id', From: [customer_id] }
         customer_name: { Field: customer_name, Type: varchar(255), 'Null': YES, Default: null, Extra: '', Comment: 客戶名稱, From: [customer_name] }
+        tel_office: { Field: tel_office, Type: varchar(32), 'Null': YES, Default: null, Extra: '', Comment: 宅配電話(O), From: [tel_office] }
+        tel_home: { Field: tel_home, Type: varchar(32), 'Null': YES, Default: null, Extra: '', Comment: 宅配電話(H), From: [tel_home] }
+        mobile: { Field: mobile, Type: varchar(32), 'Null': YES, Default: null, Extra: '', Comment: 手機, From: [mobile] }
         institute_id: { Field: institute_id, Type: int(11), 'Null': YES, Default: null, Extra: '', Comment: '機構 id', From: [institute_id] }
         institute_title: { Field: institute_title, Type: varchar(255), 'Null': YES, Default: null, Extra: '', Comment: 機構名稱, From: [institute_title] }
         route_id: { Field: route_id, Type: int(11), 'Null': YES, Default: null, Extra: '', Comment: '對應路線 id', From: [route_id] }
