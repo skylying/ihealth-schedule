@@ -7,6 +7,7 @@
  */
 
 use Schedule\Model\Customer;
+use Schedule\Table\Table;
 
 // No direct access
 defined('_JEXEC') or die;
@@ -18,4 +19,35 @@ defined('_JEXEC') or die;
  */
 class ScheduleModelCustomer extends Customer
 {
+	/**
+	 * getItem
+	 *
+	 * @param   null $pk
+	 *
+	 * @return  mixed
+	 */
+	public function getItem($pk = null)
+	{
+		$this->item = parent::getItem($pk);
+
+		// Prepare database object
+		$db = \JFactory::getDbo();
+		$query = $db->getQuery(true);
+
+		if (empty($this->item->id))
+		{
+			return $this->item;
+		}
+
+		// Get member id list
+		$query->select('`map`.`member_id`')
+			->from(Table::CUSTOMERS . ' AS customer')
+			->join('LEFT', $db->quoteName(Table::CUSTOMER_MEMBER_MAPS) . ' AS map ON customer.id = map.customer_id')
+			->where('`map`.`customer_id`= ' . $db->q($this->item->id));
+
+		// Inject member ids
+		$this->item->members = $db->setQuery($query)->loadColumn();
+
+		return $this->item;
+	}
 }

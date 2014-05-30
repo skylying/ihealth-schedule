@@ -18,5 +18,4 @@ defined('_JEXEC') or die;
  */
 class ScheduleModelCustomer extends Customer
 {
-	// Override any function if need
 }
