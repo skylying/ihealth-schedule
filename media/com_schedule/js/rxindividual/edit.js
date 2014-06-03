@@ -117,10 +117,8 @@
 			// Trigger once to update show schedule info box
 			$('.js-nth-schedule-check input[type=checkbox]').change();
 
-			/**
-			 *
+			/*
 			 * Update Schedule's Edit Block
-			 *
 			 */
 
 			// When 'times' is change show according edit blocks.
@@ -132,27 +130,25 @@
 			// After 'times' event binding, update edit block once.
 			window.DeliverScheduleHandler.showSchedulesEditBlock($('#' + self.options.timesId).val());
 
-			/**
-			 *
+			/*
 			 * Update Schedule Date when the following attributes are changed
 			 *
 			 * 1. seeDrDateId
 			 * 2. periodId
 			 * 3. js-address-list
 			 * 4. Schedule's checkboxes' status
-			 *
 			 */
 			$([
-			  // When prescription period is changed, update schedule date
-			  '#' + self.options.periodId,
-			  // When see doctor date is changed, update schedule date
-			  '#' + self.options.seeDrDateId,
-			  // Combine selector, whenever schedule's checkboxes are changed, update 'send date'
-			  '#jform_schedules_1st_deliver_nth0',
-			  '#jform_schedules_2nd_deliver_nth0',
-			  '#jform_schedules_3rd_deliver_nth0',
-			  // When address list changed, update schedule date
-			  '.js-address-list'
+				// When prescription period is changed, update schedule date
+				'#' + self.options.periodId,
+				// When see doctor date is changed, update schedule date
+				'#' + self.options.seeDrDateId,
+				// Combine selector, whenever schedule's checkboxes are changed, update 'send date'
+				'#jform_schedules_1st_deliver_nth0',
+				'#jform_schedules_2nd_deliver_nth0',
+				'#jform_schedules_3rd_deliver_nth0',
+				// When address list changed, update schedule date
+				'.js-address-list'
 			]).each(function(i, selector)
 				{
 					$(selector).change(function()
