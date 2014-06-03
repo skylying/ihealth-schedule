@@ -17,11 +17,11 @@ $formPrint = $data->formPrint;
 		class="form-validate" enctype="multipart/form-data">
 
 		<div class="form-horizontal">
-				<?php foreach ($formPrint->getFieldset('basic') as $field): ?>
-				<div id="control_<?php echo $field->id; ?>">
-					<?php echo $field->getControlGroup() . "\n\n"; ?>
-				</div>
-				<?php endforeach;?>
+			<?php foreach ($formPrint->getFieldset('basic') as $field): ?>
+			<div id="control_<?php echo $field->id; ?>">
+				<?php echo $field->getControlGroup() . "\n\n"; ?>
+			</div>
+			<?php endforeach;?>
 		</div>
 
 		<!-- Hidden Inputs -->
