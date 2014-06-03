@@ -266,7 +266,9 @@
 					try
 					{
 						// Update phone numbers
-						var tel_office = $.parseJSON(cdata.tel_office);
+						var tel_office = cdata.tel_office;
+
+						console.log(tel_office);
 
 						// Update phone select list
 						self.updatePhoneHtml(self.options.telOfficeId, tel_office);
@@ -279,7 +281,7 @@
 					try
 					{
 						// Update phone numbers
-						var tel_home = $.parseJSON(cdata.tel_home);
+						var tel_home = cdata.tel_home;
 
 						// Update phone select list
 						self.updatePhoneHtml(self.options.telHomeId, tel_home);
@@ -292,7 +294,7 @@
 					try
 					{
 						// Update phone numbers
-						var mobile = $.parseJSON(cdata.mobile);
+						var mobile = cdata.mobile;
 
 						// Update phone select list
 						self.updatePhoneHtml(self.options.mobileId, mobile);

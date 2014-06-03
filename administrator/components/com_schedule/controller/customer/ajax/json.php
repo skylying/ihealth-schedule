@@ -34,6 +34,10 @@ class ScheduleControllerCustomerAjaxJson extends DisplayController
 			$model = $this->getModel('Customer');
 
 			$data = $model->getItem($id);
+
+			$data->tel_office = json_decode($data->tel_office);
+			$data->tel_home = json_decode($data->tel_home);
+			$data->mobile = json_decode($data->mobile);
 		}
 
 		if (!empty($instituteId))
