@@ -288,16 +288,16 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 	{
 		$taskModel  = $this->getModel("Task");
 
-		// 同日期同藥師取得 外送
+		// 取得同日期同藥師的外送紀錄
 		$task = $this->mapper['task']->findOne(array("sender" => $sender->id, "date" => $schedule['date']));
 
-		// 如果有取得對應 外送
+		// 如果有外送資料就直接使用
 		if (! $task->isNull())
 		{
 			return $task;
 		}
 
-		// 沒有外送時 新增
+		// 準備新增外送資料
 		$task->date        = $schedule['date'];
 		$task->sender      = $sender->id;
 		$task->sender_name = $sender->name;
@@ -434,17 +434,16 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 				$addressIdMap[$address->id] = $this->addressModel->getState()->get("address.id");
 			}
 
-			// 塞回資料
+			// 做更新 hash id 成 實際 id 動作
 			foreach (array("1st", "2nd", "3rd") as $val)
 			{
 				$schedule = $this->data["schedules_{$val}"];
 
 				$hashId = $schedule["address_id"];
 
-				// 如果 address id 在 hash map 有記錄 更新 id
+				// 如果是有記錄過的 hash id 把 hash id 更新成實際 id
 				if (isset($addressIdMap[$hashId]))
 				{
-					// 塞回資料
 					$this->data["schedules_{$val}"]["address_id"] = $addressIdMap[$hashId];
 				}
 			}
@@ -470,10 +469,9 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 			}
 		}
 
-		// 組好他有勾選的值
+		// 把勾選的值存成資料庫形式
 		$nths = implode(",", $nths);
 
-		// 塞入資料
 		$this->data["deliver_nths"] = $nths;
 	}
 }
