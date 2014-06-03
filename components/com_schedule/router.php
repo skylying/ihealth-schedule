@@ -88,5 +88,11 @@ function ScheduleParseRoute($segments)
 		$query['id'] = $segments[1];
 	}
 
+	if ('holidays' === $query['view'] && ! empty($segments[1]) && ! empty($segments[2]))
+	{
+		$query['start'] = str_replace(':', '-', $segments[1]);
+		$query['end'] = str_replace(':', '-', $segments[2]);
+	}
+
 	return $query;
 }
