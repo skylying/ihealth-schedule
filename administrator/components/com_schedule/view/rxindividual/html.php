@@ -79,6 +79,11 @@ class ScheduleViewRxindividualHtml extends EditView
 		parent::__construct($model, $container, $config, $paths);
 	}
 
+	/**
+	 * prepareRender
+	 *
+	 * @return  void
+	 */
 	protected function prepareRender()
 	{
 		parent::prepareRender();
@@ -90,5 +95,33 @@ class ScheduleViewRxindividualHtml extends EditView
 		$data->images = $images;
 
 		$this->setData($data);
+	}
+
+	/**
+	 * configToolbar
+	 *
+	 * @param array $buttonSet
+	 * @param null  $canDo
+	 *
+	 * @return  array
+	 */
+	protected function configureToolbar($buttonSet = array(), $canDo = null)
+	{
+		// Get default button set.
+		$buttonSet                     = parent::configureToolbar($buttonSet, $canDo);
+		$buttonSet['print']['handler'] = function ()
+		{
+			$html =
+				<<<HTML
+			<button class="btn btn-info" onclick="Joomla.submitbutton('rxindividuals.redirect')">
+				<span class="glyphicon glyphicon-print"></span> 儲存列印
+			</button>
+				HTML;
+
+			$bar  = JToolbar::getInstance('toolbar');
+			$bar->appendButton('custom', $html);
+		};
+
+		return $buttonSet;
 	}
 }
