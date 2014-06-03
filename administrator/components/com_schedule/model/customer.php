@@ -8,7 +8,6 @@
 
 use Schedule\Model\Customer;
 use Schedule\Table\Table;
-use Windwalker\Joomla\DataMapper\DataMapper;
 
 // No direct access
 defined('_JEXEC') or die;
@@ -34,20 +33,6 @@ class ScheduleModelCustomer extends Customer
 		if (empty($this->item->id))
 		{
 			return $this->item;
-		}
-
-		// =====================
-		// Get full address list
-		$addressMapper = new DataMapper(Table::ADDRESSES);
-
-		// Prepare empty string as json format
-		$this->item->addresses = array();
-
-		if (!empty($this->item->id))
-		{
-			$addressDataSet = $addressMapper->find(array("customer_id" => $this->item->id));
-
-			$this->item->addresses = iterator_to_array($addressDataSet);
 		}
 
 		// Prepare database object
