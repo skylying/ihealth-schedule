@@ -142,34 +142,24 @@
 			 * 4. Schedule's checkboxes' status
 			 *
 			 */
-
-			// When see doctor date is changed, update schedule date
-			$('#' + self.options.seeDrDateId).on('change', function()
-			{
-				window.DeliverScheduleHandler.updateScheduleDate();
-			});
-
-			// When prescription period is changed, update schedule date
-			$('#' + self.options.periodId).on('change', function()
-			{
-				window.DeliverScheduleHandler.updateScheduleDate();
-			});
-
-			// When address list changed, update schedule date
-			$('.js-address-wrap').on('change', '.js-address-list', function()
-			{
-				window.DeliverScheduleHandler.updateScheduleDate();
-			});
-
-			// Combine selector, whenever schedule's checkboxes are changed, update 'send date'
-			var $scheduleOne = jQuery('#jform_schedules_1st_deliver_nth0');
-			var $scheduleTwo = $scheduleOne.add('#jform_schedules_2nd_deliver_nth0');
-			var $scheduleAll = $scheduleTwo.add('#jform_schedules_3rd_deliver_nth0');
-
-			$scheduleAll.on('change', function()
-			{
-				window.DeliverScheduleHandler.updateScheduleDate();
-			});
+			$([
+			  // When prescription period is changed, update schedule date
+			  '#' + self.options.periodId,
+			  // When see doctor date is changed, update schedule date
+			  '#' + self.options.seeDrDateId,
+			  // Combine selector, whenever schedule's checkboxes are changed, update 'send date'
+			  '#jform_schedules_1st_deliver_nth0',
+			  '#jform_schedules_2nd_deliver_nth0',
+			  '#jform_schedules_3rd_deliver_nth0',
+			  // When address list changed, update schedule date
+			  '.js-address-list'
+			]).each(function(i, selector)
+				{
+					$(selector).change(function()
+					{
+						window.DeliverScheduleHandler.updateScheduleDate();
+					});
+				});
 		}
 	};
 
