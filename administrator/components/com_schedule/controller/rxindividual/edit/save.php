@@ -126,7 +126,7 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 		$this->rxImageHandler();
 
 		// 健保處理
-		$this->drugHandler();
+		$this->processDrug();
 
 		// 最後更改地址
 		$lastAddress = null;
@@ -179,7 +179,7 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 	 *
 	 * @return  stdClass
 	 */
-	protected function drugHandler()
+	protected function processDrug()
 	{
 		$drugModel = $this->getModel("Drug");
 
@@ -255,11 +255,11 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 
 			// 整理存入資料
 			$routeData = array(
-				"city"        => $address->city,
-				"area"        => $address->area,
-				"sender_id"   => $sender->id,
-				"weekday"     => $schedule['weekday'],
-				"type"        => "customer"
+				"city"      => $address->city,
+				"area"      => $address->area,
+				"sender_id" => $sender->id,
+				"weekday"   => $schedule['weekday'],
+				"type"      => "customer"
 			);
 
 			$routeModel->save($routeData);
