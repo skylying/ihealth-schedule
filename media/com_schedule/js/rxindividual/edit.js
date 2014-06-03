@@ -44,7 +44,6 @@
 				ERROR_NO_SEE_DR_DATE : 2
 			}, options);
 
-			// init method class
 			window.MethodFieldHandler.setOptions({
 				methodId             : this.options.methodId,
 				drugId               : this.options.drugId,
@@ -77,7 +76,7 @@
 			this.registerEvent();
 		},
 		/**
-		 * Run
+		 * registerEvent Bind all relative events, ex: period, times, seeDrDate, weekday and addresses.
 		 */
 		registerEvent: function()
 		{
@@ -87,7 +86,7 @@
 
 			window.CustomerFieldHandler.registerEvent();
 
-			// Bind 'change' event to 'weekday of new route data'
+			// If the new route's weekday is changed, recalculate weekday.
 			$('.js-route-weekday select').on('change', function()
 			{
 				var weekday = $(this).val();
@@ -109,7 +108,7 @@
 				window.DeliverScheduleHandler.updateScheduleDateByWeekday(weekday, nth);
 			});
 
-			// Toggle nth schedules
+			// This binding will set the edit block to opaque when unchecked
 			$('.js-nth-schedule-check input[type=checkbox]').on('change', function()
 			{
 				window.DeliverScheduleHandler.bindChangeNthScheduleInfo($(this));
@@ -118,7 +117,13 @@
 			// Trigger once to update show schedule info box
 			$('.js-nth-schedule-check input[type=checkbox]').change();
 
-			// Bind 'times' event to 'show nth prescriptions'
+			/**
+			 *
+			 * Update Schedule's Edit Block
+			 *
+			 */
+
+			// When 'times' is change show according edit blocks.
 			$('#' + self.options.timesId).on('change', function()
 			{
 				window.DeliverScheduleHandler.showSchedulesEditBlock($(this).val());
@@ -127,19 +132,30 @@
 			// After 'times' event binding, update edit block once.
 			window.DeliverScheduleHandler.showSchedulesEditBlock($('#' + self.options.timesId).val());
 
-			// Bind See Doctor Date on change, update schedule date
+			/**
+			 *
+			 * Update Schedule Date when the following attributes are changed
+			 *
+			 * 1. seeDrDateId
+			 * 2. periodId
+			 * 3. js-address-list
+			 * 4. Schedule's checkboxes' status
+			 *
+			 */
+
+			// When see doctor date is changed, update schedule date
 			$('#' + self.options.seeDrDateId).on('change', function()
 			{
 				window.DeliverScheduleHandler.updateScheduleDate();
 			});
 
-			// Bind Drug period on change, update schedule date
+			// When prescription period is changed, update schedule date
 			$('#' + self.options.periodId).on('change', function()
 			{
 				window.DeliverScheduleHandler.updateScheduleDate();
 			});
 
-			// Bind address list on change, update schedule date
+			// When address list changed, update schedule date
 			$('.js-address-wrap').on('change', '.js-address-list', function()
 			{
 				window.DeliverScheduleHandler.updateScheduleDate();
