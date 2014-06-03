@@ -15,7 +15,7 @@
 		setOptions: function(options)
 		{
 			// Overwrite with user's options
-			this.options = $.extend(true, {
+			this.options = $.extend({
 				addressesKeys        : ["1st", "2nd", "3rd"],
 				seeDrDateId          : null,
 				periodId             : null,

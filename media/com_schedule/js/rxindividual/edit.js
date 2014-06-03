@@ -17,7 +17,7 @@
 			this.listeners = {};
 
 			// Overwrite with user's options
-			this.options = $.extend(true, {
+			this.options = $.extend({
 				customerId           : null,
 				customerIdNumber     : null,
 
@@ -73,17 +73,19 @@
 				hospitalId           : this.options.hospitalId,
 				birthDateId          : this.options.birthDateId
 			});
+
+			this.registerEvent();
 		},
 		/**
 		 * Run
 		 */
-		run: function()
+		registerEvent: function()
 		{
 			var self = this;
 
-			window.MethodFieldHandler.run();
+			window.MethodFieldHandler.registerEvent();
 
-			window.CustomerFieldHandler.run();
+			window.CustomerFieldHandler.registerEvent();
 
 			// Bind 'change' event to 'weekday of new route data'
 			$('.js-route-weekday select').on('change', function()

@@ -30,7 +30,7 @@
 			}, options);
 		},
 
-		run: function()
+		registerEvent: function()
 		{
 			var self = this;
 			var customerDropDown = jQuery("#" + this.options.customerId);
