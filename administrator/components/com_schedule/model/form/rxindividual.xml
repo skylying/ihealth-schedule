@@ -153,7 +153,7 @@
 			description="圖片3"
 			/>
 
-		<field name="create_address"
+		<field name="create_addresses"
 			type="hidden"
 			/>
 

@@ -412,26 +412,26 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 	 */
 	protected function createAddress()
 	{
-		$createAddress = isset($this->data['create_address']) ? json_decode($this->data['create_address']) : array();
+		$createAddresses = isset($this->data['create_addresses']) ? json_decode($this->data['create_addresses']) : array();
 
-		if (! empty($createAddress))
+		if (! empty($createAddresses))
 		{
-			$hashId = array();
+			$addressIdMap = array();
 
 			// 新增地址資料
-			foreach ($createAddress as $addressTmp)
+			foreach ($createAddresses as $address)
 			{
 				$this->addressModel->save(
 					array(
 						"customer_id" => $this->customer->id,
-						"city"        => $addressTmp->city,
-						"area"        => $addressTmp->area,
-						"address"     => $addressTmp->address
+						"city"        => $address->city,
+						"area"        => $address->area,
+						"address"     => $address->address
 					)
 				);
 
 				// Hash id map
-				$hashId[$addressTmp->id] = $this->addressModel->getState()->get("address.id");
+				$addressIdMap[$address->id] = $this->addressModel->getState()->get("address.id");
 			}
 
 			// 塞回資料
@@ -439,13 +439,13 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 			{
 				$schedule = $this->data["schedules_{$val}"];
 
-				$addressId = $schedule["address_id"];
+				$hashId = $schedule["address_id"];
 
 				// 如果 address id 在 hash map 有記錄 更新 id
-				if (isset($hashId[$addressId]))
+				if (isset($addressIdMap[$hashId]))
 				{
 					// 塞回資料
-					$this->data["schedules_{$val}"]["address_id"] = $hashId[$addressId];
+					$this->data["schedules_{$val}"]["address_id"] = $addressIdMap[$hashId];
 				}
 			}
 		}
@@ -463,13 +463,11 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 
 		foreach (array("1st", "2nd", "3rd") as $val)
 		{
-			// 沒有值跳過
-			if (empty($this->data["schedules_{$val}"]["deliver_nth"]))
+			// 有值就給
+			if (! empty($this->data["schedules_{$val}"]["deliver_nth"]))
 			{
-				continue;
+				$nths[] = $val;
 			}
-
-			$nths[] = $val;
 		}
 
 		// 組好他有勾選的值
