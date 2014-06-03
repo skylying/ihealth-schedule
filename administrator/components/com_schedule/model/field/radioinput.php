@@ -70,7 +70,7 @@ class JFormFieldRadioinput extends JFormField
 		$params = $this->getParams();
 
 		// Prepare input data
-		$numberSets = isset($this->value) ? json_decode($this->value) : array();
+		$numberSets = isset($this->value) ? $this->value : array();
 
 		// Start building HTML
 		$html .= '<fieldset><legend>' . $params->label . '</legend>';
@@ -113,7 +113,7 @@ HTML;
 			'id'    => $this->id,
 			'type'  => 'text',
 			'name'  => $this->name,
-			'value' => htmlspecialchars($this->value, ENT_COMPAT, 'UTF-8'),
+			'value' => htmlspecialchars(json_encode($this->value), ENT_COMPAT, 'UTF-8'),
 			'class' => 'hide hiddenjson',
 		);
 
