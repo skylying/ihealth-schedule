@@ -107,6 +107,20 @@ class ScheduleViewSchedulesHtml extends GridView
 	}
 
 	/**
+	 * prepareRender
+	 *
+	 * @return  void
+	 */
+	protected function prepareRender()
+	{
+		parent::prepareRender();
+
+		$data = $this->getData();
+
+		$data->formPrint = $this->get('FormPrint');
+	}
+
+	/**
 	 * configToolbar
 	 *
 	 * @param array $buttonSet
