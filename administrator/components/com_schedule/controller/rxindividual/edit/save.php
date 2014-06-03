@@ -91,7 +91,7 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 	{
 		$this->addressModel = $this->getModel("Address");
 
-		$this->customer = $this->getUpdateCustomerData($this->data['customer_id']);
+		$this->customer = $this->getUpdatedCustomerData($this->data['customer_id']);
 
 		$this->createAddress();
 
@@ -151,13 +151,13 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 			$address = $this->mapper['address']->findOne($schedule["address_id"]);
 
 			// 外送路線
-			$routes = $this->getUpdateRouteData($address, $schedule);
+			$routes = $this->getUpdatedRouteData($address, $schedule);
 
 			// 外送者
 			$sender = $this->mapper['address']->findOne($routes->sender_id);
 
 			// Get task
-			$task = $this->getUpdateScheduleTaskData($sender, $schedule);
+			$task = $this->getUpdatedScheduleTaskData($sender, $schedule);
 
 			// 新增排程
 			$this->scheduleModel->save(
@@ -236,7 +236,7 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 	 *
 	 * @throws  Exception
 	 */
-	protected function getUpdateRouteData($address, $schedule)
+	protected function getUpdatedRouteData($address, $schedule)
 	{
 		$routeModel   = $this->getModel("Route");
 
@@ -284,7 +284,7 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 	 *
 	 * @return  Data
 	 */
-	protected function getUpdateScheduleTaskData($sender, $schedule)
+	protected function getUpdatedScheduleTaskData($sender, $schedule)
 	{
 		$taskModel  = $this->getModel("Task");
 
@@ -321,7 +321,7 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 	 *
 	 * @throws  \Exception
 	 */
-	protected function getUpdateCustomerData($id)
+	protected function getUpdatedCustomerData($id)
 	{
 		$customer = $this->mapper['customer']->findOne($id);
 
