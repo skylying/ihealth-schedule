@@ -49,17 +49,15 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 	protected $customer;
 
 	/**
-	 * Instantiate the controller.
+	 * Prepare Execute
 	 *
-	 * @param \JInput          $input
-	 * @param \JApplicationCms $app
-	 * @param array            $config
+	 * @return  void
 	 */
-	public function __construct(\JInput $input = null, \JApplicationCms $app = null, $config = array())
+	protected function prepareExecute()
 	{
 		$this->initMapper();
 
-		parent::__construct($input, $app, $config);
+		parent::prepareExecute();
 	}
 
 	/**
