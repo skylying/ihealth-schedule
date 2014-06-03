@@ -66,7 +66,7 @@
 			});
 
 			// Bind save new address
-			$('.js-nth-schedule-info').on('click', '.js-save-address', saveAddress);
+			$('.js-nth-schedule-info').on('click', '.js-save-address', function(){ self.saveAddress(this); });
 
 			// Bind add new telephone
 			$('.js-add-tel').on('click', function()
@@ -76,98 +76,6 @@
 
 			// Bind save new telephone
 			$('.js-save-tel').on('click', saveTel);
-
-			function saveAddress()
-			{
-				// The dynamic row wrapper
-				var currentWrap = $(this).closest('.js-tmpl-add-addressrow');
-
-				// The hidden input will save the user customized input address, and wait for model to save.
-				var targetHiddenInput = $("#" + self.options.createAddressId);
-
-				// Select all the address drop down list, since we have to update all at once
-				var targetListToUpdate = $('.js-address-wrap select');
-
-				// Store the concatenated string
-				var resultString = '';
-
-				// <option> tag to append
-				var html = '';
-
-				// Data to stored
-				var data;
-
-				if (targetHiddenInput.val() == '' || targetHiddenInput.val() == '{}')
-				{
-					// initialize with array
-					data = [];
-				}
-				else
-				{
-					// initialize with input
-					data = JSON.parse(targetHiddenInput.val());
-				}
-
-				var objectToAdd = {
-					id: 'hash-' + data.length,
-					city: currentWrap.find('#jform_city').val(),
-					area: currentWrap.find('#jform_area').val(),
-					address: currentWrap.find('.js-address-row-data').val()
-				};
-
-				if ((objectToAdd.city == '')
-					|| (objectToAdd.area == '')
-					|| (objectToAdd.address == ''))
-				{
-					// Notify user to make sure they input correctly
-					Joomla.renderMessages([
-						['欄位輸入不完整']
-					]);
-				}
-				else if ((objectToAdd.city != '')
-					|| (objectToAdd.area != '')
-					|| (objectToAdd.address != ''))
-				{
-					data.push(objectToAdd);
-
-					// Concatenate string.
-					resultString = currentWrap.find('#jform_city option:selected').text() +
-						currentWrap.find('#jform_area option:selected').text() +
-						objectToAdd.address;
-
-					// Form up html <option>
-					html = '<option' +
-						' city="' + objectToAdd.city + '"' +
-						' area="' + objectToAdd.area + '"' +
-						' value="' + objectToAdd.id + '">' +
-						resultString +
-						'</option>';
-
-					// Update drop down list at once
-					targetListToUpdate.each(function()
-					{
-						$(this).append(html);
-						$(this).find('option:last').attr('selected', true);
-					});
-
-					// Update to hidden input
-					self.updateJsonToInputField(self.options.createAddressId, data);
-
-					// Clear current row
-					currentWrap.addClass('hide');
-
-					// Update Schedule date once
-					window.DeliverScheduleHandler.updateScheduleDate(
-						$('#' + self.options.seeDrDateId).val(),
-						$('#' + self.options.periodId).val(),
-						self.options.addressesKeys
-					);
-
-					Joomla.renderMessages([
-						['提醒您，您已新增散客電話或地址，記得按儲存喲。']
-					]);
-				}
-			}
 
 			function saveTel()
 			{
@@ -243,6 +151,98 @@
 			}
 		},
 
+		saveAddress : function(self)
+		{
+			// The dynamic row wrapper
+			var currentWrap = $(self).closest('.js-tmpl-add-addressrow');
+
+			// The hidden input will save the user customized input address, and wait for model to save.
+			var targetHiddenInput = $("#" + this.options.createAddressId);
+
+			// Select all the address drop down list, since we have to update all at once
+			var targetListToUpdate = $('.js-address-wrap select');
+
+			// Store the concatenated string
+			var resultString = '';
+
+			// <option> tag to append
+			var html = '';
+
+			// Data to stored
+			var data;
+
+			if (targetHiddenInput.val() == '' || targetHiddenInput.val() == '{}')
+			{
+				// initialize with array
+				data = [];
+			}
+			else
+			{
+				// initialize with input
+				data = JSON.parse(targetHiddenInput.val());
+			}
+
+			var objectToAdd = {
+				id: 'hash-' + data.length,
+				city: currentWrap.find('#jform_city').val(),
+				area: currentWrap.find('#jform_area').val(),
+				address: currentWrap.find('.js-address-row-data').val()
+			};
+
+			if ((objectToAdd.city == '')
+				|| (objectToAdd.area == '')
+				|| (objectToAdd.address == ''))
+			{
+				// Notify user to make sure they input correctly
+				Joomla.renderMessages([
+					['欄位輸入不完整']
+				]);
+			}
+			else if ((objectToAdd.city != '')
+				|| (objectToAdd.area != '')
+				|| (objectToAdd.address != ''))
+			{
+				data.push(objectToAdd);
+
+				// Concatenate string.
+				resultString = currentWrap.find('#jform_city option:selected').text() +
+					currentWrap.find('#jform_area option:selected').text() +
+					objectToAdd.address;
+
+				// Form up html <option>
+				html = '<option' +
+					' city="' + objectToAdd.city + '"' +
+					' area="' + objectToAdd.area + '"' +
+					' value="' + objectToAdd.id + '">' +
+					resultString +
+					'</option>';
+
+				// Update drop down list at once
+				targetListToUpdate.each(function()
+				{
+					$(this).append(html);
+					$(this).find('option:last').attr('selected', true);
+				});
+
+				// Update to hidden input
+				this.updateJsonToInputField(this.options.createAddressId, data);
+
+				// Clear current row
+				currentWrap.addClass('hide');
+
+				// Update Schedule date once
+				window.DeliverScheduleHandler.updateScheduleDate(
+					$('#' + this.options.seeDrDateId).val(),
+					$('#' + this.options.periodId).val(),
+					this.options.addressesKeys
+				);
+
+				Joomla.renderMessages([
+					['提醒您，您已新增散客電話或地址，記得按儲存喲。']
+				]);
+			}
+		},
+
 		/**
 		 * Fire ajax request and get from Customer model and Addresses modl
 		 *
@@ -267,8 +267,6 @@
 					{
 						// Update phone numbers
 						var tel_office = cdata.tel_office;
-
-						console.log(tel_office);
 
 						// Update phone select list
 						self.updatePhoneHtml(self.options.telOfficeId, tel_office);
