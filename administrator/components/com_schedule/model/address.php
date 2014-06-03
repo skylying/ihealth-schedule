@@ -7,6 +7,9 @@
  */
 
 use Windwalker\Model\AdminModel;
+use Windwalker\Joomla\DataMapper\DataMapper;
+use Windwalker\Data\Data;
+use Schedule\Table\Table;
 
 // No direct access
 defined('_JEXEC') or die;
@@ -92,5 +95,34 @@ class ScheduleModelAddress extends AdminModel
 		$this->db->setQuery($q);
 
 		return $this;
+	}
+
+	/**
+	 * Prepare and sanitise the table data prior to saving.
+	 *
+	 * @param   JTable  $table  A reference to a JTable object.
+	 *
+	 * @return  void
+	 */
+	protected function prepareTable(\JTable $table)
+	{
+		$cityMapper = new DataMapper(Table::CITIES);
+		$areaMapper = new DataMapper(Table::AREAS);
+
+		if (! empty($table->city))
+		{
+			$city = $cityMapper->findOne($table->city);
+
+			$table->city_title = $city->title;
+		}
+
+		if (! empty($table->area))
+		{
+			$area = $areaMapper->findOne($table->area);
+
+			$table->area_title = $area->title;
+		}
+
+		parent::prepareTable($table);
 	}
 }
