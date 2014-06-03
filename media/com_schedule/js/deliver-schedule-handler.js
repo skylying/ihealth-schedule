@@ -52,8 +52,12 @@
 		 * @param {json}      period
 		 * @param {array}     addressesKeys
 		 */
-		updateScheduleDate: function(seeDrDate, period, addressesKeys)
+		updateScheduleDate: function()
 		{
+			var seeDrDate = $('#' + this.options.seeDrDateId).val();
+			var period = $('#' + this.options.periodId).val();
+			var addressesKeys = this.options.addressesKeys;
+
 			var self = this;
 			var moment_date = moment(seeDrDate);
 

@@ -113,7 +113,6 @@
 			$('.js-nth-schedule-check input[type=checkbox]').on('change', function()
 			{
 				window.DeliverScheduleHandler.bindChangeNthScheduleInfo($(this));
-
 			});
 
 			// Trigger once to update show schedule info box
@@ -131,31 +130,19 @@
 			// Bind See Doctor Date on change, update schedule date
 			$('#' + self.options.seeDrDateId).on('change', function()
 			{
-				window.DeliverScheduleHandler.updateScheduleDate(
-					$('#' + self.options.seeDrDateId).val(),
-					$('#' + self.options.periodId).val(),
-					self.options.addressesKeys
-				);
+				window.DeliverScheduleHandler.updateScheduleDate();
 			});
 
 			// Bind Drug period on change, update schedule date
 			$('#' + self.options.periodId).on('change', function()
 			{
-				window.DeliverScheduleHandler.updateScheduleDate(
-					$('#' + self.options.seeDrDateId).val(),
-					$('#' + self.options.periodId).val(),
-					self.options.addressesKeys
-				);
+				window.DeliverScheduleHandler.updateScheduleDate();
 			});
 
 			// Bind address list on change, update schedule date
 			$('.js-address-wrap').on('change', '.js-address-list', function()
 			{
-				window.DeliverScheduleHandler.updateScheduleDate(
-					$('#' + self.options.seeDrDateId).val(),
-					$('#' + self.options.periodId).val(),
-					self.options.addressesKeys
-				);
+				window.DeliverScheduleHandler.updateScheduleDate();
 			});
 
 			// Combine selector, whenever schedule's checkboxes are changed, update 'send date'
@@ -165,11 +152,7 @@
 
 			$scheduleAll.on('change', function()
 			{
-				window.DeliverScheduleHandler.updateScheduleDate(
-					$('#' + self.options.seeDrDateId).val(),
-					$('#' + self.options.periodId).val(),
-					self.options.addressesKeys
-				);
+				window.DeliverScheduleHandler.updateScheduleDate();
 			});
 		}
 	};
