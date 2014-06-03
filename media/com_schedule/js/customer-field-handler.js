@@ -284,6 +284,7 @@
 
 						// Update phone select list
 						self.updatePhoneHtml(self.options.telOfficeId, tel_office);
+						self.updateJsonToInputField(self.options.telOfficeId, tel_office);
 					}
 					catch (err)
 					{
@@ -297,6 +298,7 @@
 
 						// Update phone select list
 						self.updatePhoneHtml(self.options.telHomeId, tel_home);
+						self.updateJsonToInputField(self.options.telHomeId, tel_home);
 					}
 					catch (err)
 					{
@@ -310,6 +312,7 @@
 
 						// Update phone select list
 						self.updatePhoneHtml(self.options.mobileId, mobile);
+						self.updateJsonToInputField(self.options.mobileId, mobile);
 					}
 					catch (err)
 					{
