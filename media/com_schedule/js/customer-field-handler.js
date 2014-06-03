@@ -75,80 +75,94 @@
 			});
 
 			// Bind save new telephone
-			$('.js-save-tel').on('click', saveTel);
+			$('.js-save-tel').on('click', function(){ self.saveTel(this); });
+		},
 
-			function saveTel()
+		saveTel : function(self)
+		{
+			var wrapperElement = $(self).closest('.js-tel-wrap');
+			var phoneToAdd = wrapperElement.find('.js-tel-row-data');
+
+			// Remove whitespace
+			phoneToAdd.val(phoneToAdd.val().replace(/\s+/g, ''));
+
+			if (phoneToAdd != "")
 			{
-				var wrapperElement = $(this).closest('.js-tel-wrap');
-				var phoneToAdd = wrapperElement.find('.js-tel-row-data');
+				// This value is a requirement
+				var limit = 3;
 
-				// Remove whitespace
-				phoneToAdd.val(phoneToAdd.val().replace(/\s+/g, ''));
+				var b_set = false;
 
-				if (phoneToAdd != "")
+				var data;
+
+				var inputValue = wrapperElement.find('input[type=hidden]').val();
+
+				if (inputValue == '' || inputValue == '{}')
 				{
-					// This value is a requirement
-					var limit = 3;
-
-					var b_set = false;
-
-					var data;
-
-					var inputValue = wrapperElement.find('input[type=hidden]').val();
-
-					if (inputValue == '' || inputValue == '{}')
-					{
-						// initialize with array
-						data = [];
-					}
-					else
-					{
-						// initialize with input
-						data = JSON.parse(inputValue);
-					}
-
-					//Only if the data length smaller than limitation will the insertion being executed
-					if (data.length < limit)
-					{
-						for (var index = 0; index < data.length; index++)
-						{
-							// Replace the empty field.
-							data[index].number = data[index].number.replace(/\s+/g, '');
-
-							// If empty, overwrite it
-							if (data[index].number == "")
-							{
-								data[index].number = phoneToAdd.val();
-								data[index].default = 'true';
-								b_set = true;
-
-								continue;
-							}
-							// If not match, reset every element's default to 'false'
-							data[index].default = 'false';
-						}
-						// If no replacement was done, and the length is still not exceed the limit, perform insertion.
-						if (!b_set)
-						{
-							var tagId = wrapperElement.find('input[type=hidden]').prop('id');
-
-							data.push({default: 'true', number: phoneToAdd.val()});
-
-							// Perform html update
-							self.updatePhoneHtml(tagId, data);
-
-							// Perform hidden input update
-							self.updateJsonToInputField(tagId, data);
-						}
-					}
+					// initialize with array
+					data = [];
+				}
+				else
+				{
+					// initialize with input
+					data = JSON.parse(inputValue);
 				}
 
-				// Clear the input value
-				phoneToAdd.val("");
+				//Only if the data length smaller than limitation will the insertion being executed
+				if (data.length < limit)
+				{
+					for (var index = 0; index < data.length; index++)
+					{
+						// Replace the empty field.
+						data[index].number = data[index].number.replace(/\s+/g, '');
 
-				// Hide the input row
-				$(this).closest('.js-tmpl-add-telrow').addClass('hide');
+						// If empty, overwrite it
+						if (data[index].number == "")
+						{
+							data[index].number = phoneToAdd.val();
+							data[index].default = 'true';
+							b_set = true;
+
+							Joomla.renderMessages([
+								['提醒您，您已新增散客電話或地址，記得按儲存喲。']
+							]);
+
+							continue;
+						}
+						// If not match, reset every element's default to 'false'
+						data[index].default = 'false';
+					}
+					// If no replacement was done, and the length is still not exceed the limit, perform insertion.
+					if (!b_set)
+					{
+						var tagId = wrapperElement.find('input[type=hidden]').prop('id');
+
+						data.push({default: 'true', number: phoneToAdd.val()});
+
+						// Perform html update
+						this.updatePhoneHtml(tagId, data);
+
+						// Perform hidden input update
+						this.updateJsonToInputField(tagId, data);
+
+						Joomla.renderMessages([
+							['提醒您，您已新增散客電話或地址，記得按儲存喲。']
+						]);
+					}
+				}
+				else
+				{
+					Joomla.renderMessages([
+						['提醒您，電話目前上限為最多三筆。']
+					]);
+				}
 			}
+
+			// Clear the input value
+			phoneToAdd.val("");
+
+			// Hide the input row
+			$(self).closest('.js-tmpl-add-telrow').addClass('hide');
 		},
 
 		saveAddress : function(self)
