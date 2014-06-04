@@ -111,12 +111,11 @@ class ScheduleViewRxindividualHtml extends EditView
 		$buttonSet                     = parent::configureToolbar($buttonSet, $canDo);
 		$buttonSet['print']['handler'] = function ()
 		{
-			$html =
-				<<<HTML
+			$html = <<<HTML
 			<button class="btn btn-info" onclick="Joomla.submitbutton('rxindividuals.redirect')">
 				<span class="glyphicon glyphicon-print"></span> 儲存列印
 			</button>
-				HTML;
+HTML;
 
 			$bar  = JToolbar::getInstance('toolbar');
 			$bar->appendButton('custom', $html);

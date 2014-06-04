@@ -21,9 +21,20 @@ defined('_JEXEC') or die;
 		</a>
 	</div>
 	<div class="col-lg-12 center">
-		<h2>這是
-			<?php echo $data->item->customer_name; ?>
+		<h2>
+			這是
+			<?php echo $data->item->customer_name;?>
+			第
+			<?php echo $data->item->deliver_nths;?>
+			次的外送資料
+			處方箋編號:
+			<?php echo $data->item->id;?>
 		</h2>
 	</div>
+	<div class="col-lg-12 center">
+		<div class="col-lg-6 center"></div>
+		<div class="col-lg-6 center"></div>
+	</div>
+
 <div>
 
