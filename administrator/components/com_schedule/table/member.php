@@ -6,6 +6,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
+use Windwalker\Joomla\DataMapper\DataMapper;
 use Windwalker\Table\Table;
 
 // No direct access
@@ -95,8 +96,9 @@ class ScheduleTableMember extends Table
 	 * a new row will be inserted into the database with the properties from the
 	 * JTable instance.
 	 *
-	 * @param   boolean  $updateNulls  True to update fields even if they are null.
+	 * @param   boolean $updateNulls True to update fields even if they are null.
 	 *
+	 * @throws  Exception
 	 * @return  boolean  True on success.
 	 *
 	 * @link    http://docs.joomla.org/JTable/store
@@ -104,6 +106,14 @@ class ScheduleTableMember extends Table
 	 */
 	public function store($updateNulls = false)
 	{
+		// Prevent user email conflict
+		$member = (new DataMapper(\Schedule\Table\Table::MEMBERS))->findOne(array('email' => $this->email));
+
+		if (empty($this->id) && $member->email)
+		{
+			throw new \Exception('這個 Email 已經有人使用過了。', 403);
+		}
+
 		return parent::store($updateNulls);
 	}
 
