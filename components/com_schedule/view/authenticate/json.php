@@ -16,7 +16,7 @@ defined('_JEXEC') or die;
  *
  * @since 1.0
  */
-class ScheduleViewMemberJson extends ApiView
+class ScheduleViewAuthenticateJson extends ApiView
 {
 	/**
 	 * Property prefix.
@@ -44,39 +44,31 @@ class ScheduleViewMemberJson extends ApiView
 	 *
 	 * @var  string
 	 */
-	protected $name = 'member';
+	protected $name = 'authenticate';
 
 	/**
 	 * Property viewItem.
 	 *
 	 * @var  string
 	 */
-	protected $viewItem = 'member';
+	protected $viewItem = 'authenticate';
 
 	/**
 	 * Property viewList.
 	 *
 	 * @var  string
 	 */
-	protected $viewList = 'members';
+	protected $viewList = 'authenticates';
 
 	/**
 	 * prepareData
 	 *
-	 * @throws Exception
 	 * @return  void
 	 */
 	protected function prepareData()
 	{
 		$data = $this->getData();
 
-		$data['item'] = $this->get('Item');
-
-		unset($data['item']->password);
-
-		if (empty($data['item']->id))
-		{
-			throw new \Exception('Member not found', 404);
-		}
+		$model = $this->getModel();
 	}
 }
