@@ -14,6 +14,17 @@
 class ScheduleControllerAuthenticateDisplay extends \Windwalker\Controller\DisplayController
 {
 	/**
+	 * Prepare execute hook.
+	 *
+	 * @throws \LogicException
+	 * @return void
+	 */
+	protected function prepareExecute()
+	{
+		$this->view = $this->getView('Member', 'json');
+	}
+
+	/**
 	 * doExecute
 	 *
 	 * @throws  Exception
@@ -21,20 +32,12 @@ class ScheduleControllerAuthenticateDisplay extends \Windwalker\Controller\Displ
 	 */
 	protected function doExecute()
 	{
-		/** @var $model ScheduleModelMember */
-		$model = $this->getModel('Member');
-
 		$username = $this->input->getString('username') ? : $this->input->getString('email');
 		$password = $this->input->getString('password');
 
 		/** @throw \Exception */
-		$model->authenticate($username, $password);
+		$this->getModel('Member')->authenticate($username, $password);
 
-		$view = $this->getView('Member', 'json');
-
-		$view->setModel($model, true);
-
-		return $view->render();
+		return parent::doExecute();
 	}
 }
- 
