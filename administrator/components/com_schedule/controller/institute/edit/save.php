@@ -12,6 +12,21 @@ use Schedule\Table\Table;
  */
 class ScheduleControllerInstituteEditSave extends SaveController
 {
+	/**
+	 * preSaveHook
+	 *
+	 * @return  void
+	 */
+	protected function preSaveHook()
+	{
+		// Update empty floor
+		if (empty($this->data['floor']))
+		{
+			$this->data['floor'] = array();
+		}
+
+		parent::preSaveHook();
+	}
 
 	/**
 	 * Post-save route table, update institute table
