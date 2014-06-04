@@ -11,6 +11,7 @@ use Windwalker\Model\Model;
 use Windwalker\View\Engine\PhpEngine;
 use Windwalker\View\Html\EditView;
 use Windwalker\Xul\XulEngine;
+use Schedule\Table\Table;
 
 // No direct access
 defined('_JEXEC') or die;
@@ -100,27 +101,46 @@ class ScheduleViewRxindividualHtml extends EditView
 	/**
 	 * configToolbar
 	 *
-	 * @param array $buttonSet
-	 * @param null  $canDo
+	 * @param  array $buttonSet
+	 * @param  bool  $canDo
 	 *
-	 * @return  array
+	 * @return array
 	 */
 	protected function configureToolbar($buttonSet = array(), $canDo = null)
 	{
 		// Get default button set.
-		$buttonSet                     = parent::configureToolbar($buttonSet, $canDo);
+		$buttonSet = parent::configureToolbar($buttonSet, $canDo);
+
+		// Add custom controller redirect to print overview layout
 		$buttonSet['print']['handler'] = function ()
 		{
 			$html = <<<HTML
-			<button class="btn btn-info" onclick="Joomla.submitbutton('rxindividuals.redirect')">
-				<span class="glyphicon glyphicon-print"></span> 儲存列印
-			</button>
+<button class="btn btn-info" onclick="Joomla.submitbutton('rxindividuals.redirect')">
+	<span class="glyphicon glyphicon-print"></span> 儲存列印
+</button>
 HTML;
+			$bar = JToolbar::getInstance('toolbar');
 
-			$bar  = JToolbar::getInstance('toolbar');
 			$bar->appendButton('custom', $html);
 		};
 
 		return $buttonSet;
+	}
+
+	/**
+	 * prepareData
+	 *
+	 * @return  void
+	 */
+	protected function prepareData()
+	{
+		$data = $this->data;
+
+		$members = \Schedule\Helper\Mapping\MemberCustomerHelper::loadMembers($data->item->customer_id);
+
+		$data->item->member_list = $members;
+
+		$this->setData($data);
+
 	}
 }
