@@ -112,7 +112,7 @@ class ScheduleViewRxindividualHtml extends EditView
 		$buttonSet = parent::configureToolbar($buttonSet, $canDo);
 
 		// Add custom controller redirect to print overview layout
-		$buttonSet['print']['handler'] = function ()
+		$buttonSet['print']['handler'] = function()
 		{
 			$html = <<<HTML
 <button class="btn btn-info" onclick="Joomla.submitbutton('rxindividuals.redirect')">
@@ -141,6 +141,5 @@ HTML;
 		$data->item->member_list = $members;
 
 		$this->setData($data);
-
 	}
 }
