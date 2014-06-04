@@ -16,7 +16,7 @@ class ScheduleControllerRxindividualsRedirect extends Windwalker\Controller\Admi
 	/**
 	 * Set redirect to print overview layout
 	 *
-	 * @return  mixed|void
+	 * @return  bool
 	 */
 	protected function doExecute()
 	{
