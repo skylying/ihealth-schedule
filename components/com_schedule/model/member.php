@@ -33,7 +33,7 @@ class ScheduleModelMember extends Member
 		{
 			$input = $this->container->get('input');
 
-			$username = $input->getString('username');
+			$username = $input->getString('username') ? : $input->getString('email');
 
 			if ($username)
 			{

@@ -24,7 +24,7 @@ class ScheduleControllerAuthenticateDisplay extends \Windwalker\Controller\Displ
 		/** @var $model ScheduleModelMember */
 		$model = $this->getModel('Member');
 
-		$username = $this->input->getString('username');
+		$username = $this->input->getString('username') ? : $this->input->getString('email');
 		$password = $this->input->getString('password');
 
 		/** @throw \Exception */
