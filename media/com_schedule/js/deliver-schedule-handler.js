@@ -75,8 +75,8 @@
 
 				if ($(deliveredNth).is(":checked") && address != '')
 				{
-					var city = $(selectedAddressId).find('option:selected').attr('city');
-					var area = $(selectedAddressId).find('option:selected').attr('area');
+					var city = $(selectedAddressId).find('option:selected').data('city');
+					var area = $(selectedAddressId).find('option:selected').data('area');
 
 					// fire ajax only if address info is sufficient
 					if(city && area)
