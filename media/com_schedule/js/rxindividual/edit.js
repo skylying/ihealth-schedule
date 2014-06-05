@@ -41,7 +41,6 @@
 
 				SUCCESS_ROUTE_EXIST  : 0,
 				ERROR_NO_ROUTE       : 1,
-				ERROR_NO_SEE_DR_DATE : 2
 				ERROR_NO_SEE_DR_DATE : 2,
 
 				isEdit               : 0
