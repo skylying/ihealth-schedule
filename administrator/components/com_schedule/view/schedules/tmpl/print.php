@@ -27,7 +27,7 @@ $formPrint = $data->formPrint;
 		<!-- Hidden Inputs -->
 		<div id="hidden-inputs">
 			<input type="hidden" name="option" value="com_schedule" />
-			<input type="hidden" name="task" value="viewReport" />
+			<input type="hidden" name="task" value="report" />
 			<?php echo JHtml::_('form.token'); ?>
 		</div>
 	</form>
