@@ -11,6 +11,8 @@ use Windwalker\Model\Model;
 use Windwalker\View\Engine\PhpEngine;
 use Windwalker\View\Html\EditView;
 use Windwalker\Xul\XulEngine;
+use Windwalker\Joomla\DataMapper\DataMapper;
+use Windwalker\Data\Data;
 
 // No direct access
 defined('_JEXEC') or die;
@@ -83,9 +85,79 @@ class ScheduleViewDrugdetailHtml extends EditView
 	 * Prepare data hook.
 	 *
 	 * @return  void
+	 *
+	 * @throws Exception
 	 */
 	protected function prepareData()
 	{
+		$app = JFactory::getApplication();
+
+		$senderCid = $app->input->get("senderCid");
+		$senderCid = explode(",", $senderCid);
+
+		$date = $app->input->get("date");
+
+		if (empty($senderCid) || empty($senderCid[0]))
+		{
+			throw new \Exception("給我 sender !");
+		}
+
+		if (empty($date))
+		{
+			throw new \Exception("給我 date ! QAQ");
+		}
+
+		$tasks = $this->getTaskData($date, $senderCid);
+
+		$taskCid = \JArrayHelper::getColumn($tasks, "id");
+
+		$this->data->schedules = $this->getScheduleData($taskCid);
+
+		$this->data->extras = $this->getDrugExtraData($taskCid);
+
 		parent::prepareData();
+	}
+
+	/**
+	 * 取得 task 資料
+	 *
+	 * @param   string  $date
+	 * @param   array   $senderCid
+	 *
+	 * @return  Data[]
+	 */
+	protected function getTaskData($date, $senderCid)
+	{
+		$taskMapper = new DataMapper(Table::TASKS);
+
+		return $taskMapper->find(array("date" => $date, "sender" => $senderCid));
+	}
+
+	/**
+	 * 取得 schedule 資料
+	 *
+	 * @param   array  $taskCid
+	 *
+	 * @return  Data[]
+	 */
+	protected function getScheduleData($taskCid)
+	{
+		$schedulesMapper = new DataMapper(Table::SCHEDULES);
+
+		return $schedulesMapper->find(array("task_id" => $taskCid));
+	}
+
+	/**
+	 * 取得額外分藥資料
+	 *
+	 * @param   array  $taskCid
+	 *
+	 * @return  Data[]
+	 */
+	protected function getDrugExtraData($taskCid)
+	{
+		$extraMapper = new DataMapper(Table::DRUG_EXTRA_DETAILS);
+
+		return $extraMapper->find(array("task_id" => $taskCid));
 	}
 }
