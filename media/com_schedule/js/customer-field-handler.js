@@ -203,6 +203,7 @@
 				address: currentWrap.find('.js-address-row-data').val()
 			};
 
+			// Validate necessary fields
 			if ((objectToAdd.city == '')
 				|| (objectToAdd.area == '')
 				|| (objectToAdd.address == ''))
@@ -211,50 +212,47 @@
 				Joomla.renderMessages([
 					['欄位輸入不完整']
 				]);
+
+				return;
 			}
-			else if ((objectToAdd.city != '')
-				|| (objectToAdd.area != '')
-				|| (objectToAdd.address != ''))
+			data.push(objectToAdd);
+
+			// Concatenate string.
+			resultString = currentWrap.find('#jform_city option:selected').text() +
+				currentWrap.find('#jform_area option:selected').text() +
+				objectToAdd.address;
+
+			// Form up html <option>
+			html = '<option' +
+				' data-city="' + objectToAdd.city + '"' +
+				' data-area="' + objectToAdd.area + '"' +
+				' value="' + objectToAdd.id + '">' +
+				resultString +
+				'</option>';
+
+			// Update drop down list at once
+			targetListToUpdate.each(function()
 			{
-				data.push(objectToAdd);
+				$(this).append(html);
+				$(this).find('option:last').attr('selected', true);
+			});
 
-				// Concatenate string.
-				resultString = currentWrap.find('#jform_city option:selected').text() +
-					currentWrap.find('#jform_area option:selected').text() +
-					objectToAdd.address;
+			// Update to hidden input
+			this.updateJsonToInputField(this.options.createAddressId, data);
 
-				// Form up html <option>
-				html = '<option' +
-					' city="' + objectToAdd.city + '"' +
-					' area="' + objectToAdd.area + '"' +
-					' value="' + objectToAdd.id + '">' +
-					resultString +
-					'</option>';
+			// Clear current row
+			currentWrap.addClass('hide');
 
-				// Update drop down list at once
-				targetListToUpdate.each(function()
-				{
-					$(this).append(html);
-					$(this).find('option:last').attr('selected', true);
-				});
+			// Update Schedule date once
+			window.DeliverScheduleHandler.updateScheduleDate(
+				$('#' + this.options.seeDrDateId).val(),
+				$('#' + this.options.periodId).val(),
+				this.options.addressesKeys
+			);
 
-				// Update to hidden input
-				this.updateJsonToInputField(this.options.createAddressId, data);
-
-				// Clear current row
-				currentWrap.addClass('hide');
-
-				// Update Schedule date once
-				window.DeliverScheduleHandler.updateScheduleDate(
-					$('#' + this.options.seeDrDateId).val(),
-					$('#' + this.options.periodId).val(),
-					this.options.addressesKeys
-				);
-
-				Joomla.renderMessages([
-					['提醒您，您已新增散客電話或地址，記得按儲存喲。']
-				]);
-			}
+			Joomla.renderMessages([
+				['提醒您，您已新增散客電話或地址，記得按儲存喲。']
+			]);
 		},
 
 		/**
