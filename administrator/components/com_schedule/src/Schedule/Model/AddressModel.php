@@ -14,11 +14,11 @@ use Windwalker\Model\AdminModel;
 defined('_JEXEC') or die;
 
 /**
- * Class Schedule\Model\Member
+ * Class Schedule\Model\AddressModel
  *
  * @since 1.0
  */
-class Member extends AdminModel
+class AddressModel extends AdminModel
 {
 	/**
 	 * Property prefix.
@@ -37,7 +37,7 @@ class Member extends AdminModel
 	/**
 	 * Property textPrefix.
 	 *
-	 * @var  string
+	 * @var string
 	 */
 	protected $textPrefix = 'COM_SCHEDULE';
 
@@ -46,21 +46,21 @@ class Member extends AdminModel
 	 *
 	 * @var  string
 	 */
-	protected $name = 'member';
+	protected $name = 'address';
 
 	/**
 	 * Property viewItem.
 	 *
 	 * @var  string
 	 */
-	protected $viewItem = 'member';
+	protected $viewItem = 'address';
 
 	/**
 	 * Property viewList.
 	 *
 	 * @var  string
 	 */
-	protected $viewList = 'members';
+	protected $viewList = 'addresses';
 
 	/**
 	 * Method to set new item ordering as first or last.
@@ -73,5 +73,26 @@ class Member extends AdminModel
 	public function setOrderPosition($table, $position = 'last')
 	{
 		parent::setOrderPosition($table, $position);
+	}
+
+	/**
+	 * Prepare and sanitise the table data prior to saving.
+	 *
+	 * @param   \JTable  $table  A reference to a JTable object.
+	 *
+	 * @return  void
+	 */
+	protected function prepareTable(\JTable $table)
+	{
+		parent::prepareTable($table);
+
+		$tableCity = $this->getTable('City');
+		$tableCity->load($table->city);
+
+		$tableArea = $this->getTable('Area');
+		$tableArea->load($table->area);
+
+		$table->city_title = $tableCity->title;
+		$table->area_title = $tableArea->title;
 	}
 }

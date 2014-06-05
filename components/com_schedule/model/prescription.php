@@ -6,19 +6,15 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-namespace Schedule\Model;
-
-use Windwalker\Model\AdminModel;
-
 // No direct access
 defined('_JEXEC') or die;
 
 /**
- * Class Schedule\Model\Member
+ * Class ScheduleModelPrescription
  *
  * @since 1.0
  */
-class Member extends AdminModel
+class ScheduleModelPrescription extends \Windwalker\Model\AdminModel
 {
 	/**
 	 * Property prefix.
@@ -37,7 +33,7 @@ class Member extends AdminModel
 	/**
 	 * Property textPrefix.
 	 *
-	 * @var  string
+	 * @var string
 	 */
 	protected $textPrefix = 'COM_SCHEDULE';
 
@@ -46,32 +42,19 @@ class Member extends AdminModel
 	 *
 	 * @var  string
 	 */
-	protected $name = 'member';
+	protected $name = 'prescription';
 
 	/**
 	 * Property viewItem.
 	 *
 	 * @var  string
 	 */
-	protected $viewItem = 'member';
+	protected $viewItem = 'prescription';
 
 	/**
 	 * Property viewList.
 	 *
 	 * @var  string
 	 */
-	protected $viewList = 'members';
-
-	/**
-	 * Method to set new item ordering as first or last.
-	 *
-	 * @param   \JTable  $table     Item table to save.
-	 * @param   string   $position  'first' or other are last.
-	 *
-	 * @return  void
-	 */
-	public function setOrderPosition($table, $position = 'last')
-	{
-		parent::setOrderPosition($table, $position);
-	}
+	protected $viewList = 'prescriptions';
 }

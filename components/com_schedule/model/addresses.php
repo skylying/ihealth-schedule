@@ -54,21 +54,12 @@ class ScheduleModelAddresses extends \Windwalker\Model\ListModel
 	 */
 	protected function populateState($ordering = null, $direction = null)
 	{
+		$input = $this->getContainer()->get('input');
+
+		// Set filter: customer_id
+		$_REQUEST['filter']['address.customer_id'] = $input->get('customer_id');
+
 		parent::populateState($ordering, $direction);
-
-		$container = $this->getContainer();
-		$input = $container->get('input');
-
-		$customerId = (int) $input->get('customer_id');
-
-		$filters = $this->state->get('filter', array());
-
-		if (! empty($customerId))
-		{
-			$filters['customer_id'] = $customerId;
-		}
-
-		$this->state->set('filter', $filters);
 	}
 
 	/**

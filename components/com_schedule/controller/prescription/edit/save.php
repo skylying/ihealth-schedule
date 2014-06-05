@@ -9,10 +9,10 @@
 use Schedule\Controller\Api\ApiSaveController;
 
 /**
- * Class ScheduleControllerAddressEditSave
+ * Class ScheduleControllerPrescriptionEditSave
  *
  * @since 1.0
  */
-class ScheduleControllerAddressEditSave extends ApiSaveController
+class ScheduleControllerPrescriptionEditSave extends ApiSaveController
 {
 }

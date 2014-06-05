@@ -151,8 +151,12 @@ class Customer extends AdminModel
 		$tableArea = $this->getTable('Area');
 		$tableArea->load($table->area);
 
+		$tableHospital = $this->getTable('Hospital');
+		$tableHospital->load($table->hospital);
+
 		$table->city_title = $tableCity->title;
 		$table->area_title = $tableArea->title;
+		$table->hospital_title = $tableHospital->title;
 	}
 
 	/**

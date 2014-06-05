@@ -6,13 +6,13 @@
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
-use Schedule\Controller\Api\ApiSaveController;
+use Schedule\Controller\Api\ApiDeleteController;
 
 /**
- * Class ScheduleControllerAddressEditSave
+ * Class ScheduleControllerPrescriptionStateDelete
  *
  * @since 1.0
  */
-class ScheduleControllerAddressEditSave extends ApiSaveController
+class ScheduleControllerPrescriptionStateDelete extends ApiDeleteController
 {
 }
