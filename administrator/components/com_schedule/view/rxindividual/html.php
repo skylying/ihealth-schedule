@@ -115,7 +115,7 @@ class ScheduleViewRxindividualHtml extends EditView
 		$buttonSet['print']['handler'] = function()
 		{
 			$html = <<<HTML
-<button class="btn btn-info" onclick="Joomla.submitbutton('rxindividuals.redirect')">
+<button class="btn btn-info" target="_blank" onclick="jQuery('input[name=save-and-print]').val('1');Joomla.submitbutton('rxindividual.edit.apply')">
 	<span class="glyphicon glyphicon-print"></span> 儲存列印
 </button>
 HTML;
@@ -134,12 +134,48 @@ HTML;
 	 */
 	protected function prepareData()
 	{
+		$app = JFactory::getApplication();
+
+		$isSaveAndPrint = $app->getUserState('save-and-print');
+
+		// SaveAndPrint state has only used once
+		$app->setUserState('save-and-print', null);
+
 		$data = $this->data;
+
+		$memberList    = '';
+		$tel_office    = '';
+		$tel_home      = '';
+		$mobile        = '';
+		$customer_note = '';
 
 		$members = \Schedule\Helper\Mapping\MemberCustomerHelper::loadMembers($data->item->customer_id);
 
-		$data->item->member_list = $members;
+		$CustomerInfos = \Schedule\Helper\GetCustomerInfoHelper::getInfo($data->item->customer_id);
 
-		$this->setData($data);
+		foreach ($members as $member)
+		{
+			$memberList .= $member->name . ' ';
+		}
+
+		foreach ($CustomerInfos as $CustomerInfo)
+		{
+			$tel_office .= $CustomerInfo->tel_office . ' ';
+			$tel_home .= $CustomerInfo->tel_home . ' ';
+			$mobile .= $CustomerInfo->mobile . ' ';
+			$customer_note .= $CustomerInfo->note . ' ';
+		}
+
+		$data->item->member_list   = $memberList;
+		$data->item->tel_office    = $tel_office;
+		$data->item->tel_home      = $tel_home;
+		$data->item->mobile        = $mobile;
+		$data->item->customer_note = $customer_note;
+
+		$data['members'] = $members;
+
+		$data['print'] = $isSaveAndPrint;
+
+		$data['customerInfos'] = $CustomerInfos;
 	}
 }

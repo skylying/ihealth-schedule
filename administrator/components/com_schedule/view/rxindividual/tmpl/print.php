@@ -8,6 +8,8 @@
 
 // No direct access
 defined('_JEXEC') or die;
+
+
 ?>
 <div class="row-fluid">
 	<div class="col-lg-12 center">
@@ -29,7 +31,7 @@ defined('_JEXEC') or die;
 			這是
 			<?php echo $data->item->customer_name;?>
 			第
-			<?php echo $data->item->deliver_nths;?>
+			<?php echo substr($data->item->deliver_nths, 0 ,1);?>
 			次的外送資料
 			(處方箋編號:
 			<?php echo $data->item->id;?>
@@ -49,9 +51,9 @@ defined('_JEXEC') or die;
 			<tbody>
 			<tr>
 				<td>所屬會員</td>
-				<td><?php echo $data->item->member_name;?></td>
+				<td><?php echo $data->item->member_list; ?></td>
 				<td>宅配次數</td>
-				<td></td>
+				<td><?php echo substr($data->item->deliver_nths, 0, 1);?></td>
 			</tr>
 			<tr>
 				<td>處方姓名</td>
@@ -87,19 +89,19 @@ defined('_JEXEC') or die;
 				<td>處方箋上傳方式</td>
 				<td><?php echo $data->item->method;?></td>
 				<td>電話(H)</td>
-				<td></td>
+				<td><?php echo $data->item->tel_home;?></td>
 			</tr>
 			<tr>
 				<td>處方開立醫院</td>
 				<td><?php echo $data->item->hospital_title;?></td>
 				<td>電話(O)</td>
-				<td></td>
+				<td><?php echo $data->item->tel_office;?></td>
 			</tr>
 			<tr>
 				<td>就醫日期</td>
 				<td><?php echo $data->item->see_dr_date;?></td>
 				<td>手機(M)</td>
-				<td></td>
+				<td><?php echo $data->item->mobile;?></td>
 			</tr>
 			<tr>
 				<td>給藥天數</td>
@@ -117,7 +119,7 @@ defined('_JEXEC') or die;
 				<td>外送次數</td>
 				<td><?php echo $data->item->times;?></td>
 				<td>客戶備註</td>
-				<td></td>
+				<td><?php echo $data->item->customer_note;?></td>
 			</tr>
 			<tr>
 				<td>藥品資料</td>
@@ -135,4 +137,3 @@ defined('_JEXEC') or die;
 		</table>
 	</div>
 <div>
-
