@@ -57,11 +57,14 @@ class ScheduleControllerCustomerEditSave extends ApiSaveController
 		$addressModel = $this->getModel("Address");
 
 		// Save address
-		foreach ($this->data['addresses'] as $address)
+		if (! empty($this->data['addresses']) && is_array($this->data['addresses']))
 		{
-			$address['customer_id'] = $validData['id'];
+			foreach ($this->data['addresses'] as $address)
+			{
+				$address['customer_id'] = $validData['id'];
 
-			$addressModel->save($address);
+				$addressModel->save($address);
+			}
 		}
 	}
 }
