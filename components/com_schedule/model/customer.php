@@ -6,7 +6,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-use Schedule\Model\Customer;
+use Schedule\Model\CustomerModel;
 
 // No direct access
 defined('_JEXEC') or die;
@@ -16,7 +16,7 @@ defined('_JEXEC') or die;
  *
  * @since 1.0
  */
-class ScheduleModelCustomer extends Customer
+class ScheduleModelCustomer extends CustomerModel
 {
 	/**
 	 * Prepare and sanitise the table data prior to saving.

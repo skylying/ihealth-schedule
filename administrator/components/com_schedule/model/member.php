@@ -6,7 +6,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-use Schedule\Model\Member;
+use Schedule\Model\MemberModel;
 
 // No direct access
 defined('_JEXEC') or die;
@@ -16,7 +16,7 @@ defined('_JEXEC') or die;
  *
  * @since 1.0
  */
-class ScheduleModelMember extends Member
+class ScheduleModelMember extends MemberModel
 {
 	/**
 	 * Overwrite getItem in order to join mapping table
