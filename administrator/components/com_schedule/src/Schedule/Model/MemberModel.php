@@ -18,7 +18,7 @@ defined('_JEXEC') or die;
  *
  * @since 1.0
  */
-class Member extends AdminModel
+class MemberModel extends AdminModel
 {
 	/**
 	 * Property prefix.
