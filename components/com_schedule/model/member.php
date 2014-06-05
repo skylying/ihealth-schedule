@@ -28,6 +28,19 @@ class ScheduleModelMember extends Member
 	 */
 	public function getItem($pk = null)
 	{
+		// If id not exists, we use email to find it.
+		if (! $pk)
+		{
+			$input = $this->container->get('input');
+
+			$username = $input->getString('username') ? : $input->getString('email');
+
+			if ($username)
+			{
+				$pk = array('email' => $username);
+			}
+		}
+
 		$this->item = parent::getItem($pk);
 
 		if (empty($this->item->id))
@@ -122,5 +135,33 @@ class ScheduleModelMember extends Member
 		}
 
 		return $addresses;
+	}
+
+	/**
+	 * authenticate
+	 *
+	 * @param string $username
+	 * @param string $password
+	 *
+	 * @throws  Exception
+	 * @return  boolean
+	 */
+	public function authenticate($username, $password)
+	{
+		$member = $this->getItem(array('email' => $username));
+
+		if (! $member->id)
+		{
+			throw new \Exception(JText::_('JGLOBAL_AUTH_NO_USER'), 403);
+		}
+
+		$match = JUserHelper::verifyPassword($password, $member->password);
+
+		if ($match !== true)
+		{
+			throw new \Exception(JText::_('JGLOBAL_AUTH_INVALID_PASS'), 403);
+		}
+
+		return true;
 	}
 }
