@@ -58,6 +58,7 @@ class JFormFieldDateTimePicker extends JFormField
 		$showButton = XmlHelper::getBool($this->element, 'show_button', false);
 		$style      = $this->getStyle();
 		$dateFormat = XmlHelper::get($this->element, 'date_format', 'YYYY-MM-DD');
+		$onChange   = XmlHelper::get($this->element, 'onchange', '');
 
 		$attr = array(
 			'type'             => 'text',
@@ -93,6 +94,8 @@ HTML;
 			$html = $input;
 		}
 
+		$onChange = "jQuery('#{$id}').on('dp.change', function(e) { {$onChange} });";
+
 		// Do not load datetimepicker when readonly or disabled
 		if (! $this->readonly && ! $this->disabled)
 		{
@@ -102,6 +105,8 @@ jQuery(function ()
 	jQuery('#{$id}').datetimepicker({
 		pickTime: false
 	});
+
+	{$onChange}
 });
 JS;
 			JFactory::getDocument()->addScriptDeclaration($js);
