@@ -115,9 +115,15 @@ class ScheduleViewDrugdetailHtml extends EditView
 
 		$this->data->schedules = $this->getScheduleData($taskCid);
 
+		$rxCid = \JArrayHelper::getColumn($this->data->tasks, "rx_id");
+
+		$this->data->rxs = $this->getRxData($rxCid);
+
 		$this->data->extras = $this->getDrugExtraData($taskCid);
 
 		DataSortHelper::orderArrayByObjectId($this->data->schedules);
+
+		DataSortHelper::orderArrayByObjectId($this->data->rxs);
 
 		DataSortHelper::orderArrayByObjectId($this->data->extras);
 
@@ -165,5 +171,19 @@ class ScheduleViewDrugdetailHtml extends EditView
 		$extraMapper = new DataMapper(Table::DRUG_EXTRA_DETAILS);
 
 		return $extraMapper->find(array("task_id" => $taskCid));
+	}
+
+	/**
+	 * 取得處方資料
+	 *
+	 * @param   array  $rxCid
+	 *
+	 * @return  mixed
+	 */
+	protected function getRxData($rxCid)
+	{
+		$rxMapper = new DataMapper(Table::PRESCRIPTIONS);
+
+		return $rxMapper->find($rxCid);
 	}
 }
