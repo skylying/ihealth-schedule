@@ -126,4 +126,38 @@ class ScheduleModelPrescription extends \Windwalker\Model\AdminModel
 
 		return $db->setQuery($query)->loadObjectList();
 	}
+
+	/**
+	 * Get drug form object to perform validation
+	 *
+	 * @return  \JForm
+	 */
+	public function getDrugForm()
+	{
+		$config = array(
+			'control'   => 'jform',
+			'load_data' => false,
+		);
+
+		$formName = 'prescription_drug';
+
+		return $this->loadForm($this->option . '.' . $formName . '.form', $formName, $config);
+	}
+
+	/**
+	 * Get schedule form object to perform validation
+	 *
+	 * @return  \JForm
+	 */
+	public function getScheduleForm()
+	{
+		$config = array(
+			'control'   => 'jform',
+			'load_data' => false,
+		);
+
+		$formName = 'prescription_schedule';
+
+		return $this->loadForm($this->option . '.' . $formName . '.form', $formName, $config);
+	}
 }
