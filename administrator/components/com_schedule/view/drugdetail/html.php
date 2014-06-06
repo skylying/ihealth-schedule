@@ -116,6 +116,10 @@ class ScheduleViewDrugdetailHtml extends EditView
 
 		$this->data->extras = $this->getDrugExtraData($taskCid);
 
+		$this->orderArrayByObjectId($this->data->schedules);
+
+		$this->orderArrayByObjectId($this->data->extras);
+
 		parent::prepareData();
 	}
 
@@ -160,5 +164,31 @@ class ScheduleViewDrugdetailHtml extends EditView
 		$extraMapper = new DataMapper(Table::DRUG_EXTRA_DETAILS);
 
 		return $extraMapper->find(array("task_id" => $taskCid));
+	}
+
+	/**
+	 * orderArrayByObjectId
+	 *
+	 * @param   Data[] &$dataset
+	 *
+	 * @return  void
+	 */
+	protected function orderArrayByObjectId(&$dataset)
+	{
+		foreach ($dataset as $key => $data)
+		{
+			// Cache data
+			$cache = $data;
+
+			// Protected isset data
+			if (! empty($dataset[$data->id]))
+			{
+				$dataset[] = $dataset[$data->id];
+			}
+
+			$dataset[$data->id] = $cache;
+
+			unset($dataset[$key]);
+		}
 	}
 }
