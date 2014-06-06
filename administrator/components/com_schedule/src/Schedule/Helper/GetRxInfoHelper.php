@@ -31,13 +31,15 @@ class GetRxInfoHelper
 	{
 		$db      = \JFactory::getDbo();
 		$query   = $db->getQuery(true);
-		$select  = 'schedule.tel_office,
-		            schedule.tel_home,
-		            schedule.mobile,
-		            schedule.city_title,
-		            schedule.area_title,
-		            schedule. address,
-		            schedule.deliver_nth';
+		$select  = array(
+			'schedule.tel_office',
+			'schedule.tel_home',
+			'schedule.mobile',
+			'schedule.city_title',
+			'schedule.area_title',
+			'schedule. address',
+			'schedule.deliver_nth'
+		);
 
 		$query->select($select)
 			->from(Table::SCHEDULES . ' AS schedule')

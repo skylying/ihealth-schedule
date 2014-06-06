@@ -9,10 +9,18 @@
 // No direct access
 defined('_JEXEC') or die;
 
-
 ?>
+
+<style>
+	@media print {
+		.printButton {
+			display : none;
+		}
+	}
+</style>
+
 <div class="row-fluid">
-	<div class="col-lg-12 center">
+	<div class="col-lg-12 center printButton">
 		<a class="btn btn-default btn-info" onclick="window.print();">
 			<i class="glyphicon glyphicon-print">
 				列印
@@ -119,7 +127,7 @@ defined('_JEXEC') or die;
 				<td>外送次數</td>
 				<td><?php echo $data->item->times; ?></td>
 				<td>客戶備註</td>
-				<td><?php echo $data->item->customer_Note; ?></td>
+				<td><?php echo $data->item->customer_note; ?></td>
 			</tr>
 			<tr>
 				<td>藥品資料</td>

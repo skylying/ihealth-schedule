@@ -115,7 +115,7 @@ class ScheduleViewRxindividualHtml extends EditView
 		$buttonSet['print']['handler'] = function()
 		{
 			$html = <<<HTML
-<button class="btn btn-info" target="_blank" onclick="jQuery('input[name=save-and-print]').val('1');Joomla.submitbutton('rxindividual.edit.apply')">
+<button class="btn btn-info" onclick="jQuery('input[name=save-and-print]').val('1');Joomla.submitbutton('rxindividual.edit.apply')">
 	<span class="glyphicon glyphicon-print"></span> 儲存列印
 </button>
 HTML;
@@ -153,16 +153,16 @@ HTML;
 
 		$data = $this->data;
 
-		$memberList     = '';
-		$tel_office     = '';
-		$tel_home       = '';
-		$mobile         = '';
-		$address        = '';
-		$customer_Note  = '';
-		$deliverNth     = '';
+		$memberList    = '';
+		$tel_office    = '';
+		$tel_home      = '';
+		$mobile        = '';
+		$address       = '';
+		$customer_note = '';
+		$deliverNth    = '';
 
 		$members       = \Schedule\Helper\Mapping\MemberCustomerHelper::loadMembers($data->item->customer_id);
-		$rxInfos       = \Schedule\Helper\GetRxInfoHelper::getInfo($data->item->id);
+		$scheduleInfos = \Schedule\Helper\GetRxInfoHelper::getInfo($data->item->id);
 		$customerNotes = \Schedule\Helper\GetRxInfoHelper::getCustomerNote($data->item->customer_id);
 
 		foreach ($members as $member)
@@ -170,18 +170,18 @@ HTML;
 			$memberList .= $member->name . ' ';
 		}
 
-		foreach ($rxInfos as $rxInfo)
+		foreach ($scheduleInfos as $scheduleInfo)
 		{
-			$tel_office .= $rxInfo->tel_office . ' ';
-			$tel_home   .= $rxInfo->tel_home . ' ';
-			$mobile     .= $rxInfo->mobile . ' ';
-			$address    .= $rxInfo->city_title . ' - ' . $rxInfo->area_title . ' - ' . $rxInfo->address;
-			$deliverNth .= $rxInfo->deliver_nth . ' ';
+			$tel_office .= $scheduleInfo->tel_office . ' ';
+			$tel_home   .= $scheduleInfo->tel_home . ' ';
+			$mobile     .= $scheduleInfo->mobile . ' ';
+			$address    .= $scheduleInfo->city_title . ' - ' . $scheduleInfo->area_title . ' - ' . $scheduleInfo->address;
+			$deliverNth .= $scheduleInfo->deliver_nth . ' ';
 		}
 
 		foreach ($customerNotes as $CustomerNote)
 		{
-			$customer_Note .= $CustomerNote->note . ' ';
+			$customer_note .= $CustomerNote->note . ' ';
 		}
 
 		$data->item->member_list    = $memberList;
@@ -189,7 +189,7 @@ HTML;
 		$data->item->tel_home       = $tel_home;
 		$data->item->mobile         = $mobile;
 		$data->item->address        = $address;
-		$data->item->customer_Note  = $customer_Note;
+		$data->item->customer_note  = $customer_note;
 		$data->item->deliverNth     = $deliverNth;
 		$data->print                = $isSaveAndPrint;
 	}
