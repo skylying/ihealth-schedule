@@ -42,7 +42,7 @@ $options = array(
 	'mobileId'             => $mobileId,
 	'seeDrDateId'          => $data->form->getField('see_dr_date')->id,
 	'periodId'             => $data->form->getField('period')->id,
-	'createAddressId'      => $data->form->getField('create_address')->id,
+	'createAddressId'      => $data->form->getField('create_addresses')->id,
 	'timesId'              => $data->form->getField('times')->id,
 	'methodId'             => $data->form->getField('method')->id,
 	'drugId'               => $data->form->getField('drug')->id,
@@ -67,7 +67,6 @@ $data->asset->addJS('rxindividual/edit.js');
 jQuery(document).ready(function ()
 {
 	RxIndividualEdit.init(<?php echo json_encode($options); ?>);
-	RxIndividualEdit.run();
 });
 </script>
 
