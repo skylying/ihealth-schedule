@@ -14,7 +14,7 @@ use Windwalker\Model\AdminModel;
 defined('_JEXEC') or die;
 
 /**
- * Class ScheduleModelDrug
+ * Class Schedule\Model\DrugModel
  *
  * @since 1.0
  */

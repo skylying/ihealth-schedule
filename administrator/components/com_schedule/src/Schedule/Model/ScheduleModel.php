@@ -15,7 +15,7 @@ use Schedule\Table\Collection AS TableCollection;
 defined('_JEXEC') or die;
 
 /**
- * Class ScheduleModelSchedule
+ * Class Schedule\Model\ScheduleModel
  *
  * @since 1.0
  */

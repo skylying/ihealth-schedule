@@ -16,7 +16,7 @@ use Windwalker\Joomla\DataMapper\DataMapper;
 defined('_JEXEC') or die;
 
 /**
- * Class ScheduleModelCustomer
+ * Class Schedule\Model\CustomerModel
  *
  * @since 1.0
  */
