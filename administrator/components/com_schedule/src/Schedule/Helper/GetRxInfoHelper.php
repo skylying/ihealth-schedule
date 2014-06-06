@@ -29,7 +29,7 @@ class GetRxInfoHelper
 	 */
 	public static function getInfo($RxID)
 	{
-		$db      = JFactory::getDbo();
+		$db      = \JFactory::getDbo();
 		$query   = $db->getQuery(true);
 		$select  = 'schedule.tel_office,
 		            schedule.tel_home,
