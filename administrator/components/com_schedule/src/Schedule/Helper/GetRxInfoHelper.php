@@ -23,23 +23,23 @@ class GetRxInfoHelper
 	/**
 	 * getInfo
 	 *
-	 * @param $RxID
+	 * @param int $RxID
 	 *
 	 * @return  mixed
 	 */
 	public static function getInfo($RxID)
 	{
-		$db    = \JFactory::getDbo();
-		$query = $db->getQuery(true);
+		$db      = JFactory::getDbo();
+		$query   = $db->getQuery(true);
+		$select  = 'schedule.tel_office,
+		            schedule.tel_home,
+		            schedule.mobile,
+		            schedule.city_title,
+		            schedule.area_title,
+		            schedule. address,
+		            schedule.deliver_nth';
 
-		$query->select(
-			'
-									schedule.tel_office, schedule.tel_home,
-									schedule.mobile, schedule.city_title,
-									schedule.area_title, schedule. address,
-									schedule.deliver_nth
-								   '
-		)
+		$query->select($select)
 			->from(Table::SCHEDULES . ' AS schedule')
 			->where('schedule.rx_id=' . $RxID);
 
@@ -48,6 +48,13 @@ class GetRxInfoHelper
 		return $info;
 	}
 
+	/**
+	 * getCustomerNote
+	 *
+	 * @param int $customerID
+	 *
+	 * @return  mixed
+	 */
 	public static function getCustomerNote($customerID)
 	{
 		$db    = \JFactory::getDbo();

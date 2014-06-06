@@ -191,6 +191,6 @@ HTML;
 		$data->item->address        = $address;
 		$data->item->customer_Note  = $customer_Note;
 		$data->item->deliverNth     = $deliverNth;
-		$data->print = $isSaveAndPrint;
+		$data->print                = $isSaveAndPrint;
 	}
 }
