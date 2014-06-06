@@ -93,7 +93,7 @@ class ScheduleViewDrugdetailHtml extends EditView
 	{
 		$app = JFactory::getApplication();
 
-		$senderCid = $app->input->get("senderCid");
+		$senderCid = $app->input->getString("senderCid");
 		$senderCid = explode(",", $senderCid);
 
 		$date = $app->input->get("date");
