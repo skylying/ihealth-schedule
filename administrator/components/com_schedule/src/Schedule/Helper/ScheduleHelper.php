@@ -146,7 +146,7 @@ class ScheduleHelper
 	 * (第一次送藥日期 = 就醫日期 + 3天)
 	 *
 	 * @param   string  $sendDate       送藥日期
-	 * @param   int     $nth            第幾次送藥 ('1st','2nd','3rd')
+	 * @param   string  $nth            第幾次送藥 ('1st','2nd','3rd')
 	 * @param   string  $seeDoctorDate  就醫日期
 	 * @param   int     $period         給藥天數
 	 *
@@ -178,5 +178,37 @@ class ScheduleHelper
 		}
 
 		return true;
+	}
+
+	/**
+	 * getDrugEmptyDate
+	 *
+	 * @param   string  $nth            第幾次送藥 ('1st','2nd','3rd')
+	 * @param   string  $seeDoctorDate  就醫日期
+	 * @param   int     $period         給藥天數
+	 *
+	 * @return  \JDate
+	 *
+	 * @throws  ValidateFailException
+	 */
+	public static function getDrugEmptyDate($nth, $seeDoctorDate, $period)
+	{
+		if (! in_array($nth, ['1st', '2nd', '3rd']))
+		{
+			throw new ValidateFailException(['Invalid nth value']);
+		}
+
+		$nth = (int) substr($nth, 0, 1);
+
+		if (1 === $nth)
+		{
+			return $seeDoctorDate;
+		}
+
+		$date = new \JDate($seeDoctorDate);
+
+		$date->modify('+' . $period * ($nth - 1) . ' days');
+
+		return $date;
 	}
 }
