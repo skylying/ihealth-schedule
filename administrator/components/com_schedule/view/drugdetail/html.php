@@ -135,7 +135,7 @@ class ScheduleViewDrugdetailHtml extends EditView
 	{
 		$taskMapper = new DataMapper(Table::TASKS);
 
-		return $taskMapper->find(array("date" => $date, "sender" => $senderCid));
+		return $taskMapper->find(array("date" => $date, "sender" => $senderCid), array("sender DESC"));
 	}
 
 	/**
