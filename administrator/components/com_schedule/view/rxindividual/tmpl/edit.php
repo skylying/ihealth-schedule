@@ -64,16 +64,6 @@ $data->asset->addJS('deliver-schedule-handler.js');
 $data->asset->addJS('customer-field-handler.js');
 $data->asset->addJS('rxindividual/edit.js');
 
-if ($isSaveAndPrint == '1')
-{
-	$script = 'window.open("' .
-		JRoute::_("index.php?option=com_schedule&view=rxindividual&layout=print&tmpl=component&id=" . $id, false)
-		. '", "_blank");';
-
-	/** @var \Windwalker\Helper\AssetHelper $asset */
-	$asset = Container::getInstance('com_schedule')->get('helper.asset');
-	$asset->internalJS($script);
-}
 ?>
 
 <script type="text/javascript">
@@ -159,6 +149,11 @@ jQuery(document).ready(function ()
 
 
 </style>
+<?php if ($isSaveAndPrint == '1'): ?>
+	<script>
+		window.open("<?php echo JRoute::_("index.php?option=com_schedule&view=rxindividual&layout=print&tmpl=component&id=" . $id, false); ?>", "_blank");
+	</script>
+<?php endif; ?>
 
 <form name="adminForm" id="adminForm" method="post" action="<?php echo JURI::getInstance(); ?>" class="form-horizontal"
 	enctype="multipart/form-data">

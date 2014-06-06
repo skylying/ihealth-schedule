@@ -134,6 +134,16 @@ HTML;
 	 */
 	protected function prepareData()
 	{
+		$this->preparePrintData();
+	}
+
+	/**
+	 * preparePrintData
+	 *
+	 * @return  void
+	 */
+	public function preparePrintData()
+	{
 		$app = JFactory::getApplication();
 
 		$isSaveAndPrint = $app->getUserState('save-and-print');
@@ -143,39 +153,44 @@ HTML;
 
 		$data = $this->data;
 
-		$memberList    = '';
-		$tel_office    = '';
-		$tel_home      = '';
-		$mobile        = '';
-		$customer_note = '';
+		$memberList     = '';
+		$tel_office     = '';
+		$tel_home       = '';
+		$mobile         = '';
+		$address        = '';
+		$customer_Note  = '';
+		$deliverNth     = '';
 
-		$members = \Schedule\Helper\Mapping\MemberCustomerHelper::loadMembers($data->item->customer_id);
-
-		$CustomerInfos = \Schedule\Helper\GetCustomerInfoHelper::getInfo($data->item->customer_id);
+		$members       = \Schedule\Helper\Mapping\MemberCustomerHelper::loadMembers($data->item->customer_id);
+		$rxInfos       = \Schedule\Helper\GetRxInfoHelper::getInfo($data->item->id);
+		$customerNotes = \Schedule\Helper\GetRxInfoHelper::getCustomerNote($data->item->customer_id);
 
 		foreach ($members as $member)
 		{
 			$memberList .= $member->name . ' ';
 		}
 
-		foreach ($CustomerInfos as $CustomerInfo)
+		foreach ($rxInfos as $rxInfo)
 		{
-			$tel_office .= $CustomerInfo->tel_office . ' ';
-			$tel_home .= $CustomerInfo->tel_home . ' ';
-			$mobile .= $CustomerInfo->mobile . ' ';
-			$customer_note .= $CustomerInfo->note . ' ';
+			$tel_office .= $rxInfo->tel_office . ' ';
+			$tel_home   .= $rxInfo->tel_home . ' ';
+			$mobile     .= $rxInfo->mobile . ' ';
+			$address    .= $rxInfo->city_title . ' - ' . $rxInfo->area_title . ' - ' . $rxInfo->address;
+			$deliverNth .= $rxInfo->deliver_nth . ' ';
 		}
 
-		$data->item->member_list   = $memberList;
-		$data->item->tel_office    = $tel_office;
-		$data->item->tel_home      = $tel_home;
-		$data->item->mobile        = $mobile;
-		$data->item->customer_note = $customer_note;
+		foreach ($customerNotes as $CustomerNote)
+		{
+			$customer_Note .= $CustomerNote->note . ' ';
+		}
 
-		$data['members'] = $members;
-
-		$data['print'] = $isSaveAndPrint;
-
-		$data['customerInfos'] = $CustomerInfos;
+		$data->item->member_list    = $memberList;
+		$data->item->tel_office     = $tel_office;
+		$data->item->tel_home       = $tel_home;
+		$data->item->mobile         = $mobile;
+		$data->item->address        = $address;
+		$data->item->customer_Note  = $customer_Note;
+		$data->item->deliverNth     = $deliverNth;
+		$data->print = $isSaveAndPrint;
 	}
 }

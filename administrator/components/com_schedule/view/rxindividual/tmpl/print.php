@@ -31,7 +31,7 @@ defined('_JEXEC') or die;
 			這是
 			<?php echo $data->item->customer_name;?>
 			第
-			<?php echo substr($data->item->deliver_nths, 0 ,1);?>
+			<?php echo substr($data->item->deliverNth, 0, 1); ?>
 			次的外送資料
 			(處方箋編號:
 			<?php echo $data->item->id;?>
@@ -53,23 +53,23 @@ defined('_JEXEC') or die;
 				<td>所屬會員</td>
 				<td><?php echo $data->item->member_list; ?></td>
 				<td>宅配次數</td>
-				<td><?php echo substr($data->item->deliver_nths, 0, 1);?></td>
+				<td>第 <?php echo substr($data->item->deliverNth, 0, 1); ?> 次</td>
 			</tr>
 			<tr>
 				<td>處方姓名</td>
-				<td><?php echo $data->item->customer_name;?></td>
+				<td><?php echo $data->item->customer_name; ?></td>
 				<td>藥品吃完日</td>
 				<td></td>
 			</tr>
 			<tr>
 				<td>客戶身分證字號</td>
-				<td><?php echo $data->item->id_number;?></td>
+				<td><?php echo $data->item->id_number; ?></td>
 				<td>預約宅配日</td>
 				<td></td>
 			</tr>
 			<tr>
 				<td>客戶生日</td>
-				<td><?php echo $data->item->birth_date;?></td>
+				<td><?php echo $data->item->birth_date; ?></td>
 				<td>時段</td>
 				<td></td>
 			</tr>
@@ -81,45 +81,45 @@ defined('_JEXEC') or die;
 			</tr>
 			<tr>
 				<td>處方箋狀態</td>
-				<td><?php echo $data->item->received ? '取得' : '未取得';?></td>
+				<td><?php echo $data->item->received ? '取得' : '未取得'; ?></td>
 				<td>地址</td>
-				<td></td>
+				<td><?php echo $data->item->address; ?></td>
 			</tr>
 			<tr>
 				<td>處方箋上傳方式</td>
-				<td><?php echo $data->item->method;?></td>
+				<td><?php echo $data->item->method; ?></td>
 				<td>電話(H)</td>
-				<td><?php echo $data->item->tel_home;?></td>
+				<td><?php echo $data->item->tel_home; ?></td>
 			</tr>
 			<tr>
 				<td>處方開立醫院</td>
-				<td><?php echo $data->item->hospital_title;?></td>
+				<td><?php echo $data->item->hospital_title; ?></td>
 				<td>電話(O)</td>
-				<td><?php echo $data->item->tel_office;?></td>
+				<td><?php echo $data->item->tel_office; ?></td>
 			</tr>
 			<tr>
 				<td>就醫日期</td>
-				<td><?php echo $data->item->see_dr_date;?></td>
+				<td><?php echo $data->item->see_dr_date; ?></td>
 				<td>手機(M)</td>
-				<td><?php echo $data->item->mobile;?></td>
+				<td><?php echo $data->item->mobile; ?></td>
 			</tr>
 			<tr>
 				<td>給藥天數</td>
-				<td><?php echo $data->item->period;?>天</td>
+				<td><?php echo $data->item->period; ?>天</td>
 				<td>本次外送備註</td>
-				<td><?php echo $data->item->note;?></td>
+				<td><?php echo $data->item->note; ?></td>
 			</tr>
 			<tr>
 				<td>可調劑次數</td>
-				<td><?php echo $data->item->times;?>次</td>
+				<td><?php echo $data->item->times; ?>次</td>
 				<td></td>
 				<td></td>
 			</tr>
 			<tr>
 				<td>外送次數</td>
-				<td><?php echo $data->item->times;?></td>
+				<td><?php echo $data->item->times; ?></td>
 				<td>客戶備註</td>
-				<td><?php echo $data->item->customer_note;?></td>
+				<td><?php echo $data->item->customer_Note; ?></td>
 			</tr>
 			<tr>
 				<td>藥品資料</td>
@@ -131,7 +131,7 @@ defined('_JEXEC') or die;
 				<td>藥品種數</td>
 				<td></td>
 				<td>註記選項</td>
-				<td><?php echo $data->item->remind;?></td>
+				<td><?php echo $data->item->remind; ?></td>
 			</tr>
 			</tbody>
 		</table>
