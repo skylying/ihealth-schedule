@@ -108,9 +108,9 @@ class ScheduleViewDrugdetailHtml extends EditView
 			throw new \Exception("給我 date ! QAQ");
 		}
 
-		$tasks = $this->getTaskData($date, $senderCid);
+		$this->data->tasks = $this->getTaskData($date, $senderCid);
 
-		$taskCid = \JArrayHelper::getColumn($tasks, "id");
+		$taskCid = \JArrayHelper::getColumn($this->data->tasks, "id");
 
 		$this->data->schedules = $this->getScheduleData($taskCid);
 
