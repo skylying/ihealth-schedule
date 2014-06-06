@@ -87,7 +87,7 @@ class ScheduleModelDrugdetail extends AdminModel
 	/**
 	 * Post save hook.
 	 *
-	 * @param JTable $table The table object.
+	 * @param   JTable $table The table object.
 	 *
 	 * @return  void
 	 */
@@ -100,7 +100,7 @@ class ScheduleModelDrugdetail extends AdminModel
 	 * Method to set new item ordering as first or last.
 	 *
 	 * @param   JTable $table    Item table to save.
-	 * @param   string $position 'first' or other are last.
+	 * @param   string $position "first" or "last"
 	 *
 	 * @return  void
 	 */

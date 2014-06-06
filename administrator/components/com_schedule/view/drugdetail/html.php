@@ -13,6 +13,7 @@ use Windwalker\View\Html\EditView;
 use Windwalker\Xul\XulEngine;
 use Windwalker\Joomla\DataMapper\DataMapper;
 use Windwalker\Data\Data;
+use Schedule\Table\Table;
 
 // No direct access
 defined('_JEXEC') or die;
@@ -34,7 +35,7 @@ class ScheduleViewDrugdetailHtml extends EditView
 	/**
 	 * The component option name.
 	 *
-	 * @var string
+	 * @var  string
 	 */
 	protected $option = 'com_schedule';
 
