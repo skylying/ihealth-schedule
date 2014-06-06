@@ -73,7 +73,25 @@ $asset->addJS('multi-row-handler.js');
 		<tbody>
 		<?php $schedules = DataSortHelper::getArrayContentByObjectColumn($data->schedules, "task_id", $task->id); ?>
 
+		<?php $nowInstituteId = null; ?>
+
 		<?php foreach ($schedules as $schedule): ?>
+			<?php if (empty($nowInstituteId)): ?>
+				<?php $nowInstituteId = $schedule->institute_id; ?>
+			<?php endif; ?>
+
+			<?php if ($nowInstituteId != $schedule->institute_id): ?>
+				<?php $nowInstituteId = $schedule->institute_id; ?>
+
+				<tr>
+					<td colspan="11" class="text-right"><!-- TODO: 份數 --> 份</td>
+					<td>
+						<!-- TODO: js -->
+						<button>+</button>
+					</td>
+				</tr>
+			<?php endif; ?>
+
 			<tr>
 				<td>
 					<!-- 排程編號 -->

@@ -121,8 +121,6 @@ class ScheduleViewDrugdetailHtml extends EditView
 
 		$this->data->extras = $this->getDrugExtraData($taskCid);
 
-		DataSortHelper::orderArrayByObjectId($this->data->schedules);
-
 		DataSortHelper::orderArrayByObjectId($this->data->rxs);
 
 		DataSortHelper::orderArrayByObjectId($this->data->extras);
@@ -156,7 +154,7 @@ class ScheduleViewDrugdetailHtml extends EditView
 	{
 		$schedulesMapper = new DataMapper(Table::SCHEDULES);
 
-		return $schedulesMapper->find(array("task_id" => $taskCid));
+		return $schedulesMapper->find(array("task_id" => $taskCid), array("`type` DESC"));
 	}
 
 	/**
