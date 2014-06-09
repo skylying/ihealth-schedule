@@ -128,20 +128,6 @@ group_concat(
 ) AS `member_json`
 SQLALIAS;
 
-		//Process the report layout needs.
-		$layoutName = JFactory::getApplication()->input->get('layout');
-		if($layoutName == 'report')
-		{
-			$query->where('`schedule`.`type` in (\'resident\', \'individual\')');
-			$query->clear('order');
-			$orders = array(
-				'`schedule`.`city_title` ASC',
-				'`schedule`.`type` ASC',
-				'`schedule`.`institute_title` ASC',
-				'`schedule`.`date` ASC',
-			);
-			$query->select($sql)->order($orders);
-		}
 		parent::postGetQuery($query);
 	}
 
@@ -153,7 +139,7 @@ SQLALIAS;
 	 *
 	 * @return  void
 	 */
-	protected function populateState($ordering = 'schedule.city_title', $direction = 'ASC')
+	protected function populateState($ordering = 'schedule.id', $direction = 'ASC')
 	{
 		parent::populateState($ordering, $direction);
 	}
@@ -219,7 +205,7 @@ SQLALIAS;
 	 *
 	 * @return  JForm
 	 */
-	public function getFormPrint()
+	public function getPrintForm()
 	{
 		$config = array(
 			'control'   => 'jform',

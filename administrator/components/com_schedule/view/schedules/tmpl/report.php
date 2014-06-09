@@ -10,7 +10,7 @@
 defined('_JEXEC') or die;
 JHtmlBehavior::multiselect('adminForm');
 
-$formPrint = $data->formPrint;
+$printForm = $data->printForm;
 
 $doc = JFactory::getDocument();
 $css = <<<CSS
@@ -37,6 +37,10 @@ CSS;
 
 $doc->addStyleDeclaration($css);
 
+$reportHelper = new \Schedule\Helper\ScheduleReportHelper();
+$reports = $reportHelper->reportData();
+
+
 ?>
 
 <div id="schedule" class="windwalker schedule edit-form row-fluid" >
@@ -44,16 +48,27 @@ $doc->addStyleDeclaration($css);
 		class="form-validate" enctype="multipart/form-data">
 
 		<div class="form-horizontal">
-			<?php foreach ($formPrint->getFieldset('basic') as $field): ?>
+			<?php foreach ($printForm->getFieldset('basic') as $field): ?>
 			<div id="control_<?php echo $field->id; ?>">
-				<?php echo $field->getControlGroup() . "\n\n"; ?>
+				<?php echo $field->getControlGroup(); ?>
 			</div>
 			<?php endforeach;?>
 		</div>
 
+		<button type="button" class="btn btn-primary" onclick="Joomla.submitbutton('schedules.report')">
+			<span class="glyphicon glyphicon-filter"></span>
+				送出條件
+		</button>
+
 		<hr style="border:0; height:1px; background-color:#000000;">
 
 		<!-- LIST TABLE -->
+
+		<button type="button" class="btn btn-success">
+			<span class="glyphicon glyphicon-print"></span>
+				列印
+		</button>
+
 		<table id="schedulereportList" class="table table-striped adminlist">
 			<!-- TABLE HEADER -->
 			<thead>
@@ -63,22 +78,17 @@ $doc->addStyleDeclaration($css);
 					縣市
 				</th>
 
-				<!-- Institute Title-->
+				<!-- Institute or individual -->
 				<th class="left">
 					所屬機構
 				</th>
 
-				<!-- Date -->
-				<th class="left">
-					Date
-				</th>
-
 				<?php
-				for($month = 1; $month < 12; $month ++):
+				for($month = 1; $month <= 12; $month ++):
 				?>
 				<!-- Month -->
 				<th class="right">
-					<?php echo $month?>月
+					<?php echo $month;?>月
 				</th>
 				<?php endfor;?>
 
@@ -91,83 +101,75 @@ $doc->addStyleDeclaration($css);
 				<th class="left">
 					排程小計
 				</th>
-
-				<!-- Type -->
-				<th class="left">
-					Type
-				</th>
 			</tr>
 			</thead>
 			<!-- TABLE BODY -->
 			<tbody>
-			<?php foreach ($data->items as $i => $item)
-				:
-				?>
-				<tr class="schedulereport-row">
+			<?php
+			$rowSpanRepeat = 0;
+			$totalOfCity = 0;
+
+			foreach ($reports as $keyCity => $belongs):
+				$cityTitle = $keyCity;
+				$rowSpan = count($belongs);
+
+				foreach ($belongs as $keyBelong => $months):
+					$belongTitle = $keyBelong;
+
+					$rowSpanRepeat++;
+			?>
+				<tr class="report-row">
 					<!-- City -->
-					<?php
-					$pastCity = $currentCity;
-					$currentCity = $item->city_title;
-					if($currentCity != $pastCity)
-					{
-						$firstCity = $currentCity;
-					}
-					else
-					{
-						$firstCity = '';
-					}
-					?>
-					<td class="left">
-						<?php echo $firstCity ?>
+					<?php if($rowSpanRepeat == 1):?>
+					<td class="left" ROWSPAN="<?php echo $rowSpan;?>">
+						<?php echo $cityTitle;?>
 					</td>
+					<?php endif;?>
 
-					<!-- Institute Title-->
-					<?php
-					$pastInstitute = $currentInstitute;
-					$currentInstitute = $item->institute_title;
-					if($currentInstitute != $pastInstitute)
-					{
-						$firstInstitute = $currentInstitute;
-					}
-					else
-					{
-						$firstInstitute = '';
-					}
-					?>
+					<!-- Institute or individual to belong -->
 					<td class="left">
-						<?php echo $firstInstitute;?>
-					</td>
-
-					<!-- Date -->
-					<td class="left">
-						<?php echo $item->date;?>
+						<?php echo $belongTitle; ?>
 					</td>
 
 					<?php
-					for($month = 1; $month < 12; $month ++):
-					?>
+					$allYearAmount = 0;
+					foreach ($months as $keyMonth => $amounts): ?>
 					<!-- Month -->
 					<td class="right">
-						0
+						<?php
+						$monthAmount = array_sum($amounts);
+						echo $monthAmount;
+						$allYearAmount = $allYearAmount + $monthAmount;
+						?>
 					</td>
-					<?php endfor;?>
+					<?php endforeach;?>
 
-					<!-- All This Year -->
+					<!-- All this year -->
 					<td class="right">
-						0
+						<?php echo $allYearAmount;?>
 					</td>
 
-					<!-- Sub Total -->
-					<td class="right">
-						0
-					</td>
-
-					<!-- Type -->
+					<!-- All total of the city-->
+					<?php
+					$totalOfCity = $allYearAmount + $totalOfCity;
+					if($rowSpanRepeat == $rowSpan):
+						$showTotal = $totalOfCity;
+					else:
+						$showTotal = '';
+					endif;
+					?>
 					<td class="left">
-						<?php echo $item->type ?>
+						<?php echo $showTotal;?>
 					</td>
 				</tr>
-			<?php endforeach; ?>
+					<?php
+					if($rowSpanRepeat == $rowSpan):
+						$rowSpanRepeat = 0;
+						$totalOfCity = 0;
+					endif;
+					?>
+				<?php endforeach;?>
+			<?php endforeach;?>
 			</tbody>
 		</table>
 

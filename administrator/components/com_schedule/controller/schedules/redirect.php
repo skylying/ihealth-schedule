@@ -25,4 +25,3 @@ class ScheduleControllerSchedulesRedirect extends Windwalker\Controller\Admin\Ab
 		return true;
 	}
 }
- 

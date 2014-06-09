@@ -2,10 +2,9 @@
 <form>
 	<fieldset name="basic">
 
-		<field id="date_star"
-			name="date_star"
+		<field id="date_start"
+			name="date_start"
 			type="calendar"
-			default=""
 			format="%Y-%m-%d"
 			label="起始日期"
 			description="起始日期"
@@ -14,7 +13,6 @@
 		<field id="date_end"
 			name="date_end"
 			type="calendar"
-			default=""
 			format="%Y-%m-%d"
 			label="結束日期"
 			description="結束日期"

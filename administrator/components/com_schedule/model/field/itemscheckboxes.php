@@ -52,7 +52,7 @@ class JFormFieldItemscheckboxes extends \JFormField
 			$html[] = <<<HTML
 	<li>
 		<label for="{$name}-{$i}">{$title}</label>
-		<input id="{$name}-{$i}" type="checkbox" name="{$name}" value="{$id}" />
+		<input id="{$name}-{$i}" type="checkbox" name="{$name}[]" value="{$id}" />
 	</li>
 HTML;
 		}
