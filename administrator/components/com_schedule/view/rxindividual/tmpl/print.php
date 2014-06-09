@@ -67,24 +67,24 @@ defined('_JEXEC') or die;
 				<td>處方姓名</td>
 				<td><?php echo $data->item->customer_name; ?></td>
 				<td>藥品吃完日</td>
-				<td></td>
+				<td><?php echo $data->item->drugEmptyDate; ?></td>
 			</tr>
 			<tr>
 				<td>客戶身分證字號</td>
 				<td><?php echo $data->item->id_number; ?></td>
 				<td>預約宅配日</td>
-				<td></td>
+				<td><?php echo $data->item->date; ?></td>
 			</tr>
 			<tr>
 				<td>客戶生日</td>
 				<td><?php echo $data->item->birth_date; ?></td>
 				<td>時段</td>
-				<td></td>
+				<td><?php echo $data->item->session; ?></td>
 			</tr>
 			<tr>
 				<td>客戶年齡</td>
+				<td><?php echo date_diff(date_create($data->item->birth_date), date_create('today'))->y; ?></td>
 				<td></td>
-				<td>時段</td>
 				<td></td>
 			</tr>
 			<tr>
@@ -95,7 +95,7 @@ defined('_JEXEC') or die;
 			</tr>
 			<tr>
 				<td>處方箋上傳方式</td>
-				<td><?php echo $data->item->method; ?></td>
+				<td><?php echo JText::_('COM_SCHEDULE_RXINDIVIDUAL_PRINT_' . $data->item->method); ?></td>
 				<td>電話(H)</td>
 				<td><?php echo $data->item->tel_home; ?></td>
 			</tr>

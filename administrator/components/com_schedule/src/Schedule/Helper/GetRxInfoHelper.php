@@ -38,7 +38,10 @@ class GetRxInfoHelper
 			'schedule.city_title',
 			'schedule.area_title',
 			'schedule. address',
-			'schedule.deliver_nth'
+			'schedule.deliver_nth',
+			'schedule.drug_empty_date',
+			'schedule.session',
+			'schedule.date'
 		);
 
 		$query->select($select)

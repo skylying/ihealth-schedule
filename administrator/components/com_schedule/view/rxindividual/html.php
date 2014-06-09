@@ -160,6 +160,9 @@ HTML;
 		$address       = '';
 		$customer_note = '';
 		$deliverNth    = '';
+		$drugEmptyDate = '';
+		$session       = '';
+		$date          = '';
 
 		$members       = \Schedule\Helper\Mapping\MemberCustomerHelper::loadMembers($data->item->customer_id);
 		$scheduleInfos = \Schedule\Helper\GetRxInfoHelper::getInfo($data->item->id);
@@ -172,11 +175,14 @@ HTML;
 
 		foreach ($scheduleInfos as $scheduleInfo)
 		{
-			$tel_office .= $scheduleInfo->tel_office . ' ';
-			$tel_home   .= $scheduleInfo->tel_home . ' ';
-			$mobile     .= $scheduleInfo->mobile . ' ';
-			$address    .= $scheduleInfo->city_title . ' - ' . $scheduleInfo->area_title . ' - ' . $scheduleInfo->address;
-			$deliverNth .= $scheduleInfo->deliver_nth . ' ';
+			$tel_office    .= $scheduleInfo->tel_office . ' ';
+			$tel_home      .= $scheduleInfo->tel_home . ' ';
+			$mobile        .= $scheduleInfo->mobile . ' ';
+			$address       .= $scheduleInfo->city_title . ' - ' . $scheduleInfo->area_title . ' - ' . $scheduleInfo->address;
+			$deliverNth    .= $scheduleInfo->deliver_nth . ' ';
+			$drugEmptyDate .= $scheduleInfo->drug_empty_date . ' ';
+			$session       .= $scheduleInfo->session . ' ';
+			$date          .= $scheduleInfo->date . ' ';
 		}
 
 		foreach ($customerNotes as $CustomerNote)
@@ -191,6 +197,9 @@ HTML;
 		$data->item->address        = $address;
 		$data->item->customer_note  = $customer_note;
 		$data->item->deliverNth     = $deliverNth;
+		$data->item->drugEmptyDate  = $drugEmptyDate;
+		$data->item->session        = $session;
+		$data->item->date           = $date;
 		$data->print                = $isSaveAndPrint;
 	}
 }
