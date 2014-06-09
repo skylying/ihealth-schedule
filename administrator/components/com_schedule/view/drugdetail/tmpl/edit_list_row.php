@@ -23,7 +23,7 @@ $price  = FieldHelper::resetGroup($form->getField('price'), $group);
 ?>
 <tr>
 	<td colspan="8">
-
+		&nbsp;
 	</td>
 	<td>
 		<?php echo $ice->input; ?>
@@ -35,6 +35,6 @@ $price  = FieldHelper::resetGroup($form->getField('price'), $group);
 		<?php echo $price->input; ?>
 	</td>
 	<td>
-
+		&nbsp;
 	</td>
 </tr>
