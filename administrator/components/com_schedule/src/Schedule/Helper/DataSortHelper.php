@@ -17,61 +17,48 @@ use Windwalker\Data\Data;
  */
 abstract class DataSortHelper
 {
-
 	/**
-	 * 用陣列中物件的 id 當 array 的 key 值
+	 * 取得欄位變更前得主索引值
 	 *
-	 * @param   Data[] &$dataset
-	 *
-	 * @return  void
-	 */
-	public static function orderArrayByObjectId(&$dataset)
-	{
-		$datasetCopy = $dataset;
-
-		$dataset = array();
-
-		foreach ($datasetCopy as $data)
-		{
-			$dataset[$data->id] = $data;
-		}
-	}
-
-	/**
-	 * 取得陣列中 $column 值為 $value 的物件
-	 *
-	 * eg:
-	 *
-	 * ```
-	 * $dataset = [{task: 1}, {task: 1}, {task: 2}]
-	 * $column = task
-	 * $value = 1
-	 * ```
+	 * 範例
+	 * $dataset = [{id: 1, val: 1}, {id: 2, val: 1}, {id: 3, val: 2}, {id: 4, val: 2}, {id: 5, val: 1}]
+	 * $column  = "val"
+	 * $index   = "id"
 	 *
 	 * 會取得
+	 * [3, 4]
 	 *
-	 * ```
-	 * [{task: 1}, {task: 1}]
-	 * ```
-	 *
-	 * @param   Data[]  $dataset
+	 * @param   array   $dataset
 	 * @param   string  $column
-	 * @param   mixed   $value
+	 * @param   string  $index
 	 *
 	 * @return  array
 	 */
-	public static function getArrayContentByObjectColumn($dataset, $column, $value)
+	public static function getBeforeColumnChangeIndex($dataset, $column, $index = "id")
 	{
-		$returnArray = array();
+		$indexCache = null;
+		$valueCache = null;
+		$returnVal  = array();
 
 		foreach ($dataset as $data)
 		{
-			if ($value === $data->$column)
+			// If value change save last index
+			if ($data->$column != $valueCache)
 			{
-				$returnArray[] = $data;
+				// If not setup
+				if (null !== $indexCache)
+				{
+					$returnVal[] = $indexCache;
+				}
+
+				// Flush new id
+				$valueCache = $data->$column;
 			}
+
+			// Flush index key
+			$indexCache = $data->$index;
 		}
 
-		return $returnArray;
+		return $returnVal;
 	}
 }
