@@ -76,6 +76,12 @@ class ScheduleControllerPrescriptionEditSave extends ApiSaveController
 				throw new ValidateFailException(['Invalid address id']);
 			}
 		}
+
+		// Restrict prescription type to "individual"
+		$this->data['type'] = 'individual';
+
+		// Set prescription default values
+		$this->data['delivered'] = 0;
 	}
 
 	/**
@@ -105,7 +111,10 @@ class ScheduleControllerPrescriptionEditSave extends ApiSaveController
 			$addressTable = TableCollection::loadTable('Address', $schedule['address_id']);
 			$routeTable = TableCollection::loadTable(
 				'Route',
-				['city' => $addressTable->city, 'area' => $addressTable->area, 'type' => 'customer']
+				[
+					'city' => $addressTable->city,
+					'area' => $addressTable->area, 'type' => 'customer'
+				]
 			);
 
 			// If no route found, create one
@@ -131,14 +140,17 @@ class ScheduleControllerPrescriptionEditSave extends ApiSaveController
 			// Get task
 			$taskTable = TableCollection::loadTable(
 				'Task',
-				['date' => $schedule['date'], 'sender' => $addressTable->sender_id]
+				[
+					'date' => $schedule['date'],
+					'sender' => $routeTable->sender_id
+				]
 			);
 
 			if (empty($taskTable->id))
 			{
 				$taskTable->date = $schedule['date'];
-				$taskTable->sender = $addressTable->sender_id;
-				$taskTable->sender_name = $addressTable->sender_name;
+				$taskTable->sender = $routeTable->sender_id;
+				$taskTable->sender_name = $routeTable->sender_name;
 				$taskTable->status = 0;
 
 				$taskModel->prepareTable($taskTable);
@@ -146,6 +158,7 @@ class ScheduleControllerPrescriptionEditSave extends ApiSaveController
 			}
 
 			$schedule['type'] = 'individual';
+			$schedule['status'] = 'scheduled';
 			$schedule['route_id'] = $routeTable->id;
 			$schedule['rx_id'] = $rxId;
 			$schedule['member_id'] = $validData['member_id'];
@@ -165,6 +178,8 @@ class ScheduleControllerPrescriptionEditSave extends ApiSaveController
 
 		foreach ($this->data['drugs'] as $drug)
 		{
+			$drug['rx_id'] = $rxId;
+
 			$drugModel->save($drug);
 
 			$drugModel->getState()->set('drug.id', null);

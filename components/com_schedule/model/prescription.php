@@ -10,6 +10,7 @@
 defined('_JEXEC') or die;
 
 use Schedule\Table\Table;
+use Schedule\Table\Collection as TableCollection;
 
 /**
  * Class ScheduleModelPrescription
@@ -159,5 +160,36 @@ class ScheduleModelPrescription extends \Windwalker\Model\AdminModel
 		$formName = 'prescription_schedule';
 
 		return $this->loadForm($this->option . '.' . $formName . '.form', $formName, $config);
+	}
+
+	/**
+	 * Prepare and sanitise the table data prior to saving.
+	 *
+	 * @param   JTable  $table  A reference to a JTable object.
+	 *
+	 * @return  void
+	 */
+	protected function prepareTable(\JTable $table)
+	{
+		parent::prepareTable($table);
+
+		$customerTable = TableCollection::loadTable('Customer', $table->customer_id);
+		$memberTable   = TableCollection::loadTable('Member',   $table->member_id);
+		$hospitalTable = TableCollection::loadTable('Hospital', $table->hospital_id);
+
+		$emptyDate1st = new JDate($table->see_dr_date);
+		$emptyDate2nd = new JDate($table->see_dr_date);
+
+		$emptyDate1st->modify('+' . $table->period . ' days');
+		$emptyDate2nd->modify('+' . ($table->period * 2) . ' days');
+
+		$table->customer_name = $customerTable->name;
+		$table->member_name = $memberTable->name;
+		$table->hospital_title = $hospitalTable->title;
+		$table->id_number = $customerTable->id_number;
+		$table->birth_date = $customerTable->birth_date;
+		$table->deliver_nths = implode(',', (array) $table->deliver_nths);
+		$table->empty_date_1st = $emptyDate1st->toSql();
+		$table->empty_date_2nd = $emptyDate2nd->toSql();
 	}
 }
