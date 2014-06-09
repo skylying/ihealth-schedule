@@ -112,24 +112,6 @@ class ScheduleModelSchedules extends ListModel
 	 */
 	protected function postGetQuery(\JDatabaseQuery $query)
 	{
-		$sql = <<<SQLALIAS
-group_concat(
-	CONCAT(
-		'{',
-			'"id": "',
-				`member`.`id`,
-			'",',
-
-			'"name": "',
-				`member`.`name`,
-			'"',
-		'}'
-	)
-) AS `member_json`
-SQLALIAS;
-
-		$query->select($sql);
-
 		parent::postGetQuery($query);
 	}
 
