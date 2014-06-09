@@ -113,7 +113,8 @@ class ScheduleControllerPrescriptionEditSave extends ApiSaveController
 				'Route',
 				[
 					'city' => $addressTable->city,
-					'area' => $addressTable->area, 'type' => 'customer'
+					'area' => $addressTable->area,
+					'type' => 'customer',
 				]
 			);
 
