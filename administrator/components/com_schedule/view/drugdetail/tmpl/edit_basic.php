@@ -19,19 +19,15 @@ $form      = $data->form;
 JHtmlJquery::framework(true);
 
 $asset->addJS('multi-row-handler.js');
-
-$lastInstituteId = null;
-$lastScheduleId  = null;
-
 ?>
 
 <h3 class="text-right">
 	<?php echo $data->date; ?>
 </h3>
 
-<?php foreach ($data->items as $item): ?>
+<?php foreach ($data->items as $senderItem): ?>
 	<h3>
-		<?php echo $item->sender_name; ?>
+		<?php echo $senderItem['name']; ?>
 	</h3>
 
 	<table id="drug-details" class="table table-bordered">
@@ -76,107 +72,100 @@ $lastScheduleId  = null;
 	</tr>
 	</thead>
 	<tbody>
-	<?php foreach ($item->schedules as $schedule): ?>
-
-
-		<?php if ($schedule->institute_id !== $lastInstituteId && ! empty($lastInstituteId)): ?>
+	<?php foreach ($senderItem['data'] as $institute_id => $schedules): ?>
+		<?php foreach ($schedules as $schedule): ?>
 			<tr>
-				<td colspan="11" class="text-right"><!-- TODO: 份數 --> 份</td>
 				<td>
-					<!-- TODO: js -->
-					<button id="button-institute<?php echo $lastScheduleId; ?>" type="button">+</button>
+					<!-- 排程編號 -->
+					<?php echo $schedule->id; ?>
+				</td>
+				<td>
+					<!-- 處方編號 -->
+					<?php echo $schedule->rx_id; ?>
+				</td>
+				<td>
+					<!-- 處方建立時間 -->
+					<?php echo $schedule->created; ?>
+				</td>
+				<td>
+					<!-- 吃完藥日 -->
+					<?php echo $schedule->drug_empty_date; ?>
+				</td>
+				<td>
+					<!-- 所屬機構/會員 -->
+					<?php
+					switch ($schedule->type):
+						case "resident":
+							echo $schedule->institute_title;
+						break;
+						case "individual":
+							$members = MemberCustomerHelper::loadMembers($schedule->customer_id);
+
+							foreach ($members as $member)
+							{
+								echo $member->name;
+
+								if (end($members) != $member)
+								{
+									echo "<br />";
+								}
+							}
+						break;
+					endswitch;
+					?>
+				</td>
+				<td>
+					<!-- 縣市 -->
+					<?php echo $schedule->city_title; ?>
+				</td>
+				<td>
+					<!-- 區域 -->
+					<?php echo $schedule->area_title; ?>
+				</td>
+				<td>
+					<!-- 客戶 -->
+					<?php echo $schedule->customer_name; ?>
+				</td>
+				<td>
+					<!-- 分要完成 form -->
+					<?php
+					$sorted = FieldHelper::resetGroup($form->getField('sorted'), "schedule.{$schedule->id}");
+
+					echo $sorted->input;
+					?>
+				</td>
+				<td>
+					<!-- 冰品 -->
+					<?php
+					$ice = FieldHelper::resetGroup($form->getField('ice'), "schedule.{$schedule->id}");
+
+					echo $ice->input;
+					?>
+				</td>
+				<td>
+					<!-- 自費金額 -->
+					<?php
+					$price = FieldHelper::resetGroup($form->getField('price'), "schedule.{$schedule->id}");
+
+					echo $price->input;
+					?>
+				</td>
+				<td>
+					<!-- 最後編輯者 -->
+					<!-- TODO: 我們 schedule 沒有修改欄位 -->
 				</td>
 			</tr>
-		<?php endif; ?>
+		<?php endforeach; ?>
 
-		<?php
-
-		$lastInstituteId = $schedule->institute_id;
-		$lastScheduleId  = $schedule->id;
-
-		?>
-
+		<?php if (0 !== $institute_id): ?>
 		<tr>
+			<td colspan="11" class="text-right"><!-- TODO: 份數 --> 份</td>
 			<td>
-				<!-- 排程編號 -->
-				<?php echo $schedule->id; ?>
-			</td>
-			<td>
-				<!-- 處方編號 -->
-				<?php echo $schedule->rx_id; ?>
-			</td>
-			<td>
-				<!-- 處方建立時間 -->
-				<?php echo $schedule->created; ?>
-			</td>
-			<td>
-				<!-- 吃完藥日 -->
-				<?php echo $schedule->drug_empty_date; ?>
-			</td>
-			<td>
-				<!-- 所屬機構/會員 -->
-				<?php
-				switch ($schedule->type):
-					case "resident":
-						echo $schedule->institute_title;
-					break;
-					case "individual":
-						$members = MemberCustomerHelper::loadMembers($schedule->customer_id);
-
-						foreach ($members as $member)
-						{
-							echo $member->name;
-
-							if (end($members) != $member)
-							{
-								echo "<br />";
-							}
-						}
-					break;
-				endswitch;
-				?>
-			</td>
-			<td>
-				<!-- 縣市 -->
-				<?php echo $schedule->city_title; ?>
-			</td>
-			<td>
-				<!-- 區域 -->
-				<?php echo $schedule->area_title; ?>
-			</td>
-			<td>
-				<!-- 客戶 -->
-				<?php echo $schedule->customer_name; ?>
-			</td>
-			<td>
-				<!-- 分要完成 form -->
-				<?php
-				$sorted = FieldHelper::resetGroup($form->getField('sorted'), "schedule.{$schedule->id}");
-
-				echo $sorted->input;
-				?>
-			</td>
-			<td>
-				<!-- 冰品 -->
-				<?php
-				$ice = FieldHelper::resetGroup($form->getField('ice'), "schedule.{$schedule->id}");
-
-				echo $ice->input;
-				?>
-			</td>
-			<td>
-				<!-- 自費金額 -->
-				<?php
-				$price = FieldHelper::resetGroup($form->getField('price'), "schedule.{$schedule->id}");
-
-				echo $price->input;
-				?>
-			</td>
-			<td>
-				<!-- 最後編輯者 -->
-				<!-- TODO: 我們 schedule 沒有修改欄位 -->
+				<!-- TODO: js -->
+				<button id="button-institute<?php echo $institute_id; ?>" type="button">+</button>
 			</td>
 		</tr>
+		<?php endif; ?>
 	<?php endforeach; ?>
 	</tbody>
 	</table>

@@ -109,44 +109,47 @@ class ScheduleViewDrugdetailHtml extends EditView
 			throw new \Exception("給我 date !");
 		}
 
-		$tasks = $this->getTaskData($this->data->date, $senderIds);
-		$taskIds = DataSortHelper::getArrayAccessColumn($tasks, "id");
-
 		$db = JFactory::getDbo();
 		$q  = $db->getQuery(true);
 
-		$q->select("*, schedule.id AS id")
+		$q->select("*, schedule.id AS id, task.sender AS sender, schedule.institute_id AS institute_id")
 			->from(Table::SCHEDULES . " AS schedule")
 			->join("LEFT", Table::TASKS . " AS task on schedule.task_id = task.id")
 			->join("LEFT", Table::PRESCRIPTIONS . " AS rx on schedule.rx_id = rx.id")
-			->where("schedule.task_id " . (new JDatabaseQueryElement('IN ()', $taskIds)))
-			->order("schedule.institute_id desc");
+			->where("task.sender " . (new JDatabaseQueryElement('IN ()', $senderIds)))
+			->where("task.date = " . $q->quote($this->data->date))
+			->order("schedule.institute_id desc")
+			->order("task.sender desc");
 
 		$schedules = $db->setQuery($q)->loadObjectList();
 
-		$this->data->items = array();
+		$items = array();
 
-		foreach ($tasks as $task)
+		foreach ($schedules as $schedule)
 		{
-			$task->schedules = array();
+			$senderId = intval($schedule->sender);
 
-			foreach ($schedules as $key => $schedule)
+			if (! isset($items[$senderId]))
 			{
-				if ($task->id == $schedule->task_id)
-				{
-					$task->schedules[] = $schedule;
-
-					// Optimization of the next foreach
-					unset($schedules[$key]);
-				}
+				$items[$senderId] = array();
+				$items[$senderId]['data'] = array();
 			}
 
-			if (! empty($task->schedules))
+			$items[$senderId]['name'] = $schedule->sender_name;
+
+			$instituteId = intval($schedule->institute_id);
+
+			if (! isset($items[$senderId]['data'][$instituteId]))
 			{
-				$this->data->items[] = $task;
+				$items[$senderId]['data'][$instituteId] = array();
 			}
+
+			$items[$senderId]['data'][$instituteId][] = $schedule;
 		}
 
+		$this->data->items = $items;
+
+		$taskIds = \JArrayHelper::getColumn($schedules, "task_id");
 		$this->data->extras = $this->getDrugExtraData($taskIds);
 
 		parent::prepareData();
