@@ -46,5 +46,4 @@ class JFormFieldDrugprice_Modal extends JFormFieldModal
 	 * @var string
 	 */
 	protected $extension = 'com_schedule';
-
 }

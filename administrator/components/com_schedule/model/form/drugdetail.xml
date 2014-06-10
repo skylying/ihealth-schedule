@@ -2,7 +2,7 @@
 <form>
 	<fieldset name="row">
 		<field name="ice"
-			type="checkboxes"
+			type="checkbox"
 			label="是否有冰品"
 			description="是否有冰品"
 			>
@@ -10,7 +10,7 @@
 		</field>
 
 		<field name="sorted"
-			type="checkboxes"
+			type="checkbox"
 			label="是否完成分藥"
 			description="是否完成分藥"
 			>

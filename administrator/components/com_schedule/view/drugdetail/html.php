@@ -94,20 +94,23 @@ class ScheduleViewDrugdetailHtml extends EditView
 	{
 		$app = JFactory::getApplication();
 
-		$senderCid = $app->input->getString("senderCid");
-		$senderCid = explode(",", $senderCid);
+		$senderIds = $app->input->getString("senderIds");
+		$senderIds = explode(",", $senderIds);
 
 		$this->data->date = $app->input->get("date");
 
-		if (empty($senderCid) || empty($senderCid[0]))
+		if (empty($senderIds) || empty($senderIds[0]))
 		{
 			throw new \Exception("給我 sender !");
 		}
 
 		if (empty($this->data->date))
 		{
-			throw new \Exception("給我 date ! QAQ");
+			throw new \Exception("給我 date !");
 		}
+
+		$tasks = $this->getTaskData($this->data->date, $senderIds);
+		$taskIds = DataSortHelper::getArrayAccessColumn($tasks, "id");
 
 		$db = JFactory::getDbo();
 		$q  = $db->getQuery(true);
@@ -116,16 +119,35 @@ class ScheduleViewDrugdetailHtml extends EditView
 			->from(Table::SCHEDULES . " AS schedule")
 			->join("LEFT", Table::TASKS . " AS task on schedule.task_id = task.id")
 			->join("LEFT", Table::PRESCRIPTIONS . " AS rx on schedule.rx_id = rx.id")
-			->where("task.sender in (" . implode(",", $senderCid) . ")")
-			->where("task.date = " . $q->quote($this->data->date))
-			->order("schedule.institute_id desc")
-			->order("task.sender desc");
+			->where("schedule.task_id " . (new JDatabaseQueryElement('IN ()', $taskIds)))
+			->order("schedule.institute_id desc");
 
-		$this->data->items = $db->setQuery($q)->loadObjectList();
+		$schedules = $db->setQuery($q)->loadObjectList();
 
-		$taskCid = \JArrayHelper::getColumn($this->data->items, "task_id");
+		$this->data->items = array();
 
-		$this->data->extras = $this->getDrugExtraData($taskCid);
+		foreach ($tasks as $task)
+		{
+			$task->schedules = array();
+
+			foreach ($schedules as $key => $schedule)
+			{
+				if ($task->id == $schedule->task_id)
+				{
+					$task->schedules[] = $schedule;
+
+					// Optimization of the next foreach
+					unset($schedules[$key]);
+				}
+			}
+
+			if (! empty($task->schedules))
+			{
+				$this->data->items[] = $task;
+			}
+		}
+
+		$this->data->extras = $this->getDrugExtraData($taskIds);
 
 		parent::prepareData();
 	}
@@ -142,5 +164,20 @@ class ScheduleViewDrugdetailHtml extends EditView
 		$extraMapper = new DataMapper(Table::DRUG_EXTRA_DETAILS);
 
 		return $extraMapper->find(array("task_id" => $taskCid));
+	}
+
+	/**
+	 * 取得外送資料
+	 *
+	 * @param   string  $date
+	 * @param   array   $senderIds
+	 *
+	 * @return  Data[]
+	 */
+	protected function getTaskData($date, $senderIds)
+	{
+		$taskMapper = new DataMapper(Table::TASKS);
+
+		return $taskMapper->find(array("sender" => $senderIds, "date" => $date));
 	}
 }

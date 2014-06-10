@@ -56,17 +56,31 @@ class ScheduleControllerDrugdetailEditSave extends SaveController
 	 */
 	protected function postSaveHook($model, $validData)
 	{
-		$scheduleDataset = $this->data['schedule'];
-
-		foreach ($scheduleDataset as $scheduleId => $scheduleData)
+		foreach ($this->data['schedule'] as $scheduleId => $scheduleData)
 		{
 			$scheduleData['id'] = $scheduleId;
-			$scheduleData['ice'] = intval(isset($scheduleData['ice'][0]));
-			$scheduleData['sorted'] = intval(isset($scheduleData['sorted'][0]));
 
 			$this->scheduleModel->save($scheduleData);
 		}
 
 		parent::postSaveHook($model, $validData);
+	}
+
+	/**
+	 * Get Redirect Item Url
+	 *
+	 * @param null   $recordId
+	 * @param string $urlVar
+	 *
+	 * @return  string
+	 */
+	protected function getRedirectItemUrl($recordId = null, $urlVar = 'id')
+	{
+		$uri  = parent::getRedirectItemUrl($recordId, $urlVar);
+		$cid  = $this->input->getString("senderCid", "");
+		$date = $this->input->get("date", "");
+		$uri  = "{$uri}&senderCid={$cid}&date={$date}";
+
+		return $uri;
 	}
 }

@@ -18,47 +18,33 @@ use Windwalker\Data\Data;
 abstract class DataSortHelper
 {
 	/**
-	 * 取得欄位變更前得主索引值
+	 * getArrayAccessColumn
 	 *
-	 * 範例
-	 * $dataset = [{id: 1, val: 1}, {id: 2, val: 1}, {id: 3, val: 2}, {id: 4, val: 2}, {id: 5, val: 1}]
-	 * $column  = "val"
-	 * $index   = "id"
-	 *
-	 * 會取得
-	 * [3, 4]
-	 *
-	 * @param   array   $dataset
-	 * @param   string  $column
-	 * @param   string  $index
+	 * @param   ArrayAccess  $object
+	 * @param   string       $index
 	 *
 	 * @return  array
 	 */
-	public static function getBeforeColumnChangeIndex($dataset, $column, $index = "id")
+	public static function getArrayAccessColumn($object, $index)
 	{
-		$indexCache = null;
-		$valueCache = null;
-		$returnVal  = array();
+		$result = array();
 
-		foreach ($dataset as $data)
+		if (is_object($object))
 		{
-			// If value change save last index
-			if ($data->$column != $valueCache)
+			foreach ($object as &$item)
 			{
-				// If not setup
-				if (null !== $indexCache)
+				if (is_array($item) && isset($item[$index]))
 				{
-					$returnVal[] = $indexCache;
+					$result[] = $item[$index];
 				}
-
-				// Flush new id
-				$valueCache = $data->$column;
+				elseif (is_object($item) && isset($item->$index))
+				{
+					$result[] = $item->$index;
+				}
+				// Else ignore the entry
 			}
-
-			// Flush index key
-			$indexCache = $data->$index;
 		}
 
-		return $returnVal;
+		return $result;
 	}
 }
