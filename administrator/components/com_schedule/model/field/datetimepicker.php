@@ -94,21 +94,25 @@ HTML;
 			$html = $input;
 		}
 
-		$onChange = "jQuery('#{$id}').on('dp.change', function(e) { {$onChange} });";
-
 		// Do not load datetimepicker when readonly or disabled
 		if (! $this->readonly && ! $this->disabled)
 		{
-			$js = <<<JS
-jQuery(function ()
+			$js = <<<JAVASCRIPT
+jQuery(function ($)
 {
-	jQuery('#{$id}').datetimepicker({
+	var node = $('#{$id}');
+
+	node.datetimepicker({
 		pickTime: false
 	});
 
-	{$onChange}
+	node.on('dp.change', function(e)
+	{
+		{$onChange}
+	});
 });
-JS;
+JAVASCRIPT;
+
 			JFactory::getDocument()->addScriptDeclaration($js);
 		}
 
