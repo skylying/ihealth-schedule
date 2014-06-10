@@ -9,6 +9,9 @@
 // No direct access
 defined('_JEXEC') or die;
 
+use Schedule\Table\Table;
+use Schedule\Table\Collection as TableCollection;
+
 /**
  * Class ScheduleModelPrescription
  *
@@ -57,4 +60,136 @@ class ScheduleModelPrescription extends \Windwalker\Model\AdminModel
 	 * @var  string
 	 */
 	protected $viewList = 'prescriptions';
+
+	/**
+	 * Method to get a single record.
+	 *
+	 * @param   integer  $pk  The id of the primary key.
+	 *
+	 * @return  mixed    Object on success, false on failure.
+	 */
+	public function getItem($pk = null)
+	{
+		$item = parent::getItem($pk);
+
+		if (empty($item->id))
+		{
+			return $item;
+		}
+
+		$item->schedules = $this->getSchedules($item->id);
+		$item->drugs = $this->getDrugs($item->id);
+
+		return $item;
+	}
+
+	/**
+	 * getSchedules
+	 *
+	 * @param   int  $rxId  Prescription id
+	 *
+	 * @return  array
+	 */
+	public function getSchedules($rxId)
+	{
+		$db    = \JFactory::getDbo();
+		$query = $db->getQuery(true);
+
+		$query->select('schedule.*')
+			->from(Table::SCHEDULES . ' AS schedule')
+			->where('`schedule`.`rx_id`=' . (int) $rxId);
+
+		$schedules = $db->setQuery($query)->loadObjectList();
+
+		foreach ($schedules as $schedule)
+		{
+			$schedule->params = (array) json_decode($schedule->params);
+		}
+
+		return $schedules;
+	}
+
+	/**
+	 * getDrugs
+	 *
+	 * @param   int  $rxId  Prescription id
+	 *
+	 * @return  array
+	 */
+	public function getDrugs($rxId)
+	{
+		$db    = \JFactory::getDbo();
+		$query = $db->getQuery(true);
+
+		$query->select('drug.*')
+			->from(Table::DRUGS . ' AS drug')
+			->where('`drug`.`rx_id`=' . (int) $rxId);
+
+		return $db->setQuery($query)->loadObjectList();
+	}
+
+	/**
+	 * Get drug form object to perform validation
+	 *
+	 * @return  \JForm
+	 */
+	public function getDrugForm()
+	{
+		$config = array(
+			'control'   => 'jform',
+			'load_data' => false,
+		);
+
+		$formName = 'prescription_drug';
+
+		return $this->loadForm($this->option . '.' . $formName . '.form', $formName, $config);
+	}
+
+	/**
+	 * Get schedule form object to perform validation
+	 *
+	 * @return  \JForm
+	 */
+	public function getScheduleForm()
+	{
+		$config = array(
+			'control'   => 'jform',
+			'load_data' => false,
+		);
+
+		$formName = 'prescription_schedule';
+
+		return $this->loadForm($this->option . '.' . $formName . '.form', $formName, $config);
+	}
+
+	/**
+	 * Prepare and sanitise the table data prior to saving.
+	 *
+	 * @param   JTable  $table  A reference to a JTable object.
+	 *
+	 * @return  void
+	 */
+	protected function prepareTable(\JTable $table)
+	{
+		parent::prepareTable($table);
+
+		$customerTable = TableCollection::loadTable('Customer', $table->customer_id);
+		$memberTable   = TableCollection::loadTable('Member',   $table->member_id);
+		$hospitalTable = TableCollection::loadTable('Hospital', $table->hospital_id);
+
+		$emptyDate1st = new JDate($table->see_dr_date);
+		$emptyDate2nd = new JDate($table->see_dr_date);
+
+		$emptyDate1st->modify('+' . $table->period . ' days');
+		$emptyDate2nd->modify('+' . ($table->period * 2) . ' days');
+
+		$table->customer_name = $customerTable->name;
+		$table->member_name = $memberTable->name;
+		$table->hospital_title = $hospitalTable->title;
+		$table->id_number = $customerTable->id_number;
+		$table->birth_date = $customerTable->birth_date;
+		$table->deliver_nths = implode(',', (array) $table->deliver_nths);
+		$table->empty_date_1st = $emptyDate1st->toSql();
+		$table->empty_date_2nd = $emptyDate2nd->toSql();
+	}
 }

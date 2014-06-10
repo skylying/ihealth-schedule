@@ -14,11 +14,11 @@ use Windwalker\Model\AdminModel;
 defined('_JEXEC') or die;
 
 /**
- * Class Schedule\Model\MemberModel
+ * Class Schedule\Model\TaskModel
  *
  * @since 1.0
  */
-class MemberModel extends AdminModel
+class TaskModel extends AdminModel
 {
 	/**
 	 * Property prefix.
@@ -37,7 +37,7 @@ class MemberModel extends AdminModel
 	/**
 	 * Property textPrefix.
 	 *
-	 * @var  string
+	 * @var string
 	 */
 	protected $textPrefix = 'COM_SCHEDULE';
 
@@ -46,27 +46,27 @@ class MemberModel extends AdminModel
 	 *
 	 * @var  string
 	 */
-	protected $name = 'member';
+	protected $name = 'task';
 
 	/**
 	 * Property viewItem.
 	 *
 	 * @var  string
 	 */
-	protected $viewItem = 'member';
+	protected $viewItem = 'task';
 
 	/**
 	 * Property viewList.
 	 *
 	 * @var  string
 	 */
-	protected $viewList = 'members';
+	protected $viewList = 'tasks';
 
 	/**
 	 * Method to set new item ordering as first or last.
 	 *
-	 * @param   \JTable  $table     Item table to save.
-	 * @param   string   $position  'first' or other are last.
+	 * @param   \JTable $table    Item table to save.
+	 * @param   string  $position 'first' or other are last.
 	 *
 	 * @return  void
 	 */

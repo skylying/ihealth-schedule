@@ -18,4 +18,15 @@ defined('_JEXEC') or die;
  */
 class ScheduleModelTask extends TaskModel
 {
+	/**
+	 * Prepare and sanitise the table data prior to saving.
+	 *
+	 * @param   JTable  $table  A reference to a JTable object.
+	 *
+	 * @return  void
+	 */
+	public function prepareTable(\JTable $table)
+	{
+		parent::prepareTable($table);
+	}
 }
