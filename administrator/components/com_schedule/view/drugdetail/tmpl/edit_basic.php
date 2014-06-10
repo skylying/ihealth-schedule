@@ -129,7 +129,7 @@ $asset->addJS('multi-row-handler.js');
 				<td>
 					<!-- 分要完成 form -->
 					<?php
-					$sorted = FieldHelper::resetGroup($form->getField('sorted'), "schedule.{$schedule->id}");
+					$sorted = FieldHelper::resetGroup($form->getField('sorted', null, $schedule->sorted), "schedule.{$schedule->id}");
 
 					echo $sorted->input;
 					?>
@@ -137,7 +137,7 @@ $asset->addJS('multi-row-handler.js');
 				<td>
 					<!-- 冰品 -->
 					<?php
-					$ice = FieldHelper::resetGroup($form->getField('ice'), "schedule.{$schedule->id}");
+					$ice = FieldHelper::resetGroup($form->getField('ice', null, $schedule->ice), "schedule.{$schedule->id}");
 
 					echo $ice->input;
 					?>
@@ -145,7 +145,7 @@ $asset->addJS('multi-row-handler.js');
 				<td>
 					<!-- 自費金額 -->
 					<?php
-					$price = FieldHelper::resetGroup($form->getField('price'), "schedule.{$schedule->id}");
+					$price = FieldHelper::resetGroup($form->getField('price', null, $schedule->price), "schedule.{$schedule->id}");
 
 					echo $price->input;
 					?>

@@ -7,6 +7,7 @@
  */
 
 use Windwalker\Table\Table;
+use Schedule\Table\Table AS ScheduleTable;
 
 // No direct access
 defined('_JEXEC') or die;
@@ -23,7 +24,7 @@ class ScheduleTableDrugdetail extends Table
 	 */
 	public function __construct()
 	{
-		parent::__construct('#__schedule_drugdetails');
+		parent::__construct(ScheduleTable::DRUG_EXTRA_DETAILS);
 	}
 
 	/**

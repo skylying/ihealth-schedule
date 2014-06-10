@@ -67,20 +67,20 @@ class ScheduleControllerDrugdetailEditSave extends SaveController
 	}
 
 	/**
-	 * Get Redirect Item Url
+	 * Redirect
 	 *
-	 * @param null   $recordId
-	 * @param string $urlVar
+	 * @param string $url
+	 * @param null   $msg
+	 * @param string $type
 	 *
-	 * @return  string
+	 * @return  void
 	 */
-	protected function getRedirectItemUrl($recordId = null, $urlVar = 'id')
+	public function redirect($url, $msg = null, $type = 'message')
 	{
-		$uri  = parent::getRedirectItemUrl($recordId, $urlVar);
-		$cid  = $this->input->getString("senderCid", "");
+		$cid  = $this->input->getString("senderIds", "");
 		$date = $this->input->get("date", "");
-		$uri  = "{$uri}&senderCid={$cid}&date={$date}";
+		$url  = $this->getRedirectItemUrl();
 
-		return $uri;
+		$this->app->redirect("{$url}&layout=edit&senderIds={$cid}&date={$date}");
 	}
 }
