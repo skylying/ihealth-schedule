@@ -174,7 +174,7 @@ HTML;
 		$customerNotes = \Schedule\Helper\GetRxInfoHelper::getCustomerNote($data->item->customer_id);
 		$drugs = \Schedule\Helper\GetRxInfoHelper::getHicode($data->item->id);
 
-		foreach($drugs as $drug)
+		foreach ($drugs as $drug)
 		{
 			$drugList .= ' ( ' . $drug->hicode . ' ) ';
 		}
@@ -201,19 +201,19 @@ HTML;
 			$customer_note .= $CustomerNote->note . ' ';
 		}
 
-		$data->item->member_list    = $memberList;
-		$data->item->tel_office     = $tel_office;
-		$data->item->tel_home       = $tel_home;
-		$data->item->mobile         = $mobile;
-		$data->item->address        = $address;
-		$data->item->customer_note  = $customer_note;
-		$data->item->deliverNth     = $deliverNth;
-		$data->item->drugEmptyDate  = $drugEmptyDate;
-		$data->item->session        = $session;
-		$data->item->date           = $date;
-		$data->item->age            = $age;
-		$data->item->drugList       = $drugList;
-		$data->item->count          = count($drugs);
-		$data->print                = $isSaveAndPrint;
+		$data->item->member_list   = $memberList;
+		$data->item->tel_office    = $tel_office;
+		$data->item->tel_home      = $tel_home;
+		$data->item->mobile        = $mobile;
+		$data->item->address       = $address;
+		$data->item->customer_note = $customer_note;
+		$data->item->deliverNth    = $deliverNth;
+		$data->item->drugEmptyDate = $drugEmptyDate;
+		$data->item->session       = $session;
+		$data->item->date          = $date;
+		$data->item->age           = $age;
+		$data->item->drugList      = $drugList;
+		$data->item->count         = count($drugs);
+		$data->print               = $isSaveAndPrint;
 	}
 }

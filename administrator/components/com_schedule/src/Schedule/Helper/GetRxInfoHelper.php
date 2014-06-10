@@ -27,7 +27,7 @@ class GetRxInfoHelper
 	 *
 	 * @return  mixed
 	 */
-	public static function getHicode($RxId)
+	public static function getHicode($rxId)
 	{
 		$db      = \JFactory::getDbo();
 		$query   = $db->getQuery(true);
@@ -37,7 +37,7 @@ class GetRxInfoHelper
 
 		$query->select($select)
 			->from(Table::DRUGS . ' AS drug')
-			->where('drug.rx_id=' . $RxId);
+			->where('drug.rx_id=' . $rxId);
 
 		$drugs = $db->setQuery($query)->loadObjectList();
 
@@ -51,7 +51,7 @@ class GetRxInfoHelper
 	 *
 	 * @return  mixed
 	 */
-	public static function getInfo($RxId)
+	public static function getInfo($rxId)
 	{
 		$db      = \JFactory::getDbo();
 		$query   = $db->getQuery(true);
@@ -70,7 +70,7 @@ class GetRxInfoHelper
 
 		$query->select($select)
 			->from(Table::SCHEDULES . ' AS schedule')
-			->where('schedule.rx_id=' . $RxId);
+			->where('schedule.rx_id=' . $rxId);
 
 		$info = $db->setQuery($query)->loadObjectList();
 
