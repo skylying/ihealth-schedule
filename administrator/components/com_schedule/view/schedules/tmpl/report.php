@@ -37,10 +37,8 @@ CSS;
 
 $doc->addStyleDeclaration($css);
 
-$reportHelper = new \Schedule\Helper\ScheduleReportHelper();
-$reports = $reportHelper->reportData();
-
-
+$ScheduleReport = new \Schedule\Helper\ScheduleReportHelper();
+$data = $ScheduleReport->getData();
 ?>
 
 <div id="schedule" class="windwalker schedule edit-form row-fluid" >
@@ -109,7 +107,7 @@ $reports = $reportHelper->reportData();
 			$rowSpanRepeat = 0;
 			$totalOfCity = 0;
 
-			foreach ($reports as $keyCity => $belongs):
+			foreach ($data as $keyCity => $belongs):
 				$cityTitle = $keyCity;
 				$rowSpan = count($belongs);
 
@@ -121,7 +119,7 @@ $reports = $reportHelper->reportData();
 				<tr class="report-row">
 					<!-- City -->
 					<?php if($rowSpanRepeat == 1):?>
-					<td class="left" ROWSPAN="<?php echo $rowSpan;?>">
+					<td class="left" rowspan="<?php echo $rowSpan;?>">
 						<?php echo $cityTitle;?>
 					</td>
 					<?php endif;?>
@@ -133,7 +131,8 @@ $reports = $reportHelper->reportData();
 
 					<?php
 					$allYearAmount = 0;
-					foreach ($months as $keyMonth => $amounts): ?>
+					foreach ($months as $keyMonth => $amounts):
+					?>
 					<!-- Month -->
 					<td class="right">
 						<?php
@@ -150,23 +149,17 @@ $reports = $reportHelper->reportData();
 					</td>
 
 					<!-- All total of the city-->
-					<?php
-					$totalOfCity = $allYearAmount + $totalOfCity;
-					if($rowSpanRepeat == $rowSpan):
-						$showTotal = $totalOfCity;
-					else:
-						$showTotal = '';
-					endif;
-					?>
+					<?php $totalOfCity = $allYearAmount + $totalOfCity;?>
 					<td class="left">
-						<?php echo $showTotal;?>
+						<?php echo ($rowSpanRepeat == $rowSpan) ? $totalOfCity : '';?>
 					</td>
 				</tr>
 					<?php
-					if($rowSpanRepeat == $rowSpan):
+					if($rowSpanRepeat == $rowSpan)
+					{
 						$rowSpanRepeat = 0;
 						$totalOfCity = 0;
-					endif;
+					};
 					?>
 				<?php endforeach;?>
 			<?php endforeach;?>

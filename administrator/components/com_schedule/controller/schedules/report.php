@@ -14,17 +14,17 @@
 class ScheduleControllerSchedulesReport extends Windwalker\Controller\Admin\AbstractRedirectController
 {
 	/**
-	 * Set redirect to route overview layout
+	 * Set redirect to route report layout
 	 *
 	 * @return  mixed|void
 	 */
 	protected function doExecute()
 	{
 
-		$input = JFactory::getApplication()->input;
-		$getPostData = new JRegistry($input->get('jform', '', 'array'));
+		$input = $this->input->get('jform', '', 'array');
+		$getPostData = new JRegistry($input);
 
-		$getFilterStat =& JFactory::getApplication();
+		$getFilterStat = JFactory::getApplication();
 		$getFilterStat->setUserState('report.filters', $getPostData);
 
 		$this->redirect(JRoute::_('index.php?option=com_schedule&view=schedules&layout=report', false));

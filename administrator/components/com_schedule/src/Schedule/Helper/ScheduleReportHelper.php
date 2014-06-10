@@ -9,6 +9,7 @@
 namespace Schedule\Helper;
 
 use Schedule\Table\Table;
+use Windwalker\Compare\InCompare;
 
 /**
  * Class ScheduleReportHelper
@@ -20,14 +21,23 @@ class ScheduleReportHelper
 	 *
 	 * @return  mixed
 	 */
-	public function getReportData()
+	public function getRowData()
 	{
-		$filter = $this->filterData();
+		$filter = $this->buildSqlFilterString();
 
 		$db = \JFactory::getDbo();
 
+		$select = [
+			'`city_title`',
+			'`type`',
+			'`institute_title`',
+			'SUBSTR(`date`, 1, 7) AS `year_month`',
+			'SUBSTR(`date`, 6, 2) AS `month`',
+			'COUNT(*) as `amount`',
+		];
+
 		$query = $db->getQuery(true)
-			->select("city_title, type, institute_title, substr(`date`, 1, 7) as `year_month`, substr(`date`, 6, 2) as month, COUNT(*) as `amount`")
+			->select($select)
 			->from(TABLE::SCHEDULES)
 			->where("type IN('individual', 'resident') " . $filter)
 			->group("city_title, institute_title, type, `year_month`")
@@ -39,37 +49,29 @@ class ScheduleReportHelper
 	/**
 	 * filterData
 	 *
-	 * @return  void
+	 * @return  string
 	 */
-	public function filterData()
+	public function buildSqlFilterString()
 	{
-		$app =& \JFactory::getApplication();
+		$app = \JFactory::getApplication();
 		$filters = $app->getUserState('report.filters');
-
-		$filterStartDate = $filters->get('date_start');
-		$filterEndDate = $filters->get('date_end');
-		$filterCity = $filters->get('city');
-
-		if(empty($filterCity))
-		{
-			$sqlWhereCity = '';
-		}
-		else
-		{
-			$inCity = "'" . implode("', '", $filterCity) . "'";
-			$sqlWhereCity = sprintf("city_title IN(%s)", $inCity);
-		}
 
 		$jDate = new \JDate();
 
-		if(empty($filterStartDate))
-		{
-			$filterStartDate = $jDate->year . '-' . sprintf("%02d", 1) . '-' . sprintf("%02d", 1);
-		}
+		$defaultYearMonthStart = $jDate->year . '-' . sprintf("%02d", 1) . '-' . sprintf("%02d", 1);
+		$defaultYearMonthEnd = $jDate->year . '-12-31';
 
-		if(empty($filterEndDate))
+		$filterStartDate = $filters->get('date_start', $defaultYearMonthStart);
+		$filterEndDate = $filters->get('date_end', $defaultYearMonthEnd);
+		$filterCity = $filters->get('city', '');
+
+		$sqlWhereCity = '';
+
+		if(!empty($filterCity))
 		{
-			$filterEndDate = $jDate->year . '-12-31';
+			$db = \JFactory::getDbo();
+			$filterCity = $db->quote($filterCity);
+			$sqlWhereCity = (string) new InCompare('`city`', $filterCity);
 		}
 
 		$sqlBetween = sprintf("date BETWEEN '%s' AND '%s'", $filterStartDate ,$filterEndDate);
@@ -91,9 +93,9 @@ class ScheduleReportHelper
 	 *
 	 * @return  mixed
 	 */
-	public function reportData()
+	public function getData()
 	{
-		$reports = $this->getReportData();
+		$reports = $this->getRowData();
 
 		$reportData = array();
 		$currentCity = '';
@@ -130,7 +132,7 @@ class ScheduleReportHelper
 			//Counting schedules in the month
 			$pastYearMonth = $currentYearMonth;
 			$currentYearMonth = $report->year_month;
-			$MonthHtmlTd = '';
+
 			for($month = 1; $month <= 12; $month ++)
 			{
 				$getYearStar = '2014';
