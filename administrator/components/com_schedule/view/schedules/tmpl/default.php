@@ -7,6 +7,7 @@
  */
 
 use Windwalker\View\Layout\FileLayout;
+use Schedule\Script\AddressScript;
 
 // No direct access
 defined('_JEXEC') or die;
@@ -18,9 +19,15 @@ JHtmlFormbehavior::chosen('select');
 /**
  * Prepare data for this template.
  *
- * @var Windwalker\DI\Container $container
+ * @var Windwalker\DI\Container       $container
+ * @var Windwalker\Helper\AssetHelper $asset
  */
 $container = $this->getContainer();
+$asset     = $container->get('helper.asset');
+
+AddressScript::bind('filter_schedule_city', 'filter_schedule_area');
+
+$asset->addJS('schedules/list.js');
 ?>
 
 <div id="schedule" class="windwalker schedules tablelist row-fluid">

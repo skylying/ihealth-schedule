@@ -24,25 +24,13 @@ class ScheduleHelper
 	{
 		$attr = array('target' => '_blank');
 
-		if ('individual' === $item->type
-			|| ('individual' !== $item->type && ! empty($item->member_json)))
+		switch ($item->type)
 		{
-			$html = array();
+			case 'individual':
+				return UiHelper::foreignLink('member', $item->member_name, $item->member_id, '', $attr);
 
-			$members = json_decode("[{$item->member_json}]");
-
-			foreach ($members as $member)
-			{
-				$html[] = \Schedule\Helper\UiHelper::foreignLink('member', $member->name, $member->id, '', $attr);
-			}
-
-			return implode("", $html);
-		}
-
-		if ('resident' === $item->type
-			|| ('resident' !== $item->type && $item->institute_id > 0))
-		{
-			return \Schedule\Helper\UiHelper::foreignLink('institute', $item->institute_title, $item->institute_id, '', $attr);
+			case 'resident':
+				return UiHelper::foreignLink('institute', $item->institute_title, $item->institute_id, '', $attr);
 		}
 
 		return '';
