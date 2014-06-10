@@ -200,12 +200,12 @@ class ScheduleHelper
 
 		$nth = (int) substr($nth, 0, 1);
 
+		$date = new \JDate($seeDoctorDate);
+
 		if (1 === $nth)
 		{
-			return $seeDoctorDate;
+			return $date;
 		}
-
-		$date = new \JDate($seeDoctorDate);
 
 		$date->modify('+' . $period * ($nth - 1) . ' days');
 
