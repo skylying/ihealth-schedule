@@ -87,5 +87,41 @@
 			type="textarea"
 			label="備註"
 			/>
+
+		<field name="type"
+			type="list"
+			label="處方箋類別"
+			default="individual"
+			>
+			<option value="individual">散客</option>
+			<option value="resident">住民</option>
+		</field>
+
+		<field name="received"
+			type="list"
+			label="處方箋狀態"
+			default="0"
+			>
+			<option value="0">未取得</option>
+			<option value="1">已取得</option>
+		</field>
+
+		<field name="called"
+			type="list"
+			label="是否已外送"
+			default="0"
+			>
+			<option value="0">未電聯</option>
+			<option value="1">已電聯</option>
+		</field>
+
+		<field name="delivered"
+			type="list"
+			label="是否已外送"
+			default="0"
+			>
+			<option value="0">否</option>
+			<option value="1">是</option>
+		</field>
 	</fieldset>
 </form>

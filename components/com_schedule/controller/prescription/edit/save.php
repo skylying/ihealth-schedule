@@ -81,6 +81,8 @@ class ScheduleControllerPrescriptionEditSave extends ApiSaveController
 		$this->data['type'] = 'individual';
 
 		// Set prescription default values
+		$this->data['received']  = 0;
+		$this->data['called']    = 0;
 		$this->data['delivered'] = 0;
 	}
 
