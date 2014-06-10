@@ -24,9 +24,11 @@ class ScheduleControllerRxindividualEditApply extends ApplyController
 	 */
 	public function postExecute($return = null)
 	{
+		$printButtonValue = $this->input->get('save-and-print');
+
 		if (false !== $return)
 		{
-			$this->app->setUserState('save-and-print', '1');
+			$this->app->setUserState('save-and-print', $printButtonValue);
 		}
 
 		return parent::postExecute($return);

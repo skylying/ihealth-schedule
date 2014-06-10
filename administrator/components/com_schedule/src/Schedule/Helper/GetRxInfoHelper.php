@@ -21,13 +21,37 @@ use Schedule\Table\Table;
 class GetRxInfoHelper
 {
 	/**
-	 * getInfo
+	 * getHicode
 	 *
-	 * @param int $RxID
+	 * @param int $RxId
 	 *
 	 * @return  mixed
 	 */
-	public static function getInfo($RxID)
+	public static function getHicode($RxId)
+	{
+		$db      = \JFactory::getDbo();
+		$query   = $db->getQuery(true);
+		$select  = array(
+			'drug.hicode'
+		);
+
+		$query->select($select)
+			->from(Table::DRUGS . ' AS drug')
+			->where('drug.rx_id=' . $RxId);
+
+		$drugs = $db->setQuery($query)->loadObjectList();
+
+		return $drugs;
+	}
+
+	/**
+	 * getInfo
+	 *
+	 * @param int $RxId
+	 *
+	 * @return  mixed
+	 */
+	public static function getInfo($RxId)
 	{
 		$db      = \JFactory::getDbo();
 		$query   = $db->getQuery(true);
@@ -46,7 +70,7 @@ class GetRxInfoHelper
 
 		$query->select($select)
 			->from(Table::SCHEDULES . ' AS schedule')
-			->where('schedule.rx_id=' . $RxID);
+			->where('schedule.rx_id=' . $RxId);
 
 		$info = $db->setQuery($query)->loadObjectList();
 

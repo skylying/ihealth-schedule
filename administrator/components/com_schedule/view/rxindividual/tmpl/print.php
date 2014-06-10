@@ -83,7 +83,7 @@ defined('_JEXEC') or die;
 			</tr>
 			<tr>
 				<td>客戶年齡</td>
-				<td><?php echo date_diff(date_create($data->item->birth_date), date_create('today'))->y; ?></td>
+				<td><?php echo $data->item->age; ?></td>
 				<td></td>
 				<td></td>
 			</tr>
@@ -131,13 +131,13 @@ defined('_JEXEC') or die;
 			</tr>
 			<tr>
 				<td>藥品資料</td>
-				<td></td>
+				<td><?php echo $data->item->drugList; ?></td>
 				<td></td>
 				<td></td>
 			</tr>
 			<tr>
 				<td>藥品種數</td>
-				<td></td>
+				<td><?php echo $data->item->count; ?></td>
 				<td>註記選項</td>
 				<td><?php echo $data->item->remind; ?></td>
 			</tr>

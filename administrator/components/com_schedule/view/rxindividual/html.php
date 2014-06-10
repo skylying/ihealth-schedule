@@ -153,6 +153,10 @@ HTML;
 
 		$data = $this->data;
 
+		// Age calculation
+		$birthday = new DateTime($data->item->birth_date);
+		$age = $birthday->diff(new Datetime('now'))->y;
+
 		$memberList    = '';
 		$tel_office    = '';
 		$tel_home      = '';
@@ -163,10 +167,17 @@ HTML;
 		$drugEmptyDate = '';
 		$session       = '';
 		$date          = '';
+		$drugList      = '';
 
 		$members       = \Schedule\Helper\Mapping\MemberCustomerHelper::loadMembers($data->item->customer_id);
 		$scheduleInfos = \Schedule\Helper\GetRxInfoHelper::getInfo($data->item->id);
 		$customerNotes = \Schedule\Helper\GetRxInfoHelper::getCustomerNote($data->item->customer_id);
+		$drugs = \Schedule\Helper\GetRxInfoHelper::getHicode($data->item->id);
+
+		foreach($drugs as $drug)
+		{
+			$drugList .= ' ( ' . $drug->hicode . ' ) ';
+		}
 
 		foreach ($members as $member)
 		{
@@ -200,6 +211,9 @@ HTML;
 		$data->item->drugEmptyDate  = $drugEmptyDate;
 		$data->item->session        = $session;
 		$data->item->date           = $date;
+		$data->item->age            = $age;
+		$data->item->drugList       = $drugList;
+		$data->item->count          = count($drugs);
 		$data->print                = $isSaveAndPrint;
 	}
 }
