@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <form>
-	<fieldset name="basic">
+	<fieldset name="schedules_print">
 
 		<field id="date_start"
 			name="date_start"

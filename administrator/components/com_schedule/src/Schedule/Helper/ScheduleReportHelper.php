@@ -69,9 +69,10 @@ class ScheduleReportHelper
 
 		if(!empty($filterCity))
 		{
+			//Borrow from dbo to make quotes for city_title is string, and will drop if use the IDs.
 			$db = \JFactory::getDbo();
 			$filterCity = $db->quote($filterCity);
-			$sqlWhereCity = (string) new InCompare('`city`', $filterCity);
+			$sqlWhereCity = (string) new InCompare('`city_title`', $filterCity);
 		}
 
 		$sqlBetween = sprintf("date BETWEEN '%s' AND '%s'", $filterStartDate ,$filterEndDate);

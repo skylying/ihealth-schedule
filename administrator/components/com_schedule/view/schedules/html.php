@@ -178,30 +178,19 @@ HTML;
 			$buttonSet['checkin']['access'] = false;
 			$buttonSet['batch']['access'] = false;
 
-			// Add a print popup button
-			$buttonSet['print'] = array(
-				'handler' => function ()
-				{
-					JFactory::getDocument()->addStyleDeclaration('
-						#modal-print {
-	  						overflow-y: hidden;
-						}
-						#modal-print iframe {
-							border: 0;
-						}
 
-						/* fix float problem */
-						#toolbar-popup-print .btn-group {
-							float: none;
-						}
-					');
+			$buttonSet['print']['handler'] = function(){
+				\JHtml::_('behavior.modal');
+				$title = '列印報表';
+				$targetModalId = 'print';
+				$icon = 'glyphicon glyphicon-print';
 
-					$printUrl = 'index.php?option=com_schedule&view=schedules&layout=print&tmpl=component';
+				$dHtml = "<a href='#" . $targetModalId . "' class='modal btn btn-small'>
+					<i class='" . $icon . "' title='" . $title . "'></i>" . $title . "</a>";
 
-					// See JToolbarButtonPopup::fetchButton()
-					JToolbar::getInstance('toolbar')->appendButton('Popup', 'print', '列印排程統計表', $printUrl);
-				},
-			);
+				$bar = JToolbar::getInstance('toolbar');
+				$bar->appendButton('Custom', $dHtml, $title);
+			};
 		}
 
 		return $buttonSet;

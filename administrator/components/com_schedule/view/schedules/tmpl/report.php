@@ -46,7 +46,7 @@ $data = $ScheduleReport->getData();
 		class="form-validate" enctype="multipart/form-data">
 
 		<div class="form-horizontal">
-			<?php foreach ($printForm->getFieldset('basic') as $field): ?>
+			<?php foreach ($printForm->getFieldset('schedules_print') as $field): ?>
 			<div id="control_<?php echo $field->id; ?>">
 				<?php echo $field->getControlGroup(); ?>
 			</div>
