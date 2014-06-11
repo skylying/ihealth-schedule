@@ -20,6 +20,84 @@ JHtmlJquery::framework(true);
 $asset->addJS('multi-row-handler.js');
 ?>
 
+<script>
+	// TODO: 會改成 class 寫法且獨立 js file
+
+	jQuery(function(){
+		window.InstituteExtraObject = new InstituteExtra("add-institute-extra", "row-institute-");
+	});
+
+	;(function($, undefined)
+	{
+		"use strict";
+
+		if (window.InstituteExtra !== undefined)
+		{
+			return;
+		}
+
+		/**
+		 * Class Institute Extra
+		 *
+		 * @param buttonClass  string  button class name
+		 * @param rowIdPrefix  string  row id prefix
+		 */
+		function InstituteExtra(buttonClass, $rowIdPrefix)
+		{
+			/**
+			 * Button class
+			 *
+			 * @type  {string}
+			 */
+			this.buttonClass = buttonClass;
+
+			/**
+			 * Row Id Prefix
+			 *
+			 * @type  {string}
+			 */
+			this.rowIdPrefix = $rowIdPrefix;
+
+			this.addInstituteExtraButtonEvent();
+		}
+
+		InstituteExtra.prototype = {
+			/**
+			 * 新增機構額外表按鈕事件
+			 *
+			 * @return  void
+			 */
+			addInstituteExtraButtonEvent: function()
+			{
+				var extra = this;
+
+				$("body").delegate("." + this.buttonClass, "click", function(){
+					extra.addInstituteExtraRow($(this).data("instituteId"));
+				});
+			},
+
+			/**
+			 * 新增機構 row
+			 *
+			 * @param  instituteId
+			 *
+			 * @return  void
+			 */
+			addInstituteExtraRow: function(instituteId)
+			{
+				var rowId = "#" + this.rowIdPrefix + instituteId;
+				var row = $(rowId).clone().removeClass("hide");
+
+				$(rowId).after(row);
+			}
+		}
+
+		window.InstituteExtra = InstituteExtra;
+
+	})(jQuery);
+
+</script>
+
 <h3 class="text-right">
 	<?php echo $data->date; ?>
 </h3>
@@ -79,11 +157,21 @@ $asset->addJS('multi-row-handler.js');
 		<?php foreach ($institute['extra'] as $extra): ?>
 			<?php echo $this->loadTemplate('extra_list_row', array('extra' => $extra, 'group' => "institutes.{$institute_id}.", 'form' => $data->form)); ?>
 		<?php endforeach; ?>
+
+		<?php
+		echo $this->loadTemplate('extra_list_row', array(
+			'id' => "row-institute-{$institute_id}",
+			'class' => 'hide',
+			'extra' => $extra,
+			'group' => "institutes.{$institute_id}.",
+			'form' => $data->form)
+		);
+		?>
 	<tr>
 		<td colspan="11" class="text-right"><!-- TODO: 份數 --> 份</td>
 		<td>
 			<!-- TODO: js -->
-			<button id="button-institute<?php echo $institute_id; ?>" type="button">+</button>
+			<button class="add-institute-extra" data-institute-id="<?php echo $institute_id; ?>" type="button">+</button>
 		</td>
 	</tr>
 	<?php endforeach; ?>
