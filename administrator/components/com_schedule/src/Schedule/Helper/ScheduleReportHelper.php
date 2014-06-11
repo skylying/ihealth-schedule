@@ -23,13 +23,13 @@ class ScheduleReportHelper
 	 */
 	public function getRowData()
 	{
-		$filter = $this->buildSqlFilterString();
-
 		$db = \JFactory::getDbo();
 
 		$select = [
+			'`city`',
 			'`city_title`',
 			'`type`',
+			'`institute_id`',
 			'`institute_title`',
 			'SUBSTR(`date`, 1, 7) AS `year_month`',
 			'SUBSTR(`date`, 6, 2) AS `month`',
@@ -39,19 +39,23 @@ class ScheduleReportHelper
 		$query = $db->getQuery(true)
 			->select($select)
 			->from(TABLE::SCHEDULES)
-			->where("`type` IN('individual', 'resident') " . $filter)
+			->where("`type` IN('individual', 'resident') ")
 			->group("`city_title`, institute_title, type, `year_month`")
 			->order("`city_title`, `type` DESC, `institute_title`, `year_month`");
+
+		$query = $this->extraFilter($query);
 
 		return $db->setQuery($query)->loadObjectList();
 	}
 
 	/**
-	 * filterData
+	 * extraFilter
 	 *
-	 * @return  string
+	 * @param $query
+	 *
+	 * @return  mixed
 	 */
-	public function buildSqlFilterString()
+	public function extraFilter($query)
 	{
 		$app = \JFactory::getApplication();
 		$filters = $app->getUserState('report.filters');
@@ -61,11 +65,9 @@ class ScheduleReportHelper
 		$defaultYearMonthStart = sprintf('%s-01-01',$thisYear);
 		$defaultYearMonthEnd = sprintf('%s-12-31',$thisYear);
 
-		$filterStartDate = $filters->get('date_start', $defaultYearMonthStart);
-		$filterEndDate = $filters->get('date_end', $defaultYearMonthEnd);
-		$filterCity = $filters->get('city', '');
-
-		$sqlWhereCity = '';
+		$startDate = $filters->get('date_start', $defaultYearMonthStart);
+		$endDate = $filters->get('date_end', $defaultYearMonthEnd);
+		$filterCity = $filters->get('city', array());
 
 		if(!empty($filterCity))
 		{
@@ -73,97 +75,68 @@ class ScheduleReportHelper
 			$db = \JFactory::getDbo();
 			$filterCity = $db->quote($filterCity);
 			$sqlWhereCity = (string) new InCompare('`city_title`', $filterCity);
+			$query = $query->where($sqlWhereCity);
 		}
 
-		$sqlBetween = sprintf("date BETWEEN '%s' AND '%s'", $filterStartDate ,$filterEndDate);
+		$query = $query->where(sprintf('`date` >= "%s"', $startDate));
 
-		if(empty($sqlWhereCity))
-		{
-			$sqlFromFilter = sprintf("AND %s", $sqlBetween);
-		}
-		else
-		{
-			$sqlFromFilter = sprintf("AND %s AND %s", $sqlWhereCity, $sqlBetween);
-		}
+		$query = $query->where(sprintf('`date` <= "%s"', $endDate));
 
-		return $sqlFromFilter;
+		return $query;
 	}
 
 	/**
-	 * reportData
+	 * getDataTmp
+	 * 此功能做為重構資料與邏輯,測試完即刪除
 	 *
-	 * @return  mixed
+	 * @return  void
 	 */
 	public function getData()
 	{
-		$reports = $this->getRowData();
+		$rowData = $this->getRowData();
 
-		$reportData = array();
-		$currentCity = '';
-		$currentBelong = '';
-		$currentYearMonth = '';
+		$data = array();
 
-		foreach($reports as $report)
+		foreach($rowData as $item)
 		{
-			//City
-			$pastCity = $currentCity;
-			$currentCity = $report->city_title;
-			if($currentCity != $pastCity)
+			if(!isset($data[$item->city]))
 			{
-				$reportData[$currentCity] = array();
+				$data[$item->city] = array(
+					"city_title" => $item->city_title,
+					"institutes" => array(),
+					"customers" => array(
+						"months" => array_fill(0, 12, 0),
+						"sub_total" => 0,
+					),
+					"total" => 0,
+				);
 			}
 
-			//Institute or individual to belong
-			$pastBelong = $currentBelong;
-
-			if($report->type == 'individual')
+			if(!isset($data[$item->city]["institutes"][$item->institute_id]))
 			{
-				$currentBelong =  '散客';
+				$data[$item->city]["institutes"][$item->institute_id] = array(
+					"title" => $item->institute_title,
+					"months" => array_fill(0, 12, 0),
+					"sub_total" => 0,
+				);
+			}
+
+			$month = (int) $item->month;
+
+			if($item->type == 'individual')
+			{
+				$data[$item->city]["customers"]["months"][$month-1] = $item->amount;
+				$data[$item->city]["customers"]["sub_total"] += $item->amount;
 			}
 			else
 			{
-				$currentBelong = $report->institute_title;
+				$data[$item->city]["institutes"][$item->institute_id]["months"][$month-1] = $item->amount;
+				$data[$item->city]["institutes"][$item->institute_id]["sub_total"] += $item->amount;
 			}
 
-			if($currentBelong != $pastBelong || $currentCity != $pastCity)
-			{
-				$reportData[$currentCity][$currentBelong] = array();
-			}
-
-			//Counting schedules in the month
-			$pastYearMonth = $currentYearMonth;
-			$currentYearMonth = $report->year_month;
-
-			for($month = 1; $month <= 12; $month ++)
-			{
-				$getYearStar = '2014';
-				$getMonth = sprintf("%02d" ,$month);
-				$needleYearMonth = $getYearStar . '-' . $getMonth;
-
-				//Check it the month of count value to set numbers.
-				if($needleYearMonth == $currentYearMonth)
-				{
-					$theSameMonthStat = 1;
-				}
-				else
-				{
-					$theSameMonthStat = 0;
-				}
-
-				if($theSameMonthStat == 0)
-				{
-					$theMonthTotal = 0;
-				}
-				else
-				{
-					$theMonthTotal = $report->amount;
-				}
-
-				// $month月 useful in debug job.
-				$reportData[$currentCity][$currentBelong][$month . '月'][] = $theMonthTotal;
-			}
+			$data[$item->city]["total"] += $item->amount;
 		}
 
-		return $reportData;
+	return $data;
 	}
 }

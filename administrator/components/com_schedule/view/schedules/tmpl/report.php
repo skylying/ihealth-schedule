@@ -10,53 +10,14 @@
 defined('_JEXEC') or die;
 JHtmlBehavior::multiselect('adminForm');
 
-$printForm = $data->printForm;
-
-$doc = JFactory::getDocument();
-$css = <<<CSS
-ol
-{
-	list-style-type:none;
-}
-
-ol li
-{
-	float:left;
-	margin: 0 10px;
-	padding: 0 10px;
-}
-
-ol li label
-{
-	float:right;
-	display:inline;
-	margin: 0 2px;
-	padding: 0 2px;
-}
-CSS;
-
-$doc->addStyleDeclaration($css);
-
 $ScheduleReport = new \Schedule\Helper\ScheduleReportHelper();
-$data = $ScheduleReport->getData();
+$items = $ScheduleReport->getData();
 ?>
-
 <div id="schedule" class="windwalker schedule edit-form row-fluid" >
 	<form action="<?php echo JURI::getInstance(); ?>" method="post" name="adminForm" id="adminForm" target="_parent"
 		class="form-validate" enctype="multipart/form-data">
 
-		<div class="form-horizontal">
-			<?php foreach ($printForm->getFieldset('schedules_print') as $field): ?>
-			<div id="control_<?php echo $field->id; ?>">
-				<?php echo $field->getControlGroup(); ?>
-			</div>
-			<?php endforeach;?>
-		</div>
-
-		<button type="button" class="btn btn-primary" onclick="Joomla.submitbutton('schedules.report')">
-			<span class="glyphicon glyphicon-filter"></span>
-				送出條件
-		</button>
+		<?php echo $this->loadTemplate('form'); ?>
 
 		<hr style="border:0; height:1px; background-color:#000000;">
 
@@ -105,62 +66,46 @@ $data = $ScheduleReport->getData();
 			<tbody>
 			<?php
 			$rowSpanRepeat = 0;
-			$totalOfCity = 0;
-
-			foreach ($data as $keyCity => $belongs):
-				$cityTitle = $keyCity;
-				$rowSpan = count($belongs);
-
-				foreach ($belongs as $keyBelong => $months):
-					$belongTitle = $keyBelong;
-
+			foreach ($items as $item):
+				$rowSpan = count($item['institutes']) + 1;
+				foreach ($item['institutes'] as $institute):
 					$rowSpanRepeat++;
 			?>
 				<tr class="report-row">
 					<!-- City -->
-					<?php if($rowSpanRepeat == 1):?>
-					<td class="left" rowspan="<?php echo $rowSpan;?>">
-						<?php echo $cityTitle;?>
-					</td>
-					<?php endif;?>
-
-					<!-- Institute or individual to belong -->
 					<td class="left">
-						<?php echo $belongTitle; ?>
+						<?php echo $item['city_title'];?>
+						<?php echo $rowSpan?>
 					</td>
 
-					<?php
-					$allYearAmount = 0;
-					foreach ($months as $keyMonth => $amounts):
-					?>
-					<!-- Month -->
-					<td class="right">
-						<?php
-						$monthAmount = array_sum($amounts);
-						echo $monthAmount;
-						$allYearAmount = $allYearAmount + $monthAmount;
-						?>
+					<!-- Institute or individual -->
+					<td class="left">
+						<?php echo $institute['title'];?>
 					</td>
-					<?php endforeach;?>
+
+					<?php for($month = 1; $month <= 12; $month ++):?>
+					<!-- Month -->
+					<th class="right">
+						<?php echo $month;?>月
+					</th>
+					<?php endfor;?>
 
 					<!-- All this year -->
 					<td class="right">
-						<?php echo $allYearAmount;?>
+						all year
 					</td>
 
 					<!-- All total of the city-->
-					<?php $totalOfCity = $allYearAmount + $totalOfCity;?>
 					<td class="left">
-						<?php echo ($rowSpanRepeat == $rowSpan) ? $totalOfCity : '';?>
+						<?php echo $item['total'];?>
 					</td>
-				</tr>
 					<?php
 					if($rowSpanRepeat == $rowSpan)
 					{
 						$rowSpanRepeat = 0;
-						$totalOfCity = 0;
-					};
+					}
 					?>
+				</tr>
 				<?php endforeach;?>
 			<?php endforeach;?>
 			</tbody>

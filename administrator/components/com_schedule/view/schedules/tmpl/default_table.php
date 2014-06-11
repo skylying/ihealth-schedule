@@ -28,34 +28,6 @@ $container = $this->getContainer();
 $asset     = $container->get('helper.asset');
 $grid      = $data->grid;
 $date      = $container->get('date');
-
-$printForm = $data->printForm;
-
-
-$doc = JFactory::getDocument();
-$css = <<<CSS
-ol
-{
-	list-style-type:none;
-}
-
-ol li
-{
-	float:left;
-	margin: 0 10px;
-	padding: 0 10px;
-}
-
-ol li label
-{
-	float:right;
-	display:inline;
-	margin: 0 2px;
-	padding: 0 2px;
-}
-CSS;
-
-$doc->addStyleDeclaration($css);
 ?>
 
 <!-- LIST TABLE -->
@@ -228,25 +200,3 @@ $doc->addStyleDeclaration($css);
 <?php endforeach; ?>
 </tbody>
 </table>
-
-<div class="hide">
-	<div id="print">
-			<div class="form-horizontal">
-				<?php foreach ($printForm->getFieldset('schedules_print') as $field): ?>
-				<div id="control_<?php echo $field->id; ?>">
-					<?php echo $field->getControlGroup();?>
-				</div>
-				<?php endforeach;?>
-			</div>
-
-			<button type="button" class="btn btn-primary" onclick="Joomla.submitbutton('schedules.report')">
-				<span class="glyphicon glyphicon-print"></span>
-					產生報表
-			</button>
-
-			<button type="button" onclick="window.parent.SqueezeBox.close();" class="btn btn-default">
-				<span class="glyphicon glyphicon-remove"></span>
-				取消
-			</button>
-	</div>
-</div>

@@ -104,6 +104,11 @@ class ScheduleViewSchedulesHtml extends GridView
 	 */
 	protected function prepareData()
 	{
+		parent::prepareData();
+
+		$data = $this->getData();
+
+		$data->printForm = $this->get('PrintForm');
 	}
 
 	/**
@@ -114,10 +119,6 @@ class ScheduleViewSchedulesHtml extends GridView
 	protected function prepareRender()
 	{
 		parent::prepareRender();
-
-		$data = $this->getData();
-
-		$data->printForm = $this->get('PrintForm');
 	}
 
 	/**
@@ -134,7 +135,7 @@ class ScheduleViewSchedulesHtml extends GridView
 		$buttonSet = parent::configureToolbar($buttonSet, $canDo);
 
 		//Get layout name.
-		$layoutName = JFactory::getApplication()->input->get('layout');
+		$layout = $this->getLayout();
 
 		// In debug mode, we remove trash button but use delete button instead.
 		if (JDEBUG)
@@ -143,43 +144,25 @@ class ScheduleViewSchedulesHtml extends GridView
 			$buttonSet['delete']['access'] = true;
 		}
 
-		if($layoutName == 'report')
-		{
-			// If layout is report do this
-			$buttonSet['add']['access'] = false;
-			$buttonSet['publish']['access'] = false;
-			$buttonSet['edit']['access'] = false;
-			$buttonSet['unpublish']['access'] = false;
-			$buttonSet['checkin']['access'] = false;
-			$buttonSet['batch']['access'] = false;
-			$buttonSet['trash']['access']  = false;
-			$buttonSet['delete']['access'] = false;
-			$buttonSet['duplicate']['access'] = false;
-			$buttonSet['preferences']['access'] = false;
+		$buttonSet['add']['args'] = array_merge($buttonSet['add']['args'], array('新增行政排程'));
 
-			$buttonSet['route']['handler'] = function()
+		$buttonSet['publish']['access'] = false;
+		$buttonSet['edit']['access'] = false;
+		$buttonSet['unpublish']['access'] = false;
+		$buttonSet['checkin']['access'] = false;
+		$buttonSet['batch']['access'] = false;
+
+		$buttonSet = $this->configReportToolbar($buttonSet);
+
+		return $buttonSet;
+	}
+
+	protected function configReportToolbar($buttonSet)
+	{
+		if ('report' !== $this->getLayout())
+		{
+			$buttonSet['print']['handler'] = function()
 			{
-				$html = <<<HTML
-<button class="btn btn-danger" onclick="Joomla.submitbutton('schedules.redirect')">
-	<span class="glyphicon glyphicon-remove"></span> 取消列印
-</button>
-HTML;
-				$bar = JToolbar::getInstance('toolbar');
-				$bar->appendButton('Custom', $html);
-			};
-		}
-		else
-		{
-			$buttonSet['add']['args'] = array_merge($buttonSet['add']['args'], array('新增行政排程'));
-
-			$buttonSet['publish']['access'] = false;
-			$buttonSet['edit']['access'] = false;
-			$buttonSet['unpublish']['access'] = false;
-			$buttonSet['checkin']['access'] = false;
-			$buttonSet['batch']['access'] = false;
-
-
-			$buttonSet['print']['handler'] = function(){
 				\JHtml::_('behavior.modal');
 				$title = '列印報表';
 				$targetModalId = 'print';
@@ -191,8 +174,31 @@ HTML;
 				$bar = JToolbar::getInstance('toolbar');
 				$bar->appendButton('Custom', $dHtml);
 			};
+			return $buttonSet;
 		}
 
+		// If layout is report do this
+		$buttonSet['add']['access'] = false;
+		$buttonSet['publish']['access'] = false;
+		$buttonSet['edit']['access'] = false;
+		$buttonSet['unpublish']['access'] = false;
+		$buttonSet['checkin']['access'] = false;
+		$buttonSet['batch']['access'] = false;
+		$buttonSet['trash']['access']  = false;
+		$buttonSet['delete']['access'] = false;
+		$buttonSet['duplicate']['access'] = false;
+		$buttonSet['preferences']['access'] = false;
+
+		$buttonSet['route']['handler'] = function()
+		{
+			$html = <<<HTML
+<button class="btn btn-danger" onclick="Joomla.submitbutton('schedules.redirect')">
+<span class="glyphicon glyphicon-remove"></span> 取消列印
+</button>
+HTML;
+			$bar = JToolbar::getInstance('toolbar');
+			$bar->appendButton('Custom', $html);
+		};
 		return $buttonSet;
 	}
 }

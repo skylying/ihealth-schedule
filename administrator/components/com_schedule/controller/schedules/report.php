@@ -20,7 +20,6 @@ class ScheduleControllerSchedulesReport extends Windwalker\Controller\Admin\Abst
 	 */
 	protected function doExecute()
 	{
-
 		$input = $this->input->get('jform', '', 'array');
 		$getPostData = new JRegistry($input);
 
