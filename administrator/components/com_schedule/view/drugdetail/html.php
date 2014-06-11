@@ -109,6 +109,8 @@ class ScheduleViewDrugdetailHtml extends EditView
 		}
 
 		$schedules = $this->getRelatedSchedules($senderIds);
+		$taskIds   = \JArrayHelper::getColumn($schedules, "task_id");
+		$extras    = $this->getDrugExtraDataSet($taskIds);
 
 		$items = array();
 
@@ -137,16 +139,27 @@ class ScheduleViewDrugdetailHtml extends EditView
 				if (! isset($items[$senderId]['institutes'][$instituteId]))
 				{
 					$items[$senderId]['institutes'][$instituteId] = array();
+					$items[$senderId]['institutes'][$instituteId]['schedule'] = array();
+					$items[$senderId]['institutes'][$instituteId]['extra'] = array();
 				}
 
-				$items[$senderId]['institutes'][$instituteId][] = $schedule;
+				foreach ($extras as $key => $extra)
+				{
+					// 同比機構的額外添購金額放入陣列中
+					if ($instituteId == $extra->institute_id)
+					{
+						$items[$senderId]['institutes'][$instituteId]['extra'][] = $extra;
+
+						// 優化下次回圈用
+						unset($extras[$key]);
+					}
+				}
+
+				$items[$senderId]['institutes'][$instituteId]['schedule'][] = $schedule;
 			}
 		}
 
 		$this->data->items = $items;
-
-		$taskIds = \JArrayHelper::getColumn($schedules, "task_id");
-		$this->data->extras = $this->getDrugExtraDataSet($taskIds);
 
 		parent::prepareData();
 	}

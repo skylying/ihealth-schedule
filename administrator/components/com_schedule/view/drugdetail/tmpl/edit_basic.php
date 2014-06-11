@@ -9,6 +9,8 @@
 // No direct access
 defined('_JEXEC') or die;
 
+use Schedule\Helper\Form\FieldHelper;
+
 $container = $this->getContainer();
 $asset = $container->get('helper.asset');
 $form = $data->form;
@@ -69,9 +71,13 @@ $asset->addJS('multi-row-handler.js');
 	</tr>
 	</thead>
 	<tbody>
-	<?php foreach ($sender['institutes'] as $institute_id => $schedules): ?>
-		<?php foreach ($schedules as $schedule): ?>
+	<?php foreach ($sender['institutes'] as $institute_id => $institute): ?>
+		<?php foreach ($institute['schedule'] as $schedule): ?>
 			<?php echo $this->loadTemplate('list_row', array('schedule' => $schedule, 'form' => $data->form)); ?>
+		<?php endforeach; ?>
+
+		<?php foreach ($institute['extra'] as $extra): ?>
+			<?php echo $this->loadTemplate('extra_list_row', array('extra' => $extra, 'group' => "institutes.{$institute_id}.", 'form' => $data->form)); ?>
 		<?php endforeach; ?>
 	<tr>
 		<td colspan="11" class="text-right"><!-- TODO: 份數 --> 份</td>
