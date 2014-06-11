@@ -60,6 +60,18 @@ class ScheduleControllerDrugdetailEditSave extends SaveController
 		{
 			$scheduleData['id'] = $scheduleId;
 
+			// Checkbox disable
+			if (! isset($scheduleData['ice']))
+			{
+				$scheduleData['ice'] = 0;
+			}
+
+			// Checkbox disable
+			if (! isset($scheduleData['sorted']))
+			{
+				$scheduleData['sorted'] = 0;
+			}
+
 			$this->scheduleModel->save($scheduleData);
 		}
 

@@ -122,6 +122,7 @@ class ScheduleViewDrugdetailHtml extends EditView
 				$items[$senderId]['institutes'] = array();
 				$items[$senderId]['individuals'] = array();
 				$items[$senderId]['name'] = $schedule->sender_name;
+				$items[$senderId]['task_id'] = $schedule->task_id;
 			}
 
 			$instituteId = intval($schedule->institute_id);
@@ -176,7 +177,7 @@ class ScheduleViewDrugdetailHtml extends EditView
 		$db = JFactory::getDbo();
 		$q  = $db->getQuery(true);
 
-		$q->select("*, schedule.id AS id, task.sender AS sender, schedule.institute_id AS institute_id")
+		$q->select("*, schedule.id AS id, task.sender AS sender, schedule.institute_id AS institute_id, task.id AS task_id")
 			->from(Table::SCHEDULES . " AS schedule")
 			->join("LEFT", Table::TASKS . " AS task on schedule.task_id = task.id")
 			->join("LEFT", Table::PRESCRIPTIONS . " AS rx on schedule.rx_id = rx.id")

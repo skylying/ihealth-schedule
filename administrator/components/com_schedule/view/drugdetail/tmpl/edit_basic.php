@@ -9,9 +9,6 @@
 // No direct access
 defined('_JEXEC') or die;
 
-use Schedule\Helper\Mapping\MemberCustomerHelper;
-use Schedule\Helper\Form\FieldHelper;
-
 $container = $this->getContainer();
 $asset = $container->get('helper.asset');
 $form = $data->form;
@@ -74,68 +71,7 @@ $asset->addJS('multi-row-handler.js');
 	<tbody>
 	<?php foreach ($sender['institutes'] as $institute_id => $schedules): ?>
 		<?php foreach ($schedules as $schedule): ?>
-	<tr>
-		<td>
-			<!-- 排程編號 -->
-			<?php echo $schedule->id; ?>
-		</td>
-		<td>
-			<!-- 處方編號 -->
-			<?php echo $schedule->rx_id; ?>
-		</td>
-		<td>
-			<!-- 處方建立時間 -->
-			<?php echo $schedule->created; ?>
-		</td>
-		<td>
-			<!-- 吃完藥日 -->
-			<?php echo $schedule->drug_empty_date; ?>
-		</td>
-		<td>
-			<!-- 所屬機構/會員 -->
-			<?php echo $schedule->institute_title; ?>
-		</td>
-		<td>
-			<!-- 縣市 -->
-			<?php echo $schedule->city_title; ?>
-		</td>
-		<td>
-			<!-- 區域 -->
-			<?php echo $schedule->area_title; ?>
-		</td>
-		<td>
-			<!-- 客戶 -->
-			<?php echo $schedule->customer_name; ?>
-		</td>
-		<td>
-			<!-- 分藥完成 form -->
-			<?php
-			$sorted = FieldHelper::resetGroup($form->getField('sorted', null, $schedule->sorted), "schedule.{$schedule->id}");
-
-			echo $sorted->input;
-			?>
-		</td>
-		<td>
-			<!-- 冰品 -->
-			<?php
-			$ice = FieldHelper::resetGroup($form->getField('ice', null, $schedule->ice), "schedule.{$schedule->id}");
-
-			echo $ice->input;
-			?>
-		</td>
-		<td>
-			<!-- 自費金額 -->
-			<?php
-			$price = FieldHelper::resetGroup($form->getField('price', null, $schedule->price), "schedule.{$schedule->id}");
-
-			echo $price->input;
-			?>
-		</td>
-		<td>
-			<!-- 最後編輯者 -->
-			<!-- TODO: 我們 schedule 需要新增這欄位 -->
-		</td>
-	</tr>
+			<?php echo $this->loadTemplate('list_row', array('schedule' => $schedule, 'form' => $data->form)); ?>
 		<?php endforeach; ?>
 	<tr>
 		<td colspan="11" class="text-right"><!-- TODO: 份數 --> 份</td>
@@ -145,80 +81,10 @@ $asset->addJS('multi-row-handler.js');
 		</td>
 	</tr>
 	<?php endforeach; ?>
+
 	<?php foreach ($sender['individuals'] as $schedule): ?>
-	<tr>
-		<td>
-			<!-- 排程編號 -->
-			<?php echo $schedule->id; ?>
-		</td>
-		<td>
-			<!-- 處方編號 -->
-			<?php echo $schedule->rx_id; ?>
-		</td>
-		<td>
-			<!-- 處方建立時間 -->
-			<?php echo $schedule->created; ?>
-		</td>
-		<td>
-			<!-- 吃完藥日 -->
-			<?php echo $schedule->drug_empty_date; ?>
-		</td>
-		<td>
-			<!-- 所屬機構/會員 -->
-			<?php
-			$members = MemberCustomerHelper::loadMembers($schedule->customer_id);
-
-			$memberNames = \JArrayHelper::getColumn($members, "name");
-
-			echo implode("<br/>", $memberNames);
-			?>
-		</td>
-		<td>
-			<!-- 縣市 -->
-			<?php echo $schedule->city_title; ?>
-		</td>
-		<td>
-			<!-- 區域 -->
-			<?php echo $schedule->area_title; ?>
-		</td>
-		<td>
-			<!-- 客戶 -->
-			<?php echo $schedule->customer_name; ?>
-		</td>
-		<td>
-			<!-- 分藥完成 form -->
-			<?php
-			$sorted = FieldHelper::resetGroup($form->getField('sorted', null, $schedule->sorted), "schedule.{$schedule->id}");
-
-			echo $sorted->input;
-			?>
-		</td>
-		<td>
-			<!-- 冰品 -->
-			<?php
-			$ice = FieldHelper::resetGroup($form->getField('ice', null, $schedule->ice), "schedule.{$schedule->id}");
-
-			echo $ice->input;
-			?>
-		</td>
-		<td>
-			<!-- 自費金額 -->
-			<?php
-			$price = FieldHelper::resetGroup($form->getField('price', null, $schedule->price), "schedule.{$schedule->id}");
-
-			echo $price->input;
-			?>
-		</td>
-		<td>
-			<!-- 最後編輯者 -->
-			<!-- TODO: 我們 schedule 需要新增這欄位 -->
-		</td>
-	</tr>
+		<?php echo $this->loadTemplate('list_row', array('schedule' => $schedule, 'form' => $data->form)); ?>
 	<?php endforeach; ?>
 	</tbody>
 </table>
 <?php endforeach; ?>
-
-<script id="row-template" class="hide" type="text/html">
-	<?php echo $this->loadTemplate('list_row', array('group' => 'items.0hash0', 'form' => $data->form)); ?>
-</script>
