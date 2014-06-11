@@ -112,14 +112,14 @@ class ScheduleViewRxindividualHtml extends EditView
 		$buttonSet = parent::configureToolbar($buttonSet, $canDo);
 
 		// Add custom controller redirect to print overview layout
-		$buttonSet['print']['handler'] = function()
+		$buttonSet['print']['handler'] = function ()
 		{
 			$html = <<<HTML
 <button class="btn btn-info" onclick="jQuery('input[name=save-and-print]').val('1');Joomla.submitbutton('rxindividual.edit.apply')">
-	<span class="glyphicon glyphicon-print"></span> 儲存列印
+	<span class="glyphicon glyphicon-print"></span> 儲存&列印
 </button>
 HTML;
-			$bar = JToolbar::getInstance('toolbar');
+			$bar  = JToolbar::getInstance('toolbar');
 
 			$bar->appendButton('custom', $html);
 		};
@@ -155,28 +155,22 @@ HTML;
 
 		// Age calculation
 		$birthday = new DateTime($data->item->birth_date);
-		$age = $birthday->diff(new Datetime('now'))->y;
+		$age      = $birthday->diff(new Datetime('now'))->y;
 
 		$memberList    = '';
-		$tel_office    = '';
-		$tel_home      = '';
-		$mobile        = '';
-		$address       = '';
 		$customer_note = '';
-		$deliverNth    = '';
-		$drugEmptyDate = '';
-		$session       = '';
-		$date          = '';
 		$drugList      = '';
 
 		$members       = \Schedule\Helper\Mapping\MemberCustomerHelper::loadMembers($data->item->customer_id);
-		$scheduleInfos = \Schedule\Helper\GetRxInfoHelper::getInfo($data->item->id);
-		$customerNotes = \Schedule\Helper\GetRxInfoHelper::getCustomerNote($data->item->customer_id);
-		$drugs = \Schedule\Helper\GetRxInfoHelper::getHicode($data->item->id);
+		$scheduleInfos = \Schedule\Helper\GetRxDataHelper::getRxList($data->item->id);
+		$customerNotes = \Schedule\Helper\GetRxDataHelper::getCustomerNote($data->item->customer_id);
+		$drugs         = \Schedule\Helper\GetRxDataHelper::getDrugList($data->item->id);
+
+		$reminds = explode(',', $data->item->remind);
 
 		foreach ($drugs as $drug)
 		{
-			$drugList .= ' ( ' . $drug->hicode . ' ) ';
+			$drugList .= ' ( ' . $drug->hicode . ' ) / ' . $drug->quantity . ' <br /> ';
 		}
 
 		foreach ($members as $member)
@@ -184,36 +178,18 @@ HTML;
 			$memberList .= $member->name . ' ';
 		}
 
-		foreach ($scheduleInfos as $scheduleInfo)
-		{
-			$tel_office    .= $scheduleInfo->tel_office . ' ';
-			$tel_home      .= $scheduleInfo->tel_home . ' ';
-			$mobile        .= $scheduleInfo->mobile . ' ';
-			$address       .= $scheduleInfo->city_title . ' - ' . $scheduleInfo->area_title . ' - ' . $scheduleInfo->address;
-			$deliverNth    .= $scheduleInfo->deliver_nth . ' ';
-			$drugEmptyDate .= $scheduleInfo->drug_empty_date . ' ';
-			$session       .= $scheduleInfo->session . ' ';
-			$date          .= $scheduleInfo->date . ' ';
-		}
-
 		foreach ($customerNotes as $CustomerNote)
 		{
 			$customer_note .= $CustomerNote->note . ' ';
 		}
 
+		$data->item->scheduleInfos = $scheduleInfos;
 		$data->item->member_list   = $memberList;
-		$data->item->tel_office    = $tel_office;
-		$data->item->tel_home      = $tel_home;
-		$data->item->mobile        = $mobile;
-		$data->item->address       = $address;
 		$data->item->customer_note = $customer_note;
-		$data->item->deliverNth    = $deliverNth;
-		$data->item->drugEmptyDate = $drugEmptyDate;
-		$data->item->session       = $session;
-		$data->item->date          = $date;
 		$data->item->age           = $age;
 		$data->item->drugList      = $drugList;
 		$data->item->count         = count($drugs);
+		$data->item->remindLists   = $reminds;
 		$data->print               = $isSaveAndPrint;
 	}
 }
