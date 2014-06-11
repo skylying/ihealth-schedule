@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <form>
 	<fieldset name="basic">
+		<field id="individual_sender_id"
+			name="sender_id"
+			type="sender_list"
+			key_field="id"
+			value_field="name"
+			label="負責藥師"
+			description="負責藥師"
+			onchange="jQuery('input[name=sender_id]').val(jQuery(this).val());"
+			>
+			<option></option>
+		</field>
+
 		<field name="customer_id"
 			type="customer_list"
 			default=""
@@ -87,17 +99,5 @@
 			label="拜訪日期"
 			description="拜訪日期"
 			/>
-
-		<field id="individual_sender_id"
-			name="sender_id"
-			type="sender_list"
-			key_field="id"
-			value_field="name"
-			label="負責藥師"
-			description="負責藥師"
-			onchange="jQuery('input[name=sender_id]').val(jQuery(this).val());"
-			>
-			<option></option>
-		</field>
 	</fieldset>
 </form>

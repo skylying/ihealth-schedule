@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <form>
 	<fieldset name="basic">
+		<field id="institute_sender_id"
+			name="sender_id"
+			type="sender_list"
+			key_field="id"
+			value_field="name"
+			label="負責藥師"
+			description="負責藥師"
+			onchange="jQuery('input[name=sender_id]').val(jQuery(this).val());"
+			>
+			<option></option>
+		</field>
+
 		<field name="institute_id"
 			type="sql"
 			query="SELECT id, short_title FROM #__schedule_institutes"
@@ -80,17 +92,5 @@
 			label="拜訪日期"
 			description="拜訪日期"
 			/>
-
-		<field id="institute_sender_id"
-			name="sender_id"
-			type="sender_list"
-			key_field="id"
-			value_field="name"
-			label="負責藥師"
-			description="負責藥師"
-			onchange="jQuery('input[name=sender_id]').val(jQuery(this).val());"
-			>
-			<option></option>
-		</field>
 	</fieldset>
 </form>
