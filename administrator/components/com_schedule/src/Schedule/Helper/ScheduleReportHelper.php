@@ -39,9 +39,9 @@ class ScheduleReportHelper
 		$query = $db->getQuery(true)
 			->select($select)
 			->from(TABLE::SCHEDULES)
-			->where("type IN('individual', 'resident') " . $filter)
-			->group("city_title, institute_title, type, `year_month`")
-			->order("city_title, type DESC, institute_title, `year_month`");
+			->where("`type` IN('individual', 'resident') " . $filter)
+			->group("`city_title`, institute_title, type, `year_month`")
+			->order("`city_title`, `type` DESC, `institute_title`, `year_month`");
 
 		return $db->setQuery($query)->loadObjectList();
 	}
@@ -56,10 +56,10 @@ class ScheduleReportHelper
 		$app = \JFactory::getApplication();
 		$filters = $app->getUserState('report.filters');
 
-		$jDate = new \JDate();
+		$thisYear = date('Y');
 
-		$defaultYearMonthStart = $jDate->year . '-' . sprintf("%02d", 1) . '-' . sprintf("%02d", 1);
-		$defaultYearMonthEnd = $jDate->year . '-12-31';
+		$defaultYearMonthStart = sprintf('%s-01-01',$thisYear);
+		$defaultYearMonthEnd = sprintf('%s-12-31',$thisYear);
 
 		$filterStartDate = $filters->get('date_start', $defaultYearMonthStart);
 		$filterEndDate = $filters->get('date_end', $defaultYearMonthEnd);

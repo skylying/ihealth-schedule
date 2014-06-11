@@ -186,10 +186,10 @@ HTML;
 				$icon = 'glyphicon glyphicon-print';
 
 				$dHtml = "<a href='#" . $targetModalId . "' class='modal btn btn-small'>
-					<i class='" . $icon . "' title='" . $title . "'></i>" . $title . "</a>";
+					<i class='" . $icon . "'></i>" . $title . "</a>";
 
 				$bar = JToolbar::getInstance('toolbar');
-				$bar->appendButton('Custom', $dHtml, $title);
+				$bar->appendButton('Custom', $dHtml);
 			};
 		}
 
