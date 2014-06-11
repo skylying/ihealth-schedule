@@ -77,10 +77,15 @@ class ScheduleControllerDrugdetailEditSave extends SaveController
 	 */
 	public function redirect($url, $msg = null, $type = 'message')
 	{
-		$cid  = $this->input->getString("senderIds", "");
+		$ids  = $this->input->getVar("senderIds", array());
 		$date = $this->input->get("date", "");
 		$url  = $this->getRedirectItemUrl();
 
-		$this->app->redirect("{$url}&layout=edit&senderIds={$cid}&date={$date}");
+		foreach ($ids as $id)
+		{
+			$url = "$url&senderIds[]={$id}";
+		}
+
+		$this->app->redirect("{$url}&layout=edit&date={$date}");
 	}
 }

@@ -94,12 +94,11 @@ class ScheduleViewDrugdetailHtml extends EditView
 	{
 		$app = JFactory::getApplication();
 
-		$senderIds = $app->input->getString("senderIds");
-		$senderIds = explode(",", $senderIds);
+		$senderIds = $app->input->getVar('senderIds', array());
 
 		$this->data->date = $app->input->get("date");
 
-		if (empty($senderIds) || empty($senderIds[0]))
+		if (empty($senderIds))
 		{
 			throw new \Exception("給我 sender !");
 		}
@@ -109,19 +108,7 @@ class ScheduleViewDrugdetailHtml extends EditView
 			throw new \Exception("給我 date !");
 		}
 
-		$db = JFactory::getDbo();
-		$q  = $db->getQuery(true);
-
-		$q->select("*, schedule.id AS id, task.sender AS sender, schedule.institute_id AS institute_id")
-			->from(Table::SCHEDULES . " AS schedule")
-			->join("LEFT", Table::TASKS . " AS task on schedule.task_id = task.id")
-			->join("LEFT", Table::PRESCRIPTIONS . " AS rx on schedule.rx_id = rx.id")
-			->where("task.sender " . (new JDatabaseQueryElement('IN ()', $senderIds)))
-			->where("task.date = " . $q->quote($this->data->date))
-			->order("schedule.institute_id desc")
-			->order("task.sender desc");
-
-		$schedules = $db->setQuery($q)->loadObjectList();
+		$schedules = $this->getRelatedSchedules($senderIds);
 
 		$items = array();
 
@@ -132,25 +119,33 @@ class ScheduleViewDrugdetailHtml extends EditView
 			if (! isset($items[$senderId]))
 			{
 				$items[$senderId] = array();
-				$items[$senderId]['data'] = array();
+				$items[$senderId]['institutes'] = array();
+				$items[$senderId]['individuals'] = array();
+				$items[$senderId]['name'] = $schedule->sender_name;
 			}
-
-			$items[$senderId]['name'] = $schedule->sender_name;
 
 			$instituteId = intval($schedule->institute_id);
 
-			if (! isset($items[$senderId]['data'][$instituteId]))
+			if (0 == $instituteId)
 			{
-				$items[$senderId]['data'][$instituteId] = array();
+				// 散客
+				$items[$senderId]['individuals'][] = $schedule;
 			}
+			else
+			{
+				if (! isset($items[$senderId]['institutes'][$instituteId]))
+				{
+					$items[$senderId]['institutes'][$instituteId] = array();
+				}
 
-			$items[$senderId]['data'][$instituteId][] = $schedule;
+				$items[$senderId]['institutes'][$instituteId][] = $schedule;
+			}
 		}
 
 		$this->data->items = $items;
 
 		$taskIds = \JArrayHelper::getColumn($schedules, "task_id");
-		$this->data->extras = $this->getDrugExtraData($taskIds);
+		$this->data->extras = $this->getDrugExtraDataSet($taskIds);
 
 		parent::prepareData();
 	}
@@ -158,29 +153,38 @@ class ScheduleViewDrugdetailHtml extends EditView
 	/**
 	 * 取得額外分藥資料
 	 *
-	 * @param   array  $taskCid
+	 * @param   array  $taskIds
 	 *
 	 * @return  Data[]
 	 */
-	protected function getDrugExtraData($taskCid)
+	protected function getDrugExtraDataSet($taskIds)
 	{
 		$extraMapper = new DataMapper(Table::DRUG_EXTRA_DETAILS);
 
-		return $extraMapper->find(array("task_id" => $taskCid));
+		return $extraMapper->find(array("task_id" => $taskIds));
 	}
 
 	/**
-	 * 取得外送資料
+	 * Get Related Schedules
 	 *
-	 * @param   string  $date
 	 * @param   array   $senderIds
 	 *
 	 * @return  Data[]
 	 */
-	protected function getTaskData($date, $senderIds)
+	protected function getRelatedSchedules($senderIds = array())
 	{
-		$taskMapper = new DataMapper(Table::TASKS);
+		$db = JFactory::getDbo();
+		$q  = $db->getQuery(true);
 
-		return $taskMapper->find(array("sender" => $senderIds, "date" => $date));
+		$q->select("*, schedule.id AS id, task.sender AS sender, schedule.institute_id AS institute_id")
+			->from(Table::SCHEDULES . " AS schedule")
+			->join("LEFT", Table::TASKS . " AS task on schedule.task_id = task.id")
+			->join("LEFT", Table::PRESCRIPTIONS . " AS rx on schedule.rx_id = rx.id")
+			->where("task.sender " . (new JDatabaseQueryElement('IN ()', $senderIds)))
+			->where("task.date = " . $q->quote($this->data->date))
+			->order("schedule.institute_id DESC")
+			->order("task.sender DESC");
+
+		return $db->setQuery($q)->loadObjectList();
 	}
 }
