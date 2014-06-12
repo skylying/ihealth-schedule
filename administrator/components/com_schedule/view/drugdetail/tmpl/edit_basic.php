@@ -154,10 +154,12 @@ $asset->addJS('multi-row-handler.js');
 			<?php echo $this->loadTemplate('list_row', array('schedule' => $schedule)); ?>
 		<?php endforeach; ?>
 
+		<!-- Load database drug extra input -->
 		<?php foreach ($institute['extra'] as $extra): ?>
 			<?php echo $this->loadTemplate('extra_list_row', array('extra' => $extra, 'group' => "institutes.{$institute_id}.")); ?>
 		<?php endforeach; ?>
 
+		<!-- Javascript drug extra input -->
 		<?php
 		echo $this->loadTemplate('extra_list_row', array(
 			'id'    => "row-institute-{$institute_id}",
