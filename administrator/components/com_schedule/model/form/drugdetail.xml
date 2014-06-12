@@ -22,5 +22,13 @@
 			label="價格"
 			description="價格"
 			/>
+
+		<field name="id"
+			type="hidden"
+			/>
+
+		<field name="task_id"
+			type="hidden"
+			/>
 	</fieldset>
 </form>

@@ -88,6 +88,20 @@ $asset->addJS('multi-row-handler.js');
 				var rowId = "#" + this.rowIdPrefix + instituteId;
 				var row = $(rowId).clone().removeClass("hide");
 
+				var groupTime = Date.now();
+
+				row.find("input").each(function()
+				{
+					var fieldName = $(this).attr("name");
+					var fieldId   = $(this).attr("id");
+
+					fieldName = fieldName.replace("0hash0", groupTime);
+					fieldId   = fieldId.replace("0hash0", groupTime);
+
+					$(this).attr("name", fieldName);
+					$(this).attr("id", fieldId);
+				});
+
 				$(rowId).after(row);
 			}
 		}
@@ -156,15 +170,16 @@ $asset->addJS('multi-row-handler.js');
 
 		<!-- Load database drug extra input -->
 		<?php foreach ($institute['extra'] as $extra): ?>
-			<?php echo $this->loadTemplate('extra_list_row', array('extra' => $extra, 'group' => "institutes.{$institute_id}.")); ?>
+			<?php echo $this->loadTemplate('extra_list_row', array('extra' => $extra, 'task_id' => $sender['task_id'], 'group' => "institutes.{$institute_id}.{$extra->id}")); ?>
 		<?php endforeach; ?>
 
 		<!-- Javascript drug extra input -->
 		<?php
 		echo $this->loadTemplate('extra_list_row', array(
 			'id'    => "row-institute-{$institute_id}",
+			'task_id' => $sender['task_id'],
 			'class' => 'hide',
-			'group' => "institutes.{$institute_id}.",
+			'group' => "institutes.{$institute_id}.0hash0",
 			'isJs'  => true)
 		);
 		?>

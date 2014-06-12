@@ -16,32 +16,39 @@ use Schedule\Helper\Form\FieldHelper;
  * @var $data Windwalker\Data\Data
  * @var $form JForm
  */
-$form  = $data->form;
-$group = $data->group;
-$extra = isset($data->extra) ? $data->extra : (new Data);
-$class = isset($data->class) ? "class=\"{$data->class}\"" : "";
-$id    = isset($data->id) ? "id=\"{$data->id}\"" : "";
-$isJs  = isset($data->isJs) ? $data->isJs : false;
+$form   = $data->form;
+$group  = $data->group;
+$taskId = $data->task_id;
+$extra  = isset($data->extra) ? $data->extra : (new Data);
+$class  = isset($data->class) ? "class=\"{$data->class}\"" : "";
+$id     = isset($data->id) ? "id=\"{$data->id}\"" : "";
+$isJs   = isset($data->isJs) ? $data->isJs : false;
 
+$idValue     = $extra->id;
 $sortedValue = $extra->sorted;
 $iceValue    = $extra->ice;
 $priceValue  = $extra->price;
 
 if ($isJs)
 {
+	$idValue     = null;
 	$sortedValue = null;
 	$iceValue    = null;
 	$priceValue  = null;
 }
 
-$sorted = FieldHelper::resetGroup($form->getField('sorted', null, $sortedValue), $group);
-$ice    = FieldHelper::resetGroup($form->getField('ice', null, $iceValue), $group);
-$price  = FieldHelper::resetGroup($form->getField('price', null, $priceValue), $group);
+$idInput = FieldHelper::resetGroup($form->getField('id', null, $idValue), $group);
+$task    = FieldHelper::resetGroup($form->getField('task_id', null, $taskId), $group);
+$sorted  = FieldHelper::resetGroup($form->getField('sorted', null, $sortedValue), $group);
+$ice     = FieldHelper::resetGroup($form->getField('ice', null, $iceValue), $group);
+$price   = FieldHelper::resetGroup($form->getField('price', null, $priceValue), $group);
+
 ?>
 
 <tr <?php echo $id; ?> <?php echo $class; ?>>
 	<td colspan="8">
-		&nbsp;
+		<?php echo $idInput->input; ?>
+		<?php echo $task->input; ?>
 	</td>
 	<td>
 		<?php echo $ice->input; ?>

@@ -56,6 +56,19 @@ class ScheduleControllerDrugdetailEditSave extends SaveController
 	 */
 	protected function postSaveHook($model, $validData)
 	{
+		$this->saveScheduleDrugDetails();
+		$this->saveDrugExtraDetails($model);
+
+		parent::postSaveHook($model, $validData);
+	}
+
+	/**
+	 * Save Schedule Drug Details
+	 *
+	 * @return  void
+	 */
+	protected function saveScheduleDrugDetails()
+	{
 		foreach ($this->data['schedule'] as $scheduleId => $scheduleData)
 		{
 			$scheduleData['id'] = $scheduleId;
@@ -74,8 +87,45 @@ class ScheduleControllerDrugdetailEditSave extends SaveController
 
 			$this->scheduleModel->save($scheduleData);
 		}
+	}
 
-		parent::postSaveHook($model, $validData);
+	/**
+	 * Save Drug Extra Details
+	 *
+	 * @param   \Windwalker\Model\CrudModel $model
+	 *
+	 * @return  void
+	 */
+	protected function saveDrugExtraDetails($model)
+	{
+		foreach ($this->data['institutes'] as $institutes_id => $institutes)
+		{
+			foreach ($institutes as $id => $details)
+			{
+				if ("0hash0" == $id)
+				{
+					continue;
+				}
+
+				$details['institute_id'] = $institutes_id;
+
+				// Disable checkbox
+				if (! isset($details['ice']))
+				{
+					$details['ice'] = 0;
+				}
+
+				// Disable checkbox
+				if (! isset($details['sorted']))
+				{
+					$details['sorted'] = 0;
+				}
+
+				show($details);
+
+				$model->save($details);
+			}
+		}
 	}
 
 	/**
