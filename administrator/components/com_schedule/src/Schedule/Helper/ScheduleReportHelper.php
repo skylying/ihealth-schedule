@@ -86,10 +86,9 @@ class ScheduleReportHelper
 	}
 
 	/**
-	 * getDataTmp
-	 * 此功能做為重構資料與邏輯,測試完即刪除
+	 * getData
 	 *
-	 * @return  void
+	 * @return  array
 	 */
 	public function getData()
 	{
@@ -112,7 +111,7 @@ class ScheduleReportHelper
 				);
 			}
 
-			if(!isset($data[$item->city]["institutes"][$item->institute_id]))
+			if(!isset($data[$item->city]["institutes"][$item->institute_id]) && $item->type == 'resident')
 			{
 				$data[$item->city]["institutes"][$item->institute_id] = array(
 					"title" => $item->institute_title,
