@@ -13,11 +13,11 @@ use Schedule\Helper\ScheduleHelper;
 defined('_JEXEC') or die;
 
 /**
- * Class ScheduleModelSchedulesenddate, read as schedule-send-date
+ * Class ScheduleModelScheduleSendDate, read as schedule-send-date
  *
  * @since 1.0
  */
-class ScheduleModelSchedulesenddate extends \Windwalker\Model\Model
+class ScheduleModelScheduleSendDate extends \Windwalker\Model\Model
 {
 	/**
 	 * getItem
