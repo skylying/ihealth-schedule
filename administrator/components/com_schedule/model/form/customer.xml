@@ -50,7 +50,6 @@
 		</field>
 	</fieldset>
 
-
 	<field name="type"
 		type="radio"
 		label="客戶類型"
@@ -59,7 +58,6 @@
 		<option value="resident">住民</option>
 		<option value="individual">散客</option>
 	</field>
-
 
 	<fieldset
 		name="institute"
@@ -144,7 +142,6 @@
 		<!--These hidden form are for the purpose of form data required-->
 	</fieldset>
 
-
 	<fieldset name="office">
 		<field name="tel_office"
 			type="radioinput"
@@ -166,7 +163,6 @@
 			/>
 
 	</fieldset>
-
 
 	<fieldset name="mobile">
 		<field name="mobile"
@@ -200,15 +196,5 @@
 			label="出生日期"
 			description="出生日期"
 			/>
-
-		<field name="type"
-			type="radio"
-			label="客戶類型"
-			description="客戶類型"
-			default="individual"
-			class="btn-group btn-group-yesno">
-			<option value="resident">住民</option>
-			<option value="individual">散客</option>
-		</field>
 	</fieldset>
 </form>

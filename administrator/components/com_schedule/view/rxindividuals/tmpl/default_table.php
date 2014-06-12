@@ -157,7 +157,7 @@ $date      = $container->get('date');
 
 		<!-- 上傳方式 -->
 		<td>
-			<?php echo $this->escape($item->method); ?>
+			<?php echo $this->escape(Jtext::_('COM_SCHEDULE_RXINDIVIDUAL_PRINT_' . $item->method)); ?>
 		</td>
 
 		<!-- 處方簽狀態 -->
