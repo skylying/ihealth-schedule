@@ -60,13 +60,13 @@ class ScheduleControllerDrugdetailEditSave extends SaveController
 		{
 			$scheduleData['id'] = $scheduleId;
 
-			// Checkbox disable
+			// Disable checkbox
 			if (! isset($scheduleData['ice']))
 			{
 				$scheduleData['ice'] = 0;
 			}
 
-			// Checkbox disable
+			// Disable checkbox
 			if (! isset($scheduleData['sorted']))
 			{
 				$scheduleData['sorted'] = 0;
@@ -93,10 +93,13 @@ class ScheduleControllerDrugdetailEditSave extends SaveController
 		$date = $this->input->get("date", "");
 		$url  = $this->getRedirectItemUrl();
 
-		foreach ($ids as $id)
-		{
-			$url = "$url&senderIds[]={$id}";
-		}
+		$url = $url . "&" . urldecode(
+				http_build_query(
+					array(
+						'senderIds' => $ids
+					)
+				)
+			);
 
 		$this->app->redirect("{$url}&layout=edit&date={$date}");
 	}

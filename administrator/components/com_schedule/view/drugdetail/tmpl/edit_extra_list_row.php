@@ -7,6 +7,7 @@
  */
 
 use Schedule\Helper\Mapping\MemberCustomerHelper;
+use Windwalker\Data\Data;
 use Schedule\Helper\Form\FieldHelper;
 
 /**
@@ -17,7 +18,7 @@ use Schedule\Helper\Form\FieldHelper;
  */
 $form  = $data->form;
 $group = $data->group;
-$extra = $data->extra;
+$extra = isset($data->extra) ? $data->extra : (new Data);
 $class = isset($data->class) ? "class=\"{$data->class}\"" : "";
 $id    = isset($data->id) ? "id=\"{$data->id}\"" : "";
 

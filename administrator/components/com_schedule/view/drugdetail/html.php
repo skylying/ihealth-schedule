@@ -181,9 +181,9 @@ class ScheduleViewDrugdetailHtml extends EditView
 	/**
 	 * Get Related Schedules
 	 *
-	 * @param   array   $senderIds
+	 * @param   array  $senderIds
 	 *
-	 * @return  Data[]
+	 * @return  stdClass[]
 	 */
 	protected function getRelatedSchedules($senderIds = array())
 	{

@@ -9,8 +9,6 @@
 // No direct access
 defined('_JEXEC') or die;
 
-use Schedule\Helper\Form\FieldHelper;
-
 $container = $this->getContainer();
 $asset = $container->get('helper.asset');
 $form = $data->form;
@@ -23,7 +21,8 @@ $asset->addJS('multi-row-handler.js');
 <script>
 	// TODO: 會改成 class 寫法且獨立 js file
 
-	jQuery(function(){
+	jQuery(function()
+	{
 		window.InstituteExtraObject = new InstituteExtra("add-institute-extra", "row-institute-");
 	});
 
@@ -71,7 +70,8 @@ $asset->addJS('multi-row-handler.js');
 			{
 				var extra = this;
 
-				$("body").delegate("." + this.buttonClass, "click", function(){
+				$("body").delegate("." + this.buttonClass, "click", function()
+				{
 					extra.addInstituteExtraRow($(this).data("instituteId"));
 				});
 			},
@@ -151,20 +151,18 @@ $asset->addJS('multi-row-handler.js');
 	<tbody>
 	<?php foreach ($sender['institutes'] as $institute_id => $institute): ?>
 		<?php foreach ($institute['schedule'] as $schedule): ?>
-			<?php echo $this->loadTemplate('list_row', array('schedule' => $schedule, 'form' => $data->form)); ?>
+			<?php echo $this->loadTemplate('list_row', array('schedule' => $schedule)); ?>
 		<?php endforeach; ?>
 
 		<?php foreach ($institute['extra'] as $extra): ?>
-			<?php echo $this->loadTemplate('extra_list_row', array('extra' => $extra, 'group' => "institutes.{$institute_id}.", 'form' => $data->form)); ?>
+			<?php echo $this->loadTemplate('extra_list_row', array('extra' => $extra, 'group' => "institutes.{$institute_id}.")); ?>
 		<?php endforeach; ?>
 
 		<?php
 		echo $this->loadTemplate('extra_list_row', array(
 			'id' => "row-institute-{$institute_id}",
 			'class' => 'hide',
-			'extra' => $extra,
-			'group' => "institutes.{$institute_id}.",
-			'form' => $data->form)
+			'group' => "institutes.{$institute_id}.")
 		);
 		?>
 	<tr>
@@ -177,7 +175,7 @@ $asset->addJS('multi-row-handler.js');
 	<?php endforeach; ?>
 
 	<?php foreach ($sender['individuals'] as $schedule): ?>
-		<?php echo $this->loadTemplate('list_row', array('schedule' => $schedule, 'form' => $data->form)); ?>
+		<?php echo $this->loadTemplate('list_row', array('schedule' => $schedule)); ?>
 	<?php endforeach; ?>
 	</tbody>
 </table>
