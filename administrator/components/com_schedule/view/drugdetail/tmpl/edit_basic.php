@@ -160,9 +160,10 @@ $asset->addJS('multi-row-handler.js');
 
 		<?php
 		echo $this->loadTemplate('extra_list_row', array(
-			'id' => "row-institute-{$institute_id}",
+			'id'    => "row-institute-{$institute_id}",
 			'class' => 'hide',
-			'group' => "institutes.{$institute_id}.")
+			'group' => "institutes.{$institute_id}.",
+			'isJs'  => true)
 		);
 		?>
 	<tr>

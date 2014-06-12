@@ -21,19 +21,27 @@ $group = $data->group;
 $extra = isset($data->extra) ? $data->extra : (new Data);
 $class = isset($data->class) ? "class=\"{$data->class}\"" : "";
 $id    = isset($data->id) ? "id=\"{$data->id}\"" : "";
+$isJs  = isset($data->isJs) ? $data->isJs : false;
 
-$sorted = FieldHelper::resetGroup($form->getField('sorted', null, $extra->sorted), $group);
-$ice    = FieldHelper::resetGroup($form->getField('ice', null, $extra->ice), $group);
-$price  = FieldHelper::resetGroup($form->getField('price', null, $extra->price), $group);
+$sortedValue = $extra->sorted;
+$iceValue    = $extra->ice;
+$priceValue  = $extra->price;
+
+if ($isJs)
+{
+	$sortedValue = null;
+	$iceValue    = null;
+	$priceValue  = null;
+}
+
+$sorted = FieldHelper::resetGroup($form->getField('sorted', null, $sortedValue), $group);
+$ice    = FieldHelper::resetGroup($form->getField('ice', null, $iceValue), $group);
+$price  = FieldHelper::resetGroup($form->getField('price', null, $priceValue), $group);
 ?>
 
 <tr <?php echo $id; ?> <?php echo $class; ?>>
 	<td colspan="8">
-		<?php
-		$sorted = FieldHelper::resetGroup($form->getField('sorted', null, $extra->sorted), $group);
-		$ice    = FieldHelper::resetGroup($form->getField('ice', null, $extra->ice), $group);
-		$price  = FieldHelper::resetGroup($form->getField('price', null, $extra->price), $group);
-		?>
+		&nbsp;
 	</td>
 	<td>
 		<?php echo $ice->input; ?>
@@ -45,6 +53,6 @@ $price  = FieldHelper::resetGroup($form->getField('price', null, $extra->price),
 		<?php echo $price->input; ?>
 	</td>
 	<td>
-
+		&nbsp;
 	</td>
 </tr>
