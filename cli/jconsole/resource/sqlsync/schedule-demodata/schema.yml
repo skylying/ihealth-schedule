@@ -126,18 +126,19 @@
         - ['18', '0', '0', p221345949, 黃詩鳳, individual, '1921-08-15', '93', '1', '6', 基隆市, '149', '中山區', '0', '', '21', '0', '[{"default":false,"number":""},{"default":false,"number":""},{"default":false,"number":""}]', '[{"default":true,"number":"03339330"},{"default":false,"number":""},{"default":false,"number":""}]', '[{"default":false,"number":""},{"default":false,"number":""},{"default":false,"number":""}]', '', '2014-05-27 10:59:42', '279', '2014-05-27 11:34:35', '279', '']
         - ['19', '0', '0', b221345621, 陳辰柔, individual, '1933-07-23', '81', '1', '2', 新北市, '19', '八里區', '0', '', '21', '0', '[{"default":false,"number":""},{"default":false,"number":""},{"default":false,"number":""}]', '[{"default":false,"number":""},{"default":false,"number":""},{"default":false,"number":""}]', '[{"default":true,"number":"0911333456"},{"default":false,"number":""},{"default":false,"number":""}]', '', '2014-05-27 11:01:48', '279', '2014-05-27 11:35:26', '279', '']
         - ['20', '0', '0', q121334332, 胡芳珍, individual, '1934-06-17', '80', '1', '2', 新北市, '25', '平溪區', '0', '', '28', '0', '[{"default":false,"number":""},{"default":false,"number":""},{"default":false,"number":""}]', '[{"default":false,"number":""},{"default":false,"number":""},{"default":false,"number":""}]', '[{"default":true,"number":"0911234567"},{"default":false,"number":""},{"default":false,"number":""}]', '', '2014-05-27 11:04:23', '279', '2014-05-27 11:35:32', '279', '']
-'#__schedule_drugprices':
-    name: '#__schedule_drugprices'
+'#__schedule_drug_extra_details':
+    name: '#__schedule_drug_extra_details'
     from:
-        - '#__schedule_drugprices'
+        - '#__schedule_drug_extra_details'
     columns:
         id: { Field: id, Type: 'int(11) unsigned', 'Null': NO, Default: null, Extra: auto_increment, Comment: 'Primary Key', From: [id] }
         institute_id: { Field: institute_id, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: '對應機構 id', From: [institute_id] }
-        customer_id: { Field: customer_id, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: '對應客戶 id', From: [customer_id] }
-        date: { Field: date, Type: date, 'Null': NO, Default: null, Extra: '', Comment: 對應外送日期, From: [date] }
         price: { Field: price, Type: 'decimal(10,0)', 'Null': NO, Default: null, Extra: '', Comment: 單筆金額, From: [price] }
+        task_id: { Field: task_id, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: '對應外送 id', From: [task_id] }
+        ice: { Field: ice, Type: int(1), 'Null': NO, Default: null, Extra: '', Comment: '是否有冰品', From: [ice] }
+        stored: { Field: stored, Type: int(1), 'Null': NO, Default: null, Extra: '', Comment: '是否完成分藥', From: [stored] }
     index:
-        - { Table: '#__schedule_drugprices', Non_unique: '0', Key_name: PRIMARY, Seq_in_index: '1', Column_name: id, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
+        - { Table: '#__schedule_drug_extra_details', Non_unique: '0', Key_name: PRIMARY, Seq_in_index: '1', Column_name: id, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
 '#__schedule_drugs':
     name: '#__schedule_drugs'
     from:
@@ -482,7 +483,7 @@
         expense: { Field: expense, Type: tinyint(1), 'Null': YES, Default: null, Extra: '', Comment: '是否為自費藥品 (0:否 / 1:是)', From: [expense] }
         price: { Field: price, Type: 'decimal(10,2)', 'Null': YES, Default: null, Extra: '', Comment: 自費金額, From: [price] }
         status: { Field: status, Type: char(20), 'Null': YES, Default: null, Extra: '', Comment: '排程狀態 (scheduled:已排程 / emergency:急件 / deleted:已刪除 / cancel_reject:取消-要退單 / cancel_only:取消-不退單 / pause:暫緩)', From: [status] }
-        cancel: { Field: cancel, Type: char(10), 'Null': YES, Default: null, Extra: '', Comment: '刪除原因 (badservice:服務不周 / changedrug:醫師換藥 / passaway:往生 / other:其他)', From: [cancel] }
+        cancel: { Field: cancel, Type: char(10), 'Null': YES, Default: null, Extra: '', Comment: '取消原因 (badservice:服務不周 / changedrug:醫師換藥 / passaway:往生 / hospitalized:住院 / other:其他)', From: [cancel] }
         cancel_note: { Field: cancel_note, Type: text, 'Null': YES, Default: null, Extra: '', Comment: '刪除原因說明', From: [cancel_note] }
         note: { Field: note, Type: text, 'Null': YES, Default: null, Extra: '', Comment: 行政排程類別說明, From: [note] }
         params: { Field: params, Type: text, 'Null': NO, Default: null, Extra: '', Comment: Params, From: [params] }
