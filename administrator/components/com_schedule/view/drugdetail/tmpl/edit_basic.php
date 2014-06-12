@@ -15,101 +15,14 @@ $form = $data->form;
 
 JHtmlJquery::framework(true);
 
-$asset->addJS('multi-row-handler.js');
+$asset->addJS('drugdetail/institute-extra.js');
 ?>
 
 <script>
-	// TODO: 會改成 class 寫法且獨立 js file
-
 	jQuery(function()
 	{
 		window.InstituteExtraObject = new InstituteExtra("add-institute-extra", "row-institute-");
 	});
-
-	;(function($, undefined)
-	{
-		"use strict";
-
-		if (window.InstituteExtra !== undefined)
-		{
-			return;
-		}
-
-		/**
-		 * Class Institute Extra
-		 *
-		 * @param buttonClass  string  button class name
-		 * @param rowIdPrefix  string  row id prefix
-		 */
-		function InstituteExtra(buttonClass, $rowIdPrefix)
-		{
-			/**
-			 * Button class
-			 *
-			 * @type  {string}
-			 */
-			this.buttonClass = buttonClass;
-
-			/**
-			 * Row Id Prefix
-			 *
-			 * @type  {string}
-			 */
-			this.rowIdPrefix = $rowIdPrefix;
-
-			this.addInstituteExtraButtonEvent();
-		}
-
-		InstituteExtra.prototype = {
-			/**
-			 * 新增機構額外表按鈕事件
-			 *
-			 * @return  void
-			 */
-			addInstituteExtraButtonEvent: function()
-			{
-				var extra = this;
-
-				$("body").delegate("." + this.buttonClass, "click", function()
-				{
-					extra.addInstituteExtraRow($(this).data("instituteId"));
-				});
-			},
-
-			/**
-			 * 新增機構 row
-			 *
-			 * @param  instituteId
-			 *
-			 * @return  void
-			 */
-			addInstituteExtraRow: function(instituteId)
-			{
-				var rowId = "#" + this.rowIdPrefix + instituteId;
-				var row = $(rowId).clone().removeClass("hide");
-
-				var groupTime = Date.now();
-
-				row.find("input").each(function()
-				{
-					var fieldName = $(this).attr("name");
-					var fieldId   = $(this).attr("id");
-
-					fieldName = fieldName.replace("0hash0", groupTime);
-					fieldId   = fieldId.replace("0hash0", groupTime);
-
-					$(this).attr("name", fieldName);
-					$(this).attr("id", fieldId);
-				});
-
-				$(rowId).after(row);
-			}
-		}
-
-		window.InstituteExtra = InstituteExtra;
-
-	})(jQuery);
-
 </script>
 
 <h3 class="text-right">
@@ -186,7 +99,6 @@ $asset->addJS('multi-row-handler.js');
 	<tr>
 		<td colspan="11" class="text-right"><!-- TODO: 份數 --> 份</td>
 		<td>
-			<!-- TODO: js -->
 			<button class="add-institute-extra" data-institute-id="<?php echo $institute_id; ?>" type="button">+</button>
 		</td>
 	</tr>
