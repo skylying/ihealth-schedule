@@ -60,6 +60,8 @@ $price   = FieldHelper::resetGroup($form->getField('price', null, $priceValue), 
 		<?php echo $price->input; ?>
 	</td>
 	<td>
-		&nbsp;
+		<?php if ($isJs): ?>
+			<button class="row-remove-button" type="button">刪除</button>
+		<?php endif; ?>
 	</td>
 </tr>

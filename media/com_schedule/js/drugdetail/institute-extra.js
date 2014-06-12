@@ -74,6 +74,11 @@
 				$(this).attr("id", fieldId);
 			});
 
+			row.find(".row-remove-button").click(function()
+			{
+				row.remove();
+			});
+
 			$(rowId).after(row);
 		}
 	}
