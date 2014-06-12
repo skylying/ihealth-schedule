@@ -21,6 +21,7 @@ JHtmlFormbehavior::chosen('select');
  *
  * @var Windwalker\DI\Container       $container
  * @var Windwalker\Helper\AssetHelper $asset
+ * @var Windwalker\Data\Data          $data
  */
 $container = $this->getContainer();
 $asset     = $container->get('helper.asset');
@@ -28,6 +29,14 @@ $asset     = $container->get('helper.asset');
 AddressScript::bind('filter_schedule_city', 'filter_schedule_area');
 
 $asset->addJS('schedules/list.js');
+$asset->internalCSS('
+div.modal.hide
+{
+	overflow: visible;
+}
+');
+
+$editFormFields = $data->editFormFields;
 ?>
 
 <div id="schedule" class="windwalker schedules tablelist row-fluid">
@@ -53,6 +62,8 @@ $asset->addJS('schedules/list.js');
 				<input type="hidden" name="task" value="" />
 				<input type="hidden" name="boxchecked" value="0" />
 				<input type="hidden" name="status" value="" />
+				<input type="hidden" name="new_date" value="" />
+				<input type="hidden" name="new_sender_id" value="" />
 				<?php echo JHtml::_('form.token'); ?>
 			</div>
 		</div>
@@ -60,14 +71,46 @@ $asset->addJS('schedules/list.js');
 </div>
 
 <!-- Add New Modal -->
-<div id="modal-add-new-item" class="modal hide fade" tabindex="-1" role="dialog" style="overflow: hidden;">
+<div id="modal-add-new-item" class="modal hide fade" tabindex="-1" role="dialog">
 	<div class="modal-body" style="overflow: hidden;">
-		<iframe src="" frameborder="0" width="100%" height="521"></iframe>
+		<iframe src="" frameborder="0" width="100%" height="525"></iframe>
+	</div>
+</div>
+
+<!-- Edit Modal -->
+<div id="modal-edit-item" class="modal hide fade" tabindex="-1" role="dialog">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		<h3 class="modal-title">排程調整</h3>
+	</div>
+	<div class="modal-body">
+		<div class="form-horizontal">
+			<div class="control-group">
+				<label class="control-label">
+					外送日期
+				</label>
+				<div class="controls">
+					<?php echo $editFormFields['date']; ?>
+				</div>
+			</div>
+
+			<div class="control-group">
+				<label class="control-label">
+					外送藥師
+				</label>
+				<div class="controls">
+					<?php echo $editFormFields['sender_id']; ?>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<button id="modal-edit-item-submit" type="button" class="btn btn-primary">儲存</button>
 	</div>
 </div>
 
 <!-- Update Status Modal (for cancel_reject and cancel_only) -->
-<div id="modal-status-cancel" class="modal hide fade" tabindex="-1" role="dialog" style="overflow: hidden;">
+<div id="modal-status-cancel" class="modal hide fade" tabindex="-1" role="dialog">
 	<div class="modal-header">
 		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 		<h3 class="modal-title">取消排程</h3>
@@ -75,11 +118,11 @@ $asset->addJS('schedules/list.js');
 	<div class="modal-body">
 		<form action="<?php echo JUri::getInstance(); ?>" method="post" id="form-status-cancel" style="margin:0;">
 			<div class="form-horizontal">
-				<div class="form-group">
-					<label class="col-sm-6 control-label">
+				<div class="control-group">
+					<label class="control-label">
 						取消原因
 					</label>
-					<div class="col-sm-6">
+					<div class="controls">
 						<div class="radio">
 							<input type="radio" id="status-cancel-reason-1" name="cancel" value="badservice">
 							<label for="status-cancel-reason-1">服務不周</label>
@@ -102,18 +145,18 @@ $asset->addJS('schedules/list.js');
 					</div>
 				</div>
 
-				<div class="form-group">
-					<label class="col-sm-6 control-label" for="status-cancel-note">
+				<div class="control-group">
+					<label class="control-label" for="status-cancel-note">
 						備註
 					</label>
-					<div class="col-sm-6">
+					<div class="controls">
 						<textarea id="status-cancel-note" name="cancel_note" class="form-control"></textarea>
 					</div>
 				</div>
 
 				<!-- Hidden Inputs -->
 				<div class="hide">
-					<input type="hidden" name="task" value="schedules.status" />
+					<input type="hidden" name="task" value="schedules.update.status" />
 					<input type="hidden" name="cid[]" value="" />
 					<input type="hidden" name="boxchecked" value="1" />
 					<input type="hidden" name="status" value="" />
@@ -128,7 +171,7 @@ $asset->addJS('schedules/list.js');
 </div>
 
 <!-- Update Status Modal (for pause) -->
-<div id="modal-status-pause" class="modal hide fade" tabindex="-1" role="dialog" style="overflow: hidden;">
+<div id="modal-status-pause" class="modal hide fade" tabindex="-1" role="dialog">
 	<div class="modal-header">
 		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 		<h3 class="modal-title">暫緩排程</h3>
@@ -136,34 +179,34 @@ $asset->addJS('schedules/list.js');
 	<div class="modal-body">
 		<form action="<?php echo JUri::getInstance(); ?>" method="post" id="form-status-pause" style="margin:0;">
 			<div class="form-horizontal">
-				<div class="form-group">
-					<label class="col-sm-6 control-label">
+				<div class="control-group">
+					<label class="control-label">
 						暫緩原因
 					</label>
-					<div class="col-sm-6">
+					<div class="controls">
 						<div class="radio">
-							<input type="radio" id="status-cancel-reason-1" name="cancel" value="hospitalized">
-							<label for="status-cancel-reason-1">住院</label>
+							<input type="radio" id="status-cancel-reason-5" name="cancel" value="hospitalized">
+							<label for="status-cancel-reason-5">住院</label>
 						</div>
 						<div class="radio">
-							<input type="radio" id="status-cancel-reason-4" name="cancel" value="other">
-							<label for="status-cancel-reason-4">其他</label>
+							<input type="radio" id="status-cancel-reason-6" name="cancel" value="other">
+							<label for="status-cancel-reason-6">其他</label>
 						</div>
 					</div>
 				</div>
 
-				<div class="form-group">
-					<label class="col-sm-6 control-label" for="status-cancel-note">
+				<div class="control-group">
+					<label class="control-label" for="status-cancel-note">
 						備註
 					</label>
-					<div class="col-sm-6">
+					<div class="controls">
 						<textarea id="status-cancel-note" name="cancel_note" class="form-control"></textarea>
 					</div>
 				</div>
 
 				<!-- Hidden Inputs -->
 				<div class="hide">
-					<input type="hidden" name="task" value="schedules.status" />
+					<input type="hidden" name="task" value="schedules.update.status" />
 					<input type="hidden" name="cid[]" value="" />
 					<input type="hidden" name="boxchecked" value="1" />
 					<input type="hidden" name="status" value="pause" />
@@ -173,6 +216,6 @@ $asset->addJS('schedules/list.js');
 		</form>
 	</div>
 	<div class="modal-footer">
-		<button type="button" class="btn btn-danger" onclick="jQuery('#form-status-pause').submit();">暫緩排程</button>
+		<button type="button" class="btn btn-primary" onclick="jQuery('#form-status-pause').submit();">暫緩排程</button>
 	</div>
 </div>

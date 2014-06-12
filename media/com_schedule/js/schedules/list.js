@@ -32,7 +32,12 @@
 		}
 	}
 
-	$(function()
+	/**
+	 * Bind "onClick" events on status dropdown menu
+	 *
+	 * @returns void
+	 */
+	function bindStatusDropdownMenu()
 	{
 		var $adminForm = $('#adminForm'),
 			$cancelForm = $('#form-status-cancel'),
@@ -44,7 +49,6 @@
 			$cancelCidInput = $cancelForm.find('input[name="cid[]"]'),
 			$pauseCidInput = $pauseForm.find('input[name="cid[]"]');
 
-		// Bind "onClick" events on status dropdown menu
 		$('.status-dropdown-menu li').click(function()
 		{
 			var $node = $(this),
@@ -58,7 +62,7 @@
 				case 'submit':
 					$cid.click();
 					$adminStatusInput.val(status);
-					window.Joomla.submitbutton('schedules.status');
+					window.Joomla.submitbutton('schedules.update.status');
 					break;
 				case 'modal-cancel':
 					$cancelStatusInput.val(status);
@@ -71,5 +75,35 @@
 					break;
 			}
 		});
+	}
+
+	/**
+	 * Bind "onClick" event on edit submit button
+	 *
+	 * @returns void
+	 */
+	function bindEditSubmitButton()
+	{
+		var $adminForm = $('#adminForm'),
+			$container = $('#modal-edit-item'),
+			$dateInput = $container.find('input[name="date"]'),
+			$senderIdSelect = $container.find('select[name="sender_id"]'),
+			$adminDateInput = $adminForm.find('input[name="new_date"]'),
+			$adminSenderIdInput = $adminForm.find('input[name="new_sender_id"]');
+
+		$('#modal-edit-item-submit').click(function()
+		{
+			$adminDateInput.val($dateInput.val());
+			$adminSenderIdInput.val($senderIdSelect.val());
+
+			window.Joomla.submitbutton('schedules.edit');
+		});
+	}
+
+	$(function()
+	{
+		bindStatusDropdownMenu();
+
+		bindEditSubmitButton();
 	});
 })(jQuery);
