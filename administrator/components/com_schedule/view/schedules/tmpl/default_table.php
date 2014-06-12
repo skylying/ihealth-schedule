@@ -200,7 +200,7 @@ foreach ($data->items as $i => $item):
 			<?php
 			if ($item->status)
 			{
-				echo $this->loadTemplate('status_dropdown', array('item' => $item));
+				echo $this->loadTemplate('status_dropdown', array('index' => $i, 'item' => $item));
 			}
 			?>
 		</td>
