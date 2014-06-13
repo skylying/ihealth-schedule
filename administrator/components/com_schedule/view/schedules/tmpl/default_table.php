@@ -189,7 +189,9 @@ foreach ($data->items as $i => $item):
 		<!-- sorted -->
 		<td class="center">
 			<a href="#" onclick="listItemTask('cb<?php echo $i; ?>', '<?php echo $sortedTask; ?>');">
-				<span class="glyphicon glyphicon-<?php echo ($item->sorted ? 'ok' : 'remove'); ?>"></span>
+				<span class="glyphicon glyphicon-<?php echo ($item->sorted ? 'ok' : 'remove'); ?>"
+					<?php echo ($item->sorted ? '' : ' style="color:red;"'); ?>>
+				</span>
 			</a>
 		</td>
 
