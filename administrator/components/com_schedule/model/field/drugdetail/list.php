@@ -11,34 +11,33 @@ defined('_JEXEC') or die;
 
 include_once JPATH_LIBRARIES . '/windwalker/src/init.php';
 JForm::addFieldPath(WINDWALKER_SOURCE . '/Form/Fields');
-JFormHelper::loadFieldClass('Modal');
+JFormHelper::loadFieldClass('itemlist');
 
 /**
- * Supports a modal picker.
+ * Supports an HTML select list of categories
  */
-class JFormFieldDrugprice_Modal extends JFormFieldModal
+class JFormFieldDrugdetail_List extends JFormFieldItemlist
 {
 	/**
 	 * The form field type.
 	 *
 	 * @var string
-	 * @since    1.6
 	 */
-	protected $type = 'Drugprice_Modal';
+	public $type = 'Drugdetail_List';
 
 	/**
 	 * List name.
 	 *
 	 * @var string
 	 */
-	protected $view_list = 'drugprices';
+	protected $view_list = 'drugdetails';
 
 	/**
 	 * Item name.
 	 *
 	 * @var string
 	 */
-	protected $view_item = 'drugprice';
+	protected $view_item = 'drugdetail';
 
 	/**
 	 * Extension name, eg: com_content.
@@ -46,4 +45,18 @@ class JFormFieldDrugprice_Modal extends JFormFieldModal
 	 * @var string
 	 */
 	protected $extension = 'com_schedule';
+
+	/**
+	 * Set the published column name in table.
+	 *
+	 * @var string
+	 */
+	protected $published_field = 'state';
+
+	/**
+	 * Set the ordering column name in table.
+	 *
+	 * @var string
+	 */
+	protected $ordering_field = null;
 }

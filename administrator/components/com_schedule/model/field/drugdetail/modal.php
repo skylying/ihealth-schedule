@@ -16,7 +16,7 @@ JFormHelper::loadFieldClass('Modal');
 /**
  * Supports a modal picker.
  */
-class JFormFieldDrugprice_Modal extends JFormFieldModal
+class JFormFieldDrugdetail_Modal extends JFormFieldModal
 {
 	/**
 	 * The form field type.
@@ -24,21 +24,21 @@ class JFormFieldDrugprice_Modal extends JFormFieldModal
 	 * @var string
 	 * @since    1.6
 	 */
-	protected $type = 'Drugprice_Modal';
+	protected $type = 'Drugdetail_Modal';
 
 	/**
 	 * List name.
 	 *
 	 * @var string
 	 */
-	protected $view_list = 'drugprices';
+	protected $view_list = 'drugdetails';
 
 	/**
 	 * Item name.
 	 *
 	 * @var string
 	 */
-	protected $view_item = 'drugprice';
+	protected $view_item = 'drugdetail';
 
 	/**
 	 * Extension name, eg: com_content.
