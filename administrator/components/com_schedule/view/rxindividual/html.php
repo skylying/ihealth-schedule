@@ -159,19 +159,13 @@ HTML;
 
 		$memberList    = '';
 		$customer_note = '';
-		$drugList      = '';
 
 		$members       = \Schedule\Helper\Mapping\MemberCustomerHelper::loadMembers($data->item->customer_id);
-		$scheduleInfos = \Schedule\Helper\GetRxDataHelper::getRxList($data->item->id);
-		$customerNotes = \Schedule\Helper\GetRxDataHelper::getCustomerNote($data->item->customer_id);
-		$drugs         = \Schedule\Helper\GetRxDataHelper::getDrugList($data->item->id);
+		$scheduleInfos = \Schedule\Helper\RxDataHelper::getRxList($data->item->id);
+		$customerNotes = \Schedule\Helper\RxDataHelper::getCustomerNote($data->item->customer_id);
+		$drugs         = \Schedule\Helper\RxDataHelper::getDrugList($data->item->id);
 
 		$reminds = explode(',', $data->item->remind);
-
-		foreach ($drugs as $drug)
-		{
-			$drugList .= ' ( ' . $drug->hicode . ' ) / ' . $drug->quantity . ' <br /> ';
-		}
 
 		foreach ($members as $member)
 		{
@@ -187,7 +181,7 @@ HTML;
 		$data->item->member_list   = $memberList;
 		$data->item->customer_note = $customer_note;
 		$data->item->age           = $age;
-		$data->item->drugList      = $drugList;
+		$data->item->drugs         = $drugs;
 		$data->item->count         = count($drugs);
 		$data->item->remindLists   = $reminds;
 		$data->print               = $isSaveAndPrint;

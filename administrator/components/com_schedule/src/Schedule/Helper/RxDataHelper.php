@@ -14,11 +14,11 @@ defined('_JEXEC') or die;
 use Schedule\Table\Table;
 
 /**
- * Class GetRxDataHelper
+ * Class RxDataHelper
  *
  * @since 1.0
  */
-class GetRxDataHelper
+class RxDataHelper
 {
 	/**
 	 * getDrugList
@@ -33,7 +33,7 @@ class GetRxDataHelper
 		$query  = $db->getQuery(true);
 		$select = array(
 			'drug.hicode',
-			'drug.quantity'
+			'drug.`quantity`'
 		);
 
 		$query->select($select)
@@ -65,8 +65,8 @@ class GetRxDataHelper
 			'schedule.address',
 			'schedule.deliver_nth',
 			'schedule.drug_empty_date',
-			'schedule.session',
-			'schedule.date'
+			'schedule.`session`',
+			'schedule.`date`'
 		);
 
 		$query->select($select)

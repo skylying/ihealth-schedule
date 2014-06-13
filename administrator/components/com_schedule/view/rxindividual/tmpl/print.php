@@ -8,8 +8,9 @@
 
 // No direct access
 defined('_JEXEC') or die;
-$remindLists = $data->item->remindLists;
+$remindList = $data->item->remindLists;
 $scheduleInfos = $data->item->scheduleInfos;
+$drugs = $data->item->drugs;
 ?>
 
 <style>
@@ -133,9 +134,26 @@ $scheduleInfos = $data->item->scheduleInfos;
 				</tr>
 				<tr>
 					<td>藥品資料</td>
-					<td><?php echo $data->item->drugList; ?></td>
-					<td></td>
-					<td></td>
+					<td>
+						<table class="table table-bordered">
+							<thead>
+							<th>藥品健保碼</th>
+							<th>顆數量</th>
+							</thead>
+							<tbody>
+							<?php foreach ($drugs as $drug): ?>
+								<tr>
+									<td>
+										<?php echo $drug->hicode; ?>
+									</td>
+									<td>
+										<?php echo $drug->quantity; ?>
+									</td>
+								</tr>
+							<?php endforeach; ?>
+							</tbody>
+						</table>
+					</td>
 				</tr>
 				<tr>
 					<td>藥品種數</td>
@@ -143,8 +161,8 @@ $scheduleInfos = $data->item->scheduleInfos;
 					<td>註記選項</td>
 					<td>
 						<?php
-						foreach ($remindLists as $remindList):
-							echo JText::_('COM_SCHEDULE_RXINDIVIDUAL_PRINT_' . $remindList) . '<br />';
+						foreach ($remindList as $remind):
+							echo JText::_('COM_SCHEDULE_RXINDIVIDUAL_PRINT_' . $remind) . '<br />';
 						endforeach;
 						?>
 					</td>
