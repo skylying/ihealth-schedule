@@ -131,7 +131,7 @@
         price: { Field: price, Type: 'decimal(10,0)', 'Null': NO, Default: null, Extra: '', Comment: 單筆金額, From: [price] }
         task_id: { Field: task_id, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: '對應外送 id', From: [task_id] }
         ice: { Field: ice, Type: int(1), 'Null': NO, Default: null, Extra: '', Comment: '是否有冰品', From: [ice] }
-        stored: { Field: stored, Type: int(1), 'Null': NO, Default: null, Extra: '', Comment: '是否完成分藥', From: [stored] }
+        sorted: { Field: sorted, Type: int(1), 'Null': NO, Default: null, Extra: '', Comment: '是否完成分藥', From: [sorted] }
     index:
         - { Table: '#__schedule_drug_extra_details', Non_unique: '0', Key_name: PRIMARY, Seq_in_index: '1', Column_name: id, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
     data:
