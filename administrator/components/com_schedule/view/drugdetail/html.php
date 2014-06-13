@@ -192,7 +192,7 @@ class ScheduleViewDrugdetailHtml extends EditView
 		$db = JFactory::getDbo();
 		$q  = $db->getQuery(true);
 
-		$q->select("*, schedule.id AS id, task.sender AS sender, schedule.institute_id AS institute_id, task.id AS task_id")
+		$q->select("*, schedule.id AS id, schedule.`type` AS `type`, task.sender AS sender, schedule.institute_id AS institute_id, task.id AS task_id")
 			->from(Table::SCHEDULES . " AS schedule")
 			->join("LEFT", Table::TASKS . " AS task on schedule.task_id = task.id")
 			->join("LEFT", Table::PRESCRIPTIONS . " AS rx on schedule.rx_id = rx.id")
