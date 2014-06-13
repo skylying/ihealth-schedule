@@ -65,6 +65,28 @@ class ScheduleControllerDrugdetailEditSave extends SaveController
 	/**
 	 * Save Schedule Drug Details
 	 *
+	 * post 形態如下
+	 *
+	 * ```
+	 * [
+	 *     'schedule' : [
+	 *         (schedule Id) 5 : [
+	 *             (1 , 0) ice : 1,
+	 *             (1 , 0) sorted : 1,
+	 *             (float) price: 333.333
+	 *         ],
+	 *         (institute Id) 6 : [
+	 *             (1 , 0) ice : 1,
+	 *             (1 , 0) sorted : 1,
+	 *             (float) price: 888.888
+	 *         ]
+	 *     ]
+	 *     'institutes' : [
+	 *         ...
+	 *     ]
+	 * ]
+	 * ```
+	 *
 	 * @return  void
 	 */
 	protected function saveScheduleDrugDetails()
@@ -92,38 +114,65 @@ class ScheduleControllerDrugdetailEditSave extends SaveController
 	/**
 	 * Save Drug Extra Details
 	 *
+	 * post 形態如下
+	 *
+	 * ```
+	 * [
+	 *     'schedule' : [
+	 *         ...
+	 *     ]
+	 *     'institutes' : [
+	 *         (institute Id) 5 : [
+	 *             0 : [
+	 *                 (drug Extra Detail Id) id : 8,
+	 *                 (1 , 0) ice : 1,
+	 *                 (1 , 0) sorted : 1,
+	 *                 (float) price: 333.333
+	 *             ],
+	 *             1 : [
+	 *                 (drug Extra Detail Id) id : 9,
+	 *                 (1 , 0) ice : 1,
+	 *                 (1 , 0) sorted : 1,
+	 *                 (float) price: 333.333
+	 *             ]
+	 *         ],
+	 *         (institute Id) 6 : [
+	 *             0 : [
+	 *                 (drug Extra Detail Id) id : 10,
+	 *                 (1 , 0) ice : 1,
+	 *                 (1 , 0) sorted : 1,
+	 *                 (float) price: 333.333
+	 *             ]
+	 *         ]
+	 *     ]
+	 * ]
+	 * ```
+	 *
 	 * @param   \Windwalker\Model\CrudModel $model
 	 *
 	 * @return  void
 	 */
 	protected function saveDrugExtraDetails($model)
 	{
-		foreach ($this->data['institutes'] as $institutes_id => $institutes)
+		foreach ($this->data['institutes'] as $instituteId => $institute)
 		{
-			foreach ($institutes as $id => $details)
+			foreach ($institute as $detail)
 			{
-				if ("0hash0" == $id)
-				{
-					continue;
-				}
-
-				$details['institute_id'] = $institutes_id;
+				$detail['institute_id'] = $instituteId;
 
 				// Disable checkbox
-				if (! isset($details['ice']))
+				if (! isset($detail['ice']))
 				{
-					$details['ice'] = 0;
+					$detail['ice'] = 0;
 				}
 
 				// Disable checkbox
-				if (! isset($details['sorted']))
+				if (! isset($detail['sorted']))
 				{
-					$details['sorted'] = 0;
+					$detail['sorted'] = 0;
 				}
 
-				show($details);
-
-				$model->save($details);
+				$model->save($detail);
 			}
 		}
 	}
