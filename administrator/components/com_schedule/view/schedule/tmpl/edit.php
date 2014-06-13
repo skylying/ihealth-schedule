@@ -20,10 +20,30 @@ JHtmlBehavior::formvalidation();
  * @var $data            Windwalker\Data\Data
  * @var $formInstitute   JForm
  * @var $formIndividual  JForm
+ * @var $asset           Windwalker\Helper\AssetHelper
  */
 $container      = $this->getContainer();
 $formInstitute  = $data->formInstitute;
 $formIndividual = $data->formIndividual;
+$asset          = $container->get('helper.asset');
+$input          = $container->get('input');
+$tmpl           = $input->get('tmpl');
+
+if ('component' === $tmpl)
+{
+	// Fix styles when layout in modal box
+	$asset->internalCSS('
+		#adminForm {
+			margin: 0;
+		}
+		.form-horizontal .control-group {
+			margin-bottom: 6px;
+		}
+		.nav {
+			margin-bottom: 10px;
+		}
+	');
+}
 ?>
 <!-- Validate Script -->
 <script type="text/javascript">
@@ -59,6 +79,17 @@ $formIndividual = $data->formIndividual;
 		class="form-validate" enctype="multipart/form-data">
 
 		<div class="form-horizontal">
+			<?php if ('component' === $tmpl): ?>
+			<div class="pull-right">
+				<button type="button" class="btn btn-success" onclick="Joomla.submitbutton('schedule.edit.save');">
+					儲存
+				</button>
+				<button type="button" class="btn btn-danger" onclick="parent.closeModal('#modal-add-new-item');">
+					取消
+				</button>
+			</div>
+			<?php endif; ?>
+
 			<?php echo JHtmlBootstrap::startTabSet('scheduleEditTab', array('active' => 'schedule_institute')); ?>
 
 			<?php echo JHtmlBootstrap::addTab('scheduleEditTab', 'schedule_institute', '機構'); ?>

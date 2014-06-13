@@ -23,4 +23,12 @@
 			$node.closest('form').submit();
 		};
 	}
+
+	if (window.closeModal === undefined)
+	{
+		window.closeModal = function(id)
+		{
+			$(id).modal('hide');
+		}
+	}
 })(jQuery);

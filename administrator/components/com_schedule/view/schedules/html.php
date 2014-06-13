@@ -126,10 +126,44 @@ class ScheduleViewSchedulesHtml extends GridView
 			$buttonSet['delete']['access'] = true;
 		}
 
-		$buttonSet['add']['args'] = array_merge($buttonSet['add']['args'], array('新增行政排程'));
+		// Button 新增行政排程
+		$buttonSet['add']['handler'] = function()
+		{
+			$url = JRoute::_('index.php?option=com_schedule&task=schedule.edit.add&tmpl=component', false);
+
+			$html = <<<HTML
+<button id="add-new-item-button" class="btn btn-small btn-success">
+	<span class="icon-new icon-white"></span> 新增行政排程
+</button>
+HTML;
+			$js = <<<JAVASCRIPT
+jQuery(function($)
+{
+	$('#add-new-item-button').click(function()
+	{
+		var node = $('#modal-add-new-item');
+
+		node.on('show', function()
+		{
+			var frame = node.find('iframe');
+
+			frame.attr("src", "");
+			frame.attr("src", "{$url}");
+		});
+
+		node.modal({show:true});
+	});
+});
+JAVASCRIPT;
+			JFactory::getDocument()->addScriptDeclaration($js);
+
+			$bar = JToolbar::getInstance('toolbar');
+			$bar->appendButton('Custom', $html);
+		};
 
 		$buttonSet['publish']['access'] = false;
 		$buttonSet['edit']['access'] = false;
+		$buttonSet['duplicate']['access'] = false;
 		$buttonSet['unpublish']['access'] = false;
 		$buttonSet['checkin']['access'] = false;
 		$buttonSet['batch']['access'] = false;

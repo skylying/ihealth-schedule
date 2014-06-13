@@ -59,3 +59,10 @@ $asset->addJS('schedules/list.js');
 		</div>
 	</form>
 </div>
+
+<!-- Add New Modal -->
+<div id="modal-add-new-item" class="modal hide fade" tabindex="-1" role="dialog" style="overflow: hidden;">
+	<div class="modal-body" style="overflow: hidden;">
+		<iframe src="" frameborder="0" width="100%" height="521"></iframe>
+	</div>
+</div>
