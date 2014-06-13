@@ -76,10 +76,10 @@ class ScheduleViewRxindividualsHtml extends GridView
 	{
 		$config['grid'] = array(
 			// Some basic setting
-			'option'    => 'com_schedule',
-			'view_name' => 'rxindividual',
-			'view_item' => 'rxindividual',
-			'view_list' => 'rxindividuals',
+			'option'         => 'com_schedule',
+			'view_name'      => 'rxindividual',
+			'view_item'      => 'rxindividual',
+			'view_list'      => 'rxindividuals',
 
 			// Column which we allow to drag sort
 			'order_column'   => 'rxindividual.catid, rxindividual.ordering',
@@ -109,8 +109,8 @@ class ScheduleViewRxindividualsHtml extends GridView
 	/**
 	 * configToolbar
 	 *
-	 * @param array $buttonSet
-	 * @param null  $canDo
+	 * @param   array $buttonSet
+	 * @param   null  $canDo
 	 *
 	 * @return  array
 	 */
@@ -120,13 +120,13 @@ class ScheduleViewRxindividualsHtml extends GridView
 		$buttonSet = parent::configureToolbar($buttonSet, $canDo);
 
 		$buttonSet['duplicate']['access'] = false;
-		$buttonSet['edit']['access'] = false;
-		$buttonSet['publish']['access']  = false;
+		$buttonSet['edit']['access']      = false;
+		$buttonSet['publish']['access']   = false;
 		$buttonSet['unpublish']['access'] = false;
-		$buttonSet['checkin']['access'] = false;
-		$buttonSet['trash']['access'] = false;
-		$buttonSet['batch']['access'] = false;
-		$buttonSet['delete']['access'] = true;
+		$buttonSet['checkin']['access']   = false;
+		$buttonSet['trash']['access']     = false;
+		$buttonSet['batch']['access']     = false;
+		$buttonSet['delete']['access']    = true;
 
 		return $buttonSet;
 	}

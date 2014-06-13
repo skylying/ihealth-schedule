@@ -196,5 +196,11 @@
 			label="出生日期"
 			description="出生日期"
 			/>
+
+		<field name="type"
+			type="hidden"
+			default="individual"
+			readonly="true"
+			/>
 	</fieldset>
 </form>
