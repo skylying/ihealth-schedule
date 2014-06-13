@@ -8,7 +8,6 @@
 			value_field="name"
 			label="負責藥師"
 			description="負責藥師"
-			onchange="jQuery('input[name=sender_id]').val(jQuery(this).val());"
 			>
 			<option></option>
 		</field>

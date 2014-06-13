@@ -160,8 +160,7 @@ class ScheduleModel extends AdminModel
 			$this->prepareIndividualTable($table);
 		}
 
-		// TODO: Use state to get sender_id
-		$senderId = \JFactory::getApplication()->input->get('sender_id', 0);
+		$senderId = $this->state->get('sender_id', 0);
 
 		if ($senderId > 0)
 		{

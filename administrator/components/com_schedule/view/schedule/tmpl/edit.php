@@ -127,7 +127,6 @@ if ('component' === $tmpl)
 			<input type="hidden" name="task" value="" />
 			<input type="hidden" name="id" value="<?php echo $data->item->id; ?>" />
 			<input type="hidden" name="form_type" value="" />
-			<input type="hidden" name="sender_id" value="" />
 			<?php echo JHtml::_('form.token'); ?>
 		</div>
 	</form>
