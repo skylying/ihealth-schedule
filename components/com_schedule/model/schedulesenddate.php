@@ -44,9 +44,9 @@ class ScheduleModelScheduleSendDate extends \Windwalker\Model\Model
 
 		$nth = $input->get('nth');
 		$seeDoctorDate = $input->get('see_doctor_date');
-		$period = $input->get('period');
+		$period = $input->get('period', 28);
 
-		$sendDate = ScheduleHelper::calculateSendDate($nth, $seeDoctorDate, $period, $weekday->weekday);
+		$sendDate = ScheduleHelper::calculateSendDate($nth, $seeDoctorDate, $period, $weekday);
 
 		return $sendDate;
 	}
@@ -54,7 +54,7 @@ class ScheduleModelScheduleSendDate extends \Windwalker\Model\Model
 	/**
 	 * getWeekday
 	 *
-	 * @return  mixed
+	 * @return  string
 	 */
 	public function getWeekday()
 	{
@@ -65,8 +65,8 @@ class ScheduleModelScheduleSendDate extends \Windwalker\Model\Model
 
 		// Build where condition
 		$whereCondition = array(
-			sprintf("`route`.`city` = %d", $input->get('city')),
-			sprintf("`route`.`area` = %d", $input->get('area')),
+			sprintf("`route`.`city` = %d", $input->getInt('city')),
+			sprintf("`route`.`area` = %d", $input->getInt('area')),
 			"`route`.`type` = 'customer'",
 		);
 
@@ -76,15 +76,7 @@ class ScheduleModelScheduleSendDate extends \Windwalker\Model\Model
 			->from(Table::ROUTES . ' AS route')
 			->where($whereCondition);
 
-		$weekday = $db->setQuery($query)->loadObject();
-
-		if (empty($weekday))
-		{
-			$weekday = new stdClass;
-
-			// Todo: Default weekday need to get from config
-			$weekday->weekday = 'MON';
-		}
+		$weekday = $db->setQuery($query)->loadResult();
 
 		return $weekday;
 	}
