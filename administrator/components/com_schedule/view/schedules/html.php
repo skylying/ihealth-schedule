@@ -98,12 +98,32 @@ class ScheduleViewSchedulesHtml extends GridView
 	}
 
 	/**
-	 * render
+	 * prepareData
 	 *
 	 * @return void
 	 */
 	protected function prepareData()
 	{
+		$data = $this->getData();
+
+		/** @var JForm $filterForm */
+		$filterForm = $data->filterForm;
+
+		// Get edit form fields
+		$editFormFields = array();
+
+		foreach (['date' => 'schedule.date_start', 'sender_id' => 'route.sender_id'] as $fieldName => $key)
+		{
+			$field = $filterForm->getField($key, 'filter');
+			$field->group = '';
+			$field->name = $fieldName;
+			$field->id = 'edit_item_field_' . $fieldName;
+			$field->onchange = '';
+
+			$editFormFields[$fieldName] = (string) $field->input;
+		}
+
+		$data->editFormFields = $editFormFields;
 	}
 
 	/**
@@ -116,18 +136,33 @@ class ScheduleViewSchedulesHtml extends GridView
 	 */
 	protected function configureToolbar($buttonSet = array(), $canDo = null)
 	{
-		// Get default button set.
-		$buttonSet = parent::configureToolbar($buttonSet, $canDo);
+		// Add a print popup button
+		$buttonSet['print'] = array(
+			'handler' => function ()
+			{
+				JFactory::getDocument()->addStyleDeclaration('
+					#modal-print {
+  						overflow-y: hidden;
+					}
+					#modal-print iframe {
+						border: 0;
+					}
 
-		// In debug mode, we remove trash button but use delete button instead.
-		if (JDEBUG)
-		{
-			$buttonSet['trash']['access']  = false;
-			$buttonSet['delete']['access'] = true;
-		}
+					/* fix float problem */
+					#toolbar-popup-print .btn-group {
+						float: none;
+					}
+				');
+
+				$printUrl = 'index.php?option=com_schedule&view=schedules&layout=print&tmpl=component';
+
+				// See JToolbarButtonPopup::fetchButton()
+				JToolbar::getInstance('toolbar')->appendButton('Popup', 'print', '列印排程統計表', $printUrl);
+			},
+		);
 
 		// Button 新增行政排程
-		$buttonSet['add']['handler'] = function()
+		$buttonSet['add2']['handler'] = function()
 		{
 			$url = JRoute::_('index.php?option=com_schedule&task=schedule.edit.add&tmpl=component', false);
 
@@ -161,37 +196,17 @@ JAVASCRIPT;
 			$bar->appendButton('Custom', $html);
 		};
 
-		$buttonSet['publish']['access'] = false;
-		$buttonSet['edit']['access'] = false;
-		$buttonSet['duplicate']['access'] = false;
-		$buttonSet['unpublish']['access'] = false;
-		$buttonSet['checkin']['access'] = false;
-		$buttonSet['batch']['access'] = false;
-
-		// Add a print popup button
-		$buttonSet['print'] = array(
-			'handler' => function ()
-			{
-				JFactory::getDocument()->addStyleDeclaration('
-					#modal-print {
-  						overflow-y: hidden;
-					}
-					#modal-print iframe {
-						border: 0;
-					}
-
-					/* fix float problem */
-					#toolbar-popup-print .btn-group {
-						float: none;
-					}
-				');
-
-				$printUrl = 'index.php?option=com_schedule&view=schedules&layout=print&tmpl=component';
-
-				// See JToolbarButtonPopup::fetchButton()
-				JToolbar::getInstance('toolbar')->appendButton('Popup', 'print', '列印排程統計表', $printUrl);
-			},
-		);
+		// Button 調整排程
+		$buttonSet['edit']['handler'] = function()
+		{
+			$html = <<<HTML
+<a id="edit-item-button" href="#modal-edit-item" class="btn btn-small" data-toggle="modal">
+	<span class="icon-edit"></span> 排程調整
+</a>
+HTML;
+			$bar = JToolbar::getInstance('toolbar');
+			$bar->appendButton('Custom', $html);
+		};
 
 		return $buttonSet;
 	}

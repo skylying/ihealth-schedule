@@ -14,20 +14,20 @@ defined('_JEXEC') or die;
  *
  * @var $data Windwalker\Data\Data
  */
-
 $prefix = 'COM_SCHEDULE_SCHEDULE_FIELD_STATUS_';
+$index = $data->index;
 $status = strtolower(trim($data->item->status));
-$options = array(
-	'scheduled',
-	'emergency',
-	'cancel_reject',
-	'cancel_only',
-	'pause',
+$options = [
+	'scheduled'     => ['updateMethod' => 'submit'],
+	'emergency'     => ['updateMethod' => 'submit'],
+	'cancel_reject' => ['updateMethod' => 'modal-cancel'],
+	'cancel_only'   => ['updateMethod' => 'modal-cancel'],
+	'pause'         => ['updateMethod' => 'modal-pause'],
 	// 'deleted',	// Not display in dropdown list, for document only.
-);
+];
 ?>
 
-<div class="btn-group">
+<div class="btn-group status-dropdown-menu">
 	<button type="button"
 		class="btn btn-default btn-sm dropdown-toggle"
 		data-toggle="dropdown"
@@ -38,7 +38,7 @@ $options = array(
 	</button>
 
 	<ul class="dropdown-menu">
-		<?php foreach ($options as $option): ?>
+		<?php foreach ($options as $option => $config): ?>
 			<?php
 			if ($status === $option)
 			{
@@ -46,8 +46,10 @@ $options = array(
 			}
 			?>
 		<li style="background:<?php echo JText::_($prefix . $option . '_COLOR'); ?>;"
-			data-status="<?php echo strtolower($option); ?>">
-			<a href="#" class="update-status-button">
+			data-status="<?php echo $option; ?>"
+			data-index="<?php echo $index; ?>"
+			data-update-method="<?php echo $config['updateMethod']; ?>">
+			<a href="#">
 				<span class="glyphicon glyphicon-<?php echo JText::_($prefix . $option . '_ICON'); ?>"></span>
 				<?php echo JText::_($prefix . $option); ?>
 			</a>

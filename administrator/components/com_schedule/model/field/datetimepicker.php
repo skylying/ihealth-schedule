@@ -58,7 +58,7 @@ class JFormFieldDateTimePicker extends JFormField
 		$showButton = XmlHelper::getBool($this->element, 'show_button', false);
 		$style      = $this->getStyle();
 		$dateFormat = XmlHelper::get($this->element, 'date_format', 'YYYY-MM-DD');
-		$onChange   = XmlHelper::get($this->element, 'onchange', '');
+		$onChange   = $this->onchange;
 
 		$attr = array(
 			'type'             => 'text',
@@ -133,6 +133,8 @@ JAVASCRIPT;
 
 		/** @var \Windwalker\Helper\AssetHelper $asset */
 		$asset = Container::getInstance('com_schedule')->get('helper.asset');
+
+		JHtmlBootstrap::framework();
 
 		$asset->addCSS('bootstrap-datetimepicker.min.css');
 		$asset->addJS('moment-with-langs.min.js');

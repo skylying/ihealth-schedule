@@ -133,8 +133,8 @@ foreach ($data->items as $i => $item):
 
 		<!-- EDIT -->
 		<td class="center">
-			<a class="btn btn-mini btn-primary"
-				href="<?php echo JRoute::_('index.php?option=com_schedule&task=schedule.edit.edit&id=' . $item->id); ?>">
+			<a class="btn btn-mini btn-primary" href="#"
+				onclick="jQuery('#cb<?php echo $i; ?>').click();jQuery('#edit-item-button').click();">
 				<span class="glyphicon glyphicon-edit"></span>
 			</a>
 		</td>
@@ -200,7 +200,7 @@ foreach ($data->items as $i => $item):
 			<?php
 			if ($item->status)
 			{
-				echo $this->loadTemplate('status_dropdown', array('item' => $item));
+				echo $this->loadTemplate('status_dropdown', array('index' => $i, 'item' => $item));
 			}
 			?>
 		</td>
