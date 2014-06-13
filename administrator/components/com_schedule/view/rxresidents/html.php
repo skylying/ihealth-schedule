@@ -76,10 +76,10 @@ class ScheduleViewRxresidentsHtml extends GridView
 	{
 		$config['grid'] = array(
 			// Some basic setting
-			'option'    => 'com_schedule',
-			'view_name' => 'rxresident',
-			'view_item' => 'rxresident',
-			'view_list' => 'rxresidents',
+			'option'         => 'com_schedule',
+			'view_name'      => 'rxresident',
+			'view_item'      => 'rxresident',
+			'view_list'      => 'rxresidents',
 
 			// Column which we allow to drag sort
 			'order_column'   => 'rxresident.catid, rxresident.ordering',
@@ -109,8 +109,8 @@ class ScheduleViewRxresidentsHtml extends GridView
 	/**
 	 * configureToolbar
 	 *
-	 * @param array   $buttonSet
-	 * @param object  $canDo
+	 * @param array  $buttonSet
+	 * @param object $canDo
 	 *
 	 * @return  array
 	 */
@@ -119,20 +119,14 @@ class ScheduleViewRxresidentsHtml extends GridView
 		// Get default button set.
 		$buttonSet = parent::configureToolbar($buttonSet, $canDo);
 
-		$buttonSet['edit']['access'] = false;
+		$buttonSet['edit']['access']      = false;
 		$buttonSet['duplicate']['access'] = false;
-		$buttonSet['publish']['access'] = false;
+		$buttonSet['publish']['access']   = false;
 		$buttonSet['unpublish']['access'] = false;
-		$buttonSet['checkin']['access'] = false;
-		$buttonSet['trash']['access'] = false;
-		$buttonSet['batch']['access'] = false;
-
-		// In debug mode, we remove trash button but use delete button instead.
-		if (JDEBUG)
-		{
-			$buttonSet['trash']['access']  = false;
-			$buttonSet['delete']['access'] = true;
-		}
+		$buttonSet['checkin']['access']   = false;
+		$buttonSet['trash']['access']     = false;
+		$buttonSet['batch']['access']     = false;
+		$buttonSet['delete']['access']    = true;
 
 		return $buttonSet;
 	}
