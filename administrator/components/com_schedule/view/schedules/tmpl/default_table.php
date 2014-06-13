@@ -188,7 +188,7 @@ foreach ($data->items as $i => $item):
 
 		<!-- sorted -->
 		<td class="center">
-			<a href="#" onclick="jQuery('#cb<?php echo $i; ?>').click();Joomla.submitbutton('<?php echo $sortedTask; ?>');">
+			<a href="#" onclick="listItemTask('cb<?php echo $i; ?>', '<?php echo $sortedTask; ?>');">
 				<span class="glyphicon glyphicon-<?php echo ($item->sorted ? 'ok' : 'remove'); ?>"></span>
 			</a>
 		</td>
