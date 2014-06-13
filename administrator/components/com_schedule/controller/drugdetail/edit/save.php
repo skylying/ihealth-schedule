@@ -202,4 +202,15 @@ class ScheduleControllerDrugdetailEditSave extends SaveController
 
 		$this->app->redirect($url . "&" . urldecode($urlValue));
 	}
+
+	/**
+	 * Do save
+	 *
+	 * @return  array
+	 */
+	protected function doSave()
+	{
+		// 不多儲存
+		return $this->data;
+	}
 }

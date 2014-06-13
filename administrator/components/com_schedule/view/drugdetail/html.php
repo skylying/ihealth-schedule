@@ -144,12 +144,15 @@ class ScheduleViewDrugdetailHtml extends EditView
 						$items[$senderId]['institutes'][$instituteId]['extra'] = array();
 					}
 
-					foreach ($extras as $extra)
+					foreach ($extras as $extraKey => $extra)
 					{
 						// 同比機構的額外添購金額放入陣列中
 						if ($instituteId == $extra->institute_id)
 						{
 							$items[$senderId]['institutes'][$instituteId]['extra'][] = $extra;
+
+							// 讓同天同樣機構不同藥師時，資料不重複
+							unset($extras[$extraKey]);
 						}
 					}
 

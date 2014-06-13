@@ -83,15 +83,27 @@ $asset->addJS('drugdetail/institute-extra.js');
 
 		<!-- Load database drug extra input -->
 		<?php foreach ($institute['extra'] as $extra): ?>
-			<?php echo $this->loadTemplate('extra_list_row', array('extra' => $extra, 'task_id' => $sender['task_id'], 'group' => "institutes.{$instituteId}.{$extra->id}")); ?>
+			<!-- ----start---- -->
+			<?php
+			echo $this->loadTemplate('extra_list_row', array(
+				'id'      => '',
+				'class'   => '',
+				'extra'   => $extra,
+				'task_id' => $sender['task_id'],
+				'group'   => "institutes.{$instituteId}.{$extra->id}",
+				'isJs'    => false)
+			);
+			?>
+			<!-- ----end---- -->
 		<?php endforeach; ?>
 
 		<!-- Javascript drug extra input -->
 		<?php
 		echo $this->loadTemplate('extra_list_row', array(
 			'id'      => "row-institute-{$instituteId}",
-			'task_id' => $sender['task_id'],
 			'class'   => 'hide',
+			'extra'   => null,
+			'task_id' => $sender['task_id'],
 			'group'   => "institutes.{$instituteId}.0hash0",
 			'isJs'    => true)
 		);
