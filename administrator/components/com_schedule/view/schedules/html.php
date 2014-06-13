@@ -200,7 +200,7 @@ JAVASCRIPT;
 		$buttonSet['edit']['handler'] = function()
 		{
 			$html = <<<HTML
-<a href="#modal-edit-item" class="btn btn-small" data-toggle="modal">
+<a id="edit-item-button" href="#modal-edit-item" class="btn btn-small" data-toggle="modal">
 	<span class="icon-edit"></span> 排程調整
 </a>
 HTML;
