@@ -35,6 +35,8 @@ if ($isJs)
 	$sortedValue = null;
 	$iceValue    = null;
 	$priceValue  = null;
+
+	$group = "js_{$group}";
 }
 
 $idInput = FieldHelper::resetGroup($form->getField('id', null, $idValue), $group);

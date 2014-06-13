@@ -84,6 +84,10 @@
 				fieldName = fieldName.replace("0hash0", groupTime);
 				fieldId   = fieldId.replace("0hash0", groupTime);
 
+				// Remove tmp name prefix
+				fieldName = fieldName.replace("js_", "");
+				fieldId   = fieldId.replace("js_", "");
+
 				$(this).attr("name", fieldName);
 				$(this).attr("id", fieldId);
 			});
