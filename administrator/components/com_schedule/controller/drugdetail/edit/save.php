@@ -69,7 +69,7 @@ class ScheduleControllerDrugdetailEditSave extends SaveController
 	 *
 	 * ```
 	 * [
-	 *     'schedule' : [
+	 *     'schedules' : [
 	 *         (schedule Id) 5 : [
 	 *             (1 , 0) ice : 1,
 	 *             (1 , 0) sorted : 1,
@@ -91,7 +91,7 @@ class ScheduleControllerDrugdetailEditSave extends SaveController
 	 */
 	protected function saveScheduleDrugDetails()
 	{
-		foreach ($this->data['schedule'] as $scheduleId => $scheduleData)
+		foreach ($this->data['schedules'] as $scheduleId => $scheduleData)
 		{
 			$scheduleData['id'] = $scheduleId;
 
@@ -118,7 +118,7 @@ class ScheduleControllerDrugdetailEditSave extends SaveController
 	 *
 	 * ```
 	 * [
-	 *     'schedule' : [
+	 *     'schedules' : [
 	 *         ...
 	 *     ]
 	 *     'institutes' : [
@@ -192,14 +192,14 @@ class ScheduleControllerDrugdetailEditSave extends SaveController
 		$date = $this->input->get("date", "");
 		$url  = $this->getRedirectItemUrl();
 
-		$url = $url . "&" . urldecode(
-				http_build_query(
-					array(
-						'senderIds' => $ids
-					)
-				)
-			);
+		$urlValue = http_build_query(
+			array(
+				'layout' => 'edit',
+				'date' => $date,
+				'senderIds' => $ids
+			)
+		);
 
-		$this->app->redirect("{$url}&layout=edit&date={$date}");
+		$this->app->redirect($url . "&" . urldecode($urlValue));
 	}
 }

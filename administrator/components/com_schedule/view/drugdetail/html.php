@@ -129,33 +129,32 @@ class ScheduleViewDrugdetailHtml extends EditView
 
 			$instituteId = intval($schedule->institute_id);
 
-			if (0 == $instituteId)
+			switch ($schedule->type)
 			{
-				// 散客
-				$items[$senderId]['individuals'][] = $schedule;
-			}
-			else
-			{
-				if (! isset($items[$senderId]['institutes'][$instituteId]))
-				{
-					$items[$senderId]['institutes'][$instituteId] = array();
-					$items[$senderId]['institutes'][$instituteId]['schedule'] = array();
-					$items[$senderId]['institutes'][$instituteId]['extra'] = array();
-				}
+				case ("individual"):
+					// 散客
+					$items[$senderId]['individuals'][] = $schedule;
+				break;
 
-				foreach ($extras as $key => $extra)
-				{
-					// 同比機構的額外添購金額放入陣列中
-					if ($instituteId == $extra->institute_id)
+				case ("resident"):
+					if (! isset($items[$senderId]['institutes'][$instituteId]))
 					{
-						$items[$senderId]['institutes'][$instituteId]['extra'][] = $extra;
-
-						// 優化下次回圈用
-						unset($extras[$key]);
+						$items[$senderId]['institutes'][$instituteId] = array();
+						$items[$senderId]['institutes'][$instituteId]['schedule'] = array();
+						$items[$senderId]['institutes'][$instituteId]['extra'] = array();
 					}
-				}
 
-				$items[$senderId]['institutes'][$instituteId]['schedule'][] = $schedule;
+					foreach ($extras as $extra)
+					{
+						// 同比機構的額外添購金額放入陣列中
+						if ($instituteId == $extra->institute_id)
+						{
+							$items[$senderId]['institutes'][$instituteId]['extra'][] = $extra;
+						}
+					}
+
+					$items[$senderId]['institutes'][$instituteId]['schedules'][] = $schedule;
+				break;
 			}
 		}
 

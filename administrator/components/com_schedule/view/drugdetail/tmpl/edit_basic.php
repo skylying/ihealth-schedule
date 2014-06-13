@@ -21,7 +21,7 @@ $asset->addJS('drugdetail/institute-extra.js');
 <script>
 	jQuery(function()
 	{
-		window.InstituteExtraObject = new InstituteExtra("add-institute-extra", "row-institute-");
+		window.InstituteExtraObject = new InstituteExtra("add-institute-extra", "row-remove-button", "row-institute-");
 	});
 </script>
 
@@ -76,30 +76,30 @@ $asset->addJS('drugdetail/institute-extra.js');
 	</tr>
 	</thead>
 	<tbody>
-	<?php foreach ($sender['institutes'] as $institute_id => $institute): ?>
-		<?php foreach ($institute['schedule'] as $schedule): ?>
+	<?php foreach ($sender['institutes'] as $instituteId => $institute): ?>
+		<?php foreach ($institute['schedules'] as $schedule): ?>
 			<?php echo $this->loadTemplate('list_row', array('schedule' => $schedule)); ?>
 		<?php endforeach; ?>
 
 		<!-- Load database drug extra input -->
 		<?php foreach ($institute['extra'] as $extra): ?>
-			<?php echo $this->loadTemplate('extra_list_row', array('extra' => $extra, 'task_id' => $sender['task_id'], 'group' => "institutes.{$institute_id}.{$extra->id}")); ?>
+			<?php echo $this->loadTemplate('extra_list_row', array('extra' => $extra, 'task_id' => $sender['task_id'], 'group' => "institutes.{$instituteId}.{$extra->id}")); ?>
 		<?php endforeach; ?>
 
 		<!-- Javascript drug extra input -->
 		<?php
 		echo $this->loadTemplate('extra_list_row', array(
-			'id'    => "row-institute-{$institute_id}",
+			'id'      => "row-institute-{$instituteId}",
 			'task_id' => $sender['task_id'],
-			'class' => 'hide',
-			'group' => "institutes.{$institute_id}.0hash0",
-			'isJs'  => true)
+			'class'   => 'hide',
+			'group'   => "institutes.{$instituteId}.0hash0",
+			'isJs'    => true)
 		);
 		?>
 	<tr>
 		<td colspan="11" class="text-right"><!-- TODO: 份數 --> 份</td>
 		<td>
-			<button class="add-institute-extra" data-institute-id="<?php echo $institute_id; ?>" type="button">+</button>
+			<button class="add-institute-extra" data-institute-id="<?php echo $instituteId; ?>" type="button">+</button>
 		</td>
 	</tr>
 	<?php endforeach; ?>

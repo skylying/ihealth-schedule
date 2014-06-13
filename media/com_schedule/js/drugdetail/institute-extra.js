@@ -10,10 +10,11 @@
 	/**
 	 * Class Institute Extra
 	 *
-	 * @param buttonClass  string  button class name
-	 * @param rowIdPrefix  string  row id prefix
+	 * @param buttonClass        string  button class name
+	 * @param removeButtonClass  string  remove button class name
+	 * @param rowIdPrefix        string  row id prefix
 	 */
-	function InstituteExtra(buttonClass, $rowIdPrefix)
+	function InstituteExtra(buttonClass, removeButtonClass, rowIdPrefix)
 	{
 		/**
 		 * Button class
@@ -27,24 +28,37 @@
 		 *
 		 * @type  {string}
 		 */
-		this.rowIdPrefix = $rowIdPrefix;
+		this.rowIdPrefix = rowIdPrefix;
 
-		this.addInstituteExtraButtonEvent();
+		/**
+		 * Remove Button Class
+		 *
+		 * @type {string}
+		 */
+		this.removeButtonClass = removeButtonClass;
+
+		var extra = this;
+
+		// Add button event
+		$("." + this.buttonClass).click(function()
+		{
+			extra.addInstituteExtraRow($(this).data("instituteId"));
+		});
 	}
 
 	InstituteExtra.prototype = {
 		/**
-		 * 新增機構額外表按鈕事件
+		 * 刪除 row 事件
+		 *
+		 * @param  row jquery
 		 *
 		 * @return  void
 		 */
-		addInstituteExtraButtonEvent: function()
+		deleteRowEvent: function(row)
 		{
-			var extra = this;
-
-			$("body").delegate("." + this.buttonClass, "click", function()
+			row.find("." + this.removeButtonClass).click(function()
 			{
-				extra.addInstituteExtraRow($(this).data("instituteId"));
+				row.remove();
 			});
 		},
 
@@ -74,10 +88,8 @@
 				$(this).attr("id", fieldId);
 			});
 
-			row.find(".row-remove-button").click(function()
-			{
-				row.remove();
-			});
+			// Bind event
+			this.deleteRowEvent(row);
 
 			$(rowId).after(row);
 		}

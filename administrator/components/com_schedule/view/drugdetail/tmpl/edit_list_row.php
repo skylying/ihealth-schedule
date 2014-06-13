@@ -18,9 +18,9 @@ use Schedule\Helper\Form\FieldHelper;
 $form     = $data->form;
 $schedule = $data->schedule;
 
-$sorted = FieldHelper::resetGroup($form->getField('sorted', null, $schedule->sorted), "schedule.{$schedule->id}");
-$ice    = FieldHelper::resetGroup($form->getField('ice', null, $schedule->ice), "schedule.{$schedule->id}");
-$price  = FieldHelper::resetGroup($form->getField('price', null, $schedule->price), "schedule.{$schedule->id}");
+$sorted = FieldHelper::resetGroup($form->getField('sorted', null, $schedule->sorted), "schedules.{$schedule->id}");
+$ice    = FieldHelper::resetGroup($form->getField('ice', null, $schedule->ice), "schedules.{$schedule->id}");
+$price  = FieldHelper::resetGroup($form->getField('price', null, $schedule->price), "schedules.{$schedule->id}");
 ?>
 <tr>
 	<td>
@@ -49,11 +49,7 @@ $price  = FieldHelper::resetGroup($form->getField('price', null, $schedule->pric
 			break;
 
 			case ("individual"):
-				$members = MemberCustomerHelper::loadMembers($schedule->customer_id);
-
-				$memberNames = \JArrayHelper::getColumn($members, "name");
-
-				echo implode("<br/>", $memberNames);
+				echo $schedule->member_name;
 			break;
 		}
 		?>
