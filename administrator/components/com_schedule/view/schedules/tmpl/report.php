@@ -24,7 +24,7 @@ $items = $ScheduleReport->getData();
 
 		<!-- LIST TABLE -->
 
-		<button type="button" class="btn btn-success">
+		<button type="button" class="btn btn-success" onclick="window.print();">
 			<span class="glyphicon glyphicon-print"></span>
 				列印
 		</button>

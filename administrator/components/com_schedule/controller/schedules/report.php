@@ -14,9 +14,9 @@
 class ScheduleControllerSchedulesReport extends Windwalker\Controller\Admin\AbstractRedirectController
 {
 	/**
-	 * Set redirect to route report layout
+	 * doExecute
 	 *
-	 * @return  mixed|void
+	 * @return  bool|mixed
 	 */
 	protected function doExecute()
 	{

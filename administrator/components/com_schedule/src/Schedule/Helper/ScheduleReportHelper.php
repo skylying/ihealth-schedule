@@ -51,7 +51,7 @@ class ScheduleReportHelper
 	/**
 	 * extraFilter
 	 *
-	 * @param $query
+	 * @param \JDatabaseQuery $query
 	 *
 	 * @return  mixed
 	 */

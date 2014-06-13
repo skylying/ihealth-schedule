@@ -146,31 +146,28 @@ class ScheduleViewSchedulesHtml extends GridView
 
 		$buttonSet['add']['args'] = array_merge($buttonSet['add']['args'], array('新增行政排程'));
 
-		$buttonSet['publish']['access'] = false;
-		$buttonSet['edit']['access'] = false;
+		$buttonSet['publish']['access']   = false;
+		$buttonSet['edit']['access']      = false;
 		$buttonSet['unpublish']['access'] = false;
-		$buttonSet['checkin']['access'] = false;
-		$buttonSet['batch']['access'] = false;
+		$buttonSet['checkin']['access']   = false;
+		$buttonSet['batch']['access']     = false;
 
-		$buttonSet = $this->configReportToolbar($buttonSet);
+		$buttonSet = $this->configureReportToolbar($buttonSet);
 
 		return $buttonSet;
 	}
 
-	protected function configReportToolbar($buttonSet)
+	protected function configureReportToolbar($buttonSet)
 	{
 		if ('report' !== $this->getLayout())
 		{
 			$buttonSet['print']['handler'] = function()
 			{
-				\JHtml::_('behavior.modal');
-				$title = '列印報表';
-				$targetModalId = 'print';
-				$icon = 'glyphicon glyphicon-print';
-
-				$dHtml = "<a href='#" . $targetModalId . "' class='modal btn btn-small'>
-					<i class='" . $icon . "'></i>" . $title . "</a>";
-
+				$dHtml = <<<HTML
+<button class="btn btn-small" onclick="Joomla.submitbutton('schedules.report')">
+<span class="glyphicon glyphicon-print"></span> 列印報表
+</button>
+HTML;
 				$bar = JToolbar::getInstance('toolbar');
 				$bar->appendButton('Custom', $dHtml);
 			};
@@ -178,15 +175,15 @@ class ScheduleViewSchedulesHtml extends GridView
 		}
 
 		// If layout is report do this
-		$buttonSet['add']['access'] = false;
-		$buttonSet['publish']['access'] = false;
-		$buttonSet['edit']['access'] = false;
-		$buttonSet['unpublish']['access'] = false;
-		$buttonSet['checkin']['access'] = false;
-		$buttonSet['batch']['access'] = false;
-		$buttonSet['trash']['access']  = false;
-		$buttonSet['delete']['access'] = false;
-		$buttonSet['duplicate']['access'] = false;
+		$buttonSet['add']['access']         = false;
+		$buttonSet['publish']['access']     = false;
+		$buttonSet['edit']['access']        = false;
+		$buttonSet['unpublish']['access']   = false;
+		$buttonSet['checkin']['access']     = false;
+		$buttonSet['batch']['access']       = false;
+		$buttonSet['trash']['access']       = false;
+		$buttonSet['delete']['access']      = false;
+		$buttonSet['duplicate']['access']   = false;
 		$buttonSet['preferences']['access'] = false;
 
 		$buttonSet['route']['handler'] = function()

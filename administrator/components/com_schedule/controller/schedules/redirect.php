@@ -14,9 +14,9 @@
 class ScheduleControllerSchedulesRedirect extends Windwalker\Controller\Admin\AbstractRedirectController
 {
 	/**
-	 * Set redirect to route overview layout
+	 * doExecute
 	 *
-	 * @return  mixed|void
+	 * @return  bool|mixed
 	 */
 	protected function doExecute()
 	{
