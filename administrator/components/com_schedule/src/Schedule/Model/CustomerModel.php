@@ -16,11 +16,11 @@ use Windwalker\Joomla\DataMapper\DataMapper;
 defined('_JEXEC') or die;
 
 /**
- * Class ScheduleModelCustomer
+ * Class Schedule\Model\CustomerModel
  *
  * @since 1.0
  */
-class Customer extends AdminModel
+class CustomerModel extends AdminModel
 {
 	/**
 	 * Property prefix.

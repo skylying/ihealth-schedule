@@ -46,6 +46,14 @@
 				areaOptions = self.areas[$city.val()] || '',
 				areaValue = Array.prototype.slice.call(arguments, 2, 3)[0] || null;
 
+			// Initialize area selection when city value is changed
+			$city.change(function()
+			{
+				updateAreaSelection($(this).val());
+			});
+
+			updateAreaSelection($city.val());
+
 			// Initialize area selection element
 			if (areaValue)
 			{
@@ -59,11 +67,16 @@
 				}
 			}
 
-			// Initialize area selection when city value is changed
-			$city.change(function()
+			/**
+			 * Update area selection
+			 *
+			 * @param {int} city
+			 *
+			 * @private
+			 */
+			function updateAreaSelection(city)
 			{
-				var cityId = $(this).val(),
-					areaOptions = self.areas[cityId] || '';
+				var areaOptions = self.areas[city] || '';
 
 				$area.html(areaOptions);
 				$area.val('');
@@ -73,7 +86,7 @@
 				{
 					$area.trigger('liszt:updated');
 				}
-			});
+			}
 		}
 	};
 })(jQuery);

@@ -17,7 +17,7 @@
 			this.listeners = {};
 
 			// Overwrite with user's options
-			this.options = $.extend(true, {
+			this.options = $.extend({
 				customerId           : null,
 				customerIdNumber     : null,
 
@@ -41,10 +41,11 @@
 
 				SUCCESS_ROUTE_EXIST  : 0,
 				ERROR_NO_ROUTE       : 1,
-				ERROR_NO_SEE_DR_DATE : 2
+				ERROR_NO_SEE_DR_DATE : 2,
+
+				isEdit               : 0
 			}, options);
 
-			// init method class
 			window.MethodFieldHandler.setOptions({
 				methodId             : this.options.methodId,
 				drugId               : this.options.drugId,
@@ -73,23 +74,39 @@
 				hospitalId           : this.options.hospitalId,
 				birthDateId          : this.options.birthDateId
 			});
+
+			this.registerEvent();
+			this.triggerEvent();
 		},
+
 		/**
-		 * Run
+		 * triggerEvent() will trigger necessary 'change' event after registerEvent()
 		 */
-		run: function()
+		triggerEvent: function()
+		{
+			// Updated schedules' checkboxes
+			$('#' + this.options.timesId).change();
+
+			// Trigger once to toggle the opacity of schedule
+			$('.js-nth-schedule-check input[type=checkbox]').change();
+		},
+
+		/**
+		 * registerEvent() will Bind all relative events, ex: period, times, seeDrDate, weekday and addresses.
+		 */
+		registerEvent: function()
 		{
 			var self = this;
 
-			window.MethodFieldHandler.run();
+			window.MethodFieldHandler.registerEvent();
 
-			window.CustomerFieldHandler.run();
+			window.CustomerFieldHandler.registerEvent();
 
-			// Bind 'change' event to 'weekday of new route data'
+			// If the new route's weekday is changed, recalculate weekday.
 			$('.js-route-weekday select').on('change', function()
 			{
 				var weekday = $(this).val();
-				var nth = $(this).attr('id');
+				var nth = $(this).prop('id');
 
 				if (nth.indexOf("1st") > -1)
 				{
@@ -107,68 +124,42 @@
 				window.DeliverScheduleHandler.updateScheduleDateByWeekday(weekday, nth);
 			});
 
-			// Toggle nth schedules
+			// This binding will set the edit block to opaque when unchecked
 			$('.js-nth-schedule-check input[type=checkbox]').on('change', function()
 			{
 				window.DeliverScheduleHandler.bindChangeNthScheduleInfo($(this));
-
 			});
 
-			// Trigger once to update show schedule info box
-			$('.js-nth-schedule-check input[type=checkbox]').change();
-
-			// Bind 'times' event to 'show nth prescriptions'
+			// When 'times' is change show according edit blocks.
 			$('#' + self.options.timesId).on('change', function()
 			{
 				window.DeliverScheduleHandler.showSchedulesEditBlock($(this).val());
 			});
 
-			// After 'times' event binding, update edit block once.
-			window.DeliverScheduleHandler.showSchedulesEditBlock($('#' + self.options.timesId).val());
-
-			// Bind See Doctor Date on change, update schedule date
-			$('#' + self.options.seeDrDateId).on('change', function()
-			{
-				window.DeliverScheduleHandler.updateScheduleDate(
-					$('#' + self.options.seeDrDateId).val(),
-					$('#' + self.options.periodId).val(),
-					self.options.addressesKeys
-				);
-			});
-
-			// Bind Drug period on change, update schedule date
-			$('#' + self.options.periodId).on('change', function()
-			{
-				window.DeliverScheduleHandler.updateScheduleDate(
-					$('#' + self.options.seeDrDateId).val(),
-					$('#' + self.options.periodId).val(),
-					self.options.addressesKeys
-				);
-			});
-
-			// Bind address list on change, update schedule date
-			$('.js-address-wrap').on('change', '.js-address-list', function()
-			{
-				window.DeliverScheduleHandler.updateScheduleDate(
-					$('#' + self.options.seeDrDateId).val(),
-					$('#' + self.options.periodId).val(),
-					self.options.addressesKeys
-				);
-			});
-
-			// Combine selector, whenever schedule's checkboxes are changed, update 'send date'
-			var $scheduleOne = jQuery('#jform_schedules_1st_deliver_nth0');
-			var $scheduleTwo = $scheduleOne.add('#jform_schedules_2nd_deliver_nth0');
-			var $scheduleAll = $scheduleTwo.add('#jform_schedules_3rd_deliver_nth0');
-
-			$scheduleAll.on('change', function()
-			{
-				window.DeliverScheduleHandler.updateScheduleDate(
-					$('#' + self.options.seeDrDateId).val(),
-					$('#' + self.options.periodId).val(),
-					self.options.addressesKeys
-				);
-			});
+			/*
+			 * Update Schedule Date when the following attributes are changed
+			 *
+			 * 1. seeDrDateId
+			 * 2. periodId
+			 * 3. js-address-list
+			 * 4. Schedule's checkboxes' status
+			 */
+			$([
+				'#' + self.options.periodId,
+				'#' + self.options.seeDrDateId,
+				'#jform_schedules_1st_deliver_nth0',
+				'#jform_schedules_2nd_deliver_nth0',
+				'#jform_schedules_3rd_deliver_nth0',
+				'.js-address-list'
+			]).each(
+				function(i, selector)
+				{
+					$(selector).change(function()
+					{
+						window.DeliverScheduleHandler.updateScheduleDate();
+					});
+				}
+			);
 		}
 	};
 

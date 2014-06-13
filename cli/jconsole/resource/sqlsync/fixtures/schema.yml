@@ -121,29 +121,30 @@
         - ['16', '9', '0', S123987123, 山高帥, resident, '1974-10-22', '0', '0', '0', 新北市, '0', 樹林區, '0', '', '0', '0', '', '', '', '', '2014-05-09 10:38:15', '1', '0000-00-00 00:00:00', '0', '']
         - ['17', '10', '0', O192837465, 高富老, resident, '1960-02-10', '0', '0', '0', 臺北市, '0', 萬里區, '0', '', '0', '0', '', '', '', '', '2014-05-09 10:45:16', '1', '0000-00-00 00:00:00', '0', '']
         - ['18', '10', '0', B123498765, 矮老醜, resident, '1965-07-07', '0', '0', '0', 臺北市, '0', 萬里區, '0', '', '0', '0', '', '', '', '', '2014-05-09 10:45:16', '1', '0000-00-00 00:00:00', '0', '']
-'#__schedule_drugprices':
-    name: '#__schedule_drugprices'
+'#__schedule_drug_extra_details':
+    name: '#__schedule_drug_extra_details'
     from:
-        - '#__schedule_drugprices'
+        - '#__schedule_drug_extra_details'
     columns:
         id: { Field: id, Type: 'int(11) unsigned', 'Null': NO, Default: null, Extra: auto_increment, Comment: 'Primary Key', From: [id] }
         institute_id: { Field: institute_id, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: '對應機構 id', From: [institute_id] }
-        customer_id: { Field: customer_id, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: '對應客戶 id', From: [customer_id] }
-        date: { Field: date, Type: date, 'Null': NO, Default: null, Extra: '', Comment: 對應外送日期, From: [date] }
         price: { Field: price, Type: 'decimal(10,0)', 'Null': NO, Default: null, Extra: '', Comment: 單筆金額, From: [price] }
+        task_id: { Field: task_id, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: '對應外送 id', From: [task_id] }
+        ice: { Field: ice, Type: int(1), 'Null': NO, Default: null, Extra: '', Comment: '是否有冰品', From: [ice] }
+        sorted: { Field: sorted, Type: int(1), 'Null': NO, Default: null, Extra: '', Comment: '是否完成分藥', From: [sorted] }
     index:
-        - { Table: '#__schedule_drugprices', Non_unique: '0', Key_name: PRIMARY, Seq_in_index: '1', Column_name: id, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
+        - { Table: '#__schedule_drug_extra_details', Non_unique: '0', Key_name: PRIMARY, Seq_in_index: '1', Column_name: id, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
     data:
-        - ['1', '8', '1', '2014-04-18', '1250']
-        - ['2', '10', '2', '2014-04-18', '500']
-        - ['3', '10', '3', '2014-04-18', '200']
-        - ['4', '5', '4', '2014-04-20', '200']
-        - ['5', '12', '5', '2014-04-20', '1000']
-        - ['6', '12', '5', '2014-04-20', '750']
-        - ['7', '13', '7', '2014-04-20', '750']
-        - ['8', '13', '8', '2014-04-20', '50']
-        - ['9', '13', '8', '2014-04-20', '150']
-        - ['10', '13', '8', '2014-04-20', '195']
+        - ['1', '8', '1250', '1', '1', '1']
+        - ['2', '10', '500', '2', '1', '1']
+        - ['3', '10', '200', '3', '1', '1']
+        - ['4', '5', '200', '4', '1', '1']
+        - ['5', '12', '1000', '5', '1', '1']
+        - ['6', '12', '750', '6', '1', '1']
+        - ['7', '13', '750', '7', '1', '1']
+        - ['8', '13', '50', '8', '1', '1']
+        - ['9', '13', '150', '9', '1', '1']
+        - ['10', '13', '195', '10', '1', '1']
 '#__schedule_drugs':
     name: '#__schedule_drugs'
     from:
@@ -444,7 +445,7 @@
         expense: { Field: expense, Type: tinyint(1), 'Null': YES, Default: null, Extra: '', Comment: '是否為自費藥品 (0:否 / 1:是)', From: [expense] }
         price: { Field: price, Type: 'decimal(10,2)', 'Null': YES, Default: null, Extra: '', Comment: 自費金額, From: [price] }
         status: { Field: status, Type: char(20), 'Null': YES, Default: null, Extra: '', Comment: '排程狀態 (scheduled:已排程 / emergency:急件 / deleted:已刪除 / cancel_reject:取消-要退單 / cancel_only:取消-不退單 / pause:暫緩)', From: [status] }
-        cancel: { Field: cancel, Type: char(10), 'Null': YES, Default: null, Extra: '', Comment: '刪除原因 (badservice:服務不周 / changedrug:醫師換藥 / passaway:往生 / other:其他)', From: [cancel] }
+        cancel: { Field: cancel, Type: char(10), 'Null': YES, Default: null, Extra: '', Comment: '取消原因 (badservice:服務不周 / changedrug:醫師換藥 / passaway:往生 / hospitalized:住院 / other:其他)', From: [cancel] }
         cancel_note: { Field: cancel_note, Type: text, 'Null': YES, Default: null, Extra: '', Comment: '刪除原因說明', From: [cancel_note] }
         note: { Field: note, Type: text, 'Null': YES, Default: null, Extra: '', Comment: 行政排程類別說明, From: [note] }
         params: { Field: params, Type: text, 'Null': NO, Default: null, Extra: '', Comment: Params, From: [params] }

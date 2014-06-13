@@ -63,6 +63,7 @@ class ScheduleViewMemberJson extends ApiView
 	/**
 	 * prepareData
 	 *
+	 * @throws Exception
 	 * @return  void
 	 */
 	protected function prepareData()
@@ -72,5 +73,10 @@ class ScheduleViewMemberJson extends ApiView
 		$data['item'] = $this->get('Item');
 
 		unset($data['item']->password);
+
+		if (empty($data['item']->id))
+		{
+			throw new \Exception('Member not found', 404);
+		}
 	}
 }

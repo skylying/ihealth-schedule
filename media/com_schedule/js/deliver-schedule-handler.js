@@ -15,7 +15,7 @@
 		setOptions: function(options)
 		{
 			// Overwrite with user's options
-			this.options = $.extend(true, {
+			this.options = $.extend({
 				addressesKeys        : ["1st", "2nd", "3rd"],
 				seeDrDateId          : null,
 				periodId             : null,
@@ -30,19 +30,16 @@
 		 *
 		 * return void
 		 */
-		bindChangeNthScheduleInfo: function($cheboxes)
+		bindChangeNthScheduleInfo: function($checkboxes)
 		{
-			$cheboxes.on('change', function()
+			if ($checkboxes.prop("checked"))
 			{
-				if ($(this).prop("checked"))
-				{
-					$(this).closest('.schedules').find('.js-nth-schedule-info').removeClass('opaque');
-				}
-				else
-				{
-					$(this).closest('.schedules').find('.js-nth-schedule-info').addClass('opaque');
-				}
-			});
+				$checkboxes.closest('.schedules').find('.js-nth-schedule-info').removeClass('opaque');
+			}
+			else
+			{
+				$checkboxes.closest('.schedules').find('.js-nth-schedule-info').addClass('opaque');
+			}
 		},
 
 		/**
@@ -52,8 +49,12 @@
 		 * @param {json}      period
 		 * @param {array}     addressesKeys
 		 */
-		updateScheduleDate: function(seeDrDate, period, addressesKeys)
+		updateScheduleDate: function()
 		{
+			var seeDrDate = $('#' + this.options.seeDrDateId).val();
+			var period = $('#' + this.options.periodId).val();
+			var addressesKeys = this.options.addressesKeys;
+
 			var self = this;
 			var moment_date = moment(seeDrDate);
 
@@ -71,8 +72,8 @@
 
 				if ($(deliveredNth).is(":checked") && address != '')
 				{
-					var city = $(selectedAddressId).find('option:selected').attr('city');
-					var area = $(selectedAddressId).find('option:selected').attr('area');
+					var city = $(selectedAddressId).find('option:selected').data('city');
+					var area = $(selectedAddressId).find('option:selected').data('area');
 
 					// fire ajax only if address info is sufficient
 					if(city && area)
@@ -131,37 +132,51 @@
 			switch (times)
 			{
 				case '1':
-					// Check 1
-					checkbox1.attr('checked', true).trigger('change');
-					checkbox2.attr('checked', false).trigger('change');
-					checkbox3.attr('checked', false).trigger('change');
+					// if Checkbox-1 is unchecked, , check and show it
+					if(!checkbox1.prop('checked'))
+					{
+						checkbox1.prop('checked', true).trigger('change');
+					}
 
-					// Show 1
-					schedules1.removeClass('hide');
+					// Unchecked 2, Hide 2
+					checkbox2.prop('checked', false).trigger('change');
 					schedules2.addClass('hide');
+
+					// Unchecked 3, Hide 3
+					checkbox3.prop('checked', false).trigger('change');
 					schedules3.addClass('hide');
+
 					break;
 				case '2':
-					// Check 2
-					checkbox1.attr('checked', false).trigger('change');
-					checkbox2.attr('checked', true).trigger('change');
-					checkbox3.attr('checked', false).trigger('change');
+					// Checkbox-1 is don't-care.
 
-					// Show 1, 2
-					schedules1.removeClass('hide');
-					schedules2.removeClass('hide');
+					// if Checkbox-2 is unchecked, check and show it
+					if(!checkbox2.prop('checked'))
+					{
+						checkbox2.prop('checked', true).trigger('change');
+						schedules2.removeClass('hide');
+					}
+
+					// Unchecked Checkbox-3, Hide Checkbox-3
+					checkbox3.prop('checked', false).trigger('change');
 					schedules3.addClass('hide');
 					break;
 				case '3':
-					// Check 2,3
-					checkbox1.attr('checked', false).trigger('change');
-					checkbox2.attr('checked', true).trigger('change');
-					checkbox3.attr('checked', true).trigger('change');
+					// Checkbox-1 is don't-care.
 
-					// Show all
-					schedules1.removeClass('hide');
-					schedules2.removeClass('hide');
-					schedules3.removeClass('hide');
+					// if Checkbox-2 is unchecked, check and show it
+					if(!checkbox2.prop('checked'))
+					{
+						checkbox2.prop('checked', true).trigger('change');
+						schedules2.removeClass('hide');
+					}
+
+					// if Checkbox-3 is unchecked, check and show it
+					if(!checkbox3.prop('checked'))
+					{
+						checkbox3.prop('checked', true).trigger('change');
+						schedules3.removeClass('hide');
+					}
 					break;
 				default:
 					break;
