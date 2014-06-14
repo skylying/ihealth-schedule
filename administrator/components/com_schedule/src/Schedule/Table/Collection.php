@@ -38,7 +38,7 @@ class Collection
 	 */
 	public static function loadTable($name, $keys = null)
 	{
-		$tableHash = $name . serialize($keys);
+		$tableHash = md5($name . serialize($keys));
 
 		if (isset(static::$tables[$tableHash]))
 		{

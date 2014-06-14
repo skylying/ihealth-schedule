@@ -9,7 +9,7 @@
 use Schedule\Controller\Api\ApiSaveController;
 
 /**
- * Class ScheduleControllerMemberEditSave
+ * Class ScheduleControllerAddressEditSave
  *
  * @since 1.0
  */

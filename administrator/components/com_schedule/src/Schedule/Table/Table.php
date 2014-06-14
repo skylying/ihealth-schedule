@@ -48,6 +48,8 @@ abstract class Table
 	const SENDERS = '#__schedule_senders';
 
 	const TASKS = '#__schedule_tasks';
-	
+
 	const CUSTOMER_MEMBER_MAPS = '#__schedule_customer_member_maps';
+
+	const DRUG_EXTRA_DETAILS = '#__schedule_drug_extra_details';
 }

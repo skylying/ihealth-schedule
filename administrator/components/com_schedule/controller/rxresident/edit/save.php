@@ -215,7 +215,13 @@ class ScheduleControllerRxresidentEditSave extends SaveController
 			$rx['period'],
 			$instituteTable->delivery_weekday
 		);
-		$task = $this->taskMapper->findOne(array('date' => $sendDate->toSql()));
+
+		$task = $this->taskMapper->findOne(
+			array(
+				'date' => $sendDate->toSql(),
+				'sender' => $instituteTable->sender_id,
+			)
+		);
 
 		if (empty($task->id))
 		{
@@ -245,7 +251,13 @@ class ScheduleControllerRxresidentEditSave extends SaveController
 			$rx['period'],
 			$instituteTable->delivery_weekday
 		);
-		$task = $this->taskMapper->findOne(array('date' => $sendDate->toSql()));
+
+		$task = $this->taskMapper->findOne(
+			array(
+				'date' => $sendDate->toSql(),
+				'sender' => $instituteTable->sender_id,
+			)
+		);
 
 		if (empty($task->id))
 		{

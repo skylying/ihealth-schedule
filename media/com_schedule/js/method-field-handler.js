@@ -14,14 +14,14 @@
 		setOptions: function(options)
 		{
 			// Overwrite with user's options
-			this.options = $.extend(true, {
+			this.options = $.extend({
 				methodId     : null,
 				drugId       : null,
 				deleteDrugId : null
 			}, options);
 		},
 
-		run: function()
+		registerEvent: function()
 		{
 			var self = this;
 

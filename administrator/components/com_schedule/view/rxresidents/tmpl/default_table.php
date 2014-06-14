@@ -167,7 +167,7 @@ $date      = $container->get('date');
 
 		<!-- 處方箋取得方式 -->
 		<td class="center">
-			<?php echo $this->escape($item->method); ?>
+			<?php echo $this->escape(Jtext::_('COM_SCHEDULE_RXINDIVIDUAL_PRINT_' . $item->method)); ?>
 		</td>
 
 		<!-- 新增人 -->
