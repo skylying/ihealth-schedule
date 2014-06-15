@@ -183,4 +183,21 @@ class ScheduleModelSchedules extends ListModel
 	protected function configureSearches($searchHelper)
 	{
 	}
+
+	/**
+	 * getFormPrint
+	 *
+	 * @return  JForm
+	 */
+	public function getPrintForm()
+	{
+		$config = array(
+			'control'   => 'jform',
+			'load_data' => 1
+		);
+
+		$formName = 'schedules_print';
+
+		return $this->loadForm($this->option . '.' . $formName . '.form', $formName, $config);
+	}
 }

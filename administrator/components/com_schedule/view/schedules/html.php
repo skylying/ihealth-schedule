@@ -124,6 +124,8 @@ class ScheduleViewSchedulesHtml extends GridView
 		}
 
 		$data->editFormFields = $editFormFields;
+
+		$data->printForm = $this->get('PrintForm');
 	}
 
 	/**
@@ -136,31 +138,6 @@ class ScheduleViewSchedulesHtml extends GridView
 	 */
 	protected function configureToolbar($buttonSet = array(), $canDo = null)
 	{
-		// Add a print popup button
-		$buttonSet['print'] = array(
-			'handler' => function ()
-			{
-				JFactory::getDocument()->addStyleDeclaration('
-					#modal-print {
-  						overflow-y: hidden;
-					}
-					#modal-print iframe {
-						border: 0;
-					}
-
-					/* fix float problem */
-					#toolbar-popup-print .btn-group {
-						float: none;
-					}
-				');
-
-				$printUrl = 'index.php?option=com_schedule&view=schedules&layout=print&tmpl=component';
-
-				// See JToolbarButtonPopup::fetchButton()
-				JToolbar::getInstance('toolbar')->appendButton('Popup', 'print', '列印排程統計表', $printUrl);
-			},
-		);
-
 		// Button 新增行政排程
 		$buttonSet['add2']['handler'] = function()
 		{
@@ -208,6 +185,58 @@ HTML;
 			$bar->appendButton('Custom', $html);
 		};
 
+		$buttonSet = $this->configureReportToolbar($buttonSet);
+
+		return $buttonSet;
+	}
+
+	/**
+	 * configureReportToolbar
+	 *
+	 * @param $buttonSet
+	 *
+	 * @return  mixed
+	 */
+	protected function configureReportToolbar($buttonSet)
+	{
+		if ('report' !== $this->getLayout())
+		{
+			$buttonSet['print']['handler'] = function()
+			{
+				$dHtml = <<<HTML
+<button class="btn btn-small" onclick="Joomla.submitbutton('schedules.report')">
+	<span class="glyphicon glyphicon-print"></span> 列印排程統計報表
+</button>
+HTML;
+				$bar = JToolbar::getInstance('toolbar');
+				$bar->appendButton('Custom', $dHtml);
+			};
+			return $buttonSet;
+		}
+
+		// If layout is report do this
+		$buttonSet['add2']['access']        = false;
+		$buttonSet['add']['access']         = false;
+		$buttonSet['publish']['access']     = false;
+		$buttonSet['edit']['access']        = false;
+		$buttonSet['unpublish']['access']   = false;
+		$buttonSet['checkin']['access']     = false;
+		$buttonSet['batch']['access']       = false;
+		$buttonSet['trash']['access']       = false;
+		$buttonSet['delete']['access']      = false;
+		$buttonSet['duplicate']['access']   = false;
+		$buttonSet['preferences']['access'] = false;
+
+		$buttonSet['route']['handler'] = function()
+		{
+			$html = <<<HTML
+<button class="btn btn-danger" onclick="Joomla.submitbutton('schedules.redirect')">
+	<span class="glyphicon glyphicon-remove"></span> 取消列印
+</button>
+HTML;
+			$bar = JToolbar::getInstance('toolbar');
+			$bar->appendButton('Custom', $html);
+		};
 		return $buttonSet;
 	}
 }
