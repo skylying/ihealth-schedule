@@ -30,7 +30,7 @@
 			}, options);
 		},
 
-		run: function()
+		registerEvent: function()
 		{
 			var self = this;
 			var customerDropDown = jQuery("#" + this.options.customerId);
@@ -66,7 +66,7 @@
 			});
 
 			// Bind save new address
-			$('.js-nth-schedule-info').on('click', '.js-save-address', saveAddress);
+			$('.js-nth-schedule-info').on('click', '.js-save-address', function(){ self.saveAddress(this); });
 
 			// Bind add new telephone
 			$('.js-add-tel').on('click', function()
@@ -75,29 +75,29 @@
 			});
 
 			// Bind save new telephone
-			$('.js-save-tel').on('click', saveTel);
+			$('.js-save-tel').on('click', function(){ self.saveTel(this); });
+		},
 
-			function saveAddress()
+		saveTel : function(self)
+		{
+			var wrapperElement = $(self).closest('.js-tel-wrap');
+			var phoneToAdd = wrapperElement.find('.js-tel-row-data');
+
+			// Remove whitespace
+			phoneToAdd.val(phoneToAdd.val().replace(/\s+/g, ''));
+
+			if (phoneToAdd != "")
 			{
-				// The dynamic row wrapper
-				var currentWrap = $(this).closest('.js-tmpl-add-addressrow');
+				// This value is a requirement
+				var limit = 3;
 
-				// The hidden input will save the user customized input address, and wait for model to save.
-				var targetHiddenInput = $("#" + self.options.createAddressId);
+				var b_set = false;
 
-				// Select all the address drop down list, since we have to update all at once
-				var targetListToUpdate = $('.js-address-wrap select');
-
-				// Store the concatenated string
-				var resultString = '';
-
-				// <option> tag to append
-				var html = '';
-
-				// Data to stored
 				var data;
 
-				if (targetHiddenInput.val() == '' || targetHiddenInput.val() == '{}')
+				var inputValue = wrapperElement.find('input[type=hidden]').val();
+
+				if (inputValue == '' || inputValue == '{}')
 				{
 					// initialize with array
 					data = [];
@@ -105,142 +105,154 @@
 				else
 				{
 					// initialize with input
-					data = JSON.parse(targetHiddenInput.val());
+					data = JSON.parse(inputValue);
 				}
 
-				var objectToAdd = {
-					id: 'hash-' + data.length,
-					city: currentWrap.find('#jform_city').val(),
-					area: currentWrap.find('#jform_area').val(),
-					address: currentWrap.find('.js-address-row-data').val()
-				};
-
-				if ((objectToAdd.city == '')
-					|| (objectToAdd.area == '')
-					|| (objectToAdd.address == ''))
+				//Only if the data length smaller than limitation will the insertion being executed
+				if (data.length < limit)
 				{
-					// Notify user to make sure they input correctly
-					Joomla.renderMessages([
-						['欄位輸入不完整']
-					]);
-				}
-				else if ((objectToAdd.city != '')
-					|| (objectToAdd.area != '')
-					|| (objectToAdd.address != ''))
-				{
-					data.push(objectToAdd);
-
-					// Concatenate string.
-					resultString = currentWrap.find('#jform_city option:selected').text() +
-						currentWrap.find('#jform_area option:selected').text() +
-						objectToAdd.address;
-
-					// Form up html <option>
-					html = '<option' +
-						' city="' + objectToAdd.city + '"' +
-						' area="' + objectToAdd.area + '"' +
-						' value="' + objectToAdd.id + '">' +
-						resultString +
-						'</option>';
-
-					// Update drop down list at once
-					targetListToUpdate.each(function()
+					for (var index = 0; index < data.length; index++)
 					{
-						$(this).append(html);
-						$(this).find('option:last').attr('selected', true);
-					});
+						// Replace the empty field.
+						data[index].number = data[index].number.replace(/\s+/g, '');
 
-					// Update to hidden input
-					self.updateJsonToInputField(self.options.createAddressId, data);
+						// If empty, overwrite it
+						if (data[index].number == "")
+						{
+							data[index].number = phoneToAdd.val();
+							data[index].default = 'true';
+							b_set = true;
 
-					// Clear current row
-					currentWrap.addClass('hide');
+							Joomla.renderMessages([
+								['提醒您，您已新增散客電話或地址，記得按儲存喲。']
+							]);
 
-					// Update Schedule date once
-					window.DeliverScheduleHandler.updateScheduleDate(
-						$('#' + self.options.seeDrDateId).val(),
-						$('#' + self.options.periodId).val(),
-						self.options.addressesKeys
-					);
+							continue;
+						}
+						// If not match, reset every element's default to 'false'
+						data[index].default = 'false';
+					}
+					// If no replacement was done, and the length is still not exceed the limit, perform insertion.
+					if (!b_set)
+					{
+						var tagId = wrapperElement.find('input[type=hidden]').prop('id');
 
+						data.push({default: 'true', number: phoneToAdd.val()});
+
+						// Perform html update
+						this.updatePhoneHtml(tagId, data);
+
+						// Perform hidden input update
+						this.updateJsonToInputField(tagId, data);
+
+						Joomla.renderMessages([
+							['提醒您，您已新增散客電話或地址，記得按儲存喲。']
+						]);
+					}
+				}
+				else
+				{
 					Joomla.renderMessages([
-						['提醒您，您已新增散客電話或地址，記得按儲存喲。']
+						['提醒您，電話目前上限為最多三筆。']
 					]);
 				}
 			}
 
-			function saveTel()
+			// Clear the input value
+			phoneToAdd.val("");
+
+			// Hide the input row
+			$(self).closest('.js-tmpl-add-telrow').addClass('hide');
+		},
+
+		saveAddress : function(self)
+		{
+			// The dynamic row wrapper
+			var currentWrap = $(self).closest('.js-tmpl-add-addressrow');
+
+			// The hidden input will save the user customized input address, and wait for model to save.
+			var targetHiddenInput = $("#" + this.options.createAddressId);
+
+			// Select all the address drop down list, since we have to update all at once
+			var targetListToUpdate = $('.js-address-wrap select');
+
+			// Store the concatenated string
+			var resultString = '';
+
+			// <option> tag to append
+			var html = '';
+
+			// Data to stored
+			var data;
+
+			if (targetHiddenInput.val() == '' || targetHiddenInput.val() == '{}')
 			{
-				var wrapperElement = $(this).closest('.js-tel-wrap');
-				var phoneToAdd = wrapperElement.find('.js-tel-row-data');
-
-				// Remove whitespace
-				phoneToAdd.val(phoneToAdd.val().replace(/\s+/g, ''));
-
-				if (phoneToAdd != "")
-				{
-					// This value is a requirement
-					var limit = 3;
-
-					var b_set = false;
-
-					var data;
-
-					var inputValue = wrapperElement.find('input[type=hidden]').val();
-
-					if (inputValue == '' || inputValue == '{}')
-					{
-						// initialize with array
-						data = [];
-					}
-					else
-					{
-						// initialize with input
-						data = JSON.parse(inputValue);
-					}
-
-					//Only if the data length smaller than limitation will the insertion being executed
-					if (data.length < limit)
-					{
-						for (var index = 0; index < data.length; index++)
-						{
-							// Replace the empty field.
-							data[index].number = data[index].number.replace(/\s+/g, '');
-
-							// If empty, overwrite it
-							if (data[index].number == "")
-							{
-								data[index].number = phoneToAdd.val();
-								data[index].default = 'true';
-								b_set = true;
-
-								continue;
-							}
-							// If not match, reset every element's default to 'false'
-							data[index].default = 'false';
-						}
-						// If no replacement was done, and the length is still not exceed the limit, perform insertion.
-						if (!b_set)
-						{
-							var tagId = wrapperElement.find('input[type=hidden]').prop('id');
-
-							data.push({default: 'true', number: phoneToAdd.val()});
-
-							// Perform html update
-							self.updatePhoneHtml(tagId, data);
-
-							// Perform hidden input update
-							self.updateJsonToInputField(tagId, data);
-						}
-					}
-				}
-
-				// Clear the input value
-				phoneToAdd.val("");
-
-				// Hide the input row
-				$(this).closest('.js-tmpl-add-telrow').addClass('hide');
+				// initialize with array
+				data = [];
 			}
+			else
+			{
+				// initialize with input
+				data = JSON.parse(targetHiddenInput.val());
+			}
+
+			var objectToAdd = {
+				id: 'hash-' + data.length,
+				city: currentWrap.find('#jform_city').val(),
+				area: currentWrap.find('#jform_area').val(),
+				address: currentWrap.find('.js-address-row-data').val()
+			};
+
+			// Validate necessary fields
+			if ((objectToAdd.city == '')
+				|| (objectToAdd.area == '')
+				|| (objectToAdd.address == ''))
+			{
+				// Notify user to make sure they input correctly
+				Joomla.renderMessages([
+					['欄位輸入不完整']
+				]);
+
+				return;
+			}
+			data.push(objectToAdd);
+
+			// Concatenate string.
+			resultString = currentWrap.find('#jform_city option:selected').text() +
+				currentWrap.find('#jform_area option:selected').text() +
+				objectToAdd.address;
+
+			// Form up html <option>
+			html = '<option' +
+				' data-city="' + objectToAdd.city + '"' +
+				' data-area="' + objectToAdd.area + '"' +
+				' value="' + objectToAdd.id + '">' +
+				resultString +
+				'</option>';
+
+			// Update drop down list at once
+			targetListToUpdate.each(function()
+			{
+				$(this).append(html);
+				$(this).find('option:last').attr('selected', true);
+			});
+
+			// Update to hidden input
+			this.updateJsonToInputField(this.options.createAddressId, data);
+
+			// Clear current row
+			currentWrap.addClass('hide');
+
+			// Update Schedule date once
+			window.DeliverScheduleHandler.updateScheduleDate(
+				$('#' + this.options.seeDrDateId).val(),
+				$('#' + this.options.periodId).val(),
+				this.options.addressesKeys
+			);
+
+			Joomla.renderMessages([
+				['提醒您，您已新增散客電話或地址，記得按儲存喲。']
+			]);
 		},
 
 		/**
@@ -266,10 +278,11 @@
 					try
 					{
 						// Update phone numbers
-						var tel_office = $.parseJSON(cdata.tel_office);
+						var tel_office = cdata.tel_office;
 
 						// Update phone select list
 						self.updatePhoneHtml(self.options.telOfficeId, tel_office);
+						self.updateJsonToInputField(self.options.telOfficeId, tel_office);
 					}
 					catch (err)
 					{
@@ -279,10 +292,11 @@
 					try
 					{
 						// Update phone numbers
-						var tel_home = $.parseJSON(cdata.tel_home);
+						var tel_home = cdata.tel_home;
 
 						// Update phone select list
 						self.updatePhoneHtml(self.options.telHomeId, tel_home);
+						self.updateJsonToInputField(self.options.telHomeId, tel_home);
 					}
 					catch (err)
 					{
@@ -292,10 +306,11 @@
 					try
 					{
 						// Update phone numbers
-						var mobile = $.parseJSON(cdata.mobile);
+						var mobile = cdata.mobile;
 
 						// Update phone select list
 						self.updatePhoneHtml(self.options.mobileId, mobile);
+						self.updateJsonToInputField(self.options.mobileId, mobile);
 					}
 					catch (err)
 					{
@@ -434,9 +449,9 @@
 			{
 				// Add option tag
 				html += '<option' +
-					' city="' + addressJson[i].city + '"' +
-					' area="' + addressJson[i].area + '"' +
-					' value="' + addressJson[i].id + '"' +
+					' data-city="' + addressJson[i].city + '"' +
+					' data-area="' + addressJson[i].area + '"' +
+					' data-value="' + addressJson[i].id + '"' +
 					((addressJson[i].id == currentSelected) ? 'selected' : '') +
 					'>' +
 					addressJson[i].city_title +

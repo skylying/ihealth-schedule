@@ -67,6 +67,9 @@ function ScheduleParseRoute($segments)
 		$method = $input->get('_method', $input->getMethod());
 		$method = strtolower($method);
 
+		// Parse "-"
+		$segments[0] = str_replace(array(':', '-'), '', $segments[0]);
+
 		// Prepare RESTful
 		if ('get' == $method)
 		{
@@ -86,6 +89,15 @@ function ScheduleParseRoute($segments)
 	if (! empty($segments[1]))
 	{
 		$query['id'] = $segments[1];
+	}
+
+	if (isset($query['view']) && 'holidays' === $query['view'])
+	{
+		if (! empty($segments[1]) && ! empty($segments[2]))
+		{
+			$query['start'] = str_replace(':', '-', $segments[1]);
+			$query['end'] = str_replace(':', '-', $segments[2]);
+		}
 	}
 
 	return $query;

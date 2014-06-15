@@ -111,9 +111,7 @@ class ScheduleModelHolidays extends \Windwalker\Model\ListModel
 				$date = new \JDate($value);
 
 				/** @var $query \JDatabaseQuery */
-				$query->where($query->format('%n >= %q', 'year', $date->year))
-					->where($query->format('%n >= %q', 'month', (int) $date->month))
-					->where($query->format('%n >= %q', 'day', (int) $date->day));
+				$query->where($query->format('%n >= %q', 'date', $date->toSql()));
 			}
 		);
 
@@ -125,9 +123,7 @@ class ScheduleModelHolidays extends \Windwalker\Model\ListModel
 				$date = new \JDate($value);
 
 				/** @var $query \JDatabaseQuery */
-				$query->where($query->format('%n <= %q', 'year', $date->year))
-					->where($query->format('%n <= %q', 'month', (int) $date->month))
-					->where($query->format('%n <= %q', 'day', (int) $date->day));
+				$query->where($query->format('%n <= %q', 'date', $date->toSql()));
 			}
 		);
 	}

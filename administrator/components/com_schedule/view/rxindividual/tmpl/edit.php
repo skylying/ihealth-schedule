@@ -70,7 +70,6 @@ $data->asset->addJS('rxindividual/edit.js');
 jQuery(document).ready(function ()
 {
 	RxIndividualEdit.init(<?php echo json_encode($options); ?>);
-	RxIndividualEdit.run();
 });
 </script>
 

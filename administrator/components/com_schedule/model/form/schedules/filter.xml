@@ -43,12 +43,6 @@
 	<!-- Filter -->
 	<fields name="filter">
 		<field
-			type="note"
-			label="COM_SCHEDULE_FILTER_NOTE_GENERAL"
-			class="filter-title"
-			/>
-
-		<field
 			name="schedule.status"
 			type="list"
 			default=""
@@ -63,30 +57,36 @@
 			<option value="pause">暫緩</option>
 		</field>
 
-		<field
-			name="schedule.institute_id"
-			type="list"
-			default=""
+		<field name="schedule.institute_id"
+			hint="輸入機構名稱"
+			type="select2"
+			minimumInputLength="1"
+			apiUrl="index.php?option=com_schedule&amp;task=institutes.search.json"
+			apiQueryKey="filter_search"
+			apiTableName="institutes"
+			onChangeCallback="filterInstituteOnChange"
 			label="所屬機構"
-			onchange="this.form.submit();"
+			class="input-large"
 			>
 			<option></option>
 		</field>
 
-		<field
-			name="schedule.city"
-			type="list"
-			default=""
+		<field name="schedule.city"
+			type="sql"
+			query="SELECT id,title FROM #__schedule_cities"
+			key_field="id"
+			value_field="title"
 			label="縣市"
 			onchange="this.form.submit();"
 			>
 			<option></option>
 		</field>
 
-		<field
-			name="schedule.area"
-			type="list"
-			default=""
+		<field name="schedule.area"
+			type="sql"
+			query="SELECT id,title FROM #__schedule_areas"
+			key_field="id"
+			value_field="title"
 			label="區域"
 			onchange="this.form.submit();"
 			>
@@ -112,17 +112,17 @@
 
 		<field
 			name="schedule.date_start"
-			type="calendar"
+			type="datetimepicker"
+			hint="選擇日期"
 			default=""
-			format="%Y-%m-%d"
 			label="預計外送日(起)"
 			onchange="this.form.submit();"
 			/>
 
 		<field
 			name="schedule.date_end"
-			type="calendar"
-			format="%Y-%m-%d"
+			type="datetimepicker"
+			hint="選擇日期"
 			default=""
 			label="預計外送日(迄)"
 			onchange="this.form.submit();"

@@ -4,6 +4,7 @@
 
 - [Prototype](http://ihealth.prototype.ipharmacy.com.tw/index)
 - [Trello](http://trello.com/b/74CnbCQs/ihealth-crm-schedule-ow)
+- [API 文件](https://docs.google.com/document/d/1nhkLdqX7ZH-_5MvIzj_oDtnzwqk3xRe1oQpNQSWFW9Q/edit)
 
 ## 專案初始化流程
 

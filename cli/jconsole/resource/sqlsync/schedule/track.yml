@@ -3,7 +3,7 @@ table:
     '#__schedule_colors': cols
     '#__schedule_customers': cols
     '#__schedule_customer_member_maps': cols
-    '#__schedule_drugprices': cols
+    '#__schedule_drug_extra_details': cols
     '#__schedule_drugs': cols
     '#__schedule_holidays': cols
     '#__schedule_hospitals': cols

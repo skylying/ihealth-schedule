@@ -103,6 +103,20 @@ class ScheduleModelMembers extends ListModel
 	}
 
 	/**
+	 * postGetQuery
+	 *
+	 * @param   JDatabaseQuery $query
+	 *
+	 * @return  void
+	 */
+	protected function postGetQuery(\JDatabaseQuery $query)
+	{
+		$query->select('GROUP_CONCAT(customer.name) AS customers_name')
+			->select('GROUP_CONCAT(customer.id) AS customers_id')
+			->group('member.id');
+	}
+
+	/**
 	 * processFilters
 	 *
 	 * @param JDatabaseQuery $query
@@ -112,17 +126,6 @@ class ScheduleModelMembers extends ListModel
 	 */
 	protected function processFilters(\JDatabaseQuery $query, $filters = array())
 	{
-		// If no state filter, set published >= 0
-		if (!isset($filters['member.state']) && property_exists($this->getTable(), 'state'))
-		{
-			$query->where($query->quoteName('member.state') . ' >= 0');
-		}
-
-		$query->select('GROUP_CONCAT(customer.name) AS customers_name');
-		$query->select('GROUP_CONCAT(customer.id) AS customers_id');
-
-		$query->group('member.id');
-
 		return parent::processFilters($query, $filters);
 	}
 

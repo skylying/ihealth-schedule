@@ -9,7 +9,7 @@
 use Schedule\Controller\Api\ApiDeleteController;
 
 /**
- * Class ScheduleControllerMemberStateDelete
+ * Class ScheduleControllerAddressStateDelete
  *
  * @since 1.0
  */
