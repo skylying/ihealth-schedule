@@ -193,7 +193,7 @@ HTML;
 	/**
 	 * configureReportToolbar
 	 *
-	 * @param $buttonSet
+	 * @param  array $buttonSet
 	 *
 	 * @return  mixed
 	 */
@@ -211,6 +211,7 @@ HTML;
 				$bar = JToolbar::getInstance('toolbar');
 				$bar->appendButton('Custom', $dHtml);
 			};
+
 			return $buttonSet;
 		}
 
@@ -237,6 +238,7 @@ HTML;
 			$bar = JToolbar::getInstance('toolbar');
 			$bar->appendButton('Custom', $html);
 		};
+
 		return $buttonSet;
 	}
 }

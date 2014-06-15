@@ -10,7 +10,7 @@
 defined('_JEXEC') or die;
 JHtmlBehavior::multiselect('adminForm');
 
-$ScheduleReport = new \Schedule\Helper\ScheduleReportHelper();
+$ScheduleReport = new \Schedule\Helper\ScheduleReportHelper;
 $items = $ScheduleReport->getData();
 ?>
 
@@ -66,13 +66,11 @@ $items = $ScheduleReport->getData();
 			$rowSpanRepeat = 0;
 
 			foreach ($items as $item):
-
 				$instituteAmount = count($item['institutes']);
 
 				$rowSpan = $instituteAmount + 1;
 
 				foreach ($item['institutes'] as $institute):
-
 					$rowSpanRepeat++;
 			?>
 				<!-- 列出 $item['institutes'] 的資料 -->
@@ -89,7 +87,7 @@ $items = $ScheduleReport->getData();
 						<?php echo $institute['title']; ?>
 					</td>
 
-					<?php for($month = 0; $month <= 11; $month++): ?>
+					<?php for ($month = 0; $month <= 11; $month++): ?>
 					<!-- 月 -->
 					<td class="right">
 						<?php echo $institute["months"][$month]; ?>
@@ -101,7 +99,7 @@ $items = $ScheduleReport->getData();
 						<?php echo $institute['sub_total']; ?>
 					</td>
 
-					<?php if($rowSpanRepeat == 1): ?>
+					<?php if ($rowSpanRepeat == 1): ?>
 					<!-- 排程小計 -->
 					<td class="left" rowspan="<?php echo $rowSpan; ?>" style="vertical-align: bottom;">
 						<?php echo $item['total']; ?>
@@ -112,7 +110,7 @@ $items = $ScheduleReport->getData();
 				<!-- 列出 $item['customers'] 的資料 -->
 				<tr class="report-row">
 					<!-- 如果該縣市沒有機構，則補印縣市 -->
-					<?php if($instituteAmount == 0): ?>
+					<?php if ($instituteAmount == 0): ?>
 					<td class="left">
 						<?php echo $item['city_title']; ?>
 					</td>
@@ -123,12 +121,12 @@ $items = $ScheduleReport->getData();
 						散客
 					</td>
 
-					<?php for($month = 0; $month <= 11; $month ++): ?>
+					<?php for ($month = 0; $month <= 11; $month ++): ?>
 					<!-- 月 -->
 					<td class="right">
 						<?php echo $item['customers']['months'][$month]; ?>
 					</td>
-					<?php endfor?>
+					<?php endfor; ?>
 
 					<!-- 排程小計 -->
 					<td class="left">
@@ -136,7 +134,7 @@ $items = $ScheduleReport->getData();
 					</td>
 
 					<!-- 如果該縣市沒有機構，則補印散客的排程小計 -->
-					<?php if($instituteAmount == 0): ?>
+					<?php if ($instituteAmount == 0): ?>
 					<td class="left">
 						<?php echo $item['total']; ?>
 					</td>
@@ -144,7 +142,7 @@ $items = $ScheduleReport->getData();
 
 					<!-- 重設表格的 rowSpanRepeat 讓表格的 rowSpan 數值出現給下個縣市印出 -->
 					<?php
-					if($rowSpanRepeat == $rowSpan)
+					if ($rowSpanRepeat == $rowSpan)
 					{
 						$rowSpanRepeat = 0;
 					}
