@@ -9,23 +9,24 @@
 $printForm = $data->printForm;
 
 $doc = JFactory::getDocument();
+
 $css = <<<CSS
 ol
 {
-	list-style-type:none;
+	list-style-type: none;
 }
 
 ol li
 {
-	float:left;
+	float: left;
 	margin: 0 10px;
 	padding: 0 10px;
 }
 
 ol li label
 {
-	float:right;
-	display:inline;
+	float: right;
+	display: inline;
 	margin: 0 2px;
 	padding: 0 2px;
 }
@@ -43,5 +44,5 @@ $doc->addStyleDeclaration($css);
 
 <button type="button" class="btn btn-primary" onclick="Joomla.submitbutton('schedules.report')">
 	<span class="glyphicon glyphicon-filter"></span>
-		送出條件
+	送出條件
 </button>

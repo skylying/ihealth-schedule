@@ -24,9 +24,9 @@ $items = $ScheduleReport->getData();
 
 		<!-- LIST TABLE -->
 
-		<button type="button" class="btn btn-success" onclick="window.print();">
+		<button type="button" class="btn btn-success" onclick="print();">
 			<span class="glyphicon glyphicon-print"></span>
-				列印
+			列印
 		</button>
 
 		<table id="schedulereportList" class="table table-bordered adminlist">
@@ -42,12 +42,12 @@ $items = $ScheduleReport->getData();
 				<th class="left">
 					所屬機構
 				</th>
-				<?php for($month = 1; $month <= 12; $month ++):?>
+				<?php for ($month = 1; $month <= 12; $month++): ?>
 				<!-- Month -->
 				<th class="right">
-					<?php echo $month?>月
+					<?php echo $month; ?>月
 				</th>
-				<?php endfor;?>
+				<?php endfor; ?>
 
 				<!-- All This Year -->
 				<th class="right">
@@ -64,80 +64,83 @@ $items = $ScheduleReport->getData();
 			<tbody>
 			<?php
 			$rowSpanRepeat = 0;
+
 			foreach ($items as $item):
+
 				$instituteAmount = count($item['institutes']);
+
 				$rowSpan = $instituteAmount + 1;
+
 				foreach ($item['institutes'] as $institute):
+
 					$rowSpanRepeat++;
 			?>
 				<!-- 列出 $item['institutes'] 的資料 -->
 				<tr class="report-row">
 					<!-- 縣市 -->
-					<?php if($rowSpanRepeat == 1):?>
-					<td class="left" rowspan="<?php echo $rowSpan?>">
-						<?php echo $item['city_title']?>
+					<?php if ($rowSpanRepeat == 1): ?>
+					<td class="left" rowspan="<?php echo $rowSpan; ?>">
+						<?php echo $item['city_title']; ?>
 					</td>
-					<?php endif;?>
+					<?php endif; ?>
 
 					<!-- Institute -->
 					<td class="left">
-						<?php echo $institute['title']?>
+						<?php echo $institute['title']; ?>
 					</td>
 
-					<?php for($month = 0; $month <= 11; $month ++):?>
+					<?php for($month = 0; $month <= 11; $month++): ?>
 					<!-- 月 -->
 					<td class="right">
-						<?php echo $institute["months"][$month]?>
+						<?php echo $institute["months"][$month]; ?>
 					</td>
-					<?php endfor?>
+					<?php endfor; ?>
 
 					<!-- 全年 -->
 					<td class="right">
-						<?php echo $institute['sub_total']?>
+						<?php echo $institute['sub_total']; ?>
 					</td>
 
-					<?php if($rowSpanRepeat == 1):?>
+					<?php if($rowSpanRepeat == 1): ?>
 					<!-- 排程小計 -->
-					<td class="left" rowspan="<?php echo $rowSpan?>" style="vertical-align: bottom;">
-						<?php echo $item['total']?>
+					<td class="left" rowspan="<?php echo $rowSpan; ?>" style="vertical-align: bottom;">
+						<?php echo $item['total']; ?>
 					</td>
-					<?php endif?>
+					<?php endif; ?>
 				</tr>
-			<?php
-				endforeach;
-			?>
+			<?php endforeach; ?>
 				<!-- 列出 $item['customers'] 的資料 -->
 				<tr class="report-row">
 					<!-- 如果該縣市沒有機構，則補印縣市 -->
-					<?php if($instituteAmount == 0):?>
+					<?php if($instituteAmount == 0): ?>
 					<td class="left">
-						<?php echo $item['city_title']?>
+						<?php echo $item['city_title']; ?>
 					</td>
-					<?php endif?>
+					<?php endif; ?>
 
 					<!-- individual -->
 					<td class="left">
 						散客
 					</td>
 
-					<?php for($month = 0; $month <= 11; $month ++):?>
+					<?php for($month = 0; $month <= 11; $month ++): ?>
 					<!-- 月 -->
 					<td class="right">
-						<?php echo $item['customers']["months"][$month]?>
+						<?php echo $item['customers']['months'][$month]; ?>
 					</td>
 					<?php endfor?>
 
 					<!-- 排程小計 -->
 					<td class="left">
-						<?php echo $item['customers']['sub_total']?>
+						<?php echo $item['customers']['sub_total']; ?>
 					</td>
 
 					<!-- 如果該縣市沒有機構，則補印散客的排程小計 -->
-					<?php if($instituteAmount == 0):?>
+					<?php if($instituteAmount == 0): ?>
 					<td class="left">
-						<?php echo $item['total']?>
+						<?php echo $item['total']; ?>
 					</td>
-					<?php endif?>
+					<?php endif; ?>
 
 					<!-- 重設表格的 rowSpanRepeat 讓表格的 rowSpan 數值出現給下個縣市印出 -->
 					<?php
@@ -147,9 +150,7 @@ $items = $ScheduleReport->getData();
 					}
 					?>
 				</tr>
-			<?php
-			endforeach;
-			?>
+			<?php endforeach; ?>
 			</tbody>
 		</table>
 

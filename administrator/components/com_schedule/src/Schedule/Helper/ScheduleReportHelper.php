@@ -136,6 +136,6 @@ class ScheduleReportHelper
 			$data[$item->city]["total"] += $item->amount;
 		}
 
-	return $data;
+		return $data;
 	}
 }

@@ -205,7 +205,7 @@ HTML;
 			{
 				$dHtml = <<<HTML
 <button class="btn btn-small" onclick="Joomla.submitbutton('schedules.report')">
-<span class="glyphicon glyphicon-print"></span> 列印排程統計報表
+	<span class="glyphicon glyphicon-print"></span> 列印排程統計報表
 </button>
 HTML;
 				$bar = JToolbar::getInstance('toolbar');
@@ -231,7 +231,7 @@ HTML;
 		{
 			$html = <<<HTML
 <button class="btn btn-danger" onclick="Joomla.submitbutton('schedules.redirect')">
-<span class="glyphicon glyphicon-remove"></span> 取消列印
+	<span class="glyphicon glyphicon-remove"></span> 取消列印
 </button>
 HTML;
 			$bar = JToolbar::getInstance('toolbar');
