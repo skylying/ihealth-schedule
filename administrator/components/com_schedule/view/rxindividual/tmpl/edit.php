@@ -11,6 +11,7 @@ defined('_JEXEC') or die;
 
 use Schedule\Helper\ScheduleHelper;
 use Schedule\Helper\ApiReturnCodeHelper;
+use \Windwalker\DI\Container;
 
 JHtmlBootstrap::tooltip();
 JHtmlFormbehavior::chosen('select');
@@ -25,6 +26,8 @@ $customerIdNumber = $data->form->getField('id_number')->id;
 $telOfficeId = $data->form->getField('tel_office')->id;
 $telHomeId = $data->form->getField('tel_home')->id;
 $mobileId = $data->form->getField('mobile')->id;
+$isSaveAndPrint = $data->print;
+$id = $data->item->id;
 
 $telOfficeName = $data->form->getField('tel_office')->name;
 $telHomeName   = $data->form->getField('tel_home')->name;
@@ -145,6 +148,11 @@ jQuery(document).ready(function ()
 
 
 </style>
+<?php if ($isSaveAndPrint == '1'): ?>
+	<script>
+		window.open("<?php echo JRoute::_("index.php?option=com_schedule&view=rxindividual&layout=print&tmpl=component&id=" . $id, false); ?>", "_blank");
+	</script>
+<?php endif; ?>
 
 <form name="adminForm" id="adminForm" method="post" action="<?php echo JURI::getInstance(); ?>" class="form-horizontal"
 	enctype="multipart/form-data">
@@ -374,6 +382,7 @@ jQuery(document).ready(function ()
 	</div>
 
 	<div>
+		<input type="hidden" name="save-and-print" value="0"/>
 		<input type="hidden" name="option" value="com_schedule" />
 		<input type="hidden" name="task" value="" />
 		<?php echo JHtml::_('form.token'); ?>
