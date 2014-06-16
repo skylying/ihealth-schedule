@@ -63,10 +63,10 @@ class ScheduleReportHelper
 		$thisYear = date('Y');
 
 		$defaultYearMonthStart = sprintf('%s-01-01', $thisYear);
-		$defaultYearMonthEnd = sprintf('%s-12-31', $thisYear);
+		$defaultYearMonthEnd   = sprintf('%s-12-31', $thisYear);
 
-		$startDate = $filters->get('date_start', $defaultYearMonthStart);
-		$endDate = $filters->get('date_end', $defaultYearMonthEnd);
+		$startDate  = $filters->get('date_start', $defaultYearMonthStart);
+		$endDate    = $filters->get('date_end', $defaultYearMonthEnd);
 		$filterCity = $filters->get('city', array());
 
 		if (!empty($filterCity))
