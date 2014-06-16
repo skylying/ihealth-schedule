@@ -54,10 +54,10 @@ $drugs         = $data->item->drugs;
 			<table class="table table-striped">
 				<thead>
 				<tr>
-				<th class="left">項次</th>
-				<th class="left">內容</th>
-				<th class="left">項次</th>
-				<th class="left">內容</th>
+					<th class="left">項次</th>
+					<th class="left">內容</th>
+					<th class="left">項次</th>
+					<th class="left">內容</th>
 				</tr>
 				</thead>
 				<tbody>
@@ -139,8 +139,8 @@ $drugs         = $data->item->drugs;
 						<table class="table table-bordered">
 							<thead>
 							<tr>
-							<th>藥品健保碼</th>
-							<th>顆數量</th>
+								<th>藥品健保碼</th>
+								<th>顆數量</th>
 							</tr>
 							</thead>
 							<tbody>
