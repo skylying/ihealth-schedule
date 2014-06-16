@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fieldset name="task">
+		<field name="date"
+			type="calendar"
+			label="實際送藥日"
+			description="實際送藥日"
+			/>
+
+		<field name="senderIds"
+			type="itemscheckboxes"
+			option_title="name"
+			table="#__schedule_senders"
+			multiple="true"
+			label="選擇外送藥師"
+			description="選擇外送藥師"
+			/>
+	</fieldset>
+</form>
