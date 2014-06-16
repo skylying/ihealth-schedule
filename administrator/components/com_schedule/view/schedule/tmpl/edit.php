@@ -44,9 +44,21 @@ if ('component' === $tmpl)
 		}
 	');
 }
+
+$asset->addJS('schedule/edit.js');
+
+$jsOptions = array(
+	'membersApi' => JRoute::_('index.php?option=com_schedule&task=members.ajax.json&id=', false),
+	'addressesApi' => JRoute::_('index.php?option=com_schedule&task=addresses.ajax.json&id=', false),
+);
 ?>
 <!-- Validate Script -->
 <script type="text/javascript">
+	jQuery(function()
+	{
+		ScheduleEdit.run(<?php echo json_encode($jsOptions); ?>);
+	});
+
 	Joomla.submitbutton = function(task)
 	{
 		(function ($)
