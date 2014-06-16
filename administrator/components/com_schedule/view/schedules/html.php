@@ -138,6 +138,8 @@ class ScheduleViewSchedulesHtml extends GridView
 	 */
 	protected function configureToolbar($buttonSet = array(), $canDo = null)
 	{
+		$buttonSet = $this->configureReportToolbar($buttonSet);
+
 		// Button 新增行政排程
 		$buttonSet['add2']['handler'] = function()
 		{
@@ -185,15 +187,13 @@ HTML;
 			$bar->appendButton('Custom', $html);
 		};
 
-		$buttonSet = $this->configureReportToolbar($buttonSet);
-
 		return $buttonSet;
 	}
 
 	/**
 	 * configureReportToolbar
 	 *
-	 * @param  array $buttonSet
+	 * @param   array $buttonSet
 	 *
 	 * @return  mixed
 	 */
