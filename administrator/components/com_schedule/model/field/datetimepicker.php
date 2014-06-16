@@ -109,6 +109,8 @@ jQuery(function ($)
 	node.on('dp.change', function(e)
 	{
 		{$onChange}
+
+		node.trigger('blur');
 	});
 });
 JAVASCRIPT;
