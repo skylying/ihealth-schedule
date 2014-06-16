@@ -8,9 +8,9 @@
 
 // No direct access
 defined('_JEXEC') or die;
-$remindList = $data->item->remindLists;
+$remindList    = $data->item->remindLists;
 $scheduleInfos = $data->item->scheduleInfos;
-$drugs = $data->item->drugs;
+$drugs         = $data->item->drugs;
 ?>
 
 <style>
@@ -39,7 +39,6 @@ $drugs = $data->item->drugs;
 	<div class="row-fluid">
 		<div class="col-lg-12">
 			<h2 class="center">
-				這是
 				<?php echo $data->item->customer_name; ?>
 				第
 				<?php echo substr($scheduleInfo->deliver_nth, 0, 1); ?>
@@ -54,10 +53,12 @@ $drugs = $data->item->drugs;
 		<div class="col-lg-12 left">
 			<table class="table table-striped">
 				<thead>
-				<th class="center">項次</th>
-				<th class="center">內容</th>
-				<th class="center">項次</th>
-				<th class="center">內容</th>
+				<tr>
+				<th class="left">項次</th>
+				<th class="left">內容</th>
+				<th class="left">項次</th>
+				<th class="left">內容</th>
+				</tr>
 				</thead>
 				<tbody>
 				<tr>
@@ -137,8 +138,10 @@ $drugs = $data->item->drugs;
 					<td>
 						<table class="table table-bordered">
 							<thead>
+							<tr>
 							<th>藥品健保碼</th>
 							<th>顆數量</th>
+							</tr>
 							</thead>
 							<tbody>
 							<?php foreach ($drugs as $drug): ?>
