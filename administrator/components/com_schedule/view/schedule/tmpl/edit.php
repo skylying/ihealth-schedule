@@ -48,6 +48,7 @@ if ('component' === $tmpl)
 $asset->addJS('schedule/edit.js');
 
 $jsOptions = array(
+	'schedulesUrl' => JRoute::_('index.php?option=com_schedule&view=schedules', false),
 	'instituteApi' => JRoute::_('index.php?option=com_schedule&task=institute.ajax.json&id=', false),
 	'membersApi' => JRoute::_('index.php?option=com_schedule&task=members.ajax.json&id=', false),
 	'addressesApi' => JRoute::_('index.php?option=com_schedule&task=addresses.ajax.json&id=', false),
@@ -112,10 +113,12 @@ $jsOptions = array(
 				</div>
 				<?php endforeach;?>
 
-				<a href="#">
-					查詢前後七日排程
-					<span class="glyphicon glyphicon-share-alt"></span>
-				</a>
+				<p>
+					<a href="#" id="institute-schedules-with-range" target="_blank">
+						查詢前後七日排程
+						<span class="glyphicon glyphicon-share-alt"></span>
+					</a>
+				</p>
 			<?php echo JHtmlBootstrap::endTab(); ?>
 
 			<?php echo JHtmlBootstrap::addTab('scheduleEditTab', 'schedule_individual', '散客'); ?>
@@ -125,10 +128,12 @@ $jsOptions = array(
 				</div>
 				<?php endforeach;?>
 
-				<a href="#">
-					查詢前後七日排程
-					<span class="glyphicon glyphicon-share-alt"></span>
-				</a>
+				<p>
+					<a href="#" id="individual-schedules-with-range" target="_blank">
+						查詢前後七日排程
+						<span class="glyphicon glyphicon-share-alt"></span>
+					</a>
+				</p>
 			<?php echo JHtmlBootstrap::endTab(); ?>
 
 			<?php echo JHtmlBootstrap::endTabSet(); ?>

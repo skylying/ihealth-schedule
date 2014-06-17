@@ -23,6 +23,10 @@
 		/**
 		 * @type {string}
 		 */
+		schedulesUrl: '',
+		/**
+		 * @type {string}
+		 */
 		instituteApi: '',
 		/**
 		 * @type {string}
@@ -41,6 +45,7 @@
 		 */
 		run: function(options)
 		{
+			this.schedulesUrl = options.schedulesUrl;
 			this.instituteApi = options.instituteApi;
 			this.membersApi = options.membersApi;
 			this.addressesApi = options.addressesApi;
@@ -51,6 +56,45 @@
 			$instituteAddress = $('#jform_address');
 			$memberSelection = $('#jform_member_id');
 			$addressSelection = $('#jform_address_id');
+		},
+
+		/**
+		 * updateScheduleLink
+		 *
+		 * @param {Object} elem The institute selection element
+		 * @param {string} type Type of "individual" or "institute"
+		 */
+		updateScheduleLink: function(elem, type)
+		{
+			var date = $(elem).val(),
+				start, end, url;
+
+			if (!date.match(/\d{4}-\d{1,2}-\d{1,2}/))
+			{
+				return;
+			}
+
+			switch (type)
+			{
+				case 'individual':
+				case 'institute':
+					start = new Date(date);
+					end = new Date(date);
+
+					// Shift 7 days before
+					start.setTime(start.getTime() - (7 * 86400000));
+
+					// Shift 7 days after
+					end.setTime(end.getTime() + (7 * 86400000));
+
+					url = this.schedulesUrl +
+						'&filter[schedule.date_start]=' + start.toISOString().substr(0, 10) +
+						'&filter[schedule.date_end]=' + end.toISOString().substr(0, 10);
+
+					$('#' + type + '-schedules-with-range').attr('href', url);
+
+					break;
+			}
 		},
 
 		/**

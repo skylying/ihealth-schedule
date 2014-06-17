@@ -76,6 +76,7 @@
 			format="%Y-%m-%d"
 			label="拜訪日期"
 			description="拜訪日期"
+			onchange="ScheduleEdit.updateScheduleLink(this, 'institute');"
 			/>
 	</fieldset>
 </form>
