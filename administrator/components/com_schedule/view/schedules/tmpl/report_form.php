@@ -39,7 +39,7 @@ $doc->addStyleDeclaration($css);
 	<div id="control_<?php echo $field->id; ?>">
 		<?php echo $field->getControlGroup(); ?>
 	</div>
-	<?php endforeach;?>
+	<?php endforeach; ?>
 </div>
 
 <button type="button" class="btn btn-primary" onclick="Joomla.submitbutton('schedules.report')">

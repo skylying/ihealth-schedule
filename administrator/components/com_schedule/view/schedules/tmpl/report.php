@@ -63,10 +63,12 @@ $items = $ScheduleReport->getData();
 			<!-- TABLE BODY -->
 			<tbody>
 			<?php
-			$rowSpanRepeat = 0;
 
 			foreach ($items as $item):
 				$instituteAmount = count($item['institutes']);
+
+				// 重設表格的 rowSpanRepeat 讓表格的 rowSpan 數值出現給下個縣市印出
+				$rowSpanRepeat = 0;
 
 				$rowSpan = $instituteAmount + 1;
 
@@ -140,13 +142,6 @@ $items = $ScheduleReport->getData();
 					</td>
 					<?php endif; ?>
 
-					<!-- 重設表格的 rowSpanRepeat 讓表格的 rowSpan 數值出現給下個縣市印出 -->
-					<?php
-					if ($rowSpanRepeat == $rowSpan)
-					{
-						$rowSpanRepeat = 0;
-					}
-					?>
 				</tr>
 			<?php endforeach; ?>
 			</tbody>
