@@ -70,16 +70,16 @@ class ScheduleControllerDrugdetailEditSave extends SaveController
 	 * ```
 	 * {
 	 *     'schedules' : [
-	 *         5 : [               // Schedule Id
+	 *         5 : {               // Schedule Id
 	 *             ice : 1,        // 0 沒冰品, 1 有冰品
 	 *             sorted : 1,     // 0 未完成, 1 已完成
-	 *             price: 333.333  // type float
-	 *         ],
-	 *         6 : [
+	 *             price: 333.33   // type float
+	 *         },
+	 *         6 : {
 	 *             ice : 1,
 	 *             sorted : 1,
-	 *             price: 888.888
-	 *         ]
+	 *             price: 888.88
+	 *         }
 	 *     ]
 	 *     'institutes' : [
 	 *         ...
@@ -123,26 +123,26 @@ class ScheduleControllerDrugdetailEditSave extends SaveController
 	 *     ]
 	 *     'institutes' : [
 	 *         5 : [                    // Institute id
-	 *             0 : [                // In same institute id data array
+	 *             0 : {                // In same institute id data array
 	 *                 id : 8,          // Drug Extra Detail Id
 	 *                 ice : 1,         // 0 沒冰品, 1 有冰品
 	 *                 sorted : 1,      // 0 未完成, 1 已完成
-	 *                 price: 333.333   // type float
-	 *             ],
-	 *             1 : [
+	 *                 price: 333.33   // type float
+	 *             },
+	 *             1 : {
 	 *                 id : 9,
 	 *                 ice : 1,
 	 *                 sorted : 1,
-	 *                 price: 333.333
-	 *             ]
+	 *                 price: 333.33
+	 *             }
 	 *         ],
 	 *         6 : [
-	 *             0 : [
+	 *             0 : {
 	 *                 id : 10,
 	 *                 ice : 1,
 	 *                 sorted : 1,
-	 *                 price: 333.333
-	 *             ]
+	 *                 price: 333.33
+	 *             }
 	 *         ]
 	 *     ]
 	 * }

@@ -174,7 +174,7 @@ class ScheduleViewDrugdetailHtml extends EditView
 	 *             1 : {
 	 *                 id : 1,
 	 *                 task_id : 1,
-	 *                 price : 888.888,
+	 *                 price : 888.88,
 	 *                 institute_id : 2,
 	 *                 ice : 1,
 	 *                 sorted : 1,
