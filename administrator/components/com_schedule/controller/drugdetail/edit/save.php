@@ -68,23 +68,23 @@ class ScheduleControllerDrugdetailEditSave extends SaveController
 	 * post 形態如下
 	 *
 	 * ```
-	 * [
+	 * {
 	 *     'schedules' : [
-	 *         (schedule Id) 5 : [
-	 *             (1 , 0) ice : 1,
-	 *             (1 , 0) sorted : 1,
-	 *             (float) price: 333.333
+	 *         5 : [               // Schedule Id
+	 *             ice : 1,        // 0 沒冰品, 1 有冰品
+	 *             sorted : 1,     // 0 未完成, 1 已完成
+	 *             price: 333.333  // type float
 	 *         ],
-	 *         (institute Id) 6 : [
-	 *             (1 , 0) ice : 1,
-	 *             (1 , 0) sorted : 1,
-	 *             (float) price: 888.888
+	 *         6 : [
+	 *             ice : 1,
+	 *             sorted : 1,
+	 *             price: 888.888
 	 *         ]
 	 *     ]
 	 *     'institutes' : [
 	 *         ...
 	 *     ]
-	 * ]
+	 * }
 	 * ```
 	 *
 	 * @return  void
@@ -117,35 +117,35 @@ class ScheduleControllerDrugdetailEditSave extends SaveController
 	 * post 形態如下
 	 *
 	 * ```
-	 * [
+	 * {
 	 *     'schedules' : [
 	 *         ...
 	 *     ]
 	 *     'institutes' : [
-	 *         (institute Id) 5 : [
-	 *             0 : [
-	 *                 (drug Extra Detail Id) id : 8,
-	 *                 (1 , 0) ice : 1,
-	 *                 (1 , 0) sorted : 1,
-	 *                 (float) price: 333.333
+	 *         5 : [                    // Institute id
+	 *             0 : [                // In same institute id data array
+	 *                 id : 8,          // Drug Extra Detail Id
+	 *                 ice : 1,         // 0 沒冰品, 1 有冰品
+	 *                 sorted : 1,      // 0 未完成, 1 已完成
+	 *                 price: 333.333   // type float
 	 *             ],
 	 *             1 : [
-	 *                 (drug Extra Detail Id) id : 9,
-	 *                 (1 , 0) ice : 1,
-	 *                 (1 , 0) sorted : 1,
-	 *                 (float) price: 333.333
+	 *                 id : 9,
+	 *                 ice : 1,
+	 *                 sorted : 1,
+	 *                 price: 333.333
 	 *             ]
 	 *         ],
-	 *         (institute Id) 6 : [
+	 *         6 : [
 	 *             0 : [
-	 *                 (drug Extra Detail Id) id : 10,
-	 *                 (1 , 0) ice : 1,
-	 *                 (1 , 0) sorted : 1,
-	 *                 (float) price: 333.333
+	 *                 id : 10,
+	 *                 ice : 1,
+	 *                 sorted : 1,
+	 *                 price: 333.333
 	 *             ]
 	 *         ]
 	 *     ]
-	 * ]
+	 * }
 	 * ```
 	 *
 	 * @param   \Windwalker\Model\CrudModel $model
