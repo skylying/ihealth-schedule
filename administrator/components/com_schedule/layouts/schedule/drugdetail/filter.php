@@ -8,9 +8,9 @@
 
 defined('JPATH_BASE') or die;
 
-\JForm::addFormPath(JPATH_COMPONENT . '/model/form');
+$data = $displayData;
 
-$form = \JForm::getInstance("com_schedule.form", "drugdetailfilter");
+$form = $data['form'];
 
 $fieldsets = $form->getFieldset("task");
 ?>

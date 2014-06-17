@@ -200,4 +200,16 @@ class ScheduleModelSchedules extends ListModel
 
 		return $this->loadForm($this->option . '.' . $formName . '.form', $formName, $config);
 	}
+
+	/**
+	 * getDrugDetailFilterForm
+	 *
+	 * @return  \JForm
+	 */
+	public function getDrugDetailFilterForm()
+	{
+		\JForm::addFormPath(JPATH_COMPONENT . '/model/form');
+
+		return \JForm::getInstance("com_schedule.form", "drugdetailfilter");
+	}
 }

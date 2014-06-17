@@ -126,6 +126,7 @@ class ScheduleViewSchedulesHtml extends GridView
 		$data->editFormFields = $editFormFields;
 
 		$data->printForm = $this->get('PrintForm');
+		$data->drugDetailForm = $this->get('DrugDetailFilterForm');
 	}
 
 	/**
