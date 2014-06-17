@@ -48,6 +48,7 @@ if ('component' === $tmpl)
 $asset->addJS('schedule/edit.js');
 
 $jsOptions = array(
+	'instituteApi' => JRoute::_('index.php?option=com_schedule&task=institute.ajax.json&id=', false),
 	'membersApi' => JRoute::_('index.php?option=com_schedule&task=members.ajax.json&id=', false),
 	'addressesApi' => JRoute::_('index.php?option=com_schedule&task=addresses.ajax.json&id=', false),
 );

@@ -20,45 +20,31 @@
 			default=""
 			label="機構名稱"
 			description="機構名稱"
+			onchange="ScheduleEdit.updateInstituteRelatedInfo(this);"
 			>
 			<option></option>
 		</field>
 
-		<field id="institute_city"
-			name="city"
-			type="sql"
-			default=""
-			query="SELECT id, title FROM #__schedule_cities"
-			key_field="id"
-			value_field="title"
+		<field name="city_title"
+			type="text"
 			label="縣市"
 			description="縣市"
-			readonly="false"
-			>
-			<option></option>
-		</field>
+			readonly="true"
+			/>
 
-		<field id="institute_area"
-			name="area"
-			type="sql"
-			default=""
-			query="SELECT id, title FROM #__schedule_areas"
-			key_field="id"
-			value_field="title"
+		<field name="area_title"
+			type="text"
 			label="區域"
 			description="區域"
-			readonly="false"
-			>
-			<option></option>
-		</field>
+			readonly="true"
+			/>
 
 		<field name="address"
 			type="text"
-			default=""
 			class="input-xlarge"
 			label="地址"
 			description="地址"
-			readonly="false"
+			readonly="true"
 			/>
 
 		<field name="type"

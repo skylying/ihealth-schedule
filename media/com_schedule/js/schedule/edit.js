@@ -10,13 +10,20 @@
 	}
 
 	// Private selectors
-	var $memberSelection,
+	var $instituteCityTitle,
+		$instituteAreaTitle,
+		$instituteAddress,
+		$memberSelection,
 		$addressSelection;
 
 	/**
 	 * Class ScheduleEdit
 	 */
 	window.ScheduleEdit = {
+		/**
+		 * @type {string}
+		 */
+		instituteApi: '',
 		/**
 		 * @type {string}
 		 */
@@ -34,12 +41,33 @@
 		 */
 		run: function(options)
 		{
+			this.instituteApi = options.instituteApi;
 			this.membersApi = options.membersApi;
 			this.addressesApi = options.addressesApi;
 
 			// Initialize selectors
+			$instituteCityTitle = $('#jform_city_title');
+			$instituteAreaTitle = $('#jform_area_title');
+			$instituteAddress = $('#jform_address');
 			$memberSelection = $('#jform_member_id');
 			$addressSelection = $('#jform_address_id');
+		},
+
+		/**
+		 * updateInstituteRelatedInfo
+		 *
+		 * @param {Object} elem The institute selection element
+		 */
+		updateInstituteRelatedInfo: function(elem)
+		{
+			var instituteId = parseInt($(elem).val());
+
+			$.getJSON(this.instituteApi + instituteId, function(institute)
+			{
+				$instituteCityTitle.val(institute.city_title);
+				$instituteAreaTitle.val(institute.area_title);
+				$instituteAddress.val(institute.address);
+			});
 		},
 
 		/**
