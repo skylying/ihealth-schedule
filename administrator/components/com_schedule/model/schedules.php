@@ -208,8 +208,6 @@ class ScheduleModelSchedules extends ListModel
 	 */
 	public function getDrugDetailFilterForm()
 	{
-		\JForm::addFormPath(JPATH_COMPONENT . '/model/form');
-
 		return \JForm::getInstance("com_schedule.form", "drugdetailfilter");
 	}
 }

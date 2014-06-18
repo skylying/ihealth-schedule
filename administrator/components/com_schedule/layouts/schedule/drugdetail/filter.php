@@ -8,6 +8,18 @@
 
 defined('JPATH_BASE') or die;
 
+/**
+ * drug detail layout
+ *
+ * @param array $displayData
+ *
+ * $displayData 變數詳細內容如下
+ * ```php
+ * array(
+ *     'form' => \JForm()  // drugdetailfilter form
+ * )
+ * ```
+ */
 $data = $displayData;
 
 $form = $data['form'];
