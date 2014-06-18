@@ -106,6 +106,19 @@ class ScheduleViewSchedulesHtml extends GridView
 	{
 		$data = $this->getData();
 
+		if ('report' == $this->getLayout())
+		{
+			$schedulesModel = $this->getModel('Schedules');
+			$filter = $schedulesModel->getState()->get('report_filter');
+
+			$ScheduleReport = new \Schedule\Helper\ScheduleReportHelper;
+			$data->items = $ScheduleReport->getData($filter);
+
+			$data->printForm = $this->get('PrintForm');
+
+			return;
+		}
+
 		/** @var JForm $filterForm */
 		$filterForm = $data->filterForm;
 
@@ -125,7 +138,6 @@ class ScheduleViewSchedulesHtml extends GridView
 
 		$data->editFormFields = $editFormFields;
 
-		$data->printForm = $this->get('PrintForm');
 	}
 
 	/**

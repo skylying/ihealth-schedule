@@ -17,11 +17,13 @@ use Windwalker\Compare\InCompare;
 class ScheduleReportHelper
 {
 	/**
-	 * getReportData
+	 * getRowData
+	 *
+	 * @param array $filter
 	 *
 	 * @return  mixed
 	 */
-	public function getRowData()
+	public function getRowData($filter)
 	{
 		$db = \JFactory::getDbo();
 
@@ -43,7 +45,7 @@ class ScheduleReportHelper
 			->group("`city_title`, institute_title, type, `year_month`")
 			->order("`city_title`, `type` DESC, `institute_title`, `year_month`");
 
-		$query = $this->extraFilter($query);
+		$query = $this->extraFilter($query, $filter);
 
 		return $db->setQuery($query)->loadObjectList();
 	}
@@ -51,23 +53,25 @@ class ScheduleReportHelper
 	/**
 	 * extraFilter
 	 *
-	 * @param \JDatabaseQuery $query
+	 * @param object $query
+	 * @param string $filter
 	 *
 	 * @return  mixed
 	 */
-	public function extraFilter($query)
+	public function extraFilter($query, $filter)
 	{
-		$app = \JFactory::getApplication();
-		$filters = $app->getUserState('report.filters');
-
 		$thisYear = date('Y');
+
+		$startDate = \JArrayHelper::getValue($filter, 'date_start');
+		$endDate = \JArrayHelper::getValue($filter, 'date_end');
+		$filterCity = \JArrayHelper::getValue($filter, 'city');
 
 		$defaultYearMonthStart = sprintf('%s-01-01', $thisYear);
 		$defaultYearMonthEnd   = sprintf('%s-12-31', $thisYear);
 
-		$startDate  = $filters->get('date_start', $defaultYearMonthStart);
-		$endDate    = $filters->get('date_end', $defaultYearMonthEnd);
-		$filterCity = $filters->get('city', array());
+		$startDate  = (!empty($startDate)) ? $startDate : $defaultYearMonthStart;
+		$endDate    = (!empty($endDate)) ? $endDate : $defaultYearMonthEnd;
+		$filterCity = (!empty($filterCity)) ? $filterCity : array();
 
 		if (!empty($filterCity))
 		{
@@ -88,11 +92,13 @@ class ScheduleReportHelper
 	/**
 	 * getData
 	 *
+	 * @param   array $filter
+	 *
 	 * @return  array
 	 */
-	public function getData()
+	public function getData($filter)
 	{
-		$rowData = $this->getRowData();
+		$rowData = $this->getRowData($filter);
 
 		$data = array();
 

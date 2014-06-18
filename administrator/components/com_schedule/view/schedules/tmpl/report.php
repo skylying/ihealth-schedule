@@ -10,8 +10,6 @@
 defined('_JEXEC') or die;
 JHtmlBehavior::multiselect('adminForm');
 
-$ScheduleReport = new \Schedule\Helper\ScheduleReportHelper;
-$items = $ScheduleReport->getData();
 ?>
 
 <div id="schedule" class="windwalker schedule edit-form row-fluid" >
@@ -62,9 +60,10 @@ $items = $ScheduleReport->getData();
 			</thead>
 			<!-- TABLE BODY -->
 			<tbody>
+
 			<?php
 
-			foreach ($items as $item):
+			foreach ($data->items as $item):
 				$instituteAmount = count($item['institutes']);
 
 				// 重設表格的 rowSpanRepeat 讓表格的 rowSpan 數值出現給下個縣市印出
@@ -150,7 +149,8 @@ $items = $ScheduleReport->getData();
 		<!-- Hidden Inputs -->
 		<div id="hidden-inputs">
 			<input type="hidden" name="option" value="com_schedule" />
-			<input type="hidden" name="task" value="report" />
+			<input type="hidden" name="layout" value="report" />
+			<input type="hidden" name="view" value="schedules" />
 			<?php echo JHtml::_('form.token'); ?>
 		</div>
 	</form>

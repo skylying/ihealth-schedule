@@ -33,8 +33,36 @@ class JFormFieldItemscheckboxes extends \JFormField
 	 */
 	public function getInput()
 	{
-		$valueField = $this->element['value_field'] ? (string) $this->element['value_field'] : "id";
+		$app         = JFactory::getApplication();
+		$doc         = $app->getDocument();
+		$name        = $this->name;
+		$inputName   = $this->element['name'] ? (string) $this->element['name'] : "";
+		$valueField  = $this->element['value_field'] ? (string) $this->element['value_field'] : "id";
 		$optionTitle = $this->element['option_title'] ? (string) $this->element['option_title'] : "title";
+
+		$doc->addScriptDeclaration(<<<JS
+	jQuery(function()
+	{
+		jQuery('#{$inputName}-click-all').click(function()
+		{
+			if(jQuery("#{$inputName}-click-all").prop("checked"))
+			{
+				jQuery(".{$inputName}-checkboxes").each(function()
+				{
+					jQuery(this).prop("checked", true);
+				});
+			}
+			else
+			{
+				jQuery(".{$inputName}-checkboxes").each(function()
+				{
+					jQuery(this).prop("checked", false);
+				});
+			}
+		});
+	});
+JS
+		);
 
 		$items = $this->getItems();
 
@@ -42,7 +70,14 @@ class JFormFieldItemscheckboxes extends \JFormField
 
 		$html[] = "<ol>";
 
-		$name = $this->name;
+		$html[] = <<<HTML
+	<li class="checkbox-inline">
+		<label for="{$inputName}-click-all">
+			<input id="{$inputName}-click-all" type="checkbox" />
+			全選
+		</label>
+	</li>
+HTML;
 
 		foreach ($items as $i => $item)
 		{
@@ -52,7 +87,7 @@ class JFormFieldItemscheckboxes extends \JFormField
 			$html[] = <<<HTML
 	<li class="checkbox-inline">
 		<label for="{$name}-{$i}">
-			<input id="{$name}-{$i}" type="checkbox" name="{$name}" value="{$id}" />
+			<input id="{$name}-{$i}" class="{$inputName}-checkboxes" type="checkbox" name="{$name}" value="{$id}" />
 			{$title}
 		</label>
 	</li>

@@ -7,42 +7,29 @@
  */
 
 $printForm = $data->printForm;
-
-$doc = JFactory::getDocument();
-
-$css = <<<CSS
-ol
-{
-	list-style-type: none;
-}
-
-ol li
-{
-	float: left;
-	margin: 0 10px;
-	padding: 0 10px;
-}
-
-ol li label
-{
-	float: right;
-	display: inline;
-	margin: 0 2px;
-	padding: 0 2px;
-}
-CSS;
-
-$doc->addStyleDeclaration($css);
 ?>
 <div class="form-horizontal">
 	<?php foreach ($printForm->getFieldset('schedules_print') as $field): ?>
-	<div id="control_<?php echo $field->id; ?>">
-		<?php echo $field->getControlGroup(); ?>
-	</div>
+		<div class="control-group">
+			<div class="control-label">
+				<?php echo $field->label; ?>
+			</div>
+			<div class="controls-<?php echo $field->id; ?>">
+				<?php echo $field->input; ?>
+			</div>
+		</div>
 	<?php endforeach; ?>
 </div>
 
-<button type="button" class="btn btn-primary" onclick="Joomla.submitbutton('schedules.report')">
+<button type="submit" class="btn btn-primary">
 	<span class="glyphicon glyphicon-filter"></span>
 	送出條件
 </button>
+
+<script type="text/javascript">
+	function check_all(obj,cName)
+	{
+		var checkboxes = document.getElementsByName(cName);
+		for(var i=0;i<checkboxes.length;i++){checkboxes[i].checked = obj.checked;}
+	}
+</script>

@@ -125,6 +125,13 @@ class ScheduleModelSchedules extends ListModel
 	 */
 	protected function populateState($ordering = 'schedule.id', $direction = 'ASC')
 	{
+		$app = JFactory::getApplication();
+
+		$filter = $app->getUserStateFromRequest('schedules.report.', 'report-filter', array());
+
+		// Set a state containing a array.
+		$this->state->set('report_filter', $filter);
+
 		parent::populateState($ordering, $direction);
 	}
 
@@ -192,7 +199,7 @@ class ScheduleModelSchedules extends ListModel
 	public function getPrintForm()
 	{
 		$config = array(
-			'control'   => 'jform',
+			'control'   => 'report-filter',
 			'load_data' => 1
 		);
 
