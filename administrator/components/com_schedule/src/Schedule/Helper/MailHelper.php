@@ -79,4 +79,31 @@ class MailHelper
 	 * )
 	 */
 	public $cc = array();
+
+	/**
+	 * set
+	 *
+	 * @param   string      $name
+	 * @param   mixed       $value
+	 *
+	 * @return  mailHelper
+	 */
+	public function __set($name, $value)
+	{
+		$this->$name = $value;
+
+		return $this;
+	}
+
+	/**
+	 * get
+	 *
+	 * @param   string  $name
+	 *
+	 * @return  mixed
+	 */
+	public function __get($name)
+	{
+		return $this->$name;
+	}
 }
