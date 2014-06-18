@@ -121,7 +121,7 @@ class ScheduleControllerDrugdetailEditSave extends SaveController
 	 *     'schedules' : [
 	 *         ...
 	 *     ]
-	 *     'institutes' : [
+	 *     'institutes' : {
 	 *         5 : [                    // Institute id
 	 *             {                    // In same institute id data array
 	 *                 id : 8,          // Drug Extra Detail Id
@@ -144,7 +144,7 @@ class ScheduleControllerDrugdetailEditSave extends SaveController
 	 *                 price: 333.33
 	 *             }
 	 *         ]
-	 *     ]
+	 *     }
 	 * }
 	 * ```
 	 *

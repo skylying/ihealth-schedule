@@ -163,26 +163,26 @@ class ScheduleViewDrugdetailHtml extends EditView
 	 *
 	 * return 詳細形式如下
 	 *
-	 * ```
-	 * {
-	 *     1 : [               // Task id
-	 *         2: [            // Institute id
-	 *             {
-	 *                 id : 1,
-	 *                 task_id : 1,
-	 *                 price : 888.88,
-	 *                 institute_id : 2,
-	 *                 ice : 1,
-	 *                 sorted : 1,
-	 *             }
-	 *         ]
-	 *     ],
-	 *     2 : [
-	 *         [
+	 * ```php
+	 * array(
+	 *     1 => array(               // Task id
+	 *         2 => array(           // Institute id
+	 *             Data(
+	 *                 "id"           => 1,
+	 *                 "task_id"      => 1,
+	 *                 "price"        => 888.88,
+	 *                 "institute_id" => 2,
+	 *                 "ice"          => 1,
+	 *                 "sorted"       => 1,
+	 *             )
+	 *         )
+	 *     ),
+	 *     2 => array(
+	 *         array(
 	 *             ...
-	 *         ]
-	 *     ],
-	 * }
+	 *         )
+	 *     ),
+	 * )
 	 * ```
 	 */
 	protected function getDrugExtraDataSet($taskIds)
