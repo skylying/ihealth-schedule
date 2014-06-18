@@ -110,7 +110,7 @@ class ScheduleViewDrugdetailHtml extends EditView
 
 		$schedules = $this->getRelatedSchedules($senderIds);
 		$taskIds   = \JArrayHelper::getColumn($schedules, "task_id");
-		$extras    = $this->getDrugExtraDataSet($taskIds);
+		$this->data->extras = $this->getDrugExtraDataSet($taskIds);
 
 		$items = array();
 
@@ -143,10 +143,6 @@ class ScheduleViewDrugdetailHtml extends EditView
 						$items[$senderId]['institutes'][$instituteId]['schedule'] = array();
 						$items[$senderId]['institutes'][$instituteId]['extra'] = array();
 					}
-
-					$extra = empty($extras[$schedule->task_id][$instituteId]) ? array() : $extras[$schedule->task_id][$instituteId];
-
-					$items[$senderId]['institutes'][$instituteId]['extra'] = $extra;
 
 					$items[$senderId]['institutes'][$instituteId]['schedules'][] = $schedule;
 				break;
