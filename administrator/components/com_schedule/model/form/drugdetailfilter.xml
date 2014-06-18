@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <form>
-	<fieldset name="task">
+	<fieldset name="filter">
 		<field name="date"
 			type="calendar"
 			label="實際送藥日"

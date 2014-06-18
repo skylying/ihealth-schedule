@@ -24,7 +24,7 @@ $data = $displayData;
 
 $form = $data['form'];
 
-$fieldsets = $form->getFieldset("task");
+$fieldsets = $form->getFieldset("filter");
 ?>
 <form action="<?php echo JURI::getInstance(); ?>"  method="post" name="adminForm" id="adminForm"
 	class="form-horizontal" enctype="multipart/form-data">
