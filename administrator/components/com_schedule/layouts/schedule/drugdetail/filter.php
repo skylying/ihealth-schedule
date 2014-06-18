@@ -11,7 +11,7 @@ defined('JPATH_BASE') or die;
 /**
  * drug detail layout
  *
- * @param array $displayData
+ * @var array $displayData
  *
  * $displayData 變數詳細內容如下
  * ```php
