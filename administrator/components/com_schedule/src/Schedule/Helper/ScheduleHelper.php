@@ -131,7 +131,7 @@ class ScheduleHelper
 	 * Validate send date
 	 *
 	 * 合理的送藥日期 = 吃完藥日的前後10天
-	 * (第一次送藥日期 = 就醫日期 + 3天)
+	 * (第一次送藥日期 = 就醫日期 ~ 3天內)
 	 *
 	 * @param   string  $sendDate       送藥日期
 	 * @param   string  $nth            第幾次送藥 ('1st','2nd','3rd')
@@ -155,12 +155,30 @@ class ScheduleHelper
 		$sendDateUnixTime      = strtotime($sendDate);
 		$seeDoctorDateUnixTime = strtotime($seeDoctorDate);
 		$drugEmptyDateUnixTime = $seeDoctorDateUnixTime + (($nth - 1) * $period * 86400);
-		$validSendDateStartAt  = $drugEmptyDateUnixTime - 10 * 86400;
-		$validSendDateEndAt    = $drugEmptyDateUnixTime + 10 * 86400;
 
-		if ((1 === $nth && $sendDateUnixTime !== $seeDoctorDateUnixTime + 3 * 86400)
-			|| (1 !== $nth && $sendDateUnixTime < $validSendDateStartAt)
-			|| (1 !== $nth && $sendDateUnixTime > $validSendDateEndAt))
+		// Get valid send date timestamps (Unix Time)
+		$validSendDateUnixTimes = [];
+
+		// Get the range of valid send dates (in days)
+		$daysBefore = 1 === $nth ? 0 : 10;
+		$daysAfter  = 1 === $nth ? 3 : 10;
+
+		// Fill valid send dates
+		for ($i = -$daysBefore; $i < $daysAfter; ++$i)
+		{
+			$unixTime = $drugEmptyDateUnixTime + $i * 86400;
+
+			// Get weekday, 1 (for Monday) through 7 (for Sunday)
+			$weekday = (int) date('N', $unixTime);
+
+			if ($weekday !== 6 && $weekday !== 7)
+			{
+				$validSendDateUnixTimes[] = $unixTime;
+			}
+		}
+
+		// Validate send date
+		if (! in_array($sendDateUnixTime, $validSendDateUnixTimes))
 		{
 			throw new ValidateFailException(['Invalid send date']);
 		}
