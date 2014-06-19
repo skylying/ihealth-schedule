@@ -49,5 +49,11 @@
 			label="路名"
 			description="除了縣市區域以外的地址"
 			class="input-xxlarge" />
+
+		<field name="previous"
+			type="integer"
+			label="預設地址"
+			description="是否為上次使用 (預設地址) (1:是 / 0:否)"
+			/>
 	</fieldset>
 </form>
