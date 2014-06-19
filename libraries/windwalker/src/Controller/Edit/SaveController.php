@@ -186,7 +186,7 @@ class SaveController extends AbstractItemController
 			$this->app->setUserState($this->context . '.data', $validData);
 
 			// Redirect back to the edit screen.
-			throw new \Exception(\JText::sprintf('JLIB_APPLICATION_ERROR_SAVE_FAILED', $e->getMessage()));
+			throw new \Exception(\JText::sprintf('JLIB_APPLICATION_ERROR_SAVE_FAILED', $e->getMessage()), 500, $e);
 		}
 
 		return $validData;
@@ -206,7 +206,8 @@ class SaveController extends AbstractItemController
 		// Clear the record id and data from the session.
 		$this->releaseEditId($this->context, $this->recordId);
 
-		if (false !== $return)
+		// If save success, clean session.
+		if ($return)
 		{
 			$this->app->setUserState($this->context . '.data', null);
 		}

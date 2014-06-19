@@ -23,7 +23,7 @@ return array(
     'Joomla\\Filesystem\\' => array($vendorDir . '/joomla/filesystem/src'),
     'Joomla\\Event\\Tests\\' => array($vendorDir . '/joomla/event/Tests'),
     'Joomla\\Event\\' => array($vendorDir . '/joomla/event/src'),
-    'Joomla\\Database\\Tests\\' => array($vendorDir . '/joomla/database/Tests'),
-    'Joomla\\Database\\' => array($vendorDir . '/joomla/database/src'),
+    'Joomla\\Application\\Tests\\' => array($vendorDir . '/joomla/application/Tests'),
+    'Joomla\\Application\\' => array($vendorDir . '/joomla/application/src'),
     '' => array($baseDir . '/../../cli/windwalker'),
 );
