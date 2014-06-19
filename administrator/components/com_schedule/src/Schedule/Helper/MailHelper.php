@@ -144,17 +144,19 @@ class MailHelper
 	/**
 	 * Send Mail When Schedule Change
 	 *
-	 * @param   \JUser               $user      Joomla user object
-	 * @param   [Data|object|array]  $schedule  Schedule data
-	 * @param   bool                 $ccBack    When param is true, it will send mail to ihealth.
+	 * @param   \JUser      $user      Joomla user object
+	 * @param   Data[]      $schedules Schedules data
+	 * @param   Data        $rx        Rx data
+	 * @param   bool        $ccBack    When param is true, it will send mail to ihealth.
 	 *
 	 * @return  MailHelper
 	 */
-	public function sendMailWhenScheduleChange($user, $schedule, $ccBack = false)
+	public function sendMailWhenScheduleChange($user, $schedules, $rx, $ccBack = false)
 	{
 		$mailDisplayData = (object) array(
 			'user'     => $user,
-			'schedule' => $schedule
+			'schedule' => $schedules,
+			'rx'       => $rx
 		);
 
 		// TODO: 確認標題
