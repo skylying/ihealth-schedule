@@ -10,11 +10,13 @@
 defined('_JEXEC') or die;
 JHtmlBehavior::multiselect('adminForm');
 
+$doPrint = JUri::getInstance()->hasVar('tmpl');
 ?>
-
 <div id="schedule" class="windwalker schedule edit-form row-fluid" >
 	<form action="<?php echo JURI::getInstance(); ?>" method="post" name="adminForm" id="adminForm" target="_parent"
 		class="form-validate" enctype="multipart/form-data">
+
+	<?php if ($doPrint != 1): ?>
 
 		<?php echo $this->loadTemplate('form'); ?>
 
@@ -22,10 +24,20 @@ JHtmlBehavior::multiselect('adminForm');
 
 		<!-- LIST TABLE -->
 
-		<button type="button" class="btn btn-success" onclick="print();">
-			<span class="glyphicon glyphicon-print"></span>
-			列印
-		</button>
+		<div style="width: 90%; text-align: right; padding-bottom: 20px;">
+			<a href="<?php echo JURI::getInstance(); ?>&tmpl=component" type="button" class="btn btn-success" target="_blank">
+				<span class="glyphicon glyphicon-print"></span>
+				列印
+			</a>
+		</div>
+
+	<?php else: ?>
+
+		<script>
+			print();
+		</script>
+
+	<?php endif; ?>
 
 		<table id="schedulereportList" class="table table-bordered adminlist">
 			<!-- TABLE HEADER -->

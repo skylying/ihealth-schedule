@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <form>
-	<fields name="report_filter">
 		<fieldset name="schedules_print">
 
 			<field id="date_start"
@@ -28,8 +27,10 @@
 				label="縣市"
 				description="縣市"
 				multiple="true"
+				filter_key="report_filter_city"
+				model_type="Schedules"
+				model_prefix="ScheduleModel"
 				/>
 
 		</fieldset>
-	</fields>
 </form>

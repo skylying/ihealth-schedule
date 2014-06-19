@@ -39,24 +39,27 @@ class JFormFieldItemscheckboxes extends \JFormField
 		$inputName   = $this->element['name'] ? (string) $this->element['name'] : "";
 		$valueField  = $this->element['value_field'] ? (string) $this->element['value_field'] : "id";
 		$optionTitle = $this->element['option_title'] ? (string) $this->element['option_title'] : "title";
+		$filterKey   = $this->element['filter_key'] ? (string) $this->element['filter_key'] : "";
+		$modelType   = $this->element['model_type'] ? (string) $this->element['model_type'] : "";
+		$modelPrefix = $this->element['model_prefix'] ? (string) $this->element['model_prefix'] : "";
 
 		$doc->addScriptDeclaration(<<<JS
-	jQuery(function()
+	jQuery(function($)
 	{
-		jQuery('#{$inputName}-click-all').click(function()
+		$('#{$inputName}-click-all').click(function()
 		{
-			if(jQuery("#{$inputName}-click-all").prop("checked"))
+			if($("#{$inputName}-click-all").prop("checked"))
 			{
-				jQuery(".{$inputName}-checkboxes").each(function()
+				$(".{$inputName}-checkboxes").each(function()
 				{
-					jQuery(this).prop("checked", true);
+					$(this).prop("checked", true);
 				});
 			}
 			else
 			{
-				jQuery(".{$inputName}-checkboxes").each(function()
+				$(".{$inputName}-checkboxes").each(function()
 				{
-					jQuery(this).prop("checked", false);
+					$(this).prop("checked", false);
 				});
 			}
 		});
@@ -68,10 +71,10 @@ JS
 
 		$html = array();
 
-		$html[] = "<ol>";
+		$html[] = "<ul>";
 
 		$html[] = <<<HTML
-	<li class="checkbox-inline">
+	<li class="checkbox" style="margin-left: 1px;">
 		<label for="{$inputName}-click-all">
 			<input id="{$inputName}-click-all" type="checkbox" />
 			全選
@@ -79,22 +82,25 @@ JS
 	</li>
 HTML;
 
+
 		foreach ($items as $i => $item)
 		{
 			$id = $item->$valueField;
 			$title = $item->$optionTitle;
 
+			$checked = ($this->inState($id, $filterKey, $modelType, $modelPrefix)) ? 'checked' : '';
+
 			$html[] = <<<HTML
-	<li class="checkbox-inline">
+	<li class="checkbox-inline" style="margin-left: 1px;">
 		<label for="{$name}-{$i}">
-			<input id="{$name}-{$i}" class="{$inputName}-checkboxes" type="checkbox" name="{$name}" value="{$id}" />
+			<input id="{$name}-{$i}" class="{$inputName}-checkboxes" type="checkbox" name="{$name}" value="{$id}" {$checked} />
 			{$title}
 		</label>
 	</li>
 HTML;
 		}
 
-		$html[] = "</ol>";
+		$html[] = "</ul>";
 
 		return implode($html);
 	}
@@ -148,5 +154,26 @@ HTML;
 		$items = $items ? $items : array();
 
 		return $items;
+	}
+
+	/**
+	 * inState
+	 *
+	 * @param string $value
+	 * @param string $filterKey
+	 * @param string $modelType
+	 * @param string $modelPrefix
+	 *
+	 * @return  bool
+	 */
+	public function inState($value, $filterKey, $modelType, $modelPrefix)
+	{
+		// How to get it auto when modelType and modelPrefix is empty?
+		$schedulesModel = \JModelList::getInstance($modelType, $modelPrefix);
+		$filter = $schedulesModel->getState()->get($filterKey);
+
+		$sameValue = (@in_array($value, $filter)) ? true : false;
+
+		return $sameValue;
 	}
 }

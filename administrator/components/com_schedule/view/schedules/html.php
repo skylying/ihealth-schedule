@@ -242,10 +242,12 @@ HTML;
 
 		$buttonSet['route']['handler'] = function()
 		{
+			$url = JRoute::_('index.php?option=com_schedule&view=schedules', false);
+
 			$html = <<<HTML
-<button class="btn btn-danger" onclick="Joomla.submitbutton('schedules.redirect')">
+<a id="edit-item-button" href="{$url}" class="btn btn-danger">
 	<span class="glyphicon glyphicon-remove"></span> 取消列印
-</button>
+</a>
 HTML;
 			$bar = JToolbar::getInstance('toolbar');
 			$bar->appendButton('Custom', $html);

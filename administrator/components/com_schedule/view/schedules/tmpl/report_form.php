@@ -8,28 +8,25 @@
 
 $printForm = $data->printForm;
 ?>
+
 <div class="form-horizontal">
+
+	<div style="width:90%; text-align:right;">
+		<button type="submit" class="btn btn-primary">
+			<span class="glyphicon glyphicon-filter"></span>
+			送出條件
+		</button>
+	</div>
+
 	<?php foreach ($printForm->getFieldset('schedules_print') as $field): ?>
-		<div class="control-group">
-			<div class="control-label">
+		<div class="col-sm-offset-3 control-group">
+			<div class="col-sm-2 control-label">
 				<?php echo $field->label; ?>
 			</div>
-			<div class="controls-<?php echo $field->id; ?>">
+			<div class="col-sm-7 controls-<?php echo $field->id; ?>">
 				<?php echo $field->input; ?>
 			</div>
 		</div>
 	<?php endforeach; ?>
+
 </div>
-
-<button type="submit" class="btn btn-primary">
-	<span class="glyphicon glyphicon-filter"></span>
-	送出條件
-</button>
-
-<script type="text/javascript">
-	function check_all(obj,cName)
-	{
-		var checkboxes = document.getElementsByName(cName);
-		for(var i=0;i<checkboxes.length;i++){checkboxes[i].checked = obj.checked;}
-	}
-</script>
