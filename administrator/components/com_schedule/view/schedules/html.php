@@ -127,6 +127,8 @@ class ScheduleViewSchedulesHtml extends GridView
 
 		$data->printForm = $this->get('PrintForm');
 		$data->drugDetailForm = $this->get('DrugDetailFilterForm');
+
+		$data->notify = $this->getModel()->getNotify();
 	}
 
 	/**
@@ -239,5 +241,15 @@ HTML;
 			$bar->appendButton('Custom', $html);
 		};
 		return $buttonSet;
+	}
+
+	/**
+	 * Display notification messages
+	 *
+	 * @return  void
+	 */
+	protected function showNotification()
+	{
+
 	}
 }

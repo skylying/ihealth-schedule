@@ -8,6 +8,7 @@
 
 use Windwalker\View\Layout\FileLayout;
 use Schedule\Script\AddressScript;
+use Schedule\Helper\ScheduleNotifyHelper;
 
 // No direct access
 defined('_JEXEC') or die;
@@ -34,10 +35,39 @@ div.modal.hide
 {
 	overflow: visible;
 }
+
+a.notify-detail-button,
+a.notify-skip-button
+{
+	margin-left: 0.5em;
+}
 ');
 
 $editFormFields = $data->editFormFields;
 ?>
+
+<?php if (count($data->notify) > 0): ?>
+<div id="notification" class="alert">
+	<button type="button" class="close" data-dismiss="alert">&times;</button>
+	<?php
+	foreach ($data->notify as $notify):
+		$urlPrefix = JRoute::_('index.php?option=com_schedule&view=schedules&filter[schedule.member_id]=', false);
+	?>
+	<div>
+		<strong><?php echo $notify->member_name; ?></strong>
+		<?php echo ScheduleNotifyHelper::text($notify->notify); ?>
+
+		<a href="<?php echo $urlPrefix . $notify->member_id; ?>" target="_blank" class="notify-detail-button">
+			<small>[ 詳細 ]</small>
+		</a>
+
+		<a href="#" class="text-muted notify-skip-button">
+			<small>[ 略過 ]</small>
+		</a>
+	</div>
+	<?php endforeach; ?>
+</div>
+<?php endif; ?>
 
 <div id="schedule" class="windwalker schedules tablelist row-fluid">
 	<form action="<?php echo JUri::getInstance(); ?>" method="post" name="adminForm" id="adminForm">
