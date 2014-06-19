@@ -30,7 +30,7 @@ abstract class ScheduleComponent extends Component
 	 *
 	 * @return  void
 	 */
-	protected function prepare()
+	public function prepare()
 	{
 		if (JDEBUG && 'html' == \JFactory::getDocument()->getType())
 		{

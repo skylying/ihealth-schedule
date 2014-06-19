@@ -28,7 +28,7 @@ final class ScheduleComponent extends \Schedule\Component\ScheduleComponent
 	 *
 	 * @return void
 	 */
-	protected function prepare()
+	public function prepare()
 	{
 		parent::prepare();
 

@@ -30,7 +30,7 @@ final class ScheduleComponent extends ScheduleComponentBase
 	 *
 	 * @return void
 	 */
-	protected function prepare()
+	public function prepare()
 	{
 		parent::prepare();
 
