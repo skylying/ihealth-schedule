@@ -2,6 +2,9 @@
 
 namespace Schedule\Helper;
 
+use Windwalker\Data\Data;
+use Windwalker\View\Layout\FileLayout;
+
 /**
  * Class ScheduleHelper
  *
@@ -134,6 +137,38 @@ class MailHelper
 		{
 			throw new \Exception("Email send failure");
 		}
+
+		return $this;
+	}
+
+	/**
+	 * Send Mail When Schedule Change
+	 *
+	 * @param   \JUser               $user      Joomla user object
+	 * @param   [Data|object|array]  $schedule  Schedule data
+	 * @param   bool                 $ccBack    When param is true, it will send mail to ihealth.
+	 *
+	 * @return  MailHelper
+	 */
+	public function sendMailWhenScheduleChange($user, $schedule, $ccBack = false)
+	{
+		$mailDisplayData = (object) array(
+			'user'     => $user,
+			'schedule' => $schedule
+		);
+
+		// TODO: 確認標題
+		$this->subject = "處方預約確認信";
+		$this->body    = (new FileLayout("scedule.mail.default"))->render($mailDisplayData);
+		$this->to[]    = $user->email;
+
+		if ($ccBack)
+		{
+			// TODO: 確認給 ihealth 信箱的 mail address
+			$this->cc[] = "ihealth@ihealth.com.tw";
+		}
+
+		$this->sendMail();
 
 		return $this;
 	}
