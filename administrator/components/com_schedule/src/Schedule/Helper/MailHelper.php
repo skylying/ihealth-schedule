@@ -40,17 +40,9 @@ class MailHelper
 	/**
 	 * Property from.
 	 *
-	 * @var  array
-	 *
-	 * 變數設定參考
-	 *
-	 * ```php
-	 * array(
-	 *     'ihealth@ihealth.com.tw' => 'ihealth'
-	 * )
-	 * ```
+	 * @var  string
 	 */
-	public $from = array('ihealth@ihealth.com.tw' => 'ihealth');
+	public $from = 'ihealth@ihealth.com.tw';
 
 	/**
 	 * Property to.
@@ -60,9 +52,10 @@ class MailHelper
 	 * 變數設定參考
 	 * ```php
 	 * array(
-	 *     'a@user.mail' => 'a User',
-	 *     'b@user.mail' => 'b user',
+	 *     'a@user.mail',
+	 *     'b@user.mail',
 	 * )
+	 * ```
 	 */
 	public $to = array();
 
@@ -74,36 +67,10 @@ class MailHelper
 	 * 變數設定參考
 	 * ```php
 	 * array(
-	 *     'a@user.mail' => 'a User',
-	 *     'b@user.mail' => 'b user',
+	 *     'a@user.mail',
+	 *     'b@user.mail',
 	 * )
+	 * ```
 	 */
 	public $cc = array();
-
-	/**
-	 * set
-	 *
-	 * @param   string      $name
-	 * @param   mixed       $value
-	 *
-	 * @return  mailHelper
-	 */
-	public function __set($name, $value)
-	{
-		$this->$name = $value;
-
-		return $this;
-	}
-
-	/**
-	 * get
-	 *
-	 * @param   string  $name
-	 *
-	 * @return  mixed
-	 */
-	public function __get($name)
-	{
-		return $this->$name;
-	}
 }
