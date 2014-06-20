@@ -81,8 +81,14 @@ $asset->addJS('drugdetail/institute-extra.js');
 			<?php echo $this->loadTemplate('list_row', array('schedule' => $schedule)); ?>
 		<?php endforeach; ?>
 
+		<?php
+		$taskId = $sender['task_id'];
+
+		$extras = empty($data->extras[$taskId][$instituteId]) ? array() : $data->extras[$taskId][$instituteId];
+		?>
+
 		<!-- Load database drug extra input -->
-		<?php foreach ($institute['extra'] as $extra): ?>
+		<?php foreach ($extras as $extra): ?>
 			<!-- ----start---- -->
 			<?php
 			echo $this->loadTemplate('extra_list_row', array(

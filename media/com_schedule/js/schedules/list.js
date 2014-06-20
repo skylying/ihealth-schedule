@@ -24,6 +24,20 @@
 		};
 	}
 
+	if (window.filterMemberOnChange === undefined)
+	{
+		/**
+		 * On change event of filter "member_id"
+		 *
+		 * @param {object} e
+		 * @param {jQuery} $node
+		 */
+		window.filterMemberOnChange = function(e, $node)
+		{
+			$node.closest('form').submit();
+		};
+	}
+
 	if (window.closeModal === undefined)
 	{
 		window.closeModal = function(id)

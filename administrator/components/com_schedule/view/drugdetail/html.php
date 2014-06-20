@@ -110,7 +110,7 @@ class ScheduleViewDrugdetailHtml extends EditView
 
 		$schedules = $this->getRelatedSchedules($senderIds);
 		$taskIds   = \JArrayHelper::getColumn($schedules, "task_id");
-		$extras    = $this->getDrugExtraDataSet($taskIds);
+		$this->data->extras = $this->getDrugExtraDataSet($taskIds);
 
 		$items = array();
 
@@ -131,29 +131,17 @@ class ScheduleViewDrugdetailHtml extends EditView
 
 			switch ($schedule->type)
 			{
-				case ("individual"):
+				case "individual":
 					// 散客
 					$items[$senderId]['individuals'][] = $schedule;
 				break;
 
-				case ("resident"):
+				case "resident":
 					if (! isset($items[$senderId]['institutes'][$instituteId]))
 					{
 						$items[$senderId]['institutes'][$instituteId] = array();
 						$items[$senderId]['institutes'][$instituteId]['schedule'] = array();
 						$items[$senderId]['institutes'][$instituteId]['extra'] = array();
-					}
-
-					foreach ($extras as $extraKey => $extra)
-					{
-						// 同比機構的額外添購金額放入陣列中
-						if ($instituteId == $extra->institute_id)
-						{
-							$items[$senderId]['institutes'][$instituteId]['extra'][] = $extra;
-
-							// 讓同天同樣機構不同藥師時，資料不重複
-							unset($extras[$extraKey]);
-						}
 					}
 
 					$items[$senderId]['institutes'][$instituteId]['schedules'][] = $schedule;
@@ -172,12 +160,55 @@ class ScheduleViewDrugdetailHtml extends EditView
 	 * @param   array  $taskIds
 	 *
 	 * @return  Data[]
+	 *
+	 * return 詳細形式如下
+	 *
+	 * ```php
+	 * array(
+	 *     1 => array(               // Task id
+	 *         2 => array(           // Institute id
+	 *             Data(
+	 *                 "id"           => 1,
+	 *                 "task_id"      => 1,
+	 *                 "price"        => 888.88,
+	 *                 "institute_id" => 2,
+	 *                 "ice"          => 1,
+	 *                 "sorted"       => 1,
+	 *             )
+	 *         )
+	 *     ),
+	 *     2 => array(
+	 *         array(
+	 *             ...
+	 *         )
+	 *     ),
+	 * )
+	 * ```
 	 */
 	protected function getDrugExtraDataSet($taskIds)
 	{
 		$extraMapper = new DataMapper(Table::DRUG_EXTRA_DETAILS);
 
-		return $extraMapper->find(array("task_id" => $taskIds));
+		$extras = $extraMapper->find(array("task_id" => $taskIds));
+
+		$returnVal = array();
+
+		foreach ($extras as $extra)
+		{
+			if (! isset($returnVal[$extra->task_id]))
+			{
+				$returnVal[$extra->task_id] = array();
+			}
+
+			if (! isset($returnVal[$extra->task_id][$extra->institute_id]))
+			{
+				$returnVal[$extra->task_id][$extra->institute_id] = array();
+			}
+
+			$returnVal[$extra->task_id][$extra->institute_id][] = $extra;
+		}
+
+		return $returnVal;
 	}
 
 	/**
