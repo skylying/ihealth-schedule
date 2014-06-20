@@ -24,18 +24,22 @@
 		 * @type {string}
 		 */
 		schedulesUrl: '',
+
 		/**
 		 * @type {string}
 		 */
 		instituteApi: '',
+
 		/**
 		 * @type {string}
 		 */
 		membersApi: '',
+
 		/**
 		 * @type {string}
 		 */
 		addressesApi: '',
+
 		/**
 		 * Options
 		 *
