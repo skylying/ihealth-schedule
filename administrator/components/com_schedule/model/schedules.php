@@ -132,9 +132,9 @@ class ScheduleModelSchedules extends ListModel
 
 		$this->state->set('report_filter', $filter);
 
-		$this->state->set('report_filter_start_date', ArrayHelper::getValue($filter, 'date_start'));
-		$this->state->set('report_filter_end_date', ArrayHelper::getValue($filter, 'date_end'));
-		$this->state->set('report_filter_city', ArrayHelper::getValue($filter, 'city'));
+		$this->state->set('report_filter_start_date', ArrayHelper::getValue($filter, 'date_start'), date('Y') . '-01-01');
+		$this->state->set('report_filter_end_date', ArrayHelper::getValue($filter, 'date_end'), date('Y') . '-12-31');
+		$this->state->set('report_filter_city', ArrayHelper::getValue($filter, 'city'), array());
 
 		parent::populateState($ordering, $direction);
 	}
@@ -221,9 +221,9 @@ class ScheduleModelSchedules extends ListModel
 	{
 		$data = parent::loadFormData();
 
-		$data->date_start = $this->state->get('report_filter_start_date', date('Y') . '-01-01');
-		$data->date_end = $this->state->get('report_filter_end_date', date('Y') . '-12-31');
-		$data->city = $this->state->get('report_filter_city', array());
+		$data->date_start = $this->state->get('report_filter_start_date');
+		$data->date_end = $this->state->get('report_filter_end_date');
+		$data->city = $this->state->get('report_filter_city');
 
 		return $data;
 	}

@@ -1,36 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <form>
-		<fieldset name="schedules_print">
+	<fieldset name="schedules_print">
 
-			<field id="date_start"
-				name="date_start"
-				type="calendar"
-				format="%Y-%m-%d"
-				label="起始日期"
-				description="起始日期"
-				/>
+		<field id="date_start"
+			name="date_start"
+			type="calendar"
+			format="%Y-%m-%d"
+			label="起始日期"
+			description="起始日期"
+			/>
 
-			<field id="date_end"
-				name="date_end"
-				type="calendar"
-				format="%Y-%m-%d"
-				label="結束日期"
-				description="結束日期"
-				/>
+		<field id="date_end"
+			name="date_end"
+			type="calendar"
+			format="%Y-%m-%d"
+			label="結束日期"
+			description="結束日期"
+			/>
 
-			<field name="city"
-				type="Itemscheckboxes"
-				table="#__schedule_cities"
-				select="title"
-				key_field="id"
-				value_field="title"
-				label="縣市"
-				description="縣市"
-				multiple="true"
-				filter_key="report_filter_city"
-				model_type="Schedules"
-				model_prefix="ScheduleModel"
-				/>
+		<field name="city"
+			type="Itemscheckboxes"
+			table="#__schedule_cities"
+			select="title"
+			key_field="id"
+			value_field="title"
+			label="縣市"
+			description="縣市"
+			multiple="true"
+			filter_key="report_filter_city"
+			model_type="Schedules"
+			model_prefix="ScheduleModel"
+			/>
 
-		</fieldset>
+	</fieldset>
 </form>

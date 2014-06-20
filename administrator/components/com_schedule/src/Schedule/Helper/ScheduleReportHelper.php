@@ -62,16 +62,13 @@ class ScheduleReportHelper
 	{
 		$thisYear = date('Y');
 
-		$startDate = \JArrayHelper::getValue($filter, 'date_start');
-		$endDate = \JArrayHelper::getValue($filter, 'date_end');
-		$filterCity = \JArrayHelper::getValue($filter, 'city');
 
 		$defaultYearMonthStart = sprintf('%s-01-01', $thisYear);
 		$defaultYearMonthEnd   = sprintf('%s-12-31', $thisYear);
 
-		$startDate  = (!empty($startDate)) ? $startDate : $defaultYearMonthStart;
-		$endDate    = (!empty($endDate)) ? $endDate : $defaultYearMonthEnd;
-		$filterCity = (!empty($filterCity)) ? $filterCity : array();
+		$startDate = \JArrayHelper::getValue($filter, 'date_start', $defaultYearMonthStart);
+		$endDate = \JArrayHelper::getValue($filter, 'date_end', $defaultYearMonthEnd);
+		$filterCity = \JArrayHelper::getValue($filter, 'city', array());
 
 		if (!empty($filterCity))
 		{

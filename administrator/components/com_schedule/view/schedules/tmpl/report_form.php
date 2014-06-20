@@ -19,14 +19,14 @@ $printForm = $data->printForm;
 	</div>
 
 	<?php foreach ($printForm->getFieldset('schedules_print') as $field): ?>
-		<div class="col-sm-offset-3 control-group">
-			<div class="col-sm-2 control-label">
-				<?php echo $field->label; ?>
-			</div>
-			<div class="col-sm-7 controls-<?php echo $field->id; ?>">
-				<?php echo $field->input; ?>
-			</div>
+	<div class="col-sm-offset-3 control-group">
+		<div class="col-sm-2 control-label">
+			<?php echo $field->label; ?>
 		</div>
+		<div class="col-sm-7 controls-<?php echo $field->id; ?>">
+			<?php echo $field->input; ?>
+		</div>
+	</div>
 	<?php endforeach; ?>
 
 </div>

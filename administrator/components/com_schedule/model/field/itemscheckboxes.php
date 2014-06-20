@@ -43,12 +43,15 @@ class JFormFieldItemscheckboxes extends \JFormField
 		$modelType   = $this->element['model_type'] ? (string) $this->element['model_type'] : "";
 		$modelPrefix = $this->element['model_prefix'] ? (string) $this->element['model_prefix'] : "";
 
+		$schedulesModel = \JModelList::getInstance($modelType, $modelPrefix);
+		$filter = $schedulesModel->getState()->get($filterKey);
+
 		$doc->addScriptDeclaration(<<<JS
 	jQuery(function($)
 	{
 		$('#{$inputName}-click-all').click(function()
 		{
-			if($("#{$inputName}-click-all").prop("checked"))
+			if ($("#{$inputName}-click-all").prop("checked"))
 			{
 				$(".{$inputName}-checkboxes").each(function()
 				{
@@ -88,7 +91,9 @@ HTML;
 			$id = $item->$valueField;
 			$title = $item->$optionTitle;
 
-			$checked = ($this->inState($id, $filterKey, $modelType, $modelPrefix)) ? 'checked' : '';
+			$value = is_array($filter) ? $filter : array($filter);
+
+			$checked = in_array($id, $value) ? ' checked="checked"' : '';
 
 			$html[] = <<<HTML
 	<li class="checkbox-inline" style="margin-left: 1px;">
@@ -154,26 +159,5 @@ HTML;
 		$items = $items ? $items : array();
 
 		return $items;
-	}
-
-	/**
-	 * inState
-	 *
-	 * @param string $value
-	 * @param string $filterKey
-	 * @param string $modelType
-	 * @param string $modelPrefix
-	 *
-	 * @return  bool
-	 */
-	public function inState($value, $filterKey, $modelType, $modelPrefix)
-	{
-		// How to get it auto when modelType and modelPrefix is empty?
-		$schedulesModel = \JModelList::getInstance($modelType, $modelPrefix);
-		$filter = $schedulesModel->getState()->get($filterKey);
-
-		$sameValue = (@in_array($value, $filter)) ? true : false;
-
-		return $sameValue;
 	}
 }
