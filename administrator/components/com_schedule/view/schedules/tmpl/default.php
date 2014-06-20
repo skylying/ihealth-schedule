@@ -73,7 +73,7 @@ $editFormFields = $data->editFormFields;
 <!-- Add New Modal -->
 <div id="modal-add-new-item" class="modal hide fade" tabindex="-1" role="dialog">
 	<div class="modal-body" style="overflow: hidden;">
-		<iframe src="" frameborder="0" width="100%" height="525"></iframe>
+		<iframe src="" frameborder="0" width="100%" height="531"></iframe>
 	</div>
 </div>
 

@@ -44,9 +44,23 @@ if ('component' === $tmpl)
 		}
 	');
 }
+
+$asset->addJS('schedule/edit.js');
+
+$jsOptions = array(
+	'schedulesUrl' => JRoute::_('index.php?option=com_schedule&view=schedules', false),
+	'instituteApi' => JRoute::_('index.php?option=com_schedule&task=institute.ajax.json&id=', false),
+	'membersApi' => JRoute::_('index.php?option=com_schedule&task=members.ajax.json&id=', false),
+	'addressesApi' => JRoute::_('index.php?option=com_schedule&task=addresses.ajax.json&id=', false),
+);
 ?>
 <!-- Validate Script -->
 <script type="text/javascript">
+	jQuery(function()
+	{
+		ScheduleEdit.run(<?php echo json_encode($jsOptions); ?>);
+	});
+
 	Joomla.submitbutton = function(task)
 	{
 		(function ($)
@@ -99,10 +113,12 @@ if ('component' === $tmpl)
 				</div>
 				<?php endforeach;?>
 
-				<a href="#">
-					查詢前後七日排程
-					<span class="glyphicon glyphicon-share-alt"></span>
-				</a>
+				<p>
+					<a href="#" id="institute-schedules-with-range" target="_blank">
+						查詢前後七日排程
+						<span class="glyphicon glyphicon-share-alt"></span>
+					</a>
+				</p>
 			<?php echo JHtmlBootstrap::endTab(); ?>
 
 			<?php echo JHtmlBootstrap::addTab('scheduleEditTab', 'schedule_individual', '散客'); ?>
@@ -112,10 +128,12 @@ if ('component' === $tmpl)
 				</div>
 				<?php endforeach;?>
 
-				<a href="#">
-					查詢前後七日排程
-					<span class="glyphicon glyphicon-share-alt"></span>
-				</a>
+				<p>
+					<a href="#" id="individual-schedules-with-range" target="_blank">
+						查詢前後七日排程
+						<span class="glyphicon glyphicon-share-alt"></span>
+					</a>
+				</p>
 			<?php echo JHtmlBootstrap::endTab(); ?>
 
 			<?php echo JHtmlBootstrap::endTabSet(); ?>
@@ -127,7 +145,6 @@ if ('component' === $tmpl)
 			<input type="hidden" name="task" value="" />
 			<input type="hidden" name="id" value="<?php echo $data->item->id; ?>" />
 			<input type="hidden" name="form_type" value="" />
-			<input type="hidden" name="sender_id" value="" />
 			<?php echo JHtml::_('form.token'); ?>
 		</div>
 	</form>

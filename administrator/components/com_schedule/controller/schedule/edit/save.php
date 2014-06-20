@@ -18,6 +18,7 @@ class ScheduleControllerScheduleEditSave extends SaveController
 	{
 		$state = $this->model->getState();
 
+		$state->set('sender_id', $this->data['sender_id']);
 		$state->set('form.type', $this->input->get('form_type', 'schedule_institute'));
 
 		parent::preSaveHook();
