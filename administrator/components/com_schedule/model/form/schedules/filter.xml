@@ -71,6 +71,19 @@
 			<option></option>
 		</field>
 
+		<field name="schedule.member_id"
+			hint="輸入會員名稱"
+			type="select2"
+			minimumInputLength="1"
+			apiUrl="index.php?option=com_schedule&amp;task=members.search.json"
+			apiQueryKey="filter_search"
+			apiTableName="members"
+			onChangeCallback="filterMemberOnChange"
+			label="會員名稱"
+			>
+			<option></option>
+		</field>
+
 		<field name="schedule.city"
 			type="sql"
 			query="SELECT id,title FROM #__schedule_cities"
