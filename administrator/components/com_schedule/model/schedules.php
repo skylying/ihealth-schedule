@@ -213,11 +213,11 @@ class ScheduleModelSchedules extends ListModel
 	}
 
 	/**
-	 * getNotify
+	 * getNotifies
 	 *
 	 * @return  stdClass[]
 	 */
-	public function getNotify()
+	public function getNotifies()
 	{
 		$query = $this->db->getQuery(true);
 

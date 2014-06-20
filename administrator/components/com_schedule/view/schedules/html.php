@@ -10,7 +10,8 @@ use Joomla\DI\Container;
 use Windwalker\Model\Model;
 use Windwalker\View\Engine\PhpEngine;
 use Windwalker\View\Html\GridView;
-use Windwalker\Xul\XulEngine;
+use Windwalker\View\Layout\FileLayout;
+use Windwalker\Data\Data;
 
 // No direct access
 defined('_JEXEC') or die;
@@ -104,6 +105,7 @@ class ScheduleViewSchedulesHtml extends GridView
 	 */
 	protected function prepareData()
 	{
+		$app = JFactory::getApplication();
 		$data = $this->getData();
 
 		/** @var JForm $filterForm */
@@ -128,7 +130,16 @@ class ScheduleViewSchedulesHtml extends GridView
 		$data->printForm = $this->get('PrintForm');
 		$data->drugDetailForm = $this->get('DrugDetailFilterForm');
 
-		$data->notify = $this->getModel()->getNotify();
+		$notifies = $this->getModel()->getNotifies();
+
+		if (count($notifies) > 0)
+		{
+			$fileLayout = new FileLayout('schedule.schedules.notify');
+
+			$notifyMessage = $fileLayout->render(new Data(['notifies' => $notifies]));
+
+			$app->enqueueMessage($notifyMessage, 'warning');
+		}
 	}
 
 	/**
