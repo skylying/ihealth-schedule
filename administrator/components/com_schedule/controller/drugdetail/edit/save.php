@@ -47,19 +47,16 @@ class ScheduleControllerDrugdetailEditSave extends SaveController
 	}
 
 	/**
-	 * Post SaveHook
+	 * Do save
 	 *
-	 * @param   \Windwalker\Model\CrudModel $model
-	 * @param   array                       $validData
-	 *
-	 * @return  void
+	 * @return  array
 	 */
-	protected function postSaveHook($model, $validData)
+	protected function doSave()
 	{
 		$this->saveScheduleDrugDetails();
-		$this->saveDrugExtraDetails($model);
+		$this->saveDrugExtraDetails($this->model);
 
-		parent::postSaveHook($model, $validData);
+		return $this->data;
 	}
 
 	/**
@@ -201,16 +198,5 @@ class ScheduleControllerDrugdetailEditSave extends SaveController
 		);
 
 		$this->app->redirect($url . "&" . urldecode($urlValue));
-	}
-
-	/**
-	 * Do save
-	 *
-	 * @return  array
-	 */
-	protected function doSave()
-	{
-		// 不多儲存
-		return $this->data;
 	}
 }
