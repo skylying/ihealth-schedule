@@ -27,9 +27,6 @@
 			label="縣市"
 			description="縣市"
 			multiple="true"
-			filter_key="report_filter_city"
-			model_type="Schedules"
-			model_prefix="ScheduleModel"
 			/>
 
 	</fieldset>

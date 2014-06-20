@@ -62,7 +62,6 @@ class ScheduleReportHelper
 	{
 		$thisYear = date('Y');
 
-
 		$defaultYearMonthStart = sprintf('%s-01-01', $thisYear);
 		$defaultYearMonthEnd   = sprintf('%s-12-31', $thisYear);
 

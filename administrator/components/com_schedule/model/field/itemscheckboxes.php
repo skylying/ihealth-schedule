@@ -39,12 +39,6 @@ class JFormFieldItemscheckboxes extends \JFormField
 		$inputName   = $this->element['name'] ? (string) $this->element['name'] : "";
 		$valueField  = $this->element['value_field'] ? (string) $this->element['value_field'] : "id";
 		$optionTitle = $this->element['option_title'] ? (string) $this->element['option_title'] : "title";
-		$filterKey   = $this->element['filter_key'] ? (string) $this->element['filter_key'] : "";
-		$modelType   = $this->element['model_type'] ? (string) $this->element['model_type'] : "";
-		$modelPrefix = $this->element['model_prefix'] ? (string) $this->element['model_prefix'] : "";
-
-		$schedulesModel = \JModelList::getInstance($modelType, $modelPrefix);
-		$filter = $schedulesModel->getState()->get($filterKey);
 
 		$doc->addScriptDeclaration(<<<JS
 	jQuery(function($)
@@ -91,7 +85,7 @@ HTML;
 			$id = $item->$valueField;
 			$title = $item->$optionTitle;
 
-			$value = is_array($filter) ? $filter : array($filter);
+			$value = is_array($this->value) ? $this->value : array($this->value);
 
 			$checked = in_array($id, $value) ? ' checked="checked"' : '';
 
