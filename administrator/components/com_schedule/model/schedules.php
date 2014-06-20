@@ -9,6 +9,7 @@
 use Windwalker\DI\Container;
 use Windwalker\Model\Filter\FilterHelper;
 use Windwalker\Model\ListModel;
+use Schedule\Table\Table;
 
 // No direct access
 defined('_JEXEC') or die;
@@ -209,5 +210,24 @@ class ScheduleModelSchedules extends ListModel
 	public function getDrugDetailFilterForm()
 	{
 		return \JForm::getInstance("com_schedule.form", "drugdetailfilter");
+	}
+
+	/**
+	 * getNotifies
+	 *
+	 * @return  stdClass[]
+	 */
+	public function getNotifies()
+	{
+		$query = $this->db->getQuery(true);
+
+		$query->select('`schedule`.`id`, `schedule`.`member_name`, `schedule`.`member_id`, `schedule`.`notify`')
+			->from(Table::SCHEDULES . ' AS `schedule`')
+			->leftJoin(Table::TASKS . ' AS `task` ON `schedule`.`task_id`=`task`.`id`')
+			->where('`schedule`.`notify` > 0')
+			->where('`task`.`status` = 0')
+			->group('`schedule`.`member_id`');
+
+		return $this->db->setQuery($query)->loadObjectList();
 	}
 }

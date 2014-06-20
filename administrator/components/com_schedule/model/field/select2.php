@@ -324,6 +324,10 @@ class JFormFieldSelect2 extends JFormField
 
 			break;
 
+			case 'members':
+				$selectString = "`id`, `name` AS `dropdowntext`";
+				break;
+
 			default:
 				$selectString = "`id`, `title` AS `dropdowntext`";
 		}

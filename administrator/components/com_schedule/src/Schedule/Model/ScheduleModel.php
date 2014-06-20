@@ -10,6 +10,7 @@ namespace Schedule\Model;
 
 use Windwalker\Model\AdminModel;
 use Schedule\Table\Collection AS TableCollection;
+use Schedule\Table\Table;
 
 // No direct access
 defined('_JEXEC') or die;
@@ -213,5 +214,38 @@ class ScheduleModel extends AdminModel
 		$table->area          = $addressTable->area;
 		$table->city_title    = $addressTable->city_title;
 		$table->area_title    = $addressTable->area_title;
+		$table->notify        = $this->getNotify($table);
+	}
+
+	/**
+	 * getNotify
+	 *
+	 * @param   \JTable  $table
+	 *
+	 * @return  bool
+	 */
+	protected function getNotify($table)
+	{
+		$query = $this->db->getQuery(true);
+
+		$validDateStart = new \JDate($table->date);
+		$validDateEnd = (new \JDate($table->date));
+
+		$validDateStart->modify('-10 days');
+		$validDateEnd->modify('+10 days');
+
+		// Check if there is any schedule need to be combined together
+		$query->select('COUNT(*)')
+			->from(Table::SCHEDULES . ' AS schedule')
+			->leftJoin(Table::TASKS . ' AS task ON task.id=schedule.task_id')
+			->where('schedule.member_id = ' . $table->member_id)
+			->where('schedule.address_id = ' . $table->address_id)
+			->where('task.status = 0')
+			->where('schedule.date >= ' . $this->db->q($validDateStart->toSql()))
+			->where('schedule.date <= ' . $this->db->q($validDateEnd->toSql()));
+
+		$result = (int) $this->db->setQuery($query)->loadResult();
+
+		return $result > 0 ? 1 : 0;
 	}
 }
