@@ -130,7 +130,7 @@ class ScheduleViewSchedulesHtml extends GridView
 		$data->printForm = $this->get('PrintForm');
 		$data->drugDetailForm = $this->get('DrugDetailFilterForm');
 
-		$notifies = $this->getModel()->getNotifies();
+		$notifies = $this->get('Notifies');
 
 		if (count($notifies) > 0)
 		{
