@@ -227,4 +227,14 @@ class ScheduleModelSchedules extends ListModel
 
 		return $data;
 	}
+
+	/**
+	 * getDrugDetailFilterForm
+	 *
+	 * @return  \JForm
+	 */
+	public function getDrugDetailFilterForm()
+	{
+		return \JForm::getInstance("com_schedule.form", "drugdetailfilter");
+	}
 }

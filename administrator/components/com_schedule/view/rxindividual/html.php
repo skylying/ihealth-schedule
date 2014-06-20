@@ -134,7 +134,15 @@ HTML;
 	 */
 	protected function prepareData()
 	{
-		$this->preparePrintData();
+		$data       = $this->data;
+		$customerId = $data->item->customer_id;
+		$itemId     = $data->item->id;
+
+		// Check item id and customer id
+		if (!empty($itemId) && !empty($customerId))
+		{
+			$this->preparePrintData();
+		}
 	}
 
 	/**
@@ -160,9 +168,10 @@ HTML;
 		$memberList    = '';
 		$customer_note = '';
 
-		$members       = \Schedule\Helper\Mapping\MemberCustomerHelper::loadMembers($data->item->customer_id);
-		$scheduleInfos = \Schedule\Helper\RxDataHelper::getRxList($data->item->id);
+		// Get print data from helpers
 		$customerNotes = \Schedule\Helper\RxDataHelper::getCustomerNote($data->item->customer_id);
+		$members       = \Schedule\Helper\Mapping\MemberCustomerHelper::loadMembers($data->item->id);
+		$scheduleInfos = \Schedule\Helper\RxDataHelper::getRxList($data->item->id);
 		$drugs         = \Schedule\Helper\RxDataHelper::getDrugList($data->item->id);
 
 		$reminds = explode(',', $data->item->remind);
