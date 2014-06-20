@@ -33,31 +33,73 @@ class JFormFieldItemscheckboxes extends \JFormField
 	 */
 	public function getInput()
 	{
-		$valueField = $this->element['value_field'] ? (string) $this->element['value_field'] : "id";
+		$app         = JFactory::getApplication();
+		$doc         = $app->getDocument();
+		$name        = $this->name;
+		$inputName   = $this->element['name'] ? (string) $this->element['name'] : "";
+		$valueField  = $this->element['value_field'] ? (string) $this->element['value_field'] : "id";
 		$optionTitle = $this->element['option_title'] ? (string) $this->element['option_title'] : "title";
+
+		$doc->addScriptDeclaration(<<<JS
+	jQuery(function($)
+	{
+		$('#{$inputName}-click-all').click(function()
+		{
+			if ($("#{$inputName}-click-all").prop("checked"))
+			{
+				$(".{$inputName}-checkboxes").each(function()
+				{
+					$(this).prop("checked", true);
+				});
+			}
+			else
+			{
+				$(".{$inputName}-checkboxes").each(function()
+				{
+					$(this).prop("checked", false);
+				});
+			}
+		});
+	});
+JS
+		);
 
 		$items = $this->getItems();
 
 		$html = array();
 
-		$html[] = "<ol>";
+		$html[] = "<ul>";
 
-		$name = $this->name;
+		$html[] = <<<HTML
+	<li class="checkbox" style="margin-left: 1px;">
+		<label for="{$inputName}-click-all">
+			<input id="{$inputName}-click-all" type="checkbox" />
+			全選
+		</label>
+	</li>
+HTML;
+
 
 		foreach ($items as $i => $item)
 		{
 			$id = $item->$valueField;
 			$title = $item->$optionTitle;
 
+			$value = is_array($this->value) ? $this->value : array($this->value);
+
+			$checked = in_array($id, $value) ? ' checked="checked"' : '';
+
 			$html[] = <<<HTML
-	<li>
-		<label for="{$name}-{$i}">{$title}</label>
-		<input id="{$name}-{$i}" type="checkbox" name="{$name}[]" value="{$id}" />
+	<li class="checkbox-inline" style="margin-left: 1px;">
+		<label for="{$name}-{$i}">
+			<input id="{$name}-{$i}" class="{$inputName}-checkboxes" type="checkbox" name="{$name}" value="{$id}" {$checked} />
+			{$title}
+		</label>
 	</li>
 HTML;
 		}
 
-		$html[] = "</ol>";
+		$html[] = "</ul>";
 
 		return implode($html);
 	}

@@ -108,6 +108,19 @@ class ScheduleViewSchedulesHtml extends GridView
 		$app = JFactory::getApplication();
 		$data = $this->getData();
 
+		if ('report' == $this->getLayout())
+		{
+			$schedulesModel = $this->getModel('Schedules');
+			$filter = $schedulesModel->getState()->get('report_filter');
+
+			$ScheduleReport = new \Schedule\Helper\ScheduleReportHelper;
+			$data->items = $ScheduleReport->getData($filter);
+
+			$data->printForm = $this->get('PrintForm');
+
+			return;
+		}
+
 		/** @var JForm $filterForm */
 		$filterForm = $data->filterForm;
 
@@ -127,7 +140,6 @@ class ScheduleViewSchedulesHtml extends GridView
 
 		$data->editFormFields = $editFormFields;
 
-		$data->printForm = $this->get('PrintForm');
 		$data->drugDetailForm = $this->get('DrugDetailFilterForm');
 
 		$notifies = $this->get('Notifies');
@@ -152,6 +164,8 @@ class ScheduleViewSchedulesHtml extends GridView
 	 */
 	protected function configureToolbar($buttonSet = array(), $canDo = null)
 	{
+		$buttonSet = $this->configureReportToolbar($buttonSet);
+
 		// Button 新增行政排程
 		$buttonSet['add2']['handler'] = function()
 		{
@@ -199,15 +213,13 @@ HTML;
 			$bar->appendButton('Custom', $html);
 		};
 
-		$buttonSet = $this->configureReportToolbar($buttonSet);
-
 		return $buttonSet;
 	}
 
 	/**
 	 * configureReportToolbar
 	 *
-	 * @param $buttonSet
+	 * @param   array $buttonSet
 	 *
 	 * @return  mixed
 	 */
@@ -225,6 +237,7 @@ HTML;
 				$bar = JToolbar::getInstance('toolbar');
 				$bar->appendButton('Custom', $dHtml);
 			};
+
 			return $buttonSet;
 		}
 
@@ -243,14 +256,17 @@ HTML;
 
 		$buttonSet['route']['handler'] = function()
 		{
+			$url = JRoute::_('index.php?option=com_schedule&view=schedules', false);
+
 			$html = <<<HTML
-<button class="btn btn-danger" onclick="Joomla.submitbutton('schedules.redirect')">
+<a id="edit-item-button" href="{$url}" class="btn btn-danger">
 	<span class="glyphicon glyphicon-remove"></span> 取消列印
-</button>
+</a>
 HTML;
 			$bar = JToolbar::getInstance('toolbar');
 			$bar->appendButton('Custom', $html);
 		};
+
 		return $buttonSet;
 	}
 

@@ -9,6 +9,7 @@
 use Windwalker\DI\Container;
 use Windwalker\Model\Filter\FilterHelper;
 use Windwalker\Model\ListModel;
+use Windwalker\Helper\ArrayHelper;
 use Schedule\Table\Table;
 
 // No direct access
@@ -126,6 +127,16 @@ class ScheduleModelSchedules extends ListModel
 	 */
 	protected function populateState($ordering = 'schedule.id', $direction = 'ASC')
 	{
+		$app = JFactory::getApplication();
+
+		$filter = $app->getUserStateFromRequest('schedules.report.filter', 'report-filter', array());
+
+		$this->state->set('report_filter', $filter);
+
+		$this->state->set('report_filter_start_date', ArrayHelper::getValue($filter, 'date_start', date('Y') . '-01-01'));
+		$this->state->set('report_filter_end_date', ArrayHelper::getValue($filter, 'date_end', date('Y') . '-12-31'));
+		$this->state->set('report_filter_city', ArrayHelper::getValue($filter, 'city', array()));
+
 		parent::populateState($ordering, $direction);
 	}
 
@@ -193,13 +204,29 @@ class ScheduleModelSchedules extends ListModel
 	public function getPrintForm()
 	{
 		$config = array(
-			'control'   => 'jform',
+			'control'   => 'report-filter',
 			'load_data' => 1
 		);
 
 		$formName = 'schedules_print';
 
 		return $this->loadForm($this->option . '.' . $formName . '.form', $formName, $config);
+	}
+
+	/**
+	 * loadFormData
+	 *
+	 * @return  mixed
+	 */
+	public function loadFormData()
+	{
+		$data = parent::loadFormData();
+
+		$data->date_start = $this->state->get('report_filter_start_date');
+		$data->date_end = $this->state->get('report_filter_end_date');
+		$data->city = $this->state->get('report_filter_city');
+
+		return $data;
 	}
 
 	/**
