@@ -30,10 +30,9 @@
 			/>
 
 		<field name="path"
-			type="finder"
-			label="檔案位址"
-			description="儲存檔案的路徑"
-			class="input-large"
+			type="image"
+			label="圖片"
+			description="圖片"
 			/>
 	</fieldset>
 </form>

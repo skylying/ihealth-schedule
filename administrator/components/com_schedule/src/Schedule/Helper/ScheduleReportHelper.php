@@ -17,11 +17,13 @@ use Windwalker\Compare\InCompare;
 class ScheduleReportHelper
 {
 	/**
-	 * getReportData
+	 * getRowData
+	 *
+	 * @param array $filter
 	 *
 	 * @return  mixed
 	 */
-	public function getRowData()
+	public function getRowData($filter)
 	{
 		$db = \JFactory::getDbo();
 
@@ -43,7 +45,7 @@ class ScheduleReportHelper
 			->group("`city_title`, institute_title, type, `year_month`")
 			->order("`city_title`, `type` DESC, `institute_title`, `year_month`");
 
-		$query = $this->extraFilter($query);
+		$query = $this->extraFilter($query, $filter);
 
 		return $db->setQuery($query)->loadObjectList();
 	}
@@ -51,27 +53,25 @@ class ScheduleReportHelper
 	/**
 	 * extraFilter
 	 *
-	 * @param \JDatabaseQuery $query
+	 * @param object $query
+	 * @param string $filter
 	 *
 	 * @return  mixed
 	 */
-	public function extraFilter($query)
+	public function extraFilter($query, $filter)
 	{
-		$app = \JFactory::getApplication();
-		$filters = $app->getUserState('report.filters');
-
 		$thisYear = date('Y');
 
-		$defaultYearMonthStart = sprintf('%s-01-01',$thisYear);
-		$defaultYearMonthEnd = sprintf('%s-12-31',$thisYear);
+		$defaultYearMonthStart = sprintf('%s-01-01', $thisYear);
+		$defaultYearMonthEnd   = sprintf('%s-12-31', $thisYear);
 
-		$startDate = $filters->get('date_start', $defaultYearMonthStart);
-		$endDate = $filters->get('date_end', $defaultYearMonthEnd);
-		$filterCity = $filters->get('city', array());
+		$startDate = \JArrayHelper::getValue($filter, 'date_start', $defaultYearMonthStart);
+		$endDate = \JArrayHelper::getValue($filter, 'date_end', $defaultYearMonthEnd);
+		$filterCity = \JArrayHelper::getValue($filter, 'city', array());
 
-		if(!empty($filterCity))
+		if (!empty($filterCity))
 		{
-			//Borrow from dbo to make quotes for city_title is string, and will drop if use the IDs.
+			// Borrow from dbo to make quotes for city_title is string, and will drop if use the IDs.
 			$db = \JFactory::getDbo();
 			$filterCity = $db->quote($filterCity);
 			$sqlWhereCity = (string) new InCompare('`city_title`', $filterCity);
@@ -88,17 +88,19 @@ class ScheduleReportHelper
 	/**
 	 * getData
 	 *
+	 * @param   array $filter
+	 *
 	 * @return  array
 	 */
-	public function getData()
+	public function getData($filter)
 	{
-		$rowData = $this->getRowData();
+		$rowData = $this->getRowData($filter);
 
 		$data = array();
 
-		foreach($rowData as $item)
+		foreach ($rowData as $item)
 		{
-			if(!isset($data[$item->city]))
+			if (!isset($data[$item->city]))
 			{
 				$data[$item->city] = array(
 					"city_title" => $item->city_title,
@@ -111,7 +113,7 @@ class ScheduleReportHelper
 				);
 			}
 
-			if(!isset($data[$item->city]["institutes"][$item->institute_id]) && $item->type == 'resident')
+			if (!isset($data[$item->city]["institutes"][$item->institute_id]) && $item->type == 'resident')
 			{
 				$data[$item->city]["institutes"][$item->institute_id] = array(
 					"title" => $item->institute_title,
@@ -122,7 +124,7 @@ class ScheduleReportHelper
 
 			$month = (int) $item->month;
 
-			if($item->type == 'individual')
+			if ($item->type == 'individual')
 			{
 				$data[$item->city]["customers"]["months"][$month-1] = $item->amount;
 				$data[$item->city]["customers"]["sub_total"] += $item->amount;

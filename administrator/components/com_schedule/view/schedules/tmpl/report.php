@@ -10,13 +10,13 @@
 defined('_JEXEC') or die;
 JHtmlBehavior::multiselect('adminForm');
 
-$ScheduleReport = new \Schedule\Helper\ScheduleReportHelper();
-$items = $ScheduleReport->getData();
+$doPrint = JUri::getInstance()->hasVar('tmpl');
 ?>
-
 <div id="schedule" class="windwalker schedule edit-form row-fluid" >
 	<form action="<?php echo JURI::getInstance(); ?>" method="post" name="adminForm" id="adminForm" target="_parent"
 		class="form-validate" enctype="multipart/form-data">
+
+	<?php if ($doPrint != 1): ?>
 
 		<?php echo $this->loadTemplate('form'); ?>
 
@@ -24,10 +24,20 @@ $items = $ScheduleReport->getData();
 
 		<!-- LIST TABLE -->
 
-		<button type="button" class="btn btn-success" onclick="print();">
-			<span class="glyphicon glyphicon-print"></span>
-			列印
-		</button>
+		<div style="width: 90%; text-align: right; padding-bottom: 20px;">
+			<a href="<?php echo JURI::getInstance(); ?>&tmpl=component" type="button" class="btn btn-success" target="_blank">
+				<span class="glyphicon glyphicon-print"></span>
+				列印
+			</a>
+		</div>
+
+	<?php else: ?>
+
+		<script>
+			print();
+		</script>
+
+	<?php endif; ?>
 
 		<table id="schedulereportList" class="table table-bordered adminlist">
 			<!-- TABLE HEADER -->
@@ -62,17 +72,18 @@ $items = $ScheduleReport->getData();
 			</thead>
 			<!-- TABLE BODY -->
 			<tbody>
+
 			<?php
-			$rowSpanRepeat = 0;
 
-			foreach ($items as $item):
-
+			foreach ($data->items as $item):
 				$instituteAmount = count($item['institutes']);
+
+				// 重設表格的 rowSpanRepeat 讓表格的 rowSpan 數值出現給下個縣市印出
+				$rowSpanRepeat = 0;
 
 				$rowSpan = $instituteAmount + 1;
 
 				foreach ($item['institutes'] as $institute):
-
 					$rowSpanRepeat++;
 			?>
 				<!-- 列出 $item['institutes'] 的資料 -->
@@ -89,7 +100,7 @@ $items = $ScheduleReport->getData();
 						<?php echo $institute['title']; ?>
 					</td>
 
-					<?php for($month = 0; $month <= 11; $month++): ?>
+					<?php for ($month = 0; $month <= 11; $month++): ?>
 					<!-- 月 -->
 					<td class="right">
 						<?php echo $institute["months"][$month]; ?>
@@ -101,7 +112,7 @@ $items = $ScheduleReport->getData();
 						<?php echo $institute['sub_total']; ?>
 					</td>
 
-					<?php if($rowSpanRepeat == 1): ?>
+					<?php if ($rowSpanRepeat == 1): ?>
 					<!-- 排程小計 -->
 					<td class="left" rowspan="<?php echo $rowSpan; ?>" style="vertical-align: bottom;">
 						<?php echo $item['total']; ?>
@@ -112,7 +123,7 @@ $items = $ScheduleReport->getData();
 				<!-- 列出 $item['customers'] 的資料 -->
 				<tr class="report-row">
 					<!-- 如果該縣市沒有機構，則補印縣市 -->
-					<?php if($instituteAmount == 0): ?>
+					<?php if ($instituteAmount == 0): ?>
 					<td class="left">
 						<?php echo $item['city_title']; ?>
 					</td>
@@ -123,12 +134,12 @@ $items = $ScheduleReport->getData();
 						散客
 					</td>
 
-					<?php for($month = 0; $month <= 11; $month ++): ?>
+					<?php for ($month = 0; $month <= 11; $month ++): ?>
 					<!-- 月 -->
 					<td class="right">
 						<?php echo $item['customers']['months'][$month]; ?>
 					</td>
-					<?php endfor?>
+					<?php endfor; ?>
 
 					<!-- 排程小計 -->
 					<td class="left">
@@ -136,19 +147,12 @@ $items = $ScheduleReport->getData();
 					</td>
 
 					<!-- 如果該縣市沒有機構，則補印散客的排程小計 -->
-					<?php if($instituteAmount == 0): ?>
+					<?php if ($instituteAmount == 0): ?>
 					<td class="left">
 						<?php echo $item['total']; ?>
 					</td>
 					<?php endif; ?>
 
-					<!-- 重設表格的 rowSpanRepeat 讓表格的 rowSpan 數值出現給下個縣市印出 -->
-					<?php
-					if($rowSpanRepeat == $rowSpan)
-					{
-						$rowSpanRepeat = 0;
-					}
-					?>
 				</tr>
 			<?php endforeach; ?>
 			</tbody>
@@ -157,7 +161,8 @@ $items = $ScheduleReport->getData();
 		<!-- Hidden Inputs -->
 		<div id="hidden-inputs">
 			<input type="hidden" name="option" value="com_schedule" />
-			<input type="hidden" name="task" value="report" />
+			<input type="hidden" name="layout" value="report" />
+			<input type="hidden" name="view" value="schedules" />
 			<?php echo JHtml::_('form.token'); ?>
 		</div>
 	</form>

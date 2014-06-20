@@ -70,10 +70,8 @@
 			description="區域名稱" />
 
 		<field name="images"
-			type="file"
+			type="image"
 			label="處方箋上傳"
-			description="處方箋上傳"
-			size="40"
-			class="inputbox" />
+			description="處方箋上傳" />
 	</fieldset>
 </form>
