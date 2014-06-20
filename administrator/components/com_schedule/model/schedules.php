@@ -221,10 +221,12 @@ class ScheduleModelSchedules extends ListModel
 	{
 		$query = $this->db->getQuery(true);
 
-		$query->select('`id`, `member_name`, `member_id`, `notify`')
-			->from(Table::SCHEDULES)
-			->where('`notify` > 0')
-			->group('`member_id`');
+		$query->select('`schedule`.`id`, `schedule`.`member_name`, `schedule`.`member_id`, `schedule`.`notify`')
+			->from(Table::SCHEDULES . ' AS `schedule`')
+			->leftJoin(Table::TASKS . ' AS `task` ON `schedule`.`task_id`=`task`.`id`')
+			->where('`schedule`.`notify` > 0')
+			->where('`task`.`status` = 0')
+			->group('`schedule`.`member_id`');
 
 		return $this->db->setQuery($query)->loadObjectList();
 	}
