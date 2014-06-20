@@ -9,6 +9,8 @@
 use Windwalker\DI\Container;
 use Windwalker\Model\Filter\FilterHelper;
 use Windwalker\Model\ListModel;
+use Windwalker\Helper\ArrayHelper;
+use Schedule\Table\Table;
 
 // No direct access
 defined('_JEXEC') or die;
@@ -112,24 +114,6 @@ class ScheduleModelSchedules extends ListModel
 	 */
 	protected function postGetQuery(\JDatabaseQuery $query)
 	{
-		$sql = <<<SQLALIAS
-group_concat(
-	CONCAT(
-		'{',
-			'"id": "',
-				`member`.`id`,
-			'",',
-
-			'"name": "',
-				`member`.`name`,
-			'"',
-		'}'
-	)
-) AS `member_json`
-SQLALIAS;
-
-		$query->select($sql);
-
 		parent::postGetQuery($query);
 	}
 
@@ -143,6 +127,16 @@ SQLALIAS;
 	 */
 	protected function populateState($ordering = 'schedule.id', $direction = 'ASC')
 	{
+		$app = JFactory::getApplication();
+
+		$filter = $app->getUserStateFromRequest('schedules.report.filter', 'report-filter', array());
+
+		$this->state->set('report_filter', $filter);
+
+		$this->state->set('report_filter_start_date', ArrayHelper::getValue($filter, 'date_start', date('Y') . '-01-01'));
+		$this->state->set('report_filter_end_date', ArrayHelper::getValue($filter, 'date_end', date('Y') . '-12-31'));
+		$this->state->set('report_filter_city', ArrayHelper::getValue($filter, 'city', array()));
+
 		parent::populateState($ordering, $direction);
 	}
 
@@ -200,5 +194,67 @@ SQLALIAS;
 	 */
 	protected function configureSearches($searchHelper)
 	{
+	}
+
+	/**
+	 * getFormPrint
+	 *
+	 * @return  JForm
+	 */
+	public function getPrintForm()
+	{
+		$config = array(
+			'control'   => 'report-filter',
+			'load_data' => 1
+		);
+
+		$formName = 'schedules_print';
+
+		return $this->loadForm($this->option . '.' . $formName . '.form', $formName, $config);
+	}
+
+	/**
+	 * loadFormData
+	 *
+	 * @return  mixed
+	 */
+	public function loadFormData()
+	{
+		$data = parent::loadFormData();
+
+		$data->date_start = $this->state->get('report_filter_start_date');
+		$data->date_end = $this->state->get('report_filter_end_date');
+		$data->city = $this->state->get('report_filter_city');
+
+		return $data;
+	}
+
+	/**
+	 * getDrugDetailFilterForm
+	 *
+	 * @return  \JForm
+	 */
+	public function getDrugDetailFilterForm()
+	{
+		return \JForm::getInstance("com_schedule.form", "drugdetailfilter");
+	}
+
+	/**
+	 * getNotifies
+	 *
+	 * @return  stdClass[]
+	 */
+	public function getNotifies()
+	{
+		$query = $this->db->getQuery(true);
+
+		$query->select('`schedule`.`id`, `schedule`.`member_name`, `schedule`.`member_id`, `schedule`.`notify`')
+			->from(Table::SCHEDULES . ' AS `schedule`')
+			->leftJoin(Table::TASKS . ' AS `task` ON `schedule`.`task_id`=`task`.`id`')
+			->where('`schedule`.`notify` > 0')
+			->where('`task`.`status` = 0')
+			->group('`schedule`.`member_id`');
+
+		return $this->db->setQuery($query)->loadObjectList();
 	}
 }

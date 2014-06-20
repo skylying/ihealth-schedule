@@ -10,7 +10,8 @@ use Joomla\DI\Container;
 use Windwalker\Model\Model;
 use Windwalker\View\Engine\PhpEngine;
 use Windwalker\View\Html\GridView;
-use Windwalker\Xul\XulEngine;
+use Windwalker\View\Layout\FileLayout;
+use Windwalker\Data\Data;
 
 // No direct access
 defined('_JEXEC') or die;
@@ -98,12 +99,59 @@ class ScheduleViewSchedulesHtml extends GridView
 	}
 
 	/**
-	 * render
+	 * prepareData
 	 *
 	 * @return void
 	 */
 	protected function prepareData()
 	{
+		$app = JFactory::getApplication();
+		$data = $this->getData();
+
+		if ('report' == $this->getLayout())
+		{
+			$schedulesModel = $this->getModel('Schedules');
+			$filter = $schedulesModel->getState()->get('report_filter');
+
+			$ScheduleReport = new \Schedule\Helper\ScheduleReportHelper;
+			$data->items = $ScheduleReport->getData($filter);
+
+			$data->printForm = $this->get('PrintForm');
+
+			return;
+		}
+
+		/** @var JForm $filterForm */
+		$filterForm = $data->filterForm;
+
+		// Get edit form fields
+		$editFormFields = array();
+
+		foreach (['date' => 'schedule.date_start', 'sender_id' => 'route.sender_id'] as $fieldName => $key)
+		{
+			$field = $filterForm->getField($key, 'filter');
+			$field->group = '';
+			$field->name = $fieldName;
+			$field->id = 'edit_item_field_' . $fieldName;
+			$field->onchange = '';
+
+			$editFormFields[$fieldName] = (string) $field->input;
+		}
+
+		$data->editFormFields = $editFormFields;
+
+		$data->drugDetailForm = $this->get('DrugDetailFilterForm');
+
+		$notifies = $this->get('Notifies');
+
+		if (count($notifies) > 0)
+		{
+			$fileLayout = new FileLayout('schedule.schedules.notify');
+
+			$notifyMessage = $fileLayout->render(new Data(['notifies' => $notifies]));
+
+			$app->enqueueMessage($notifyMessage, 'warning');
+		}
 	}
 
 	/**
@@ -116,49 +164,119 @@ class ScheduleViewSchedulesHtml extends GridView
 	 */
 	protected function configureToolbar($buttonSet = array(), $canDo = null)
 	{
-		// Get default button set.
-		$buttonSet = parent::configureToolbar($buttonSet, $canDo);
+		$buttonSet = $this->configureReportToolbar($buttonSet);
 
-		// In debug mode, we remove trash button but use delete button instead.
-		if (JDEBUG)
+		// Button 新增行政排程
+		$buttonSet['add2']['handler'] = function()
 		{
-			$buttonSet['trash']['access']  = false;
-			$buttonSet['delete']['access'] = true;
-		}
+			$url = JRoute::_('index.php?option=com_schedule&task=schedule.edit.add&tmpl=component', false);
 
-		$buttonSet['add']['args'] = array_merge($buttonSet['add']['args'], array('新增行政排程'));
+			$html = <<<HTML
+<button id="add-new-item-button" class="btn btn-small btn-success">
+	<span class="icon-new icon-white"></span> 新增行政排程
+</button>
+HTML;
+			$js = <<<JAVASCRIPT
+jQuery(function($)
+{
+	$('#add-new-item-button').click(function()
+	{
+		var node = $('#modal-add-new-item');
 
-		$buttonSet['publish']['access'] = false;
-		$buttonSet['edit']['access'] = false;
-		$buttonSet['unpublish']['access'] = false;
-		$buttonSet['checkin']['access'] = false;
-		$buttonSet['batch']['access'] = false;
+		node.on('show', function()
+		{
+			var frame = node.find('iframe');
 
-		// Add a print popup button
-		$buttonSet['print'] = array(
-			'handler' => function ()
-			{
-				JFactory::getDocument()->addStyleDeclaration('
-					#modal-print {
-  						overflow-y: hidden;
-					}
-					#modal-print iframe {
-						border: 0;
-					}
+			frame.attr("src", "");
+			frame.attr("src", "{$url}");
+		});
 
-					/* fix float problem */
-					#toolbar-popup-print .btn-group {
-						float: none;
-					}
-				');
+		node.modal({show:true});
+	});
+});
+JAVASCRIPT;
+			JFactory::getDocument()->addScriptDeclaration($js);
 
-				$printUrl = 'index.php?option=com_schedule&view=schedules&layout=print&tmpl=component';
+			$bar = JToolbar::getInstance('toolbar');
+			$bar->appendButton('Custom', $html);
+		};
 
-				// See JToolbarButtonPopup::fetchButton()
-				JToolbar::getInstance('toolbar')->appendButton('Popup', 'print', '列印排程統計表', $printUrl);
-			},
-		);
+		// Button 調整排程
+		$buttonSet['edit']['handler'] = function()
+		{
+			$html = <<<HTML
+<a id="edit-item-button" href="#modal-edit-item" class="btn btn-small" data-toggle="modal">
+	<span class="icon-edit"></span> 排程調整
+</a>
+HTML;
+			$bar = JToolbar::getInstance('toolbar');
+			$bar->appendButton('Custom', $html);
+		};
 
 		return $buttonSet;
+	}
+
+	/**
+	 * configureReportToolbar
+	 *
+	 * @param   array $buttonSet
+	 *
+	 * @return  mixed
+	 */
+	protected function configureReportToolbar($buttonSet)
+	{
+		if ('report' !== $this->getLayout())
+		{
+			$buttonSet['print']['handler'] = function()
+			{
+				$dHtml = <<<HTML
+<button class="btn btn-small" onclick="Joomla.submitbutton('schedules.report')">
+	<span class="glyphicon glyphicon-print"></span> 列印排程統計報表
+</button>
+HTML;
+				$bar = JToolbar::getInstance('toolbar');
+				$bar->appendButton('Custom', $dHtml);
+			};
+
+			return $buttonSet;
+		}
+
+		// If layout is report do this
+		$buttonSet['add2']['access']        = false;
+		$buttonSet['add']['access']         = false;
+		$buttonSet['publish']['access']     = false;
+		$buttonSet['edit']['access']        = false;
+		$buttonSet['unpublish']['access']   = false;
+		$buttonSet['checkin']['access']     = false;
+		$buttonSet['batch']['access']       = false;
+		$buttonSet['trash']['access']       = false;
+		$buttonSet['delete']['access']      = false;
+		$buttonSet['duplicate']['access']   = false;
+		$buttonSet['preferences']['access'] = false;
+
+		$buttonSet['route']['handler'] = function()
+		{
+			$url = JRoute::_('index.php?option=com_schedule&view=schedules', false);
+
+			$html = <<<HTML
+<a id="edit-item-button" href="{$url}" class="btn btn-danger">
+	<span class="glyphicon glyphicon-remove"></span> 取消列印
+</a>
+HTML;
+			$bar = JToolbar::getInstance('toolbar');
+			$bar->appendButton('Custom', $html);
+		};
+
+		return $buttonSet;
+	}
+
+	/**
+	 * Display notification messages
+	 *
+	 * @return  void
+	 */
+	protected function showNotification()
+	{
+
 	}
 }

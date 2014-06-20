@@ -6,11 +6,16 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
+use Schedule\Model\ScheduleModel;
+
 // No direct access
 defined('_JEXEC') or die;
 
-?>
-
-<form target="_parent">
-	<input type="submit" class="btn" value="Print" />
-</form>
+/**
+ * Class ScheduleModelSchedule
+ *
+ * @since 1.0
+ */
+class ScheduleModelSchedule extends ScheduleModel
+{
+}

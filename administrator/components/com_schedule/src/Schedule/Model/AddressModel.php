@@ -9,6 +9,7 @@
 namespace Schedule\Model;
 
 use Windwalker\Model\AdminModel;
+use \Schedule\Table\Table;
 
 // No direct access
 defined('_JEXEC') or die;
@@ -94,5 +95,26 @@ class AddressModel extends AdminModel
 
 		$table->city_title = $tableCity->title;
 		$table->area_title = $tableArea->title;
+	}
+
+	/**
+	 * Flush Default Address
+	 *
+	 * @param   integer  $customerId
+	 * @param   integer  $addressId
+	 *
+	 * @return  $this
+	 */
+	public function flushDefaultAddress($customerId, $addressId)
+	{
+		$q = $this->db->getQuery(true);
+
+		$q->update(Table::ADDRESSES)
+			->set("previous = CASE WHEN id = {$addressId} THEN 1 ELSE 0 END")
+			->where("customer_id = {$customerId}");
+
+		$this->db->setQuery($q)->execute();
+
+		return $this;
 	}
 }

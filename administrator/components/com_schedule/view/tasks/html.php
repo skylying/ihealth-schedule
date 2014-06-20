@@ -146,6 +146,7 @@ class ScheduleViewTasksHtml extends GridView
 </button>
 HTML;
 			$bar = JToolbar::getInstance('toolbar');
+
 			$bar->appendButton('Custom', $html);
 		};
 

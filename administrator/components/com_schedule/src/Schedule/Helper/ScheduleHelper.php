@@ -4,6 +4,7 @@ namespace Schedule\Helper;
 
 use Windwalker\Data\Data;
 use Schedule\Table\Table;
+use Windwalker\Model\Exception\ValidateFailException;
 
 /**
  * Class ScheduleHelper
@@ -23,25 +24,13 @@ class ScheduleHelper
 	{
 		$attr = array('target' => '_blank');
 
-		if ('individual' === $item->type
-			|| ('individual' !== $item->type && ! empty($item->member_json)))
+		switch ($item->type)
 		{
-			$html = array();
+			case 'individual':
+				return UiHelper::foreignLink('member', $item->member_name, $item->member_id, '', $attr);
 
-			$members = json_decode("[{$item->member_json}]");
-
-			foreach ($members as $member)
-			{
-				$html[] = \Schedule\Helper\UiHelper::foreignLink('member', $member->name, $member->id, '', $attr);
-			}
-
-			return implode("", $html);
-		}
-
-		if ('resident' === $item->type
-			|| ('resident' !== $item->type && $item->institute_id > 0))
-		{
-			return \Schedule\Helper\UiHelper::foreignLink('institute', $item->institute_title, $item->institute_id, '', $attr);
+			case 'resident':
+				return UiHelper::foreignLink('institute', $item->institute_title, $item->institute_id, '', $attr);
 		}
 
 		return '';
@@ -136,5 +125,96 @@ class ScheduleHelper
 		}
 
 		return new \JDate($date->format('Y-m-d'));
+	}
+
+	/**
+	 * Validate send date
+	 *
+	 * 合理的送藥日期 = 吃完藥日的前後10天
+	 * (第一次送藥日期 = 就醫日期 ~ 3天內)
+	 *
+	 * @param   string  $sendDate       送藥日期
+	 * @param   string  $nth            第幾次送藥 ('1st','2nd','3rd')
+	 * @param   string  $seeDoctorDate  就醫日期
+	 * @param   int     $period         給藥天數
+	 *
+	 * @return  bool
+	 *
+	 * @throws  ValidateFailException
+	 */
+	public static function validateSendDate($sendDate, $nth, $seeDoctorDate, $period)
+	{
+		if (! in_array($nth, ['1st', '2nd', '3rd']))
+		{
+			throw new ValidateFailException(['Invalid nth value']);
+		}
+
+		$nth = (int) substr($nth, 0, 1);
+
+		// Get necessary timestamps (Unix Time)
+		$sendDateUnixTime      = strtotime($sendDate);
+		$seeDoctorDateUnixTime = strtotime($seeDoctorDate);
+		$drugEmptyDateUnixTime = $seeDoctorDateUnixTime + (($nth - 1) * $period * 86400);
+
+		// Get valid send date timestamps (Unix Time)
+		$validSendDateUnixTimes = [];
+
+		// Get the range of valid send dates (in days)
+		$daysBefore = 1 === $nth ? 0 : 10;
+		$daysAfter  = 1 === $nth ? 3 : 10;
+
+		// Fill valid send dates
+		for ($i = -$daysBefore; $i < $daysAfter; ++$i)
+		{
+			$unixTime = $drugEmptyDateUnixTime + $i * 86400;
+
+			// Get weekday, 1 (for Monday) through 7 (for Sunday)
+			$weekday = (int) date('N', $unixTime);
+
+			if ($weekday !== 6 && $weekday !== 7)
+			{
+				$validSendDateUnixTimes[] = $unixTime;
+			}
+		}
+
+		// Validate send date
+		if (! in_array($sendDateUnixTime, $validSendDateUnixTimes))
+		{
+			throw new ValidateFailException(['Invalid send date']);
+		}
+
+		return true;
+	}
+
+	/**
+	 * getDrugEmptyDate
+	 *
+	 * @param   string  $nth            第幾次送藥 ('1st','2nd','3rd')
+	 * @param   string  $seeDoctorDate  就醫日期
+	 * @param   int     $period         給藥天數
+	 *
+	 * @return  \JDate
+	 *
+	 * @throws  ValidateFailException
+	 */
+	public static function getDrugEmptyDate($nth, $seeDoctorDate, $period)
+	{
+		if (! in_array($nth, ['1st', '2nd', '3rd']))
+		{
+			throw new ValidateFailException(['Invalid nth value']);
+		}
+
+		$nth = (int) substr($nth, 0, 1);
+
+		$date = new \JDate($seeDoctorDate);
+
+		if (1 === $nth)
+		{
+			return $date;
+		}
+
+		$date->modify('+' . $period * ($nth - 1) . ' days');
+
+		return $date;
 	}
 }

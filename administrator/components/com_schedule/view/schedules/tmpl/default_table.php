@@ -111,14 +111,20 @@ $date      = $container->get('date');
 
 <!-- TABLE BODY -->
 <tbody>
-<?php foreach ($data->items as $i => $item)
-	:
+<?php
+$typeButtonStyles = array('individual' => 'btn-info', 'resident' => 'btn-warning');
+
+foreach ($data->items as $i => $item):
 	// Prepare data
 	$item = new Data($item);
 
 	// Prepare item for GridHelper
 	$grid->setItem($item, $i);
-	?>
+
+	$typeButtonStyle = ArrayHelper::getValue($typeButtonStyles, $item->type, 'btn-inverse');
+
+	$sortedTask = 'schedules.' . ($item->sorted ? 'unsorted' : 'sorted');
+?>
 	<tr class="schedule-row">
 		<!-- CHECKBOX -->
 		<td class="center">
@@ -127,8 +133,8 @@ $date      = $container->get('date');
 
 		<!-- EDIT -->
 		<td class="center">
-			<a class="btn btn-mini btn-primary"
-				href="<?php echo JRoute::_('index.php?option=com_schedule&task=schedule.edit.edit&id=' . $item->id); ?>">
+			<a class="btn btn-mini btn-primary" href="#"
+				onclick="jQuery('#cb<?php echo $i; ?>').click();jQuery('#edit-item-button').click();">
 				<span class="glyphicon glyphicon-edit"></span>
 			</a>
 		</td>
@@ -140,11 +146,9 @@ $date      = $container->get('date');
 
 		<!-- type -->
 		<td>
-			<?php
-			$styles = array('individual' => 'btn-info', 'resident' => 'btn-warning');
-			$buttonStyle = ArrayHelper::getValue($styles, $item->type, 'btn-inverse');
-			?>
-			<button type="button" style="padding: 3px 8px;" class="btn <?php echo $buttonStyle?>"><?php echo JText::_('COM_SCHEDULE_SCHEDULE_FIELD_TYPE_' . $item->type);?></button>
+			<button type="button" style="padding: 3px 8px;" class="btn <?php echo $typeButtonStyle?>">
+				<?php echo JText::_('COM_SCHEDULE_SCHEDULE_FIELD_TYPE_' . $item->type);?>
+			</button>
 		</td>
 
 		<!-- customer_name | institute_name -->
@@ -184,7 +188,11 @@ $date      = $container->get('date');
 
 		<!-- sorted -->
 		<td class="center">
-			<span class="glyphicon glyphicon-<?php echo ($item->sorted ? 'ok' : 'remove'); ?>"></span>
+			<a href="#" onclick="listItemTask('cb<?php echo $i; ?>', '<?php echo $sortedTask; ?>');">
+				<span class="glyphicon glyphicon-<?php echo ($item->sorted ? 'ok' : 'remove'); ?>"
+					<?php echo ($item->sorted ? '' : ' style="color:red;"'); ?>>
+				</span>
+			</a>
 		</td>
 
 		<!-- status -->
@@ -192,7 +200,7 @@ $date      = $container->get('date');
 			<?php
 			if ($item->status)
 			{
-				echo $this->loadTemplate('status_dropdown', array('item' => $item));
+				echo $this->loadTemplate('status_dropdown', array('index' => $i, 'item' => $item));
 			}
 			?>
 		</td>

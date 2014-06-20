@@ -58,6 +58,7 @@ class JFormFieldDateTimePicker extends JFormField
 		$showButton = XmlHelper::getBool($this->element, 'show_button', false);
 		$style      = $this->getStyle();
 		$dateFormat = XmlHelper::get($this->element, 'date_format', 'YYYY-MM-DD');
+		$onChange   = $this->onchange;
 
 		$attr = array(
 			'type'             => 'text',
@@ -96,14 +97,24 @@ HTML;
 		// Do not load datetimepicker when readonly or disabled
 		if (! $this->readonly && ! $this->disabled)
 		{
-			$js = <<<JS
-jQuery(function ()
+			$js = <<<JAVASCRIPT
+jQuery(function ($)
 {
-	jQuery('#{$id}').datetimepicker({
+	var node = $('#{$id}');
+
+	node.datetimepicker({
 		pickTime: false
 	});
+
+	node.on('dp.change', function(e)
+	{
+		{$onChange}
+
+		node.trigger('blur');
+	});
 });
-JS;
+JAVASCRIPT;
+
 			JFactory::getDocument()->addScriptDeclaration($js);
 		}
 
@@ -124,6 +135,8 @@ JS;
 
 		/** @var \Windwalker\Helper\AssetHelper $asset */
 		$asset = Container::getInstance('com_schedule')->get('helper.asset');
+
+		JHtmlBootstrap::framework();
 
 		$asset->addCSS('bootstrap-datetimepicker.min.css');
 		$asset->addJS('moment-with-langs.min.js');

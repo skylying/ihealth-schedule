@@ -67,6 +67,9 @@ function ScheduleParseRoute($segments)
 		$method = $input->get('_method', $input->getMethod());
 		$method = strtolower($method);
 
+		// Parse "-"
+		$segments[0] = str_replace(array(':', '-'), '', $segments[0]);
+
 		// Prepare RESTful
 		if ('get' == $method)
 		{
