@@ -45,7 +45,7 @@ class ScheduleReportHelper
 			->group("`city_title`, institute_title, type, `year_month`")
 			->order("`city_title`, `type` DESC, `institute_title`, `year_month`");
 
-		$query = $this->extraFilter($query, $filter);
+		$this->extraFilter($query, $filter);
 
 		return $db->setQuery($query)->loadObjectList();
 	}
@@ -78,11 +78,8 @@ class ScheduleReportHelper
 			$query = $query->where($sqlWhereCity);
 		}
 
-		$query = $query->where(sprintf('`date` >= "%s"', $startDate));
-
-		$query = $query->where(sprintf('`date` <= "%s"', $endDate));
-
-		return $query;
+		$query->where(sprintf('`date` >= "%s"', $startDate))
+			->where(sprintf('`date` <= "%s"', $endDate));
 	}
 
 	/**
@@ -126,12 +123,12 @@ class ScheduleReportHelper
 
 			if ($item->type == 'individual')
 			{
-				$data[$item->city]["customers"]["months"][$month-1] = $item->amount;
+				$data[$item->city]["customers"]["months"][$month - 1] = $item->amount;
 				$data[$item->city]["customers"]["sub_total"] += $item->amount;
 			}
 			else
 			{
-				$data[$item->city]["institutes"][$item->institute_id]["months"][$month-1] = $item->amount;
+				$data[$item->city]["institutes"][$item->institute_id]["months"][$month - 1] = $item->amount;
 				$data[$item->city]["institutes"][$item->institute_id]["sub_total"] += $item->amount;
 			}
 

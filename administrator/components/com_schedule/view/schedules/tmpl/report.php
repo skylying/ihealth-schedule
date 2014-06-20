@@ -9,14 +9,13 @@
 // No direct access
 defined('_JEXEC') or die;
 JHtmlBehavior::multiselect('adminForm');
-
-$doPrint = JUri::getInstance()->hasVar('tmpl');
+$tmpl = JUri::getInstance()->getVar('tmpl');
 ?>
 <div id="schedule" class="windwalker schedule edit-form row-fluid" >
 	<form action="<?php echo JURI::getInstance(); ?>" method="post" name="adminForm" id="adminForm" target="_parent"
 		class="form-validate" enctype="multipart/form-data">
 
-	<?php if ($doPrint != 1): ?>
+	<?php if ($tmpl != 'component'): ?>
 
 		<?php echo $this->loadTemplate('form'); ?>
 
