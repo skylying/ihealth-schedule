@@ -128,13 +128,13 @@ class ScheduleModelSchedules extends ListModel
 	{
 		$app = JFactory::getApplication();
 
-		$filter = $app->getUserStateFromRequest('schedules.report.', 'report-filter', array());
+		$filter = $app->getUserStateFromRequest('schedules.report.filter', 'report-filter', array());
 
 		$this->state->set('report_filter', $filter);
 
-		$this->state->set('report_filter_start_date', ArrayHelper::getValue($filter, 'date_start'), date('Y') . '-01-01');
-		$this->state->set('report_filter_end_date', ArrayHelper::getValue($filter, 'date_end'), date('Y') . '-12-31');
-		$this->state->set('report_filter_city', ArrayHelper::getValue($filter, 'city'), array());
+		$this->state->set('report_filter_start_date', ArrayHelper::getValue($filter, 'date_start', date('Y') . '-01-01'));
+		$this->state->set('report_filter_end_date', ArrayHelper::getValue($filter, 'date_end', date('Y') . '-12-31'));
+		$this->state->set('report_filter_city', ArrayHelper::getValue($filter, 'city', array()));
 
 		parent::populateState($ordering, $direction);
 	}
