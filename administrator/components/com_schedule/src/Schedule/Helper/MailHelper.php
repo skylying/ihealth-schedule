@@ -13,13 +13,6 @@ use Windwalker\View\Layout\FileLayout;
 class MailHelper
 {
 	/**
-	 * Property from.
-	 *
-	 * @var  string
-	 */
-	public static $from = 'ihealth@ihealth.com.tw';
-
-	/**
 	 * sendMailWhenScheduleChange
 	 *
 	 * @param   string      $mailTo
@@ -32,11 +25,12 @@ class MailHelper
 	public static function sendMailWhenScheduleChange($mailTo, $displayData)
 	{
 		$mailer = \JFactory::getMailer();
+		$from   = \JFactory::getConfig()->get('mailfrom');
 
 		$mailer->setSubject("處方預約確認信");
 		$mailer->setBody((new FileLayout("schedule.mail.confirm"))->render($displayData));
 		$mailer->addRecipient($mailTo);
-		$mailer->setSender(static::$from);
+		$mailer->setSender($from);
 		$mailer->isHtml(true);
 
 		$sendMailDone = $mailer->Send();
@@ -60,11 +54,12 @@ class MailHelper
 	public static function sendEmptyRouteMail($mailTo, $displayData)
 	{
 		$mailer = \JFactory::getMailer();
+		$from   = \JFactory::getConfig()->get('mailfrom');
 
 		$mailer->setSubject("沒有路線通知");
 		$mailer->setBody((new FileLayout("schedule.mail.emptyroute"))->render($displayData));
 		$mailer->addRecipient($mailTo);
-		$mailer->setSender(static::$from);
+		$mailer->setSender($from);
 		$mailer->isHtml(true);
 
 		$sendMailDone = $mailer->Send();
