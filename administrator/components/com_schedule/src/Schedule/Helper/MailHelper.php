@@ -45,11 +45,42 @@ class MailHelper
 	 */
 	public static function sendMailWhenScheduleChange($mailTo, $displayData)
 	{
+		static::sendMailProcessor($mailTo, "處方預約確認信", "schedule.mail.confirm", $displayData);
+	}
+
+	/**
+	 * sendEmptyRouteMail
+	 *
+	 * @param   string      $mailTo
+	 * @param   stdClass    $displayData
+	 *
+	 * @return  void
+	 *
+	 * @throws \Exception
+	 */
+	public static function sendEmptyRouteMail($mailTo, $displayData)
+	{
+		static::sendMailProcessor($mailTo, "沒有路線通知", "schedule.mail.emptyroute", $displayData);
+	}
+
+	/**
+	 * Send Mail Processor
+	 *
+	 * @param   string  $mailTo
+	 * @param   string  $subject
+	 * @param   string  $layout
+	 * @param   object  $displayData
+	 *
+	 * @return  void
+	 *
+	 * @throws \Exception
+	 */
+	public static function sendMailProcessor($mailTo, $subject, $layout, $displayData)
+	{
 		$mailer = \JFactory::getMailer();
 
-		// TODO: 確認標題文字
-		$mailer->setSubject("處方預約確認信");
-		$mailer->setBody((new FileLayout("scedule.mail.confirm"))->render($displayData));
+		$mailer->setSubject($subject);
+		$mailer->setBody((new FileLayout($layout))->render($displayData));
 		$mailer->addRecipient($mailTo);
 		$mailer->setSender(static::$from);
 		$mailer->isHtml("text/plain" !== static::$contentType);
