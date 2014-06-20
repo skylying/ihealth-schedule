@@ -17,21 +17,21 @@ class MailHelper
 	 *
 	 * @var  string
 	 */
-	public $contentType = "text/html";
+	public static $contentType = "text/html";
 
 	/**
 	 * Property charset.
 	 *
 	 * @var  string
 	 */
-	public $charset = "utf-8";
+	public static $charset = "utf-8";
 
 	/**
 	 * Property from.
 	 *
 	 * @var  string
 	 */
-	public $from = 'ihealth@ihealth.com.tw';
+	public static $from = 'ihealth@ihealth.com.tw';
 
 	/**
 	 * sendMailWhenScheduleChange
@@ -39,11 +39,11 @@ class MailHelper
 	 * @param   string      $mailTo
 	 * @param   stdClass    $displayData
 	 *
-	 * @return  MailHelper
+	 * @return  void
 	 *
 	 * @throws \Exception
 	 */
-	public function sendMailWhenScheduleChange($mailTo, $displayData)
+	public static function sendMailWhenScheduleChange($mailTo, $displayData)
 	{
 		$mailer = \JFactory::getMailer();
 
@@ -51,21 +51,10 @@ class MailHelper
 		$mailer->setSubject("處方預約確認信");
 		$mailer->setBody((new FileLayout("scedule.mail.confirm"))->render($displayData));
 		$mailer->addRecipient($mailTo);
-		$mailer->setSender($this->from);
+		$mailer->setSender(static::$from);
+		$mailer->isHtml("text/plain" !== static::$contentType);
 
-		$mailer->Encoding = $this->charset;
-
-		switch ($this->contentType)
-		{
-			case "text/html":
-				$mailer->isHtml(true);
-				break;
-			case "text/plain":
-				$mailer->isHtml(false);
-				break;
-			default:
-				$mailer->isHtml(true);
-		}
+		$mailer->CharSet = static::$charset;
 
 		$sendMailDone = $mailer->Send();
 
@@ -73,7 +62,5 @@ class MailHelper
 		{
 			throw new \Exception("Email send failure");
 		}
-
-		return $this;
 	}
 }
