@@ -166,6 +166,18 @@ class ScheduleViewSchedulesHtml extends GridView
 	{
 		$buttonSet = $this->configureReportToolbar($buttonSet);
 
+		// Button 分藥註記
+		$buttonSet['sorted_preview']['handler'] = function()
+		{
+			$html = <<<HTML
+<a id="sorted-preview-button" href="#modal-sorted-preview" class="btn btn-small" data-toggle="modal">
+	<span class="icon-print"></span> 分藥註記
+</a>
+HTML;
+			$bar = JToolbar::getInstance('toolbar');
+			$bar->appendButton('Custom', $html);
+		};
+
 		// Button 新增行政排程
 		$buttonSet['add2']['handler'] = function()
 		{
@@ -268,15 +280,5 @@ HTML;
 		};
 
 		return $buttonSet;
-	}
-
-	/**
-	 * Display notification messages
-	 *
-	 * @return  void
-	 */
-	protected function showNotification()
-	{
-
 	}
 }

@@ -12,6 +12,8 @@ defined('JPATH_BASE') or die;
  * drug detail layout
  *
  * @var array $displayData
+ * @var JForm $form
+ * @var int   $formId
  *
  * $displayData 變數詳細內容如下
  * ```php
@@ -23,11 +25,14 @@ defined('JPATH_BASE') or die;
 $data = $displayData;
 
 $form = $data['form'];
+$formId = empty($data['formId']) ? 'adminForm' : $data['formId'];
 
 $fieldsets = $form->getFieldset("filter");
 ?>
-<form action="<?php echo JURI::getInstance(); ?>"  method="post" name="adminForm" id="adminForm"
-	class="form-horizontal" enctype="multipart/form-data">
+<form name="<?php echo $formId; ?>"
+	id="<?php echo $formId; ?>"
+	action="<?php echo JRoute::_('index.php?option=com_schedule&view=drugdetail&layout=edit'); ?>"
+	method="post" class="form-horizontal">
 	<?php echo $fieldsets['date']->getControlGroup(); ?>
 
 	<?php echo $fieldsets['senderIds']->getControlGroup(); ?>
