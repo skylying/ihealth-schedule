@@ -10,6 +10,7 @@ use Schedule\Controller\Api\ApiSaveController;
 use Windwalker\Model\Exception\ValidateFailException;
 use Schedule\Helper\ScheduleHelper;
 use Schedule\Table\Collection as TableCollection;
+use Schedule\Helper\MailHelper;
 
 /**
  * Class ScheduleControllerPrescriptionEditSave
@@ -99,12 +100,22 @@ class ScheduleControllerPrescriptionEditSave extends ApiSaveController
 	{
 		$rxId = empty($validData['id']) ? $model->getState()->get('prescription.id') : $validData['id'];
 
+		$validData['id'] = $rxId;
+
 		/** @var ScheduleModelDrug $drugModel */
 		$drugModel = $this->getModel('Drug');
 		/** @var ScheduleModelSchedule $scheduleModel */
 		$scheduleModel = $this->getModel('Schedule');
 		/** @var ScheduleModelTask $taskModel */
 		$taskModel = $this->getModel('Task');
+
+		$mailDataSet = array(
+			"schedule" => array(),
+			"rx"       => $validData,
+			"member"   => null,
+			"customer" => null,
+			"route"    => null
+		);
 
 		$scheduleModel->getState()->set('form.type', 'schedule_individual');
 
@@ -119,6 +130,8 @@ class ScheduleControllerPrescriptionEditSave extends ApiSaveController
 					'type' => 'customer',
 				]
 			);
+
+			$mailDataSet['route'] = $routeTable;
 
 			// If no route found, create one
 			if (empty($routeTable->id))
@@ -137,7 +150,9 @@ class ScheduleControllerPrescriptionEditSave extends ApiSaveController
 
 				$routeTable->store();
 
-				// TODO: 無 route 時要寄 EMail 通知 https://github.com/smstw/ihealth-schedule/issues/249
+				$notifyMail = \JFactory::getConfig()->get('mailfrom');
+
+				MailHelper::sendEmptyRouteMail($notifyMail, $routeTable);
 			}
 
 			// Get task
@@ -177,6 +192,8 @@ class ScheduleControllerPrescriptionEditSave extends ApiSaveController
 			$scheduleModel->save($schedule);
 
 			$scheduleModel->getState()->set('schedule.id', null);
+
+			$mailDataSet['schedule'][$schedule['deliver_nth']] = $schedule;
 		}
 
 		foreach ($this->data['drugs'] as $drug)
@@ -186,6 +203,17 @@ class ScheduleControllerPrescriptionEditSave extends ApiSaveController
 			$drugModel->save($drug);
 
 			$drugModel->getState()->set('drug.id', null);
+		}
+
+		$memberTable = TableCollection::loadTable('Member', $schedule['member_id']);
+		$customerTable = TableCollection::loadTable('Customer', $schedule['customer_id']);
+
+		$mailDataSet['member'] = $memberTable;
+		$mailDataSet['customer'] = $customerTable;
+
+		if (! empty($memberTable->email))
+		{
+			MailHelper::sendMailWhenScheduleChange($memberTable->email, $mailDataSet);
 		}
 	}
 }
