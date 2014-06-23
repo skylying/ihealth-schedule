@@ -6,19 +6,16 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
+/** @var JForm $printForm */
 $printForm = $data->printForm;
 ?>
 
-<div class="form-horizontal">
-
-	<div style="width:90%; text-align:right;">
-		<button type="submit" class="btn btn-primary">
-			<span class="glyphicon glyphicon-filter"></span>
-			送出條件
-		</button>
-	</div>
-
-	<?php foreach ($printForm->getFieldset('schedules_print') as $field): ?>
+<form id="adminPrintScheduleReportForm"
+	action="<?php echo JUri::getInstance(); ?>"
+	method="post"
+	target="_parent"
+	class="form-validate form-horizontal">
+<?php foreach ($printForm->getFieldset('schedules_print') as $field): ?>
 	<div class="col-sm-offset-3 control-group">
 		<div class="col-sm-2 control-label">
 			<?php echo $field->label; ?>
@@ -27,6 +24,13 @@ $printForm = $data->printForm;
 			<?php echo $field->input; ?>
 		</div>
 	</div>
-	<?php endforeach; ?>
+<?php endforeach; ?>
 
-</div>
+	<!-- Hidden Inputs -->
+	<div class="hidden-inputs">
+		<input type="hidden" name="option" value="com_schedule" />
+		<input type="hidden" name="layout" value="report" />
+		<input type="hidden" name="view" value="schedules" />
+		<?php echo JHtml::_('form.token'); ?>
+	</div>
+</form>
