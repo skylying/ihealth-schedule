@@ -39,6 +39,7 @@ class JFormFieldItemscheckboxes extends \JFormField
 		$inputName   = $this->element['name'] ? (string) $this->element['name'] : "";
 		$valueField  = $this->element['value_field'] ? (string) $this->element['value_field'] : "id";
 		$optionTitle = $this->element['option_title'] ? (string) $this->element['option_title'] : "title";
+		$value       = is_array($this->value) ? $this->value : array($this->value);
 
 		$doc->addScriptDeclaration(<<<JS
 	jQuery(function($)
@@ -65,6 +66,7 @@ JS
 		);
 
 		$items = $this->getItems();
+		$checkedAll = (count($value) === count($items) ? ' checked="checked"' : '');
 
 		$html = array();
 
@@ -73,7 +75,7 @@ JS
 		$html[] = <<<HTML
 	<li class="checkbox" style="margin-left: 1px;">
 		<label for="{$inputName}-click-all">
-			<input id="{$inputName}-click-all" type="checkbox" />
+			<input id="{$inputName}-click-all" type="checkbox" {$checkedAll} />
 			全選
 		</label>
 	</li>
@@ -84,8 +86,6 @@ HTML;
 		{
 			$id = $item->$valueField;
 			$title = $item->$optionTitle;
-
-			$value = is_array($this->value) ? $this->value : array($this->value);
 
 			$checked = in_array($id, $value) ? ' checked="checked"' : '';
 
