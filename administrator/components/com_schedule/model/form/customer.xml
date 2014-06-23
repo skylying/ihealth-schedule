@@ -197,6 +197,13 @@
 			description="出生日期"
 			/>
 
+		<field name="member_id"
+			type="member_list"
+			value_field="name"
+			label="對應會員"
+			description="對應會員"
+			/>
+
 		<field name="type"
 			type="hidden"
 			default="individual"
