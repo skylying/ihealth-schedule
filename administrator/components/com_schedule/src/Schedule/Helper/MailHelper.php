@@ -16,7 +16,7 @@ class MailHelper
 	 * sendMailWhenScheduleChange
 	 *
 	 * @param   string      $mailTo
-	 * @param   stdClass    $displayData
+	 * @param   mixed       $displayData
 	 *
 	 * @return  void
 	 *
@@ -45,7 +45,7 @@ class MailHelper
 	 * sendEmptyRouteMail
 	 *
 	 * @param   string      $mailTo
-	 * @param   stdClass    $displayData
+	 * @param   mixed       $displayData
 	 *
 	 * @return  void
 	 *
