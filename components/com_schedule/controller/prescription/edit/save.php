@@ -55,6 +55,18 @@ class ScheduleControllerPrescriptionEditSave extends ApiSaveController
 			$model->validate($drugForm, $drug);
 		}
 
+		// Validate fields see_dr_date
+		if (empty($this->data['see_dr_date']))
+		{
+			throw new ValidateFailException(['Invalid see doctor date']);
+		}
+
+		// Validate fields period
+		if (empty($this->data['period']))
+		{
+			throw new ValidateFailException(['Invalid period']);
+		}
+
 		// Do validation with schedules
 		foreach ($this->data['schedules'] as $schedule)
 		{
