@@ -6,31 +6,31 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-/** @var JForm $printForm */
-$printForm = $data->printForm;
+/**
+ * @var Windwalker\Data\Data $displayData
+ * @var JForm                $printForm
+ */
+$printForm = $displayData->printForm;
 ?>
 
-<form id="adminPrintScheduleReportForm"
-	action="<?php echo JUri::getInstance(); ?>"
-	method="post"
-	target="_parent"
+<form id="<?php echo $displayData->formId; ?>"
+	action="<?php echo JRoute::_('index.php'); ?>"
+	method="get"
 	class="form-validate form-horizontal">
 <?php foreach ($printForm->getFieldset('schedules_print') as $field): ?>
-	<div class="col-sm-offset-3 control-group">
-		<div class="col-sm-2 control-label">
+	<div class="control-group">
+		<div class="col-sm-3 control-label">
 			<?php echo $field->label; ?>
 		</div>
-		<div class="col-sm-7 controls-<?php echo $field->id; ?>">
+		<div class="col-sm-9 controls-<?php echo $field->id; ?>">
 			<?php echo $field->input; ?>
 		</div>
 	</div>
 <?php endforeach; ?>
 
-	<!-- Hidden Inputs -->
 	<div class="hidden-inputs">
 		<input type="hidden" name="option" value="com_schedule" />
-		<input type="hidden" name="layout" value="report" />
 		<input type="hidden" name="view" value="schedules" />
-		<?php echo JHtml::_('form.token'); ?>
+		<input type="hidden" name="layout" value="report" />
 	</div>
 </form>

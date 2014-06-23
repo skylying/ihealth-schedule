@@ -8,19 +8,31 @@
 
 // No direct access
 defined('_JEXEC') or die;
+
+use Windwalker\Data\Data;
+use Windwalker\View\Layout\FileLayout;
+
 JHtmlBehavior::multiselect('adminForm');
+
 $tmpl = JUri::getInstance()->getVar('tmpl');
+$filterFormLayout = new FileLayout('schedule.schedules.report_form');
 ?>
 <div id="schedule" class="windwalker schedule edit-form row-fluid" >
 <?php if ($tmpl != 'component'): ?>
 	<div style="width:90%; text-align:right;">
-		<button type="button" class="btn btn-primary" onclick="jQuery('#adminPrintScheduleReportForm').submit();">
+		<button type="button" class="btn btn-primary" onclick="jQuery('#print-schedule-report-form').submit();">
 			<span class="glyphicon glyphicon-filter"></span>
 			送出條件
 		</button>
 	</div>
 
-	<?php echo $this->loadTemplate('form'); ?>
+	<div class="col-sm-offset-3">
+		<?php
+		echo $filterFormLayout->render(
+			new Data(['printForm' => $data->printForm, 'formId' => 'print-schedule-report-form'])
+		);
+		?>
+	</div>
 
 	<hr style="border:0; height:1px; background-color:#000000;">
 
