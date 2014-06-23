@@ -8,6 +8,7 @@
 
 use Windwalker\View\Layout\FileLayout;
 use Schedule\Script\AddressScript;
+use Windwalker\Data\Data;
 
 // No direct access
 defined('_JEXEC') or die;
@@ -227,9 +228,31 @@ $editFormFields = $data->editFormFields;
 		<h3 class="modal-title">分藥註記</h3>
 	</div>
 	<div class="modal-body">
-		<?php echo with(new FileLayout('schedule.drugdetail.filter'))->render(['form' => $this->data->drugDetailForm, 'formId' => 'sorted-preview-form']); ?>
+		<?php
+		echo (new FileLayout('schedule.drugdetail.filter'))->render(
+			new Data(['form' => $this->data->drugDetailForm, 'formId' => 'sorted-preview-form'])
+		);
+		?>
 	</div>
 	<div class="modal-footer">
 		<button type="button" class="btn btn-primary" onclick="jQuery('#sorted-preview-form').submit();">送出</button>
+	</div>
+</div>
+
+<!-- 列印排程統計報表 Filter Modal -->
+<div id="modal-report-print" class="modal hide fade" tabindex="-1" role="dialog">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		<h3 class="modal-title">列印排程統計報表</h3>
+	</div>
+	<div class="modal-body row-fluid">
+		<?php
+		echo (new FileLayout('schedule.schedules.report_form'))->render(
+			new Data(['printForm' => $this->data->printForm, 'formId' => 'print-schedule-report-form'])
+		);
+		?>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-primary" onclick="jQuery('#print-schedule-report-form').submit();">送出</button>
 	</div>
 </div>
