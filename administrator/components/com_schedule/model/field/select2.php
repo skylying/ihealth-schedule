@@ -167,10 +167,13 @@ class JFormFieldSelect2 extends JFormField
 						}
 					});
 
-					if (option.hasInitialValue == "true" && typeof initialText == "undefined")
+					if (option.readonly)
 					{
 						$node.select2("readonly", true);
+					}
 
+					if (option.hasInitialValue == "true" && typeof initialText == "undefined")
+					{
 						if (option.tableName == "institutes")
 						{
 							// update "外送日" & "外送顏色" in edit view on document load
@@ -270,7 +273,8 @@ class JFormFieldSelect2 extends JFormField
 			'consoleResult'      => XmlHelper::get($this->element, 'apiConsoleResult', 'false'),
 			'apiQueryKey'        => XmlHelper::get($this->element, 'apiQueryKey'),
 			'allowNew'           => XmlHelper::get($this->element, 'allowNew', 'false'),
-			'onChangeCallback'   => XmlHelper::get($this->element, 'onChangeCallback', 'function(){}')
+			'onChangeCallback'   => XmlHelper::get($this->element, 'onChangeCallback', 'function(){}'),
+			'readonly'           => $this->readonly,
 		);
 
 		return $params;
