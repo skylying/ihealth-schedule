@@ -1,7 +1,8 @@
 <?php
 
-use \Windwalker\DI\Container;
-use \Windwalker\Helper\XmlHelper;
+use Windwalker\DI\Container;
+use Windwalker\Helper\XmlHelper;
+use Windwalker\Data\Data;
 
 /**
  * Class JFormFieldSelect2
@@ -292,19 +293,18 @@ class JFormFieldSelect2 extends JFormField
 		// Prepare database object
 		$container = Container::getInstance();
 		$db        = $container->get('db');
-		$q         = $db->getQuery(true);
+		$query     = XmlHelper::get($this->element, 'query', '');
 
-		$this->table_name  = XmlHelper::get($this->element, 'apiTableName');
-		$selectString = $this->getSelectString($this->table_name);
+		if (! empty($queryId))
+		{
+			$query = str_replace('%s', $queryId, $query);
 
-		// Do query
-		$q->select($selectString)
-			->from("#__schedule_" . $this->table_name)
-			->where("id = {$queryId}");
+			$item = new Data($db->setQuery($query)->loadObject());
 
-		$db->setQuery($q);
+			return new Data($item);
+		}
 
-		return new \Windwalker\Data\Data($db->loadObject());
+		return new Data;
 	}
 
 	/**

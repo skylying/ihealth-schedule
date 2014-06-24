@@ -13,6 +13,7 @@
 			label="機構名稱"
 			description="機構名稱"
 			required="true"
+			query="SELECT `id`, `short_title` AS `dropdowntext`, `color_hex` AS `hex`, `delivery_weekday` AS `delivery_day`, `floor` FROM #__schedule_institutes WHERE `id`=%s"
 			/>
 
 		<field name="floor"
@@ -45,6 +46,7 @@
 			label="客戶"
 			description="客戶"
 			required="true"
+			query="SELECT `id`, `name` AS `dropdowntext` FROM #__schedule_members WHERE `id`=%s"
 			/>
 
 		<field name="id_number"
