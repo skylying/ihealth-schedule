@@ -124,7 +124,7 @@ class ScheduleViewRxresidentHtml extends EditView
 	{
 		$items = array();
 		$app = JFactory::getApplication();
-		$key = $this->option . '.item.edit.save.data';
+		$key = $this->option . '.edit.' . $this->getName() . '.data';
 		$data = $app->getUserState($key);
 
 		if ($data)
