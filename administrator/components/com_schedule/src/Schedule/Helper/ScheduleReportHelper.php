@@ -34,6 +34,7 @@ class ScheduleReportHelper
 			'`institute_id`',
 			'`institute_title`',
 			'SUBSTR(`date`, 1, 7) AS `year_month`',
+			'SUBSTR(`date`, 1, 4) AS `year`',
 			'SUBSTR(`date`, 6, 2) AS `month`',
 			'COUNT(*) as `amount`',
 		];
@@ -43,7 +44,7 @@ class ScheduleReportHelper
 			->from(TABLE::SCHEDULES)
 			->where("`type` IN('individual', 'resident') ")
 			->group("`city_title`, institute_title, type, `year_month`")
-			->order("`city_title`, `type` DESC, `institute_title`, `year_month`");
+			->order("`year_month`, `city_title`, `type` DESC, `institute_title`");
 
 		$this->extraFilter($query, $filter);
 
@@ -97,9 +98,24 @@ class ScheduleReportHelper
 
 		foreach ($rowData as $item)
 		{
-			if (!isset($data[$item->city]))
+			if (!isset($data[$item->year]))
 			{
-				$data[$item->city] = array(
+					$data[$item->year] = array(
+						$item->city => array(
+							"city_title" => $item->city_title,
+							"institutes" => array(),
+							"customers" => array(
+								"months" => array_fill(0, 12, 0),
+								"sub_total" => 0,
+						),
+						"total" => 0,
+					)
+				);
+			}
+
+			if (!isset($data[$item->year][$item->city]))
+			{
+				$data[$item->year][$item->city] = array(
 					"city_title" => $item->city_title,
 					"institutes" => array(),
 					"customers" => array(
@@ -110,9 +126,9 @@ class ScheduleReportHelper
 				);
 			}
 
-			if (!isset($data[$item->city]["institutes"][$item->institute_id]) && $item->type == 'resident')
+			if (!isset($data[$item->year][$item->city]["institutes"][$item->institute_id]) && $item->type == 'resident')
 			{
-				$data[$item->city]["institutes"][$item->institute_id] = array(
+				$data[$item->year][$item->city]["institutes"][$item->institute_id] = array(
 					"title" => $item->institute_title,
 					"months" => array_fill(0, 12, 0),
 					"sub_total" => 0,
@@ -123,16 +139,16 @@ class ScheduleReportHelper
 
 			if ($item->type == 'individual')
 			{
-				$data[$item->city]["customers"]["months"][$month - 1] = $item->amount;
-				$data[$item->city]["customers"]["sub_total"] += $item->amount;
+				$data[$item->year][$item->city]["customers"]["months"][$month - 1] = $item->amount;
+				$data[$item->year][$item->city]["customers"]["sub_total"] += $item->amount;
 			}
 			else
 			{
-				$data[$item->city]["institutes"][$item->institute_id]["months"][$month - 1] = $item->amount;
-				$data[$item->city]["institutes"][$item->institute_id]["sub_total"] += $item->amount;
+				$data[$item->year][$item->city]["institutes"][$item->institute_id]["months"][$month - 1] = $item->amount;
+				$data[$item->year][$item->city]["institutes"][$item->institute_id]["sub_total"] += $item->amount;
 			}
 
-			$data[$item->city]["total"] += $item->amount;
+			$data[$item->year][$item->city]["total"] += $item->amount;
 		}
 
 		return $data;

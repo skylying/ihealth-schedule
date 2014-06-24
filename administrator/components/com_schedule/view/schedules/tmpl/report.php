@@ -38,6 +38,8 @@ $tmpl = JUri::getInstance()->getVar('tmpl');
 
 	<?php endif; ?>
 
+	<?php foreach ($data->items as $year => $item): ?>
+		<h1 style="text-align: center"><?php echo $year; ?></h1>
 		<table id="schedulereportList" class="table table-bordered adminlist">
 			<!-- TABLE HEADER -->
 			<thead>
@@ -74,15 +76,15 @@ $tmpl = JUri::getInstance()->getVar('tmpl');
 
 			<?php
 
-			foreach ($data->items as $item):
-				$instituteAmount = count($item['institutes']);
+			foreach ($item as $subItem):
+				$instituteAmount = count($subItem['institutes']);
 
 				// 重設表格的 rowSpanRepeat 讓表格的 rowSpan 數值出現給下個縣市印出
 				$rowSpanRepeat = 0;
 
 				$rowSpan = $instituteAmount + 1;
 
-				foreach ($item['institutes'] as $institute):
+				foreach ($subItem['institutes'] as $institute):
 					$rowSpanRepeat++;
 			?>
 				<!-- 列出 $item['institutes'] 的資料 -->
@@ -90,7 +92,7 @@ $tmpl = JUri::getInstance()->getVar('tmpl');
 					<!-- 縣市 -->
 					<?php if ($rowSpanRepeat == 1): ?>
 					<td class="left" rowspan="<?php echo $rowSpan; ?>">
-						<?php echo $item['city_title']; ?>
+						<?php echo $subItem['city_title']; ?>
 					</td>
 					<?php endif; ?>
 
@@ -114,7 +116,7 @@ $tmpl = JUri::getInstance()->getVar('tmpl');
 					<?php if ($rowSpanRepeat == 1): ?>
 					<!-- 排程小計 -->
 					<td class="left" rowspan="<?php echo $rowSpan; ?>" style="vertical-align: bottom;">
-						<?php echo $item['total']; ?>
+						<?php echo $subItem['total']; ?>
 					</td>
 					<?php endif; ?>
 				</tr>
@@ -124,7 +126,7 @@ $tmpl = JUri::getInstance()->getVar('tmpl');
 					<!-- 如果該縣市沒有機構，則補印縣市 -->
 					<?php if ($instituteAmount == 0): ?>
 					<td class="left">
-						<?php echo $item['city_title']; ?>
+						<?php echo $subItem['city_title']; ?>
 					</td>
 					<?php endif; ?>
 
@@ -136,19 +138,19 @@ $tmpl = JUri::getInstance()->getVar('tmpl');
 					<?php for ($month = 0; $month <= 11; $month ++): ?>
 					<!-- 月 -->
 					<td class="right">
-						<?php echo $item['customers']['months'][$month]; ?>
+						<?php echo $subItem['customers']['months'][$month]; ?>
 					</td>
 					<?php endfor; ?>
 
 					<!-- 排程小計 -->
 					<td class="left">
-						<?php echo $item['customers']['sub_total']; ?>
+						<?php echo $subItem['customers']['sub_total']; ?>
 					</td>
 
 					<!-- 如果該縣市沒有機構，則補印散客的排程小計 -->
 					<?php if ($instituteAmount == 0): ?>
 					<td class="left">
-						<?php echo $item['total']; ?>
+						<?php echo $subItem['total']; ?>
 					</td>
 					<?php endif; ?>
 
@@ -156,6 +158,7 @@ $tmpl = JUri::getInstance()->getVar('tmpl');
 			<?php endforeach; ?>
 			</tbody>
 		</table>
+		<?php endforeach; ?>
 
 		<!-- Hidden Inputs -->
 		<div id="hidden-inputs">
