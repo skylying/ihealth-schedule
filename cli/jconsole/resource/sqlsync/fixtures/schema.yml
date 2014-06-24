@@ -91,8 +91,6 @@
         area_title: { Field: area_title, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 區域名稱, From: [area_title] }
         hospital: { Field: hospital, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: '開立處方醫院 id', From: [hospital] }
         hospital_title: { Field: hospital_title, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 開立處方醫院名稱, From: [hospital_title] }
-        rx_period: { Field: rx_period, Type: tinyint(2), 'Null': NO, Default: null, Extra: '', Comment: 給藥天數, From: [rx_period] }
-        rx_times: { Field: rx_times, Type: tinyint(1), 'Null': NO, Default: null, Extra: '', Comment: 可調劑次數, From: [rx_times] }
         tel_office: { Field: tel_office, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: '宅配電話(O)', From: [tel_office] }
         tel_home: { Field: tel_home, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: '宅配電話(H)', From: [tel_home] }
         mobile: { Field: mobile, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 手機, From: [mobile] }
@@ -105,22 +103,22 @@
     index:
         - { Table: '#__schedule_customers', Non_unique: '0', Key_name: PRIMARY, Seq_in_index: '1', Column_name: id, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
     data:
-        - ['1', '4', '3', c123401453, '紅金保', resident, '2014-04-16', '12', '1', '1', 臺北市, '1', 松山區, '2', 台大醫院, '21', '2', 0999-123-334, 0977-343-134, 0934-414-533, '', '2014-04-09 00:00:00', '279', '2014-04-25 22:50:24', '279', '']
-        - ['2', '4', '3', t131401314, 陳龍, individual, '2014-04-16', '42', '2', '7', 新竹市, '73', ' 南區', '2', 三總, '21', '2', 0999-123-334, 0977-343-134, 0934-414-533, '', '2014-04-09 00:00:00', '279', '2014-04-25 22:52:00', '279', '']
-        - ['3', '7', '3', g123801399, '酸中山', resident, '2014-04-30', '27', '1', '1', 臺北市, '3', 中正區, '3', 容總, '3', '2', 09xx-xxx-1xxx, 09xx-xxx-1xxx, 09xx-xxx-1xxx, '', '0000-00-00 00:00:00', '279', '2014-04-25 22:50:43', '279', '']
-        - ['4', '5', '3', c121801314, 講中正, resident, '2014-04-30', '67', '1', '1', 臺北市, '3', 萬華區, '3', 長更, '3', '2', 09xx-xxx-1xxx, 09xx-xxx-1xxx, 09xx-xxx-1xxx, '', '0000-00-00 00:00:00', '279', '2014-04-25 22:50:53', '279', '']
-        - ['5', '8', '3', h123801384, '黃灰紅', resident, '0000-00-00', '44', '2', '12', 新北市, '22', 新莊區, '23', 佛山醫願, '2', '1', 09xx-xxx-xxxx, 09xx-xxx-xxxx, 09xx-xxx-xxxx, '', '0000-00-00 00:00:00', '279', '2014-04-25 22:51:01', '279', '']
-        - ['6', '10', '3', k121201384, 中國城, resident, '0000-00-00', '42', '2', '12', 臺北市, '22', 萬里區, '23', 香港醫願, '2', '1', 09xx-xxx-xxxx, 09xx-xxx-xxxx, 09xx-xxx-xxxx, '', '0000-00-00 00:00:00', '279', '2014-04-25 22:51:10', '279', '']
-        - ['7', '0', '4', d123401234, 金英王, individual, '2014-04-09', '33', '1', '1', 臺北市, '7', 大安區, '3', 宜蘭醫院, '21', '1', 09xx-xxx-xxxx, 09xx-xxx-xxxx, 09xx-xxx-xxxx, '', '0000-00-00 00:00:00', '279', '2014-04-25 22:51:27', '279', '']
-        - ['8', '0', '4', d233401234, 李登灰, individual, '2014-04-09', '55', '1', '1', 臺北市, '8', 南港區, '3', 中正醫院, '21', '1', 09xx-xxx-xxxx, 09xx-xxx-xxxx, 09xx-xxx-xxxx, '', '0000-00-00 00:00:00', '279', '2014-04-25 22:51:42', '279', '']
-        - ['9', '0', '3', d123465789, '忠庭立張寸', individual, '2014-04-30', '34', '1', '1', 臺北市, '12', 文山區, '2', 文山醫院, '21', '1', 09xx-xxx-xxxx, 09xx-xxx-xxxx, 09xx-xxx-xxxx, '', '0000-00-00 00:00:00', '279', '2014-04-25 22:52:27', '279', '']
-        - ['10', '0', '3', d123412389, 不小姐, individual, '2014-04-08', '34', '1', '1', 臺北市, '9', 北投區, '2', 木榨醫院, '21', '1', 09xx-xxx-xxxx, 09xx-xxx-xxxx, 09xx-xxx-xxxx, '', '0000-00-00 00:00:00', '279', '2014-04-25 22:53:00', '279', '']
-        - ['13', '5', '0', F038123456, 蝦咪大, resident, '1960-12-22', '0', '0', '0', 臺北市, '0', 萬華區, '0', '', '0', '0', '', '', '', '', '2014-05-09 10:35:21', '1', '0000-00-00 00:00:00', '0', '']
-        - ['14', '5', '0', A998012345, 不太大, resident, '1949-11-09', '0', '0', '0', 臺北市, '0', 萬華區, '0', '', '0', '0', '', '', '', '', '2014-05-09 10:35:21', '1', '0000-00-00 00:00:00', '0', '']
-        - ['15', '9', '0', K123456789, 新人郎, resident, '1959-04-11', '0', '0', '0', 新北市, '0', 樹林區, '0', '', '0', '0', '', '', '', '', '2014-05-09 10:38:15', '1', '0000-00-00 00:00:00', '0', '']
-        - ['16', '9', '0', S123987123, 山高帥, resident, '1974-10-22', '0', '0', '0', 新北市, '0', 樹林區, '0', '', '0', '0', '', '', '', '', '2014-05-09 10:38:15', '1', '0000-00-00 00:00:00', '0', '']
-        - ['17', '10', '0', O192837465, 高富老, resident, '1960-02-10', '0', '0', '0', 臺北市, '0', 萬里區, '0', '', '0', '0', '', '', '', '', '2014-05-09 10:45:16', '1', '0000-00-00 00:00:00', '0', '']
-        - ['18', '10', '0', B123498765, 矮老醜, resident, '1965-07-07', '0', '0', '0', 臺北市, '0', 萬里區, '0', '', '0', '0', '', '', '', '', '2014-05-09 10:45:16', '1', '0000-00-00 00:00:00', '0', '']
+        - ['1', '4', '3', c123401453, '紅金保', resident, '2014-04-16', '12', '1', '1', 臺北市, '1', 松山區, '2', 台大醫院, 0999-123-334, 0977-343-134, 0934-414-533, '', '2014-04-09 00:00:00', '279', '2014-04-25 22:50:24', '279', '']
+        - ['2', '4', '3', t131401314, 陳龍, individual, '2014-04-16', '42', '2', '7', 新竹市, '73', ' 南區', '2', 三總, 0999-123-334, 0977-343-134, 0934-414-533, '', '2014-04-09 00:00:00', '279', '2014-04-25 22:52:00', '279', '']
+        - ['3', '7', '3', g123801399, '酸中山', resident, '2014-04-30', '27', '1', '1', 臺北市, '3', 中正區, '3', 容總, 09xx-xxx-1xxx, 09xx-xxx-1xxx, 09xx-xxx-1xxx, '', '0000-00-00 00:00:00', '279', '2014-04-25 22:50:43', '279', '']
+        - ['4', '5', '3', c121801314, 講中正, resident, '2014-04-30', '67', '1', '1', 臺北市, '3', 萬華區, '3', 長更, 09xx-xxx-1xxx, 09xx-xxx-1xxx, 09xx-xxx-1xxx, '', '0000-00-00 00:00:00', '279', '2014-04-25 22:50:53', '279', '']
+        - ['5', '8', '3', h123801384, '黃灰紅', resident, '0000-00-00', '44', '2', '12', 新北市, '22', 新莊區, '23', 佛山醫願, 09xx-xxx-xxxx, 09xx-xxx-xxxx, 09xx-xxx-xxxx, '', '0000-00-00 00:00:00', '279', '2014-04-25 22:51:01', '279', '']
+        - ['6', '10', '3', k121201384, 中國城, resident, '0000-00-00', '42', '2', '12', 臺北市, '22', 萬里區, '23', 香港醫願,09xx-xxx-xxxx, 09xx-xxx-xxxx, 09xx-xxx-xxxx, '', '0000-00-00 00:00:00', '279', '2014-04-25 22:51:10', '279', '']
+        - ['7', '0', '4', d123401234, 金英王, individual, '2014-04-09', '33', '1', '1', 臺北市, '7', 大安區, '3', 宜蘭醫院, 09xx-xxx-xxxx, 09xx-xxx-xxxx, 09xx-xxx-xxxx, '', '0000-00-00 00:00:00', '279', '2014-04-25 22:51:27', '279', '']
+        - ['8', '0', '4', d233401234, 李登灰, individual, '2014-04-09', '55', '1', '1', 臺北市, '8', 南港區, '3', 中正醫院, 09xx-xxx-xxxx, 09xx-xxx-xxxx, 09xx-xxx-xxxx, '', '0000-00-00 00:00:00', '279', '2014-04-25 22:51:42', '279', '']
+        - ['9', '0', '3', d123465789, '忠庭立張寸', individual, '2014-04-30', '34', '1', '1', 臺北市, '12', 文山區, '2', 文山醫院, 09xx-xxx-xxxx, 09xx-xxx-xxxx, 09xx-xxx-xxxx, '', '0000-00-00 00:00:00', '279', '2014-04-25 22:52:27', '279', '']
+        - ['10', '0', '3', d123412389, 不小姐, individual, '2014-04-08', '34', '1', '1', 臺北市, '9', 北投區, '2', 木榨醫院, 09xx-xxx-xxxx, 09xx-xxx-xxxx, 09xx-xxx-xxxx, '', '0000-00-00 00:00:00', '279', '2014-04-25 22:53:00', '279', '']
+        - ['13', '5', '0', F038123456, 蝦咪大, resident, '1960-12-22', '0', '0', '0', 臺北市, '0', 萬華區, '0', '', '', '', '', '', '2014-05-09 10:35:21', '1', '0000-00-00 00:00:00', '0', '']
+        - ['14', '5', '0', A998012345, 不太大, resident, '1949-11-09', '0', '0', '0', 臺北市, '0', 萬華區, '0', '', '', '', '', '', '2014-05-09 10:35:21', '1', '0000-00-00 00:00:00', '0', '']
+        - ['15', '9', '0', K123456789, 新人郎, resident, '1959-04-11', '0', '0', '0', 新北市, '0', 樹林區, '0', '', '', '', '', '', '2014-05-09 10:38:15', '1', '0000-00-00 00:00:00', '0', '']
+        - ['16', '9', '0', S123987123, 山高帥, resident, '1974-10-22', '0', '0', '0', 新北市, '0', 樹林區, '0', '', '', '', '', '', '2014-05-09 10:38:15', '1', '0000-00-00 00:00:00', '0', '']
+        - ['17', '10', '0', O192837465, 高富老, resident, '1960-02-10', '0', '0', '0', 臺北市, '0', 萬里區, '0', '', '', '', '', '', '2014-05-09 10:45:16', '1', '0000-00-00 00:00:00', '0', '']
+        - ['18', '10', '0', B123498765, 矮老醜, resident, '1965-07-07', '0', '0', '0', 臺北市, '0', 萬里區, '0', '', '', '', '', '', '2014-05-09 10:45:16', '1', '0000-00-00 00:00:00', '0', '']
 '#__schedule_drug_extra_details':
     name: '#__schedule_drug_extra_details'
     from:
@@ -128,7 +126,7 @@
     columns:
         id: { Field: id, Type: 'int(11) unsigned', 'Null': NO, Default: null, Extra: auto_increment, Comment: 'Primary Key', From: [id] }
         institute_id: { Field: institute_id, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: '對應機構 id', From: [institute_id] }
-        price: { Field: price, Type: 'decimal(10,0)', 'Null': NO, Default: null, Extra: '', Comment: 單筆金額, From: [price] }
+        price: { Field: price, Type: 'decimal(10,2)', 'Null': NO, Default: null, Extra: '', Comment: 單筆金額, From: [price] }
         task_id: { Field: task_id, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: '對應外送 id', From: [task_id] }
         ice: { Field: ice, Type: int(1), 'Null': NO, Default: null, Extra: '', Comment: '是否有冰品', From: [ice] }
         sorted: { Field: sorted, Type: int(1), 'Null': NO, Default: null, Extra: '', Comment: '是否完成分藥', From: [sorted] }
@@ -307,20 +305,22 @@
         email: { Field: email, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 'Member email', From: [email] }
         password: { Field: password, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 'Member password', From: [password] }
         tel: { Field: tel, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 'Member Phone Number', From: [tel] }
+        created: { Field: created, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: '新增時間', From: [created] }
+        modified: { Field: modified, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: '更新時間', From: [modified] }
     index:
         - { Table: '#__schedule_members', Non_unique: '0', Key_name: PRIMARY, Seq_in_index: '1', Column_name: id, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
         - { Table: '#__schedule_members', Non_unique: '1', Key_name: idx_alias, Seq_in_index: '1', Column_name: email, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
     data:
-        - ['1', 'Spider Man', llw@hotmail.com, llw, '0910000233']
-        - ['2', 'Iron Man', llw@hotmail.com, '00000000', '0910000233']
-        - ['3', 'Ma Ying Dog', llw@hotmail.com, '00000000', '0910000233']
-        - ['4', Avenger, llw@hotmail.com, '00000000', '0910000233']
-        - ['5', QQ, female@hotmail.com, '00000000', '0910000233']
-        - ['6', Q_Q, female@hotmail.com, '00000000', '0910000233']
-        - ['7', 假藥師, female@hotmail.com, '00000000', '0910000233']
-        - ['8', 客戶一號, female@hotmail.com, '00000000', '0910000233']
-        - ['9', 龍澤秀明, female@hotmail.com, '00000000', '0910000233']
-        - ['10', '借雅人', female@hotmail.com, '00000000', '0910000233']
+        - ['1', 'Spider Man', llw@hotmail.com, llw, '0910000233', '', '']
+        - ['2', 'Iron Man', llw@hotmail.com, '00000000', '0910000233', '', '']
+        - ['3', 'Ma Ying Dog', llw@hotmail.com, '00000000', '0910000233', '', '']
+        - ['4', Avenger, llw@hotmail.com, '00000000', '0910000233', '', '']
+        - ['5', QQ, female@hotmail.com, '00000000', '0910000233', '', '']
+        - ['6', Q_Q, female@hotmail.com, '00000000', '0910000233', '', '']
+        - ['7', 假藥師, female@hotmail.com, '00000000', '0910000233', '', '']
+        - ['8', 客戶一號, female@hotmail.com, '00000000', '0910000233', '', '']
+        - ['9', 龍澤秀明, female@hotmail.com, '00000000', '0910000233', '', '']
+        - ['10', '借雅人', female@hotmail.com, '00000000', '0910000233', '', '']
 '#__schedule_prescriptions':
     name: '#__schedule_prescriptions'
     from:
