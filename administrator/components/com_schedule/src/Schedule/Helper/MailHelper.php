@@ -26,7 +26,9 @@ class MailHelper
 	{
 		$mailer = \JFactory::getMailer();
 		$from   = \JFactory::getConfig()->get('mailfrom');
-		$layout = new FileLayout("schedule.mail.confirm", JPATH_ADMINISTRATOR . '/components/com_schedule/layouts');
+
+		// Set layouts from admin
+		$layout = new FileLayout("schedule.mail.confirm", SCHEDULE_ADMIN . '/layouts');
 
 		$mailer->setSubject("處方預約確認信");
 		$mailer->setBody($layout->render($displayData));
@@ -56,7 +58,9 @@ class MailHelper
 	{
 		$mailer = \JFactory::getMailer();
 		$from   = \JFactory::getConfig()->get('mailfrom');
-		$layout = new FileLayout("schedule.mail.emptyroute", JPATH_ADMINISTRATOR . '/components/com_schedule/layouts');
+
+		// Set layouts from admin
+		$layout = new FileLayout("schedule.mail.emptyroute", SCHEDULE_ADMIN . '/layouts');
 
 		$mailer->setSubject("沒有路線通知");
 		$mailer->setBody($layout->render($displayData));
