@@ -35,8 +35,8 @@ class ImageHelper
 	/**
 	 * getImages
 	 *
-	 * @param $foreignId
-	 * @param $imageType
+	 * @param int    $foreignId
+	 * @param string $imageType
 	 *
 	 * @return  array|mixed
 	 */
@@ -53,11 +53,11 @@ class ImageHelper
 	}
 
 	/**
-	 * handleUpload
+	 * Do the file upload and update database as well
 	 *
-	 * @param        $foreignId
-	 * @param        $imageType
-	 * @param        $files
+	 * @param int    $foreignId
+	 * @param string $imageType
+	 * @param array  $files
 	 * @param string $purpose
 	 *
 	 * @return  array|mixed
@@ -100,8 +100,8 @@ class ImageHelper
 	/**
 	 * getStoragePath
 	 *
-	 * @param $foreignId
-	 * @param $imageType
+	 * @param int    $foreignId
+	 * @param string $imageType
 	 *
 	 * @return  string
 	 */
@@ -114,10 +114,10 @@ class ImageHelper
 	/**
 	 * saveImages
 	 *
-	 * @param $foreignId
-	 * @param $imageType
-	 * @param $images
-	 * @param $purpose
+	 * @param int    $foreignId
+	 * @param string $imageType
+	 * @param array  $images
+	 * @param string $purpose
 	 *
 	 * @return  array
 	 */
@@ -188,9 +188,9 @@ class ImageHelper
 	/**
 	 * resetImagesRxId
 	 *
-	 * @param array $cid
-	 * @param       $foreignId
-	 * @param       $imageType
+	 * @param array  $cid
+	 * @param int    $foreignId
+	 * @param string $imageType
 	 *
 	 * @return  void
 	 */
