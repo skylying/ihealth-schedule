@@ -9,6 +9,13 @@
 	}
 
 	window.customerMemberField = {
+		/**
+		 * Init the field
+		 *
+		 * @param  {string}  $customerId
+		 * @param  {string}  $memberSelectId
+		 * @param  {string}  $url
+		 */
 		init: function($customerId, $memberSelectId, $url)
 		{
 			this.customer = $("#" + $customerId);
@@ -25,6 +32,9 @@
 				window.customerMemberField.flushSelect();
 			});
 		},
+		/**
+		 * Flush select input
+		 */
 		flushSelect: function()
 		{
 			var memberId    = this.memberId;
@@ -50,6 +60,12 @@
 				memberField.replaceWith(html);
 			});
 		},
+		/**
+		 * Select input's html
+		 *
+		 * @param   {string}  $listHtml
+		 * @returns {string}
+		 */
 		selectHtml: function($listHtml)
 		{
 			var $id    = this.member.attr("id");
@@ -58,6 +74,13 @@
 
 			return "<select id='" + $id + "' name='" + $name + "' class='" + $class + "'>" + $listHtml + "</select>";
 		},
+		/**
+		 * Select option's html
+		 *
+		 * @param   {string}  $title
+		 * @param   {string}  $value
+		 * @returns {string}
+		 */
 		selectListHtml: function($title, $value)
 		{
 			return "<option value='" + $value + "'>" + $title + "</option>";
