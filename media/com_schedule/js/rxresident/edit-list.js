@@ -12,47 +12,79 @@
 	// Exports class RxResidentEditList
 	window.RxResidentEditList = {
 		/**
-		 * Run
+		 * Option
 		 */
-		run: function()
+		option: {
+			customerApi: ''
+		},
+		/**
+		 * Run
+		 *
+		 * @param {Object} option
+		 */
+		run: function(option)
 		{
-			var $panel = $('#rx-list').find('tbody'),
+			this.option = $.extend(this.option, option);
+
+			var self = this,
+				$panel = $('#rx-list').find('tbody'),
+				$totalRow = $('#totalrow'),
+				$instituteId = $('#jform_institute_id'),
 				handler = new MultiRowHandler({$panel:$panel});
 
 			// Bind afterInsert event
 			handler.on('afterInsert', function ($row)
 			{
-				$row.find('input.customer-id').each(function()
+				var customers = $instituteId.data('customers');
+
+				$row.find('input.customer-id').each(function (i, val)
 				{
-					customer_id.select2Initialize($(this));
+					Select2Helper.select2('customer_id', $(this), {data:customers});
 				});
 			});
 
 			// Bind afterDuplicate event
 			handler.on('afterDuplicate', function ($row, $from)
 			{
-				// Remove exists select2 element
-				$row.find('div.customer-id').remove();
-
-				var originCustomerIds = $from.find('input.customer-id');
+				var customers = $instituteId.data('customers'),
+					customer = $from.find('input.customer-id').select2('data') || {id: '', name: ''};
 
 				$row.find('input.customer-id').each(function (i, val)
 				{
-					var data = $(originCustomerIds[i]).select2('data') || {id:'', customer_name:''};
+					// Remove exists select2 element
+					$(this).parent().find('.select2-container').remove();
 
-					customer_id.select2Initialize($(this), data.customer_name);
+					Select2Helper.select2('customer_id', $row.find('input.customer-id'), {data:customers,initialData:customer});
 				});
 			});
 
 			// Bind initialize event
 			handler.on('initializeRow', function ($row)
 			{
-				$row.find('.datetimepicker').datetimepicker({
+				var $dpNode = $row.find('.datetimepicker');
+
+				$dpNode.datetimepicker({
 					pickTime: false
 				});
 
-				// Initialize select2
-				customer_id.select2Initialize($row.find('.customer-id'));
+				$dpNode.on('dp.change', function(e)
+				{
+					// Focus on a known element to improve performance
+					$('#jform_floor').focus().blur();
+
+					self.updateFinishDate.call(this);
+				});
+
+				$dpNode.on('dp.hide', function(e)
+				{
+					// Trigger event "dp.change" when select today's date
+					if (0 === moment().diff(e.date, 'days'))
+					{
+						console.log('trigger dp.change');
+
+						$(this).trigger('dp.change');
+					}
+				});
 			});
 
 			// Inject javascript to every element on page
@@ -61,18 +93,16 @@
 			// Add row
 			$('.button-add-row').click(function ()
 			{
-				var i,
-					amount = $(this).val();
+				var amount = $(this).val();
 
 				amount = isNaN(amount) ? 0 : amount;
 
-				for (i = 0; i < amount; ++i)
+				for (var i = 0; i < amount; ++i)
 				{
 					handler.insert($('#row-template').html());
 				}
 
-				// Update total number of rows
-				$('#totalrow').text($('#rx-list tr').length - 1);
+				updateTotalRowNumber();
 			});
 
 			// Delete row
@@ -80,8 +110,7 @@
 			{
 				handler.remove($(this).closest('tr'));
 
-				// Update total number of rows
-				$('#totalrow').text($('#rx-list tr').length - 1);
+				updateTotalRowNumber();
 			});
 
 			// Copy row
@@ -89,9 +118,117 @@
 			{
 				handler.duplicate($(this).closest('tr'));
 
-				// Update total number of rows
-				$('#totalrow').text($('#rx-list tr').length - 1);
+				updateTotalRowNumber();
 			});
+
+			// Update total row number first
+			updateTotalRowNumber();
+
+			/**
+			 * Update total number of rows
+			 */
+			function updateTotalRowNumber()
+			{
+				$totalRow.text($panel.find('tr').length);
+			}
+		},
+
+		/**
+		 * Triggered by institute_id onchange event, will update "外送日", "機構樓層", "顏色", and Customer Select2 Data
+		 *
+		 * It will return a callback function, which contains params:
+		 * - {object}  e     Event object, Contains the following custom properties:
+		 *                        - val:     The current selection (taking into account the result of the change) - id or array of ids.
+		 *                        - added:   The added element, if any - the full element object, not just the id.
+		 *                        - removed: The removed element, if any - the full element object, not just the id.
+		 * - {element} $node Current Element node
+		 */
+		instituteIdChange: function()
+		{
+			var self = this;
+
+			return function(e, $node)
+			{
+				var translateWeek = {
+					MON: '週一',
+					TUE: '週二',
+					WED: '週三',
+					THU: '週四',
+					FRI: '週五',
+					SAT: '週六',
+					SUN: '週日'
+				};
+
+				var weekday = e.added.delivery_weekday,
+					color = e.added.color_hex,
+					floor = e.added.id.split('-')[1],
+					customerApiUrl = self.option.customerApi + e.val.split('-')[0];
+
+				// update delivery_weekday
+				$('#weekday-from-js').text(translateWeek[weekday]);
+
+				// update delivery_weekday color
+				$('.deliverycolor').css('background', color);
+
+				// update floor
+				$('#jform_floor').val(floor);
+
+				$.getJSON(customerApiUrl, function(obj)
+				{
+					$node.data('customers', obj);
+
+					$('input.customer-id').each(function(i, val)
+					{
+						var $self = $(this),
+							data = $self.select2('data'),
+							select2Option = $self.data('select2');
+
+						select2Option.opts.data.results = obj;
+						select2Option.opts.initSelection = function(element, callback)
+						{
+							callback(data);
+						};
+
+						// Clear selected id
+						if (data && !isNaN(data.id))
+						{
+							$self.val('');
+						}
+
+						$self.select2(select2Option.opts).change();
+					});
+				});
+			}
+		},
+
+		/**
+		 * Triggered by customer_id onchange event, will update "身分證字號" and "生日"
+		 *
+		 * It will return a callback function, which contains params:
+		 * - {object}  e     Event object, Contains the following custom properties:
+		 *                        - val:     The current selection (taking into account the result of the change) - id or array of ids.
+		 *                        - added:   The added element, if any - the full element object, not just the id.
+		 *                        - removed: The removed element, if any - the full element object, not just the id.
+		 * - {element} $node Current Element node
+		 */
+		customerIdChange: function()
+		{
+			return function(e, $node)
+			{
+				var $idNumber = $node.closest('tr').find('.idnumber'),
+					$birthDay = $node.closest('tr').find('.birthday');
+
+				if (typeof e.added === 'object')
+				{
+					$idNumber.val(e.added.id_number);
+					$birthDay.val(e.added.birth_date);
+				}
+				else
+				{
+					$idNumber.val('');
+					$birthDay.val('');
+				}
+			};
 		},
 
 		// Inject javascript to every single row
@@ -160,159 +297,75 @@
 			});
 
 			// Bind onchange to "就醫日期" & "給藥天數"
-			$panel.on('change', '.seedr', updateFinishDate);
-			$panel.on('change', '.period', updateFinishDate);
+			$panel.on('change', '.period', this.updateFinishDate);
+		},
+
+		/**
+		 * Update "第一次吃完藥品日" & "第二次吃完藥品日"
+		 *
+		 * @param event
+		 *
+		 * @return void
+		 */
+		updateFinishDate: function()
+		{
+			var $row = $(this).closest('tr');
+
+			var seeDrDateNode  = $row.find('.seedr'),
+				seeDrDateValue = seeDrDateNode.val();
+
+			// if "就醫日期" not set, return
+			if (seeDrDateValue == 'undefined' || seeDrDateValue == '')
+			{
+				return;
+			}
+
+			var periodNode      = $row.find('.period'),
+				periodValue     = parseInt(periodNode.val());
+
+			var dateObj = new Date(seeDrDateValue);
+
+			// Set finishdate1 & finishdate2
+			var finishDate1 = dateObj.setDate(dateObj.getDate() + periodValue),
+				finishDate2 = dateObj.setDate(dateObj.getDate() + periodValue);
+
+			// update "藥吃完日" view column
+			$row.find('.emptydisplay1').text(getFormat(finishDate1, false));
+			$row.find('.emptydisplay2').text(getFormat(finishDate2, false));
+
+			// update "藥吃完日" form field
+			$row.find('.emptydate1').val(getFormat(finishDate1, true));
+			$row.find('.emptydate2').val(getFormat(finishDate2, true));
 
 			/**
-			 * Update "第一次吃完藥品日" & "第二次吃完藥品日"
+			 * Create date format MM-DD
 			 *
-			 * @param event
+			 * @param   {timestamp} date
+			 * @param   {boolean}   type , true => return full format
 			 *
-			 * @return void
+			 * @returns {string}
 			 */
-			function updateFinishDate(event)
+			function getFormat(date, type)
 			{
-				var $row = $($(this).closest('tr'));
+				var dateObj = new Date(date),
+					year    = dateObj.getFullYear(),
+					month   = dateObj.getMonth() + 1,
+					day     = dateObj.getDate(),
+					short   = ((month < 10) ? '0'+ month : month) + '-' + ((day < 10) ? '0'+ day : day),
+					full    = year + '-' + short,
+					result;
 
-				var seeDrDateNode  = $row.find('.seedr'),
-					seeDrDateValue = seeDrDateNode.val();
-
-				// if "就醫日期" not set, return
-				if (seeDrDateValue == 'undefined' || seeDrDateValue == '')
+				if (type == true)
 				{
-					return;
+					result = full;
+				}
+				else
+				{
+					result = short;
 				}
 
-				var periodNode      = $row.find('.period'),
-					periodValue     = parseInt(periodNode.val());
-
-				var dateObj = new Date(seeDrDateValue);
-
-				// Set finishdate1 & finishdate2
-				var finishDate1 = dateObj.setDate(dateObj.getDate() + periodValue),
-					finishDate2 = dateObj.setDate(dateObj.getDate() + periodValue);
-
-				// update "藥吃完日" view column
-				$row.find('.emptydisplay1').text(getFormat(finishDate1, false));
-				$row.find('.emptydisplay2').text(getFormat(finishDate2, false));
-
-				// update "藥吃完日" form field
-				$row.find('.emptydate1').val(getFormat(finishDate1, true));
-				$row.find('.emptydate2').val(getFormat(finishDate2, true));
-
-				/**
-				 * Create date format MM-DD
-				 *
-				 * @param   {timestamp} date
-				 * @param   {boolean}   type , true => return full format
-				 *
-				 * @returns {string}
-				 */
-				function getFormat(date, type)
-				{
-					var dateObj = new Date(date),
-						year    = dateObj.getFullYear(),
-						month   = dateObj.getMonth() + 1,
-						day     = dateObj.getDate(),
-						short   = ((month < 10) ? '0'+ month : month) + '-' + ((day < 10) ? '0'+ day : day),
-						full    = year + '-' + short,
-						result;
-
-					if (type == true)
-					{
-						result = full;
-					}
-					else
-					{
-						result = short;
-					}
-
-					return result;
-				}
+				return result;
 			}
 		}
-	};
-
-	/**
-	 * Bind onchange handler to update "外送日" column
-	 * Event Triggerer : rxresident.xml => Fieldname = "institute_id"
-	 *
-	 * @param {object}  e
-	 * @param {element} $node
-	 */
-	window.updateDeliveryDay = function(e, $node)
-	{
-		var translateWeek  = {
-			MON: '週一',
-			TUE: '週二',
-			WED: '週三',
-			THU: '週四',
-			FRI: '週五',
-			SAT: '週六',
-			SUN: '週日'
-		};
-
-		var weekday = e.added.delivery_day,
-			color   = e.added.color,
-			floor   = e.added.floor,
-			hasInitialValue = e.added.hasInitialValue;
-
-		var weekdaySpan = $('#weekday-from-js'),
-			colorBlock  = $('.deliverycolor'),
-			floorInput  = $('#jform_floor');
-
-		// update delivery_day
-		weekdaySpan.text(translateWeek[weekday]);
-
-		// update delivery_day color
-		colorBlock.css('background', color);
-
-		// Replace $node value with real institute id
-		if (e.added.instituteid)
-		{
-			$node.val(e.added.instituteid);
-		}
-
-		// Export institute_id
-		window.instituteId = e.added.instituteid;
-
-		// For view = edit, we don't need to re-initialize select2
-		if (typeof hasInitialValue !== undefined && hasInitialValue == 'true')
-		{
-			return;
-		}
-
-		// update floor
-		floorInput.val(floor);
-
-		// If user change institute, initialize $row with select2 again
-		var panel = $('#rx-list').find('tr');
-
-		$(panel).each(function()
-		{
-			var $row = $(this);
-
-			// Initialize select2 with global object
-			customer_id.select2Initialize($row.find('.customer-id'));
-
-			$row.find('.idnumber').val('');
-			$row.find('.birthday').val('');
-		})
-	};
-
-	/**
-	 * Bind onchahge handler to update customer id_number and birth_date
-	 * Event Triggerer : rxresident.xml => Fieldname = "customer_id"
-	 *
-	 * @param {object}  e
-	 * @param {element} $node
-	 */
-	window.updateIdBirthday = function(e, $node)
-	{
-		var idNumber = $node.closest('tr').find('.idnumber'),
-			birthDay = $node.closest('tr').find('.birthday');
-
-		idNumber.val(e.added.id_number);
-		birthDay.val(e.added.birth_date);
 	};
 })(jQuery);

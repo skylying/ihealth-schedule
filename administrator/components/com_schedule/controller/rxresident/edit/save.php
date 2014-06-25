@@ -134,6 +134,7 @@ class ScheduleControllerRxresidentEditSave extends SaveController
 				$customer = $customerMapper->findOne($item['customer_id']);
 			}
 
+			$item['origin_customer_id'] = $item['customer_id'];
 			$item['customer_id'] = $customer['id'];
 			$item['customer_name'] = $customer['name'];
 		}

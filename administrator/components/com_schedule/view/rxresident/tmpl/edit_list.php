@@ -27,10 +27,14 @@ $asset->addCSS('rxresident.css');
 $asset->addJS('multi-row-handler.js');
 $asset->addJS('rxresident/edit-list.js');
 
+$jsOption = [
+	'customerApi' => JRoute::_('index.php?option=com_schedule&task=customer.ajax.json&institute_id=', false),
+];
+
 ?>
 <script type="text/javascript">
 	jQuery(document).ready(function() {
-		RxResidentEditList.run();
+		RxResidentEditList.run(<?php echo json_encode($jsOption); ?>);
 	});
 </script>
 

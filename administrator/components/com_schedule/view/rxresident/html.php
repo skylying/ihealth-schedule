@@ -112,6 +112,7 @@ class ScheduleViewRxresidentHtml extends EditView
 
 		// Check if in edit mode
 		$id = (int) $this->container->get('input')->get('id');
+
 		$data->isNew = ($id <= 0);
 	}
 
@@ -131,6 +132,12 @@ class ScheduleViewRxresidentHtml extends EditView
 		{
 			foreach (ArrayHelper::getValue($data, 'items', array()) as $hash => $item)
 			{
+				// Fixed bug that cannot display new customer name correctly
+				if (isset($item['origin_customer_id']))
+				{
+					$item['customer_id'] = $item['origin_customer_id'];
+				}
+
 				$items[$hash] = $item;
 			}
 
