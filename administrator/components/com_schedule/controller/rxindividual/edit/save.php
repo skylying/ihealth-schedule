@@ -400,7 +400,7 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 			}
 		}
 
-		ImageHelper::resetImagesRxId($resetId, $this->data['id']);
+		ImageHelper::resetImagesRxId($resetId, $this->data['id'], 'rxindividual');
 	}
 
 	/**

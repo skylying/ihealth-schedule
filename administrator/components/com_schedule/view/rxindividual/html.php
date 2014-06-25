@@ -91,7 +91,7 @@ class ScheduleViewRxindividualHtml extends EditView
 
 		$data = $this->getData();
 
-		$images = \Schedule\Helper\ImageHelper::getImages($data->item->id);
+		$images = \Schedule\Helper\ImageHelper::getImages($data->item->id, 'rxindividual');
 
 		$data->images = $images;
 

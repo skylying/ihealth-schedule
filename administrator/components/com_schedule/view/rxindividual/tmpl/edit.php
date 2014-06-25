@@ -218,7 +218,7 @@ jQuery(document).ready(function ()
 					<?php echo $schedules["jform_schedules_{$key}_schedule_id"]->getControlGroup(); ?>
 				</div>
 			<?php endforeach; ?>
-			<div class="row-fluid well">
+			<div class="row-fluid well" style="margin-left: 30px">
 				<div class="col-lg-12 js-tel-wrap">
 					<div class="control-group">
 						<div class="control-label">
