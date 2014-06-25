@@ -16,7 +16,7 @@ defined('_JEXEC') or die;
  *
  * @since 1.0
  */
-class ScheduleViewPrescriptionsJson extends ApiView
+class ScheduleViewScheduleJson extends ApiView
 {
 	/**
 	 * Property prefix.
@@ -44,21 +44,21 @@ class ScheduleViewPrescriptionsJson extends ApiView
 	 *
 	 * @var  string
 	 */
-	protected $name = 'prescriptions';
+	protected $name = 'schedule';
 
 	/**
 	 * Property viewItem.
 	 *
 	 * @var  string
 	 */
-	protected $viewItem = 'prescription';
+	protected $viewItem = 'schedule';
 
 	/**
 	 * Property viewList.
 	 *
 	 * @var  string
 	 */
-	protected $viewList = 'prescriptions';
+	protected $viewList = 'schedules';
 
 	/**
 	 * prepareData
@@ -69,6 +69,6 @@ class ScheduleViewPrescriptionsJson extends ApiView
 	{
 		$data = $this->getData();
 
-		$data['items'] = $this->get('Items');
+		$data['items'] = $this->get('Item');
 	}
 }
