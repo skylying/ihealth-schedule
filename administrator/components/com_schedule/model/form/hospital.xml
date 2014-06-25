@@ -72,12 +72,14 @@
 		<field name="ajax_image1"
 			type="image"
 			imageType="hospital"
+			purpose="reserve"
 			label="預約用處方箋"
 			description="預約用處方箋" />
 
 		<field name="ajax_image2"
 			type="image"
 			imageType="hospital"
+			purpose="form"
 			label="自行填表用處方箋"
 			description="自行填表用處方箋" />
 	</fieldset>

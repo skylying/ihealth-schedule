@@ -43,6 +43,7 @@ class JFormFieldImage extends JFormField
 		$textOnly       = XmlHelper::getBool($this->element, 'text_only', false);
 		$foreignIdField = XmlHelper::getAttribute($this->element, 'foreign_id_field', "id");
 		$imageType      = XmlHelper::get($this->element, 'imageType');
+		$purpose        = XmlHelper::get($this->element, 'purpose', '');
 
 		// Miscelleneous configs
 		$name      = $this->element['name'];
@@ -120,6 +121,7 @@ JS
 		<input id="upload-input-{$name}" name="image" type="file" />
 		<input id="upload-foreign-id-{$name}" name="$foreignId"  type="hidden" value="{$foreignId}" />
 		<input id="upload-type-{$name}" name="imageType"  type="hidden" value="{$imageType}" />
+		<input id="image-purpose-{$name}" name="purpose"  type="hidden" value="{$purpose}" />
 	</div>
 	<input id="image-id-{$name}" type="hidden" name="{$inputName}" value="{$imageId}" />
 HTML;

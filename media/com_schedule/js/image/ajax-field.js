@@ -93,6 +93,13 @@
 		 */
 		this.ajaxPostUri = ajaxPostUri;
 
+		/**
+		 * Image has 2 purposes, 預約處方 and 自行填表
+		 *
+		 * @type {*|HTMLElement}
+		 */
+		this.purpose = $("#image-purpose-" + name);
+
 		// 初始化 HTMLElement event
 
 		this.fileInputEvent();
@@ -165,6 +172,7 @@
 			post.append("image", files[0]);
 			post.append("foreignId", this.uploadForeignId.val());
 			post.append("imageType", this.uploadImageType.val())
+			post.append("purpose", this.purpose.val());
 			post.append("task", "image.ajax.upload");
 
 			$.ajax({

@@ -55,13 +55,14 @@ class ImageHelper
 	/**
 	 * handleUpload
 	 *
-	 * @param $foreignId
-	 * @param $imageType
-	 * @param $files
+	 * @param        $foreignId
+	 * @param        $imageType
+	 * @param        $files
+	 * @param string $purpose
 	 *
-	 * @return  array
+	 * @return  array|mixed
 	 */
-	public static function handleUpload($foreignId, $imageType, $files)
+	public static function handleUpload($foreignId, $imageType, $files, $purpose)
 	{
 		$images = array();
 
@@ -91,7 +92,7 @@ class ImageHelper
 			);
 		}
 
-		static::saveImages($foreignId, $imageType, $images);
+		static::saveImages($foreignId, $imageType, $images, $purpose);
 
 		return static::getImages($foreignId, $imageType);
 	}
@@ -116,10 +117,11 @@ class ImageHelper
 	 * @param $foreignId
 	 * @param $imageType
 	 * @param $images
+	 * @param $purpose
 	 *
 	 * @return  array
 	 */
-	public static function saveImages($foreignId, $imageType, $images)
+	public static function saveImages($foreignId, $imageType, $images, $purpose)
 	{
 		$imageMapper = new DataMapper(Table::IMAGES);
 
@@ -132,6 +134,12 @@ class ImageHelper
 				"path" => $image["path"],
 				"type" => $imageType,
 			);
+
+			// Title 後綴圖片用途, 避免官網撈錯圖片
+			if (!empty($purpose))
+			{
+				$columnList['title'] = $image["name"] . '-' . $purpose;
+			}
 
 			$imageType == 'rxindividual' ? $columnList['rx_id'] = $foreignId : $columnList['hospital_id'] = $foreignId;
 

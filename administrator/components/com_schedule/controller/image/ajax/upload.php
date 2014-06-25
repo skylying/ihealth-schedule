@@ -27,10 +27,11 @@ class ScheduleControllerImageAjaxUpload extends DisplayController
 	{
 		$foreignId   = $this->input->getInt("foreignId", 0);
 		$imageType   = $this->input->getString("imageType");
+		$purpose     = $this->input->getString("purpose");
 		$files       = $this->input->files->getVar('image');
 		$imageMapper = new DataMapper(Table::IMAGES);
 
-		ImageHelper::handleUpload($foreignId, $imageType, array($files));
+		ImageHelper::handleUpload($foreignId, $imageType, array($files), $purpose);
 
 		echo json_encode($imageMapper->findOne(array(), array("id DESC")));
 
