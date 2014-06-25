@@ -30,6 +30,12 @@
 			<option></option>
 		</field>
 
+		<field name="member_id"
+			type="text"
+			label="會員"
+			description="會員"
+			/>
+
 		<field name="type"
 			type="hidden"
 			/>

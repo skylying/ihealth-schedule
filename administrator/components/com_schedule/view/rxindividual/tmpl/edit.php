@@ -23,6 +23,8 @@ $ps    = $data->form->getFieldset("schedules_ps");
 $customerId = $data->form->getField('customer_id')->id;
 $customerIdNumber = $data->form->getField('id_number')->id;
 
+$memberId = $data->form->getField('member_id')->id;
+
 $telOfficeId = $data->form->getField('tel_office')->id;
 $telHomeId = $data->form->getField('tel_home')->id;
 $mobileId = $data->form->getField('mobile')->id;
@@ -63,6 +65,7 @@ $data->asset->addJS('method-field-handler.js');
 $data->asset->addJS('deliver-schedule-handler.js');
 $data->asset->addJS('customer-field-handler.js');
 $data->asset->addJS('rxindividual/edit.js');
+$data->asset->addJS('customer-member-field-map.js');
 
 ?>
 
@@ -70,6 +73,7 @@ $data->asset->addJS('rxindividual/edit.js');
 jQuery(document).ready(function ()
 {
 	RxIndividualEdit.init(<?php echo json_encode($options); ?>);
+	window.customerMemberField.init('<?php echo $customerId; ?>', '<?php echo $memberId; ?>', '<?php echo JRoute::_("index.php?option=com_schedule&task=rxindividual.ajax.member", false); ?>');
 });
 </script>
 
