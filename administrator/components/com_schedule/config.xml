@@ -17,6 +17,19 @@
 		</fieldset>
 	</fields>
 
+	<fields name="schedule">
+		<fieldset name="schedule"
+			label="Schedule"
+			description="Schedule config"
+			>
+			<field name="empty_route_mail"
+				type="text"
+				label="無路線提醒信箱"
+				description="無路線提醒信箱"
+				/>
+		</fieldset>
+	</fields>
+
 	<fieldset
 		name="permissions"
 		label="JCONFIG_PERMISSIONS_LABEL"

@@ -150,7 +150,9 @@ class ScheduleControllerPrescriptionEditSave extends ApiSaveController
 
 				$routeTable->store();
 
-				$notifyMail = \JFactory::getConfig()->get('mailfrom');
+				$scheduleConfig = \JComponentHelper::getParams('com_schedule')->get("schedule");
+
+				$notifyMail = $scheduleConfig->empty_route_mail;
 
 				MailHelper::sendEmptyRouteMail($notifyMail, $routeTable);
 			}
