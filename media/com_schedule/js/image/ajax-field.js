@@ -70,7 +70,14 @@
 		 *
 		 * @type {HTMLElement}
 		 */
-		this.uploadRxId = $("#upload-rx-id-" + name);
+		this.uploadForeignId = $("#upload-foreign-id-" + name);
+
+		/**
+		 * upload image type
+		 *
+		 * @type {*|HTMLElement}
+		 */
+		this.uploadImageType = $("#upload-type-" + name);
 
 		/**
 		 * Image uri proxy
@@ -85,7 +92,6 @@
 		 * @type {string}
 		 */
 		this.ajaxPostUri = ajaxPostUri;
-
 
 		// 初始化 HTMLElement event
 
@@ -152,12 +158,13 @@
 		 */
 		uploadImage: function()
 		{
-			var field = this;
+			var self = this;
 			var post  = new FormData();
 			var files = this.uploadFile.prop("files");
 
 			post.append("image", files[0]);
-			post.append("rxId", this.uploadRxId.val());
+			post.append("foreignId", this.uploadForeignId.val());
+			post.append("imageType", this.uploadImageType.val())
 			post.append("task", "image.ajax.upload");
 
 			$.ajax({
@@ -169,9 +176,9 @@
 				contentType: false,
 				success: function(data)
 				{
-					field.imageId.val(data.id);
+					self.imageId.val(data.id);
 
-					field.flushImage(data.title, data.path);
+					self.flushImage(data.title, data.path);
 				}
 			});
 		},

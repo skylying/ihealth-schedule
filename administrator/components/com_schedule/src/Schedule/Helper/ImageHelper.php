@@ -33,31 +33,35 @@ class ImageHelper
 	);
 
 	/**
-	 * Get Images
+	 * getImages
 	 *
-	 * @param integer $rxId
+	 * @param $foreignId
+	 * @param $imageType
 	 *
-	 * @return  array
+	 * @return  array|mixed
 	 */
-	public static function getImages($rxId)
+	public static function getImages($foreignId, $imageType)
 	{
-		if (!$rxId)
+		if (!$foreignId)
 		{
 			return array();
 		}
 
-		return (new DataMapper(Table::IMAGES))->find(array("rx_id" => $rxId));
+		$searchArray = ($imageType == 'rxindividual') ? ['rx_id' => $foreignId] : ['hospital_id' => $foreignId];
+
+		return (new DataMapper(Table::IMAGES))->find($searchArray);
 	}
 
 	/**
 	 * handleUpload
 	 *
-	 * @param integer $rxId
-	 * @param array   $files
+	 * @param $foreignId
+	 * @param $imageType
+	 * @param $files
 	 *
 	 * @return  array
 	 */
-	public static function handleUpload($rxId, $files)
+	public static function handleUpload($foreignId, $imageType, $files)
 	{
 		$images = array();
 
@@ -72,12 +76,12 @@ class ImageHelper
 
 			$ext = \JArrayHelper::getValue(static::$extMapper, $file['type']);
 
-			if (!is_dir(JPATH_ROOT . '/' . static::getStoragePath($rxId)))
+			if (!is_dir(JPATH_ROOT . '/' . static::getStoragePath($foreignId, $imageType)))
 			{
-				\JFolder::create(JPATH_ROOT . '/' . static::getStoragePath($rxId));
+				\JFolder::create(JPATH_ROOT . '/' . static::getStoragePath($foreignId, $imageType));
 			}
 
-			$imagePath  = static::getStoragePath($rxId) . '/' . $imageName . '.' . $ext;
+			$imagePath  = static::getStoragePath($foreignId, $imageType) . '/' . $imageName . '.' . $ext;
 
 			\JFile::upload($file['tmp_name'], JPATH_ROOT . '/' . $imagePath);
 
@@ -87,33 +91,35 @@ class ImageHelper
 			);
 		}
 
-		static::saveImages($rxId, $images);
+		static::saveImages($foreignId, $imageType, $images);
 
-		return static::getImages($rxId);
+		return static::getImages($foreignId, $imageType);
 	}
 
 	/**
 	 * getStoragePath
 	 *
-	 * @param integer $rxId
+	 * @param $foreignId
+	 * @param $imageType
 	 *
 	 * @return  string
 	 */
-	public static function getStoragePath($rxId)
+	public static function getStoragePath($foreignId, $imageType)
 	{
 		// TODO: 設定到 xml 的設定檔
-		return 'media/com_schedule/upload/' . $rxId;
+		return 'media/com_schedule/upload/' . $imageType . '/' . $foreignId;
 	}
 
 	/**
 	 * saveImages
 	 *
-	 * @param integer $rxId
-	 * @param array   $images
+	 * @param $foreignId
+	 * @param $imageType
+	 * @param $images
 	 *
-	 * @return  Data
+	 * @return  array
 	 */
-	public static function saveImages($rxId, $images)
+	public static function saveImages($foreignId, $imageType, $images)
 	{
 		$imageMapper = new DataMapper(Table::IMAGES);
 
@@ -121,7 +127,15 @@ class ImageHelper
 
 		foreach ($images as $image)
 		{
-			$data[] = new Data(array("title" => $image["name"], "path" => $image["path"], "rx_id" => $rxId));
+			$columnList = array(
+				"title" => $image["name"],
+				"path" => $image["path"],
+				"type" => $imageType,
+			);
+
+			$imageType == 'rxindividual' ? $columnList['rx_id'] = $foreignId : $columnList['hospital_id'] = $foreignId;
+
+			$data[] = new Data($columnList);
 		}
 
 		$dataSet = new DataSet($data);
@@ -164,14 +178,15 @@ class ImageHelper
 	}
 
 	/**
-	 * Reset Images RxId
+	 * resetImagesRxId
 	 *
-	 * @param   array   $cid
-	 * @param   integer $rxId
+	 * @param array $cid
+	 * @param       $foreignId
+	 * @param       $imageType
 	 *
 	 * @return  void
 	 */
-	public static function resetImagesRxId(array $cid, $rxId)
+	public static function resetImagesRxId(array $cid, $foreignId, $imageType)
 	{
 		$imageMapper = new DataMapper(Table::IMAGES);
 
@@ -179,7 +194,7 @@ class ImageHelper
 
 		foreach ($images as $image)
 		{
-			$newJoomlaDir      = static::getStoragePath($rxId);
+			$newJoomlaDir      = static::getStoragePath($foreignId, $imageType);
 			$newSystemPath     = JPATH_ROOT . '/' . $newJoomlaDir;
 			$oldSystemFilePath = JPATH_ROOT . '/' . $image->path;
 			$fileName          = basename($oldSystemFilePath);
@@ -194,7 +209,7 @@ class ImageHelper
 			\JFile::move($oldSystemFilePath, "{$newSystemPath}/{$fileName}");
 
 			// Flush database
-			$image->rx_id = $rxId;
+			($imageType == 'rxindividual') ? $image->rx_id = $foreignId : $image->hospital_id = $foreignId;
 			$image->path  = "{$newJoomlaDir}/{$fileName}";
 
 			// Save data
