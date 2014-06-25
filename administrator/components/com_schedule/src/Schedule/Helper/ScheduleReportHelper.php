@@ -100,13 +100,13 @@ class ScheduleReportHelper
 		{
 			if (!isset($data[$item->year]))
 			{
-					$data[$item->year] = array(
-						$item->city => array(
-							"city_title" => $item->city_title,
-							"institutes" => array(),
-							"customers" => array(
-								"months" => array_fill(0, 12, 0),
-								"sub_total" => 0,
+				$data[$item->year] = array(
+					$item->city => array(
+						"city_title" => $item->city_title,
+						"institutes" => array(),
+						"customers" => array(
+							"months" => array_fill(0, 12, 0),
+							"sub_total" => 0,
 						),
 						"total" => 0,
 					)
