@@ -3,38 +3,29 @@
 use Windwalker\DI\Container;
 use Windwalker\Helper\XmlHelper;
 use Windwalker\Data\Data;
+use Windwalker\Html\HtmlElement;
 
 /**
  * Class JFormFieldSelect2
  *
- * XML Property list :
+ * XML Properties:
  *
- * hint               @ placeholder
- * EX : "輸入機構名稱"
- *
- * - minimumInputLength : required input words to trigger ajax search
- *  - EX : 2
- *
- * - apiUrl : ajax request url, MUST replace "&" with "&amp;"
- *  - EX : "index.php?option=com_schedule&amp;task=institutes.search.json"
- *
- * - apiQueryKey : query key name attached after ajax request url
- *  - EX : "filter_search"
- *  - Ajax request will become "index.php?option=com_schedule&task=institutes.search.json&filter_search="
- *
- * - apiConsoleResult : Auto console.log ajax response
- *  - EX : "true"
- *
- * - onChangeCallback : callback function when select2 activated elememnt changed
- *  - this function need to be declared in your own js code with excatly the same name
- *  - EX : "updateDeliveryDay"
- *
- * - apiTableName : table name where initialValue came from
- *  - EX : institutes
- *
- * - allowNew : allow select2 field enter value which not included in dropdown list
- *  - EX : "true"
- *
+ * - query:              (Required) SQL statement to get initial item data
+ *                       SQL statement can use "%s" keyword to be replace by field value
+ *                       EX: SELECT * FROM some_table WHERE id = %s
+ * - idField:            (Required) Determine the id filed name, use this field name to get Selection's value
+ * - textField:          (Required) Determine the text filed name, use this field name to get Selection's display text
+ * - apiUrl:             (Optional) Ajax request url, MUST replace "&" with "&amp;" (Default: null)
+ *                       EX: "index.php?option=com_schedule&amp;task=institutes.search.json"
+ * - apiQueryKey:        (Optional) Query key name attached after ajax request url
+ *                       If ajax request is "index.php?option=com_schedule&task=institutes.search.json&filter_search="
+ *                       The apiQueryKey will be "filter_search"
+ * - apiDataType:        (Optional) Ajax data-type, could use "xml", "json" and "jsonp" (Default: "json")
+ * - minimumInputLength: (Optional) Number of characters necessary to start a search (Default: 2)
+ * - enableComboBox:     (Optional) Enable combo-box support, (Default: false)
+ * - readonly:           (Optional) Setup readonly property (Default: false)
+ * - onchange:           (Optional) Setup an onchange javascript, script should be a callback function (Default: null)
+ *                       Ex: function(e, $node) { console.log(e); }
  */
 class JFormFieldSelect2 extends JFormField
 {
@@ -59,178 +50,40 @@ class JFormFieldSelect2 extends JFormField
 	 */
 	protected function getInput()
 	{
-		/** @var \Windwalker\Helper\AssetHelper $asset */
-		$asset = Container::getInstance('com_schedule')->get('helper.asset');
-
 		// Check if js/css library are included or not
 		$this->init();
 
-		// Check if select2 has initial value
-		$initialValue = $this->value;
+		/** @var \Windwalker\Helper\AssetHelper $asset */
+		$asset = Container::getInstance('com_schedule')->get('helper.asset');
 
-		$params = $this->getXmlField($initialValue);
+		$id        = $this->id;
+		$onchange  = empty($this->onchange) ? 'null' : $this->onchange;
+		$namespace = $this->fieldname . $this->value;
+		$config    = json_encode($this->getXmlField());
 
-		// Tell javascript we don't have initial value
-		$params['hasInitialValue'] = 'false';
+		$script = <<<JAVASCRIPT
+jQuery(function($)
+{
+	var config = {$config};
 
-		if (isset($initialValue) && '' != $initialValue)
-		{
-			$initialItem = $this->getInitialItem($initialValue);
+	config.onchange = {$onchange};
 
-			$params['hasInitialValue'] = 'true';
-			$params['tableName'] = $this->table_name;
+	Select2Helper.setConfig('{$namespace}', config);
 
-			foreach ($initialItem as $key => $value)
-			{
-				$params[$key] = $value;
-			}
-
-			// This is select2 bug, we have to remove hint to get initial value
-			unset($params['hint']);
-		}
-
-		$option = json_encode($params);
-
-		$script = '
-			(function($) {
-
-				// Inject xml params
-				var option = ' . $option . ';
-
-				function select2Initialize($node, initialText)
-				{
-					if (typeof initialText != "undefined")
-					{
-						option.hasInitialValue = "true";
-						option.dropdowntext = initialText;
-					}
-
-					var lastResults = [];
-
-					$node.select2({
-						minimumInputLength : (option.fieldName == "institute_id") ? option.minimumInputLength : 0,
-						placeholder : option.hint,
-						ajax : {
-							url : option.apiUrl,
-							dataType : option.apiDataType,
-							data: function(term)
-							{
-								var obj = {};
-
-									obj[option.apiQueryKey] = term;
-									obj["institute_id"] = window.instituteId;
-
-								return obj;
-							},
-							results : function(data)
-							{
-								lastResults = data;
-								return {results : data};
-							}
-						},
-						formatResult : function(result)
-						{
-							if (option.consoleResult == "true")
-							{
-								console.log(result);
-							}
-
-							return  result.dropdowntext;
-						},
-						formatSelection : function(result)
-						{
-							return result.dropdowntext;
-						},
-						dropdownCssClass: "bigdrop",
-						initSelection : function (element, callback) {
-
-                            if (option.hasInitialValue == "true")
-                            {
-                            	callback({
-                            		id: option.id,
-                            		dropdowntext: option.dropdowntext
-                            	});
-                            }
-                        },
-						// Allow user to add new customer
-						createSearchChoice: function (term)
-						{
-							if (option.allowNew == "true")
-							{
-								var text = term + (lastResults.some(function(r) { return r.text == term }) ? "" : " (新)");
-									obj = {};
-
-								obj["id"] = term;
-								obj.dropdowntext = text;
-
-								return obj;
-							}
-						}
-					});
-
-					if (option.readonly)
-					{
-						$node.select2("readonly", true);
-					}
-
-					if (option.hasInitialValue == "true" && typeof initialText == "undefined")
-					{
-						if (option.tableName == "institutes")
-						{
-							// update "外送日" & "外送顏色" in edit view on document load
-							$(document).ready(function(){
-								var instituteData = {
-									added : {
-										"delivery_day" : option.delivery_day,
-										"color" : option.hex,
-										"hasInitialValue" : option.hasInitialValue
-										}
-									};
-
-								// Call $node onchange callback
-								window[option.onChangeCallback](instituteData, $node);
-							})
-						};
-					};
-
-					$node.on("change", function(e)
-					{
-						window[option.onChangeCallback](e, $node);
-					});
-				}
-
-				// Export function
-				window[option.fieldName] = {};
-				window[option.fieldName].select2Initialize = select2Initialize;
-			})(jQuery);
-		';
-
-		$jsToInitializeInstituteSelect2 = '
-			(function ($) {
-				$(document).ready(function() {
-
-				var $node = $("#' . $this->id . '"),
-
-					// Inject xml params
-					option = ' . $option . ';
-
-					window[option.fieldName].select2Initialize($node);
-				});
-			})(jQuery);
-		';
+	Select2Helper.select2('{$namespace}', $('#{$id}'));
+});
+JAVASCRIPT;
 
 		$asset->internalJS($script);
 
-		$asset->internalJS($jsToInitializeInstituteSelect2);
-
-		$attrs = array(
+		$attributes = [
 			'id'    => $this->id,
 			'name'  => $this->name,
 			'class' => $this->class,
 			'value' => $this->value,
-		);
+		];
 
-		$html = new \Windwalker\Html\HtmlElement('input', '', $attrs);
+		$html = new HtmlElement('input', '', $attributes);
 
 		return (string) $html;
 	}
@@ -251,6 +104,7 @@ class JFormFieldSelect2 extends JFormField
 		$asset = Container::getInstance('com_schedule')->get('helper.asset');
 
 		$asset->addJs('library/select2/select2.js');
+		$asset->addJs('js/select2-helper.js');
 		$asset->addCss('library/select2/select2.css');
 
 		self::$initialized = true;
@@ -259,22 +113,22 @@ class JFormFieldSelect2 extends JFormField
 	/**
 	 * Get all xml form field value
 	 *
-	 * @param  integer $fieldNameSpace
-	 *
 	 * @return array
 	 */
-	public function getXmlField($fieldNameSpace)
+	public function getXmlField()
 	{
+		$item = $this->getInitialItem();
+
 		$params = array(
-			'fieldName'          => $this->fieldname . $fieldNameSpace,
 			'minimumInputLength' => XmlHelper::get($this->element, 'minimumInputLength', 2),
-			'hint'               => XmlHelper::get($this->element, 'hint'),
 			'apiUrl'             => XmlHelper::get($this->element, 'apiUrl'),
 			'apiDataType'        => XmlHelper::get($this->element, 'apiDataType', 'json'),
-			'consoleResult'      => XmlHelper::get($this->element, 'apiConsoleResult', 'false'),
-			'apiQueryKey'        => XmlHelper::get($this->element, 'apiQueryKey'),
-			'allowNew'           => XmlHelper::get($this->element, 'allowNew', 'false'),
-			'onChangeCallback'   => XmlHelper::get($this->element, 'onChangeCallback', 'function(){}'),
+			'apiQueryKey'        => XmlHelper::get($this->element, 'apiQueryKey', 'q'),
+			'idField'            => XmlHelper::get($this->element, 'idField', 'id'),
+			'textField'          => XmlHelper::get($this->element, 'textField', 'text'),
+			'enableComboBox'     => XmlHelper::getBool($this->element, 'enableComboBox', false),
+			'data'               => (object) iterator_to_array($item),
+			'placeholder'        => $this->hint,
 			'readonly'           => $this->readonly,
 		);
 
@@ -282,60 +136,46 @@ class JFormFieldSelect2 extends JFormField
 	}
 
 	/**
-	 * Get select2 initial value in edit view
+	 * Get select2 initial item data
 	 *
-	 * @param integer $queryId
-	 *
-	 * @return mixed
+	 * @return Data
 	 */
-	public function getInitialItem($queryId)
+	public function getInitialItem()
 	{
-		// Prepare database object
-		$container = Container::getInstance();
-		$db        = $container->get('db');
-		$query     = XmlHelper::get($this->element, 'query', '');
+		$db    = Container::getInstance()->get('db');
+		$query = XmlHelper::get($this->element, 'query', '');
 
-		if (! empty($queryId))
+		if (! empty($this->value) && ! empty($query))
 		{
-			$query = str_replace('%s', $queryId, $query);
+			$query = str_replace('%s', $this->value, $query);
 
-			$item = new Data($db->setQuery($query)->loadObject());
+			$item = $db->setQuery($query)->loadObject();
+
+			if (empty($item))
+			{
+				return $this->getDefaultItem();
+			}
 
 			return new Data($item);
 		}
 
-		return new Data;
+		return $this->getDefaultItem();
 	}
 
 	/**
-	 * getTableField according to apiTableName input
+	 * getDefaultItem
 	 *
-	 * @param  string $table_name
-	 *
-	 * @return string
+	 * @return  Data
 	 */
-	public function getSelectString($table_name)
+	protected function getDefaultItem()
 	{
-		switch ($table_name)
-		{
-			case 'customers':
-				$selectString = "`id`, `name` AS `dropdowntext`";
+		$idField = XmlHelper::get($this->element, 'idField', 'id');
+		$textField = XmlHelper::get($this->element, 'textField', 'text');
+		$item = new stdClass;
 
-			break;
+		$item->{$idField} = $this->value;
+		$item->{$textField} = $this->value;
 
-			case 'institutes':
-				$selectString = "`id`, `short_title` AS `dropdowntext`, `color_hex` AS `hex`, `delivery_weekday` AS `delivery_day`, `floor` AS `floor`";
-
-			break;
-
-			case 'members':
-				$selectString = "`id`, `name` AS `dropdowntext`";
-				break;
-
-			default:
-				$selectString = "`id`, `title` AS `dropdowntext`";
-		}
-
-		return $selectString;
+		return new Data($item);
 	}
 }
