@@ -69,6 +69,6 @@ class ScheduleViewScheduleJson extends ApiView
 	{
 		$data = $this->getData();
 
-		$data['items'] = $this->get('Item');
+		$data['item'] = $this->get('Item');
 	}
 }
