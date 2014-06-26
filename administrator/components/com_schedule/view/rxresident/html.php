@@ -86,24 +86,20 @@ class ScheduleViewRxresidentHtml extends EditView
 	 */
 	protected function prepareData()
 	{
-		$items = $this->getItems();
-
 		/** @var ScheduleModelRxresident $model */
 		$model = $this->getModel();
 
+		$postData = $this->getPostData();
+
 		$data = $this->getData();
+
 		$data->forms = array();
 		$data->instituteForm = $model->getForm(array('id' => -1));
 		$data->templateForm = $model->getForm(array('id' => 0));
+		$data->institute = $postData['institute'];
+		$data->instituteForm->bind($postData['institute']);
 
-		foreach ($items as $item)
-		{
-			$data->instituteForm->bind($item);
-
-			break;
-		}
-
-		foreach ($items as $hash => $item)
+		foreach ($postData['items'] as $hash => $item)
 		{
 			$data->forms[$hash] = $model->getForm(array('id' => $hash));
 
@@ -113,38 +109,32 @@ class ScheduleViewRxresidentHtml extends EditView
 		// Check if in edit mode
 		$id = (int) $this->container->get('input')->get('id');
 
-		$data->isNew = ($id <= 0);
+		$data->isEdit = ($id > 0);
 	}
 
 	/**
-	 * Get items from url query input or session
+	 * Get post data from session or url query input
 	 *
 	 * @return  array
 	 */
-	protected function getItems()
+	protected function getPostData()
 	{
-		$items = array();
 		$app = JFactory::getApplication();
 		$key = $this->option . '.edit.' . $this->getName() . '.data';
 		$data = $app->getUserState($key);
+		$institute = [];
+		$items = [];
 
 		if ($data)
 		{
-			foreach (ArrayHelper::getValue($data, 'items', array()) as $hash => $item)
-			{
-				// Fixed bug that cannot display new customer name correctly
-				if (isset($item['origin_customer_id']))
-				{
-					$item['customer_id'] = $item['origin_customer_id'];
-				}
-
-				$items[$hash] = $item;
-			}
+			$items = ArrayHelper::getValue($data, 'items', []);
 
 			$app->setUserState($key, null);
 		}
 		else
 		{
+			$data = [];
+
 			/** @var ScheduleModelRxresident $model */
 			$model = $this->getModel();
 			/** @var JInput $input */
@@ -156,9 +146,30 @@ class ScheduleViewRxresidentHtml extends EditView
 			{
 				$items[$id] = (array) $model->getItem($id);
 			}
+
+			if (count($items) > 0)
+			{
+				$data = current($items);
+
+				$data['institute_id_selection'] = $data['institute_id'] . '-' . $data['floor'];
+			}
 		}
 
-		return $items;
+		$institute['institute_id']           = ArrayHelper::getValue($data, 'institute_id', '');
+		$institute['institute_id_selection'] = ArrayHelper::getValue($data, 'institute_id_selection', '');
+		$institute['floor']                  = ArrayHelper::getValue($data, 'floor', '');
+		$institute['color_hex']              = ArrayHelper::getValue($data, 'color_hex', '#ffffff');
+		$institute['delivery_weekday']       = ArrayHelper::getValue($data, 'delivery_weekday', '');
+
+		if (! empty($institute['delivery_weekday']))
+		{
+			$institute['delivery_weekday'] = JText::_('COM_SCHEDULE_DELIVERY_WEEKDAY_' . $institute['delivery_weekday']);
+		}
+
+		return array(
+			'institute' => $institute,
+			'items' => $items,
+		);
 	}
 
 	/**

@@ -2,17 +2,213 @@
 {
 	"use strict";
 
+	// Selectors
+	var $instituteId,
+		$instituteIdSelection,
+		$floor,
+		$deliveryWeekdayText,
+		$deliveryWeekday,
+		$colorText,
+		$color,
+		$panel,
+		$totalRow,
+		$rowTemplate;
+
 	/* Globals: document, window, console */
 
-	if (window.RxResidentEditList !== undefined)
+	/**
+	 * initSelectors
+	 */
+	function initSelectors()
 	{
-		return;
+		$instituteId = $('#jform_institute_id');
+		$instituteIdSelection = $('#jform_institute_id_selection');
+		$panel = $('#rx-list').find('tbody');
+		$totalRow = $('#total-row');
+		$floor = $('#jform_floor');
+		$rowTemplate = $('#row-template');
+		$deliveryWeekdayText = $('#weekday-from-js');
+		$deliveryWeekday = $('#jform_delivery_weekday');
+		$colorText = $('.delivery-color');
+		$color = $('#jform_color_hex');
+	}
+
+	/**
+	 * Update "第一次吃完藥品日" & "第二次吃完藥品日"
+	 *
+	 * @returns void
+	 *
+	 * @private
+	 */
+	function updateDrugEmptyDate()
+	{
+		var $row = $(this).closest('tr'),
+			seeDrDate = $row.find('.see-dr-date').val(),
+			period = parseInt($row.find('.period').val());
+
+		// If "就醫日期" not set, return
+		if (undefined === seeDrDate || '' === seeDrDate)
+		{
+			return;
+		}
+
+		// Calculate "第一次吃完藥品日" & "第二次吃完藥品日"
+		var drugEmptyDate1 = moment(seeDrDate).add('days', period),
+			drugEmptyDate2 = moment(seeDrDate).add('days', period * 2);
+
+		// update "藥吃完日" view column
+		$row.find('.drug-empty-date-text1').text(drugEmptyDate1.format('MM-DD'));
+		$row.find('.drug-empty-date-text2').text(drugEmptyDate2.format('MM-DD'));
+
+		// update "藥吃完日" form field
+		$row.find('.drug-empty-date1').val(drugEmptyDate1.format('YYYY-MM-DD'));
+		$row.find('.drug-empty-date2').val(drugEmptyDate2.format('YYYY-MM-DD'));
+	}
+
+	/**
+	 * Trigger onchange event to update "times (可調劑次數)" and "drug-empty-date (藥吃完日)" elements
+	 *
+	 * @returns void
+	 *
+	 * @private
+	 */
+	function timesChange()
+	{
+		var $node = $(this),
+			$row = $node.closest('tr'),
+			cb1 = $row.find('input[value="1st"]'),
+			cb2 = $row.find('input[value="2nd"]'),
+			cb3 = $row.find('input[value="3rd"]'),
+			$drugEmptyDateText2 = $row.find('.drug-empty-date-text2');
+
+		// Update deliver-nths checkboxes
+		switch ($node.find('option:selected').val())
+		{
+			case '1':
+				cb1.attr('checked', true);
+
+				cb2.attr('checked', false);
+				cb2.attr('disabled', true);
+
+				cb3.attr('checked', false);
+				cb3.attr('disabled', true);
+
+				$drugEmptyDateText2.hide();
+
+				break;
+
+			case '2':
+				cb1.attr('checked', false);
+
+				cb2.attr('checked', true);
+				cb2.attr('disabled', false);
+
+				cb3.attr('checked', false);
+				cb3.attr('disabled', true);
+
+				$drugEmptyDateText2.show();
+
+				break;
+
+			case '3':
+				cb1.attr('checked', false);
+
+				cb2.attr('checked', true);
+				cb2.attr('disabled', false);
+
+				cb3.attr('checked', true);
+				cb3.attr('disabled', false);
+
+				$drugEmptyDateText2.show();
+
+				break;
+		}
+	}
+
+	/**
+	 * Update total number of rows
+	 */
+	function updateTotalRowNumber()
+	{
+		$totalRow.text($panel.find('tr').length);
+	}
+
+	/**
+	 * bindSeeDrDateEvent
+	 *
+	 * @param {jQuery} $node DatetimePicker element
+	 *
+	 * @returns void
+	 */
+	function bindSeeDrDateEvent($node)
+	{
+		function change()
+		{
+			// Focus out DatetimePicker element
+			$node.closest('tr').find('.id-number').focus().blur();
+
+			updateDrugEmptyDate.call(this);
+		}
+
+		$node.on('dp.change', function(e)
+		{
+			change.call(this);
+		});
+
+		$node.on('dp.hide', function(e)
+		{
+			// Trigger event "dp.change" when select today's date
+			if (0 === moment().diff(e.date, 'days'))
+			{
+				change.call(this);
+			}
+		});
+	}
+
+	/**
+	 * Bind element events
+	 *
+	 * @returns void
+	 *
+	 * @private
+	 */
+	function bindEvents()
+	{
+		// Bind onchange event to update "就醫日期" & "給藥天數"
+		$panel.find('.period').change(updateDrugEmptyDate);
+
+		// 可調劑次數與處方箋外送次數連動處理
+		$panel.find('.times').change(timesChange);
+
+		$('.see-dr-date').each(function()
+		{
+			bindSeeDrDateEvent($(this));
+		});
+
+		// Bind form submit event
+		Joomla.submitbutton = function(task)
+		{
+			// Clear empty row before submit form
+			$panel.find('tr').each(function()
+			{
+				var $row = $(this);
+
+				if ('' === $row.find('.customer-id').val())
+				{
+					$row.remove();
+				}
+			});
+
+			Joomla.submitform(task, document.getElementById('adminForm'));
+		};
 	}
 
 	// Exports class RxResidentEditList
-	window.RxResidentEditList = {
+	window.RxResidentEditList = window.RxResidentEditList || {
 		/**
 		 * Option
+		 *
+		 * @type {Object}
 		 */
 		option: {
 			customerApi: ''
@@ -24,74 +220,66 @@
 		 */
 		run: function(option)
 		{
+			initSelectors();
+			bindEvents();
+
 			this.option = $.extend(this.option, option);
 
 			var self = this,
-				$panel = $('#rx-list').find('tbody'),
-				$totalRow = $('#totalrow'),
-				$instituteId = $('#jform_institute_id'),
 				handler = new MultiRowHandler({$panel:$panel});
 
 			// Bind afterInsert event
-			handler.on('afterInsert', function ($row)
+			handler.on('afterInsert', function($row)
 			{
-				var customers = $instituteId.data('customers');
+				var customers = $instituteIdSelection.data('customers');
 
-				$row.find('input.customer-id').each(function (i, val)
+				$row.find('input.customer-id-selection').each(function(i, val)
 				{
-					Select2Helper.select2('customer_id', $(this), {data:customers});
+					Select2Helper.select2('customer_id_selection', $(this), {data:customers});
 				});
 			});
 
 			// Bind afterDuplicate event
-			handler.on('afterDuplicate', function ($row, $from)
+			handler.on('afterDuplicate', function($row, $from)
 			{
-				var customers = $instituteId.data('customers'),
-					customer = $from.find('input.customer-id').select2('data') || {id: '', name: ''};
+				var customers = $instituteIdSelection.data('customers'),
+					customer = $from.find('input.customer-id-selection').select2('data') || {id: '', name: ''};
 
-				$row.find('input.customer-id').each(function (i, val)
+				$row.find('input.customer-id-selection').each(function(i, val)
 				{
 					// Remove exists select2 element
 					$(this).parent().find('.select2-container').remove();
 
-					Select2Helper.select2('customer_id', $row.find('input.customer-id'), {data:customers,initialData:customer});
+					Select2Helper.select2(
+						'customer_id_selection',
+						$(this),
+						{
+							data: customers,
+							initialData: customer
+						}
+					);
 				});
 			});
 
 			// Bind initialize event
-			handler.on('initializeRow', function ($row)
+			handler.on('initializeRow', function($row)
 			{
-				var $dpNode = $row.find('.datetimepicker');
+				var $datetimePicker = $row.find('.datetimepicker');
 
-				$dpNode.datetimepicker({
+				$datetimePicker.datetimepicker({
 					pickTime: false
 				});
+				bindSeeDrDateEvent($datetimePicker);
 
-				$dpNode.on('dp.change', function(e)
-				{
-					// Focus on a known element to improve performance
-					$('#jform_floor').focus().blur();
+				// Bind onchange event to update "就醫日期" & "給藥天數"
+				$row.find('.period').change(updateDrugEmptyDate);
 
-					self.updateFinishDate.call(this);
-				});
-
-				$dpNode.on('dp.hide', function(e)
-				{
-					// Trigger event "dp.change" when select today's date
-					if (0 === moment().diff(e.date, 'days'))
-					{
-						console.log('trigger dp.change');
-
-						$(this).trigger('dp.change');
-					}
-				});
+				// 可調劑次數與處方箋外送次數連動處理
+				$row.find('.times').change(timesChange);
 			});
 
-			// Inject javascript to every element on page
-			this.injectJsToRow($panel);
-
 			// Add row
-			$('.button-add-row').click(function ()
+			$('.button-add-row').click(function()
 			{
 				var amount = $(this).val();
 
@@ -99,7 +287,7 @@
 
 				for (var i = 0; i < amount; ++i)
 				{
-					handler.insert($('#row-template').html());
+					handler.insert($rowTemplate.html());
 				}
 
 				updateTotalRowNumber();
@@ -124,13 +312,7 @@
 			// Update total row number first
 			updateTotalRowNumber();
 
-			/**
-			 * Update total number of rows
-			 */
-			function updateTotalRowNumber()
-			{
-				$totalRow.text($panel.find('tr').length);
-			}
+			$instituteIdSelection.change();
 		},
 
 		/**
@@ -149,60 +331,76 @@
 
 			return function(e, $node)
 			{
-				var translateWeek = {
-					MON: '週一',
-					TUE: '週二',
-					WED: '週三',
-					THU: '週四',
-					FRI: '週五',
-					SAT: '週六',
-					SUN: '週日'
-				};
+				var data = $node.select2('data');
 
-				var weekday = e.added.delivery_weekday,
-					color = e.added.color_hex,
-					floor = e.added.id.split('-')[1],
-					customerApiUrl = self.option.customerApi + e.val.split('-')[0];
+				if (!data)
+				{
+					return;
+				}
+
+				var translateWeek = {
+						MON: '週一',
+						TUE: '週二',
+						WED: '週三',
+						THU: '週四',
+						FRI: '週五',
+						SAT: '週六',
+						SUN: '週日'
+					},
+					weekday = data.delivery_weekday,
+					color = data.color_hex,
+					floor = data.id.split('-')[1],
+					instituteId = data.id.split('-')[0],
+					customerApiUrl = self.option.customerApi + instituteId;
+
+				$instituteId.val(instituteId);
 
 				// update delivery_weekday
-				$('#weekday-from-js').text(translateWeek[weekday]);
+				$deliveryWeekdayText.text(translateWeek[weekday]);
+				$deliveryWeekday.val(weekday);
 
 				// update delivery_weekday color
-				$('.deliverycolor').css('background', color);
+				$colorText.css('background', color);
+				$color.val(color);
 
 				// update floor
-				$('#jform_floor').val(floor);
+				$floor.val(floor);
 
-				$.getJSON(customerApiUrl, function(obj)
+				if (instituteId > 0)
 				{
-					$node.data('customers', obj);
-
-					$('input.customer-id').each(function(i, val)
+					$.getJSON(customerApiUrl, function(obj)
 					{
-						var $self = $(this),
-							data = $self.select2('data'),
-							select2Option = $self.data('select2');
+						$node.data('customers', obj);
 
-						select2Option.opts.data.results = obj;
-						select2Option.opts.initSelection = function(element, callback)
+						$('input.customer-id-selection').each(function(i, val)
 						{
-							callback(data);
-						};
+							var $input = $(this),
+								customerId = $input.val(),
+								data = $input.select2('data') || {},
+								isNewData = undefined === data['_new'] ? false : data['_new'],
+								select2Option = $input.data('select2');
 
-						// Clear selected id
-						if (data && !isNaN(data.id))
-						{
-							$self.val('');
-						}
+							select2Option.opts.data.results = obj;
+							select2Option.opts.initSelection = function(element, callback)
+							{
+								callback(data);
+							};
 
-						$self.select2(select2Option.opts).change();
+							// Clear selected id when data.id is not in the selection options
+							if (false === obj.some(function(r) { return r.id == customerId; }) && !isNewData)
+							{
+								$input.val('');
+							}
+
+							$input.select2(select2Option.opts).change();
+						});
 					});
-				});
+				}
 			}
 		},
 
 		/**
-		 * Triggered by customer_id onchange event, will update "身分證字號" and "生日"
+		 * Triggered by customer_id_selection onchange event, will update "customer_id", "身分證字號" and "生日"
 		 *
 		 * It will return a callback function, which contains params:
 		 * - {object}  e     Event object, Contains the following custom properties:
@@ -215,157 +413,48 @@
 		{
 			return function(e, $node)
 			{
-				var $idNumber = $node.closest('tr').find('.idnumber'),
-					$birthDay = $node.closest('tr').find('.birthday');
+				var $row = $node.closest('tr'),
+					$idNumber = $row.find('.id-number'),
+					$birthDate = $row.find('.birth-date'),
+					$customerId = $row.find('.customer-id'),
+					data = $node.select2('data');
 
-				if (typeof e.added === 'object')
+				if (data)
 				{
-					$idNumber.val(e.added.id_number);
-					$birthDay.val(e.added.birth_date);
+					if (data.id)
+					{
+						$customerId.val(data.id);
+					}
+
+					if (data.id_number)
+					{
+						$idNumber.val(data.id_number);
+					}
+
+					if (data.birth_date)
+					{
+						$birthDate.val(data.birth_date);
+					}
 				}
 				else
 				{
 					$idNumber.val('');
-					$birthDay.val('');
+					$birthDate.val('');
+					$customerId.val('');
 				}
 			};
 		},
 
-		// Inject javascript to every single row
-		injectJsToRow : function($panel)
-		{
-			// 可調劑次數與處方箋外送次數連動
-			$panel.on('change', '.times', function()
-			{
-				var timesValue = $(this).find('option:selected').val(),
-					cb1 = $(this).closest('tr').find('input[value="1st"]'),
-					cb2 = $(this).closest('tr').find('input[value="2nd"]'),
-					cb3 = $(this).closest('tr').find('input[value="3rd"]');
-
-				switch (timesValue)
-				{
-					case '1':
-						cb1.attr('checked', true);
-
-						cb2.attr('checked', false);
-						cb2.attr('disabled', true);
-
-						cb3.attr('checked', false);
-						cb3.attr('disabled', true);
-
-						break;
-
-					case '2':
-						cb1.attr('checked', false);
-
-						cb2.attr('checked', true);
-						cb2.attr('disabled', false);
-
-						cb3.attr('checked', false);
-						cb3.attr('disabled', true);
-
-						break;
-
-					case '3':
-						cb1.attr('checked', false);
-
-						cb2.attr('checked', true);
-						cb2.attr('disabled', false);
-
-						cb3.attr('checked', true);
-						cb3.attr('disabled', false);
-
-						break;
-				}
-			});
-
-			// if "可調劑次數" = 1, hide "第二次藥品吃完日"
-			$panel.on('change', '.times', function(event)
-			{
-				var $row = $($(this).closest('tr')),
-					timesValue = $(event.target).val(),
-					finishDate2Span = $row.find('.emptydisplay2');
-
-				if (timesValue == '1')
-				{
-					finishDate2Span.addClass('hide');
-				}
-				else
-				{
-					finishDate2Span.removeClass('hide');
-				}
-			});
-
-			// Bind onchange to "就醫日期" & "給藥天數"
-			$panel.on('change', '.period', this.updateFinishDate);
-		},
-
 		/**
-		 * Update "第一次吃完藥品日" & "第二次吃完藥品日"
+		 * bindSeeDrDateEvent
 		 *
-		 * @param event
+		 * @param {jQuery} $node DatetimePicker element
 		 *
-		 * @return void
+		 * @returns void
 		 */
-		updateFinishDate: function()
+		bindSeeDrDateEvent: function($node)
 		{
-			var $row = $(this).closest('tr');
-
-			var seeDrDateNode  = $row.find('.seedr'),
-				seeDrDateValue = seeDrDateNode.val();
-
-			// if "就醫日期" not set, return
-			if (seeDrDateValue == 'undefined' || seeDrDateValue == '')
-			{
-				return;
-			}
-
-			var periodNode      = $row.find('.period'),
-				periodValue     = parseInt(periodNode.val());
-
-			var dateObj = new Date(seeDrDateValue);
-
-			// Set finishdate1 & finishdate2
-			var finishDate1 = dateObj.setDate(dateObj.getDate() + periodValue),
-				finishDate2 = dateObj.setDate(dateObj.getDate() + periodValue);
-
-			// update "藥吃完日" view column
-			$row.find('.emptydisplay1').text(getFormat(finishDate1, false));
-			$row.find('.emptydisplay2').text(getFormat(finishDate2, false));
-
-			// update "藥吃完日" form field
-			$row.find('.emptydate1').val(getFormat(finishDate1, true));
-			$row.find('.emptydate2').val(getFormat(finishDate2, true));
-
-			/**
-			 * Create date format MM-DD
-			 *
-			 * @param   {timestamp} date
-			 * @param   {boolean}   type , true => return full format
-			 *
-			 * @returns {string}
-			 */
-			function getFormat(date, type)
-			{
-				var dateObj = new Date(date),
-					year    = dateObj.getFullYear(),
-					month   = dateObj.getMonth() + 1,
-					day     = dateObj.getDate(),
-					short   = ((month < 10) ? '0'+ month : month) + '-' + ((day < 10) ? '0'+ day : day),
-					full    = year + '-' + short,
-					result;
-
-				if (type == true)
-				{
-					result = full;
-				}
-				else
-				{
-					result = short;
-				}
-
-				return result;
-			}
+			bindSeeDrDateEvent($node);
 		}
 	};
 })(jQuery);

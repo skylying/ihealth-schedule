@@ -1,20 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <form>
 	<fieldset name="institute">
-		<field name="institute_id"
+		<field name="institute_id_selection"
 			type="select2"
 			class="input-large"
 			label="機構名稱"
 			description="機構名稱"
-			required="true"
 			hint="輸入機構名稱"
 			onchange="RxResidentEditList.instituteIdChange()"
 			minimumInputLength="1"
 			apiUrl="index.php?option=com_schedule&amp;task=institutes.search.json"
 			apiQueryKey="filter_search"
-			query="SELECT `id`, `short_title`, `color_hex`, `delivery_weekday`, `floor` FROM #__schedule_institutes WHERE `id`=%s"
+			query="
+				SELECT '%s' AS `id`, CONCAT(`short_title`, ' ', SUBSTRING_INDEX('%s', '-', -1)) AS `short_title`,
+					`color_hex`, `delivery_weekday`, `floor`
+				FROM #__schedule_institutes
+				WHERE `id` = SUBSTRING_INDEX('%s', '-', 1)
+			"
 			idField="id"
 			textField="short_title"
+			/>
+
+		<field name="institute_id"
+			type="hidden"
+			readonly="true"
+			label="機構名稱"
+			description="機構名稱"
+			required="true"
+			/>
+
+		<field name="delivery_weekday"
+			type="hidden"
+			readonly="true"
+			label="外送日"
+			description="外送日"
+			/>
+
+		<field name="color_hex"
+			type="hidden"
+			readonly="true"
+			label="外送日顏色"
+			description="外送日顏色"
 			/>
 
 		<field name="floor"
@@ -29,29 +55,37 @@
 	<fieldset name="information">
 		<field name="id"
 			type="hidden"
-			class="fullwidth"
 			label="id"
 			description="id"
 			readonly="true"
 			/>
 
-		<field name="customer_id"
+		<field name="customer_id_selection"
 			type="select2"
-			class="fullwidth customer-id"
+			class="fullwidth customer-id-selection"
 			label="客戶"
 			description="客戶"
-			required="true"
 			hint="客戶姓名"
 			onchange="RxResidentEditList.customerIdChange()"
 			minimumInputLength="0"
+			enableComboBox="true"
+			query="SELECT `id`, `name`, `id_number`, `birth_date` FROM #__schedule_customers WHERE `id` = '%s'"
 			idField="id"
 			textField="name"
-			enableComboBox="true"
+			/>
+
+		<field name="customer_id"
+			type="hidden"
+			class="customer-id"
+			label="客戶編號"
+			description="客戶編號"
+			required="true"
+			readonly="true"
 			/>
 
 		<field name="id_number"
 			type="text"
-			class="fullwidth idnumber"
+			class="fullwidth id-number"
 			label="身分證字號"
 			description="身分證字號"
 			/>
@@ -59,7 +93,7 @@
 		<field name="birth_date"
 			type="DateTimePicker"
 			hint="選擇日期"
-			class="datetimepicker calendarwidth birthday"
+			class="datetimepicker calendarwidth birth-date"
 			label="生日"
 			description="生日"
 			/>
@@ -67,10 +101,11 @@
 		<field name="see_dr_date"
 			type="DateTimePicker"
 			hint="選擇日期"
-			class="datetimepicker calendarwidth seedr"
+			class="datetimepicker calendarwidth see-dr-date"
 			label="就醫日期"
 			description="就醫日期"
 			required="true"
+			dpBindEvent="RxResidentEditList.bindSeeDrDateEvent"
 			/>
 
 		<field name="period"
@@ -122,14 +157,14 @@
 
 		<field name="empty_date_1st"
 			type="hidden"
-			class="fullwidth emptydate1"
+			class="fullwidth drug-empty-date1"
 			label="第一次吃完藥日"
 			description="第一次吃完藥日"
 			/>
 
 		<field name="empty_date_2nd"
 			type="hidden"
-			class="fullwidth emptydate2"
+			class="fullwidth drug-empty-date2"
 			label="第二次吃完藥日"
 			description="第二次吃完藥日"
 			/>
