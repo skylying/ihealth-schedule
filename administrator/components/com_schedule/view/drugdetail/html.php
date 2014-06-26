@@ -239,4 +239,22 @@ class ScheduleViewDrugdetailHtml extends EditView
 
 		return $db->setQuery($q)->loadObjectList();
 	}
+
+	/**
+	 * ConfigureToolbar
+	 *
+	 * @param array $buttonSet
+	 * @param null  $canDo
+	 *
+	 * @return  array
+	 */
+	protected function configureToolbar($buttonSet = array(), $canDo = null)
+	{
+		$returnVal = parent::configureToolbar($buttonSet, $canDo);
+
+		unset($returnVal['save2new']);
+		unset($returnVal['save2copy']);
+
+		return $returnVal;
+	}
 }
