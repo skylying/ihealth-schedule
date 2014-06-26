@@ -13,7 +13,7 @@ use Windwalker\Model\Helper\QueryHelper;
 defined('_JEXEC') or die;
 
 /**
- * Class ScheduleModelHospitals
+ * Class ScheduleModelSchedules
  *
  * @since 1.0
  */
@@ -26,7 +26,7 @@ class ScheduleModelSchedules extends \Windwalker\Model\ListModel
 	 */
 	protected function configureTables()
 	{
-		$this->addTable('hospital', Table::SCHEDULES);
+		$this->addTable('schedule', Table::SCHEDULES);
 	}
 
 	/**
