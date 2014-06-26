@@ -207,7 +207,6 @@
         has_hicode: { Field: has_hicode, Type: tinyint(1), 'Null': NO, Default: null, Extra: '', Comment: '藥品健保碼 無0 / 有1', From: [has_hicode] }
         city: { Field: city, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: 醫院所在縣市, From: [city] }
         city_title: { Field: city_title, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 縣市名稱, From: [city_title] }
-        images: { Field: images, Type: text, 'Null': NO, Default: null, Extra: '', Comment: 圖片路徑, From: [images] }
         area: { Field: area, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: 醫院所在區域, From: [area] }
         area_title: { Field: area_title, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 區域名稱, From: [area_title] }
         created: { Field: created, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: 'Created time', From: [created] }
@@ -219,16 +218,16 @@
         - { Table: '#__schedule_hospitals', Non_unique: '0', Key_name: PRIMARY, Seq_in_index: '1', Column_name: id, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
         - { Table: '#__schedule_hospitals', Non_unique: '1', Key_name: idx_created_by, Seq_in_index: '1', Column_name: created_by, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
     data:
-        - ['1', '臺大嬰兒園區', '1', '1', 台北市, images/joomla_black.gif, '1', 大同區, '2014-04-18 15:40:28', '279', '2014-04-22 16:03:59', '279', '']
-        - ['2', '臺大嬰兒照護機構', '1', '1', 台北市, '', '2', 中正區, '2014-04-18 15:40:28', '279', '2014-04-21 16:16:01', '279', '']
-        - ['3', 退回福茂養護中心, '1', '3', 台中市, '', '4', 天龍區, '2014-04-18 15:40:28', '279', '2014-04-21 17:09:14', '279', '']
-        - ['4', 逐條審茶安養中心, '1', '1', 台北市, '', '3', 中正區, '2014-04-18 15:40:28', '279', '2014-04-21 16:16:40', '279', '']
-        - ['5', '中央嬰兒研究園區', '1', '3', 台中市, '', '5', 三角洲區, '2014-04-18 15:40:28', '279', '2014-04-21 16:17:21', '279', '']
-        - ['6', '中央嬰兒研究園區2', '1', '3', 台中市, '', '5', 三角洲區, '2014-04-18 15:40:28', '279', '2014-04-21 17:20:58', '279', '']
-        - ['7', '中央嬰兒研究園3', '1', '3', 台中市, '', '3', 中正區, '2014-04-18 15:40:28', '279', '2014-04-21 17:21:55', '279', '']
-        - ['8', '臺大嬰兒照護機構2', '1', '1', 台北市, '', '2', 中正區, '2014-04-18 15:40:28', '279', '2014-04-21 16:16:01', '279', '']
-        - ['9', '臺大嬰兒照護機5', '1', '5', 台灣市, '', '0', '', '2014-04-18 15:40:28', '279', '2014-04-21 17:25:33', '279', '']
-        - ['10', 退回福茂養護中心, '1', '3', 台中市, '', '4', 天龍區, '2014-04-18 15:40:28', '279', '2014-04-21 17:09:14', '279', '']
+        - ['1', '臺大嬰兒園區', '1', '1', 台北市, '1', 大同區, '2014-04-18 15:40:28', '279', '2014-04-22 16:03:59', '279', '']
+        - ['2', '臺大嬰兒照護機構', '1', '1', 台北市, '2', 中正區, '2014-04-18 15:40:28', '279', '2014-04-21 16:16:01', '279', '']
+        - ['3', 退回福茂養護中心, '1', '3', 台中市, '4', 天龍區, '2014-04-18 15:40:28', '279', '2014-04-21 17:09:14', '279', '']
+        - ['4', 逐條審茶安養中心, '1', '1', 台北市, '3', 中正區, '2014-04-18 15:40:28', '279', '2014-04-21 16:16:40', '279', '']
+        - ['5', '中央嬰兒研究園區', '1', '3', 台中市, '5', 三角洲區, '2014-04-18 15:40:28', '279', '2014-04-21 16:17:21', '279', '']
+        - ['6', '中央嬰兒研究園區2', '1', '3', 台中市, '5', 三角洲區, '2014-04-18 15:40:28', '279', '2014-04-21 17:20:58', '279', '']
+        - ['7', '中央嬰兒研究園3', '1', '3', 台中市, '3', 中正區, '2014-04-18 15:40:28', '279', '2014-04-21 17:21:55', '279', '']
+        - ['8', '臺大嬰兒照護機構2', '1', '1', 台北市, '2', 中正區, '2014-04-18 15:40:28', '279', '2014-04-21 16:16:01', '279', '']
+        - ['9', '臺大嬰兒照護機5', '1', '5', 台灣市, '0', '', '2014-04-18 15:40:28', '279', '2014-04-21 17:25:33', '279', '']
+        - ['10', 退回福茂養護中心, '1', '3', 台中市, '4', 天龍區, '2014-04-18 15:40:28', '279', '2014-04-21 17:09:14', '279', '']
 '#__schedule_images':
     name: '#__schedule_images'
     from:
@@ -236,21 +235,23 @@
     columns:
         id: { Field: id, Type: 'int(11) unsigned', 'Null': NO, Default: null, Extra: auto_increment, Comment: 'Primary Key', From: [id] }
         rx_id: { Field: rx_id, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: '對應處方箋 id', From: [rx_id] }
+        hospital_id: { Field: hospital_id, Type: 'int(11) unsigned', 'Null': NO, Default: null, Extra: '', Comment: '醫院 id', From: [hospital_id] }
+        type: { Field: type, Type: varchar(20), 'Null': NO, Default: null, Extra: '', Comment: '圖片種類, rxindividual => 散客上傳, hospital => 醫院示範圖例', From: [type] }
         title: { Field: title, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 圖片說明, From: [title] }
         path: { Field: path, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 圖片位址, From: [path] }
     index:
         - { Table: '#__schedule_images', Non_unique: '0', Key_name: PRIMARY, Seq_in_index: '1', Column_name: id, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
     data:
-        - ['1', '2', mypresc1.png, images/2/mypresc1.png]
-        - ['2', '2', mypresc2.png, images/2/mypresc2.png]
-        - ['3', '2', mypresc3.png, images/2/mypresc3.png]
-        - ['4', '3', mypresc1.png, images/3/mypresc1.png]
-        - ['5', '3', mypresc2.png, images/3/mypresc2.png]
-        - ['6', '3', mypresc3.png, images/3/mypresc3.png]
-        - ['7', '4', mypresc1.png, images/4/mypresc1.png]
-        - ['8', '4', mypresc2.png, images/4/mypresc2.png]
-        - ['9', '4', mypresc3.png, images/4/mypresc3.png]
-        - ['10', '5', mypresc1.png, images/5/mypresc1.png]
+        - ['1', '2', '', rxindividual, mypresc1.png, images/2/mypresc1.png]
+        - ['2', '2', '', rxindividual, mypresc2.png, images/2/mypresc2.png]
+        - ['3', '2', '', rxindividual, mypresc3.png, images/2/mypresc3.png]
+        - ['4', '3', '', rxindividual, mypresc1.png, images/3/mypresc1.png]
+        - ['5', '3', '', rxindividual, mypresc2.png, images/3/mypresc2.png]
+        - ['6', '3', '', rxindividual, mypresc3.png, images/3/mypresc3.png]
+        - ['7', '4', '', rxindividual, mypresc1.png, images/4/mypresc1.png]
+        - ['8', '4', '', rxindividual, mypresc2.png, images/4/mypresc2.png]
+        - ['9', '4', '', rxindividual, mypresc3.png, images/4/mypresc3.png]
+        - ['10', '5', '', rxindividual, mypresc1.png, images/5/mypresc1.png]
 '#__schedule_institutes':
     name: '#__schedule_institutes'
     from:

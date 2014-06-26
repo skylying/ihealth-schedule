@@ -114,7 +114,6 @@
         has_hicode: { Field: has_hicode, Type: tinyint(1), 'Null': NO, Default: null, Extra: '', Comment: '藥品健保碼 無0 / 有1', From: [has_hicode] }
         city: { Field: city, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: 醫院所在縣市, From: [city] }
         city_title: { Field: city_title, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 縣市名稱, From: [city_title] }
-        images: { Field: images, Type: text, 'Null': NO, Default: null, Extra: '', Comment: 圖片路徑, From: [images] }
         area: { Field: area, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: 醫院所在區域, From: [area] }
         area_title: { Field: area_title, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 區域名稱, From: [area_title] }
         created: { Field: created, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: 'Created time', From: [created] }
@@ -132,6 +131,8 @@
     columns:
         id: { Field: id, Type: 'int(11) unsigned', 'Null': NO, Default: null, Extra: auto_increment, Comment: 'Primary Key', From: [id] }
         rx_id: { Field: rx_id, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: '對應處方箋 id', From: [rx_id] }
+        hospital_id: { Field: hospital_id, Type: 'int(11) unsigned', 'Null': NO, Default: null, Extra: '', Comment: '醫院 id', From: [hospital_id] }
+        type: { Field: type, Type: varchar(20), 'Null': NO, Default: null, Extra: '', Comment: '圖片種類, rxindividual => 散客上傳, hospital => 醫院示範圖例', From: [type] }
         title: { Field: title, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 圖片說明, From: [title] }
         path: { Field: path, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 圖片位址, From: [path] }
     index:
