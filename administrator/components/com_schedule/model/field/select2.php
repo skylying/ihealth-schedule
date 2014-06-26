@@ -127,6 +127,7 @@ JAVASCRIPT;
 			'idField'            => XmlHelper::get($this->element, 'idField', 'id'),
 			'textField'          => XmlHelper::get($this->element, 'textField', 'text'),
 			'enableComboBox'     => XmlHelper::getBool($this->element, 'enableComboBox', false),
+			'allowClear'         => XmlHelper::getBool($this->element, 'allowClear', false),
 			'initialData'        => (object) iterator_to_array($item),
 			'placeholder'        => $this->hint,
 			'readonly'           => $this->readonly,

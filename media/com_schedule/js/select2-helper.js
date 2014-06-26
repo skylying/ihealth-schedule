@@ -55,7 +55,8 @@
 				initialData: null,
 				enableComboBox: false,
 				readonly: false,
-				onchange: null
+				onchange: null,
+				allowClear: false
 			}, config);
 
 			this.configCollection[namespace] = config;
@@ -82,6 +83,7 @@
 				id: config.idField,
 				minimumInputLength: config.minimumInputLength,
 				placeholder: config.placeholder,
+				allowClear: config.allowClear,
 				formatResult: function(result)
 				{
 					return result[config.textField];
