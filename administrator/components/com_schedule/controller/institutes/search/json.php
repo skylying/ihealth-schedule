@@ -39,7 +39,10 @@ class ScheduleControllerInstitutesSearchJson extends DisplayController
 	 */
 	protected function doExecute()
 	{
-		$queryString = JFactory::getApplication()->input->getString('filter_search');
+		$input = JFactory::getApplication()->input;
+
+		$queryString = $input->getString('filter_search');
+		$showFloor = $input->getBool('show_floor');
 
 		if (empty($queryString))
 		{
@@ -54,27 +57,28 @@ class ScheduleControllerInstitutesSearchJson extends DisplayController
 
 		foreach ($model->getItems() as $item)
 		{
-			$data = array(
-				'color_hex'        => $item->color_hex,
-				'delivery_weekday' => $item->delivery_weekday,
-				'floor'            => $item->floor,
-				'city'             => $item->city,
-				'area'             => $item->area,
-			);
-
-			foreach (explode(',', $item->floor) as $floor)
+			if ($showFloor)
 			{
-				/*
-				 * select2 在 onchange 時會把回傳的 "id" 塞進本身的 value 裏面
-				 * 但這邊因應同一間機構在 id 相同狀況下必須更新樓層欄位的需求
-				 * 必須把 ajax 回傳的 "id" 做出區隔 (在這邊是後綴上 $value)
-				 * 才能滿足 select2 "onchange" 的事件觸發, 否則同一間機構,
-				 * 不同樓層, 再怎麼選 id 都一樣, 無法觸發 onchange 事件
-				 */
-				$data['id'] = $item->id . '-' . $floor;
-				$data['short_title'] = $item->institute_short_title . ' ' . $floor;
+				foreach (explode(',', $item->floor) as $floor)
+				{
+					$data = (array) $item;
 
-				$items[] = $data;
+					/*
+					 * select2 在 onchange 時會把回傳的 "id" 塞進本身的 value 裏面
+					 * 但這邊因應同一間機構在 id 相同狀況下必須更新樓層欄位的需求
+					 * 必須把 ajax 回傳的 "id" 做出區隔 (在這邊是後綴上 $value)
+					 * 才能滿足 select2 "onchange" 的事件觸發, 否則同一間機構,
+					 * 不同樓層, 再怎麼選 id 都一樣, 無法觸發 onchange 事件
+					 */
+					$data['id'] = $item->id . '-' . $floor;
+					$data['short_title'] = $item->institute_short_title . ' ' . $floor;
+
+					$items[] = $data;
+				}
+			}
+			else
+			{
+				$items[] = (array) $item;
 			}
 		}
 
