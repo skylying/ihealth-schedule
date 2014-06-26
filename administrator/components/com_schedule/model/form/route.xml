@@ -25,15 +25,16 @@
 
 		<field name="institute_id"
 			type="select2"
-			apiUrl="index.php?option=com_schedule&amp;task=institutes.search.json"
-			apiQueryKey="filter_search"
-			apiValueField="title"
-			apiTableName="institutes"
-			minimumInputLength="1"
-			hint="輸入機構名稱"
 			class="input-large"
 			label="機構名稱"
 			description="機構名稱"
+			hint="輸入機構名稱"
+			minimumInputLength="1"
+			apiUrl="index.php?option=com_schedule&amp;task=institutes.search.json"
+			apiQueryKey="filter_search"
+			query="SELECT `id`, `short_title` FROM #__schedule_institutes WHERE `id` = '%s'"
+			idField="id"
+			textField="short_title"
 			/>
 
 		<field name="city"

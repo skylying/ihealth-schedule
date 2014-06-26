@@ -58,31 +58,36 @@
 		</field>
 
 		<field name="schedule.institute_id"
-			hint="輸入機構名稱"
 			type="select2"
+			class="input-large"
+			label="機構名稱"
+			description="機構名稱"
+			hint="輸入機構名稱"
 			minimumInputLength="1"
 			apiUrl="index.php?option=com_schedule&amp;task=institutes.search.json"
 			apiQueryKey="filter_search"
-			apiTableName="institutes"
-			onChangeCallback="filterInstituteOnChange"
-			label="所屬機構"
-			class="input-large"
-			>
-			<option></option>
-		</field>
+			query="SELECT `id`, `short_title` FROM #__schedule_institutes WHERE `id` = '%s'"
+			idField="id"
+			textField="short_title"
+			allowClear="true"
+			onchange="filterInstituteOnChange();"
+			/>
 
 		<field name="schedule.member_id"
-			hint="輸入會員名稱"
 			type="select2"
+			class="input-large"
+			label="會員名稱"
+			description="會員名稱"
+			hint="輸入會員名稱"
 			minimumInputLength="1"
 			apiUrl="index.php?option=com_schedule&amp;task=members.search.json"
 			apiQueryKey="filter_search"
-			apiTableName="members"
-			onChangeCallback="filterMemberOnChange"
-			label="會員名稱"
-			>
-			<option></option>
-		</field>
+			query="SELECT `id`, `name` FROM #__schedule_members WHERE `id` = '%s'"
+			idField="id"
+			textField="name"
+			allowClear="true"
+			onchange="filterMemberOnChange();"
+			/>
 
 		<field name="schedule.city"
 			type="sql"

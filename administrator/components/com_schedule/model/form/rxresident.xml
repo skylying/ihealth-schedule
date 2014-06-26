@@ -9,7 +9,7 @@
 			hint="輸入機構名稱"
 			onchange="RxResidentEditList.instituteIdChange()"
 			minimumInputLength="1"
-			apiUrl="index.php?option=com_schedule&amp;task=institutes.search.json"
+			apiUrl="index.php?option=com_schedule&amp;task=institutes.search.json&amp;show_floor=1"
 			apiQueryKey="filter_search"
 			query="
 				SELECT '%s' AS `id`, CONCAT(`short_title`, ' ', SUBSTRING_INDEX('%s', '-', -1)) AS `short_title`,
