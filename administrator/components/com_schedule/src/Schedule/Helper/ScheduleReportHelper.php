@@ -42,9 +42,8 @@ class ScheduleReportHelper
 		$query = $db->getQuery(true)
 			->select($select)
 			->from(TABLE::SCHEDULES)
-			->where("`type` IN('individual', 'resident') ")
-			->group("`city_title`, institute_title, type, `year_month`")
-			->order("`year_month`, `city_title`, `type` DESC, `institute_title`");
+			->group("`city`, `institute_id`, `type`, `year_month`")
+			->order("`year_month`, `city`, `type` DESC, `institute_id`");
 
 		$this->extraFilter($query, $filter);
 
@@ -79,7 +78,8 @@ class ScheduleReportHelper
 			$query = $query->where($sqlWhereCity);
 		}
 
-		$query->where(sprintf('`date` >= "%s"', $startDate))
+		$query->where("`type` IN('individual', 'resident') ")
+			->where(sprintf('`date` >= "%s"', $startDate))
 			->where(sprintf('`date` <= "%s"', $endDate));
 	}
 
