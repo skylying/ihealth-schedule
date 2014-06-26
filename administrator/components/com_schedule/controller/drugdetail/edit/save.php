@@ -35,6 +35,13 @@ class ScheduleControllerDrugdetailEditSave extends SaveController
 	protected $customer;
 
 	/**
+	 * Property viewList.
+	 *
+	 * @var  string
+	 */
+	protected $viewList = 'schedules';
+
+	/**
 	 * Prepare Execute
 	 *
 	 * @return  void
@@ -224,6 +231,20 @@ class ScheduleControllerDrugdetailEditSave extends SaveController
 		$ids  = $this->data["senderIds"];
 		$date = $this->data["date"];
 		$url  = $this->getRedirectItemUrl();
+
+		$task = $this->input->get("task");
+		$do   = explode(".", $task);
+		$do   = end($do);
+
+		/**
+		 * TODO: 修改成複寫兩個個別的 function
+		 *
+		 * 我不知道為什麼我覆寫 redirectToItem 後儲存 依然導向別的地方
+		 */
+		if ("save" == $do)
+		{
+			$this->app->redirect($this->getRedirectListUrl());
+		}
 
 		$urlValue = http_build_query(
 			array(
