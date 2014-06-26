@@ -103,11 +103,12 @@
 				{
 					if (config.enableComboBox)
 					{
-						var text = term + (data.some(function(r) { return r[config.textField] == term; }) ? '' : ' (新)'),
+						var termExists = data.some(function(r) { return r[config.textField] == term; }),
 							ret = {};
 
 						ret[config.idField] = term;
-						ret[config.textField] = text;
+						ret[config.textField] = term + (termExists ? '' : ' (新)');
+						ret['_new'] = !termExists;
 
 						return ret;
 					}

@@ -127,7 +127,7 @@ JAVASCRIPT;
 			'idField'            => XmlHelper::get($this->element, 'idField', 'id'),
 			'textField'          => XmlHelper::get($this->element, 'textField', 'text'),
 			'enableComboBox'     => XmlHelper::getBool($this->element, 'enableComboBox', false),
-			'data'               => (object) iterator_to_array($item),
+			'initialData'        => (object) iterator_to_array($item),
 			'placeholder'        => $this->hint,
 			'readonly'           => $this->readonly,
 		);
@@ -156,6 +156,8 @@ JAVASCRIPT;
 				return $this->getDefaultItem();
 			}
 
+			$item->_new = false;
+
 			return new Data($item);
 		}
 
@@ -174,7 +176,8 @@ JAVASCRIPT;
 		$item = new stdClass;
 
 		$item->{$idField} = $this->value;
-		$item->{$textField} = $this->value;
+		$item->{$textField} = $this->value . ' (新)';
+		$item->_new = true;
 
 		return new Data($item);
 	}
