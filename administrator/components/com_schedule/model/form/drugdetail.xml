@@ -30,5 +30,9 @@
 		<field name="task_id"
 			type="hidden"
 			/>
+
+		<field name="institute_id"
+			type="hidden"
+			/>
 	</fieldset>
 </form>

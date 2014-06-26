@@ -53,10 +53,42 @@ class ScheduleControllerDrugdetailEditSave extends SaveController
 	 */
 	protected function doSave()
 	{
-		$this->saveScheduleDrugDetails();
-		$this->saveDrugExtraDetails($this->model);
+		$form = $this->model->getForm($this->data, false);
 
-		return $this->data;
+		$validData = array(
+			'schedules' => array(),
+			'institutes' => array()
+		);
+
+		// Valid Data Schedule
+		foreach ($this->data['schedules'] as $id => $schedule)
+		{
+			$schedule['id'] = $id;
+
+			$validDataSchedule = $this->model->validate($form, $schedule);
+
+			$validData['schedules'][$id] = $validDataSchedule;
+		}
+
+		// Valid Data Institute
+		foreach ($this->data['institutes'] as $instituteId => $instituteSchedules)
+		{
+			$validDataInstituteSchedule = array();
+
+			foreach ($instituteSchedules as $schedule)
+			{
+				$schedule['institute_id'] = $instituteId;
+
+				$validDataInstituteSchedule[] = $schedule;
+			}
+
+			$validData['institutes'][$instituteId] = $validDataInstituteSchedule;
+		}
+
+		$this->saveScheduleDrugDetails($validData);
+		$this->saveDrugExtraDetails($this->model, $validData);
+
+		return $validData;
 	}
 
 	/**
@@ -84,11 +116,13 @@ class ScheduleControllerDrugdetailEditSave extends SaveController
 	 * }
 	 * ```
 	 *
+	 * @param   array  $validData
+	 *
 	 * @return  void
 	 */
-	protected function saveScheduleDrugDetails()
+	protected function saveScheduleDrugDetails($validData)
 	{
-		foreach ($this->data['schedules'] as $scheduleId => $scheduleData)
+		foreach ($validData['schedules'] as $scheduleId => $scheduleData)
 		{
 			$scheduleData['id'] = $scheduleId;
 
@@ -147,11 +181,13 @@ class ScheduleControllerDrugdetailEditSave extends SaveController
 	 *
 	 * @param   \Windwalker\Model\CrudModel $model
 	 *
+	 * @param   array                       $validData
+	 *
 	 * @return  void
 	 */
-	protected function saveDrugExtraDetails($model)
+	protected function saveDrugExtraDetails($model, $validData)
 	{
-		foreach ($this->data['institutes'] as $instituteId => $institute)
+		foreach ($validData['institutes'] as $instituteId => $institute)
 		{
 			foreach ($institute as $detail)
 			{
