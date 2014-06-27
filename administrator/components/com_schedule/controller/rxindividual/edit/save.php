@@ -149,17 +149,20 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 			$address = $this->mapper['address']->findOne($schedule["address_id"]);
 
 			// 外送路線
-			$routes = $this->getUpdatedRouteData($address, $schedule);
+			$route = $this->getUpdatedRouteData($address, $schedule);
 
 			// 外送者
-			$sender = $this->mapper['address']->findOne($routes->sender_id);
+			$sender = $this->mapper['address']->findOne($route->sender_id);
 
 			// Get task
 			$task = $this->getUpdatedScheduleTaskData($sender, $schedule);
 
+			// Schedule sender id
+			$this->scheduleModel->getState()->set("sender_id", $route->sender_id);
+
 			// 新增排程
 			$this->scheduleModel->save(
-				$this->getScheduleUploadData($task->id, $address, $nth, $schedule, $routes)
+				$this->getScheduleUploadData($task->id, $address, $nth, $schedule, $route)
 			);
 
 			// 最後更改地址
@@ -349,7 +352,7 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 	 * @param   Data    $address
 	 * @param   string  $nth
 	 * @param   array   $formData
-	 * @param   Data    $routes
+	 * @param   Data    $route
 	 *
 	 * @return  array
 	 */
@@ -363,9 +366,6 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 			// Rx id
 			"rx_id"         => $this->data['id'],
 			"route_id"      => $route->id,
-
-			// Sender
-			"sender_id"     => $route->sender_id,
 
 			// 對應外送 id
 			"task_id"       => $task,
