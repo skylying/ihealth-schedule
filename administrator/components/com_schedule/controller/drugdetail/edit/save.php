@@ -91,7 +91,7 @@ class ScheduleControllerDrugdetailEditSave extends SaveController
 		}
 
 		$this->saveScheduleDrugDetails($schedules);
-		$this->saveDrugExtraDetails($this->model, $institutes);
+		$this->saveDrugExtraDetails($institutes);
 
 		return array(
 			'schedules' => $schedules,
@@ -187,13 +187,11 @@ class ScheduleControllerDrugdetailEditSave extends SaveController
 	 * }
 	 * ```
 	 *
-	 * @param   \Windwalker\Model\CrudModel $model
-	 *
-	 * @param   array                       $institutes
+	 * @param   array  $institutes
 	 *
 	 * @return  void
 	 */
-	protected function saveDrugExtraDetails($model, $institutes)
+	protected function saveDrugExtraDetails($institutes)
 	{
 		foreach ($institutes as $instituteId => $institute)
 		{
@@ -213,7 +211,7 @@ class ScheduleControllerDrugdetailEditSave extends SaveController
 					$detail['sorted'] = 0;
 				}
 
-				$model->save($detail);
+				$this->model->save($detail);
 			}
 		}
 	}
