@@ -149,17 +149,20 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 			$address = $this->mapper['address']->findOne($schedule["address_id"]);
 
 			// 外送路線
-			$routes = $this->getUpdatedRouteData($address, $schedule);
+			$route = $this->getUpdatedRouteData($address, $schedule);
 
 			// 外送者
-			$sender = $this->mapper['address']->findOne($routes->sender_id);
+			$sender = $this->mapper['address']->findOne($route->sender_id);
 
 			// Get task
 			$task = $this->getUpdatedScheduleTaskData($sender, $schedule);
 
+			// Schedule sender id
+			$this->scheduleModel->getState()->set("sender_id", $route->sender_id);
+
 			// 新增排程
 			$this->scheduleModel->save(
-				$this->getScheduleUploadData($task->id, $address, $nth, $schedule, $routes)
+				$this->getScheduleUploadData($task->id, $address, $nth, $schedule, $route)
 			);
 
 			// 最後更改地址
@@ -349,20 +352,20 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 	 * @param   Data    $address
 	 * @param   string  $nth
 	 * @param   array   $formData
-	 * @param   Data    $routes
+	 * @param   Data    $route
 	 *
 	 * @return  array
 	 */
-	protected function getScheduleUploadData($task, $address, $nth, $formData, $routes)
+	protected function getScheduleUploadData($task, $address, $nth, $formData, $route)
 	{
 		// Schedule data
-		$scheduleUpdata = array(
+		$scheduleUploadData = array(
 			// Id
 			"id"            => $formData['schedule_id'],
 
 			// Rx id
 			"rx_id"         => $this->data['id'],
-			"route_id"      => $routes->id,
+			"route_id"      => $route->id,
 
 			// Member
 			"member_id"     => $this->data['member_id'],
@@ -383,7 +386,7 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 			"sorted"        => 0
 		);
 
-		return array_merge($formData, $scheduleUpdata);
+		return array_merge($formData, $scheduleUploadData);
 	}
 
 	/**
