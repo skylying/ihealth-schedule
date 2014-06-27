@@ -353,16 +353,19 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 	 *
 	 * @return  array
 	 */
-	protected function getScheduleUploadData($task, $address, $nth, $formData, $routes)
+	protected function getScheduleUploadData($task, $address, $nth, $formData, $route)
 	{
 		// Schedule data
-		$scheduleUpdata = array(
+		$scheduleUploadData = array(
 			// Id
 			"id"            => $formData['schedule_id'],
 
 			// Rx id
 			"rx_id"         => $this->data['id'],
-			"route_id"      => $routes->id,
+			"route_id"      => $route->id,
+
+			// Sender
+			"sender_id"     => $route->sender_id,
 
 			// 對應外送 id
 			"task_id"       => $task,
@@ -380,7 +383,7 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 			"sorted"        => 0
 		);
 
-		return array_merge($formData, $scheduleUpdata);
+		return array_merge($formData, $scheduleUploadData);
 	}
 
 	/**
