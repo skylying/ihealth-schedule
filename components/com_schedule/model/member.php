@@ -28,11 +28,13 @@ class ScheduleModelMember extends MemberModel
 	 */
 	public function getItem($pk = null)
 	{
+		$input = $this->container->get('input');
+
+		$pk = $pk ?: $input->getInt('id');
+
 		// If id not exists, we use email to find it.
 		if (! $pk)
 		{
-			$input = $this->container->get('input');
-
 			$username = $input->getString('username') ? : $input->getString('email');
 
 			if ($username)
