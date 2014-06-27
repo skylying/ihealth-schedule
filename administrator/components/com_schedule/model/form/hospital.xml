@@ -69,9 +69,18 @@
 			label="區域名稱"
 			description="區域名稱" />
 
-		<field name="images"
+		<field name="ajax_image1"
 			type="image"
-			label="處方箋上傳"
-			description="處方箋上傳" />
+			imageType="hospital"
+			purpose="reserve"
+			label="預約用處方箋"
+			description="預約用處方箋" />
+
+		<field name="ajax_image2"
+			type="image"
+			imageType="hospital"
+			purpose="form"
+			label="自行填表用處方箋"
+			description="自行填表用處方箋" />
 	</fieldset>
 </form>
