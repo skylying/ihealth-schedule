@@ -26,7 +26,13 @@
 			// Field init
 			this.flushSelect();
 
-			// Event init
+			// Quick add flush event
+			this.customer.on("liszt:updated", function()
+			{
+				window.customerMemberField.flushSelect();
+			});
+
+			// Select change event
 			this.customer.change(function()
 			{
 				window.customerMemberField.flushSelect();
