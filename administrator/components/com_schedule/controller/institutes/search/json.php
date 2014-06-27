@@ -23,6 +23,7 @@ class ScheduleControllerInstitutesSearchJson extends DisplayController
 	 *   - api keys :
 	 *     - task = institutes.search.json
 	 *     - filter_search = {institute name}
+	 *     - show_floor = {0: not to expend floor data, 1: expend floor data}
 	 *
 	 * EX : index.php?option=com_schedule&task=institutes.search.json&filter_search=新北
 	 *

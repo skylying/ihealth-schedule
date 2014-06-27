@@ -24,6 +24,7 @@ use Windwalker\Html\HtmlElement;
  * - minimumInputLength: (Optional) Number of characters necessary to start a search (Default: 2)
  * - enableComboBox:     (Optional) Enable combo-box support, (Default: false)
  * - readonly:           (Optional) Setup readonly property (Default: false)
+ * - allowClear:         (Optional) Whether or not a clear button is displayed when the select box has a selection. (Default: false)
  * - onchange:           (Optional) Setup an onchange javascript, script should be a callback function (Default: null)
  *                       Ex: function(e, $node) { console.log(e); }
  */
