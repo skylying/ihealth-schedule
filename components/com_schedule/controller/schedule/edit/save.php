@@ -31,7 +31,9 @@ class ScheduleControllerScheduleEditSave extends ApiSaveController
 		$scheduleModel = $this->getModel('Schedule');
 		$scheduleModel->getState()->set('form.type', 'schedule_individual');
 
-		$schedule = $this->data;
+		$scheduleForm = $scheduleModel->getForm();
+		$schedule = $scheduleModel->validate($scheduleForm, $this->data);
+
 		$addressTable = TableCollection::loadTable('Address', $schedule['address_id']);
 		$routeTable = TableCollection::loadTable(
 			'Route',
