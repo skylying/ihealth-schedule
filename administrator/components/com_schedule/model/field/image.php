@@ -66,6 +66,7 @@ class JFormFieldImage extends JFormField
 			$imageId   = $imageInfo->id;
 			$imageName = $imageInfo->title;
 			$imagePath = $baseUrl . "/" . $imageInfo->path;
+			$nameClass = "col-lg-10 col-md-10 col-sm-10";
 		}
 
 		// 純文字時的設定值

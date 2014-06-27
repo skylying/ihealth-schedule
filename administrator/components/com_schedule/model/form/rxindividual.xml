@@ -137,21 +137,21 @@
 
 		<field name="ajax_image1"
 			type="image"
-			imageType="rx"
+			imageType="rxindividual"
 			label="圖片1"
 			description="圖片1"
 			/>
 
 		<field name="ajax_image2"
 			type="image"
-			imageType="rx"
+			imageType="rxindividual"
 			label="圖片2"
 			description="圖片2"
 			/>
 
 		<field name="ajax_image3"
 			type="image"
-			imageType="rx"
+			imageType="rxindividual"
 			label="圖片3"
 			description="圖片3"
 			/>
