@@ -62,10 +62,8 @@ class ScheduleControllerDrugdetailEditSave extends SaveController
 	{
 		$form = $this->model->getForm($this->data, false);
 
-		$validData = array(
-			'schedules' => array(),
-			'institutes' => array()
-		);
+		$schedules = array();
+		$institutes = array();
 
 		// Valid Data Schedule
 		foreach ($this->data['schedules'] as $id => $schedule)
@@ -74,28 +72,31 @@ class ScheduleControllerDrugdetailEditSave extends SaveController
 
 			$validDataSchedule = $this->model->validate($form, $schedule);
 
-			$validData['schedules'][$id] = $validDataSchedule;
+			$schedules[$id] = $validDataSchedule;
 		}
 
 		// Valid Data Institute
-		foreach ($this->data['institutes'] as $instituteId => $instituteSchedules)
+		foreach ($this->data['institutes'] as $instituteId => $instituteDrugDetails)
 		{
-			$validDataInstituteSchedule = array();
+			$validDataDrugDetail = array();
 
-			foreach ($instituteSchedules as $schedule)
+			foreach ($instituteDrugDetails as $drugDetail)
 			{
-				$schedule['institute_id'] = $instituteId;
+				$drugDetail['institute_id'] = $instituteId;
 
-				$validDataInstituteSchedule[] = $schedule;
+				$validDataDrugDetail[] = $drugDetail;
 			}
 
-			$validData['institutes'][$instituteId] = $validDataInstituteSchedule;
+			$institutes[$instituteId] = $validDataDrugDetail;
 		}
 
-		$this->saveScheduleDrugDetails($validData);
-		$this->saveDrugExtraDetails($this->model, $validData);
+		$this->saveScheduleDrugDetails($schedules);
+		$this->saveDrugExtraDetails($this->model, $institutes);
 
-		return $validData;
+		return array(
+			'schedules' => $schedules,
+			'institutes' => $institutes
+		);
 	}
 
 	/**
@@ -123,13 +124,13 @@ class ScheduleControllerDrugdetailEditSave extends SaveController
 	 * }
 	 * ```
 	 *
-	 * @param   array  $validData
+	 * @param   array  $schedules
 	 *
 	 * @return  void
 	 */
-	protected function saveScheduleDrugDetails($validData)
+	protected function saveScheduleDrugDetails($schedules)
 	{
-		foreach ($validData['schedules'] as $scheduleId => $scheduleData)
+		foreach ($schedules as $scheduleId => $scheduleData)
 		{
 			$scheduleData['id'] = $scheduleId;
 
@@ -188,13 +189,13 @@ class ScheduleControllerDrugdetailEditSave extends SaveController
 	 *
 	 * @param   \Windwalker\Model\CrudModel $model
 	 *
-	 * @param   array                       $validData
+	 * @param   array                       $institutes
 	 *
 	 * @return  void
 	 */
-	protected function saveDrugExtraDetails($model, $validData)
+	protected function saveDrugExtraDetails($model, $institutes)
 	{
-		foreach ($validData['institutes'] as $instituteId => $institute)
+		foreach ($institutes as $instituteId => $institute)
 		{
 			foreach ($institute as $detail)
 			{
