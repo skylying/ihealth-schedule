@@ -150,7 +150,11 @@ jQuery(document).ready(function ()
 		box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
 	}
 
-
+	/** This page quick add */
+	#jform_customer_id_quickadd-container
+	{
+		overflow: auto;
+	}
 </style>
 <?php if ($isSaveAndPrint == '1'): ?>
 	<script>
