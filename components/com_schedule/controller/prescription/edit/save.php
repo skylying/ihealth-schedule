@@ -109,17 +109,12 @@ class ScheduleControllerPrescriptionEditSave extends ApiSaveController
 		/** @var ScheduleModelTask $taskModel */
 		$taskModel = $this->getModel('Task');
 
-		$mailDataSet = array(
-			"schedule" => array(),
-			"rx"       => $validData,
-			"member"   => null,
-			"customer" => null,
-			"route"    => null
-		);
+		$scheduleConfig = \JComponentHelper::getParams('com_schedule')->get("schedule");
+		$notifyMail     = $scheduleConfig->empty_route_mail;
 
 		$scheduleModel->getState()->set('form.type', 'schedule_individual');
 
-		foreach ($this->data['schedules'] as $schedule)
+		foreach ($this->data['schedules'] as &$schedule)
 		{
 			$addressTable = TableCollection::loadTable('Address', $schedule['address_id']);
 			$routeTable = TableCollection::loadTable(
@@ -131,7 +126,7 @@ class ScheduleControllerPrescriptionEditSave extends ApiSaveController
 				]
 			);
 
-			$mailDataSet['route'] = $routeTable;
+			$schedule['route'] = $routeTable;
 
 			// If no route found, create one
 			if (empty($routeTable->id))
@@ -149,10 +144,6 @@ class ScheduleControllerPrescriptionEditSave extends ApiSaveController
 				$routeTable->weekday = 'MON';
 
 				$routeTable->store();
-
-				$scheduleConfig = \JComponentHelper::getParams('com_schedule')->get("schedule");
-
-				$notifyMail = $scheduleConfig->empty_route_mail;
 
 				MailHelper::sendEmptyRouteMail($notifyMail, $routeTable);
 			}
@@ -194,8 +185,6 @@ class ScheduleControllerPrescriptionEditSave extends ApiSaveController
 			$scheduleModel->save($schedule);
 
 			$scheduleModel->getState()->set('schedule.id', null);
-
-			$mailDataSet['schedule'][$schedule['deliver_nth']] = $schedule;
 		}
 
 		foreach ($this->data['drugs'] as $drug)
@@ -208,13 +197,18 @@ class ScheduleControllerPrescriptionEditSave extends ApiSaveController
 		}
 
 		$memberTable = TableCollection::loadTable('Member', $schedule['member_id']);
-		$customerTable = TableCollection::loadTable('Customer', $schedule['customer_id']);
-
-		$mailDataSet['member'] = $memberTable;
-		$mailDataSet['customer'] = $customerTable;
 
 		if (! empty($memberTable->email))
 		{
+			$customerTable = TableCollection::loadTable('Customer', $schedule['customer_id']);
+
+			$mailDataSet = array(
+				"schedules" => $this->data['schedules'],
+				"rx"        => $validData,
+				"member"    => $memberTable,
+				"customer"  => $customerTable
+			);
+
 			MailHelper::sendMailWhenScheduleChange($memberTable->email, $mailDataSet);
 		}
 	}
