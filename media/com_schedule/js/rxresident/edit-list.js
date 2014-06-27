@@ -211,7 +211,8 @@
 		 * @type {Object}
 		 */
 		option: {
-			customerApi: ''
+			customerApi: '',
+			isEdit: true
 		},
 		/**
 		 * Run
@@ -225,8 +226,7 @@
 
 			this.option = $.extend(this.option, option);
 
-			var self = this,
-				handler = new MultiRowHandler({$panel:$panel});
+			var handler = new MultiRowHandler({$panel:$panel});
 
 			// Bind afterInsert event
 			handler.on('afterInsert', function($row)
@@ -312,7 +312,10 @@
 			// Update total row number first
 			updateTotalRowNumber();
 
-			$instituteIdSelection.change();
+			if (! this.option.isEdit)
+			{
+				$instituteIdSelection.change();
+			}
 		},
 
 		/**

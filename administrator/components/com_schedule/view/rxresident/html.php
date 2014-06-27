@@ -144,7 +144,11 @@ class ScheduleViewRxresidentHtml extends EditView
 
 			if (! empty($id))
 			{
-				$items[$id] = (array) $model->getItem($id);
+				$item = (array) $model->getItem($id);
+
+				$item['customer_id_selection'] = $item['customer_id'];
+
+				$items[$id] = $item;
 			}
 
 			if (count($items) > 0)

@@ -29,6 +29,7 @@ $asset->addJS('rxresident/edit-list.js');
 
 $jsOption = [
 	'customerApi' => JRoute::_('index.php?option=com_schedule&task=customer.ajax.json&institute_id=', false),
+	'isEdit' => $data->isEdit,
 ];
 
 ?>
@@ -41,7 +42,16 @@ $jsOption = [
 <form id="adminForm" name="adminForm" action="" method="post" class="form-horizontal">
 	<div id="institute-information" class="row-fluid">
 		<div class="col-md-4">
-			<?php echo $instituteForm->getField('institute_id_selection')->getControlGroup(); ?>
+			<?php
+			$instituteIdSelection = $instituteForm->getField('institute_id_selection');
+
+			if ($data->isEdit)
+			{
+				$instituteIdSelection->readonly = true;
+			}
+
+			echo $instituteIdSelection->getControlGroup();
+			?>
 			<?php echo $instituteForm->getField('institute_id')->getControlGroup(); ?>
 		</div>
 		<div class="col-md-4 col-md-offset-1">
