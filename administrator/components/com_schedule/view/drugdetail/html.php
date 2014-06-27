@@ -151,6 +151,11 @@ class ScheduleViewDrugdetailHtml extends EditView
 
 		$this->data->items = $items;
 
+		$filterData['senderIds'] = $app->input->getVar("senderIds", array());
+		$filterData['date']      = $app->input->get("date", "");
+
+		$this->data->filterForm = $this->get('FilterForm', null, array($filterData));
+
 		parent::prepareData();
 	}
 
@@ -233,5 +238,23 @@ class ScheduleViewDrugdetailHtml extends EditView
 			->order("task.sender DESC");
 
 		return $db->setQuery($q)->loadObjectList();
+	}
+
+	/**
+	 * ConfigureToolbar
+	 *
+	 * @param array $buttonSet
+	 * @param null  $canDo
+	 *
+	 * @return  array
+	 */
+	protected function configureToolbar($buttonSet = array(), $canDo = null)
+	{
+		$buttonSet = parent::configureToolbar($buttonSet, $canDo);
+
+		unset($buttonSet['save2new']);
+		unset($buttonSet['save2copy']);
+
+		return $buttonSet;
 	}
 }
