@@ -104,11 +104,20 @@ class ScheduleControllerRxresidentEditSave extends SaveController
 	 * Save new customers
 	 *
 	 * @return  void
+	 *
+	 * @throws \Windwalker\Model\Exception\ValidateFailException
 	 */
 	protected function createCustomers()
 	{
 		foreach ($this->data['items'] as &$item)
 		{
+			$item['customer_id'] = trim($item['customer_id']);
+
+			if (empty($item['customer_id']))
+			{
+				throw new ValidateFailException(array('客戶姓名未填寫!'));
+			}
+
 			if (! is_numeric($item['customer_id']))
 			{
 				$customer = array(

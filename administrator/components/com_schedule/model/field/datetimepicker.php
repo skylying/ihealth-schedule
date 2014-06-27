@@ -28,6 +28,9 @@ use Windwalker\Html\HtmlElement;
  *                If the text box is disabled, the date cannot be changed, selected or copied.
  * - hint:        (optional) is placeholder attribute.
  * - required:    (optional) The field must be filled before submitting the form.
+ * - dpBindEvent: (optional) Function name to be triggered when element is changed.
+ *                Function format: function($node) { ... }
+ *                - $node is the current datetimepicker element
  */
 class JFormFieldDateTimePicker extends JFormField
 {
@@ -58,7 +61,8 @@ class JFormFieldDateTimePicker extends JFormField
 		$showButton = XmlHelper::getBool($this->element, 'show_button', false);
 		$style      = $this->getStyle();
 		$dateFormat = XmlHelper::get($this->element, 'date_format', 'YYYY-MM-DD');
-		$onChange   = $this->onchange;
+		$bindEvent  = XmlHelper::get($this->element, 'dpBindEvent', '');
+		$bindEvent  = empty($bindEvent) ? '' : $bindEvent . '(node);';
 
 		$attr = array(
 			'type'             => 'text',
@@ -106,12 +110,7 @@ jQuery(function ($)
 		pickTime: false
 	});
 
-	node.on('dp.change', function(e)
-	{
-		{$onChange}
-
-		node.trigger('blur');
-	});
+	{$bindEvent}
 });
 JAVASCRIPT;
 
