@@ -250,11 +250,11 @@ class ScheduleViewDrugdetailHtml extends EditView
 	 */
 	protected function configureToolbar($buttonSet = array(), $canDo = null)
 	{
-		$returnVal = parent::configureToolbar($buttonSet, $canDo);
+		$buttonSet = parent::configureToolbar($buttonSet, $canDo);
 
-		unset($returnVal['save2new']);
-		unset($returnVal['save2copy']);
+		unset($buttonSet['save2new']);
+		unset($buttonSet['save2copy']);
 
-		return $returnVal;
+		return $buttonSet;
 	}
 }
