@@ -364,6 +364,9 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 			"rx_id"         => $this->data['id'],
 			"route_id"      => $routes->id,
 
+			// Member
+			"member_id"     => $this->data['member_id'],
+
 			// 對應外送 id
 			"task_id"       => $task,
 			"type"          => "individual",

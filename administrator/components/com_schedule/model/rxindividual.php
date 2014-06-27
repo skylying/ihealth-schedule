@@ -89,6 +89,11 @@ class ScheduleModelRxindividual extends AdminModel
 		// 客戶名
 		$table->customer_name = $customer->name;
 
+		$member = (new DataMapper(Table::MEMBERS))->findOne($table->member_id);
+
+		// 會員名
+		$table->member_name = $member->name;
+
 		$hospital = (new DataMapper(Table::HOSPITALS))->findOne($table->hospital_id);
 
 		// 醫院名

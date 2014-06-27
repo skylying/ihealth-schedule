@@ -29,6 +29,13 @@
 			>
 			<option></option>
 		</field>
+
+		<field name="member_id"
+			type="text"
+			label="會員"
+			description="會員"
+			/>
+
 		<field name="type"
 			type="hidden"
 			/>
@@ -171,8 +178,7 @@
 
 	<field name="deliver_nths"
 		type="hidden"
-		>
-	</field>
+		/>
 
 	<fields name="schedules_1st">
 		<field name="deliver_nth"
@@ -183,8 +189,7 @@
 			<option value="1st">第一次</option>
 		</field>
 
-		<field
-			name="address_id"
+		<field name="address_id"
 			type="text"
 			label="地址"
 			description="地址"
@@ -198,15 +203,13 @@
 			readonly="true"
 			/>
 
-		<field
-			name="date"
+		<field name="date"
 			type="calendar"
 			label="預約宅配日"
 			description="預約宅配日"
 			/>
 
-		<field
-			name="session"
+		<field name="session"
 			type="list"
 			label="時段"
 			description="時段"
@@ -218,13 +221,11 @@
 			<option value="other">其他</option>
 		</field>
 
-		<field
-			name="schedule_id"
+		<field name="schedule_id"
 			type="hidden"
 			/>
 
-		<field
-			name="sender_id"
+		<field name="sender_id"
 			type="sender_list"
 			value_field="name"
 			label="配送藥師"
@@ -232,8 +233,7 @@
 			<option></option>
 		</field>
 
-		<field
-			name="weekday"
+		<field name="weekday"
 			type="list"
 			label="配送日"
 			description="配送日"
@@ -258,8 +258,7 @@
 			<option value="2nd">第二次</option>
 		</field>
 
-		<field
-			name="address_id"
+		<field name="address_id"
 			type="text"
 			label="地址"
 			description="地址"
@@ -273,15 +272,13 @@
 			readonly="true"
 			/>
 
-		<field
-			name="date"
+		<field name="date"
 			type="calendar"
 			label="預約宅配日"
 			description="預約宅配日"
 			/>
 
-		<field
-			name="session"
+		<field name="session"
 			type="list"
 			label="時段"
 			description="時段"
@@ -293,13 +290,11 @@
 			<option value="other">其他</option>
 		</field>
 
-		<field
-			name="schedule_id"
+		<field name="schedule_id"
 			type="hidden"
 			/>
 
-		<field
-			name="sender_id"
+		<field name="sender_id"
 			type="sender_list"
 			value_field="name"
 			label="配送藥師"
@@ -307,8 +302,7 @@
 			<option></option>
 		</field>
 
-		<field
-			name="weekday"
+		<field name="weekday"
 			type="list"
 			label="配送日"
 			description="配送日"
@@ -333,8 +327,7 @@
 			<option value="3rd">第三次</option>
 		</field>
 
-		<field
-			name="address_id"
+		<field name="address_id"
 			type="text"
 			label="地址"
 			description="地址"
@@ -348,15 +341,13 @@
 			readonly="true"
 			/>
 
-		<field
-			name="date"
+		<field name="date"
 			type="calendar"
 			label="預約宅配日"
 			description="預約宅配日"
 			/>
 
-		<field
-			name="session"
+		<field name="session"
 			type="list"
 			label="時段"
 			description="時段"
@@ -368,13 +359,11 @@
 			<option value="other">其他</option>
 		</field>
 
-		<field
-			name="schedule_id"
+		<field name="schedule_id"
 			type="hidden"
 			/>
 
-		<field
-			name="sender_id"
+		<field name="sender_id"
 			type="sender_list"
 			value_field="name"
 			label="配送藥師"
@@ -382,8 +371,7 @@
 			<option></option>
 		</field>
 
-		<field
-			name="weekday"
+		<field name="weekday"
 			type="list"
 			label="配送日"
 			description="配送日"
@@ -401,37 +389,32 @@
 
 	<fieldset
 		name="schedules_ps">
-		<field
-			name="tel_office"
+		<field name="tel_office"
 			type="text"
 			label="聯絡電話(O)"
 			description="聯絡電話(O)"
 			/>
 
-		<field
-			name="tel_home"
+		<field name="tel_home"
 			type="text"
 			label="聯絡電話(H)"
 			description="聯絡電話(H)"
 			/>
 
-		<field
-			name="mobile"
+		<field name="mobile"
 			type="text"
 			label="手機(M)"
 			description="手機(M)"
 			/>
 
 		<!-- 存入 prescription 的備註 -->
-		<field
-			name="note"
+		<field name="note"
 			type="textarea"
 			label="備註"
 			description="備註"
 			/>
 
-		<field
-			name="remind"
+		<field name="remind"
 			type="checkboxes"
 			label="註記選項"
 			description="註記選項"
@@ -452,6 +435,7 @@
 			description="縣市">
 			<option>- 請選擇縣市 -</option>
 		</field>
+
 		<field name="area"
 			type="sql"
 			query="SELECT `id`, `title` FROM #__schedule_areas WHERE published=1"
