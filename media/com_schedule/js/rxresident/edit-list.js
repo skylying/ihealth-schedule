@@ -8,6 +8,7 @@
 		$floor,
 		$deliveryWeekdayText,
 		$deliveryWeekday,
+		$note,
 		$colorText,
 		$color,
 		$panel,
@@ -29,6 +30,7 @@
 		$rowTemplate = $('#row-template');
 		$deliveryWeekdayText = $('#weekday-from-js');
 		$deliveryWeekday = $('#jform_delivery_weekday');
+		$note = $('#note-from-js');
 		$colorText = $('.delivery-color');
 		$color = $('#jform_color_hex');
 	}
@@ -352,6 +354,7 @@
 					},
 					weekday = data.delivery_weekday,
 					color = data.color_hex,
+					note = data.note,
 					floor = data.id.split('-')[1],
 					instituteId = data.id.split('-')[0],
 					customerApiUrl = self.option.customerApi + instituteId;
@@ -365,6 +368,9 @@
 				// update delivery_weekday color
 				$colorText.css('background', color);
 				$color.val(color);
+
+				// update note
+				$note.text(note);
 
 				// update floor
 				$floor.val(floor);

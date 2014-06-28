@@ -77,6 +77,19 @@ $jsOption = [
 			總數： <span id="total-row"><?php echo count($forms); ?></span> 筆處方箋
 		</div>
 	</div>
+
+	<div class="row-fluid">
+		<div class="col-md-12 deliveryblock">
+			<div class="note">
+				備註：
+				<span id="note-from-js">
+					<?php echo $data->institute['note']; ?>
+					<?php echo $instituteForm->getField('note')->input; ?>
+				</span>
+			</div>
+		</div>
+	</div>
+
 	<hr />
 	<?php if (! $data->isEdit): ?>
 		<p>
