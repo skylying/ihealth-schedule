@@ -2,16 +2,45 @@
 <form>
 	<fieldset name="basic">
 		<field name="id"
-			type="hidden"
+			type="integer"
+			label="處方箋編號"
+			readonly="true"
 			/>
 
-		<field name="task_id"
-			type="hidden"
+		<field name="date"
+			type="calendar"
+			label="排程日期"
+			required="true"
 			/>
 
-		<field name="route_id"
-			type="hidden"
+		<field name="address_id"
+			type="integer"
+			label="地址編號"
+			required="true"
 			/>
+
+		<field name="deliver_nth"
+			type="list"
+			label="宅配第幾次 ('1st','2nd','3rd')"
+			required="true"
+			>
+			<option value="1st">1st</option>
+			<option value="2nd">2nd</option>
+			<option value="3rd">3rd</option>
+		</field>
+
+		<field name="session"
+			type="list"
+			label="送藥時段"
+			default="daytime"
+			required="true"
+			>
+			<option value="daytime">白天皆可 0900-1800</option>
+			<option value="morning">早上 0900-1300</option>
+			<option value="afternoon">下午 1300-1800</option>
+			<option value="night">晚上 1800-2100</option>
+			<option value="other">其他</option>
+		</field>
 
 		<field name="tel_office"
 			type="text"
@@ -28,60 +57,40 @@
 			label="手機"
 			/>
 
-		<field name="date"
-			type="calendar"
-			label="排程日期"
-			required="true"
+		<field name="type"
+			type="hidden"
+			label="排程類別"
+			default="individual"
 			/>
 
-		<field name="session"
-			type="list"
-			label="送藥時段"
-			default="daytime"
-			required="true"
-			>
-			<option value="daytime">白天皆可 0900-1800</option>
-			<option value="morning">早上 0900-1300</option>
-			<option value="afternoon">下午 1300-1800</option>
-			<option value="night">晚上 1800-2100</option>
-			<option value="other">其他</option>
-		</field>
+		<field name="sorted"
+			type="hidden"
+			label="是否完成分藥"
+			default="0"
+			/>
 
-		<field id="institute_city"
-			name="city"
-			type="sql"
-			default=""
-			query="SELECT id, title FROM #__schedule_cities"
-			key_field="id"
-			value_field="title"
-			label="縣市"
-			description="縣市"
-			readonly="false"
-			>
-			<option></option>
-		</field>
+		<field name="ice"
+			type="hidden"
+			label="是否有冰品"
+			default="0"
+			/>
 
-		<field id="institute_area"
-			name="area"
-			type="sql"
-			default=""
-			query="SELECT id, title FROM #__schedule_areas"
-			key_field="id"
-			value_field="title"
-			label="區域"
-			description="區域"
-			readonly="false"
-			>
-			<option></option>
-		</field>
+		<field name="expense"
+			type="hidden"
+			label="是否為自費藥品"
+			default="0"
+			/>
 
-		<field name="address"
-			type="text"
-			default=""
-			class="input-xlarge"
-			label="地址"
-			description="地址"
-			readonly="false"
+		<field name="price"
+			type="hidden"
+			label="自費金額"
+			default="0"
+			/>
+
+		<field name="status"
+			type="hidden"
+			label="排程狀態"
+			default="scheduled"
 			/>
 	</fieldset>
 </form>
