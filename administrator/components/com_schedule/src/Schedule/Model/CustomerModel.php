@@ -11,6 +11,7 @@ namespace Schedule\Model;
 use Windwalker\Model\AdminModel;
 use Schedule\Table\Table;
 use Windwalker\Joomla\DataMapper\DataMapper;
+use Windwalker\Model\Exception\ValidateFailException;
 
 // No direct access
 defined('_JEXEC') or die;
@@ -173,5 +174,50 @@ class CustomerModel extends AdminModel
 
 		$table->city_title = $tableInstitute->city_title;
 		$table->area_title = $tableInstitute->area_title;
+	}
+
+	/**
+	 * setCustomerState
+	 *
+	 * @param   int    $state
+	 * @param   array  $customerIds
+	 *
+	 * @return  int    Affected  rows
+	 *
+	 * @throws  \Windwalker\Model\Exception\ValidateFailException
+	 */
+	public function setCustomerState($state, array $customerIds)
+	{
+		$state = (int) $state;
+
+		if (!in_array($state, [0, 1]))
+		{
+			throw new ValidateFailException(['state should be 0 or 1, given ' . $state]);
+		}
+
+		$customerIds = array_unique($customerIds);
+
+		foreach ($customerIds as &$id)
+		{
+			if ($id <= 0)
+			{
+				unset($id);
+			}
+		}
+
+		if (0 === count($customerIds))
+		{
+			throw new ValidateFailException(['empty customer id list']);
+		}
+
+		$query = $this->db->getQuery(true);
+
+		$query->update(Table::CUSTOMERS)
+			->set('`state` = ' . $state)
+			->where('id IN (' . implode(',', $customerIds) . ')');
+
+		$this->db->setQuery($query)->execute();
+
+		return $this->db->getAffectedRows();
 	}
 }
