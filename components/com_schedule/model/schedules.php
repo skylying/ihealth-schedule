@@ -19,6 +19,11 @@ defined('_JEXEC') or die;
  */
 class ScheduleModelSchedules extends \Windwalker\Model\ListModel
 {
+	/**
+	 * Property filterFields.
+	 *
+	 * @var  array
+	 */
 	protected $filterFields = array(
 		'rx_id',
 		'member_id'
@@ -46,9 +51,19 @@ class ScheduleModelSchedules extends \Windwalker\Model\ListModel
 	{
 		$input = $this->getContainer()->get('input');
 
+		$rx_id = $input->get('rx_id');
+		$member_id = $input->get('member_id');
+
 		// Set filter:
-		$_REQUEST['filter']['rx_id']     = $input->get('rx_id');
-		$_REQUEST['filter']['member_id'] = $input->get('member_id');
+		if (!empty($rx_id))
+		{
+			$_REQUEST['filter']['rx_id'] = $rx_id;
+		}
+
+		if (!empty($member_id))
+		{
+			$_REQUEST['filter']['member_id'] = $member_id;
+		}
 
 		parent::populateState($ordering, $direction);
 	}
