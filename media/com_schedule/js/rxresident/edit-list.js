@@ -269,8 +269,12 @@
 				var $datetimePicker = $row.find('.datetimepicker');
 
 				$datetimePicker.datetimepicker({
-					pickTime: false
+					pickTime: false,
+
+					// 禁用點選未來的日期
+					maxDate: new Date()
 				});
+
 				bindSeeDrDateEvent($datetimePicker);
 
 				// Bind onchange event to update "就醫日期" & "給藥天數"
