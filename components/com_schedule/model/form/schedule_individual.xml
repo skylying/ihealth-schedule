@@ -3,7 +3,7 @@
 	<fieldset name="basic">
 		<field name="id"
 			type="integer"
-			label="處方箋編號"
+			label="宅配編號"
 			readonly="true"
 			/>
 

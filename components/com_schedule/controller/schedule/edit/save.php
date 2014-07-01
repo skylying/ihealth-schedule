@@ -9,6 +9,7 @@
 use Schedule\Controller\Api\ApiSaveController;
 use Schedule\Helper\ScheduleHelper;
 use Schedule\Table\Collection as TableCollection;
+use Windwalker\Model\Exception\ValidateFailException;
 
 /**
  * Class ScheduleControllerPrescriptionEditSave
@@ -26,6 +27,11 @@ class ScheduleControllerScheduleEditSave extends ApiSaveController
 	 */
 	protected function preSaveHook()
 	{
+		if ($this->data['id'] <= 0)
+		{
+			throw new ValidateFailException(['Schedule id should be greater than 0, ' . $this->data['id'] . 'given.']);
+		}
+
 		$taskModel = $this->getModel('Task');
 
 		$scheduleModel = $this->getModel('Schedule');
