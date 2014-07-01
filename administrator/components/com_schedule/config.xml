@@ -15,21 +15,13 @@
 				default=""
 				/>
 
-			<field name="default_sender_id"
-				type="sender_list"
-				key_field="id"
-				value_field="id"
-				label="預設外送藥師編號"
-				description="預設外送藥師編號"
-				class=""
-				/>
-
-			<field name="default_sender_name"
-				type="sender_list"
-				key_field="name"
+			<field name="default_sender"
+				type="sql"
+				query="SELECT CONCAT(id, '-', name) AS sender, name FROM #__schedule_senders"
+				key_field="sender"
 				value_field="name"
-				label="預設外送藥師姓名"
-				description="預設外送藥師姓名"
+				label="預設外送藥師"
+				description="預設外送藥師"
 				class=""
 				/>
 

@@ -8,6 +8,7 @@
 		$floor,
 		$deliveryWeekdayText,
 		$deliveryWeekday,
+		$note,
 		$colorText,
 		$color,
 		$panel,
@@ -29,6 +30,7 @@
 		$rowTemplate = $('#row-template');
 		$deliveryWeekdayText = $('#weekday-from-js');
 		$deliveryWeekday = $('#jform_delivery_weekday');
+		$note = $('#note-from-js');
 		$colorText = $('.delivery-color');
 		$color = $('#jform_color_hex');
 	}
@@ -267,8 +269,12 @@
 				var $datetimePicker = $row.find('.datetimepicker');
 
 				$datetimePicker.datetimepicker({
-					pickTime: false
+					pickTime: false,
+
+					// 禁用點選未來的日期
+					maxDate: new Date()
 				});
+
 				bindSeeDrDateEvent($datetimePicker);
 
 				// Bind onchange event to update "就醫日期" & "給藥天數"
@@ -352,6 +358,7 @@
 					},
 					weekday = data.delivery_weekday,
 					color = data.color_hex,
+					note = data.note,
 					floor = data.id.split('-')[1],
 					instituteId = data.id.split('-')[0],
 					customerApiUrl = self.option.customerApi + instituteId;
@@ -365,6 +372,9 @@
 				// update delivery_weekday color
 				$colorText.css('background', color);
 				$color.val(color);
+
+				// update note
+				$note.text(note);
 
 				// update floor
 				$floor.val(floor);

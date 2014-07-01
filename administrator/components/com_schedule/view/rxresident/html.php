@@ -164,6 +164,7 @@ class ScheduleViewRxresidentHtml extends EditView
 		$institute['floor']                  = ArrayHelper::getValue($data, 'floor', '');
 		$institute['color_hex']              = ArrayHelper::getValue($data, 'color_hex', '#ffffff');
 		$institute['delivery_weekday']       = ArrayHelper::getValue($data, 'delivery_weekday', '');
+		$institute['note']                   = ArrayHelper::getValue($data, 'note', '');
 
 		if (! empty($institute['delivery_weekday']))
 		{
