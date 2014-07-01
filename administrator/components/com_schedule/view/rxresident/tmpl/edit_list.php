@@ -79,8 +79,8 @@ $jsOption = [
 	</div>
 
 	<div class="row-fluid">
-		<div class="col-md-12 deliveryblock">
-			<div class="note">
+		<div class="col-md-12">
+			<div>
 				備註：
 				<span id="note-from-js">
 					<?php echo $data->institute['note']; ?>
