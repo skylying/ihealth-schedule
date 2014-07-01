@@ -1,6 +1,6 @@
 <?php
 /**
- * Part of ihealth-schedule project. 
+ * Part of ihealth-schedule project.
  *
  * @copyright  Copyright (C) 2011 - 2014 SMS Taiwan, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
@@ -32,10 +32,10 @@ class ScheduleControllerScheduleEditSave extends ApiSaveController
 		$scheduleModel->getState()->set('form.type', 'schedule_individual');
 
 		$scheduleForm = $scheduleModel->getScheduleForm();
-		$schedule = $this->model->validate($scheduleForm, $this->data);
+		$schedule     = $this->model->validate($scheduleForm, $this->data);
 
 		$addressTable = TableCollection::loadTable('Address', $schedule['address_id']);
-		$routeTable = TableCollection::loadTable(
+		$routeTable   = TableCollection::loadTable(
 			'Route',
 			[
 				'city' => $addressTable->city,
@@ -48,16 +48,16 @@ class ScheduleControllerScheduleEditSave extends ApiSaveController
 		if (empty($routeTable->id))
 		{
 			$routeTable->institute_id = 0;
-			$routeTable->type = 'customer';
-			$routeTable->city = $addressTable->city;
-			$routeTable->city_title = $addressTable->city_title;
-			$routeTable->area = $addressTable->area;
-			$routeTable->area_title = $addressTable->area_title;
+			$routeTable->type         = 'customer';
+			$routeTable->city         = $addressTable->city;
+			$routeTable->city_title   = $addressTable->city_title;
+			$routeTable->area         = $addressTable->area;
+			$routeTable->area_title   = $addressTable->area_title;
 
 			// TODO: 從 config 中取得 https://github.com/smstw/ihealth-schedule/issues/220
-			$routeTable->sender_id = 1;
+			$routeTable->sender_id   = 1;
 			$routeTable->sender_name = '陳藥師';
-			$routeTable->weekday = 'MON';
+			$routeTable->weekday     = 'MON';
 
 			$routeTable->store();
 
@@ -68,23 +68,23 @@ class ScheduleControllerScheduleEditSave extends ApiSaveController
 		$taskTable = TableCollection::loadTable(
 			'Task',
 			[
-				'date' => $schedule['date'],
+				'date'   => $schedule['date'],
 				'sender' => $routeTable->sender_id
 			]
 		);
 
 		if (empty($taskTable->id))
 		{
-			$taskTable->date = $schedule['date'];
-			$taskTable->sender = $routeTable->sender_id;
+			$taskTable->date        = $schedule['date'];
+			$taskTable->sender      = $routeTable->sender_id;
 			$taskTable->sender_name = $routeTable->sender_name;
-			$taskTable->status = 0;
+			$taskTable->status      = 0;
 
 			$taskModel->prepareTable($taskTable);
 			$taskTable->store(true);
 		}
 
 		$this->data['route_id'] = $routeTable->id;
-		$this->data['task_id'] = $taskTable->id;
+		$this->data['task_id']  = $taskTable->id;
 	}
 }

@@ -47,7 +47,7 @@ class ScheduleModelSchedules extends \Windwalker\Model\ListModel
 		$input = $this->getContainer()->get('input');
 
 		// Set filter:
-		$_REQUEST['filter']['rx_id'] = $input->get('rx_id');
+		$_REQUEST['filter']['rx_id']     = $input->get('rx_id');
 		$_REQUEST['filter']['member_id'] = $input->get('member_id');
 
 		parent::populateState($ordering, $direction);
@@ -79,7 +79,6 @@ class ScheduleModelSchedules extends \Windwalker\Model\ListModel
 				$query->where('`schedule`.`rx_id`=' . (int) $value);
 			}
 		);
-
 
 		parent::configureFilters($filterHelper);
 	}
