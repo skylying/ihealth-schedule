@@ -17,9 +17,9 @@
 
 			<field name="default_sender"
 				type="sql"
-				query="SELECT concat(id, '-', name) AS sender FROM #__schedule_senders"
+				query="SELECT CONCAT(id, '-', name) AS sender, name FROM #__schedule_senders"
 				key_field="sender"
-				value_field="sender"
+				value_field="name"
 				label="預設外送藥師"
 				description="預設外送藥師"
 				class=""
