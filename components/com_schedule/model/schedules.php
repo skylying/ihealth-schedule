@@ -69,36 +69,6 @@ class ScheduleModelSchedules extends \Windwalker\Model\ListModel
 	}
 
 	/**
-	 * configureFilters
-	 *
-	 * @param \Windwalker\Model\Filter\FilterHelper $filterHelper
-	 *
-	 * @return  void
-	 */
-	protected function configureFilters($filterHelper)
-	{
-		$filterHelper->setHandler(
-			'member_id',
-			function ($query, $field, $value)
-			{
-				/** @var $query \JDatabaseQuery */
-				$query->where('`schedule`.`member_id`=' . (int) $value);
-			}
-		);
-
-		$filterHelper->setHandler(
-			'rx_id',
-			function ($query, $field, $value)
-			{
-				/** @var $query \JDatabaseQuery */
-				$query->where('`schedule`.`rx_id`=' . (int) $value);
-			}
-		);
-
-		parent::configureFilters($filterHelper);
-	}
-
-	/**
 	 * postGetQuery
 	 *
 	 * @param JDatabaseQuery $query
