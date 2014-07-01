@@ -27,7 +27,7 @@ class ScheduleControllerScheduleEditSave extends ApiSaveController
 	 */
 	protected function preSaveHook()
 	{
-		if ($this->data['id'] <= 0)
+		if (empty($this->data['id']) || $this->data['id'] <= 0)
 		{
 			throw new ValidateFailException(['Schedule id should be greater than 0, ' . $this->data['id'] . 'given.']);
 		}
@@ -39,6 +39,22 @@ class ScheduleControllerScheduleEditSave extends ApiSaveController
 
 		$scheduleForm = $scheduleModel->getScheduleForm();
 		$schedule     = $this->model->validate($scheduleForm, $this->data);
+
+		// Get data from prescription table for sendate validation by rx_id
+		$prescriptionTable = TableCollection::loadTable('Prescription', $this->data['rx_id']);
+
+		if (empty($prescriptionTable->id))
+		{
+			throw new ValidateFailException(['Invalid correlative prescription id.']);
+		}
+
+		// Validate send date
+		ScheduleHelper::validateSendDate(
+			$this->data['date'],
+			$this->data['deliver_nth'],
+			$prescriptionTable->see_dr_date,
+			$prescriptionTable->period
+		);
 
 		$addressTable = TableCollection::loadTable('Address', $schedule['address_id']);
 		$routeTable   = TableCollection::loadTable(
