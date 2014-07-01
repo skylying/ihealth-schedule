@@ -48,7 +48,7 @@
 			</tr>
 			<tr>
 				<td>藥師送藥時段</td>
-				<td><!--Session--><</td>
+				<td><!--Session--></td>
 			</tr>
 			<tr>
 				<td>藥師送藥地址</td>
@@ -99,6 +99,5 @@
 			<h3>藥師親自宅配. 最方便. 最放心.</h3>
 		</div>
 	</div>
-	<p>SMS Taiwan Copyright (C) SMS Consulting Service Co.,Ltd.</p>
 </div>
 </html>
