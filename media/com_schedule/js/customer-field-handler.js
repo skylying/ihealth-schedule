@@ -452,6 +452,7 @@
 					' data-city="' + addressJson[i].city + '"' +
 					' data-area="' + addressJson[i].area + '"' +
 					' data-value="' + addressJson[i].id + '"' +
+					' value="' + addressJson[i].id + '"' +
 					((addressJson[i].id == currentSelected) ? 'selected' : '') +
 					'>' +
 					addressJson[i].city_title +

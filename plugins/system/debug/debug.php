@@ -747,7 +747,8 @@ class PlgSystemDebug extends JPlugin
 
 				// How heavy should the string length count: 0 - 1.
 				$ratio = 0.5;
-				$timeScore = $queryTime / (strlen($query) * $ratio) * 200;
+				$division = strlen($query) * $ratio;
+				$timeScore = $division > 0 ? $queryTime / $division * 200 : 0;
 
 				// Determine color of bargraph depending on query speed and presence of warnings in EXPLAIN.
 				if ($timeScore > 10)

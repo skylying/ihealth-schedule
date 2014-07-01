@@ -7,6 +7,7 @@
  */
 
 use Windwalker\Model\AdminModel;
+use Schedule\Table\Table;
 
 // No direct access
 defined('_JEXEC') or die;
@@ -89,5 +90,38 @@ class ScheduleModelHospital extends AdminModel
 		$tableArea = $this->getTable('Area');
 		$tableArea->load($table->area);
 		$table->area_title = $tableArea->title;
+	}
+
+	/**
+	 * Insert ajax_image id
+	 *
+	 * @return  array
+	 */
+	protected function loadFormData()
+	{
+		$returnVal = parent::loadFormData();
+
+		// Return when it's empty
+		if (empty($returnVal))
+		{
+			return $returnVal;
+		}
+
+		if (!empty($returnVal->id))
+		{
+			$db = JFactory::getDbo();
+			$query = $db->getQuery(true);
+
+			$query->select('`image`.`id`')
+				->from(Table::IMAGES . ' AS image')
+				->where('`image`.`hospital_id` = ' . $returnVal->id);
+
+			$imageIdList = $db->setQuery($query)->loadColumn();
+
+			$returnVal->ajax_image1 = isset($imageIdList[0]) ? $imageIdList[0] : null;
+			$returnVal->ajax_image2 = isset($imageIdList[1]) ? $imageIdList[1] : null;
+		}
+
+		return $returnVal;
 	}
 }

@@ -10,6 +10,7 @@ use Schedule\Controller\Api\ApiSaveController;
 use Windwalker\Model\Exception\ValidateFailException;
 use Schedule\Helper\ScheduleHelper;
 use Schedule\Table\Collection as TableCollection;
+use Schedule\Helper\MailHelper;
 
 /**
  * Class ScheduleControllerPrescriptionEditSave
@@ -53,6 +54,18 @@ class ScheduleControllerPrescriptionEditSave extends ApiSaveController
 		foreach ($this->data['drugs'] as $drug)
 		{
 			$model->validate($drugForm, $drug);
+		}
+
+		// Validate fields see_dr_date
+		if (empty($this->data['see_dr_date']))
+		{
+			throw new ValidateFailException(['Invalid see doctor date']);
+		}
+
+		// Validate fields period
+		if (empty($this->data['period']))
+		{
+			throw new ValidateFailException(['Invalid period']);
 		}
 
 		// Do validation with schedules
@@ -99,6 +112,8 @@ class ScheduleControllerPrescriptionEditSave extends ApiSaveController
 	{
 		$rxId = empty($validData['id']) ? $model->getState()->get('prescription.id') : $validData['id'];
 
+		$validData['id'] = $rxId;
+
 		/** @var ScheduleModelDrug $drugModel */
 		$drugModel = $this->getModel('Drug');
 		/** @var ScheduleModelSchedule $scheduleModel */
@@ -106,9 +121,12 @@ class ScheduleControllerPrescriptionEditSave extends ApiSaveController
 		/** @var ScheduleModelTask $taskModel */
 		$taskModel = $this->getModel('Task');
 
+		$scheduleConfig = \JComponentHelper::getParams('com_schedule')->get("schedule");
+		$notifyMail     = $scheduleConfig->empty_route_mail;
+
 		$scheduleModel->getState()->set('form.type', 'schedule_individual');
 
-		foreach ($this->data['schedules'] as $schedule)
+		foreach ($this->data['schedules'] as &$schedule)
 		{
 			$addressTable = TableCollection::loadTable('Address', $schedule['address_id']);
 			$routeTable = TableCollection::loadTable(
@@ -119,6 +137,8 @@ class ScheduleControllerPrescriptionEditSave extends ApiSaveController
 					'type' => 'customer',
 				]
 			);
+
+			$schedule['route'] = $routeTable;
 
 			// If no route found, create one
 			if (empty($routeTable->id))
@@ -137,7 +157,7 @@ class ScheduleControllerPrescriptionEditSave extends ApiSaveController
 
 				$routeTable->store();
 
-				// TODO: 無 route 時要寄 EMail 通知 https://github.com/smstw/ihealth-schedule/issues/249
+				MailHelper::sendEmptyRouteMail($notifyMail, $routeTable);
 			}
 
 			// Get task
@@ -186,6 +206,22 @@ class ScheduleControllerPrescriptionEditSave extends ApiSaveController
 			$drugModel->save($drug);
 
 			$drugModel->getState()->set('drug.id', null);
+		}
+
+		$memberTable = TableCollection::loadTable('Member', $validData['member_id']);
+
+		if (! empty($memberTable->email))
+		{
+			$customerTable = TableCollection::loadTable('Customer', $validData['customer_id']);
+
+			$mailDataSet = array(
+				"schedules" => $this->data['schedules'],
+				"rx"        => $validData,
+				"member"    => $memberTable,
+				"customer"  => $customerTable
+			);
+
+			MailHelper::sendMailWhenScheduleChange($memberTable->email, $mailDataSet);
 		}
 	}
 }

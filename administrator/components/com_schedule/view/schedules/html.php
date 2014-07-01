@@ -108,6 +108,9 @@ class ScheduleViewSchedulesHtml extends GridView
 		$app = JFactory::getApplication();
 		$data = $this->getData();
 
+		/** @var JForm $printForm */
+		$data->printForm = $this->get('PrintForm');
+
 		if ('report' == $this->getLayout())
 		{
 			$schedulesModel = $this->getModel('Schedules');
@@ -115,8 +118,6 @@ class ScheduleViewSchedulesHtml extends GridView
 
 			$ScheduleReport = new \Schedule\Helper\ScheduleReportHelper;
 			$data->items = $ScheduleReport->getData($filter);
-
-			$data->printForm = $this->get('PrintForm');
 
 			return;
 		}
@@ -165,6 +166,18 @@ class ScheduleViewSchedulesHtml extends GridView
 	protected function configureToolbar($buttonSet = array(), $canDo = null)
 	{
 		$buttonSet = $this->configureReportToolbar($buttonSet);
+
+		// Button 分藥註記
+		$buttonSet['sorted_preview']['handler'] = function()
+		{
+			$html = <<<HTML
+<a id="sorted-preview-button" href="#modal-sorted-preview" class="btn btn-small" data-toggle="modal">
+	<span class="icon-print"></span> 分藥註記
+</a>
+HTML;
+			$bar = JToolbar::getInstance('toolbar');
+			$bar->appendButton('Custom', $html);
+		};
 
 		// Button 新增行政排程
 		$buttonSet['add2']['handler'] = function()
@@ -230,9 +243,9 @@ HTML;
 			$buttonSet['print']['handler'] = function()
 			{
 				$dHtml = <<<HTML
-<button class="btn btn-small" onclick="Joomla.submitbutton('schedules.report')">
-	<span class="glyphicon glyphicon-print"></span> 列印排程統計報表
-</button>
+<a id="report-print-button" href="#modal-report-print" class="btn btn-small" data-toggle="modal">
+	<span class="icon-print"></span> 列印排程統計報表
+</a>
 HTML;
 				$bar = JToolbar::getInstance('toolbar');
 				$bar->appendButton('Custom', $dHtml);
@@ -241,18 +254,13 @@ HTML;
 			return $buttonSet;
 		}
 
-		// If layout is report do this
-		$buttonSet['add2']['access']        = false;
-		$buttonSet['add']['access']         = false;
-		$buttonSet['publish']['access']     = false;
-		$buttonSet['edit']['access']        = false;
-		$buttonSet['unpublish']['access']   = false;
-		$buttonSet['checkin']['access']     = false;
-		$buttonSet['batch']['access']       = false;
-		$buttonSet['trash']['access']       = false;
-		$buttonSet['delete']['access']      = false;
-		$buttonSet['duplicate']['access']   = false;
-		$buttonSet['preferences']['access'] = false;
+		// If layout is report, disable those buttons
+		foreach (['add2', 'add', 'publish', 'edit', 'unpublish',
+			'checkin', 'batch', 'trash', 'delete', 'duplicate',
+			'preferences', 'sorted_preview'] as $buttonName)
+		{
+			$buttonSet[$buttonName]['access'] = false;
+		}
 
 		$buttonSet['route']['handler'] = function()
 		{
@@ -268,15 +276,5 @@ HTML;
 		};
 
 		return $buttonSet;
-	}
-
-	/**
-	 * Display notification messages
-	 *
-	 * @return  void
-	 */
-	protected function showNotification()
-	{
-
 	}
 }

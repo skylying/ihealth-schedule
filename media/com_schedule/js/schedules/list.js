@@ -12,15 +12,12 @@
 		 * @param {object} e
 		 * @param {jQuery} $node
 		 */
-		window.filterInstituteOnChange = function(e, $node)
+		window.filterInstituteOnChange = function()
 		{
-			// Replace $node value with real institute id
-			if (e.added.instituteid)
+			return function(e, $node)
 			{
-				$node.val(e.added.instituteid);
-			}
-
-			$node.closest('form').submit();
+				$node.closest('form').submit();
+			};
 		};
 	}
 
@@ -32,9 +29,12 @@
 		 * @param {object} e
 		 * @param {jQuery} $node
 		 */
-		window.filterMemberOnChange = function(e, $node)
+		window.filterMemberOnChange = function()
 		{
-			$node.closest('form').submit();
+			return function(e, $node)
+			{
+				$node.closest('form').submit();
+			};
 		};
 	}
 

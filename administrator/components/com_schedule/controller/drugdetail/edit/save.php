@@ -35,6 +35,13 @@ class ScheduleControllerDrugdetailEditSave extends SaveController
 	protected $customer;
 
 	/**
+	 * Property viewList.
+	 *
+	 * @var  string
+	 */
+	protected $viewList = 'schedules';
+
+	/**
 	 * Prepare Execute
 	 *
 	 * @return  void
@@ -53,10 +60,43 @@ class ScheduleControllerDrugdetailEditSave extends SaveController
 	 */
 	protected function doSave()
 	{
-		$this->saveScheduleDrugDetails();
-		$this->saveDrugExtraDetails($this->model);
+		$form = $this->model->getForm($this->data, false);
 
-		return $this->data;
+		$schedules = array();
+		$institutes = array();
+
+		// Valid Data Schedule
+		foreach ($this->data['schedules'] as $id => $schedule)
+		{
+			$schedule['id'] = $id;
+
+			$validDataSchedule = $this->model->validate($form, $schedule);
+
+			$schedules[$id] = $validDataSchedule;
+		}
+
+		// Valid Data Institute
+		foreach ($this->data['institutes'] as $instituteId => $instituteDrugDetails)
+		{
+			$validDataDrugDetail = array();
+
+			foreach ($instituteDrugDetails as $drugDetail)
+			{
+				$drugDetail['institute_id'] = $instituteId;
+
+				$validDataDrugDetail[] = $drugDetail;
+			}
+
+			$institutes[$instituteId] = $validDataDrugDetail;
+		}
+
+		$this->saveScheduleDrugDetails($schedules);
+		$this->saveDrugExtraDetails($institutes);
+
+		return array(
+			'schedules' => $schedules,
+			'institutes' => $institutes
+		);
 	}
 
 	/**
@@ -84,11 +124,13 @@ class ScheduleControllerDrugdetailEditSave extends SaveController
 	 * }
 	 * ```
 	 *
+	 * @param   array  $schedules
+	 *
 	 * @return  void
 	 */
-	protected function saveScheduleDrugDetails()
+	protected function saveScheduleDrugDetails($schedules)
 	{
-		foreach ($this->data['schedules'] as $scheduleId => $scheduleData)
+		foreach ($schedules as $scheduleId => $scheduleData)
 		{
 			$scheduleData['id'] = $scheduleId;
 
@@ -145,13 +187,13 @@ class ScheduleControllerDrugdetailEditSave extends SaveController
 	 * }
 	 * ```
 	 *
-	 * @param   \Windwalker\Model\CrudModel $model
+	 * @param   array  $institutes
 	 *
 	 * @return  void
 	 */
-	protected function saveDrugExtraDetails($model)
+	protected function saveDrugExtraDetails($institutes)
 	{
-		foreach ($this->data['institutes'] as $instituteId => $institute)
+		foreach ($institutes as $instituteId => $institute)
 		{
 			foreach ($institute as $detail)
 			{
@@ -169,34 +211,8 @@ class ScheduleControllerDrugdetailEditSave extends SaveController
 					$detail['sorted'] = 0;
 				}
 
-				$model->save($detail);
+				$this->model->save($detail);
 			}
 		}
-	}
-
-	/**
-	 * Redirect
-	 *
-	 * @param string $url
-	 * @param null   $msg
-	 * @param string $type
-	 *
-	 * @return  void
-	 */
-	public function redirect($url, $msg = null, $type = 'message')
-	{
-		$ids  = $this->input->getVar("senderIds", array());
-		$date = $this->input->get("date", "");
-		$url  = $this->getRedirectItemUrl();
-
-		$urlValue = http_build_query(
-			array(
-				'layout' => 'edit',
-				'date' => $date,
-				'senderIds' => $ids
-			)
-		);
-
-		$this->app->redirect($url . "&" . urldecode($urlValue));
 	}
 }

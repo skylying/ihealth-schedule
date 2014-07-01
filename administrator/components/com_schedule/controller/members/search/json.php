@@ -38,16 +38,7 @@ class ScheduleControllerMembersSearchJson extends DisplayController
 
 		$model->getState()->set('search', array('member.name' => $search));
 
-		$items = array_map(
-			function ($item)
-			{
-				return array(
-					'id'           => $item->id,
-					'dropdowntext' => $item->name,
-				);
-			},
-			$model->getItems()
-		);
+		$items = $model->getItems();
 
 		jexit(json_encode($items));
 	}
