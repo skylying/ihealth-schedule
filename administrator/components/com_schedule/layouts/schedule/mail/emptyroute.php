@@ -7,7 +7,7 @@
  */
 ?>
 <style>
-	h2.text-center {
+	h2 {
 		font-family : Tahoma, Helvetica, Arial, "Microsoft Yahei", "微软雅黑", STXihei, "华文细黑", sans-serif;
 	}
 </style>
@@ -66,7 +66,9 @@
 		</tr>
 	</table>
 	<table class="table table-bordered">
-		<th class="text-center">聯絡電話</th>
+		<tr>
+			<th class="text-center">聯絡電話</th>
+		</tr>
 		<tr>
 			<td>手機:</td>
 			<td><!--Mobile--></td>
