@@ -172,6 +172,8 @@ class ScheduleControllerRxresidentEditSave extends SaveController
 		$this->taskState = $this->taskModel->getState();
 		$this->scheduleState = $this->scheduleModel->getState();
 
+		$customerIds = [];
+
 		foreach ($validDataSet as $rx)
 		{
 			/** @var ScheduleTableInstitute $instituteTable */
@@ -204,7 +206,14 @@ class ScheduleControllerRxresidentEditSave extends SaveController
 			{
 				$this->createSchedule($nth, $rx, $instituteTable);
 			}
+
+			$customerIds[] = $rx['customer_id'];
 		}
+
+		/** @var ScheduleModelCustomer $customerModel */
+		$customerModel = $this->getModel('Customer', '', array('ignore_request' => true));
+
+		$customerModel->setCustomerState(1, $customerIds);
 	}
 
 	/**

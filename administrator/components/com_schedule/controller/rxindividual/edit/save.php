@@ -175,6 +175,11 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 			// Flush Default Address
 			$this->addressModel->flushDefaultAddress($this->customer->id, $lastAddress->id);
 		}
+
+		/** @var ScheduleModelCustomer $customerModel */
+		$customerModel = $this->getModel('Customer', '', array('ignore_request' => true));
+
+		$customerModel->setCustomerState(1, [$this->customer->id]);
 	}
 
 	/**
