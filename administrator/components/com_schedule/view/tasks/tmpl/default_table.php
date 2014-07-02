@@ -131,7 +131,7 @@ $date      = $container->get('date');
 
 			<!--PRINT-->
 			<td class="center">
-				<a href="print-preview" class="btn btn-info">
+				<a href="<?php echo JRoute::_('index.php?option=com_schedule&view=task&layout=print&id=' . $item->id); ?>" class="btn btn-info">
 					<span class="glyphicon glyphicon-print"></span>
 					列印
 				</a>
