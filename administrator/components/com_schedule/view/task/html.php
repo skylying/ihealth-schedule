@@ -10,6 +10,9 @@ use Joomla\DI\Container;
 use Windwalker\Model\Model;
 use Windwalker\View\Engine\PhpEngine;
 use Windwalker\View\Html\EditView;
+use Windwalker\Joomla\DataMapper\DataMapper;
+use Schedule\Table\Table;
+use Schedule\Table\Collection as TableCollection;
 
 // No direct access
 defined('_JEXEC') or die;
@@ -122,7 +125,13 @@ class ScheduleViewTaskHtml extends EditView
 		{
 			$data = $this->getData();
 
-			$data->item->schedules = (new DataMapper(Table::SCHEDULES))->find(['task_id' => $data->item->id]);
+			$schedules = (new DataMapper(Table::SCHEDULES))->find(['task_id' => $data->item->id]);
+
+			$data->item->schedules = $this->getSummarizeScheduleData(iterator_to_array($schedules));
+
+			$data->item->instituteQuntity = count($data->item->schedules['institutes']);
+			$data->item->customerQuntity = count($data->item->schedules['customers']);
+			$data->item->totalQuntity = $data->item->instituteQuntity + $data->item->customerQuntity;
 		}
 	}
 
@@ -202,5 +211,166 @@ HTML;
 		};
 
 		return $buttonSet;
+	}
+
+	/**
+	 * getSummarizeScheduleData
+	 *
+	 * TODO: 加入額外藥品資料
+	 *
+	 * @param   array  $schedules
+	 *
+	 * @return  array
+	 */
+	private function getSummarizeScheduleData(array $schedules)
+	{
+		$data = [
+			'institutes' => [],
+			'customers' => [],
+			'others' => [],
+		];
+
+		foreach ($schedules as $schedule)
+		{
+			if ($schedule['institute_id'] > 0)
+			{
+				// Summarize resident customers
+				if (! isset($data['institutes'][$schedule['institute_id']]))
+				{
+					$row = $this->getInitSchedule($schedule);
+					$row['title'] = $schedule['institute_title'];
+
+					$instituteTable = TableCollection::loadTable('Institute', $schedule['institute_id']);
+
+					$note = trim($instituteTable->note);
+
+					if (! empty($note))
+					{
+						$row['notes'][] = [
+							'type' => '',
+							'message' => $note,
+						];
+					}
+
+					$data['institutes'][$schedule['institute_id']] = $row;
+				}
+
+				$this->summarizeSchedules($schedule, $data['institutes'][$schedule['institute_id']]);
+			}
+			elseif ($schedule['customer_id'] > 0)
+			{
+				// Summarize individual customers
+				if (! isset($data['customers'][$schedule['customer_id']]))
+				{
+					$row = $this->getInitSchedule($schedule);
+					$row['title'] = $schedule['customer_name'];
+
+					$data['customers'][$schedule['customer_id']] = $row;
+				}
+
+				$this->summarizeSchedules($schedule, $data['customers'][$schedule['customer_id']]);
+			}
+			else
+			{
+				$row = $this->getInitSchedule($schedule);
+				$row['title'] = '行政排程';
+
+				$data['others'][$schedule['id']] = $row;
+
+				$this->summarizeSchedules($schedule, $data['others'][$schedule['id']]);
+			}
+		}
+
+		return $data;
+	}
+
+	/**
+	 * getInitSchedule
+	 *
+	 * @param   array  $schedule
+	 *
+	 * @return  array
+	 */
+	private function getInitSchedule($schedule)
+	{
+		$phones = [];
+
+		// Get phone information
+		foreach (['mobile', 'tel_home', 'tel_office'] as $key)
+		{
+			$phone = trim($schedule[$key]);
+
+			if (! empty($phone))
+			{
+				$phones[] = $phone;
+			}
+		}
+
+		return [
+			'title' => '',
+			'address' => $schedule['city'] . $schedule['area'] . $schedule['address'],
+			'notes' => [],
+			'quantity' => 0,
+			'phones' => $phones,
+			'ices' => [],
+			'expenses' => [],
+			'session' => JText::_('COM_SCHEDULE_SEND_SESSION_' . $schedule['session']),
+		];
+	}
+
+	/**
+	 * summarizeSchedules
+	 *
+	 * @param   array  $schedule
+	 * @param   array  &$row
+	 *
+	 * @return  void
+	 */
+	private function summarizeSchedules($schedule, &$row)
+	{
+		if (empty($row))
+		{
+			return;
+		}
+
+		++$row['quantity'];
+
+		if ($schedule['ice'])
+		{
+			$row['ices'][] = [
+				'drug_empty_date' => $schedule['drug_empty_date'],
+				'customer_name' => $schedule['customer_name'],
+			];
+		}
+
+		if ($schedule['expense'])
+		{
+			$row['expenses'][] = [
+				'customer_name' => $schedule['customer_name'],
+				'price' => $schedule['price'],
+			];
+		}
+
+		if ('cancel_reject' === $schedule['status'])
+		{
+			$row['notes'][] = [
+				'type' => '處方箋退單',
+				'message' => $schedule['customer_name'],
+			];
+		}
+
+		switch ($schedule['type'])
+		{
+			case 'discuss':
+			case 'speech':
+			case 'collect':
+			case 'visit':
+			case 'other':
+				$row['notes'][] = [
+					'type' => JText::_('COM_SCHEDULE_SCHEDULE_FIELD_TYPE_' . $schedule['type']),
+					'message' => $schedule['note'],
+				];
+				break;
+		}
 	}
 }
