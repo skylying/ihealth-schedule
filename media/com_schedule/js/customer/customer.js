@@ -206,6 +206,20 @@
 			{
 				self.defaultSwitch = false;
 			});
+
+			// Not change any default after save and it must be default
+			$(document).on('ready', function(){
+				self.addressAppendArea.find('.address-row').each(function()
+				{
+					var addressRowDefault = $(this).closest('.address-row');
+					var addressRowDefaultElement = addressRowDefault.find('.glyphicon-ok.default');
+
+					if(addressRowDefaultElement.length == 1)
+					{
+						addressRowDefaultElement.trigger('click');
+					}
+				});
+			});
 		},
 
 		/**
