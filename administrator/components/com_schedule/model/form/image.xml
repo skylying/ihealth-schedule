@@ -29,7 +29,7 @@
 			class="input-large"
 			/>
 
-		<field name="path"
+		<field name="upload_id"
 			type="image"
 			label="圖片"
 			description="圖片"
