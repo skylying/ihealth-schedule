@@ -13,6 +13,7 @@ use Windwalker\View\Html\EditView;
 use Windwalker\Joomla\DataMapper\DataMapper;
 use Schedule\Table\Table;
 use Schedule\Table\Collection as TableCollection;
+use Schedule\Helper\TaskHelper;
 
 // No direct access
 defined('_JEXEC') or die;
@@ -252,6 +253,22 @@ HTML;
 						];
 					}
 
+					$row['phones'][] = $instituteTable->tel;
+
+					$extraExpenses = TaskHelper::getInstituteExtraExpenses($schedule['task_id'], $schedule['institute_id']);
+					$totalExtraExpense = array_reduce(
+						$extraExpenses,
+						function($carry, $item)
+						{
+							return $carry += $item->price;
+						}
+					);
+
+					if ($totalExtraExpense > 0)
+					{
+						$row['extraExpenses'] = '加購總額: $' . $totalExtraExpense;
+					}
+
 					$data['institutes'][$schedule['institute_id']] = $row;
 				}
 
@@ -314,6 +331,7 @@ HTML;
 			'phones' => $phones,
 			'ices' => [],
 			'expenses' => [],
+			'extraExpenses' => '',
 			'session' => JText::_('COM_SCHEDULE_SEND_SESSION_' . $schedule['session']),
 		];
 	}

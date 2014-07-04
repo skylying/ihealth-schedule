@@ -92,6 +92,8 @@ if ($componentTmpl)
 				echo $expense['customer_name'] . ': $' . $expense['price'] . '<br />';
 			}
 			?>
+
+			<?php echo $schedule['extraExpenses']; ?>
 		</td>
 		<td><?php echo $schedule['session']; ?></td>
 	</tr>
