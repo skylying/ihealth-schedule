@@ -27,7 +27,7 @@
 <div class="container">
 	<div class="row">
 		<div>
-			<img src="<?php echo JUri::root(true) . '/media/media/images/ihealth.png' ?>" class="img-responsive" alt="Responsive image" />
+			<img src="<?php echo JUri::root(true) . '/media/com_schedule/images/ihealth.png' ?>" class="img-responsive" alt="Responsive image" />
 		</div>
 	</div>
 </div>
