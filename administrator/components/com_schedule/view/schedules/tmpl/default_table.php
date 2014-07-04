@@ -153,7 +153,17 @@ foreach ($data->items as $i => $item):
 
 		<!-- customer_name | institute_name -->
 		<td>
+			<?php if ($item->type == 'resident')
+			{
+				echo '<div class="glyphicon glyphicon-home">';
+			}
+			else
+			{
+				echo '<div class="glyphicon glyphicon-user">';
+			}
+			?>
 			<?php echo Schedule\Helper\ScheduleHelper::getTargetLink($item); ?>
+			<?php echo '</div>'; ?>
 		</td>
 
 		<!-- city_title -->
