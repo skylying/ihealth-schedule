@@ -338,7 +338,7 @@ HTML;
 		if ($schedule['ice'])
 		{
 			$row['ices'][] = [
-				'drug_empty_date' => $schedule['drug_empty_date'],
+				'drug_empty_date' => str_replace('-', '/', substr($schedule['drug_empty_date'], 5)),
 				'customer_name' => $schedule['customer_name'],
 			];
 		}
