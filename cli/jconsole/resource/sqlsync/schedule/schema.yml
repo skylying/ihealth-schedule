@@ -53,8 +53,6 @@
         area_title: { Field: area_title, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 區域名稱, From: [area_title] }
         hospital: { Field: hospital, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: '開立處方醫院 id', From: [hospital] }
         hospital_title: { Field: hospital_title, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 開立處方醫院名稱, From: [hospital_title] }
-        rx_period: { Field: rx_period, Type: tinyint(2), 'Null': NO, Default: null, Extra: '', Comment: 給藥天數, From: [rx_period] }
-        rx_times: { Field: rx_times, Type: tinyint(1), 'Null': NO, Default: null, Extra: '', Comment: 可調劑次數, From: [rx_times] }
         tel_office: { Field: tel_office, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: '宅配電話(O)', From: [tel_office] }
         tel_home: { Field: tel_home, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: '宅配電話(H)', From: [tel_home] }
         mobile: { Field: mobile, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 手機, From: [mobile] }
@@ -73,7 +71,7 @@
     columns:
         id: { Field: id, Type: 'int(11) unsigned', 'Null': NO, Default: null, Extra: auto_increment, Comment: 'Primary Key', From: [id] }
         institute_id: { Field: institute_id, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: '對應機構 id', From: [institute_id] }
-        price: { Field: price, Type: 'decimal(10,0)', 'Null': NO, Default: null, Extra: '', Comment: 單筆金額, From: [price] }
+        price: { Field: price, Type: 'decimal(10,2)', 'Null': NO, Default: null, Extra: '', Comment: 單筆金額, From: [price] }
         task_id: { Field: task_id, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: '對應外送 id', From: [task_id] }
         ice: { Field: ice, Type: int(1), 'Null': NO, Default: null, Extra: '', Comment: '是否有冰品', From: [ice] }
         sorted: { Field: sorted, Type: int(1), 'Null': NO, Default: null, Extra: '', Comment: '是否完成分藥', From: [sorted] }
@@ -116,7 +114,6 @@
         has_hicode: { Field: has_hicode, Type: tinyint(1), 'Null': NO, Default: null, Extra: '', Comment: '藥品健保碼 無0 / 有1', From: [has_hicode] }
         city: { Field: city, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: 醫院所在縣市, From: [city] }
         city_title: { Field: city_title, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 縣市名稱, From: [city_title] }
-        images: { Field: images, Type: text, 'Null': NO, Default: null, Extra: '', Comment: 圖片路徑, From: [images] }
         area: { Field: area, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: 醫院所在區域, From: [area] }
         area_title: { Field: area_title, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 區域名稱, From: [area_title] }
         created: { Field: created, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: 'Created time', From: [created] }
@@ -134,6 +131,8 @@
     columns:
         id: { Field: id, Type: 'int(11) unsigned', 'Null': NO, Default: null, Extra: auto_increment, Comment: 'Primary Key', From: [id] }
         rx_id: { Field: rx_id, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: '對應處方箋 id', From: [rx_id] }
+        hospital_id: { Field: hospital_id, Type: 'int(11) unsigned', 'Null': NO, Default: null, Extra: '', Comment: '醫院 id', From: [hospital_id] }
+        type: { Field: type, Type: varchar(20), 'Null': NO, Default: null, Extra: '', Comment: '圖片種類, rxindividual => 散客上傳, hospital => 醫院示範圖例', From: [type] }
         title: { Field: title, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 圖片說明, From: [title] }
         path: { Field: path, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 圖片位址, From: [path] }
     index:
@@ -181,6 +180,8 @@
         email: { Field: email, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 'Member email', From: [email] }
         password: { Field: password, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 'Member password', From: [password] }
         tel: { Field: tel, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 'Member Phone Number', From: [tel] }
+        created: { Field: created, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: '新增時間', From: [created] }
+        modified: { Field: modified, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: '更新時間', From: [modified] }
     index:
         - { Table: '#__schedule_members', Non_unique: '0', Key_name: PRIMARY, Seq_in_index: '1', Column_name: id, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
         - { Table: '#__schedule_members', Non_unique: '1', Key_name: idx_alias, Seq_in_index: '1', Column_name: email, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
@@ -278,6 +279,7 @@
         cancel: { Field: cancel, Type: char(10), 'Null': YES, Default: null, Extra: '', Comment: '取消原因 (badservice:服務不周 / changedrug:醫師換藥 / passaway:往生 / hospitalized:住院 / other:其他)', From: [cancel] }
         cancel_note: { Field: cancel_note, Type: text, 'Null': YES, Default: null, Extra: '', Comment: '刪除原因說明', From: [cancel_note] }
         note: { Field: note, Type: text, 'Null': YES, Default: null, Extra: '', Comment: 行政排程類別說明, From: [note] }
+        notify: { Field: notify, Type: tinyint(1), 'Null': NO, Default: null, Extra: '', Comment: '提醒使用者該排程需要被注意 (0:無通知 / 1:排程需要被合併)', From: [notify] }
         params: { Field: params, Type: text, 'Null': NO, Default: null, Extra: '', Comment: Params, From: [params] }
     index:
         - { Table: '#__schedule_schedules', Non_unique: '0', Key_name: PRIMARY, Seq_in_index: '1', Column_name: id, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }

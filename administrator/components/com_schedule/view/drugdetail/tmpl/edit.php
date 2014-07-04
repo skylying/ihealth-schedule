@@ -20,9 +20,10 @@ JHtmlBehavior::formvalidation();
  * @var $data      Windwalker\Data\Data
  * @var $item      \stdClass
  */
-$container = $this->getContainer();
-$form      = $data->form;
-$item      = $data->item;
+$container  = $this->getContainer();
+$form       = $data->form;
+$filterForm = $data->filterForm;
+$item       = $data->item;
 
 ?>
 <!-- Validate Script -->
@@ -47,6 +48,12 @@ $item      = $data->item;
 			<input type="hidden" name="option" value="com_schedule" />
 			<input type="hidden" name="task" value="" />
 			<?php echo JHtml::_('form.token'); ?>
+		</div>
+
+		<div class="hide">
+			<?php foreach($filterForm->getFieldset('filter') as $field): ?>
+				<?php echo $field->input; ?>
+			<?php endforeach; ?>
 		</div>
 	</form>
 </div>

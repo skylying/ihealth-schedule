@@ -1,18 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <form>
 	<fieldset name="institute">
-		<field name="institute_id"
-			hint="輸入機構名稱"
+		<field name="institute_id_selection"
 			type="select2"
-			minimumInputLength="1"
-			apiUrl="index.php?option=com_schedule&amp;task=institutes.search.json"
-			apiQueryKey="filter_search"
-			onChangeCallback="updateDeliveryDay"
-			apiTableName="institutes"
 			class="input-large"
 			label="機構名稱"
 			description="機構名稱"
+			hint="輸入機構名稱"
+			onchange="RxResidentEditList.instituteIdChange()"
+			minimumInputLength="1"
+			apiUrl="index.php?option=com_schedule&amp;task=institutes.search.json&amp;show_floor=1"
+			apiQueryKey="filter_search"
+			query="
+				SELECT '%s' AS `id`, CONCAT(`short_title`, ' ', SUBSTRING_INDEX('%s', '-', -1)) AS `short_title`,
+					`color_hex`, `delivery_weekday`, `note`, `floor`
+				FROM #__schedule_institutes
+				WHERE `id` = SUBSTRING_INDEX('%s', '-', 1)
+			"
+			idField="id"
+			textField="short_title"
+			/>
+
+		<field name="institute_id"
+			type="hidden"
+			readonly="true"
+			label="機構名稱"
+			description="機構名稱"
 			required="true"
+			/>
+
+		<field name="delivery_weekday"
+			type="hidden"
+			readonly="true"
+			label="外送日"
+			description="外送日"
+			/>
+
+		<field name="color_hex"
+			type="hidden"
+			readonly="true"
+			label="外送日顏色"
+			description="外送日顏色"
 			/>
 
 		<field name="floor"
@@ -22,42 +50,58 @@
 			label="機構樓層"
 			description="機構樓層"
 			/>
+
+		<field name="note"
+			type="hidden"
+			readonly="true"
+			label="備註"
+			description="備註"
+			/>
 	</fieldset>
 
 	<fieldset name="information">
 		<field name="id"
 			type="hidden"
-			class="fullwidth"
 			label="id"
 			description="id"
 			readonly="true"
 			/>
 
-		<field name="customer_id"
-			hint="客戶姓名"
+		<field name="customer_id_selection"
 			type="select2"
-			apiUrl="index.php?option=com_schedule&amp;task=customer.ajax.json"
-			apiQueryKey="filter_search"
-			onChangeCallback="updateIdBirthday"
-			apiTableName="customers"
-			allowNew="true"
-			class="fullwidth customer-id"
+			class="fullwidth customer-id-selection"
 			label="客戶"
 			description="客戶"
+			hint="客戶姓名"
+			onchange="RxResidentEditList.customerIdChange()"
+			minimumInputLength="0"
+			enableComboBox="true"
+			query="SELECT `id`, `name`, `id_number`, `birth_date` FROM #__schedule_customers WHERE `id` = '%s'"
+			idField="id"
+			textField="name"
+			/>
+
+		<field name="customer_id"
+			type="hidden"
+			class="customer-id"
+			label="客戶編號"
+			description="客戶編號"
 			required="true"
+			readonly="true"
 			/>
 
 		<field name="id_number"
 			type="text"
-			class="fullwidth idnumber"
+			class="fullwidth id-number"
 			label="身分證字號"
 			description="身分證字號"
+			default="**********"
 			/>
 
 		<field name="birth_date"
 			type="DateTimePicker"
 			hint="選擇日期"
-			class="datetimepicker calendarwidth birthday"
+			class="datetimepicker calendarwidth birth-date"
 			label="生日"
 			description="生日"
 			/>
@@ -65,10 +109,11 @@
 		<field name="see_dr_date"
 			type="DateTimePicker"
 			hint="選擇日期"
-			class="datetimepicker calendarwidth seedr"
+			class="datetimepicker calendarwidth see-dr-date"
 			label="就醫日期"
 			description="就醫日期"
 			required="true"
+			dpBindEvent="RxResidentEditList.bindSeeDrDateEvent"
 			/>
 
 		<field name="period"
@@ -79,17 +124,36 @@
 			default="28"
 			required="true"
 			>
-			<option value="21">21</option>
-			<option value="22">22</option>
-			<option value="23">23</option>
-			<option value="24">24</option>
-			<option value="25">25</option>
-			<option value="26">26</option>
-			<option value="27">27</option>
-			<option value="28">28</option>
-			<option value="29">29</option>
 			<option value="30">30</option>
-			<option value="31">31</option>
+			<option value="29">29</option>
+			<option value="28">28</option>
+			<option value="27">27</option>
+			<option value="26">26</option>
+			<option value="25">25</option>
+			<option value="24">24</option>
+			<option value="23">23</option>
+			<option value="22">22</option>
+			<option value="21">21</option>
+			<option value="20">20</option>
+			<option value="19">19</option>
+			<option value="18">18</option>
+			<option value="17">17</option>
+			<option value="16">16</option>
+			<option value="15">15</option>
+			<option value="14">14</option>
+			<option value="13">13</option>
+			<option value="12">12</option>
+			<option value="11">11</option>
+			<option value="10">10</option>
+			<option value="9">9</option>
+			<option value="8">8</option>
+			<option value="7">7</option>
+			<option value="6">6</option>
+			<option value="5">5</option>
+			<option value="4">4</option>
+			<option value="3">3</option>
+			<option value="2">2</option>
+			<option value="1">1</option>
 		</field>
 
 		<field name="times"
@@ -120,14 +184,14 @@
 
 		<field name="empty_date_1st"
 			type="hidden"
-			class="fullwidth emptydate1"
+			class="fullwidth drug-empty-date1"
 			label="第一次吃完藥日"
 			description="第一次吃完藥日"
 			/>
 
 		<field name="empty_date_2nd"
 			type="hidden"
-			class="fullwidth emptydate2"
+			class="fullwidth drug-empty-date2"
 			label="第二次吃完藥日"
 			description="第二次吃完藥日"
 			/>
@@ -142,8 +206,7 @@
 			>
 			<option value="fax">傳真</option>
 			<option value="line">line</option>
-			<option value="form">自行填表</option>
-			<option value="file">上傳檔案</option>
+			<option value="email">email</option>
 			<option value="photo">拍照</option>
 			<option value="paper">正本</option>
 		</field>

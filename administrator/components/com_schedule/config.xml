@@ -14,6 +14,42 @@
 				class=""
 				default=""
 				/>
+
+			<field name="default_sender"
+				type="sql"
+				query="SELECT CONCAT(id, '-', name) AS sender, name FROM #__schedule_senders"
+				key_field="sender"
+				value_field="name"
+				label="預設外送藥師"
+				description="預設外送藥師"
+				class=""
+				/>
+
+			<field name="default_weekday"
+				type="list"
+				label="預設外送日"
+				description="預設外送日"
+				class=""
+				>
+				<option value="MON">MON</option>
+				<option value="TUE">TUE</option>
+				<option value="WED">WED</option>
+				<option value="THU">THU</option>
+				<option value="FRI">FRI</option>
+			</field>
+		</fieldset>
+	</fields>
+
+	<fields name="schedule">
+		<fieldset name="schedule"
+			label="Schedule"
+			description="Schedule config"
+			>
+			<field name="empty_route_mail"
+				type="text"
+				label="無路線提醒信箱"
+				description="無路線提醒信箱"
+				/>
 		</fieldset>
 	</fields>
 

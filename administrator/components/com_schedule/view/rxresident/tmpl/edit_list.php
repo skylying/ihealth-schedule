@@ -27,16 +27,31 @@ $asset->addCSS('rxresident.css');
 $asset->addJS('multi-row-handler.js');
 $asset->addJS('rxresident/edit-list.js');
 
+$jsOption = [
+	'customerApi' => JRoute::_('index.php?option=com_schedule&task=customer.ajax.json&institute_id=', false),
+	'isEdit' => $data->isEdit,
+];
+
 ?>
 <script type="text/javascript">
 	jQuery(document).ready(function() {
-		RxResidentEditList.run();
+		RxResidentEditList.run(<?php echo json_encode($jsOption); ?>);
 	});
 </script>
 
 <form id="adminForm" name="adminForm" action="" method="post" class="form-horizontal">
 	<div id="institute-information" class="row-fluid">
 		<div class="col-md-4">
+			<?php
+			$instituteIdSelection = $instituteForm->getField('institute_id_selection');
+
+			if ($data->isEdit)
+			{
+				$instituteIdSelection->readonly = true;
+			}
+
+			echo $instituteIdSelection->getControlGroup();
+			?>
 			<?php echo $instituteForm->getField('institute_id')->getControlGroup(); ?>
 		</div>
 		<div class="col-md-4 col-md-offset-1">
@@ -45,19 +60,38 @@ $asset->addJS('rxresident/edit-list.js');
 	</div>
 	<div class="row-fluid">
 		<div class="col-md-4 deliveryblock">
-			<div class="weekday">外送日：<span id="weekday-from-js"></span></div>
+			<div class="weekday">
+				外送日：
+				<span id="weekday-from-js">
+					<?php echo $data->institute['delivery_weekday']; ?>
+					<?php echo $instituteForm->getField('delivery_weekday')->input; ?>
+				</span>
+			</div>
 			<div>
-				<?php echo \Schedule\Helper\ColorHelper::getColorBlock('#ffffff', 30, 'deliverycolor'); ?>
+				<?php echo \Schedule\Helper\ColorHelper::getColorBlock($data->institute['color_hex'], 30, 'delivery-color'); ?>
+				<?php echo $instituteForm->getField('color_hex')->input; ?>
 			</div>
 		</div>
-		<?php if ($data->isNew): ?>
+
 		<div class="col-md-4 col-md-offset-1">
-			總數： <span id="totalrow">0</span> 筆處方箋
+			總數： <span id="total-row"><?php echo count($forms); ?></span> 筆處方箋
 		</div>
-		<?php endif; ?>
 	</div>
+
+	<div class="row-fluid">
+		<div class="col-md-12">
+			<div>
+				備註：
+				<span id="note-from-js">
+					<?php echo $data->institute['note']; ?>
+					<?php echo $instituteForm->getField('note')->input; ?>
+				</span>
+			</div>
+		</div>
+	</div>
+
 	<hr />
-	<?php if ($data->isNew): ?>
+	<?php if (! $data->isEdit): ?>
 		<p>
 			<button type="button" class="btn btn-primary button-add-row" value="1">
 				<span class="glyphicon glyphicon-plus"></span>
@@ -88,7 +122,7 @@ $asset->addJS('rxresident/edit-list.js');
 				<th width="7.1%">處方箋取得方式</th>
 				<th width="9.82%">處方箋上傳</th>
 				<th width="9.91%">備註</th>
-				<?php if ($data->isNew): ?>
+				<?php if (! $data->isEdit): ?>
 				<th width="8.33%">複製/刪除</th>
 				<?php endif; ?>
 			</tr>

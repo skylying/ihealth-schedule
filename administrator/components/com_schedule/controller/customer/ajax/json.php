@@ -34,6 +34,8 @@ class ScheduleControllerCustomerAjaxJson extends DisplayController
 			$model = $this->getModel('Customer');
 
 			$data = $model->getItem($id);
+
+			jexit(json_encode($data));
 		}
 
 		if (!empty($instituteId))
@@ -77,15 +79,15 @@ class ScheduleControllerCustomerAjaxJson extends DisplayController
 			{
 				$data[$i] = new stdClass;
 
-				$data[$i]->id           = $item->id;
-				$data[$i]->dropdowntext = $item->name;
-				$data[$i]->id_number    = $item->id_number;
-				$data[$i]->birth_date   = $item->birth_date;
+				$data[$i]->id         = $item->id;
+				$data[$i]->name       = $item->name;
+				$data[$i]->id_number  = $item->id_number;
+				$data[$i]->birth_date = $item->birth_date;
 			}
+
+			jexit(json_encode($data));
 		}
 
-		echo json_encode($data);
-
-		jexit();
+		jexit('{}');
 	}
 }

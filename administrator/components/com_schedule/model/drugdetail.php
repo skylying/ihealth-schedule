@@ -108,4 +108,27 @@ class ScheduleModelDrugdetail extends AdminModel
 	{
 		parent::setOrderPosition($table, $position);
 	}
+
+	/**
+	 * Get Filter Form
+	 *
+	 * @param   array  $data
+	 *
+	 * @return  JForm
+	 */
+	public function getFilterForm($data = array())
+	{
+		$config = array(
+			'control'   => 'jform',
+			'load_data' => false
+		);
+
+		$form = $this->loadForm($this->option . '.drugdetailfilter.form', 'drugdetailfilter', $config);
+
+		$this->preprocessForm($form, $data);
+
+		$form->bind($data);
+
+		return $form;
+	}
 }

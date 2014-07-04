@@ -16,7 +16,7 @@ class MailHelper
 	 * sendMailWhenScheduleChange
 	 *
 	 * @param   string      $mailTo
-	 * @param   stdClass    $displayData
+	 * @param   mixed       $displayData
 	 *
 	 * @return  void
 	 *
@@ -27,8 +27,11 @@ class MailHelper
 		$mailer = \JFactory::getMailer();
 		$from   = \JFactory::getConfig()->get('mailfrom');
 
+		// Set layouts from admin
+		$layout = new FileLayout("schedule.mail.confirm", SCHEDULE_ADMIN . '/layouts');
+
 		$mailer->setSubject("處方預約確認信");
-		$mailer->setBody((new FileLayout("schedule.mail.confirm"))->render($displayData));
+		$mailer->setBody($layout->render($displayData));
 		$mailer->addRecipient($mailTo);
 		$mailer->setSender($from);
 		$mailer->isHtml(true);
@@ -45,7 +48,7 @@ class MailHelper
 	 * sendEmptyRouteMail
 	 *
 	 * @param   string      $mailTo
-	 * @param   stdClass    $displayData
+	 * @param   mixed       $displayData
 	 *
 	 * @return  void
 	 *
@@ -56,8 +59,11 @@ class MailHelper
 		$mailer = \JFactory::getMailer();
 		$from   = \JFactory::getConfig()->get('mailfrom');
 
+		// Set layouts from admin
+		$layout = new FileLayout("schedule.mail.emptyroute", SCHEDULE_ADMIN . '/layouts');
+
 		$mailer->setSubject("沒有路線通知");
-		$mailer->setBody((new FileLayout("schedule.mail.emptyroute"))->render($displayData));
+		$mailer->setBody($layout->render($displayData));
 		$mailer->addRecipient($mailTo);
 		$mailer->setSender($from);
 		$mailer->isHtml(true);

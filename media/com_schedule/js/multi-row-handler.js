@@ -26,7 +26,7 @@
 	 *                                              $row: the new row
 	 * - afterDuplicate   function($row, $from)   Trigger after duplicate a new row
 	 *                                              $row: the new row
-	 *                                              $form: the original row
+	 *                                              $from: the original row
 	 *
 	 * @param  options            object                 Containing configuration parameters
 	 * @param  options.$panel     jQuery                 Multi-Row container element
