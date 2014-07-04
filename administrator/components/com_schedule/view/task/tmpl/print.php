@@ -13,11 +13,27 @@ defined('_JEXEC') or die;
  * Prepare data for this template.
  *
  * @var $container Windwalker\DI\Container
+ * @var $asset     Windwalker\Helper\AssetHelper
  * @var $data      Windwalker\Data\Data
- * @var $item      \stdClass
+ * @var $item      stdClass
  */
 $container = $this->getContainer();
+$asset     = $container->get('helper.asset');
 $item      = $data->item;
+
+$componentTmpl = ('component' === JUri::getInstance()->getVar('tmpl'));
+
+if ($componentTmpl)
+{
+	$asset->internalCSS('
+	@media print {
+		body.component {
+			padding-top: 30px;
+			margin-top: -30px;
+		}
+	}
+	');
+}
 ?>
 
 <h2>
@@ -83,7 +99,7 @@ $item      = $data->item;
 	<?php endforeach; ?>
 </table>
 
-<?php if ('component' === JUri::getInstance()->getVar('tmpl')): ?>
+<?php if ($componentTmpl): ?>
 <script type="text/javascript">
 	print();
 </script>
