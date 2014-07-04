@@ -188,7 +188,7 @@ foreach ($data->items as $i => $item):
 
 		<!-- sorted -->
 		<td class="center">
-			<?php if ($item->type == 'individual' OR $item->type == 'resident'): ?>
+			<?php if ($item->type == 'individual' || $item->type == 'resident'): ?>
 			<a href="#" onclick="listItemTask('cb<?php echo $i; ?>', '<?php echo $sortedTask; ?>');">
 				<span class="glyphicon glyphicon-<?php echo ($item->sorted ? 'ok' : 'remove'); ?>"
 					<?php echo ($item->sorted ? '' : ' style="color:red;"'); ?>>

@@ -32,11 +32,12 @@ class AddressBlockHelper
 		$cityList = AddressHelper::getCityList('city', array('class' => 'form-control citylist'), 'value', 'text', $cityId);
 		$areaList = AddressHelper::getAreaList($cityId, 'area', array('class' => 'form-control arealist'), 'value', 'text', $areaId);
 		$spanClass = ($previous) ? 'glyphicon glyphicon-ok default' : 'glyphicon glyphicon-ok';
+		$title = ($previous) ? 'true' : 'false';
 
 		$html = <<<HTML
 		<div class="row address-row" style="margin-bottom:20px;">
 			<div class="col-md-1 visibleinput">
-				<span class="{$spanClass}"></span>
+				<span class="{$spanClass}" title="{$title}"></span>
 			</div>
 			<div class="col-md-9">
 				<div class="row">
