@@ -67,6 +67,12 @@ class ScheduleHelper
 		{
 			$date->modify('+3 day');
 
+			// Skip weekend
+			for ($i = 0; $i < 3 && $date->dayofweek > 5; ++$i)
+			{
+				$date->modify('-1 day');
+			}
+
 			return $date;
 		}
 
