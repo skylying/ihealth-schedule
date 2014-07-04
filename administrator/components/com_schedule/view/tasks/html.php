@@ -109,8 +109,8 @@ class ScheduleViewTasksHtml extends GridView
 	/**
 	 * configToolbar
 	 *
-	 * @param array $buttonSet
-	 * @param null  $canDo
+	 * @param   array   $buttonSet
+	 * @param   object  $canDo
 	 *
 	 * @return  array
 	 */
@@ -118,15 +118,6 @@ class ScheduleViewTasksHtml extends GridView
 	{
 		// Get default button set.
 		$buttonSet = parent::configureToolbar($buttonSet, $canDo);
-
-		// In debug mode, we remove trash button but use delete button instead.
-		if (JDEBUG)
-		{
-			$buttonSet['trash']['access'] = false;
-			$buttonSet['delete']['access'] = true;
-			$buttonSet['edit']['access'] = true;
-			$buttonSet['add']['access'] = true;
-		}
 
 		$buttonSet['edit']['access'] = false;
 		$buttonSet['duplicate']['access'] = false;
@@ -136,12 +127,13 @@ class ScheduleViewTasksHtml extends GridView
 		$buttonSet['batch']['access'] = false;
 		$buttonSet['delete']['access'] = false;
 		$buttonSet['add']['access'] = false;
+		$buttonSet['trash']['access'] = false;
 
 		// Add custom controller redirect to routes overview layout
 		$buttonSet['route']['handler'] = function()
 		{
 			$html = <<<HTML
-<button class="btn btn-info" onclick="Joomla.submitbutton('tasks.redirect')">
+<button class="btn btn-info btn-small" onclick="Joomla.submitbutton('tasks.redirect')">
 	<span class="glyphicon glyphicon-random"></span> 路線管理
 </button>
 HTML;
