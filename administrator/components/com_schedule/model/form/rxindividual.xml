@@ -52,8 +52,8 @@
 
 		<field name="received"
 			type="radio"
-			label="處方箋狀態"
-			description="處方箋狀態"
+			label="處方箋正本"
+			description="處方箋正本"
 			class="btn-group"
 			>
 			<option value="1">已取得</option>
@@ -67,7 +67,7 @@
 			class="btn-group"
 			>
 			<option value="1">已電聯</option>
-			<option value="0">未電聯</option>
+			<option value="0">無法聯繫</option>
 		</field>
 
 		<field name="hospital_id"
@@ -145,22 +145,22 @@
 		<field name="ajax_image1"
 			type="image"
 			imageType="rxindividual"
-			label="圖片1"
-			description="圖片1"
+			label="處方箋圖片 1"
+			description="處方箋圖片 1"
 			/>
 
 		<field name="ajax_image2"
 			type="image"
 			imageType="rxindividual"
-			label="圖片2"
-			description="圖片2"
+			label="處方箋圖片 2"
+			description="處方箋圖片 2"
 			/>
 
 		<field name="ajax_image3"
 			type="image"
 			imageType="rxindividual"
-			label="圖片3"
-			description="圖片3"
+			label="處方箋圖片 3"
+			description="處方箋圖片 3"
 			/>
 
 		<field name="create_addresses"
