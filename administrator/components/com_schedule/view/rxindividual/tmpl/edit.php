@@ -319,7 +319,7 @@ jQuery(document).ready(function ()
 		</div>
 	</div>
 
-	<!-- HICODE TEMPLATE-->
+	<!-- HICODE TEMPLATE
 	<div class="control-group custom-well js-hicode-tmpl hide">
 		<table class="table table-striped">
 			<thead>
@@ -363,6 +363,7 @@ jQuery(document).ready(function ()
 			</tbody>
 		</table>
 	</div>
+	-->
 
 	<!-- ADD ADDRESS ROW TEMPLATE -->
 	<div class="js-tmpl-add-addressrow hide">

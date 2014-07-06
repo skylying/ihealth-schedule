@@ -8,9 +8,9 @@
 
 // No direct access
 defined('_JEXEC') or die;
-$remindList    = $data->item->remindLists;
+$remindList = $data->item->remindLists;
 $scheduleInfos = $data->item->scheduleInfos;
-$drugs         = $data->item->drugs;
+$drugs = $data->item->drugs;
 ?>
 
 <style>
@@ -47,6 +47,11 @@ $drugs         = $data->item->drugs;
 				<?php echo $data->item->id; ?>
 				)
 			</h2>
+			<?php if ($data->item->method == 'form')
+			{
+				echo '<div class="alert alert-info center" role="alert">本處方箋需確認正本</div>';
+			}
+			?>
 		</div>
 	</div>
 	<div class="row-fluid">
