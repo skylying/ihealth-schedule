@@ -17,7 +17,8 @@ defined('_JEXEC') or die;
 $prefix = 'COM_SCHEDULE_SCHEDULE_FIELD_STATUS_';
 $index = $data->index;
 $status = strtolower(trim($data->item->status));
-$options = [
+$type = $data->item->type;
+$optionForDelivery = [
 	'scheduled'     => ['updateMethod' => 'submit'],
 	'emergency'     => ['updateMethod' => 'submit'],
 	'cancel_reject' => ['updateMethod' => 'modal-cancel'],
@@ -25,6 +26,13 @@ $options = [
 	'pause'         => ['updateMethod' => 'modal-pause'],
 	// 'deleted',	// Not display in dropdown list, for document only.
 ];
+$optionForNormal = [
+	'scheduled'     => ['updateMethod' => 'submit'],
+	'canceled'        => ['updateMethod' => 'modal-cancel'],
+	'pause'         => ['updateMethod' => 'modal-pause'],
+];
+
+$options = ($type == 'individual' || $type == 'resident') ? $optionForDelivery : $optionForNormal;
 ?>
 
 <div class="btn-group status-dropdown-menu">

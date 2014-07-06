@@ -72,4 +72,25 @@ class ScheduleModelImage extends AdminModel
 	{
 		parent::setOrderPosition($table, $position);
 	}
+
+	/**
+	 * getItem
+	 *
+	 * @param null $pk
+	 *
+	 * @return  mixed
+	 */
+	public function getItem($pk = null)
+	{
+		$item = parent::getItem($pk);
+
+		if (empty($item))
+		{
+			return $item;
+		}
+
+		$item->upload_id = $item->id;
+
+		return $item;
+	}
 }
