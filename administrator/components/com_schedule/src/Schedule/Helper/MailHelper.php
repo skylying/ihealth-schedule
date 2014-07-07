@@ -75,4 +75,36 @@ class MailHelper
 			throw new \Exception("Email send failure");
 		}
 	}
+
+	/**
+	 * sendEmptyRouteMail
+	 *
+	 * @param   string      $mailTo
+	 * @param   mixed       $displayData
+	 *
+	 * @return  void
+	 *
+	 * @throws \Exception
+	 */
+	public static function scheduleChangeNotify($mailTo, $displayData = array())
+	{
+		$mailer = \JFactory::getMailer();
+		$from   = \JFactory::getConfig()->get('mailfrom');
+
+		// Set layouts from admin
+		$layout = new FileLayout("schedule.mail.notify_staff", SCHEDULE_ADMIN . '/layouts');
+
+		$mailer->setSubject("排程修改通知");
+		$mailer->setBody($layout->render($displayData));
+		$mailer->addRecipient($mailTo);
+		$mailer->setSender($from);
+		$mailer->isHtml(true);
+
+		$sendMailDone = $mailer->Send();
+
+		if (! $sendMailDone)
+		{
+			throw new \Exception("Email send failure");
+		}
+	}
 }
