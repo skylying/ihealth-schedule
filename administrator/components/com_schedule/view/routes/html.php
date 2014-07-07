@@ -139,6 +139,8 @@ class ScheduleViewRoutesHtml extends GridView
 
 		$buttonSet['add']['args'] = array($this->viewItem . '.edit.save', 'title' => '儲存變更');
 
+		$buttonSet['add2'] = $buttonSet['add'];
+
 		// Add custom controller redirect to 外送管理
 		$buttonSet['route']['handler'] = function()
 		{
@@ -150,6 +152,8 @@ HTML;
 			$bar = JToolbar::getInstance('toolbar');
 			$bar->appendButton('Custom', $html);
 		};
+
+		$buttonSet['add']['access'] = false;
 
 		return $buttonSet;
 	}
