@@ -157,7 +157,7 @@ foreach ($data->items as $i => $item):
 			{
 				echo '<div class="glyphicon glyphicon-home">';
 			}
-			else
+			elseif ($item->type == 'individual')
 			{
 				echo '<div class="glyphicon glyphicon-user">';
 			}
