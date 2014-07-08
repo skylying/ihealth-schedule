@@ -42,6 +42,10 @@ abstract class ScheduleHelper
 			'holidays'      => 'calendar'
 		);
 
+		$menusForSender = array(
+			'tasks' => 'tasks',
+		);
+
 		$noMvcMenus = array(
 			'routes'     => 'road',
 			'drugs'      => 'tint',
@@ -55,6 +59,13 @@ abstract class ScheduleHelper
 		if (JDEBUG)
 		{
 			$menus = array_merge($menus, $noMvcMenus);
+		}
+
+		$senderLoginStat = \Schedule\Helper\SenderHelper::isSenderLogin();
+
+		if ($senderLoginStat)
+		{
+			$menus = $menusForSender;
 		}
 
 		foreach ($menus as $folder => $icon)
