@@ -11,6 +11,7 @@ defined('_JEXEC') or die;
 
 use Schedule\Helper\ScheduleHelper;
 use Schedule\Helper\ApiReturnCodeHelper;
+use Schedule\Helper\AddressHelper;
 use \Windwalker\DI\Container;
 
 JHtmlBootstrap::tooltip();
@@ -66,6 +67,8 @@ $data->asset->addJS('deliver-schedule-handler.js');
 $data->asset->addJS('customer-field-handler.js');
 $data->asset->addJS('rxindividual/edit.js');
 $data->asset->addJS('customer-member-field-map.js');
+
+Schedule\Script\AddressScript::bind('jform_city', 'jform_area');
 
 ?>
 
