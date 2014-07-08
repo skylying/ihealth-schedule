@@ -173,6 +173,12 @@ jQuery(document).ready(function ()
 	{
 		width: 67%;
 	}
+	/* Chosen Max Width */
+	#jform_customer_id_chzn
+	{
+		max-width: 128px !important;
+	}
+
 </style>
 <?php if ($isSaveAndPrint == '1'): ?>
 	<script>
