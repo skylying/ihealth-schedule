@@ -18,6 +18,7 @@
 		</field>
 
 		<field name="price"
+			class="input-small"
 			type="text"
 			label="價格"
 			description="價格"

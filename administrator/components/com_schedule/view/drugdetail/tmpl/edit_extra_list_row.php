@@ -43,7 +43,7 @@ $idInput = FieldHelper::resetGroup($form->getField('id', null, $idValue), $group
 $task    = FieldHelper::resetGroup($form->getField('task_id', null, $taskId), $group);
 $sorted  = FieldHelper::resetGroup($form->getField('sorted', null, $sortedValue), $group);
 $ice     = FieldHelper::resetGroup($form->getField('ice', null, $iceValue), $group);
-$price   = FieldHelper::resetGroup($form->getField('price', null, $priceValue), $group);
+$price   = FieldHelper::resetGroup($form->getField('price', null, (int) $priceValue), $group);
 
 ?>
 
@@ -63,7 +63,7 @@ $price   = FieldHelper::resetGroup($form->getField('price', null, $priceValue), 
 	</td>
 	<td>
 		<?php if ($isJs): ?>
-			<button class="row-remove-button" type="button">刪除</button>
+			<button class="row-remove-button btn btn-danger" type="button">刪除</button>
 		<?php endif; ?>
 	</td>
 </tr>

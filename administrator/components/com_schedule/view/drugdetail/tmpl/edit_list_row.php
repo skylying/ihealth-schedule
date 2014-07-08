@@ -20,7 +20,7 @@ $schedule = $data->schedule;
 
 $sorted = FieldHelper::resetGroup($form->getField('sorted', null, $schedule->sorted), "schedules.{$schedule->id}");
 $ice    = FieldHelper::resetGroup($form->getField('ice', null, $schedule->ice), "schedules.{$schedule->id}");
-$price  = FieldHelper::resetGroup($form->getField('price', null, $schedule->price), "schedules.{$schedule->id}");
+$price  = FieldHelper::resetGroup($form->getField('price', null, (int) $schedule->price), "schedules.{$schedule->id}");
 ?>
 <tr>
 	<td>
@@ -33,27 +33,25 @@ $price  = FieldHelper::resetGroup($form->getField('price', null, $schedule->pric
 	</td>
 	<td>
 		<!-- 處方建立時間 -->
-		<?php echo $schedule->created; ?>
+		<?php echo substr($schedule->created, 0, 10); ?>
 	</td>
 	<td>
 		<!-- 吃完藥日 -->
 		<?php echo $schedule->drug_empty_date; ?>
 	</td>
-	<td>
-		<!-- 所屬機構/會員 -->
-		<?php
-		switch ($schedule->type)
-		{
-			case ("resident"):
-				echo $schedule->institute_title;
-			break;
+	<!-- 所屬機構/會員 -->
+	<?php
+	switch ($schedule->type)
+	{
+		case ("resident"):
+			echo "<td class='alert alert-info'>" . $schedule->institute_title . "</td>";
+		break;
 
-			case ("individual"):
-				echo $schedule->member_name;
-			break;
-		}
-		?>
-	</td>
+		case ("individual"):
+			echo "<td class='alert alert-warning'>" . $schedule->member_name . "</td>";
+		break;
+	}
+	?>
 	<td>
 		<!-- 縣市 -->
 		<?php echo $schedule->city_title; ?>

@@ -4,16 +4,14 @@
 
 		<field id="date_start"
 			name="date_start"
-			type="calendar"
-			format="%Y-%m-%d"
+			type="datetimepicker"
 			label="起始日期"
 			description="起始日期"
 			/>
 
 		<field id="date_end"
 			name="date_end"
-			type="calendar"
-			format="%Y-%m-%d"
+			type="datetimepicker"
 			label="結束日期"
 			description="結束日期"
 			/>
