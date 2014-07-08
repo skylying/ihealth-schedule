@@ -99,9 +99,6 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 		$this->data["empty_date_1st"] = $this->data["schedules_1st"]["drug_empty_date"];
 		$this->data["empty_date_2nd"] = $this->data["schedules_2nd"]["drug_empty_date"];
 
-		// Remind
-		$this->data["remind"] = isset($this->data['remind']) ? implode(",", $this->data['remind']) : "";
-
 		parent::preSaveHook();
 	}
 

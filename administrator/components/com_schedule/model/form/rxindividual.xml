@@ -415,13 +415,10 @@
 			/>
 
 		<field name="remind"
-			type="checkboxes"
+			type="text"
 			label="註記選項"
-			description="註記選項"
+			description="藥品需分包"
 			>
-			<option value="checkorigin">需確認正本</option>
-			<option value="needsplit">藥品需分包</option>
-			<option value="origincollected">正本已回收</option>
 		</field>
 	</fieldset>
 
