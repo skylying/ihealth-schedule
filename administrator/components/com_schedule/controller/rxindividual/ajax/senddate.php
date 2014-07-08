@@ -38,7 +38,7 @@ class ScheduleControllerRxindividualAjaxSendDate extends DisplayController
 		// 撈路線
 		if (! empty($cityId) && ! empty($areaId))
 		{
-			$route = $routeMapper->findOne(array("city" => $cityId, "area" => $areaId));
+			$route = $routeMapper->findOne(array("city" => $cityId, "area" => $areaId, "type" => "customer"));
 		}
 
 		// 沒有就醫日期 直接回傳message

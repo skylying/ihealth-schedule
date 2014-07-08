@@ -244,7 +244,7 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 		$routeModel   = $this->getModel("Route");
 
 		// 外送路線
-		$route = $this->mapper['routes']->findOne(array("city" => $address->city, "area" => $address->area, "type" => "institute"));
+		$route = $this->mapper['routes']->findOne(array("city" => $address->city, "area" => $address->area, "type" => "customer"));
 
 		// 沒有路線的時候新增路線
 		if ($route->isNull())
