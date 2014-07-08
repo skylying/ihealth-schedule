@@ -152,7 +152,7 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 			$route = $this->getUpdatedRouteData($address, $schedule);
 
 			// 外送者
-			$sender = $this->mapper['address']->findOne($route->sender_id);
+			$sender = $this->mapper['sender']->findOne($route->sender_id);
 
 			// Get task
 			$task = $this->getUpdatedScheduleTaskData($sender, $schedule);
