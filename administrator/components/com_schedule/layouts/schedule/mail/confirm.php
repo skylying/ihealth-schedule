@@ -8,6 +8,8 @@
 
 $data = $displayData;
 
+$nthDelivery = array('1st' => '第一次宅配', '2nd' => '第二次宅配', '3rd' => '第三次宅配');
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -39,37 +41,37 @@ $data = $displayData;
 		<h2 class="text-center"><span><?php echo $data->member->name; ?></span> 先生/小姐 <br /> 您好：以下是您的預約宅配資料 </h2>
 		<h4 class="bg-success">小叮嚀：外送藥師拜訪時, 請準備好您的健保卡</h4>
 		<?php foreach ($data['schedules'] as $schedule): ?>
-			<?php echo '<h2>' . $nthDelivery[$schedule['deliver_nth']] . '</h2>'; ?>
-			<table class="table table-striped">
-				<tr>
-					<td>宅配編號</td>
-					<td><?php echo $schedule['id']; ?></td>
-				</tr>
-				<tr>
-					<td>處方姓名</td>
-					<td><?php echo $data->customer->name; ?></td>
-				</tr>
-				<tr>
-					<td>身分證字號</td>
-					<td><?php echo $data->customer->id_number; ?></td>
-				</tr>
-				<tr>
-					<td>藥師送藥日期</td>
-					<td><?php echo $schedule['date']; ?></td>
-				</tr>
-				<tr>
-					<td>藥師送藥時段</td>
-					<td><?php echo JText::_('COM_SCHEDULE_SEND_SESSION_' . $schedule['session']); ?></td>
-				</tr>
-				<tr>
-					<td>藥師送藥地址</td>
-					<td><?php echo $schedule['city_title'] . '' . $schedule['area_title'] . '' . $schedule['address']; ?></td>
-				</tr>
-			</table>
+		<h2><?php echo $nthDelivery[$schedule['deliver_nth']];?></h2>
+		<table class="table table-striped">
+			<tr>
+				<td>宅配編號</td>
+				<td><?php echo $schedule['id']; ?></td>
+			</tr>
+			<tr>
+				<td>處方姓名</td>
+				<td><?php echo $data->customer->name; ?></td>
+			</tr>
+			<tr>
+				<td>身分證字號</td>
+				<td><?php echo $data->customer->id_number; ?></td>
+			</tr>
+			<tr>
+				<td>藥師送藥日期</td>
+				<td><?php echo $schedule['date']; ?></td>
+			</tr>
+			<tr>
+				<td>藥師送藥時段</td>
+				<td><?php echo JText::_('COM_SCHEDULE_SEND_SESSION_' . $schedule['session']); ?></td>
+			</tr>
+			<tr>
+				<td>藥師送藥地址</td>
+				<td><?php echo $schedule['city_title'] . '' . $schedule['area_title'] . '' . $schedule['address']; ?></td>
+			</tr>
+		</table>
 		<?php endforeach; ?>
 	</div>
 
-	<h2>處方箋詳細資訊</h2>
+		<h2>處方箋詳細資訊</h2>
 
 	<div class="row">
 		<table class="table table-striped">
