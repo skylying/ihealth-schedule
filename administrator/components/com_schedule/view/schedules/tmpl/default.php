@@ -225,7 +225,7 @@ $editFormFields = $data->editFormFields;
 <div id="modal-sorted-preview" class="modal hide fade" tabindex="-1" role="dialog">
 	<div class="modal-header">
 		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-		<h3 class="modal-title">分藥註記</h3>
+		<h3 class="modal-title">請選擇外送日與藥師</h3>
 	</div>
 	<div class="modal-body">
 		<?php

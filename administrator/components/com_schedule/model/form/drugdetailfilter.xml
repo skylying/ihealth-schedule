@@ -3,8 +3,8 @@
 	<fieldset name="filter">
 		<field name="date"
 			type="datetimepicker"
-			label="實際送藥日"
-			description="實際送藥日"
+			label="預計外送日"
+			description="預計外送日"
 			/>
 
 		<field name="senderIds"
