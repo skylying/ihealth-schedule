@@ -20,6 +20,20 @@ use Schedule\Helper\MailHelper;
 class ScheduleControllerScheduleEditSave extends ApiSaveController
 {
 	/**
+	 * Property oldScheduleTable.
+	 *
+	 * @var \JTable
+	 */
+	protected $oldScheduleTable;
+
+	/**
+	 * Property notifyMail.
+	 *
+	 * @var string
+	 */
+	protected $notifyMail;
+
+	/**
 	 * Method to do something before save.
 	 *
 	 * @return void
@@ -68,7 +82,7 @@ class ScheduleControllerScheduleEditSave extends ApiSaveController
 		);
 
 		$scheduleConfig = \JComponentHelper::getParams('com_schedule')->get("schedule");
-		$notifyMail     = $scheduleConfig->empty_route_mail;
+		$this->notifyMail = $scheduleConfig->empty_route_mail;
 
 		// If no route found, create one
 		if (empty($routeTable->id))
@@ -90,7 +104,7 @@ class ScheduleControllerScheduleEditSave extends ApiSaveController
 			$routeTable->store();
 
 			// When user created a none exists route, send a notify email to iHealth staff
-			MailHelper::sendEmptyRouteMail($notifyMail, $routeTable);
+			MailHelper::sendEmptyRouteMail($this->notifyMail, $routeTable);
 		}
 
 		// Get task
@@ -116,14 +130,25 @@ class ScheduleControllerScheduleEditSave extends ApiSaveController
 		$this->data['route_id'] = $routeTable->id;
 		$this->data['task_id']  = $taskTable->id;
 
-		$scheduleTable = TableCollection::loadTable('Schedule', $this->data['id']);
+		$this->oldScheduleTable = TableCollection::loadTable('Schedule', $this->data['id']);
+	}
 
+	/**
+	 * postSaveHook
+	 *
+	 * @param \Windwalker\Model\CrudModel $model
+	 * @param array                       $validData
+	 *
+	 * @return  void
+	 */
+	protected function postSaveHook($model, $validData)
+	{
 		// When user changed a exist schedule, send a notify email to iHealth staff
-		if ($scheduleTable->address_id != $schedule['address_id']
-			|| $scheduleTable->date != $schedule['date']
-			|| $scheduleTable->session != $schedule['session'])
+		if (ScheduleHelper::checkScheduleChanged($this->oldScheduleTable->getProperties(), $validData))
 		{
-			MailHelper::scheduleChangeNotify($notifyMail);
+			MailHelper::scheduleChangeNotify($this->notifyMail);
 		}
+
+		parent::postSaveHook($model, $validData);
 	}
 }
