@@ -126,7 +126,7 @@ $date      = $container->get('date');
 	<tr class="prescription-row">
 
 		<!-- checkbox -->
-		<td>
+		<td class="center">
 			<?php echo JHtml::_('grid.id', $i, $item->id); ?>
 		</td>
 
@@ -135,17 +135,17 @@ $date      = $container->get('date');
 		</td>
 
 		<!-- id -->
-		<td>
+		<td class="center">
 			<?php echo $this->escape($item->id); ?>
 		</td>
 
 		<!-- 散客名稱 -->
-		<td>
+		<td class="center">
 			<?php echo Schedule\Helper\UiHelper::foreignLink('customer', $item->customer_name, $item->customer_id, '', array('target' => '_blank'));?>
 		</td>
 
 		<!-- 所屬會員 -->
-		<td>
+		<td class="center">
 			<?php
 				$members = empty($item->member_json) ? array() : json_decode("[" . $item->member_json . "]");
 				foreach ($members as $member)
@@ -153,45 +153,45 @@ $date      = $container->get('date');
 					echo Schedule\Helper\UiHelper::foreignLink('member', $member->name, $member->id, '', array('target' => '_blank'));
 				}
 			?>
-		</td>
+		</td class="center">
 
 		<!-- 上傳方式 -->
-		<td>
+		<td class="center">
 			<?php echo $this->escape(Jtext::_('COM_SCHEDULE_RXINDIVIDUAL_PRINT_' . $item->method)); ?>
 		</td>
 
 		<!-- 處方簽狀態 -->
-		<td>
+		<td class="center">
 			<?php echo ($item->received) ? "已取得" : "未取得"; ?>
 		</td>
 
 		<!-- 電聯狀態 -->
-		<td>
+		<td class="center">
 			<?php echo ($item->called) ? "已電聯" : "未電聯"; ?>
 		</td>
 
 		<!-- 就醫日期 -->
-		<td>
+		<td class="center">
 			<?php echo $this->escape($item->see_dr_date); ?>
 		</td>
 
 		<!-- 可調劑次數 -->
-		<td>
+		<td class="center">
 			<?php echo $this->escape($item->times); ?>
 		</td>
 
 		<!-- 宅配次數 -->
-		<td>
+		<td class="center">
 			<?php echo $this->escape($item->deliver_nths); ?>
 		</td>
 
 		<!-- 新增人 -->
-		<td>
+		<td class="center">
 			<?php echo $this->escape($item->author_name); ?>
 		</td>
 
 		<!-- 修改人 -->
-		<td>
+		<td class="center">
 			<?php echo $this->escape($item->modifier_name); ?>
 		</td>
 	</tr>
