@@ -325,7 +325,7 @@ HTML;
 
 		return [
 			'title' => '',
-			'address' => $schedule['city'] . $schedule['area'] . $schedule['address'],
+			'address' => $schedule['city_title'] . $schedule['area_title'] . $schedule['address'],
 			'notes' => [],
 			'quantity' => 0,
 			'phones' => $phones,
