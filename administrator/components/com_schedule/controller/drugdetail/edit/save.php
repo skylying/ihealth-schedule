@@ -75,19 +75,22 @@ class ScheduleControllerDrugdetailEditSave extends SaveController
 			$schedules[$id] = $validDataSchedule;
 		}
 
-		// Valid Data Institute
-		foreach ($this->data['institutes'] as $instituteId => $instituteDrugDetails)
+		if (!empty($this->data['institutes']))
 		{
-			$validDataDrugDetail = array();
-
-			foreach ($instituteDrugDetails as $drugDetail)
+			// Valid Data Institute
+			foreach ($this->data['institutes'] as $instituteId => $instituteDrugDetails)
 			{
-				$drugDetail['institute_id'] = $instituteId;
+				$validDataDrugDetail = array();
 
-				$validDataDrugDetail[] = $drugDetail;
+				foreach ($instituteDrugDetails as $drugDetail)
+				{
+					$drugDetail['institute_id'] = $instituteId;
+
+					$validDataDrugDetail[] = $drugDetail;
+				}
+
+				$institutes[$instituteId] = $validDataDrugDetail;
 			}
-
-			$institutes[$instituteId] = $validDataDrugDetail;
 		}
 
 		$this->saveScheduleDrugDetails($schedules);
