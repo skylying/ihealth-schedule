@@ -21,24 +21,43 @@
 			description="要加購藥品的機構名稱"
 			/>
 
-		<field name="customer_id"
-			type="customer_list"
-			value_field="name"
+		<!--TODO: 機構與所屬外送要連動-->
+		<field name="task_id"
+			type="task_list"
+			value_field="date"
 			key_field="id"
-			label="藥品所屬客戶"
-			description="要加購藥品的客戶"
+			label="藥品所屬外送"
+			description="藥品所屬外送"
 			/>
 
-		<field name="date"
-			type="calendar"
-			label="對應日期"
-			description="對應的排程日期"
-			/>
+		<field name="ice"
+			type="checkbox"
+			label="是否有冰品"
+			description="是否有冰品"
+			>
+			<option value="1">是</option>
+		</field>
+
+		<field name="sorted"
+			type="checkbox"
+			label="是否完成分藥"
+			description="是否完成分藥"
+			>
+			<option value="1">是</option>
+		</field>
 
 		<field name="price"
 			type="text"
 			label="單筆金額"
 			description="單一一種藥品的總額"
+			/>
+
+		<field name="modified_by"
+			type="user_list"
+			value_field="name"
+			key_field="id"
+			label="最後修改人"
+			description="最後修改人"
 			/>
 	</fieldset>
 </form>

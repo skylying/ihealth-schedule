@@ -59,11 +59,11 @@
 		</field>
 
 		<field
-			name="drugprice.customer_id"
-			type="customer_list"
-			value_field="name"
+			name="drugprice.task_id"
+			type="task_list"
+			value_field="id"
 			default=""
-			label="對應客戶"
+			label="對應外送"
 			onchange="this.form.submit();"
 			>
 			<option></option>
