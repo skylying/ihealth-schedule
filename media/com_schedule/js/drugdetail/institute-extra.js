@@ -13,8 +13,9 @@
 	 * @param buttonClass        string  button class name
 	 * @param removeButtonClass  string  remove button class name
 	 * @param rowIdPrefix        string  row id prefix
+	 * @param userId             int
 	 */
-	function InstituteExtra(buttonClass, removeButtonClass, rowIdPrefix)
+	function InstituteExtra(buttonClass, removeButtonClass, rowIdPrefix, userId)
 	{
 		/**
 		 * Button class
@@ -37,30 +38,40 @@
 		 */
 		this.removeButtonClass = removeButtonClass;
 
-		var extra = this;
+		/**
+		 * User id
+		 *
+		 * @type {int}
+		 */
+		this.userId = userId;
 
-		// Add button event
-		$("." + this.buttonClass).click(function()
-		{
-			extra.addInstituteExtraRow($(this).data("instituteId"));
-		});
+		// Bind all event we need
+		this.bindEvent();
 	}
 
 	InstituteExtra.prototype = {
-		/**
-		 * 刪除 row 事件
-		 *
-		 * @param  row jquery
-		 *
-		 * @return  void
+
+		/*
+		 * Bind all events
 		 */
-		deleteRowEvent: function(row)
+		bindEvent : function()
 		{
-			row.find("." + this.removeButtonClass).click(function()
+			// Register self as "this" alias
+			var self = this;
+
+			// New row click event
+			$("." + this.buttonClass).click(function()
 			{
-				row.remove();
+				self.addInstituteExtraRow($(this).data("instituteId"));
 			});
+
+			// Delete row click event
+			$("#schedule").on('click', '.' + self.removeButtonClass, function()
+			{
+				$(this).closest('tr').remove();
+			})
 		},
+
 
 		/**
 		 * 新增機構 row
@@ -92,13 +103,10 @@
 				$(this).attr("id", fieldId);
 			});
 
-			// Bind event
-			this.deleteRowEvent(row);
-
 			$(rowId).after(row);
 		}
-	}
+	};
 
+	// Export object
 	window.InstituteExtra = InstituteExtra;
-
 })(jQuery);
