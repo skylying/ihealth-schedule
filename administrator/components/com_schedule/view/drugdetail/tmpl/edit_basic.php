@@ -22,7 +22,7 @@ $user = JFactory::getUser();
 ?>
 
 <script>
-	jQuery(function()
+	jQuery(document).ready(function()
 	{
 		var btnClass = 'add-institute-extra',
 			deleteBtnClass = 'row-remove-button',
@@ -69,10 +69,10 @@ $user = JFactory::getUser();
 		<th>
 			客戶
 		</th>
-		<th>
+		<th width="7%">
 			完成分藥
 		</th>
-		<th>
+		<th width="7%">
 			冰品
 		</th>
 		<th>

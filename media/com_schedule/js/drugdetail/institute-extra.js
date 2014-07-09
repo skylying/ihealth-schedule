@@ -45,8 +45,25 @@
 		 */
 		this.userId = userId;
 
+		/**
+		 * Big checkbox label
+		 *
+		 * @type {*|HTMLElement}
+		 */
+		this.bigCheckboxesLabel = $('.big-checkbox-td label');
+
+		/**
+		 * Checked big checkboxes
+		 *
+		 * @type {*|HTMLElement}
+		 */
+		this.bigCheckboxes = $('.big-checkbox:checked');
+
 		// Bind all event we need
 		this.bindEvent();
+
+		// Set default label of checkbox style
+		this.setDefaultCheck();
 	}
 
 	InstituteExtra.prototype = {
@@ -69,9 +86,38 @@
 			$("#schedule").on('click', '.' + self.removeButtonClass, function()
 			{
 				$(this).closest('tr').remove();
-			})
+			});
+
+			// Bind big checkbox label click event
+			self.bigCheckboxesLabel.on('click', function()
+			{
+				var hasTickClass = $(this).attr('class').indexOf('tick');
+
+				if (-1 == hasTickClass)
+				{
+					$(this).addClass('tick');
+
+					$(this).closest('td .big-checkbox').prop('checked', true);
+				}
+				else
+				{
+					$(this).removeClass('tick');
+
+					$(this).closest('td .big-checkbox').prop('checked', false);
+				}
+			});
 		},
 
+		/*
+		 * Set default checkbox
+		 */
+		setDefaultCheck : function()
+		{
+			this.bigCheckboxes.each(function()
+			{
+				$(this).closest('td').find('label').addClass('tick');
+			})
+		},
 
 		/**
 		 * 新增機構 row

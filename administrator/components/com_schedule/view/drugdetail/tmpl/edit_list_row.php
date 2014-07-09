@@ -67,13 +67,13 @@ $price  = FieldHelper::resetGroup($form->getField('price', null, (int) $schedule
 		<!-- 客戶 -->
 		<?php echo $schedule->customer_name; ?>
 	</td>
-	<td>
+	<td class="big-checkbox-td text-center">
 		<!-- 分藥完成 form -->
-		<?php echo $sorted->input; ?>
+		<?php echo $sorted->getControlGroup(); ?>
 	</td>
-	<td>
+	<td class="big-checkbox-td text-center">
 		<!-- 冰品 -->
-		<?php echo $ice->input; ?>
+		<?php echo $ice->getControlGroup(); ?>
 	</td>
 	<td>
 		<!-- 自費金額 -->

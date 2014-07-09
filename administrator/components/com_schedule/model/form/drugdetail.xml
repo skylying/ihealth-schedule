@@ -3,7 +3,8 @@
 	<fieldset name="row">
 		<field name="ice"
 			type="checkbox"
-			label="是否有冰品"
+			class="big-checkbox"
+			label=""
 			description="是否有冰品"
 			>
 			<option value="1">是</option>
@@ -11,7 +12,8 @@
 
 		<field name="sorted"
 			type="checkbox"
-			label="是否完成分藥"
+			class="big-checkbox"
+			label=""
 			description="是否完成分藥"
 			>
 			<option value="1">是</option>
