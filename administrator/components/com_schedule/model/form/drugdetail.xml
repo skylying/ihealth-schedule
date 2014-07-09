@@ -17,8 +17,17 @@
 			<option value="1">是</option>
 		</field>
 
+		<!-- 最後修改人是否要獨立更新每一筆需再和 iHealth 討論
+
+		<field name="modified_by"
+			type="hidden"
+			class="modifier"
+			label="最後修改人"
+			description="最後修改人"
+			/>-->
+
 		<field name="price"
-			class="input-small"
+			class="input-small price"
 			type="text"
 			label="價格"
 			description="價格"

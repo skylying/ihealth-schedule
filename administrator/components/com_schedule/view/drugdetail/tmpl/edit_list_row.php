@@ -8,6 +8,7 @@
 
 use Schedule\Helper\Mapping\MemberCustomerHelper;
 use Schedule\Helper\Form\FieldHelper;
+use Windwalker\Joomla\DataMapper\DataMapper;
 
 /**
  * Prepare data for this template.
@@ -21,6 +22,8 @@ $schedule = $data->schedule;
 $sorted = FieldHelper::resetGroup($form->getField('sorted', null, $schedule->sorted), "schedules.{$schedule->id}");
 $ice    = FieldHelper::resetGroup($form->getField('ice', null, $schedule->ice), "schedules.{$schedule->id}");
 $price  = FieldHelper::resetGroup($form->getField('price', null, (int) $schedule->price), "schedules.{$schedule->id}");
+// @ 最後編輯者是否要每一筆獨立更新需再和 iHealth 討論
+//$modified_by = FieldHelper::resetGroup($form->getField('modified_by', null, 'hello'), "schedules.{$schedule->id}");
 ?>
 <tr>
 	<td>
@@ -77,7 +80,19 @@ $price  = FieldHelper::resetGroup($form->getField('price', null, (int) $schedule
 		<?php echo $price->input; ?>
 	</td>
 	<td>
-		<!-- 最後編輯者 -->
-		<!-- TODO: 我們 schedule 需要新增這欄位 -->
+		<!-- 最後編輯者 @ 最後編輯者是否要每一筆獨立更新需再和 iHealth 討論-->
+
+		<?php
+/*		if (!empty($schedule->modified_by))
+		{
+			$userMapper = new DataMapper('#__users');
+
+			$modifier = $userMapper->findOne(['id' => $schedule->modified_by]);
+
+			echo $modifier->name;
+		}
+
+		echo $modified_by->input;
+		*/?>
 	</td>
 </tr>

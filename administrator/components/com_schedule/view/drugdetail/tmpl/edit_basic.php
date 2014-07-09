@@ -16,12 +16,20 @@ $form = $data->form;
 JHtmlJquery::framework(true);
 
 $asset->addJS('drugdetail/institute-extra.js');
+
+// Prepare user for javascript
+$user = JFactory::getUser();
 ?>
 
 <script>
 	jQuery(function()
 	{
-		window.InstituteExtraObject = new InstituteExtra("add-institute-extra", "row-remove-button", "row-institute-");
+		var btnClass = 'add-institute-extra',
+			deleteBtnClass = 'row-remove-button',
+			rowIdPrefix = 'row-institute-',
+			userId = '<?php echo $user->id; ?>';
+
+		window.InstituteExtraObject = new InstituteExtra(btnClass, deleteBtnClass, rowIdPrefix, userId);
 	});
 </script>
 
