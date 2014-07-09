@@ -101,9 +101,31 @@
 
 				$(this).attr("name", fieldName);
 				$(this).attr("id", fieldId);
+
+				// Mark price input field
+				if ($(this).attr('type') == 'text')
+				{
+					$(this).attr('data-type', 'extra-purchase');
+				}
 			});
 
 			$(rowId).after(row);
+		},
+
+		/*
+		 * Remove extra price input without actual price, will be called on form submit
+		 */
+		deleteEmptyPrice : function()
+		{
+			var extraPurchaseInputs = $('input[data-type="extra-purchase"]');
+
+			$.each(extraPurchaseInputs, function(key, item)
+			{
+				if ($(item).val() == 0 || (typeof $(item).val()) == 'undefined')
+				{
+					$(this).closest('tr').remove();
+				}
+			})
 		}
 	};
 
