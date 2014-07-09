@@ -33,15 +33,14 @@ $user = JFactory::getUser();
 	});
 </script>
 
-<h3 class="text-right">
-	<?php echo $data->date; ?>
-</h3>
+<h1 class="text-center"><?php echo $data->date; ?> 分藥表</h1>
 
 <?php foreach ($data->items as $sender):?>
-<h3>
-	<?php echo $sender['name']; ?>
-</h3>
 
+<span class="btn btn-info" style="font-size: 20px;">
+	<span class="icon-signup"></span>&nbsp;&nbsp;<?php echo $sender['name']; ?>
+</span>
+	<hr />
 <table id="drug-details" class="table table-bordered">
 	<thead>
 	<tr>
