@@ -51,16 +51,11 @@ $price   = FieldHelper::resetGroup($form->getField('price', null, (int) $priceVa
 ?>
 
 <tr <?php echo $id; ?> <?php echo $class; ?>>
-	<td colspan="8">
+	<td colspan="7">
 		<?php echo $idInput->input; ?>
 		<?php echo $task->input; ?>
 	</td>
-	<td class="big-checkbox-td text-center">
-		<?php echo $sorted->getControlGroup(); ?>
-	</td>
-	<td class="big-checkbox-td text-center">
-		<?php echo $ice->getControlGroup(); ?>
-	</td>
+	<td colspan="3" class="text-center">機構自訂</td>
 	<td>
 		<?php echo $price->input; ?>
 	</td>
