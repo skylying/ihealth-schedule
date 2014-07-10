@@ -87,31 +87,28 @@ CSS;
 
 $doc->addStyleDeclaration($css);
 
-$routeUpdater = $this->data->filterForm->getGroup('routeupdater');
-$senderForm   = $routeUpdater['routeupdater_sender_id'];
-$weekdayForm  = $routeUpdater['routeupdater_weekday'];
-
+$senderField  = $this->data->filterForm->getField('sender_id', 'routeupdater');
+$weekdayField = $this->data->filterForm->getField('weekday', 'routeupdater');
 ?>
 
 <div id="schedule" class="windwalker routes tablelist row-fluid">
 	<form action="<?php echo JURI::getInstance(); ?>" method="post" name="adminForm" id="adminForm" enctype="multipart/form-data">
 
 		<div id="j-main-container">
-
-			<div class="row">
-				<div class="col-md-1">
+			<div class="row-fluid">
+				<div class="col-md-2">
 					<div class="route-outer institute-bg" style="padding: 4px">機構路線</div>
-				</div>
-				<div class="col-md-1">
 					<div class="route-outer customer-bg" style="padding: 4px">散客路線</div>
 				</div>
-				<div class="col-md-3 col-md-offset-1">
-					<?php echo $senderForm->getControlGroup(); ?>
+				<div class="col-md-4 form-inline">
+					<?php echo $senderField->label; ?>
+					<?php echo $senderField->input; ?>
 				</div>
-				<div class="col-md-3">
-					<?php echo $weekdayForm->getControlGroup(); ?>
+				<div class="col-md-4 form-inline">
+					<?php echo $weekdayField->label; ?>
+					<?php echo $weekdayField->input; ?>
 				</div>
-				<div class="col-md-2 col-md-offset-1">
+				<div class="col-md-2">
 					<span id="uncheckalltable" class="btn btn-danger">取消選取所有</span>
 				</div>
 			</div>
@@ -133,12 +130,10 @@ $weekdayForm  = $routeUpdater['routeupdater_weekday'];
 	</form>
 </div>
 
-<script>
-
+<script type="text/javascript">
 	// Initialize RouteJs
 	jQuery(document).ready(function()
 	{
 		RouteJs.initialize();
 	});
-
 </script>
