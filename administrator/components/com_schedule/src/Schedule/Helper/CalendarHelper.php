@@ -25,7 +25,7 @@ class CalendarHelper
 	 *
 	 * @return  \JGrid
 	 */
-	public static function getCalendar($year, $month, $data, $tableWidth = 300)
+	public static function getCalendar($year, $month, $data)
 	{
 		$offDaysInMonth = array();
 
@@ -44,7 +44,6 @@ class CalendarHelper
 
 		$option['class'] = 'table table-bordered calendar calendar' . $year . $month;
 		$option['id']    = 'calendar';
-		$option['style'] = 'width: ' . $tableWidth . 'px; margin:0 auto;';
 
 		$grid->setTableOptions($option);
 		$grid->setColumns($weekArray);
