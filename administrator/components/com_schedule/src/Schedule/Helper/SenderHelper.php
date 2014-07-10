@@ -20,7 +20,9 @@ class SenderHelper
 	 */
 	public static function isSenderLogin()
 	{
-		return (static::getSenderId() == 0 ? false : true );
+		$sender = static::sender();
+
+		return ! $sender->isNull();
 	}
 
 	/**
@@ -30,22 +32,20 @@ class SenderHelper
 	 */
 	public static function getSenderId()
 	{
+		$sender = static::sender();
+
+		return $sender->id;
+	}
+
+	/**
+	 * sender
+	 *
+	 * @return  mixed
+	 */
+	public static function sender()
+	{
 		$user = \JFactory::getUser();
-		$db = \JFactory::getDbo();
 
-		$query = $db->getQuery(true);
-		$query->select('id, name')
-			->from(Table::SENDERS)
-			->where("name = '{$user->name}'");
-
-		$data = $db->setQuery($query)->loadObject();
-
-		if (!$data)
-		{
-			$data = new DataMapper(Table::SENDERS);
-			$data->id = 0;
-		}
-
-		return $data->id;
+		return (new DataMapper(Table::SENDERS))->findOne(array('name' => $user->name));
 	}
 }
