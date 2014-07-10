@@ -146,16 +146,14 @@
 			// Get input attributes
 			var attributes = this.configureInput(checkbox);
 
-			var input = $('<input/>', {
+			return $('<input/>', {
 				'id'    : attributes.elementId,
 				'type'  : attributes.type,
 				'name'  : attributes.name,
 				'title' : attributes.title,
 				'class' : attributes.class,
-				'value' : JSON.stringify(attributes.value)
+				'value' : attributes.value.id
 			});
-
-			return input;
 		},
 
 		/**
