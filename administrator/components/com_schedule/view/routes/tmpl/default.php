@@ -6,7 +6,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-use Windwalker\View\Layout\FileLayout;
+use Schedule\Helper\RouteHelper;
 
 // No direct access
 defined('_JEXEC') or die;
@@ -14,16 +14,18 @@ defined('_JEXEC') or die;
 // Prepare script
 JHtmlBootstrap::tooltip();
 JHtmlFormbehavior::chosen('select');
+JHtmlBehavior::multiselect('adminForm');
 JHtmlDropdown::init();
 
 /**
  * Prepare data for this template.
  *
- * @var Windwalker\DI\Container $container
+ * @var Windwalker\DI\Container       $container
+ * @var Windwalker\Helper\AssetHelper $asset
  */
 $container = $this->getContainer();
+$asset     = $container->get('helper.asset');
 
-$doc = JFactory::getDocument();
 $css = <<<CSS
 .route-outer
 {
@@ -85,10 +87,11 @@ $css = <<<CSS
 }
 CSS;
 
-$doc->addStyleDeclaration($css);
+$asset->internalCSS($css);
+$asset->addJS('route/overview.js');
 
-$senderField  = $this->data->filterForm->getField('sender_id', 'routeupdater');
-$weekdayField = $this->data->filterForm->getField('weekday', 'routeupdater');
+$senderField  = $this->data->filterForm->getField('sender_id', 'data');
+$weekdayField = $this->data->filterForm->getField('weekday', 'data');
 ?>
 
 <div id="schedule" class="windwalker routes tablelist row-fluid">
@@ -115,9 +118,7 @@ $weekdayField = $this->data->filterForm->getField('weekday', 'routeupdater');
 
 			<hr />
 
-			<?php echo $this->loadTemplate('overview'); ?>
-
-			<?php echo with(new FileLayout('joomla.batchtools.modal'))->render(array('view' => $this->data, 'task_prefix' => 'routes.')); ?>
+			<?php echo RouteHelper::getTable($data->items); ?>
 
 			<!-- Hidden Inputs -->
 			<div id="hidden-inputs">
