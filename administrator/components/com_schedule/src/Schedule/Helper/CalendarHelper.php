@@ -76,7 +76,12 @@ class CalendarHelper
 				$grid->addRow();
 			}
 
-			$grid->setRowCell($currentDay, $i, array('class' => 'center', 'name' => $year . '-' . $month . '-' . $i));
+			$grid->setRowCell(
+				$currentDay, $i, array(
+					'class' => 'center',
+					'data-date' => $year . '-' . $month . '-' . $i,
+				)
+			);
 
 			// Inject offdays
 			if (!empty($offDaysInMonth))
@@ -89,8 +94,8 @@ class CalendarHelper
 							$currentDay, $i, array(
 								'id'    => $value->id,
 								'class' => ($value->state == 1) ? 'center off' : 'center',
-								'name'  => $value->date,
-								'title' => $value->title
+								'data-date'  => $value->date,
+								'title' => $value->title,
 							)
 						);
 					}

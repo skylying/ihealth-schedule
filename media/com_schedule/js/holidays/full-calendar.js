@@ -30,12 +30,20 @@
 			{
 				var valuePackage = {};
 
-				valuePackage.date      = $(this).attr('name');
+				valuePackage.date      = $(this).attr('data-date');
 				valuePackage.holidayId = $(this).attr('id');
 				valuePackage.state     = '1';
 
+				var weekDay = new Date(valuePackage.date).getDay();
+
 				// When user click empty date, return
 				if (valuePackage.date == '' || valuePackage.date == undefined)
+				{
+					return false;
+				}
+
+				// When user click weekend, return
+				if (weekDay == 0 || weekDay == 6)
 				{
 					return false;
 				}
