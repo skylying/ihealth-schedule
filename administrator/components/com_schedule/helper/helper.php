@@ -8,6 +8,7 @@
 
 // No direct access
 use Windwalker\Html\HtmlElement;
+use Schedule\Helper\SenderHelper;
 
 defined('_JEXEC') or die;
 
@@ -61,9 +62,7 @@ abstract class ScheduleHelper
 			$menus = array_merge($menus, $noMvcMenus);
 		}
 
-		$senderLoginStat = \Schedule\Helper\SenderHelper::isSenderLogin();
-
-		if ($senderLoginStat)
+		if (SenderHelper::isSenderLogin())
 		{
 			$menus = $menusForSender;
 		}

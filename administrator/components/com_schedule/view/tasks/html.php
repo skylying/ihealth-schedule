@@ -130,16 +130,21 @@ class ScheduleViewTasksHtml extends GridView
 		$buttonSet['trash']['access'] = false;
 
 		// Add custom controller redirect to routes overview layout
-		$buttonSet['route']['handler'] = function()
+		$senderLoginStat = \Schedule\Helper\SenderHelper::isSenderLogin();
+
+		if (!$senderLoginStat)
 		{
-			$html = <<<HTML
+			$buttonSet['route']['handler'] = function()
+			{
+				$html = <<<HTML
 <button class="btn btn-info btn-small" onclick="Joomla.submitbutton('tasks.redirect')">
 	<span class="glyphicon glyphicon-random"></span> 路線管理
 </button>
 HTML;
-			$bar = JToolbar::getInstance('toolbar');
+				$bar = JToolbar::getInstance('toolbar');
 
-			$bar->appendButton('Custom', $html);
+				$bar->appendButton('Custom', $html);
+			};
 		};
 
 		$buttonSet['completeDelivery']['handler'] = function(){

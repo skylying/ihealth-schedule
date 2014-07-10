@@ -125,6 +125,14 @@ class ScheduleModelTasks extends ListModel
 			$query->where($query->quoteName('task.state') . ' >= 0');
 		}
 
+		$senderId = Schedule\Helper\SenderHelper::getSenderId();
+		$isSender = Schedule\Helper\SenderHelper::isSenderLogin();
+
+		if ($isSender)
+		{
+			$query->where('sender = ' . $senderId);
+		}
+
 		return parent::processFilters($query, $filters);
 	}
 
