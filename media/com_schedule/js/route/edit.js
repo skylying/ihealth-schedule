@@ -25,7 +25,7 @@
 			}, options);
 
 			// Prepare element cache
-			this.$typeField  = $('#jform_type.radio');
+			this.$typeField  = $('#jform_type');
 			this.$typeRadios = this.$typeField.find('input');
 			this.$instituteControl  = $('#control_jform_institute_id');
 			this.$instituteSelector = $('#jform_institute_id');
@@ -34,7 +34,7 @@
 			this.registerEvents();
 
 			// init selector
-			this.toggleInstituteSelector(this.$typeRadios.find(':checked').val());
+			this.toggleInstituteSelector(this.$typeField.find('input:checked').val());
 
 			// Disable some fields in edit page
 			if (options.isEdit)
