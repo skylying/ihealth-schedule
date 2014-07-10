@@ -1,6 +1,10 @@
 <?php
 
 use Windwalker\Controller\State\AbstractUpdateStateController;
+use Schedule\Table\Table as Table;
+use Schedule\Table\Collection as TableCollection;
+use Windwalker\Joomla\DataMapper\DataMapper;
+use Schedule\Helper\MailHelper;
 
 /**
  * Class ScheduleControllerSchedulesUpdateStatus
@@ -40,6 +44,13 @@ class ScheduleControllerSchedulesUpdateStatus extends AbstractUpdateStateControl
 	protected $useTransaction = true;
 
 	/**
+	 * Property sendNotifyMail.
+	 *
+	 * @var  array
+	 */
+	protected $sendNotifyMail = array();
+
+	/**
 	 * Prepare execute hook.
 	 *
 	 * @throws \LogicException
@@ -64,6 +75,17 @@ class ScheduleControllerSchedulesUpdateStatus extends AbstractUpdateStateControl
 		if (in_array($status, ['cancel_reject', 'cancel_only']))
 		{
 			$validCancel = ['badservice', 'changedrug', 'passaway', 'other'];
+
+			foreach ($this->input->get('cid', array(), 'ARRAY') as $id)
+			{
+				if ($id > 0)
+				{
+					if (! empty(TableCollection::loadTable('Schedule', $id)->id))
+					{
+						$this->sendNotifyMail[] = $id;
+					}
+				}
+			}
 		}
 		elseif ('pause' === $status)
 		{
@@ -93,6 +115,37 @@ class ScheduleControllerSchedulesUpdateStatus extends AbstractUpdateStateControl
 			// Reset "cancel" and "cancel_note" fields
 			$this->stateData['cancel']      = null;
 			$this->stateData['cancel_note'] = '';
+		}
+	}
+
+	/**
+	 * postUpdateHook
+	 *
+	 * @param \Windwalker\Model\Model $model
+	 *
+	 * @return  void
+	 */
+	protected function postUpdateHook($model)
+	{
+		parent::postUpdateHook($model);
+
+		foreach ($this->sendNotifyMail as $scheduleId)
+		{
+			$oldScheduleTable = TableCollection::loadTable('Schedule', $scheduleId);
+
+			$memberTable = TableCollection::loadTable('Member', $oldScheduleTable->member_id);
+			$customerTable = TableCollection::loadTable('Customer', $oldScheduleTable->customer_id);
+			$rx = (new DataMapper(Table::PRESCRIPTIONS))->findOne($oldScheduleTable->rx_id);
+			$schedules = (new DataMapper(Table::SCHEDULES))->find(array('rx_id' => $oldScheduleTable->rx_id));
+
+			$mailData = array(
+				"schedules" => $schedules,
+				"rx"        => $rx,
+				"member"    => $memberTable,
+				"customer"  => $customerTable,
+			);
+
+			MailHelper::sendMailWhenScheduleChange($memberTable->email, $mailData);
 		}
 	}
 }
