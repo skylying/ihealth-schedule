@@ -131,10 +131,18 @@ jQuery(document).ready(function ()
 		position: relative;
 	}
 
-	.js-tmpl-add-addressrow{
+	.js-tmpl-add-addressrow
+	{
 		padding: 10px 30px;
 		margin: 0px -30px;
-		background-color: #E2E2E2;
+		background-color: #FFDBDB;
+	}
+
+	.js-route-wrap
+	{
+		padding: 10px 30px;
+		margin: 0px -30px;
+		background-color: #FFDBDB;
 	}
 
 	.opaque
@@ -206,6 +214,23 @@ jQuery(document).ready(function ()
 					</div>
 					<div class="col-lg-9 js-nth-schedule-info custom-well opaque">
 						<div class="row-fluid">
+							<div class="col-lg-12 ">
+								<div class="js-route-wrap hide">
+									<p><span class="label label-warning">宅配區域路線不存在，請指定外送藥師，外送日。</span></p>
+									<div class="row-fluid">
+										<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4" style="padding: 0px 10px 0px 0px;">
+											<?php echo $schedules["jform_schedules_{$key}_sender_id"]->getControlGroup(); ?>
+										</div>
+										<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 js-route-weekday" style="padding: 0px 10px 0px 0px;">
+											<?php echo $schedules["jform_schedules_{$key}_weekday"]->getControlGroup(); ?>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- Add Address Row -->
+							<div class="col-lg-12 js-add-address-position">
+
+							</div>
 							<div class="col-lg-12">
 								<div class="row-fluid">
 									<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 js-address-wrap" style="padding: 0px;">
@@ -218,21 +243,6 @@ jQuery(document).ready(function ()
 										</div>
 									</div>
 								</div>
-							</div>
-							<div class="col-lg-12 js-route-wrap hide">
-								<p><span class="label label-warning">宅配區域路線不存在，請指定外送藥師，外送日。</span></p>
-								<div class="row-fluid">
-									<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4" style="padding: 0px 10px 0px 0px;">
-										<?php echo $schedules["jform_schedules_{$key}_sender_id"]->getControlGroup(); ?>
-									</div>
-									<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 js-route-weekday" style="padding: 0px 10px 0px 0px;">
-										<?php echo $schedules["jform_schedules_{$key}_weekday"]->getControlGroup(); ?>
-									</div>
-								</div>
-							</div>
-							<!-- Add Address Row -->
-							<div class="col-lg-12 js-add-address-position">
-
 							</div>
 						</div>
 						<div class="row-fluid">
@@ -402,17 +412,41 @@ jQuery(document).ready(function ()
 			<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8" style="padding: 0px;">
 				<div class="row-fluid">
 					<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4" style="padding: 0px 10px 0px 0px;">
-						<?php echo $data->form->getInput('city') ?>
+						<div class="control-group">
+							<div class="control-label">
+								縣市
+							</div>
+							<!-- This is where to put select list -->
+							<div class="controls">
+								<?php echo $data->form->getInput('city') ?>
+							</div>
+						</div>
 					</div>
 					<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4" style="padding: 0px 10px 0px 0px;">
-						<?php echo $data->form->getInput('area') ?>
+						<div class="control-group">
+							<div class="control-label">
+								區域
+							</div>
+							<!-- This is where to put select list -->
+							<div class="controls">
+								<?php echo $data->form->getInput('area') ?>
+							</div>
+						</div>
 					</div>
 					<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4" style="padding: 0px">
-						<input class="js-address-row-data pull-left" type="text">
+						<div class="control-group">
+							<div class="control-label">
+								地址
+							</div>
+							<!-- This is where to put select list -->
+							<div class="controls">
+								<input class="js-address-row-data pull-left" type="text">
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
-			<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4" style="padding: 0px;">
+			<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4" style="padding: 0px; margin-top: 27px;">
 				<div class="btn btn-small btn-success pull-right js-save-address">
 					<span class="icon-ok icon-white"></span>
 					儲存
