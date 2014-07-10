@@ -13,7 +13,7 @@
 		// Initialize all element we need
 		initialize : function()
 		{
-			this.td         = $('.calendar tr td');
+			this.td         = $('.selectable');
 			this.inputsArea = $('#hidden-inputs-area');
 
 			// Global namespace for "this"
@@ -38,12 +38,6 @@
 
 				// When user click empty date, return
 				if (valuePackage.date == '' || valuePackage.date == undefined)
-				{
-					return false;
-				}
-
-				// When user click weekend, return
-				if (weekDay == 0 || weekDay == 6)
 				{
 					return false;
 				}

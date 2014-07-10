@@ -21,7 +21,6 @@ class CalendarHelper
 	 * @param integer $year
 	 * @param integer $month
 	 * @param array   $data
-	 * @param integer $tableWidth
 	 *
 	 * @return  \JGrid
 	 */
@@ -71,6 +70,8 @@ class CalendarHelper
 		{
 			$currentDay = date('w', mktime(null, null, null, $month, $i, $year));
 
+			$className = ($currentDay == 0 || $currentDay == 6) ? 'off center' : 'selectable center';
+
 			if ($currentDay == 0)
 			{
 				$grid->addRow();
@@ -78,7 +79,7 @@ class CalendarHelper
 
 			$grid->setRowCell(
 				$currentDay, $i, array(
-					'class' => 'center',
+					'class' => $className,
 					'data-date' => $year . '-' . $month . '-' . $i,
 				)
 			);
@@ -93,7 +94,7 @@ class CalendarHelper
 						$grid->setRowCell(
 							$currentDay, $i, array(
 								'id'    => $value->id,
-								'class' => ($value->state == 1) ? 'center off' : 'center',
+								'class' => ($value->state == 1) ? 'selectable center off' : 'selectable center',
 								'data-date'  => $value->date,
 								'title' => $value->title,
 							)
