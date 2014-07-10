@@ -4,6 +4,7 @@ namespace Schedule\Helper;
 
 use Schedule\Table\Table;
 use Windwalker\Data\Data;
+use Windwalker\Joomla\DataMapper\DataMapper;
 
 /**
  * Class SenderHelper
@@ -13,77 +14,38 @@ use Windwalker\Data\Data;
 class SenderHelper
 {
 	/**
-	 * senderIsLogin
+	 * isSenderLogin
 	 *
 	 * @return  bool
 	 */
 	public static function isSenderLogin()
 	{
-		$isSender = static::isUserEqualSender();
-
-		return $isSender ? true : false;
+		return (static::getSenderId() == 0 ? false : true );
 	}
 
 	/**
 	 * getSenderId
 	 *
-	 * @return  mixed
+	 * @return  int
 	 */
 	public static function getSenderId()
 	{
-		$sender = static::getSenderData();
-
-		return $sender->id;
-	}
-
-	/**
-	 * isUserEqualSender
-	 *
-	 * @return  bool
-	 */
-	public static function isUserEqualSender()
-	{
-		$currentUserName = static::getLoginInfo()->name;
-
-		$senderData = static::getSenderData();
-
-		return $currentUserName == $senderData->name ? true : false;
-	}
-
-	/**
-	 * getUserInfo
-	 *
-	 * @return  \JUser
-	 */
-	public static function getLoginInfo()
-	{
-		return \JFactory::getUser();
-	}
-
-	/**
-	 * getSenderData
-	 *
-	 * @return  mixed
-	 */
-	public static function getSenderData()
-	{
-		$currentUserName = static::getLoginInfo()->name;
-
+		$user = \JFactory::getUser();
 		$db = \JFactory::getDbo();
+
 		$query = $db->getQuery(true);
 		$query->select('id, name')
 			->from(Table::SENDERS)
-			->where("name = '{$currentUserName}'");
+			->where("name = '{$user->name}'");
 
 		$data = $db->setQuery($query)->loadObject();
 
-		if (!isset($data))
+		if (!$data)
 		{
-			$data = new Data;
+			$data = new DataMapper(Table::SENDERS);
 			$data->id = 0;
-			$data->name = 0;
 		}
 
-		return $data;
+		return $data->id;
 	}
 }
