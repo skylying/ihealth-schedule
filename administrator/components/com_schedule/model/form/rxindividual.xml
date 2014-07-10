@@ -244,8 +244,6 @@
 			<option value="WED">星期三</option>
 			<option value="THU">星期四</option>
 			<option value="FRI">星期五</option>
-			<option value="SAT">星期六</option>
-			<option value="SUN">星期日</option>
 		</field>
 	</fields>
 
@@ -313,8 +311,6 @@
 			<option value="WED">星期三</option>
 			<option value="THU">星期四</option>
 			<option value="FRI">星期五</option>
-			<option value="SAT">星期六</option>
-			<option value="SUN">星期日</option>
 		</field>
 	</fields>
 

@@ -250,7 +250,6 @@ jQuery(document).ready(function ()
 					<?php echo $schedules["jform_schedules_{$key}_schedule_id"]->getControlGroup(); ?>
 				</div>
 			<?php endforeach; ?>
-			<div class="row-fluid well">
 				<div class="col-lg-12 js-tel-wrap">
 					<div class="control-group">
 						<div class="control-label">
@@ -350,7 +349,6 @@ jQuery(document).ready(function ()
 				</div>
 			</div>
 		</div>
-	</div>
 
 	<!-- HICODE TEMPLATE
 	<div class="control-group custom-well js-hicode-tmpl hide">

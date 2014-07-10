@@ -66,7 +66,24 @@
 			});
 
 			// Bind save new address
-			$('.js-nth-schedule-info').on('click', '.js-save-address', function(){ self.saveAddress(this); });
+			$('.js-nth-schedule-info').on('click', '.js-save-address', function()
+			{
+				self.saveAddress(this);
+			});
+
+			// Bind address list being changed
+			$('.js-nth-schedule-info').on('change', '.js-address-list', function()
+			{
+				var currentSchedule = [];
+
+				currentSchedule.push(
+					$(this).closest('.schedules').find('input[id$="_deliver_nth0"]').val()
+				);
+
+				window.DeliverScheduleHandler.updateScheduleDate(currentSchedule);
+
+				self.getSenderWeekdayDataFromAddress(this);
+			});
 
 			// Bind add new telephone
 			$('.js-add-tel').on('click', function()
@@ -75,7 +92,121 @@
 			});
 
 			// Bind save new telephone
-			$('.js-save-tel').on('click', function(){ self.saveTel(this); });
+			$('.js-save-tel').on('click', function()
+			{
+				self.saveTel(this);
+			});
+
+			// While no route, we have to set sender_id and bind this info to address
+			$('select[id$="_sender_id"]').on('change', function()
+			{
+				self.updateSenderIdForAddress(this);
+			});
+
+			// While no route, we have to set weekday and bind this info to address
+			$('select[id$="_weekday"]').on('change', function()
+			{
+				self.updateWeekdayForAddress(this);
+			});
+		},
+
+		/**
+		 * While address is being changed, if data-sender and data-weekday exist, set the sender and weekday
+		 * dropdown-list these value
+		 *
+		 * @param self
+		 */
+		getSenderWeekdayDataFromAddress: function(self)
+		{
+			var routeWrap = $(this).closest('.js-nth-schedule-info').find('.js-route-wrap');
+			var sender_id = $(this).find('option:selected').data('sender');
+			var weekday = $(this).find('option:selected').data('weekday');
+
+			if (sender_id)
+			{
+				routeWrap.find('select[id$="_sender_id"]')
+					.find('option[value="' + sender_id + '"]')
+					.attr("selected", "selected");
+
+				routeWrap.find('select[id$="_sender_id"]').trigger('liszt:updated');
+			}
+
+			if (weekday)
+			{
+				routeWrap.find('select[id$="_weekday"]')
+					.find('option[value="' + weekday + '"]')
+					.attr("selected", "selected");
+
+				routeWrap.find('select[id$="_weekday"]').trigger('liszt:updated');
+			}
+		},
+
+		/**
+		 * If the route does not exist, we have to create one and assign sender_id
+		 *
+		 * @param self
+		 */
+		updateSenderIdForAddress: function(self)
+		{
+			var currentAddress = $(self).closest('.js-nth-schedule-info').find('.js-address-list option:selected');
+
+			if (currentAddress.data('sender'))
+			{
+				currentAddress.data("sender", $(self).val());
+			}
+			else
+			{
+				currentAddress.attr("data-sender", $(self).val());
+			}
+
+			$('.js-address-list option').each(function()
+			{
+				if ($(this).val() == currentAddress.val())
+				{
+					if ($(this).data('sender'))
+					{
+						$(this).data("sender", $(self).val());
+					}
+					else
+					{
+						$(this).attr("data-sender", $(self).val());
+					}
+				}
+			});
+		},
+
+		/**
+		 * If the route does not exist, we have to create one and assign weekday
+		 *
+		 * @param self
+		 */
+		updateWeekdayForAddress: function(self)
+		{
+			var currentAddress = $(self).closest('.js-nth-schedule-info').find('.js-address-list option:selected');
+
+			if (currentAddress.data('weekday'))
+			{
+				currentAddress.data("weekday", $(self).val());
+			}
+			else
+			{
+				currentAddress.attr("data-weekday", $(self).val());
+			}
+
+			$('.js-address-list option').each(function()
+			{
+				if ($(this).val() == currentAddress.val())
+				{
+					if ($(this).data('weekday'))
+					{
+						$(this).data("weekday", $(self).val());
+					}
+					else
+					{
+						$(this).attr("data-weekday", $(self).val());
+					}
+				}
+			});
 		},
 
 		saveTel : function(self)
@@ -170,6 +301,8 @@
 			// The dynamic row wrapper
 			var currentWrap = $(self).closest('.js-tmpl-add-addressrow');
 
+			var currentAddressList = $(self).closest('.js-nth-schedule-info').find('.js-address-wrap select');
+
 			// The hidden input will save the user customized input address, and wait for model to save.
 			var targetHiddenInput = $("#" + this.options.createAddressId);
 
@@ -234,7 +367,11 @@
 			targetListToUpdate.each(function()
 			{
 				$(this).append(html);
-				$(this).find('option:last').attr('selected', true);
+
+				if($(this).is(currentAddressList))
+				{
+					$(this).find('option:last').attr('selected', true);
+				}
 			});
 
 			// Update to hidden input
@@ -244,11 +381,7 @@
 			currentWrap.addClass('hide');
 
 			// Update Schedule date once
-			window.DeliverScheduleHandler.updateScheduleDate(
-				$('#' + this.options.seeDrDateId).val(),
-				$('#' + this.options.periodId).val(),
-				this.options.addressesKeys
-			);
+			window.DeliverScheduleHandler.updateScheduleDate();
 
 			Joomla.renderMessages([
 				['提醒您，您已新增散客電話或地址，記得按儲存喲。']
@@ -263,6 +396,7 @@
 		fireAjax: function(id)
 		{
 			var self = this;
+
 			// Fire ajax to Customer
 			$.ajax({
 				type: "POST",
@@ -453,8 +587,9 @@
 					' data-area="' + addressJson[i].area + '"' +
 					' data-value="' + addressJson[i].id + '"' +
 					' value="' + addressJson[i].id + '"' +
+					' selected="' +
 					((addressJson[i].id == currentSelected) ? 'selected' : '') +
-					'>' +
+					'">' +
 					addressJson[i].city_title +
 					addressJson[i].area_title +
 					addressJson[i].address +
@@ -467,6 +602,8 @@
 			targetsParent.html("");
 
 			targetsParent.html(html);
+
+			targetsParent.find('option[value="' + currentSelected + '"]').attr("selected", "selected");
 		},
 
 		/**
