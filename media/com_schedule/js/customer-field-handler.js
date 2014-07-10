@@ -118,9 +118,9 @@
 		 */
 		getSenderWeekdayDataFromAddress: function(self)
 		{
-			var routeWrap = $(this).closest('.js-nth-schedule-info').find('.js-route-wrap');
-			var sender_id = $(this).find('option:selected').data('sender');
-			var weekday = $(this).find('option:selected').data('weekday');
+			var routeWrap = $(self).closest('.js-nth-schedule-info').find('.js-route-wrap');
+			var sender_id = $(self).find('option:selected').data('sender');
+			var weekday = $(self).find('option:selected').data('weekday');
 
 			if (sender_id)
 			{
@@ -587,9 +587,7 @@
 					' data-area="' + addressJson[i].area + '"' +
 					' data-value="' + addressJson[i].id + '"' +
 					' value="' + addressJson[i].id + '"' +
-					' selected="' +
-					((addressJson[i].id == currentSelected) ? 'selected' : '') +
-					'">' +
+					'>' +
 					addressJson[i].city_title +
 					addressJson[i].area_title +
 					addressJson[i].address +
