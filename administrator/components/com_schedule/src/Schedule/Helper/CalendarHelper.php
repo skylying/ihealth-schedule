@@ -41,8 +41,7 @@ class CalendarHelper
 
 		$weekArray = array('0', '1', '2', '3', '4', '5', '6');
 
-		$option['class'] = 'table table-bordered calendar calendar' . $year . $month;
-		$option['id']    = 'calendar';
+		$option['class'] = 'table table-bordered calendar calendar-' . $year . '-' . $month;
 
 		$grid->setTableOptions($option);
 		$grid->setColumns($weekArray);
@@ -70,38 +69,48 @@ class CalendarHelper
 		{
 			$currentDay = date('w', mktime(null, null, null, $month, $i, $year));
 
-			$className = ($currentDay == 0 || $currentDay == 6) ? 'off center' : 'selectable center';
-
+			// Add new row at Sunday
 			if ($currentDay == 0)
 			{
 				$grid->addRow();
 			}
 
-			$grid->setRowCell(
-				$currentDay, $i, array(
-					'class' => $className,
-					'data-date' => $year . '-' . $month . '-' . $i,
-				)
-			);
+			// Set default cell config
+			$cellConfig = [];
+			$cellConfig['data-date'] = $year . '-' . $month . '-' . $i;
 
-			// Inject offdays
-			if (!empty($offDaysInMonth))
+			$className = ['center'];
+
+			// Get off days config & class name
+			if (!empty($offDaysInMonth[$i]))
 			{
-				foreach ($offDaysInMonth as $key => $value)
+				$cellConfig['data-date'] = $offDaysInMonth[$i]->date;
+				$cellConfig['id'] = $offDaysInMonth[$i]->id;
+
+				if ($offDaysInMonth[$i]->state == 1)
 				{
-					if ($key == $i)
-					{
-						$grid->setRowCell(
-							$currentDay, $i, array(
-								'id'    => $value->id,
-								'class' => ($value->state == 1) ? 'selectable center off' : 'selectable center',
-								'data-date'  => $value->date,
-								'title' => $value->title,
-							)
-						);
-					}
+					$className[] = 'off';
 				}
 			}
+
+			// Check weekends
+			if ($currentDay != 0 && $currentDay != 6)
+			{
+				// 非週末時設為可勾選
+				$className[] = 'selectable';
+			}
+			else
+			{
+				// 週末, 表示為休假日
+				$className[] = 'off';
+			}
+
+			// Prevent offdays contains weekend
+			$className = array_unique($className);
+
+			$cellConfig['class'] = implode(' ', $className);
+
+			$grid->setRowCell($currentDay, $i, $cellConfig);
 		}
 
 		// Fill the "blank days" at end

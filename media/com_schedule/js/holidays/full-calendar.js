@@ -31,7 +31,7 @@
 			{
 				var valuePackage = {};
 
-				valuePackage.date      = $(this).attr('data-date');
+				valuePackage.date      = $(this).data('date');
 				valuePackage.holidayId = $(this).attr('id');
 				valuePackage.state     = '1';
 
@@ -91,11 +91,7 @@
 
 			this.inputsArea.append(input);
 
-			// Prevent re-create hidden inputs
-			if (-1 == $.inArray(valuePackage.date, this.hiddenInputIdList))
-			{
-				this.hiddenInputIdList.push(valuePackage.date);
-			}
+			this.hiddenInputIdList.push(valuePackage.date);
 		}
 	}
 })(jQuery);
