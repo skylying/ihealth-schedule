@@ -129,6 +129,12 @@ jQuery(document).ready(function ()
 	{
 		bottom: -30px;
 		position: relative;
+		width: 88%;
+	}
+
+	.js-save-address
+	{
+		width: 88%;
 	}
 
 	.js-tmpl-add-addressrow
@@ -148,6 +154,7 @@ jQuery(document).ready(function ()
 	.opaque
 	{
 		opacity: .3;
+		transition: all .3s;
 	}
 
 	.custom-well
@@ -159,6 +166,7 @@ jQuery(document).ready(function ()
 		-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
 		-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
 		box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+		transition: all .2s;
 	}
 
 	/** This page quick add */
@@ -187,6 +195,76 @@ jQuery(document).ready(function ()
 		max-width: 128px !important;
 	}
 
+	/* Base for label styling */
+	[type="checkbox"]:not(:checked),
+	[type="checkbox"]:checked {
+		position: absolute;
+		left: -9999px;
+	}
+	[type="checkbox"]:not(:checked) + label,
+	[type="checkbox"]:checked + label {
+		position: relative;
+		padding-left: 30px;
+		padding-top: 4px;
+		cursor: pointer;
+		font-size: 1.3em;
+	}
+
+	/* checkbox aspect */
+	[type="checkbox"]:not(:checked) + label:before,
+	[type="checkbox"]:checked + label:before {
+		content: '';
+		position: absolute;
+		left:0;
+		top: 2px;
+		width: 22px;
+		height: 22px;
+		border: 1px solid #aaa;
+		background: #f8f8f8;
+		border-radius: 3px;
+		box-shadow: inset 0 1px 3px rgba(0,0,0,.3)
+	}
+	/* checked mark aspect */
+	[type="checkbox"]:not(:checked) + label:after,
+	[type="checkbox"]:checked + label:after {
+		content: '✔';
+		position: absolute;
+		top: 0;
+		left: 4px;
+		padding-top: 3px;
+		font-size: 17px;
+		color: #09ad7e;
+		transition: all .2s;
+	}
+	/* checked mark aspect changes */
+	[type="checkbox"]:not(:checked) + label:after {
+		opacity: 0;
+		transform: scale(0);
+	}
+	[type="checkbox"]:checked + label:after {
+		opacity: 1;
+		transform: scale(1);
+	}
+	/* disabled checkbox */
+	[type="checkbox"]:disabled:not(:checked) + label:before,
+	[type="checkbox"]:disabled:checked + label:before {
+		box-shadow: none;
+		border-color: #bbb;
+		background-color: #ddd;
+	}
+	[type="checkbox"]:disabled:checked + label:after {
+		color: #999;
+	}
+	[type="checkbox"]:disabled + label {
+		color: #aaa;
+	}
+	/* accessibility */
+	[type="checkbox"]:checked:focus + label:before,
+	[type="checkbox"]:not(:checked):focus + label:before {
+		border: 1px dotted blue;
+	}
+
+
 </style>
 <?php if ($isSaveAndPrint == '1'): ?>
 	<script>
@@ -204,6 +282,18 @@ jQuery(document).ready(function ()
 				echo $field->getControlGroup();
 			}
 			?>
+			<?php echo $data->form->getControlGroup('note'); ?>
+			<div class="control-group">
+				<div class="control-label">
+					<?php echo $data->form->getLabel('remind'); ?>
+				</div>
+				<div class="controls">
+						<span class="remind">
+						<?php echo JText::_('COM_SCHEDULE_RXINDIVIDUAL_REMIND_' . $data->form->getValue('remind')); ?>
+						</span>
+				</div>
+			</div>
+
 		</div>
 		<div class="col-lg-7 col-md-7 col-sm-12">
 			<?php foreach (array("1st", "2nd", "3rd") as $key): ?>
@@ -354,19 +444,6 @@ jQuery(document).ready(function ()
 								<span class="icon-plus icon-white"></span>
 								儲存
 							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-12">
-					<?php echo $data->form->getControlGroup('note'); ?>
-					<div class="control-group">
-						<div class="control-label">
-							<?php echo $data->form->getLabel('remind'); ?>
-						</div>
-						<div class="controls">
-							<span class="remind">
-							<?php echo JText::_('COM_SCHEDULE_RXINDIVIDUAL_REMIND_' . $data->form->getValue('remind')); ?>
-							</span>
 						</div>
 					</div>
 				</div>
