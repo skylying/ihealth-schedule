@@ -97,6 +97,9 @@ class ScheduleModelHolidays extends ListModel
 		}
 
 		parent::populateState($ordering, 'ASC');
+
+		// Reset pagination state, because we need all holidays even when it exceeds 100 records
+		$this->getState()->set('list', '');
 	}
 
 	/**

@@ -13,26 +13,29 @@
 		// Initialize all element we need
 		initialize : function()
 		{
-			this.td         = $('.calendar tr td');
+			this.td         = $('.selectable');
 			this.inputsArea = $('#hidden-inputs-area');
 
-			// Global namespace for "this"
-			window.$this = this;
+			this.hiddenInputIdList = [];
 
 			// Bind all event we need
-			$this.bindEvent();
+			this.bindEvent();
 		},
 
 		// Bind all event
 		bindEvent : function()
 		{
-			$this.td.on('click', function()
+			var self = this;
+
+			self.td.on('click', function()
 			{
 				var valuePackage = {};
 
-				valuePackage.date      = $(this).attr('name');
+				valuePackage.date      = $(this).data('date');
 				valuePackage.holidayId = $(this).attr('id');
 				valuePackage.state     = '1';
+
+				var weekDay = new Date(valuePackage.date).getDay();
 
 				// When user click empty date, return
 				if (valuePackage.date == '' || valuePackage.date == undefined)
@@ -51,8 +54,26 @@
 					$(this).addClass('off');
 				}
 
-				$this.createInput(valuePackage);
+				// If check hidden input list, if exist, update it
+				if (-1 == $.inArray(valuePackage.date, self.hiddenInputIdList))
+				{
+					self.createInput(valuePackage);
+				}
+				else
+				{
+					self.updateHiddenInput(valuePackage);
+				}
 			})
+		},
+
+		/**
+		 * Update existing hidden input
+		 *
+		 * @param {object} valuePackage
+		 */
+		updateHiddenInput : function(valuePackage)
+		{
+			$('#' + valuePackage.date).val(JSON.stringify(valuePackage));
 		},
 
 		/**
@@ -62,39 +83,15 @@
 		 */
 		createInput : function(valuePackage)
 		{
-			var inputConfig = $this.configureNewInput(valuePackage);
-
 			var input = $('<input/>', {
-				'id'    : inputConfig.elementId,
+				'id'    : valuePackage.date,
 				'name'  : 'jform[date][]',
-				'value' : JSON.stringify(inputConfig.value)
+				'value' : JSON.stringify(valuePackage)
 			});
 
-			$this.inputsArea.append(input);
-		},
+			this.inputsArea.append(input);
 
-		/**
-		 * Generate input value and attributes
-		 *
-		 * @param {object} valuePackage
-		 *
-		 * @returns object
-		 */
-		configureNewInput : function(valuePackage)
-		{
-			var date = new Date,
-				timeStamp = date.getTime(),
-				inputConfig = {};
-				inputConfig.value = {};
-
-			// Give each dynamically created input an unique id
-			inputConfig.elementId = 'date-' + timeStamp;
-
-			inputConfig.value.date      = valuePackage.date;
-			inputConfig.value.holidayId = valuePackage.holidayId;
-			inputConfig.value.state     = valuePackage.state;
-
-			return inputConfig;
+			this.hiddenInputIdList.push(valuePackage.date);
 		}
 	}
 })(jQuery);
