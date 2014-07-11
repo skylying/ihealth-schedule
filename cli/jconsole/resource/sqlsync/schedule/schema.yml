@@ -75,6 +75,7 @@
         task_id: { Field: task_id, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: '對應外送 id', From: [task_id] }
         ice: { Field: ice, Type: int(1), 'Null': NO, Default: null, Extra: '', Comment: '是否有冰品', From: [ice] }
         sorted: { Field: sorted, Type: int(1), 'Null': NO, Default: null, Extra: '', Comment: '是否完成分藥', From: [sorted] }
+        modified_by: { Field: modified_by, Type: 'int(11) unsigned', 'Null': NO, Default: null, Extra: '', Comment: '最後修改人 id', From: [modified_by] }
     index:
         - { Table: '#__schedule_drug_extra_details', Non_unique: '0', Key_name: PRIMARY, Seq_in_index: '1', Column_name: id, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
 '#__schedule_drugs':
@@ -281,6 +282,7 @@
         note: { Field: note, Type: text, 'Null': YES, Default: null, Extra: '', Comment: 行政排程類別說明, From: [note] }
         notify: { Field: notify, Type: tinyint(1), 'Null': NO, Default: null, Extra: '', Comment: '提醒使用者該排程需要被注意 (0:無通知 / 1:排程需要被合併)', From: [notify] }
         params: { Field: params, Type: text, 'Null': NO, Default: null, Extra: '', Comment: Params, From: [params] }
+        modified_by: { Field: modified_by, Type: 'int(11) unsigned', 'Null': NO, Default: null, Extra: '', Comment: '最後修改人 id', From: [modified_by] }
     index:
         - { Table: '#__schedule_schedules', Non_unique: '0', Key_name: PRIMARY, Seq_in_index: '1', Column_name: id, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
 '#__schedule_senders':
