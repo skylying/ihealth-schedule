@@ -104,6 +104,13 @@ class ScheduleViewTasksHtml extends GridView
 	 */
 	protected function prepareData()
 	{
+		$isSender = Schedule\Helper\SenderHelper::isSenderLogin();
+
+		if ($isSender)
+		{
+			$filters = $this->data->filterForm;
+			$filters->removeField('task.sender', 'filter');
+		}
 	}
 
 	/**
