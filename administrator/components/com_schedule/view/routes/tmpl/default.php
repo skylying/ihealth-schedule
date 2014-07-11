@@ -137,4 +137,18 @@ $weekdayField = $this->data->filterForm->getField('weekday', 'data');
 	{
 		RouteJs.initialize();
 	});
+
+	Joomla.submitbutton = function(task)
+	{
+		var valid = RouteJs.validateSubmit();
+
+		if (task == 'route.edit.save' && true !== valid)
+		{
+			Joomla.renderMessages(valid);
+
+			return;
+		}
+
+		Joomla.submitform(task, document.getElementById('adminForm'));
+	};
 </script>
