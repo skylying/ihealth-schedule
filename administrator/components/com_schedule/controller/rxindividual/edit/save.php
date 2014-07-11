@@ -383,6 +383,11 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 			// 第幾次宅配
 			"deliver_nth"   => $nth,
 
+			// Telephone Info
+			"tel_office"   => $formData['tel_office'],
+			"tel_home"     => $formData['tel_home'],
+			"mobile"       => $formData['mobile'],
+
 			// Default
 			"status"        => "scheduled",
 			"sorted"        => 0

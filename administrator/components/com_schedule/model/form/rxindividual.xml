@@ -245,6 +245,24 @@
 			<option value="THU">星期四</option>
 			<option value="FRI">星期五</option>
 		</field>
+
+		<field name="tel_office"
+			type="text"
+			label="聯絡電話(O)"
+			description="聯絡電話(O)"
+			/>
+
+		<field name="tel_home"
+			type="text"
+			label="聯絡電話(H)"
+			description="聯絡電話(H)"
+			/>
+
+		<field name="mobile"
+			type="text"
+			label="手機(M)"
+			description="手機(M)"
+			/>
 	</fields>
 
 	<fields name="schedules_2nd">
@@ -312,6 +330,24 @@
 			<option value="THU">星期四</option>
 			<option value="FRI">星期五</option>
 		</field>
+
+		<field name="tel_office"
+			type="text"
+			label="聯絡電話(O)"
+			description="聯絡電話(O)"
+			/>
+
+		<field name="tel_home"
+			type="text"
+			label="聯絡電話(H)"
+			description="聯絡電話(H)"
+			/>
+
+		<field name="mobile"
+			type="text"
+			label="手機(M)"
+			description="手機(M)"
+			/>
 	</fields>
 
 	<fields name="schedules_3rd">
@@ -379,6 +415,24 @@
 			<option value="THU">星期四</option>
 			<option value="FRI">星期五</option>
 		</field>
+
+		<field name="tel_office"
+			type="text"
+			label="聯絡電話(O)"
+			description="聯絡電話(O)"
+			/>
+
+		<field name="tel_home"
+			type="text"
+			label="聯絡電話(H)"
+			description="聯絡電話(H)"
+			/>
+
+		<field name="mobile"
+			type="text"
+			label="手機(M)"
+			description="手機(M)"
+			/>
 	</fields>
 
 	<fieldset

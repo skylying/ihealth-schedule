@@ -245,6 +245,7 @@ jQuery(document).ready(function ()
 								</div>
 							</div>
 						</div>
+
 						<div class="row-fluid">
 							<div class="col-lg-4">
 								<?php echo $schedules["jform_schedules_{$key}_drug_empty_date"]->getControlGroup(); ?>
@@ -254,6 +255,18 @@ jQuery(document).ready(function ()
 							</div>
 							<div class="col-lg-4">
 								<?php echo $schedules["jform_schedules_{$key}_session"]->getControlGroup(); ?>
+							</div>
+						</div>
+
+						<div class="row-fluid">
+							<div class="col-lg-4">
+								<?php echo $schedules["jform_schedules_{$key}_tel_office"]->getControlGroup(); ?>
+							</div>
+							<div class="col-lg-4">
+								<?php echo $schedules["jform_schedules_{$key}_tel_home"]->getControlGroup(); ?>
+							</div>
+							<div class="col-lg-4">
+								<?php echo $schedules["jform_schedules_{$key}_mobile"]->getControlGroup(); ?>
 							</div>
 						</div>
 					</div>
