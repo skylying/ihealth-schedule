@@ -72,7 +72,7 @@ class ScheduleControllerScheduleEditSave extends SaveController
 		$js = <<<JAVASCRIPT
 <script>
 parent.closeModal("#modal-add-new-item");
-parent.location.href = parent.location.href;
+parent.location.reload(true);
 </script>
 JAVASCRIPT;
 
