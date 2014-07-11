@@ -32,9 +32,10 @@
 			minimumInputLength="1"
 			apiUrl="index.php?option=com_schedule&amp;task=institutes.search.json"
 			apiQueryKey="filter_search"
-			query="SELECT `id`, `short_title` FROM #__schedule_institutes WHERE `id` = '%s'"
+			query="SELECT `id`, `short_title`, `city`, `area` FROM #__schedule_institutes WHERE `id` = '%s'"
 			idField="id"
 			textField="short_title"
+			onchange="RouteEdit.instituteIdChange()"
 			/>
 
 		<field name="city"
