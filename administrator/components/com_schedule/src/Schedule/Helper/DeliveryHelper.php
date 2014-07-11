@@ -19,9 +19,6 @@ class DeliveryHelper
 	 */
 	public static function deliveryButton($id, $status)
 	{
-		// Joomla build-in checkbox id starts with "cid0", so we set item id minus 1 to fit it
-		$id--;
-
 		if ($status == 1)
 		{
 			$html = '<div class="btn btn-success" onclick="return listItemTask(\'cb' . $id . '\', \'tasks.state.undelivery\')">';

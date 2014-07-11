@@ -126,7 +126,7 @@ $date      = $container->get('date');
 
 			<!--STATE-->
 			<td class="center">
-				<?php echo DeliveryHelper::deliveryButton($item->id, $item->status)?>
+				<?php echo DeliveryHelper::deliveryButton($i, $item->status)?>
 			</td>
 
 			<!--PRINT-->
