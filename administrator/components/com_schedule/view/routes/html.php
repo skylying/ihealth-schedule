@@ -143,7 +143,8 @@ HTML;
 		};
 
 		$buttonSet['add2'] = $buttonSet['add'];
-		$buttonSet['add2']['args'] = array($this->viewItem . '.edit.save', 'title' => '儲存變更');
+		$buttonSet['add2']['handler'] = 'apply';
+		$buttonSet['add2']['args'] = array($this->viewItem . '.edit.save', '儲存變更');
 
 		$buttonSet['add']['access'] = false;
 
@@ -153,6 +154,17 @@ HTML;
 			$buttonSet['add']['access'] = true;
 			$buttonSet['delete']['access'] = true;
 			$buttonSet['delete']['priority'] = 10;
+
+			$buttonSet['add']['handler'] = function($task)
+			{
+				$html = <<<HTML
+<button class="btn btn-small" onclick="Joomla.submitbutton('route.edit.edit')">
+	<span class="icon-new"></span> 新增
+</button>
+HTML;
+				$bar = JToolbar::getInstance('toolbar');
+				$bar->appendButton('Custom', $html);
+			};
 		}
 
 		return $buttonSet;
