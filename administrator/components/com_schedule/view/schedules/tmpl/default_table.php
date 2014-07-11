@@ -8,6 +8,7 @@
 
 use Windwalker\Data\Data;
 use Windwalker\Helper\ArrayHelper;
+use Schedule\Helper\ScheduleHelper;
 
 // No direct access
 defined('_JEXEC') or die;
@@ -153,16 +154,17 @@ foreach ($data->items as $i => $item):
 
 		<!-- customer_name | institute_name -->
 		<td>
-			<?php if ($item->type == 'resident')
+			<?php
+			if ($item->institute_id > 0)
 			{
 				echo '<div class="glyphicon glyphicon-home">';
 			}
-			elseif ($item->type == 'individual')
+			elseif ($item->customer_id > 0)
 			{
 				echo '<div class="glyphicon glyphicon-user">';
 			}
 			?>
-			<?php echo Schedule\Helper\ScheduleHelper::getTargetLink($item); ?>
+			<?php echo ScheduleHelper::getTargetLink($item); ?>
 			<?php echo '</div>'; ?>
 		</td>
 

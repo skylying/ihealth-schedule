@@ -24,13 +24,13 @@ class ScheduleHelper
 	{
 		$attr = array('target' => '_blank');
 
-		switch ($item->type)
+		if ($item->institute_id > 0)
 		{
-			case 'individual':
-				return UiHelper::foreignLink('member', $item->member_name, $item->member_id, '', $attr);
-
-			case 'resident':
-				return UiHelper::foreignLink('institute', $item->institute_title, $item->institute_id, '', $attr);
+			return UiHelper::foreignLink('institute', $item->institute_title, $item->institute_id, '', $attr);
+		}
+		elseif ($item->customer_id > 0)
+		{
+			return UiHelper::foreignLink('member', $item->member_name, $item->member_id, '', $attr);
 		}
 
 		return '';
