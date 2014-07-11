@@ -81,9 +81,9 @@ class ScheduleModelDrugprices extends ListModel
 	{
 		$queryHelper = $this->getContainer()->get('model.drugprices.helper.query', Container::FORCE_NEW);
 
-		$queryHelper->addTable('drugprice', '#__schedule_drugprices')
+		$queryHelper->addTable('drugprice', '#__schedule_drug_extra_details')
 			->addTable('institute', '#__schedule_institutes', 'drugprice.institute_id = institute.id')
-			->addTable('customer', '#__schedule_customers', 'drugprice.customer_id = customer.id');
+			->addTable('task', '#__schedule_tasks', 'drugprice.task_id = task.id');
 
 		$this->filterFields = array_merge($this->filterFields, $queryHelper->getFilterFields());
 	}

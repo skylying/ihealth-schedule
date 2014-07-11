@@ -94,22 +94,24 @@ class ScheduleViewDrugdetailHtml extends EditView
 	{
 		$app = JFactory::getApplication();
 
+		// Prepare filter input data
 		$senderIds = $app->input->getVar('senderIds', array());
-
 		$this->data->date = $app->input->get("date");
 
 		if (empty($senderIds))
 		{
-			throw new \Exception("給我 sender !");
+			throw new \Exception("請選擇至少一位外送藥師");
 		}
 
 		if (empty($this->data->date))
 		{
-			throw new \Exception("給我 date !");
+			throw new \Exception("請選擇外送日期");
 		}
 
+		// Get schedules
 		$schedules = $this->getRelatedSchedules($senderIds);
 		$taskIds   = \JArrayHelper::getColumn($schedules, "task_id");
+
 		$this->data->extras = $this->getDrugExtraDataSet($taskIds);
 
 		$items = array();
@@ -228,7 +230,17 @@ class ScheduleViewDrugdetailHtml extends EditView
 		$db = JFactory::getDbo();
 		$q  = $db->getQuery(true);
 
-		$q->select("*, schedule.id AS id, schedule.`type` AS `type`, task.sender AS sender, schedule.institute_id AS institute_id, task.id AS task_id")
+		$select = [
+			'* ',
+			'`schedule`.`id` AS id',
+			'`schedule`.`type` AS type',
+			'`schedule`.`modified_by` AS modified_by',
+			'`task`.`sender` AS sender',
+			'`schedule`.`institute_id` AS institute_id',
+			'`task`.`id` AS task_id',
+		];
+
+		$q->select($select)
 			->from(Table::SCHEDULES . " AS schedule")
 			->join("LEFT", Table::TASKS . " AS task on schedule.task_id = task.id")
 			->join("LEFT", Table::PRESCRIPTIONS . " AS rx on schedule.rx_id = rx.id")

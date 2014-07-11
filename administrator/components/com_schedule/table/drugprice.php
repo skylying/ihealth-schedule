@@ -23,7 +23,7 @@ class ScheduleTableDrugprice extends Table
 	 */
 	public function __construct()
 	{
-		parent::__construct('#__schedule_drugprices');
+		parent::__construct('#__schedule_drug_extra_details');
 	}
 
 	/**

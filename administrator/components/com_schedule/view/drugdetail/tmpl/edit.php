@@ -30,6 +30,9 @@ $item       = $data->item;
 <script type="text/javascript">
 	Joomla.submitbutton = function(task)
 	{
+		// Delete empty extra purchase inputs
+		window.InstituteExtraObject.deleteEmptyPrice();
+
 		if (task == 'drugdetails.edit.cancel' || document.formvalidator.isValid(document.id('adminForm')))
 		{
 			Joomla.submitform(task, document.getElementById('adminForm'));
