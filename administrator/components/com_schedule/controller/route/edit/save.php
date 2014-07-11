@@ -2,11 +2,7 @@
 
 use Windwalker\Controller\Edit\SaveController;
 use Windwalker\Model\Exception\ValidateFailException;
-use Windwalker\Data\Data;
-use Windwalker\Joomla\DataMapper\DataMapper;
-use Schedule\Table\Table;
 use Schedule\Table\Collection as TableCollection;
-use Schedule\Helper\ScheduleHelper;
 
 /**
  * Class ScheduleControllerRouteEditSave
@@ -106,11 +102,17 @@ class ScheduleControllerRouteEditSave extends SaveController
 
 			if ('institute' === $route->type)
 			{
-				$updateData = array(
-					'id' => $route->institute_id,
-					'sender_id' => $data['sender_id'],
-					'delivery_weekday' => $data['weekday'],
-				);
+				$updateData = array('id' => $route->institute_id);
+
+				if (!empty($data['sender_id']))
+				{
+					$updateData['sender_id'] = $data['sender_id'];
+				}
+
+				if (!empty($data['weekday']))
+				{
+					$updateData['delivery_weekday'] = $data['weekday'];
+				}
 
 				$modelInstitute->save($updateData);
 			}
@@ -131,6 +133,19 @@ class ScheduleControllerRouteEditSave extends SaveController
 		if (! empty($id))
 		{
 			$data['id'] = $id;
+		}
+		else
+		{
+			if (! empty($data['institute_id']))
+			{
+				// When institute_id exists, update route with exists route id
+				$routeTable = TableCollection::loadTable('Route', ['institute_id' => $data['institute_id']]);
+
+				if (! empty($routeTable->id))
+				{
+					$data['id'] = $routeTable->id;
+				}
+			}
 		}
 
 		// Validate the posted data.
