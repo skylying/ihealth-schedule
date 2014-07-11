@@ -146,16 +146,14 @@
 			// Get input attributes
 			var attributes = this.configureInput(checkbox);
 
-			var input = $('<input/>', {
+			return $('<input/>', {
 				'id'    : attributes.elementId,
 				'type'  : attributes.type,
 				'name'  : attributes.name,
 				'title' : attributes.title,
 				'class' : attributes.class,
-				'value' : JSON.stringify(attributes.value)
+				'value' : attributes.value.id
 			});
-
-			return input;
 		},
 
 		/**
@@ -188,6 +186,40 @@
 			inputConfig.value.institute_id = routeValueObj.institute_id;
 
 			return inputConfig;
+		},
+
+		/**
+		 * Validate submit form
+		 *
+		 * @returns bool|object
+		 */
+		validateSubmit: function()
+		{
+			var checked = 0;
+
+			$('.routeinput').each(function() {
+				if ($(this).prop('checked'))
+				{
+					++checked;
+				}
+			});
+
+			if (0 === checked)
+			{
+				return {item:['未選取任何路線']};
+			}
+
+			if (!($('#data_sender_id').val() > 0))
+			{
+				return {item:['「外送藥師」為空白']};
+			}
+
+			if ('' === $('#data_weekday').val())
+			{
+				return {item:['「外送日」為空白']};
+			}
+
+			return true;
 		}
 	};
 })(jQuery);

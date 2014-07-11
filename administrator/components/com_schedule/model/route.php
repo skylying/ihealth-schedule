@@ -91,9 +91,14 @@ class ScheduleModelRoute extends AdminModel
 
 		if ('customer' === $table->type)
 		{
+			$tableCity = TableCollection::loadTable('City', $table->city);
+			$tableArea = TableCollection::loadTable('Area', $table->area);
+
 			$table->institute_id = 0;
+			$table->city_title = $tableCity->title;
+			$table->area_title = $tableArea->title;
 		}
-		elseif ('institute' === $table->type)
+		elseif ('institute' === $table->type && !empty($table->institute_id))
 		{
 			$tableInstitute = TableCollection::loadTable('Institute', $table->institute_id);
 
