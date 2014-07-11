@@ -276,6 +276,16 @@
 						// Perform hidden input update
 						this.updateJsonToInputField(tagId, data);
 
+						// Update Telephones for each schedule
+
+						// Slice "jform_"
+						var tag = tagId.slice(6, tagId.length);
+
+						for (var i = 0; i < this.options.addressesKeys.length; i++)
+						{
+							this.updateTelephoneHtmlForSchedule(this.options.addressesKeys[i], data, tag);
+						}
+
 						Joomla.renderMessages([
 							['提醒您，您已新增散客電話或地址，記得按儲存喲。']
 						]);
@@ -417,6 +427,12 @@
 						// Update phone select list
 						self.updatePhoneHtml(self.options.telOfficeId, tel_office);
 						self.updateJsonToInputField(self.options.telOfficeId, tel_office);
+
+						// Update Telephones for each schedule
+						for (var i = 0; i < self.options.addressesKeys.length; i++)
+						{
+							self.updateTelephoneHtmlForSchedule(self.options.addressesKeys[i], tel_office, 'tel_office');
+						}
 					}
 					catch (err)
 					{
@@ -431,6 +447,12 @@
 						// Update phone select list
 						self.updatePhoneHtml(self.options.telHomeId, tel_home);
 						self.updateJsonToInputField(self.options.telHomeId, tel_home);
+
+						// Update Telephones for each schedule
+						for (var i = 0; i < self.options.addressesKeys.length; i++)
+						{
+							self.updateTelephoneHtmlForSchedule(self.options.addressesKeys[i], tel_home, 'tel_home');
+						}
 					}
 					catch (err)
 					{
@@ -445,6 +467,12 @@
 						// Update phone select list
 						self.updatePhoneHtml(self.options.mobileId, mobile);
 						self.updateJsonToInputField(self.options.mobileId, mobile);
+
+						// Update Telephones for each schedule
+						for (var i = 0; i < self.options.addressesKeys.length; i++)
+						{
+							self.updateTelephoneHtmlForSchedule(self.options.addressesKeys[i], mobile, 'mobile');
+						}
 					}
 					catch (err)
 					{
@@ -546,6 +574,57 @@
 			{
 				targetElement.val(JSON.stringify(dataJson));
 			}
+		},
+
+		/**
+		 * After telephone date retrived from ajax, update html
+		 *
+		 * @param {strinf} key
+		 * @param {json}   telJson
+		 * @param {string} fieldId
+		 */
+		updateTelephoneHtmlForSchedule : function(key, telJson, fieldId)
+		{
+			console.log(fieldId);
+			telJson = telJson || {};
+
+			// ex: jform_schedule_1st_tel_office
+			var targetId = 'jform_schedules_' + key + '_' + fieldId;
+
+			// ex: jform[schedule_1st][address]
+			var targetName = 'jform[' + 'schedules_' + key + '][' + fieldId + ']';
+
+			// Find its parent, later we will replace it with new select list
+			var targetsParent = $('#' + targetId).parent();
+
+			var targetValue = $('#' + targetId).val();
+
+			var html = '';
+
+			// Add select tag
+			html += '<select' +
+				' name="' + targetName + '"' +
+				' id="' + targetId + '"' +
+				'>';
+
+			for (var i = 0; i < telJson.length; i++)
+			{
+				// Add option tag
+				html += '<option' +
+					' value="' + telJson[i].number + '"' +
+					'>' +
+					telJson[i].number +
+					'</option>';
+			}
+
+			html += '</select>';
+
+			//Clear target hook's html first.
+			targetsParent.html("");
+
+			targetsParent.html(html);
+
+			targetsParent.find('option[value="' + targetValue + '"]').attr("selected", "selected");
 		},
 
 		/**

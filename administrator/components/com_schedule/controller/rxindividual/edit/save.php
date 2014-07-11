@@ -384,9 +384,9 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 			"deliver_nth"   => $nth,
 
 			// Telephone Info
-			"tel_office"   => $formData['tel_office'],
-			"tel_home"     => $formData['tel_home'],
-			"mobile"       => $formData['mobile'],
+			"tel_office"   => isset($formData['tel_office']) ? $formData['tel_office'] : "",
+			"tel_home"     => isset($formData['tel_home']) ? $formData['tel_home'] : "",
+			"mobile"       => isset($formData['mobile']) ? $formData['mobile'] : "",
 
 			// Default
 			"status"        => "scheduled",
