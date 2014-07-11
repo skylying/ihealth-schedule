@@ -120,11 +120,21 @@ jQuery(document).ready(function ()
 		width: 67%;
 		margin-right: 2%;
 	}
+
+	.js-nth-schedule-check .control-group
+	{
+		border-top: 7px solid #ccc;
+		border-bottom: 8px solid #ccc;
+		padding: 30px 0px;
+		background-color: #F8F8F8;
+	}
+
 	.js-select-phone-default
 	{
 		width: 67%;
 		margin-right: 2%;
 	}
+
 	.js-add-address
 	{
 		bottom: -30px;
@@ -132,23 +142,34 @@ jQuery(document).ready(function ()
 		width: 88%;
 	}
 
-	.js-save-address
+	.save-cancel-btn-group
 	{
 		width: 88%;
+	}
+
+	.js-save-address, .js-cancel-address
+	{
+		width: 50%;
 	}
 
 	.js-tmpl-add-addressrow
 	{
 		padding: 10px 30px;
 		margin: 0px -30px;
-		background-color: #FFDBDB;
+		background-color: rgba(255, 219, 219, .5);
 	}
 
 	.js-route-wrap
 	{
 		padding: 10px 30px;
 		margin: 0px -30px;
-		background-color: #FFDBDB;
+		background-color: rgba(255, 219, 219, .5);
+	}
+
+	.js-alltels-wrap
+	{
+		border-top: 1px solid #ccc;
+		padding-top: 24px;
 	}
 
 	.opaque
@@ -363,86 +384,88 @@ jQuery(document).ready(function ()
 					<?php echo $schedules["jform_schedules_{$key}_schedule_id"]->getControlGroup(); ?>
 				</div>
 			<?php endforeach; ?>
-				<div class="col-lg-12 js-tel-wrap">
-					<div class="control-group">
-						<div class="control-label">
-							<?php echo $data->form->getLabel('tel_office'); ?>
-						</div>
-						<!-- This is where to put select list -->
-						<div class="controls">
-							<input type="text" />
-						</div>
-						<div class="btn btn-small btn-info pull-left js-add-tel">
-							<span class="icon-plus icon-white"></span>
-							新增
-						</div>
-						<input type="hidden" name="<?php echo $telOfficeName; ?>" id="<?php echo $telOfficeId;?>"/>
-					</div>
-					<!-- Add telephone row -->
-					<div class="js-tmpl-add-telrow hide">
+				<div class="js-alltels-wrap">
+					<div class="col-lg-12 js-tel-wrap">
 						<div class="control-group">
+							<div class="control-label">
+								<?php echo $data->form->getLabel('tel_office'); ?>
+							</div>
+							<!-- This is where to put select list -->
 							<div class="controls">
-								<input class="js-tel-row-data pull-left" type="text">
+								<input type="text" />
 							</div>
-							<div class="btn btn-small btn-success pull-left js-save-tel">
-								<span class="icon-ok icon-white"></span>
-								儲存
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-12 js-tel-wrap">
-					<div class="control-group">
-						<div class="control-label">
-							<?php echo $data->form->getLabel('tel_home'); ?>
-						</div>
-						<!-- This is where to put select list -->
-						<div class="controls">
-							<input type="text" />
-						</div>
-						<div class="btn btn-small btn-info pull-left js-add-tel">
-							<span class="icon-plus icon-white"></span>
-							新增
-						</div>
-						<input type="hidden" name="<?php echo $telHomeName; ?>" id="<?php echo $telHomeId;?>"/>
-					</div>
-					<!-- Add telephone row -->
-					<div class="js-tmpl-add-telrow hide">
-						<div class="control-group">
-							<div class="controls">
-								<input class="js-tel-row-data pull-left" type="text">
-							</div>
-							<div class="btn btn-small btn-success pull-left js-save-tel">
-								<span class="icon-ok icon-white"></span>
-								儲存
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-12 js-tel-wrap">
-					<div class="control-group">
-						<div class="control-label">
-							<?php echo $data->form->getLabel('mobile'); ?>
-						</div>
-						<!-- This is where to put select list -->
-						<div class="controls">
-							<input type="text" />
-						</div>
-						<div class="btn btn-small btn-info pull-left js-add-tel">
-							<span class="icon-plus icon-white"></span>
-							新增
-						</div>
-						<input type="hidden" name="<?php echo $mobileName; ?>" id="<?php echo $mobileId;?>"/>
-					</div>
-					<!-- Add telephone row -->
-					<div class="js-tmpl-add-telrow hide">
-						<div class="control-group">
-							<div class="controls">
-								<input class="js-tel-row-data pull-left" type="text">
-							</div>
-							<div class="btn btn-small btn-success pull-left js-save-tel">
+							<div class="btn btn-small btn-info pull-left js-add-tel">
 								<span class="icon-plus icon-white"></span>
-								儲存
+								新增
+							</div>
+							<input type="hidden" name="<?php echo $telOfficeName; ?>" id="<?php echo $telOfficeId;?>"/>
+						</div>
+						<!-- Add telephone row -->
+						<div class="js-tmpl-add-telrow hide">
+							<div class="control-group">
+								<div class="controls">
+									<input class="js-tel-row-data pull-left" type="text">
+								</div>
+								<div class="btn btn-small btn-success pull-left js-save-tel">
+									<span class="icon-ok icon-white"></span>
+									儲存
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-12 js-tel-wrap">
+						<div class="control-group">
+							<div class="control-label">
+								<?php echo $data->form->getLabel('tel_home'); ?>
+							</div>
+							<!-- This is where to put select list -->
+							<div class="controls">
+								<input type="text" />
+							</div>
+							<div class="btn btn-small btn-info pull-left js-add-tel">
+								<span class="icon-plus icon-white"></span>
+								新增
+							</div>
+							<input type="hidden" name="<?php echo $telHomeName; ?>" id="<?php echo $telHomeId;?>"/>
+						</div>
+						<!-- Add telephone row -->
+						<div class="js-tmpl-add-telrow hide">
+							<div class="control-group">
+								<div class="controls">
+									<input class="js-tel-row-data pull-left" type="text">
+								</div>
+								<div class="btn btn-small btn-success pull-left js-save-tel">
+									<span class="icon-ok icon-white"></span>
+									儲存
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-12 js-tel-wrap">
+						<div class="control-group">
+							<div class="control-label">
+								<?php echo $data->form->getLabel('mobile'); ?>
+							</div>
+							<!-- This is where to put select list -->
+							<div class="controls">
+								<input type="text" />
+							</div>
+							<div class="btn btn-small btn-info pull-left js-add-tel">
+								<span class="icon-plus icon-white"></span>
+								新增
+							</div>
+							<input type="hidden" name="<?php echo $mobileName; ?>" id="<?php echo $mobileId;?>"/>
+						</div>
+						<!-- Add telephone row -->
+						<div class="js-tmpl-add-telrow hide">
+							<div class="control-group">
+								<div class="controls">
+									<input class="js-tel-row-data pull-left" type="text">
+								</div>
+								<div class="btn btn-small btn-success pull-left js-save-tel">
+									<span class="icon-plus icon-white"></span>
+									儲存
+								</div>
 							</div>
 						</div>
 					</div>
@@ -537,9 +560,15 @@ jQuery(document).ready(function ()
 				</div>
 			</div>
 			<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4" style="padding: 0px; margin-top: 27px;">
-				<div class="btn btn-small btn-success pull-right js-save-address">
-					<span class="icon-ok icon-white"></span>
-					儲存
+				<div class="btn-group pull-right save-cancel-btn-group">
+					<div class="btn btn-small btn-danger js-cancel-address">
+						<span class="icon-cancel icon-white"></span>
+						取消
+					</div>
+					<div class="btn btn-small btn-success js-save-address">
+						<span class="icon-ok icon-white"></span>
+						儲存
+					</div>
 				</div>
 			</div>
 		</div>

@@ -71,6 +71,11 @@
 				self.saveAddress(this);
 			});
 
+			$('.js-nth-schedule-info').on('click', '.js-cancel-address', function()
+			{
+				$(this).closest('.js-tmpl-add-addressrow').addClass('hide');
+			});
+
 			// Bind address list being changed
 			$('.js-nth-schedule-info').on('change', '.js-address-list', function()
 			{

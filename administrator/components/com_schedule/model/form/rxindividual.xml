@@ -183,7 +183,7 @@
 	<fields name="schedules_1st">
 		<field name="deliver_nth"
 			type="checkboxes"
-			label="宅配第幾次"
+			label=""
 			description="宅配第幾次"
 			>
 			<option value="1st">第一次</option>
@@ -268,7 +268,7 @@
 	<fields name="schedules_2nd">
 		<field name="deliver_nth"
 			type="checkboxes"
-			label="宅配第幾次"
+			label=""
 			description="宅配第幾次"
 			>
 			<option value="2nd">第二次</option>
@@ -353,7 +353,7 @@
 	<fields name="schedules_3rd">
 		<field name="deliver_nth"
 			type="checkboxes"
-			label="宅配第幾次"
+			label=""
 			description="宅配第幾次"
 			>
 			<option value="3rd">第三次</option>
