@@ -166,11 +166,11 @@ class ScheduleHelper
 		$validSendDateUnixTimes = [];
 
 		// Get the range of valid send dates (in days)
-		$daysBefore = 1 === $nth ? 0 : 10;
+		$daysBefore = 1 === $nth ? -1 : 10;
 		$daysAfter  = 1 === $nth ? 3 : 10;
 
 		// Fill valid send dates
-		for ($i = -$daysBefore; $i < $daysAfter; ++$i)
+		for ($i = -$daysBefore; $i <= $daysAfter; ++$i)
 		{
 			$unixTime = $drugEmptyDateUnixTime + $i * 86400;
 
