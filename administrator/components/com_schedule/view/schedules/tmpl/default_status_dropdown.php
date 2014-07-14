@@ -33,12 +33,25 @@ $optionForNormal = [
 ];
 
 $options = ($type == 'individual' || $type == 'resident') ? $optionForDelivery : $optionForNormal;
+
+$classTooltip = '';
+$showTooltip = '';
+
+if ($status != 'scheduled')
+{
+	$classTooltip = 'hasTooltip';
+	$cancelTitle = JText::_($prefix . $status);
+	$cancelNote = $data->item->cancel_note;
+
+	$showTooltip = 'title="<strong>取消原因:</strong>' . $cancelTitle . '<br /><strong>備註:</strong>' . $cancelNote . '"';
+}
 ?>
 
 <div class="btn-group status-dropdown-menu">
 	<button type="button"
-		class="btn btn-default btn-sm dropdown-toggle"
+		class="btn btn-default btn-sm dropdown-toggle <?php echo $classTooltip; ?>"
 		data-toggle="dropdown"
+		<?php echo $showTooltip; ?>
 		style="background:<?php echo JText::_($prefix . $status . '_COLOR'); ?>;">
 		<span class="glyphicon glyphicon-<?php echo JText::_($prefix . $status . '_ICON'); ?>"></span>
 		<?php echo JText::_($prefix . $status); ?>
