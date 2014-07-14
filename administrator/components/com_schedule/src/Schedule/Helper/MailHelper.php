@@ -15,8 +15,8 @@ class MailHelper
 	/**
 	 * sendMailWhenScheduleChange
 	 *
-	 * @param   string      $mailTo
-	 * @param   mixed       $displayData
+	 * @param   string|array  $mailTo
+	 * @param   mixed         $displayData
 	 *
 	 * @return  void
 	 *
@@ -47,8 +47,8 @@ class MailHelper
 	/**
 	 * sendEmptyRouteMail
 	 *
-	 * @param   string      $mailTo
-	 * @param   mixed       $displayData
+	 * @param   string|array  $mailTo
+	 * @param   mixed         $displayData
 	 *
 	 * @return  void
 	 *
@@ -79,8 +79,8 @@ class MailHelper
 	/**
 	 * scheduleChangeNotify
 	 *
-	 * @param   string      $mailTo
-	 * @param   mixed       $displayData
+	 * @param   string|array  $mailTo
+	 * @param   mixed         $displayData
 	 *
 	 * @return  void
 	 *
