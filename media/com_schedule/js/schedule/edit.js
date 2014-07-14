@@ -95,6 +95,11 @@
 						'&filter[schedule.date_start]=' + start.toISOString().substr(0, 10) +
 						'&filter[schedule.date_end]=' + end.toISOString().substr(0, 10);
 
+					if ('institute' === type)
+					{
+						url += '&filter[schedule.institute_id]=' + $('#jform_institute_id').val();
+					}
+
 					$('#' + type + '-schedules-with-range').attr('href', url);
 
 					break;
