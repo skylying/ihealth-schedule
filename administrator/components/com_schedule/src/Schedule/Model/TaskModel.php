@@ -9,6 +9,7 @@
 namespace Schedule\Model;
 
 use Windwalker\Model\AdminModel;
+use Schedule\Table\Collection AS TableCollection;
 
 // No direct access
 defined('_JEXEC') or die;
@@ -73,5 +74,21 @@ class TaskModel extends AdminModel
 	public function setOrderPosition($table, $position = 'last')
 	{
 		parent::setOrderPosition($table, $position);
+	}
+
+	/**
+	 * prepareTable
+	 *
+	 * @param   \JTable $table
+	 *
+	 * @return  void
+	 */
+	protected function prepareTable(\JTable $table)
+	{
+		$senderTable = TableCollection::loadTable('Sender', $table->sender);
+
+		$table->sender_name = $senderTable->name;
+
+		parent::prepareTable($table);
 	}
 }

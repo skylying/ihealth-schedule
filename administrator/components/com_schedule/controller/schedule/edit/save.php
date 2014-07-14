@@ -4,6 +4,7 @@ use Windwalker\Controller\Edit\SaveController;
 use Schedule\Helper\ScheduleHelper;
 use Schedule\Table\Table;
 use Schedule\Table\Collection as TableCollection;
+use Windwalker\Data\Data;
 use Windwalker\Joomla\DataMapper\DataMapper;
 use Schedule\Helper\MailHelper;
 
@@ -43,6 +44,20 @@ class ScheduleControllerScheduleEditSave extends SaveController
 				$this->sendNotifyMail = true;
 			}
 		}
+
+		$task = (new DataMapper(Table::TASKS))->findOne(
+			array(
+				'date' => $this->data['date'],
+				'sender' => $this->data['sender_id'],
+			)
+		);
+
+		if (empty($task->id))
+		{
+			$task = $this->createTaskData();
+		}
+
+		$this->data['task_id'] = $task->id;
 
 		parent::preSaveHook();
 	}
@@ -111,5 +126,28 @@ JAVASCRIPT;
 
 			MailHelper::sendMailWhenScheduleChange($memberTable->email, $mailData);
 		}
+	}
+
+	/**
+	 * createTaskData
+	 *
+	 * @return  Data
+	 */
+	protected function createTaskData()
+	{
+		$task = array(
+			'status' => 0,
+			'sender' => $this->data['sender_id'],
+			'date' => $this->data['date'],
+		);
+
+		/** @var ScheduleModelTask $taskModel */
+		$taskModel = $this->getModel('Task');
+
+		$taskModel->save($task);
+
+		$task['id'] = $taskModel->getState()->get('task.id');
+
+		return new Data($task);
 	}
 }
