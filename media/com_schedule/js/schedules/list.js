@@ -43,7 +43,18 @@
 		window.closeModal = function(id)
 		{
 			$(id).modal('hide');
-		}
+		};
+	}
+
+	if (window.bindDateFilter === undefined)
+	{
+		window.bindDateFilter = function($node)
+		{
+			$node.on('dp.change', function()
+			{
+				$('#adminForm').submit();
+			});
+		};
 	}
 
 	/**
