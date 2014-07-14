@@ -186,7 +186,7 @@ class ScheduleHelper
 		// Validate send date
 		if (! in_array($sendDateUnixTime, $validSendDateUnixTimes))
 		{
-			throw new ValidateFailException(['Invalid send date']);
+			throw new ValidateFailException(['Invalid send date for ' . $nth . 'th schedule']);
 		}
 
 		return true;
