@@ -77,7 +77,7 @@ class MailHelper
 	}
 
 	/**
-	 * sendEmptyRouteMail
+	 * scheduleChangeNotify
 	 *
 	 * @param   string      $mailTo
 	 * @param   mixed       $displayData

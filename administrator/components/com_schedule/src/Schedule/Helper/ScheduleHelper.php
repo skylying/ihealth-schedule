@@ -253,7 +253,7 @@ class ScheduleHelper
 		}
 
 		if (isset($validData['status'])
-			&& 'deleted' === $validData['session'])
+			&& 'deleted' === $validData['status'])
 		{
 			return true;
 		}
