@@ -64,7 +64,7 @@
 			description="處方開立醫院"
 			onchange="this.form.submit();"
 			>
-			<option></option>
+			<option>--選擇處方開立醫院--</option>
 		</field>
 
 		<field
@@ -74,7 +74,7 @@
 			description="處方箋狀態"
 			onchange="this.form.submit();"
 			>
-			<option></option>
+			<option>--選擇處方箋狀態--</option>
 			<option value="0">已取得</option>
 			<option value="1">未取得</option>
 		</field>
@@ -85,7 +85,7 @@
 			description="處方箋取得方式"
 			onchange="this.form.submit();"
 			>
-			<option></option>
+			<option>--選擇處方箋取得方式--</option>
 			<option value="fax">傳真</option>
 			<option value="line">line</option>
 			<option value="form">自行填表</option>
@@ -96,35 +96,6 @@
 	</fields>
 
 	<fields name="list">
-		<field
-			name="fullordering"
-			type="list"
-			label="COM_CONTENT_LIST_FULL_ORDERING"
-			description="COM_CONTENT_LIST_FULL_ORDERING_DESC"
-			onchange="this.form.submit();"
-			default="a.title ASC"
-			>
-			<option value="">JGLOBAL_SORT_BY</option>
-			<option value="rxindividual.catid, rxindividual.ordering ASC">JGRID_HEADING_ORDERING_ASC</option>
-			<option value="rxindividual.catid, rxindividual.ordering DESC">JGRID_HEADING_ORDERING_DESC</option>
-			<option value="rxindividual.state ASC">JSTATUS_ASC</option>
-			<option value="rxindividual.state DESC">JSTATUS_DESC</option>
-			<option value="rxindividual.title ASC">JGLOBAL_TITLE_ASC</option>
-			<option value="rxindividual.title DESC">JGLOBAL_TITLE_DESC</option>
-			<option value="category.title ASC">JCATEGORY_ASC</option>
-			<option value="category.title DESC">JCATEGORY_DESC</option>
-			<option value="rxindividual.access ASC">JGRID_HEADING_ACCESS_ASC</option>
-			<option value="rxindividual.access DESC">JGRID_HEADING_ACCESS_DESC</option>
-			<option value="rxindividual.created_by ASC">JAUTHOR_ASC</option>
-			<option value="rxindividual.created_by DESC">JAUTHOR_DESC</option>
-			<option value="rxindividual.language ASC">JGRID_HEADING_LANGUAGE_ASC</option>
-			<option value="rxindividual.language DESC">JGRID_HEADING_LANGUAGE_DESC</option>
-			<option value="rxindividual.created ASC">JDATE_ASC</option>
-			<option value="rxindividual.created DESC">JDATE_DESC</option>
-			<option value="rxindividual.id ASC">JGRID_HEADING_ID_ASC</option>
-			<option value="rxindividual.id DESC">JGRID_HEADING_ID_DESC</option>
-		</field>
-
 		<field
 			name="limit"
 			type="limitbox"
