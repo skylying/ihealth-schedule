@@ -125,6 +125,48 @@
 		});
 	}
 
+	/**
+	 * Class SchedulesList
+	 */
+	window.SchedulesList = window.SchedulesList || {
+		/**
+		 * Edit one schedule
+		 *
+		 * @param {integer} index Index of table row
+		 */
+		edit: function(index) {
+			var $fieldDate = $('#edit_item_field_date'),
+				$fieldSenderId = $('#edit_item_field_sender_id');
+
+			$('input[name="checkall-toggle"]').prop('checked', false);
+
+			$('input[name="cid[]"]').each(function(i, val)
+			{
+				var $node = $(this);
+
+				if (i === index)
+				{
+					$node.prop('checked', true);
+
+					var $row = $node.closest('tr'),
+						date = $.trim($row.find('.field-date').text()),
+						senderId = $row.find('.field-sender-id').data('sender-id');
+
+					// Copy date & sender_id to modal box
+					$fieldDate.val(date);
+					$fieldSenderId.val(senderId);
+					$fieldSenderId.trigger('liszt:updated');
+				}
+				else
+				{
+					$node.prop('checked', false);
+				}
+			});
+
+			$('#edit-item-button').click();
+		}
+	};
+
 	$(function()
 	{
 		bindStatusDropdownMenu();

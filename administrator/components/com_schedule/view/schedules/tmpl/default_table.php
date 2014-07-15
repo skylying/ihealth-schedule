@@ -135,7 +135,7 @@ foreach ($data->items as $i => $item):
 		<!-- EDIT -->
 		<td class="center">
 			<a class="btn btn-mini btn-primary" href="#"
-				onclick="jQuery('#cb<?php echo $i; ?>').click();jQuery('#edit-item-button').click();">
+				onclick="SchedulesList.edit(<?php echo $i; ?>);">
 				<span class="glyphicon glyphicon-edit"></span>
 			</a>
 		</td>
@@ -189,12 +189,12 @@ foreach ($data->items as $i => $item):
 		</td>
 
 		<!-- date -->
-		<td class="center">
+		<td class="center field-date">
 			<?php echo $item->date; ?>
 		</td>
 
 		<!-- route_sender_name -->
-		<td class="center">
+		<td class="center field-sender-id" data-sender-id="<?php echo $item->sender_id; ?>">
 			<?php echo $item->sender_name; ?>
 		</td>
 
