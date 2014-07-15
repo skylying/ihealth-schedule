@@ -12,6 +12,10 @@
 			readonly="true"
 			/>
 
+		<field name="printed"
+			type="hidden"
+			/>
+
 		<field name="id_number"
 			type="text"
 			label="身分證字號"

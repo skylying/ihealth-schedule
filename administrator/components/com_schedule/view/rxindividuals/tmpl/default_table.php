@@ -99,6 +99,11 @@ $date      = $container->get('date');
 	<th class="center">
 		<?php echo $grid->sortTitle('最後修改人', 'user.modified_by'); ?>
 	</th>
+
+	<!-- 已列印 -->
+	<th class="center">
+		<?php echo $grid->sortTitle('已列印', 'rxresident.printed'); ?>
+	</th>
 </tr>
 </thead>
 
@@ -193,6 +198,13 @@ $date      = $container->get('date');
 		<!-- 修改人 -->
 		<td>
 			<?php echo $this->escape($item->modifier_name); ?>
+		</td>
+
+		<!-- 已列印 -->
+		<td>
+			<span class="glyphicon glyphicon-<?php echo ($item->printed ? 'ok' : 'remove'); ?>"
+				<?php echo ($item->printed ? ' style="color:green;"' : ' style="color:red;"'); ?>>
+			</span>
 		</td>
 	</tr>
 <?php endforeach; ?>

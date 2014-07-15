@@ -20,10 +20,19 @@ $drugs = $data->item->drugs;
 		}
 	}
 </style>
+<script>
+function markPrinted()
+{
+	var adminForm = window.opener.document.forms["adminForm"];
+	adminForm.elements["jform[printed]"].value = 1;
+	window.opener.Joomla.submitbutton('rxindividual.edit.apply');
+	window.close();
+}
+</script>
 
 <div class="row-fluid">
 	<div class="col-lg-12 center printButton">
-		<a class="btn btn-default btn-info" onclick="window.print();">
+		<a class="btn btn-default btn-info" onclick="window.print();markPrinted();">
 			<i class="glyphicon glyphicon-print">
 				列印
 			</i>
