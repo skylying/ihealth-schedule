@@ -42,17 +42,13 @@ if ($status != 'scheduled')
 	$classTooltip = 'hasTooltip';
 	$cancelNote = $data->item->cancel_note;
 
-	$reason = array(
-		'badservice' => '服務不周',
-		'changedrug' => '醫師換藥',
-		'passaway' => '往生',
-		'hospitalized' => '住院',
-		'other' => '其他',
-	);
+	$cancelReason = $data->item->cancel;
 
-	$cancelOrPause = ($status == 'pause')? '暫緩原因' : '取消原因';
+	$reason = ($data->item->cancel) ? JText::_($prefix . 'REASON_' . $cancelReason) : '';
 
-	$showTooltip = 'title="<strong>' . $cancelOrPause . ':</strong>' . $reason[$data->item->cancel] . '<br /><strong>備註:</strong>' . $cancelNote . '"';
+	$cancelOrPause = ($status == 'pause') ? '暫緩原因' : '取消原因';
+
+	$showTooltip = 'title="<strong>' . $cancelOrPause . ':</strong>' . $reason . '<br /><strong>備註:</strong>' . $cancelNote . '"';
 }
 ?>
 
