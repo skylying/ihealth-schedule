@@ -150,13 +150,16 @@ class ScheduleControllerPrescriptionEditSave extends ApiSaveController
 				$routeTable->area = $addressTable->area;
 				$routeTable->area_title = $addressTable->area_title;
 
-				// TODO: 從 config 中取得 https://github.com/smstw/ihealth-schedule/issues/220
-				$routeTable->sender_id = 1;
-				$routeTable->sender_name = '陳藥師';
-				$routeTable->weekday = 'MON';
+				$icrmConfig = \JComponentHelper::getParams('com_schedule')->get("icrm");
+				$defaultSender = \Schedule\Helper\ConfigHelper::getDefaultSender();
+
+				$routeTable->sender_id   = $defaultSender['id'];
+				$routeTable->sender_name = $defaultSender['sender'];
+				$routeTable->weekday     = $icrmConfig->default_weekday;
 
 				$routeTable->store();
 
+				// When user created a none exists route, send a notify email to iHealth staff
 				MailHelper::sendEmptyRouteMail($notifyMail, $routeTable);
 			}
 

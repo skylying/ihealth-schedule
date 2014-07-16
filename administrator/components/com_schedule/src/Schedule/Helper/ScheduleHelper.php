@@ -223,4 +223,41 @@ class ScheduleHelper
 
 		return $date;
 	}
+
+	/**
+	 * Check schedule changing
+	 *
+	 * @param   array  $oldData
+	 * @param   array  $validData
+	 *
+	 * @return  bool
+	 */
+	public static function checkScheduleChanged(array $oldData, array $validData)
+	{
+		if (isset($validData['address_id'])
+			&& $oldData['address_id'] != $validData['address_id'])
+		{
+			return true;
+		}
+
+		if (isset($validData['date'])
+			&& $oldData['date'] != $validData['date'])
+		{
+			return true;
+		}
+
+		if (isset($validData['session'])
+			&& $oldData['session'] != $validData['session'])
+		{
+			return true;
+		}
+
+		if (isset($validData['status'])
+			&& 'deleted' === $validData['status'])
+		{
+			return true;
+		}
+
+		return false;
+	}
 }
