@@ -92,7 +92,7 @@ class ScheduleControllerSchedulesUpdateStatus extends AbstractUpdateStateControl
 		{
 			// Reset "cancel" and "cancel_note" fields
 			$this->stateData['cancel']      = null;
-			$this->stateData['cancel_note'] = '';
+			$this->stateData['cancel_note'] = null;
 		}
 	}
 }
