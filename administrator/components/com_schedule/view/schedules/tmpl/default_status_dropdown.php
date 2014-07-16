@@ -53,7 +53,7 @@ if ($status != 'scheduled' && $status != 'emergency')
 ?>
 <div class="btn-group status-dropdown-menu">
 	<button type="button"
-		id="btn-status-dp-<?php echo $index; ?>"
+		id="btn-status-<?php echo $index; ?>"
 		class="btn btn-default btn-sm dropdown-toggle <?php echo $classTooltip; ?>"
 		data-toggle="dropdown"
 		data-default-cancel="<?php echo $data->item->cancel; ?>"

@@ -70,10 +70,11 @@
 			var $node = $(this),
 				index = $node.data('index'),
 				$cid = $('#cb' + index),
+				$btnStatus = $('#btn-status-' + index),
 				status = $node.data('status'),
 				updateMethod = $node.data('update-method'),
-				$cancelNote = $('#btn-status-dp-' + index).data('default-cancel-note'),
-				$cancelReason = $('#btn-status-dp-' + index).data('default-cancel');
+				$cancelNote = $btnStatus.data('default-cancel-note'),
+				$cancelReason = $btnStatus.data('default-cancel');
 
 			switch (updateMethod)
 			{
@@ -87,13 +88,13 @@
 					$cancelCidInput.val($cid.val());
 					$modalStatusCancel.modal();
 					$cancelNoteTextArea.text($cancelNote);
-					$cancelForm.find('input[value="'+$cancelReason+'"]').attr('checked','checked');
+					$cancelForm.find('input[value="' + $cancelReason + '"]').prop('checked', true);
 					break;
 				case 'modal-pause':
 					$pauseCidInput.val($cid.val());
 					$modalStatusPause.modal();
 					$pauseNoteTextArea.text($cancelNote);
-					$pauseForm.find('input[value="'+$cancelReason+'"]').attr('checked','checked');
+					$pauseForm.find('input[value="' + $cancelReason + '"]').prop('checked', true);
 					break;
 			}
 		});
