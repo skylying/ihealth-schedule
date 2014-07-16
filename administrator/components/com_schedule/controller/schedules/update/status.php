@@ -61,7 +61,7 @@ class ScheduleControllerSchedulesUpdateStatus extends AbstractUpdateStateControl
 		parent::prepareExecute();
 
 		$status      = strtolower(trim($this->input->get('status', '')));
-		$validStatus = ['scheduled', 'emergency', 'cancel_reject', 'cancel_only', 'canceled', 'pause'];
+		$validStatus = ['scheduled', 'emergency', 'cancel_reject', 'cancel_only', 'canceled', 'pause', 'delivered'];
 		$checkCancel = true;
 
 		if (!in_array($status, $validStatus))

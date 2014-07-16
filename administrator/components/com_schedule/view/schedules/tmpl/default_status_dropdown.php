@@ -24,12 +24,14 @@ $optionForDelivery = [
 	'cancel_reject' => ['updateMethod' => 'modal-cancel'],
 	'cancel_only'   => ['updateMethod' => 'modal-cancel'],
 	'pause'         => ['updateMethod' => 'modal-pause'],
+	'delivered'     => ['updateMethod' => 'submit'],
 	// 'deleted',	// Not display in dropdown list, for document only.
 ];
 $optionForNormal = [
-	'scheduled'     => ['updateMethod' => 'submit'],
-	'canceled'        => ['updateMethod' => 'modal-cancel'],
-	'pause'         => ['updateMethod' => 'modal-pause'],
+	'scheduled' => ['updateMethod' => 'submit'],
+	'canceled'  => ['updateMethod' => 'modal-cancel'],
+	'pause'     => ['updateMethod' => 'modal-pause'],
+	'delivered' => ['updateMethod' => 'submit'],
 ];
 
 $options = ($type == 'individual' || $type == 'resident') ? $optionForDelivery : $optionForNormal;

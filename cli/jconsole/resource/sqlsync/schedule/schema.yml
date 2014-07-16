@@ -277,7 +277,7 @@
         ice: { Field: ice, Type: tinyint(1), 'Null': YES, Default: null, Extra: '', Comment: '是否有冰品 (0:否 / 1:是)', From: [ice] }
         expense: { Field: expense, Type: tinyint(1), 'Null': YES, Default: null, Extra: '', Comment: '是否為自費藥品 (0:否 / 1:是)', From: [expense] }
         price: { Field: price, Type: 'decimal(10,2)', 'Null': YES, Default: null, Extra: '', Comment: 自費金額, From: [price] }
-        status: { Field: status, Type: char(20), 'Null': YES, Default: null, Extra: '', Comment: '排程狀態 (scheduled:已排程 / emergency:急件 / deleted:已刪除 / cancel_reject:取消-要退單 / cancel_only:取消-不退單 / pause:暫緩)', From: [status] }
+        status: { Field: status, Type: char(20), 'Null': YES, Default: null, Extra: '', Comment: '排程狀態 (scheduled:已排程 / emergency:急件 / deleted:已刪除 / cancel_reject:取消-要退單 / cancel_only:取消-不退單 / pause:暫緩 / delivered:已外送)', From: [status] }
         cancel: { Field: cancel, Type: char(10), 'Null': YES, Default: null, Extra: '', Comment: '取消原因 (badservice:服務不周 / changedrug:醫師換藥 / passaway:往生 / hospitalized:住院 / other:其他)', From: [cancel] }
         cancel_note: { Field: cancel_note, Type: text, 'Null': YES, Default: null, Extra: '', Comment: '刪除原因說明', From: [cancel_note] }
         note: { Field: note, Type: text, 'Null': YES, Default: null, Extra: '', Comment: 行政排程類別說明, From: [note] }
