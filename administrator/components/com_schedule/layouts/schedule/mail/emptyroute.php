@@ -95,7 +95,7 @@ $nthDelivery = array('1st' => '第一次宅配', '2nd' => '第二次宅配', '3r
 											<p>政昇處方宅配藥局</p>
 										</div>
 										<div style="padding: 5px;">
-											<h2 style="float: right; color: #FFFFFF;">
+											<h2 style="float: left; color: #FFFFFF;">
 												藥師親自宅配、最方便、最放心。
 											</h2>
 										</div>

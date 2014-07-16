@@ -73,6 +73,19 @@ $nthDelivery = array('第一次宅配', '第二次宅配', '第三次宅配');
 											<td>可調劑次數</td>
 											<td style="padding:10px;"><?php echo $data['rx']['times']; ?></td>
 										</tr>
+										<tr>
+										<?php foreach ($data['drugs'] as $key => $drug): ?>
+											<?php if ($key == '0')
+											{
+												echo '<tr><td>藥品健保碼</td><td style="padding:10px;">' . $drug['hicode'] . '</td></tr>';
+											}
+											else
+											{
+												echo '<tr><td></td><td style="padding:10px;">' . $drug['hicode'] . '</td></tr>';
+											}
+											?>
+										<?php endforeach; ?>
+										</tr>
 									</table>
 									<!--end fifth table-->
 									<h4 style="color:#FF8000; font-family: 微软雅黑;">小叮嚀：外送藥師拜訪時, 請準備好您的健保卡
@@ -97,7 +110,7 @@ $nthDelivery = array('第一次宅配', '第二次宅配', '第三次宅配');
 											<p>政昇處方宅配藥局</p>
 										</div>
 										<div style="padding: 5px;">
-											<h2 style="float: right; color: #FFFFFF;">
+											<h2 style="float: left; color: #FFFFFF;">
 												藥師親自宅配、最方便、最放心。
 											</h2>
 										</div>
