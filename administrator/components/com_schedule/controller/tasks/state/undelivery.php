@@ -6,12 +6,14 @@
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
+use Windwalker\Controller\State\AbstractUpdateStateController;
+
 /**
  * Class UndeliveryController
  *
  * @since 1.0
  */
-class ScheduleControllerTasksStateUndelivery extends \Windwalker\Controller\State\AbstractUpdateStateController
+class ScheduleControllerTasksStateUndelivery extends AbstractUpdateStateController
 {
 	/**
 	 * Property stateData.

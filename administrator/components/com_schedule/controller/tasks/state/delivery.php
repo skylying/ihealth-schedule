@@ -6,12 +6,15 @@
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
+use Windwalker\Controller\State\AbstractUpdateStateController;
+use Schedule\Table\Table;
+
 /**
  * Class DeliveryController
  *
  * @since 1.0
  */
-class ScheduleControllerTasksStateDelivery extends \Windwalker\Controller\State\AbstractUpdateStateController
+class ScheduleControllerTasksStateDelivery extends AbstractUpdateStateController
 {
 	/**
 	 * Property stateData.
@@ -28,4 +31,33 @@ class ScheduleControllerTasksStateDelivery extends \Windwalker\Controller\State\
 	 * @var string
 	 */
 	protected $actionText = 'DELIVERED';
+
+	/**
+	 * postUpdateHook
+	 *
+	 * @param \Windwalker\Model\Model $model
+	 *
+	 * @return void
+	 */
+	protected function postUpdateHook($model)
+	{
+		$db = \JFactory::getDbo();
+		$query = $db->getQuery(true);
+
+		// Update schedule status to delivered
+		$pks = $this->cid;
+
+		foreach ($pks as $id)
+		{
+			$query->clear()
+				->update(Table::SCHEDULES)
+				->set('status = "delivered"')
+				->where('task_id = ' . $id)
+				->where('status = "scheduled"');
+
+			$db->setQuery($query)->execute();
+		}
+
+		parent::postUpdateHook($model);
+	}
 }
