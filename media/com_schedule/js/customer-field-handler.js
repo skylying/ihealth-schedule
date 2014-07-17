@@ -66,7 +66,29 @@
 			});
 
 			// Bind save new address
-			$('.js-nth-schedule-info').on('click', '.js-save-address', function(){ self.saveAddress(this); });
+			$('.js-nth-schedule-info').on('click', '.js-save-address', function()
+			{
+				self.saveAddress(this);
+			});
+
+			$('.js-nth-schedule-info').on('click', '.js-cancel-address', function()
+			{
+				$(this).closest('.js-tmpl-add-addressrow').addClass('hide');
+			});
+
+			// Bind address list being changed
+			$('.js-nth-schedule-info').on('change', '.js-address-list', function()
+			{
+				var currentSchedule = [];
+
+				currentSchedule.push(
+					$(this).closest('.schedules').find('input[id$="_deliver_nth0"]').val()
+				);
+
+				window.DeliverScheduleHandler.updateScheduleDate(currentSchedule);
+
+				self.getSenderWeekdayDataFromAddress(this);
+			});
 
 			// Bind add new telephone
 			$('.js-add-tel').on('click', function()
@@ -75,7 +97,121 @@
 			});
 
 			// Bind save new telephone
-			$('.js-save-tel').on('click', function(){ self.saveTel(this); });
+			$('.js-save-tel').on('click', function()
+			{
+				self.saveTel(this);
+			});
+
+			// While no route, we have to set sender_id and bind this info to address
+			$('select[id$="_sender_id"]').on('change', function()
+			{
+				self.updateSenderIdForAddress(this);
+			});
+
+			// While no route, we have to set weekday and bind this info to address
+			$('select[id$="_weekday"]').on('change', function()
+			{
+				self.updateWeekdayForAddress(this);
+			});
+		},
+
+		/**
+		 * While address is being changed, if data-sender and data-weekday exist, set the sender and weekday
+		 * dropdown-list these value
+		 *
+		 * @param self
+		 */
+		getSenderWeekdayDataFromAddress: function(self)
+		{
+			var routeWrap = $(self).closest('.js-nth-schedule-info').find('.js-route-wrap');
+			var sender_id = $(self).find('option:selected').data('sender');
+			var weekday = $(self).find('option:selected').data('weekday');
+
+			if (sender_id)
+			{
+				routeWrap.find('select[id$="_sender_id"]')
+					.find('option[value="' + sender_id + '"]')
+					.attr("selected", "selected");
+
+				routeWrap.find('select[id$="_sender_id"]').trigger('liszt:updated');
+			}
+
+			if (weekday)
+			{
+				routeWrap.find('select[id$="_weekday"]')
+					.find('option[value="' + weekday + '"]')
+					.attr("selected", "selected");
+
+				routeWrap.find('select[id$="_weekday"]').trigger('liszt:updated');
+			}
+		},
+
+		/**
+		 * If the route does not exist, we have to create one and assign sender_id
+		 *
+		 * @param self
+		 */
+		updateSenderIdForAddress: function(self)
+		{
+			var currentAddress = $(self).closest('.js-nth-schedule-info').find('.js-address-list option:selected');
+
+			if (currentAddress.data('sender'))
+			{
+				currentAddress.data("sender", $(self).val());
+			}
+			else
+			{
+				currentAddress.attr("data-sender", $(self).val());
+			}
+
+			$('.js-address-list option').each(function()
+			{
+				if ($(this).val() == currentAddress.val())
+				{
+					if ($(this).data('sender'))
+					{
+						$(this).data("sender", $(self).val());
+					}
+					else
+					{
+						$(this).attr("data-sender", $(self).val());
+					}
+				}
+			});
+		},
+
+		/**
+		 * If the route does not exist, we have to create one and assign weekday
+		 *
+		 * @param self
+		 */
+		updateWeekdayForAddress: function(self)
+		{
+			var currentAddress = $(self).closest('.js-nth-schedule-info').find('.js-address-list option:selected');
+
+			if (currentAddress.data('weekday'))
+			{
+				currentAddress.data("weekday", $(self).val());
+			}
+			else
+			{
+				currentAddress.attr("data-weekday", $(self).val());
+			}
+
+			$('.js-address-list option').each(function()
+			{
+				if ($(this).val() == currentAddress.val())
+				{
+					if ($(this).data('weekday'))
+					{
+						$(this).data("weekday", $(self).val());
+					}
+					else
+					{
+						$(this).attr("data-weekday", $(self).val());
+					}
+				}
+			});
 		},
 
 		saveTel : function(self)
@@ -145,6 +281,16 @@
 						// Perform hidden input update
 						this.updateJsonToInputField(tagId, data);
 
+						// Update Telephones for each schedule
+
+						// Slice "jform_"
+						var tag = tagId.slice(6, tagId.length);
+
+						for (var i = 0; i < this.options.addressesKeys.length; i++)
+						{
+							this.updateTelephoneHtmlForSchedule(this.options.addressesKeys[i], data, tag);
+						}
+
 						Joomla.renderMessages([
 							['提醒您，您已新增散客電話或地址，記得按儲存喲。']
 						]);
@@ -169,6 +315,8 @@
 		{
 			// The dynamic row wrapper
 			var currentWrap = $(self).closest('.js-tmpl-add-addressrow');
+
+			var currentAddressList = $(self).closest('.js-nth-schedule-info').find('.js-address-wrap select');
 
 			// The hidden input will save the user customized input address, and wait for model to save.
 			var targetHiddenInput = $("#" + this.options.createAddressId);
@@ -234,7 +382,11 @@
 			targetListToUpdate.each(function()
 			{
 				$(this).append(html);
-				$(this).find('option:last').attr('selected', true);
+
+				if($(this).is(currentAddressList))
+				{
+					$(this).find('option:last').attr('selected', true);
+				}
 			});
 
 			// Update to hidden input
@@ -244,11 +396,7 @@
 			currentWrap.addClass('hide');
 
 			// Update Schedule date once
-			window.DeliverScheduleHandler.updateScheduleDate(
-				$('#' + this.options.seeDrDateId).val(),
-				$('#' + this.options.periodId).val(),
-				this.options.addressesKeys
-			);
+			window.DeliverScheduleHandler.updateScheduleDate();
 
 			Joomla.renderMessages([
 				['提醒您，您已新增散客電話或地址，記得按儲存喲。']
@@ -263,6 +411,7 @@
 		fireAjax: function(id)
 		{
 			var self = this;
+
 			// Fire ajax to Customer
 			$.ajax({
 				type: "POST",
@@ -283,6 +432,12 @@
 						// Update phone select list
 						self.updatePhoneHtml(self.options.telOfficeId, tel_office);
 						self.updateJsonToInputField(self.options.telOfficeId, tel_office);
+
+						// Update Telephones for each schedule
+						for (var i = 0; i < self.options.addressesKeys.length; i++)
+						{
+							self.updateTelephoneHtmlForSchedule(self.options.addressesKeys[i], tel_office, 'tel_office');
+						}
 					}
 					catch (err)
 					{
@@ -297,6 +452,12 @@
 						// Update phone select list
 						self.updatePhoneHtml(self.options.telHomeId, tel_home);
 						self.updateJsonToInputField(self.options.telHomeId, tel_home);
+
+						// Update Telephones for each schedule
+						for (var i = 0; i < self.options.addressesKeys.length; i++)
+						{
+							self.updateTelephoneHtmlForSchedule(self.options.addressesKeys[i], tel_home, 'tel_home');
+						}
 					}
 					catch (err)
 					{
@@ -311,6 +472,12 @@
 						// Update phone select list
 						self.updatePhoneHtml(self.options.mobileId, mobile);
 						self.updateJsonToInputField(self.options.mobileId, mobile);
+
+						// Update Telephones for each schedule
+						for (var i = 0; i < self.options.addressesKeys.length; i++)
+						{
+							self.updateTelephoneHtmlForSchedule(self.options.addressesKeys[i], mobile, 'mobile');
+						}
 					}
 					catch (err)
 					{
@@ -415,6 +582,57 @@
 		},
 
 		/**
+		 * After telephone date retrived from ajax, update html
+		 *
+		 * @param {strinf} key
+		 * @param {json}   telJson
+		 * @param {string} fieldId
+		 */
+		updateTelephoneHtmlForSchedule : function(key, telJson, fieldId)
+		{
+			console.log(fieldId);
+			telJson = telJson || {};
+
+			// ex: jform_schedule_1st_tel_office
+			var targetId = 'jform_schedules_' + key + '_' + fieldId;
+
+			// ex: jform[schedule_1st][address]
+			var targetName = 'jform[' + 'schedules_' + key + '][' + fieldId + ']';
+
+			// Find its parent, later we will replace it with new select list
+			var targetsParent = $('#' + targetId).parent();
+
+			var targetValue = $('#' + targetId).val();
+
+			var html = '';
+
+			// Add select tag
+			html += '<select' +
+				' name="' + targetName + '"' +
+				' id="' + targetId + '"' +
+				'>';
+
+			for (var i = 0; i < telJson.length; i++)
+			{
+				// Add option tag
+				html += '<option' +
+					' value="' + telJson[i].number + '"' +
+					'>' +
+					telJson[i].number +
+					'</option>';
+			}
+
+			html += '</select>';
+
+			//Clear target hook's html first.
+			targetsParent.html("");
+
+			targetsParent.html(html);
+
+			targetsParent.find('option[value="' + targetValue + '"]').attr("selected", "selected");
+		},
+
+		/**
 		 * Update address select list row
 		 *
 		 * @param {string}  key
@@ -453,7 +671,6 @@
 					' data-area="' + addressJson[i].area + '"' +
 					' data-value="' + addressJson[i].id + '"' +
 					' value="' + addressJson[i].id + '"' +
-					((addressJson[i].id == currentSelected) ? 'selected' : '') +
 					'>' +
 					addressJson[i].city_title +
 					addressJson[i].area_title +
@@ -467,6 +684,8 @@
 			targetsParent.html("");
 
 			targetsParent.html(html);
+
+			targetsParent.find('option[value="' + currentSelected + '"]').attr("selected", "selected");
 		},
 
 		/**

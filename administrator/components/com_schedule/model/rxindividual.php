@@ -164,6 +164,9 @@ class ScheduleModelRxindividual extends AdminModel
 				"drug_empty_date" => $schedule->drug_empty_date,
 				"date"            => $schedule->date,
 				"session"         => $schedule->session,
+				"tel_office"      => $schedule->tel_office,
+				"tel_home"        => $schedule->tel_home,
+				"mobile"          => $schedule->mobile,
 				"deliver_nth"     => array($schedule->deliver_nth)
 			);
 		}
