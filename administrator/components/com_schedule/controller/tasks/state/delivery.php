@@ -7,7 +7,6 @@
  */
 
 use Windwalker\Controller\State\AbstractUpdateStateController;
-use Schedule\Table\Table;
 
 /**
  * Class DeliveryController
@@ -35,27 +34,18 @@ class ScheduleControllerTasksStateDelivery extends AbstractUpdateStateController
 	/**
 	 * postUpdateHook
 	 *
-	 * @param \Windwalker\Model\Model $model
+	 * @param ScheduleModelTask $model
 	 *
 	 * @return void
 	 */
 	protected function postUpdateHook($model)
 	{
-		$db = \JFactory::getDbo();
-		$query = $db->getQuery(true);
-
 		// Update schedule status to delivered
 		$pks = $this->cid;
 
-		foreach ($pks as $id)
+		foreach ($pks as $taskId)
 		{
-			$query->clear()
-				->update(Table::SCHEDULES)
-				->set('status = "delivered"')
-				->where('task_id = ' . $id)
-				->where('status = "scheduled"');
-
-			$db->setQuery($query)->execute();
+			$model->updateScheduleAsDelivered($taskId);
 		}
 
 		parent::postUpdateHook($model);
