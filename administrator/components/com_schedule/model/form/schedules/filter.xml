@@ -50,6 +50,7 @@
 			onchange="this.form.submit();"
 			>
 			<option></option>
+			<option>--請選擇排程狀態--</option>
 			<option value="scheduled">已排程</option>
 			<option value="emergency">急件</option>
 			<option value="cancelonly">取消要退單</option>
@@ -98,6 +99,7 @@
 			onchange="this.form.submit();"
 			>
 			<option></option>
+			<option>--請選擇縣市--</option>
 		</field>
 
 		<field name="schedule.area"
@@ -109,6 +111,7 @@
 			onchange="this.form.submit();"
 			>
 			<option></option>
+			<option>--請選擇區域--</option>
 		</field>
 
 		<field
@@ -119,6 +122,7 @@
 			onchange="this.form.submit();"
 			>
 			<option></option>
+			<option>--請選擇類別--</option>
 			<option value="individual">散客</option>
 			<option value="resident">住民</option>
 			<option value="discuss">討論</option>
@@ -157,6 +161,7 @@
 			onchange="this.form.submit();"
 			>
 			<option></option>
+			<option>--請選擇外送藥師--</option>
 		</field>
 
 		<field
@@ -167,6 +172,7 @@
 			onchange="this.form.submit();"
 			>
 			<option></option>
+			<option>--請選擇排刪除原因--</option>
 			<option value="badservice">服務不周</option>
 			<option value="changedrug">醫師換藥</option>
 			<option value="passaway">往生</option>
@@ -181,6 +187,7 @@
 			onchange="this.form.submit();"
 			>
 			<option></option>
+			<option>--請選擇分藥狀態--</option>
 			<option value="1">已分藥</option>
 			<option value="0">未分藥</option>
 		</field>
