@@ -36,4 +36,26 @@ class ConfigHelper
 			'sender' => $defaultSenderName
 		);
 	}
+
+	/**
+	 * getNotifyEmptyRouteMails
+	 *
+	 * @return  array
+	 */
+	public static function getNotifyEmptyRouteMails()
+	{
+		static $mails = null;
+
+		if (is_array($mails))
+		{
+			return $mails;
+		}
+
+		$config = \JComponentHelper::getParams('com_schedule')->get("schedule");
+
+		$mails = (isset($config->empty_route_mail) ? $config->empty_route_mail : '');
+		$mails = explode(' ', $mails);
+
+		return $mails;
+	}
 }

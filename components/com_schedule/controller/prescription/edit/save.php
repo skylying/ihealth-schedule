@@ -11,6 +11,7 @@ use Windwalker\Model\Exception\ValidateFailException;
 use Schedule\Helper\ScheduleHelper;
 use Schedule\Table\Collection as TableCollection;
 use Schedule\Helper\MailHelper;
+use Schedule\Helper\ConfigHelper;
 
 /**
  * Class ScheduleControllerPrescriptionEditSave
@@ -121,8 +122,7 @@ class ScheduleControllerPrescriptionEditSave extends ApiSaveController
 		/** @var ScheduleModelTask $taskModel */
 		$taskModel = $this->getModel('Task');
 
-		$scheduleConfig = \JComponentHelper::getParams('com_schedule')->get("schedule");
-		$notifyMail     = $scheduleConfig->empty_route_mail;
+		$notifyMail = ConfigHelper::getNotifyEmptyRouteMails();
 
 		$scheduleModel->getState()->set('form.type', 'schedule_individual');
 

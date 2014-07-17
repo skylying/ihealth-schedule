@@ -3,7 +3,6 @@
 	<fields name="icrm">
 		<fieldset name="api"
 			label="API"
-			description="API config"
 			addfieldpath="administrator/components/com_schedule/model/field"
 			>
 
@@ -43,12 +42,11 @@
 	<fields name="schedule">
 		<fieldset name="schedule"
 			label="Schedule"
-			description="Schedule config"
 			>
 			<field name="empty_route_mail"
 				type="text"
 				label="無路線提醒信箱"
-				description="無路線提醒信箱"
+				description="無路線提醒信箱, 設定多組信箱時使用空白隔開"
 				/>
 		</fieldset>
 	</fields>
