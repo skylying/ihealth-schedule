@@ -47,62 +47,62 @@ $date      = $container->get('date');
 
 	<!-- 編號 -->
 	<th class="center">
-		<?php echo $grid->sortTitle('編號', 'rxresident.id'); ?>
+		<?php echo $grid->sortTitle('編號', 'rxindividual.id'); ?>
 	</th>
 
 	<!-- 散客姓名 -->
 	<th class="center">
-		<?php echo $grid->sortTitle('散客姓名', 'rxresident.customer_name'); ?>
+		<?php echo $grid->sortTitle('散客姓名', 'rxindividual.customer_name'); ?>
 	</th>
 
 	<!-- 所屬會員 -->
 	<th class="center">
-		<?php echo $grid->sortTitle('所屬會員', 'rxresident.member_name'); ?>
+		<?php echo $grid->sortTitle('所屬會員', 'rxindividual.member_name'); ?>
 	</th>
 
 	<!-- 上傳方式 -->
 	<th class="center">
-		<?php echo $grid->sortTitle('上傳方式', 'rxresident.method'); ?>
+		<?php echo $grid->sortTitle('上傳方式', 'rxindividual.method'); ?>
 	</th>
 
 	<!-- 處方箋狀態 -->
 	<th class="center">
-		<?php echo $grid->sortTitle('處方箋狀態', 'rxresident.received'); ?>
+		<?php echo $grid->sortTitle('處方箋狀態', 'rxindividual.received'); ?>
 	</th>
 
 	<!-- 電聯紀錄 -->
 	<th class="center">
-		<?php echo $grid->sortTitle('電聯紀錄', 'rxresident.called'); ?>
+		<?php echo $grid->sortTitle('電聯紀錄', 'rxindividual.called'); ?>
 	</th>
 
 	<!-- 就醫日期 -->
 	<th class="center">
-		<?php echo $grid->sortTitle('就醫日期', 'rxresident.see_dr_date'); ?>
+		<?php echo $grid->sortTitle('就醫日期', 'rxindividual.see_dr_date'); ?>
 	</th>
 
 	<!-- 可調劑次數 -->
 	<th class="center">
-		<?php echo $grid->sortTitle('可調劑次數', 'rxresident.times'); ?>
+		<?php echo $grid->sortTitle('可調劑次數', 'rxindividual.times'); ?>
 	</th>
 
 	<!-- 宅配次數 -->
 	<th class="center">
-		<?php echo $grid->sortTitle('宅配次數', 'rxresident.deliver_nths'); ?>
+		<?php echo $grid->sortTitle('宅配次數', 'rxindividual.deliver_nths'); ?>
 	</th>
 
 	<!-- 新增人 -->
 	<th class="center">
-		<?php echo $grid->sortTitle('新增人', 'user.created_by'); ?>
+		<?php echo $grid->sortTitle('新增人', 'rxindividual.created_by'); ?>
 	</th>
 
 	<!-- 最後修改人 -->
 	<th class="center">
-		<?php echo $grid->sortTitle('最後修改人', 'user.modified_by'); ?>
+		<?php echo $grid->sortTitle('最後修改人', 'rxindividual.modified_by'); ?>
 	</th>
 
 	<!-- 已列印 -->
 	<th class="center">
-		<?php echo $grid->sortTitle('已列印', 'rxresident.printed'); ?>
+		<?php echo $grid->sortTitle('已列印', 'rxindividual.printed'); ?>
 	</th>
 </tr>
 </thead>
