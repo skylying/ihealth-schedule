@@ -419,6 +419,7 @@
         modified_by: { Field: modified_by, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: '修改者 user id', From: [modified_by] }
         ordering: { Field: ordering, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: 排序, From: [ordering] }
         params: { Field: params, Type: text, 'Null': NO, Default: null, Extra: '', Comment: Params, From: [params] }
+        printed: { Field: printed, Type: tinyint(1), 'Null': YES, Default: null, Extra: '', Comment: '是否已列印 (0:否 / 1:是)', From: [printed] }
     index:
         - { Table: '#__schedule_prescriptions', Non_unique: '0', Key_name: PRIMARY, Seq_in_index: '1', Column_name: id, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
         - { Table: '#__schedule_prescriptions', Non_unique: '1', Key_name: idx_created_by, Seq_in_index: '1', Column_name: created_by, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
