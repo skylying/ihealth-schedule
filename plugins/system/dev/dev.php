@@ -9,6 +9,7 @@
 defined('_JEXEC') or die;
 
 use Schedule\Json\JsonResponse;
+use Schedule\Table\Table;
 
 /**
  * Class PlgSystemDev
@@ -70,10 +71,20 @@ class PlgSystemDev extends JPlugin
 			return;
 		}
 
+		$view = $this->isSender() ? '&view=tasks' : '';
+
+		// Redirect to view=tasks when sender is login
+		if ($this->isSender() && $query == 'option=com_schedule&ihealth-schedule')
+		{
+			$app->redirect('index.php?option=com_schedule' . $view);
+
+			exit();
+		}
+
 		// Redirect to component
 		if (empty($query) && !$user->guest)
 		{
-			$app->redirect('index.php?option=com_schedule');
+			$app->redirect('index.php?option=com_schedule' . $view);
 
 			exit();
 		}
@@ -181,5 +192,25 @@ class PlgSystemDev extends JPlugin
 	 */
 	public function onAfterRender()
 	{
+	}
+
+	/**
+	 * isSender
+	 *
+	 * @return  bool
+	 */
+	public function isSender()
+	{
+		$user = \JFactory::getUser();
+		$db = \JFactory::getDbo();
+
+		$query = $db->getQuery(true);
+		$query->select('id, name')
+			->from(Table::SENDERS)
+			->where("name = '{$user->name}'");
+
+		$data = $db->setQuery($query)->loadObject();
+
+		return (!$data) ? false : true;
 	}
 }

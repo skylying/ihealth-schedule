@@ -29,12 +29,15 @@ class ScheduleControllerHolidayEditSave extends SaveController
 	 */
 	protected function doSave()
 	{
-		$formatedData = $this->getFormatedData($this->data['date']);
-
-		// Attemp to save each data
-		foreach ($formatedData as $value)
+		if (!empty($this->data['date']))
 		{
-			$this->saveItem($value);
+			$formatedData = $this->getFormatedData($this->data['date']);
+
+			// Attemp to save each data
+			foreach ($formatedData as $value)
+			{
+				$this->saveItem($value);
+			}
 		}
 	}
 

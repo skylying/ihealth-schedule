@@ -2,11 +2,7 @@
 
 use Windwalker\Controller\Edit\SaveController;
 use Windwalker\Model\Exception\ValidateFailException;
-use Windwalker\Data\Data;
-use Windwalker\Joomla\DataMapper\DataMapper;
-use Schedule\Table\Table;
 use Schedule\Table\Collection as TableCollection;
-use Schedule\Helper\ScheduleHelper;
 
 /**
  * Class ScheduleControllerRouteEditSave
@@ -19,6 +15,24 @@ class ScheduleControllerRouteEditSave extends SaveController
 	 * @var  bool
 	 */
 	protected $useTransaction = true;
+
+	/**
+	 * preSaveHook
+	 *
+	 * @return  void
+	 */
+	protected function preSaveHook()
+	{
+		parent::preSaveHook();
+
+		// Get data input ("sender_id" and "weekday")
+		$data = $this->input->get('data', array(), 'ARRAY');
+
+		if (!empty($data))
+		{
+			$this->data = $data;
+		}
+	}
 
 	/**
 	 * doSave
@@ -41,9 +55,9 @@ class ScheduleControllerRouteEditSave extends SaveController
 		// Attempt to save the data.
 		try
 		{
-			foreach ($cid as $value)
+			foreach ($cid as $id)
 			{
-				$validDataSet[] = $this->saveItem($value);
+				$validDataSet[] = $this->saveItem($id);
 			}
 		}
 		catch (ValidateFailException $e)
@@ -84,20 +98,18 @@ class ScheduleControllerRouteEditSave extends SaveController
 		// Update institute "sender_id" and "delivery_weekday"
 		foreach ($validDataSet as $data)
 		{
-			if (! empty($data['type']) && 'institute' === $data['type'])
-			{
-				$updateData = array(
-					'id' => $data['institute_id'],
-				);
+			$route = $this->model->getItem($data['id']);
 
-				// Prevent not set data
-				if (isset($data['sender_id']))
+			if ('institute' === $route->type)
+			{
+				$updateData = array('id' => $route->institute_id);
+
+				if (!empty($data['sender_id']))
 				{
 					$updateData['sender_id'] = $data['sender_id'];
 				}
 
-				// Prevent not set data
-				if (isset($data['weekday']))
+				if (!empty($data['weekday']))
 				{
 					$updateData['delivery_weekday'] = $data['weekday'];
 				}
@@ -110,29 +122,31 @@ class ScheduleControllerRouteEditSave extends SaveController
 	/**
 	 * saveAll
 	 *
-	 * @param  array $singleCid
+	 * @param   int  $id
 	 *
-	 * @return array
+	 * @return  array
 	 */
-	private function saveItem($singleCid)
+	private function saveItem($id)
 	{
-		// Get sender id and weekday from post input value
-		$data = $this->input->get('routeupdater', array(), 'ARRAY');
+		$data = $this->data;
 
-		// If no sender_id or weekday, unset the empty value
-		foreach ($data as $key => $value)
+		if (! empty($id))
 		{
-			if (empty($value))
+			$data['id'] = $id;
+		}
+		else
+		{
+			if (! empty($data['institute_id']))
 			{
-				unset($data[$key]);
+				// When institute_id exists, update route with exists route id
+				$routeTable = TableCollection::loadTable('Route', ['institute_id' => $data['institute_id']]);
+
+				if (! empty($routeTable->id))
+				{
+					$data['id'] = $routeTable->id;
+				}
 			}
 		}
-
-		// Get route type, institute_id
-		$decodedData = (array) json_decode($singleCid);
-
-		// Combine all route information
-		$data = $decodedData + $data;
 
 		// Validate the posted data.
 		// Sometimes the form needs some posted data, such as for plugins and modules.

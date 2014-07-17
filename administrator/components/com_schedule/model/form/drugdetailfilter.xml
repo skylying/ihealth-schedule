@@ -2,9 +2,9 @@
 <form>
 	<fieldset name="filter">
 		<field name="date"
-			type="calendar"
-			label="實際送藥日"
-			description="實際送藥日"
+			type="datetimepicker"
+			label="預計外送日"
+			description="預計外送日"
 			/>
 
 		<field name="senderIds"
@@ -12,6 +12,7 @@
 			option_title="name"
 			table="#__schedule_senders"
 			multiple="true"
+			default_check="all"
 			label="選擇外送藥師"
 			description="選擇外送藥師"
 			/>

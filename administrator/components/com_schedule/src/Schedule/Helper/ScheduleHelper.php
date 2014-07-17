@@ -166,11 +166,11 @@ class ScheduleHelper
 		$validSendDateUnixTimes = [];
 
 		// Get the range of valid send dates (in days)
-		$daysBefore = 1 === $nth ? 0 : 10;
+		$daysBefore = 1 === $nth ? -1 : 10;
 		$daysAfter  = 1 === $nth ? 3 : 10;
 
 		// Fill valid send dates
-		for ($i = -$daysBefore; $i < $daysAfter; ++$i)
+		for ($i = -$daysBefore; $i <= $daysAfter; ++$i)
 		{
 			$unixTime = $drugEmptyDateUnixTime + $i * 86400;
 
@@ -186,7 +186,7 @@ class ScheduleHelper
 		// Validate send date
 		if (! in_array($sendDateUnixTime, $validSendDateUnixTimes))
 		{
-			throw new ValidateFailException(['Invalid send date']);
+			throw new ValidateFailException(['Invalid send date for ' . $nth . 'th schedule']);
 		}
 
 		return true;
@@ -222,5 +222,42 @@ class ScheduleHelper
 		$date->modify('+' . $period * ($nth - 1) . ' days');
 
 		return $date;
+	}
+
+	/**
+	 * Check schedule changing
+	 *
+	 * @param   array  $oldData
+	 * @param   array  $validData
+	 *
+	 * @return  bool
+	 */
+	public static function checkScheduleChanged(array $oldData, array $validData)
+	{
+		if (isset($validData['address_id'])
+			&& $oldData['address_id'] != $validData['address_id'])
+		{
+			return true;
+		}
+
+		if (isset($validData['date'])
+			&& $oldData['date'] != $validData['date'])
+		{
+			return true;
+		}
+
+		if (isset($validData['session'])
+			&& $oldData['session'] != $validData['session'])
+		{
+			return true;
+		}
+
+		if (isset($validData['status'])
+			&& 'deleted' === $validData['status'])
+		{
+			return true;
+		}
+
+		return false;
 	}
 }

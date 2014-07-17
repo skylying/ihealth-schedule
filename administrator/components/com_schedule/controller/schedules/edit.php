@@ -4,6 +4,9 @@ use Windwalker\Controller\State\AbstractUpdateStateController;
 use Schedule\Table\Table as Table;
 use Windwalker\Joomla\DataMapper\DataMapper;
 use Windwalker\Data\Data;
+use Schedule\Table\Collection as TableCollection;
+use Schedule\Helper\ScheduleHelper;
+use Schedule\Helper\MailHelper;
 
 /**
  * Class ScheduleControllerSchedulesEdit
@@ -52,6 +55,13 @@ class ScheduleControllerSchedulesEdit extends AbstractUpdateStateController
 	protected $useTransaction = true;
 
 	/**
+	 * Property sendNotifyMail.
+	 *
+	 * @var  array
+	 */
+	protected $sendNotifyMail = array();
+
+	/**
 	 * Prepare execute hook.
 	 *
 	 * @throws \LogicException
@@ -95,6 +105,20 @@ class ScheduleControllerSchedulesEdit extends AbstractUpdateStateController
 		}
 
 		$this->stateData['task_id'] = $task->id;
+
+		foreach ($this->input->get('cid', array(), 'ARRAY') as $id)
+		{
+			if ($id > 0)
+			{
+				$oldScheduleTable = TableCollection::loadTable('Schedule', $id);
+
+				if (! empty($oldScheduleTable->id)
+					&& ScheduleHelper::checkScheduleChanged($oldScheduleTable->getProperties(), $this->stateData))
+				{
+					$this->sendNotifyMail[] = $id;
+				}
+			}
+		}
 	}
 
 	/**
@@ -107,6 +131,25 @@ class ScheduleControllerSchedulesEdit extends AbstractUpdateStateController
 	protected function postUpdateHook($model)
 	{
 		parent::postUpdateHook($model);
+
+		foreach ($this->sendNotifyMail as $scheduleId)
+		{
+			$oldScheduleTable = TableCollection::loadTable('Schedule', $scheduleId);
+
+			$memberTable = TableCollection::loadTable('Member', $oldScheduleTable->member_id);
+			$customerTable = TableCollection::loadTable('Customer', $oldScheduleTable->customer_id);
+			$rx = (new DataMapper(Table::PRESCRIPTIONS))->findOne($oldScheduleTable->rx_id);
+			$schedules = (new DataMapper(Table::SCHEDULES))->find(array('rx_id' => $oldScheduleTable->rx_id));
+
+			$mailData = array(
+				"schedules" => $schedules,
+				"rx"        => $rx,
+				"member"    => $memberTable,
+				"customer"  => $customerTable,
+			);
+
+			MailHelper::sendMailWhenScheduleChange($memberTable->email, $mailData);
+		}
 	}
 
 	/**

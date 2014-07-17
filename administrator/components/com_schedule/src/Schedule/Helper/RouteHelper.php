@@ -20,25 +20,9 @@ use Windwalker\Html\HtmlElement;
 class RouteHelper
 {
 	/**
-	 * Property routeFields.
-	 *
-	 * @var  array
-	 */
-	protected static $routeFields = array(
-		'id',
-		'city',
-		'city_title',
-		'area',
-		'area_title',
-		'weekday',
-		'sender_id',
-		'sender_name'
-	);
-
-	/**
 	 * Get view = overview table
 	 *
-	 * @param object $data
+	 * @param array $data
 	 *
 	 * @return \JGrid
 	 */
@@ -133,9 +117,7 @@ class RouteHelper
 		// Prepare institute mapper
 		$instituteMapper = new DataMapper(Table::INSTITUTES);
 
-		$fields = self::$routeFields;
-
-		foreach ($data as $key => $value)
+		foreach ($data as $value)
 		{
 			// Get institute short title
 			$instituteData = $instituteMapper->findOne(array("id" => $value->institute_id));
@@ -169,10 +151,10 @@ class RouteHelper
 	 * Template look like :
 	 *
 	 * <div class="route-outer">
-	 * 	<div>
-	 * 		<input />
-	 * 		<label>
-	 * 	</div>
+	 *     <div>
+	 *         <input />
+	 *         <label>
+	 *     </div>
 	 * </div>
 	 *
 	 * @param array $aliasArray
@@ -182,37 +164,33 @@ class RouteHelper
 	private static function getRouteStyle(array $aliasArray)
 	{
 		// Creat selectall and its mask
-		$html =	<<<HTML
+		$html = <<<HTML
 <span class="mask">
 	<span class="batchbutton checkall glyphicon glyphicon-ok-sign"></span>
 	<span class="batchbutton uncheckall glyphicon glyphicon-remove-sign"></span>
 </span>
 HTML;
 
-		foreach ($aliasArray as $key => $value)
+		foreach ($aliasArray as $route_id => $value)
 		{
-			// Prepare input value we need
-			$jsonValue = json_encode($value);
-
-			// Saparate different route type
-			$bgColor = ($value['type'] == 'customer') ? 'route-outer customer-bg' : 'route-outer institute-bg';
+			// Separate different route type
+			$class = ($value['type'] == 'customer') ? 'route-outer customer-bg' : 'route-outer institute-bg';
 
 			// Create <input>
-			$inputAttr = array('id' => $key, 'type' => 'checkbox', 'class' => 'routeinput', "value" => htmlspecialchars($jsonValue));
+			$inputAttr = array('id' => $route_id, 'type' => 'checkbox', 'class' => 'routeinput', "value" => $route_id);
 			$input = new HtmlElement('input', '', $inputAttr);
 
 			// Create <label>
-			$labelAttr = array('for' => $key);
+			$labelAttr = array('for' => $route_id);
 			$label = new HtmlElement('label', $value['title'], $labelAttr);
 
 			// Create inner <div>, and insert <label> & <input>
 			$innerDiv = new HtmlElement('div', $input . $label);
 
 			// Create outer <div>, and insert inner <div>
-			$outerDivAttr = array('class' => $bgColor);
-			$outerDiv = new HtmlElement('div', $innerDiv, $outerDivAttr);
+			$outerDiv = new HtmlElement('div', $innerDiv, array('class' => $class));
 
-			$html .= (string) ' ' . $outerDiv;
+			$html .= ' ' . $outerDiv;
 		}
 
 		return $html;

@@ -58,7 +58,7 @@ $date      = $container->get('date');
 
 	<!--CUSTOMER_ID-->
 	<th width="1%" class="nowrap center">
-		<?php echo $grid->sortTitle('對應顧客', 'drugprice.customer_id'); ?>
+		<?php echo $grid->sortTitle('對應外送id', 'drugprice.task_id'); ?>
 	</th>
 
 	<!--DATE-->
@@ -118,7 +118,7 @@ $date      = $container->get('date');
 
 		<!--CUSTOMER_NAME-->
 		<td class="center">
-			<?php echo \Schedule\Helper\UiHelper::foreignLink('customer', $item->customer_name, $item->customer_id); ?>
+			<?php echo \Schedule\Helper\UiHelper::foreignLink('task', $item->task_id, $item->task_id); ?>
 		</td>
 
 		<!--DATE-->

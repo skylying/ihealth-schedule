@@ -58,7 +58,7 @@
 			onchange="this.form.submit();"
 			/>
 		<field
-			name="task.id"
+			name="task.sender"
 			type="sql"
 			query="SELECT `id`, `name` FROM #__schedule_senders"
 			key_field="id"
@@ -74,14 +74,12 @@
 			name="task.status"
 			type="list"
 			label="JSTATUS"
-			default=""
+			default="0"
 			onchange="this.form.submit();"
 			>
-			<option></option>
-			<option>COM_SCHEDULE_TASK_TITLE_FILTER_CHOOSE_STATUS</option>
+			<option value="*">JALL</option>
 			<option value="1">COM_SCHEDULE_TASK_TITLE_FILTER_STATUS_YES</option>
 			<option value="0">COM_SCHEDULE_TASK_TITLE_FILTER_STATUS_NO</option>
-			<option value="*">JALL</option>
 		</field>
 
 	</fields>

@@ -10,6 +10,7 @@ use Schedule\Controller\Api\ApiSaveController;
 use Schedule\Helper\ScheduleHelper;
 use Schedule\Table\Collection as TableCollection;
 use Windwalker\Model\Exception\ValidateFailException;
+use Schedule\Helper\MailHelper;
 
 /**
  * Class ScheduleControllerPrescriptionEditSave
@@ -18,6 +19,20 @@ use Windwalker\Model\Exception\ValidateFailException;
  */
 class ScheduleControllerScheduleEditSave extends ApiSaveController
 {
+	/**
+	 * Property oldScheduleTable.
+	 *
+	 * @var \JTable
+	 */
+	protected $oldScheduleTable;
+
+	/**
+	 * Property notifyMail.
+	 *
+	 * @var string
+	 */
+	protected $notifyMail;
+
 	/**
 	 * Method to do something before save.
 	 *
@@ -66,6 +81,9 @@ class ScheduleControllerScheduleEditSave extends ApiSaveController
 			]
 		);
 
+		$scheduleConfig = \JComponentHelper::getParams('com_schedule')->get("schedule");
+		$this->notifyMail = $scheduleConfig->empty_route_mail;
+
 		// If no route found, create one
 		if (empty($routeTable->id))
 		{
@@ -76,14 +94,17 @@ class ScheduleControllerScheduleEditSave extends ApiSaveController
 			$routeTable->area         = $addressTable->area;
 			$routeTable->area_title   = $addressTable->area_title;
 
-			// TODO: 從 config 中取得 https://github.com/smstw/ihealth-schedule/issues/220
-			$routeTable->sender_id   = 1;
-			$routeTable->sender_name = '陳藥師';
-			$routeTable->weekday     = 'MON';
+			$icrmConfig    = \JComponentHelper::getParams('com_schedule')->get("icrm");
+			$defaultSender = \Schedule\Helper\ConfigHelper::getDefaultSender();
+
+			$routeTable->sender_id   = $defaultSender['id'];
+			$routeTable->sender_name = $defaultSender['sender'];
+			$routeTable->weekday     = $icrmConfig->default_weekday;
 
 			$routeTable->store();
 
-			// TODO: 無 route 時要寄 EMail 通知 https://github.com/smstw/ihealth-schedule/issues/249
+			// When user created a none exists route, send a notify email to iHealth staff
+			MailHelper::sendEmptyRouteMail($this->notifyMail, $routeTable);
 		}
 
 		// Get task
@@ -108,5 +129,26 @@ class ScheduleControllerScheduleEditSave extends ApiSaveController
 
 		$this->data['route_id'] = $routeTable->id;
 		$this->data['task_id']  = $taskTable->id;
+
+		$this->oldScheduleTable = TableCollection::loadTable('Schedule', $this->data['id']);
+	}
+
+	/**
+	 * postSaveHook
+	 *
+	 * @param \Windwalker\Model\CrudModel $model
+	 * @param array                       $validData
+	 *
+	 * @return  void
+	 */
+	protected function postSaveHook($model, $validData)
+	{
+		// When user changed a exist schedule, send a notify email to iHealth staff
+		if (ScheduleHelper::checkScheduleChanged($this->oldScheduleTable->getProperties(), $validData))
+		{
+			MailHelper::scheduleChangeNotify($this->notifyMail);
+		}
+
+		parent::postSaveHook($model, $validData);
 	}
 }

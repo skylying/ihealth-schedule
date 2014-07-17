@@ -44,7 +44,7 @@ $offDays = $this->data->offDays;
 	})
 </script>
 
-<div class="container">
+<div class="wrapper">
 	<div class="calendar-body">
 		<div class="row">
 			<div class="col-md-4 col-md-offset-4">

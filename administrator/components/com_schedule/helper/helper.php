@@ -8,6 +8,7 @@
 
 // No direct access
 use Windwalker\Html\HtmlElement;
+use Schedule\Helper\SenderHelper;
 
 defined('_JEXEC') or die;
 
@@ -42,6 +43,10 @@ abstract class ScheduleHelper
 			'holidays'      => 'calendar'
 		);
 
+		$menusForSender = array(
+			'tasks' => 'tasks',
+		);
+
 		$noMvcMenus = array(
 			'routes'     => 'road',
 			'drugs'      => 'tint',
@@ -55,6 +60,11 @@ abstract class ScheduleHelper
 		if (JDEBUG)
 		{
 			$menus = array_merge($menus, $noMvcMenus);
+		}
+
+		if (SenderHelper::isSenderLogin())
+		{
+			$menus = $menusForSender;
 		}
 
 		foreach ($menus as $folder => $icon)

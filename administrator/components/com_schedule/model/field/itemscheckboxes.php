@@ -1,5 +1,7 @@
 <?php
 
+use Windwalker\Helper\XmlHelper;
+
 /**
  * Class JFormFieldSqlcheckboxes
  *
@@ -36,10 +38,20 @@ class JFormFieldItemscheckboxes extends \JFormField
 		$app         = JFactory::getApplication();
 		$doc         = $app->getDocument();
 		$name        = $this->name;
-		$inputName   = $this->element['name'] ? (string) $this->element['name'] : "";
-		$valueField  = $this->element['value_field'] ? (string) $this->element['value_field'] : "id";
-		$optionTitle = $this->element['option_title'] ? (string) $this->element['option_title'] : "title";
+
+		// Prepare field config
+		$inputName   = XmlHelper::get($this->element, 'name', '');
+		$valueField  = XmlHelper::get($this->element, 'value_field', 'id');
+		$optionTitle = XmlHelper::get($this->element, 'option_title', 'title');
+		$default     = XmlHelper::get($this->element, 'default_check', '');
+
 		$value       = is_array($this->value) ? $this->value : array($this->value);
+
+		// If we load form data from post request, then we reset the default value
+		if (!empty($this->value))
+		{
+			$default = '';
+		}
 
 		$doc->addScriptDeclaration(<<<JS
 	jQuery(function($)
@@ -66,7 +78,7 @@ JS
 		);
 
 		$items = $this->getItems();
-		$checkedAll = (count($value) === count($items) ? ' checked="checked"' : '');
+		$checkedAll = (count($value) === count($items) || $default == 'all') ? ' checked="checked"' : '';
 
 		$html = array();
 
@@ -87,7 +99,7 @@ HTML;
 			$id = $item->$valueField;
 			$title = $item->$optionTitle;
 
-			$checked = in_array($id, $value) ? ' checked="checked"' : '';
+			$checked = (in_array($id, $value) || $default == 'all') ? ' checked="checked"' : '';
 
 			$html[] = <<<HTML
 	<li class="checkbox-inline" style="margin-left: 1px;">

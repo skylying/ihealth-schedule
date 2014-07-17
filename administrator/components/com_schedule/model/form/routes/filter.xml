@@ -39,8 +39,8 @@
 		-->
 	</fields>
 
-	<!-- RouteUpdater -->
-	<fields name="routeupdater">
+	<!-- Update Data -->
+	<fields name="data">
 		<field
 			name="sender_id"
 			type="sender_list"

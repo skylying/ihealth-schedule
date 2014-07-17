@@ -5,6 +5,9 @@ use Windwalker\Joomla\DataMapper\DataMapper;
 use Windwalker\Data\Data;
 use Schedule\Table\Table;
 use Schedule\Helper\ImageHelper;
+use Schedule\Table\Collection as TableCollection;
+use Schedule\Helper\ScheduleHelper;
+use Schedule\Helper\MailHelper;
 
 /**
  * Class SaveController
@@ -47,6 +50,13 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 	 * @var  Data
 	 */
 	protected $customer;
+
+	/**
+	 * Property isNew.
+	 *
+	 * @var  bool
+	 */
+	protected $isNew = true;
 
 	/**
 	 * Prepare Execute
@@ -99,6 +109,11 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 		$this->data["empty_date_1st"] = $this->data["schedules_1st"]["drug_empty_date"];
 		$this->data["empty_date_2nd"] = $this->data["schedules_2nd"]["drug_empty_date"];
 
+		// Remind
+		$this->data["remind"] = isset($this->data['remind']) ? implode(",", $this->data['remind']) : "";
+
+		$this->isNew = empty($this->data['id']) || $this->data['id'] <= 0;
+
 		parent::preSaveHook();
 	}
 
@@ -128,16 +143,25 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 		// 最後更改地址
 		$lastAddress = null;
 
+		// Get a simple array of schedule data
+		$schedules = array();
+
 		// 新增排程
 		foreach (array("1st", "2nd", "3rd") as $nth)
 		{
 			// 使用者上傳的排程資料
 			$schedule = $this->data["schedules_{$nth}"];
+			$scheduleTable = TableCollection::loadTable('Schedule', $schedule['schedule_id']);
 
 			// 沒有需要外送的次數跳過
 			if (empty($schedule["deliver_nth"]) || ! isset($schedule["deliver_nth"]))
 			{
 				$this->deleteSchedule($schedule['schedule_id']);
+
+				if (! empty($schedule['schedule_id']))
+				{
+					$this->data["schedules_{$nth}"]['send_confirm_email'] = true;
+				}
 
 				continue;
 			}
@@ -157,13 +181,21 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 			// Schedule sender id
 			$this->scheduleModel->getState()->set("sender_id", $route->sender_id);
 
+			$this->data["schedules_{$nth}"] = $this->getScheduleUploadData($task->id, $address, $nth, $schedule, $route);
+
 			// 新增排程
-			$this->scheduleModel->save(
-				$this->getScheduleUploadData($task->id, $address, $nth, $schedule, $route)
-			);
+			$this->scheduleModel->save($this->data["schedules_{$nth}"]);
 
 			// 最後更改地址
 			$lastAddress = $address;
+
+			if (! empty($scheduleTable->id)
+				&& ScheduleHelper::checkScheduleChanged($scheduleTable->getProperties(), $this->data["schedules_{$nth}"]))
+			{
+				$this->data["schedules_{$nth}"]['send_confirm_email'] = true;
+			}
+
+			$schedules[] = $this->data["schedules_{$nth}"];
 		}
 
 		// 如果有最後地址
@@ -177,6 +209,45 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 		$customerModel = $this->getModel('Customer', '', array('ignore_request' => true));
 
 		$customerModel->setCustomerState(1, [$this->customer->id]);
+
+		// Send notify email to member
+		if ($this->sendNotifyMailToMember())
+		{
+			$customerTable = TableCollection::loadTable('Customer', $validData['customer_id']);
+			$memberTable = TableCollection::loadTable('Member', $validData['member_id']);
+
+			$mailData = array(
+				"schedules" => $schedules,
+				"rx"        => $validData,
+				"member"    => $memberTable,
+				"customer"  => $customerTable,
+			);
+
+			MailHelper::sendMailWhenScheduleChange($memberTable->email, $mailData);
+		}
+	}
+
+	/**
+	 * sendNotifyMailToMember
+	 *
+	 * @return  bool
+	 */
+	private function sendNotifyMailToMember()
+	{
+		if ($this->isNew)
+		{
+			return true;
+		}
+
+		foreach (array("1st", "2nd", "3rd") as $nth)
+		{
+			if (! empty($this->data["schedules_{$nth}"]['send_confirm_email']))
+			{
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	/**

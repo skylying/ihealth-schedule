@@ -119,13 +119,6 @@ class ScheduleViewRoutesHtml extends GridView
 		// Get default button set.
 		$buttonSet = parent::configureToolbar($buttonSet, $canDo);
 
-		// In debug mode, we remove trash button but use delete button instead.
-		if (JDEBUG)
-		{
-			$buttonSet['trash']['access'] = false;
-			$buttonSet['delete']['access'] = true;
-		}
-
 		// Remove all buttons we do not need
 		$buttonSet['edit']['access']        = false;
 		$buttonSet['duplicate']['access']   = false;
@@ -137,15 +130,11 @@ class ScheduleViewRoutesHtml extends GridView
 		$buttonSet['batch']['access']       = false;
 		$buttonSet['preferences']['access'] = false;
 
-		$buttonSet['add']['args'] = array($this->viewItem . '.edit.save', 'title' => '儲存變更');
-
-		$buttonSet['add2'] = $buttonSet['add'];
-
 		// Add custom controller redirect to 外送管理
 		$buttonSet['route']['handler'] = function()
 		{
 			$html = <<<HTML
-<button class="btn btn-info" onclick="Joomla.submitbutton('routes.redirect')">
+<button class="btn btn-info btn-small" onclick="Joomla.submitbutton('routes.redirect')">
 	<span class="glyphicon glyphicon-random"></span> 回到外送管理
 </button>
 HTML;
@@ -153,7 +142,30 @@ HTML;
 			$bar->appendButton('Custom', $html);
 		};
 
+		$buttonSet['add2'] = $buttonSet['add'];
+		$buttonSet['add2']['handler'] = 'apply';
+		$buttonSet['add2']['args'] = array($this->viewItem . '.edit.save', '儲存變更');
+
 		$buttonSet['add']['access'] = false;
+
+		// In debug mode, we remove trash button but use delete button instead.
+		if (JDEBUG)
+		{
+			$buttonSet['add']['access'] = true;
+			$buttonSet['delete']['access'] = true;
+			$buttonSet['delete']['priority'] = 10;
+
+			$buttonSet['add']['handler'] = function($task)
+			{
+				$html = <<<HTML
+<button class="btn btn-small" onclick="Joomla.submitbutton('route.edit.edit')">
+	<span class="icon-new"></span> 新增
+</button>
+HTML;
+				$bar = JToolbar::getInstance('toolbar');
+				$bar->appendButton('Custom', $html);
+			};
+		}
 
 		return $buttonSet;
 	}
