@@ -221,6 +221,7 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 				"rx"        => $validData,
 				"member"    => $memberTable,
 				"customer"  => $customerTable,
+				"drugs"     => $this->data['drugs'],
 			);
 
 			MailHelper::sendMailWhenScheduleChange($memberTable->email, $mailData);
@@ -263,6 +264,8 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 		$drugs = isset($this->data['drug']) ? json_decode($this->data['drug']) : array();
 		$deleteDrugIds = isset($this->data['delete_drug']) ? json_decode($this->data['delete_drug']) : array();
 
+		$this->data['drugs'] = array();
+
 		// 新增健保碼
 		if (! empty($drugs))
 		{
@@ -270,7 +273,11 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 			{
 				$drug->rx_id = $this->data['id'];
 
-				$drugModel->save((array) $drug);
+				$drug = (array) $drug;
+
+				$this->data['drugs'][] = $drug;
+
+				$drugModel->save($drug);
 			}
 		}
 

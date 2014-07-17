@@ -221,7 +221,8 @@ class ScheduleControllerPrescriptionEditSave extends ApiSaveController
 				"schedules" => $this->data['schedules'],
 				"rx"        => $validData,
 				"member"    => $memberTable,
-				"customer"  => $customerTable
+				"customer"  => $customerTable,
+				"drugs"     => $this->data['drugs'],
 			);
 
 			MailHelper::sendMailWhenScheduleChange($memberTable->email, $mailDataSet);
