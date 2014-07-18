@@ -216,11 +216,13 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 		if ($this->sendNotifyMailToMember())
 		{
 			$memberTable = TableCollection::loadTable('Member', $validData['member_id']);
+			$drugsModel = $this->getModel('Drugs');
+			$drugsModel->getState()->set('filter', array('drug.rx_id' => $this->data['id']));
 
 			$mailData = array(
 				"schedules" => $schedules,
 				"rx"        => new Data($model->getItem($this->data['id'])),
-				"drugs"     => $this->data['drugs'],
+				"drugs"     => $drugsModel->getItems(),
 			);
 
 			MailHelper::sendMailWhenScheduleChange($memberTable->email, $mailData);
