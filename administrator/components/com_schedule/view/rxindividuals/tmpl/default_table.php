@@ -47,57 +47,62 @@ $date      = $container->get('date');
 
 	<!-- 編號 -->
 	<th class="center">
-		<?php echo $grid->sortTitle('編號', 'rxresident.id'); ?>
+		<?php echo $grid->sortTitle('編號', 'rxindividual.id'); ?>
 	</th>
 
 	<!-- 散客姓名 -->
-	<th class="center">
-		<?php echo $grid->sortTitle('散客姓名', 'rxresident.customer_name'); ?>
+	<th>
+		<?php echo $grid->sortTitle('散客姓名', 'rxindividual.customer_name'); ?>
 	</th>
 
 	<!-- 所屬會員 -->
-	<th class="center">
-		<?php echo $grid->sortTitle('所屬會員', 'rxresident.member_name'); ?>
+	<th>
+		<?php echo $grid->sortTitle('所屬會員', 'rxindividual.member_name'); ?>
 	</th>
 
 	<!-- 上傳方式 -->
-	<th class="center">
-		<?php echo $grid->sortTitle('上傳方式', 'rxresident.method'); ?>
+	<th>
+		<?php echo $grid->sortTitle('上傳方式', 'rxindividual.method'); ?>
 	</th>
 
 	<!-- 處方箋狀態 -->
 	<th class="center">
-		<?php echo $grid->sortTitle('處方箋狀態', 'rxresident.received'); ?>
+		<?php echo $grid->sortTitle('處方箋狀態', 'rxindividual.received'); ?>
 	</th>
 
 	<!-- 電聯紀錄 -->
 	<th class="center">
-		<?php echo $grid->sortTitle('電聯紀錄', 'rxresident.called'); ?>
+		<?php echo $grid->sortTitle('電聯紀錄', 'rxindividual.called'); ?>
 	</th>
 
 	<!-- 就醫日期 -->
 	<th class="center">
-		<?php echo $grid->sortTitle('就醫日期', 'rxresident.see_dr_date'); ?>
+		<?php echo $grid->sortTitle('就醫日期', 'rxindividual.see_dr_date'); ?>
 	</th>
 
 	<!-- 可調劑次數 -->
 	<th class="center">
-		<?php echo $grid->sortTitle('可調劑次數', 'rxresident.times'); ?>
+		<?php echo $grid->sortTitle('可調劑次數', 'rxindividual.times'); ?>
 	</th>
 
 	<!-- 宅配次數 -->
-	<th class="center">
-		<?php echo $grid->sortTitle('宅配次數', 'rxresident.deliver_nths'); ?>
+	<th>
+		<?php echo $grid->sortTitle('宅配次數', 'rxindividual.deliver_nths'); ?>
 	</th>
 
 	<!-- 新增人 -->
-	<th class="center">
-		<?php echo $grid->sortTitle('新增人', 'user.created_by'); ?>
+	<th>
+		<?php echo $grid->sortTitle('新增人', 'rxindividual.created_by'); ?>
 	</th>
 
 	<!-- 最後修改人 -->
+	<th>
+		<?php echo $grid->sortTitle('最後修改人', 'rxindividual.modified_by'); ?>
+	</th>
+
+	<!-- 已列印 -->
 	<th class="center">
-		<?php echo $grid->sortTitle('最後修改人', 'user.modified_by'); ?>
+		<?php echo $grid->sortTitle('已列印', 'rxindividual.printed'); ?>
 	</th>
 </tr>
 </thead>
@@ -126,7 +131,7 @@ $date      = $container->get('date');
 	<tr class="prescription-row">
 
 		<!-- checkbox -->
-		<td>
+		<td class="center">
 			<?php echo JHtml::_('grid.id', $i, $item->id); ?>
 		</td>
 
@@ -135,17 +140,17 @@ $date      = $container->get('date');
 		</td>
 
 		<!-- id -->
-		<td>
+		<td class="center">
 			<?php echo $this->escape($item->id); ?>
 		</td>
 
 		<!-- 散客名稱 -->
-		<td>
+		<td class="center">
 			<?php echo Schedule\Helper\UiHelper::foreignLink('customer', $item->customer_name, $item->customer_id, '', array('target' => '_blank'));?>
 		</td>
 
 		<!-- 所屬會員 -->
-		<td>
+		<td class="center">
 			<?php
 				$members = empty($item->member_json) ? array() : json_decode("[" . $item->member_json . "]");
 				foreach ($members as $member)
@@ -153,46 +158,53 @@ $date      = $container->get('date');
 					echo Schedule\Helper\UiHelper::foreignLink('member', $member->name, $member->id, '', array('target' => '_blank'));
 				}
 			?>
-		</td>
+		</td class="center">
 
 		<!-- 上傳方式 -->
-		<td>
+		<td class="center">
 			<?php echo $this->escape(Jtext::_('COM_SCHEDULE_RXINDIVIDUAL_PRINT_' . $item->method)); ?>
 		</td>
 
 		<!-- 處方簽狀態 -->
-		<td>
+		<td class="center">
 			<?php echo ($item->received) ? "已取得" : "未取得"; ?>
 		</td>
 
 		<!-- 電聯狀態 -->
-		<td>
+		<td class="center">
 			<?php echo ($item->called) ? "已電聯" : "未電聯"; ?>
 		</td>
 
 		<!-- 就醫日期 -->
-		<td>
+		<td class="center">
 			<?php echo $this->escape($item->see_dr_date); ?>
 		</td>
 
 		<!-- 可調劑次數 -->
-		<td>
+		<td class="center">
 			<?php echo $this->escape($item->times); ?>
 		</td>
 
 		<!-- 宅配次數 -->
-		<td>
+		<td class="center">
 			<?php echo $this->escape($item->deliver_nths); ?>
 		</td>
 
 		<!-- 新增人 -->
-		<td>
+		<td class="center">
 			<?php echo $this->escape($item->author_name); ?>
 		</td>
 
 		<!-- 修改人 -->
-		<td>
+		<td class="center">
 			<?php echo $this->escape($item->modifier_name); ?>
+		</td>
+
+		<!-- 已列印 -->
+		<td class="center">
+			<span class="glyphicon glyphicon-<?php echo ($item->printed ? 'ok' : 'remove'); ?>"
+				<?php echo ($item->printed ? ' style="color:green;"' : ' style="color:red;"'); ?>>
+			</span>
 		</td>
 	</tr>
 <?php endforeach; ?>

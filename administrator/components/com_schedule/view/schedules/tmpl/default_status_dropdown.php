@@ -35,12 +35,32 @@ $optionForNormal = [
 ];
 
 $options = ($type == 'individual' || $type == 'resident') ? $optionForDelivery : $optionForNormal;
-?>
 
+$classTooltip = '';
+$showTooltip = '';
+
+if ($status != 'scheduled' && $status != 'emergency')
+{
+	$classTooltip = 'hasTooltip';
+	$cancelNote = $data->item->cancel_note;
+
+	$cancelReason = $data->item->cancel;
+
+	$reason = ($data->item->cancel) ? JText::_($prefix . 'REASON_' . $cancelReason) : '';
+
+	$cancelOrPause = ($status == 'pause') ? '暫緩原因' : '取消原因';
+
+	$showTooltip = 'title="<strong>' . $cancelOrPause . ':</strong>' . $reason . '<br /><strong>備註:</strong>' . $cancelNote . '"';
+}
+?>
 <div class="btn-group status-dropdown-menu">
 	<button type="button"
-		class="btn btn-default btn-sm dropdown-toggle"
+		id="btn-status-<?php echo $index; ?>"
+		class="btn btn-default btn-sm dropdown-toggle <?php echo $classTooltip; ?>"
 		data-toggle="dropdown"
+		data-default-cancel="<?php echo $data->item->cancel; ?>"
+		data-default-cancel-note="<?php echo $data->item->cancel_note; ?>"
+		<?php echo $showTooltip; ?>
 		style="background:<?php echo JText::_($prefix . $status . '_COLOR'); ?>;">
 		<span class="glyphicon glyphicon-<?php echo JText::_($prefix . $status . '_ICON'); ?>"></span>
 		<?php echo JText::_($prefix . $status); ?>
@@ -54,6 +74,8 @@ $options = ($type == 'individual' || $type == 'resident') ? $optionForDelivery :
 			{
 				continue;
 			}
+
+			$showOnclickStatus = 'onclick="transferStatus(' . $index . ');"';
 			?>
 		<li style="background:<?php echo JText::_($prefix . $option . '_COLOR'); ?>;"
 			data-status="<?php echo $option; ?>"

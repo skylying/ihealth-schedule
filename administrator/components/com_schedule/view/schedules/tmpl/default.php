@@ -186,22 +186,22 @@ $editFormFields = $data->editFormFields;
 					</label>
 					<div class="controls">
 						<div class="radio">
-							<input type="radio" id="status-cancel-reason-5" name="cancel" value="hospitalized">
-							<label for="status-cancel-reason-5">住院</label>
+							<input type="radio" id="pause-status-cancel-reason-1" name="cancel" value="hospitalized">
+							<label for="pause-status-cancel-reason-1">住院</label>
 						</div>
 						<div class="radio">
-							<input type="radio" id="status-cancel-reason-6" name="cancel" value="other">
-							<label for="status-cancel-reason-6">其他</label>
+							<input type="radio" id="pause-status-cancel-reason-2" name="cancel" value="other">
+							<label for="pause-status-cancel-reason-2">其他</label>
 						</div>
 					</div>
 				</div>
 
 				<div class="control-group">
-					<label class="control-label" for="status-cancel-note">
+					<label class="control-label" for="pause-status-cancel-note">
 						備註
 					</label>
 					<div class="controls">
-						<textarea id="status-cancel-note" name="cancel_note" class="form-control"></textarea>
+						<textarea id="pause-status-cancel-note" name="cancel_note" class="form-control"></textarea>
 					</div>
 				</div>
 

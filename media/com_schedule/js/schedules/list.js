@@ -72,15 +72,20 @@
 			$adminStatusInput = $adminForm.find('input[name="status"]'),
 			$cancelStatusInput = $cancelForm.find('input[name="status"]'),
 			$cancelCidInput = $cancelForm.find('input[name="cid[]"]'),
-			$pauseCidInput = $pauseForm.find('input[name="cid[]"]');
+			$pauseCidInput = $pauseForm.find('input[name="cid[]"]'),
+			$cancelNoteTextArea = $cancelForm.find('textarea[name="cancel_note"]'),
+			$pauseNoteTextArea = $pauseForm.find('textarea[name="cancel_note"]');
 
 		$('.status-dropdown-menu li').click(function()
 		{
 			var $node = $(this),
 				index = $node.data('index'),
 				$cid = $('#cb' + index),
+				$statusBtn = $('#btn-status-' + index),
 				status = $node.data('status'),
-				updateMethod = $node.data('update-method');
+				updateMethod = $node.data('update-method'),
+				cancelNote = $statusBtn.data('default-cancel-note'),
+				cancelReason = $statusBtn.data('default-cancel');
 
 			switch (updateMethod)
 			{
@@ -93,10 +98,14 @@
 					$cancelStatusInput.val(status);
 					$cancelCidInput.val($cid.val());
 					$modalStatusCancel.modal();
+					$cancelNoteTextArea.text(cancelNote);
+					$cancelForm.find('input[value="' + cancelReason + '"]').prop('checked', true);
 					break;
 				case 'modal-pause':
 					$pauseCidInput.val($cid.val());
 					$modalStatusPause.modal();
+					$pauseNoteTextArea.text(cancelNote);
+					$pauseForm.find('input[value="' + cancelReason + '"]').prop('checked', true);
 					break;
 			}
 		});

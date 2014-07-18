@@ -419,6 +419,7 @@
         modified_by: { Field: modified_by, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: '修改者 user id', From: [modified_by] }
         ordering: { Field: ordering, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: 排序, From: [ordering] }
         params: { Field: params, Type: text, 'Null': NO, Default: null, Extra: '', Comment: Params, From: [params] }
+        printed: { Field: printed, Type: tinyint(1), 'Null': YES, Default: null, Extra: '', Comment: '是否已列印 (0:否 / 1:是)', From: [printed] }
     index:
         - { Table: '#__schedule_prescriptions', Non_unique: '0', Key_name: PRIMARY, Seq_in_index: '1', Column_name: id, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
         - { Table: '#__schedule_prescriptions', Non_unique: '1', Key_name: idx_created_by, Seq_in_index: '1', Column_name: created_by, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
@@ -486,7 +487,7 @@
         expense: { Field: expense, Type: tinyint(1), 'Null': YES, Default: null, Extra: '', Comment: '是否為自費藥品 (0:否 / 1:是)', From: [expense] }
         price: { Field: price, Type: 'decimal(10,2)', 'Null': YES, Default: null, Extra: '', Comment: 自費金額, From: [price] }
         status: { Field: status, Type: char(20), 'Null': YES, Default: null, Extra: '', Comment: '排程狀態 (scheduled:已排程 / emergency:急件 / deleted:已刪除 / cancel_reject:取消-要退單 / cancel_only:取消-不退單 / pause:暫緩 / delivered:已外送)', From: [status] }
-        cancel: { Field: cancel, Type: char(10), 'Null': YES, Default: null, Extra: '', Comment: '取消原因 (badservice:服務不周 / changedrug:醫師換藥 / passaway:往生 / hospitalized:住院 / other:其他)', From: [cancel] }
+        cancel: { Field: cancel, Type: char(20), 'Null': YES, Default: null, Extra: '', Comment: '取消原因 (badservice:服務不周 / changedrug:醫師換藥 / passaway:往生 / hospitalized:住院 / other:其他)', From: [cancel] }
         cancel_note: { Field: cancel_note, Type: text, 'Null': YES, Default: null, Extra: '', Comment: '刪除原因說明', From: [cancel_note] }
         note: { Field: note, Type: text, 'Null': YES, Default: null, Extra: '', Comment: 行政排程類別說明, From: [note] }
         notify: { Field: notify, Type: tinyint(1), 'Null': NO, Default: null, Extra: '', Comment: '提醒使用者該排程需要被注意 (0:無通知 / 1:排程需要被合併)', From: [notify] }

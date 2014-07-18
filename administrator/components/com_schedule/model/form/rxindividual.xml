@@ -12,6 +12,10 @@
 			readonly="true"
 			/>
 
+		<field name="printed"
+			type="hidden"
+			/>
+
 		<field name="id_number"
 			type="text"
 			label="身分證字號"
@@ -55,6 +59,7 @@
 			label="處方箋正本"
 			description="處方箋正本"
 			class="btn-group"
+			default="1"
 			>
 			<option value="1">已取得</option>
 			<option value="0">未取得</option>
@@ -65,6 +70,7 @@
 			label="電聯狀態"
 			description="電聯狀態"
 			class="btn-group"
+			default="1"
 			>
 			<option value="1">已電聯</option>
 			<option value="0">無法聯繫</option>
@@ -183,7 +189,7 @@
 	<fields name="schedules_1st">
 		<field name="deliver_nth"
 			type="checkboxes"
-			label="宅配第幾次"
+			label=""
 			description="宅配第幾次"
 			>
 			<option value="1st">第一次</option>
@@ -244,15 +250,31 @@
 			<option value="WED">星期三</option>
 			<option value="THU">星期四</option>
 			<option value="FRI">星期五</option>
-			<option value="SAT">星期六</option>
-			<option value="SUN">星期日</option>
 		</field>
+
+		<field name="tel_office"
+			type="text"
+			label="聯絡電話(O)"
+			description="聯絡電話(O)"
+			/>
+
+		<field name="tel_home"
+			type="text"
+			label="聯絡電話(H)"
+			description="聯絡電話(H)"
+			/>
+
+		<field name="mobile"
+			type="text"
+			label="手機(M)"
+			description="手機(M)"
+			/>
 	</fields>
 
 	<fields name="schedules_2nd">
 		<field name="deliver_nth"
 			type="checkboxes"
-			label="宅配第幾次"
+			label=""
 			description="宅配第幾次"
 			>
 			<option value="2nd">第二次</option>
@@ -313,15 +335,31 @@
 			<option value="WED">星期三</option>
 			<option value="THU">星期四</option>
 			<option value="FRI">星期五</option>
-			<option value="SAT">星期六</option>
-			<option value="SUN">星期日</option>
 		</field>
+
+		<field name="tel_office"
+			type="text"
+			label="聯絡電話(O)"
+			description="聯絡電話(O)"
+			/>
+
+		<field name="tel_home"
+			type="text"
+			label="聯絡電話(H)"
+			description="聯絡電話(H)"
+			/>
+
+		<field name="mobile"
+			type="text"
+			label="手機(M)"
+			description="手機(M)"
+			/>
 	</fields>
 
 	<fields name="schedules_3rd">
 		<field name="deliver_nth"
 			type="checkboxes"
-			label="宅配第幾次"
+			label=""
 			description="宅配第幾次"
 			>
 			<option value="3rd">第三次</option>
@@ -382,9 +420,25 @@
 			<option value="WED">星期三</option>
 			<option value="THU">星期四</option>
 			<option value="FRI">星期五</option>
-			<option value="SAT">星期六</option>
-			<option value="SUN">星期日</option>
 		</field>
+
+		<field name="tel_office"
+			type="text"
+			label="聯絡電話(O)"
+			description="聯絡電話(O)"
+			/>
+
+		<field name="tel_home"
+			type="text"
+			label="聯絡電話(H)"
+			description="聯絡電話(H)"
+			/>
+
+		<field name="mobile"
+			type="text"
+			label="手機(M)"
+			description="手機(M)"
+			/>
 	</fields>
 
 	<fieldset
@@ -415,13 +469,10 @@
 			/>
 
 		<field name="remind"
-			type="checkboxes"
+			type="text"
 			label="註記選項"
-			description="註記選項"
+			description="藥品需分包"
 			>
-			<option value="checkorigin">需確認正本</option>
-			<option value="needsplit">藥品需分包</option>
-			<option value="origincollected">正本已回收</option>
 		</field>
 	</fieldset>
 

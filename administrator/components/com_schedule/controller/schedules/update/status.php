@@ -110,12 +110,6 @@ class ScheduleControllerSchedulesUpdateStatus extends AbstractUpdateStateControl
 			$this->stateData['cancel']      = $cancel;
 			$this->stateData['cancel_note'] = trim($this->input->get('cancel_note', '', 'RAW'));
 		}
-		else
-		{
-			// Reset "cancel" and "cancel_note" fields
-			$this->stateData['cancel']      = null;
-			$this->stateData['cancel_note'] = '';
-		}
 	}
 
 	/**

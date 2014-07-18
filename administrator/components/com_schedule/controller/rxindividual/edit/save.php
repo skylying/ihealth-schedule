@@ -315,7 +315,7 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 		$routeModel   = $this->getModel("Route");
 
 		// 外送路線
-		$route = $this->mapper['routes']->findOne(array("city" => $address->city, "area" => $address->area, "type" => "institute"));
+		$route = $this->mapper['routes']->findOne(array("city" => $address->city, "area" => $address->area, "type" => "customer"));
 
 		// 沒有路線的時候新增路線
 		if ($route->isNull())
@@ -453,6 +453,11 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 
 			// 第幾次宅配
 			"deliver_nth"   => $nth,
+
+			// Telephone Info
+			"tel_office"   => isset($formData['tel_office']) ? $formData['tel_office'] : "",
+			"tel_home"     => isset($formData['tel_home']) ? $formData['tel_home'] : "",
+			"mobile"       => isset($formData['mobile']) ? $formData['mobile'] : "",
 
 			// Default
 			"status"        => "scheduled",
