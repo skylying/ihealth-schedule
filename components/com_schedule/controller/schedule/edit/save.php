@@ -82,7 +82,7 @@ class ScheduleControllerScheduleEditSave extends ApiSaveController
 			]
 		);
 
-		$this->notifyMail = ConfigHelper::getNotifyEmptyRouteMails();
+		$this->notifyMail = MailHelper::getNotifyEmptyRouteMails();
 
 		// If no route found, create one
 		if (empty($routeTable->id))

@@ -122,7 +122,7 @@ class ScheduleControllerPrescriptionEditSave extends ApiSaveController
 		/** @var ScheduleModelTask $taskModel */
 		$taskModel = $this->getModel('Task');
 
-		$notifyMail = ConfigHelper::getNotifyEmptyRouteMails();
+		$notifyMail = MailHelper::getNotifyEmptyRouteMails();
 
 		$scheduleModel->getState()->set('form.type', 'schedule_individual');
 

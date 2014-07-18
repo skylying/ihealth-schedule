@@ -107,4 +107,23 @@ class MailHelper
 			throw new \Exception("Email send failure");
 		}
 	}
+
+	/**
+	 * getNotifyEmptyRouteMails
+	 *
+	 * @return  array
+	 */
+	public static function getNotifyEmptyRouteMails()
+	{
+		static $mails = null;
+
+		if (is_array($mails))
+		{
+			return $mails;
+		}
+
+		$mails = \JComponentHelper::getParams('com_schedule')->get("schedule.empty_route_mail", array());
+
+		return $mails;
+	}
 }

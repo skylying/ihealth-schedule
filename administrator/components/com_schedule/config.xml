@@ -44,9 +44,11 @@
 			label="Schedule"
 			>
 			<field name="empty_route_mail"
-				type="text"
+				type="sql"
+				query="SELECT CONCAT(`name`, ' &lt;', `email`, '&gt;') AS empty_route_mail, `email` AS `value` FROM #__users"
+				multiple="true"
 				label="無路線提醒信箱"
-				description="無路線提醒信箱, 設定多組信箱時使用空白隔開"
+				description="無路線提醒信箱"
 				/>
 		</fieldset>
 	</fields>
