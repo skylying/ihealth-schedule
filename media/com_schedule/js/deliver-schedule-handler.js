@@ -61,7 +61,6 @@
 			for (var i = 0; i < addressesKeys.length; i++)
 			{
 				var drugEmptyDateId = '#jform_schedules_' + addressesKeys[i] + '_drug_empty_date';
-				var abailavleReceiveDateId = '#jform_schedules_' + addressesKeys[i] + '_available_receive_date';
 				var selectedAddressId = '#jform_schedules_' + addressesKeys[i] + '_address_id';
 				var deliveredNth = '#jform_schedules_' + addressesKeys[i] + '_deliver_nth0';
 
@@ -69,30 +68,7 @@
 
 				// Set finish drug date
 				moment_date.add('days', period);
-
-				var moment_receive_date = moment(moment_date);
-
 				$(drugEmptyDateId).val(moment_date.format("YYYY-MM-DD"));
-
-				// 第一次外送的開始領藥日 = 就醫日期
-				// 第二次外送的開始領藥日 = 第一次吃完藥日 -10 天
-				// 第三次外送的開始領藥日 = 第二次吃完藥日 -10 天
-				switch (i)
-				{
-					case 0:
-						moment_receive_date = moment(seeDrDate);
-						break;
-					case 1:
-						moment_receive_date = moment_receive_date.subtract('days', parseInt(period) + 10);
-						break;
-					case 2:
-						moment_receive_date = moment_receive_date.subtract('days', parseInt(period) + 10);
-						break;
-					default:
-						break;
-				}
-
-				$(abailavleReceiveDateId).val(moment_receive_date.format("YYYY-MM-DD"));
 
 				if ($(deliveredNth).is(":checked") && address != '')
 				{
