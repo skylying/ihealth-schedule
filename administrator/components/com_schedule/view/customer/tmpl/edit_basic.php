@@ -63,6 +63,16 @@ $addresses = isset($data->item->addresses) ? $data->item->addresses : array();
 
 ?>
 
+<script type="text/javascript">
+
+	jQuery(document).ready(function()
+	{
+		var isNew = <?php echo $data->isNew; ?>;
+
+		CustomerJs.initialize(isNew);
+	});
+
+</script>
 
 <div class="row-fluid">
 	<div class="span6">
@@ -145,12 +155,3 @@ $addresses = isset($data->item->addresses) ? $data->item->addresses : array();
 	</div>
 </script>
 <!--Hidden address block template-->
-
-<script type="text/javascript">
-
-jQuery(document).ready(function()
-{
-	CustomerJs.initialize();
-});
-
-</script>

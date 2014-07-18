@@ -11,8 +11,10 @@
 	window.CustomerJs = {
 
 		// Initialize all element we need
-		initialize : function()
+		initialize : function(isNew)
 		{
+			this.isNew = isNew;
+
 			this.birthday = $('#jform_birth_date');
 			this.age      = $('#jform_age');
 
@@ -66,14 +68,20 @@
 			{
 				if ($(this).val() == 'individual')
 				{
-					alert('由『住民』換為『散客』時，住民資料將不會被儲存');
+					if (!self.isNew)
+					{
+						alert('您剛剛編輯的『住民』資料將不會被儲存');
+					}
 
 					self.individualDiv.removeClass('hide');
 					self.residentDiv.addClass('hide');
 				}
 				else
 				{
-					alert('由『散客』換為『住民』時，散客資料將不會被儲存');
+					if (!self.isNew)
+					{
+						alert('您剛剛編輯的『散客』資料將不會被儲存');
+					}
 
 					self.individualDiv.addClass('hide');
 					self.residentDiv.removeClass('hide');

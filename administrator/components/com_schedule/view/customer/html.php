@@ -81,6 +81,9 @@ class ScheduleViewCustomerHtml extends EditView
 
 	protected function prepareRender()
 	{
+		// Prepare isNew variable for javascript
+		$this->data->isNew = $this->container->get('input')->get('id') ? 'false' : 'true';
+
 		parent::prepareRender();
 	}
 }
