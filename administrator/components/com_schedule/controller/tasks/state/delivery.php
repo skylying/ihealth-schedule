@@ -6,12 +6,14 @@
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
+use Windwalker\Controller\State\AbstractUpdateStateController;
+
 /**
  * Class DeliveryController
  *
  * @since 1.0
  */
-class ScheduleControllerTasksStateDelivery extends \Windwalker\Controller\State\AbstractUpdateStateController
+class ScheduleControllerTasksStateDelivery extends AbstractUpdateStateController
 {
 	/**
 	 * Property stateData.
@@ -28,4 +30,24 @@ class ScheduleControllerTasksStateDelivery extends \Windwalker\Controller\State\
 	 * @var string
 	 */
 	protected $actionText = 'DELIVERED';
+
+	/**
+	 * postUpdateHook
+	 *
+	 * @param ScheduleModelTask $model
+	 *
+	 * @return void
+	 */
+	protected function postUpdateHook($model)
+	{
+		// Update schedule status to delivered
+		$pks = $this->cid;
+
+		foreach ($pks as $taskId)
+		{
+			$model->updateScheduleAsDelivered($taskId);
+		}
+
+		parent::postUpdateHook($model);
+	}
 }

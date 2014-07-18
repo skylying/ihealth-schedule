@@ -65,5 +65,14 @@
 			description="拜訪日期"
 			onchange="ScheduleEdit.updateScheduleLink(this, 'individual');"
 			/>
+
+		<field name="task_id"
+			type="hidden"
+			/>
+
+		<field name="status"
+			type="hidden"
+			default="scheduled"
+			/>
 	</fieldset>
 </form>

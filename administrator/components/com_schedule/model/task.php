@@ -7,6 +7,7 @@
  */
 
 use Schedule\Model\TaskModel;
+use Schedule\Table\Table;
 
 // No direct access
 defined('_JEXEC') or die;
@@ -18,4 +19,26 @@ defined('_JEXEC') or die;
  */
 class ScheduleModelTask extends TaskModel
 {
+	/**
+	 * updateScheduleAsDelivered
+	 *
+	 * @param   int  $taskId  Task Id
+	 *
+	 * @return  int
+	 */
+	public function updateScheduleAsDelivered($taskId)
+	{
+		$db = \JFactory::getDbo();
+		$query = $db->getQuery(true);
+
+		$query->clear()
+			->update(Table::SCHEDULES)
+			->set('status = "delivered"')
+			->where('task_id = ' . $taskId)
+			->where('status = "scheduled"');
+
+		$db->setQuery($query)->execute();
+
+		return $db->getAffectedRows();
+	}
 }

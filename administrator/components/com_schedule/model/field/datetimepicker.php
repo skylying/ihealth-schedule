@@ -49,6 +49,58 @@ class JFormFieldDateTimePicker extends JFormField
 	protected static $initialized = false;
 
 	/**
+	 * Property width.
+	 *
+	 * @var  int
+	 */
+	protected $width = 130;
+
+	/**
+	 * Property show_button.
+	 *
+	 * @var  bool
+	 */
+	protected $show_button = false;
+
+	/**
+	 * Property date_format.
+	 *
+	 * @var  string
+	 */
+	protected $date_format = 'YYYY-MM-DD';
+
+	/**
+	 * Property dpBindEvent.
+	 *
+	 * @var  string
+	 */
+	protected $dpBindEvent = '';
+
+	/**
+	 * Method to attach a JForm object to the field.
+	 *
+	 * @param   SimpleXMLElement $element
+	 * @param   mixed            $value
+	 * @param   null             $group
+	 *
+	 * @return  boolean  True on success.
+	 */
+	public function setup(SimpleXMLElement $element, $value, $group = null)
+	{
+		$return = parent::setup($element, $value, $group);
+
+		$width = (int) XmlHelper::get($this->element, 'width');
+		$dpBindEvent = XmlHelper::get($this->element, 'dpBindEvent', '');
+
+		$this->width       = ($width > 0 ? $width : 130);
+		$this->show_button = XmlHelper::getBool($this->element, 'show_button', false);
+		$this->date_format = XmlHelper::get($this->element, 'date_format', 'YYYY-MM-DD');
+		$this->dpBindEvent = empty($dpBindEvent) ? '' : $dpBindEvent . '(node);';
+
+		return $return;
+	}
+
+	/**
 	 * getInput
 	 *
 	 * @return  string
@@ -57,12 +109,11 @@ class JFormFieldDateTimePicker extends JFormField
 	{
 		$this->init();
 
-		$id         = $this->id;
-		$showButton = XmlHelper::getBool($this->element, 'show_button', false);
-		$style      = $this->getStyle();
-		$dateFormat = XmlHelper::get($this->element, 'date_format', 'YYYY-MM-DD');
-		$bindEvent  = XmlHelper::get($this->element, 'dpBindEvent', '');
-		$bindEvent  = empty($bindEvent) ? '' : $bindEvent . '(node);';
+		$id          = $this->id;
+		$showButton  = $this->show_button;
+		$style       = $this->getStyle();
+		$dateFormat  = $this->date_format;
+		$dpBindEvent = $this->dpBindEvent;
 
 		$attr = array(
 			'type'             => 'text',
@@ -110,7 +161,7 @@ jQuery(function ($)
 		pickTime: false
 	});
 
-	{$bindEvent}
+	{$dpBindEvent}
 });
 JAVASCRIPT;
 
@@ -153,10 +204,7 @@ JAVASCRIPT;
 	{
 		$styles = array();
 
-		$width = (int) XmlHelper::get($this->element, 'width');
-		$width = ($width > 0 ? $width : 130);
-
-		$styles[] = 'width:' . $width . 'px;';
+		$styles[] = 'width:' . $this->width . 'px;';
 
 		return implode(' ', $styles);
 	}

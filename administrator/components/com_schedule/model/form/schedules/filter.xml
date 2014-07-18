@@ -138,7 +138,7 @@
 			hint="選擇日期"
 			default=""
 			label="預計外送日(起)"
-			onchange="this.form.submit();"
+			dpBindEvent="bindDateFilter"
 			/>
 
 		<field
@@ -147,7 +147,7 @@
 			hint="選擇日期"
 			default=""
 			label="預計外送日(迄)"
-			onchange="this.form.submit();"
+			dpBindEvent="bindDateFilter"
 			/>
 
 		<field
@@ -197,7 +197,7 @@
 		<field
 			name="fullordering"
 			type="list"
-			default="schedule.id ASC"
+			default="schedule.date ASC"
 			label="COM_CONTENT_LIST_FULL_ORDERING"
 			description="COM_CONTENT_LIST_FULL_ORDERING_DESC"
 			onchange="this.form.submit();"

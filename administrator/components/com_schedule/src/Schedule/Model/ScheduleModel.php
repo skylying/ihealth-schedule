@@ -168,6 +168,7 @@ class ScheduleModel extends AdminModel
 			$tableSender = $this->getTable('Sender');
 			$tableSender->load($senderId);
 
+			$table->sender_id = $senderId;
 			$table->sender_name = $tableSender->name;
 		}
 	}

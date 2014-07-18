@@ -8,6 +8,7 @@
 
 use Windwalker\Data\Data;
 use Windwalker\Helper\ArrayHelper;
+use Schedule\Helper\ScheduleHelper;
 
 // No direct access
 defined('_JEXEC') or die;
@@ -134,7 +135,7 @@ foreach ($data->items as $i => $item):
 		<!-- EDIT -->
 		<td class="center">
 			<a class="btn btn-mini btn-primary" href="#"
-				onclick="jQuery('#cb<?php echo $i; ?>').click();jQuery('#edit-item-button').click();">
+				onclick="SchedulesList.edit(<?php echo $i; ?>);">
 				<span class="glyphicon glyphicon-edit"></span>
 			</a>
 		</td>
@@ -153,16 +154,17 @@ foreach ($data->items as $i => $item):
 
 		<!-- customer_name | institute_name -->
 		<td>
-			<?php if ($item->type == 'resident')
+			<?php
+			if ($item->institute_id > 0)
 			{
 				echo '<div class="glyphicon glyphicon-home">';
 			}
-			elseif ($item->type == 'individual')
+			elseif ($item->customer_id > 0)
 			{
 				echo '<div class="glyphicon glyphicon-user">';
 			}
 			?>
-			<?php echo Schedule\Helper\ScheduleHelper::getTargetLink($item); ?>
+			<?php echo ScheduleHelper::getTargetLink($item); ?>
 			<?php echo '</div>'; ?>
 		</td>
 
@@ -187,12 +189,12 @@ foreach ($data->items as $i => $item):
 		</td>
 
 		<!-- date -->
-		<td class="center">
+		<td class="center field-date">
 			<?php echo $item->date; ?>
 		</td>
 
 		<!-- route_sender_name -->
-		<td class="center">
+		<td class="center field-sender-id" data-sender-id="<?php echo $item->sender_id; ?>">
 			<?php echo $item->sender_name; ?>
 		</td>
 

@@ -136,6 +136,11 @@ class ScheduleViewSchedulesHtml extends GridView
 			$field->id = 'edit_item_field_' . $fieldName;
 			$field->onchange = '';
 
+			if ('date' === $fieldName)
+			{
+				$field->dpBindEvent = '';
+			}
+
 			$editFormFields[$fieldName] = (string) $field->input;
 		}
 
