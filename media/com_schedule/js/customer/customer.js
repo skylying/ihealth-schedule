@@ -151,6 +151,14 @@
 				if (confirm('確定要刪除此筆地址嗎?'))
 				{
 					$(this).closest('.address-row').remove();
+
+					var isDefault = $(this).closest('.address-row').find('.glyphicon-ok').attr('title');
+
+					// If user delete the default address, we automatically set first existed address as default
+					if (isDefault == 'true')
+					{
+						self.setDefaultAddress();
+					}
 				}
 			});
 
@@ -330,6 +338,25 @@
 			});
 
 			this.hiddenAddressInput.val(JSON.stringify(result));
+		},
+
+		/*
+		 * Check and set default address after original default address was deleted
+		 */
+		setDefaultAddress : function()
+		{
+			var defaultMarkers = $('.address-row').find('.glyphicon-ok');
+
+			// If there is no address, nothing happen
+			if (defaultMarkers.length == 0)
+			{
+				return;
+			}
+			else
+			{
+				// Has address, then we set first one as default
+				$(defaultMarkers[0]).addClass('default').attr('title', 'true');
+			}
 		}
 	};
 })(jQuery);
