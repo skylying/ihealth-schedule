@@ -14,28 +14,35 @@ $nthDelivery = array('1st' => '第一次宅配', '2nd' => '第二次宅配', '3r
 <!DOCTYPE html>
 <html>
 <body>
-<table border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" id="bodyTable" style="font-family: 微软雅黑;"><!--first table-->
+<table border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" id="bodyTable" style="font-family: 微软雅黑; letter-spacing: 3px;"><!--first table-->
 	<tr>
 		<td valign="top">
 			<table border="0" cellpadding="20" cellspacing="0" width="600" id="emailContainer" style="background-color:#f2f2f2;"><!--second table-->
 				<tr>
 					<td valign="top">
 						<table border="0" cellpadding="20" cellspacing="0" width="100%" id="emailBody" style="background-color: #FFFFFF; font-size: 15px;"><!--third table-->
+							<?php foreach ($data['schedules'] as $schedule): ?>
 							<tr>
 								<td valign="top">
-									<?php foreach ($data['schedules'] as $schedule): ?>
-
 									<div>
-										<h2 style="font-family: 微软雅黑;">
-											<?php echo $data->member->name; ?> 先生/小姐 <br />
-											已取消日期: <?php echo $schedule['date']; ?> 送藥排程。
+										<a href="http://www.ihealth.com.tw" style="float: right;">
+											<img style="width: 83px; height: 20px;" src="<?php echo JUri::root() . '/media/com_schedule/images/ihealth.png'; ?>" />
+										</a>
+										<h2 style="letter-spacing: 2px;">
+											<?php echo $schedule['member_name'] ?> 先生/小姐 <br />
+										</h2>
+										<h2>
+											已成功取消一筆送藥排程。
 										</h2>
 									</div>
-
-									<h3 style="font-family: 微软雅黑;">資料如下:</h3>
-
+									<hr />
+									<h3>資料如下:</h3>
 									<div>
 										<table><!--fourth table-->
+											<tr>
+												<td>排程日期:</td>
+												<td style="padding:10px;"><?php echo $schedule['date']; ?></td>
+											</tr>
 											<tr>
 												<td>第幾次宅配:</td>
 												<td style="padding:10px;"><?php echo $nthDelivery[$schedule['deliver_nth']]; ?></td>
@@ -74,10 +81,9 @@ $nthDelivery = array('1st' => '第一次宅配', '2nd' => '第二次宅配', '3r
 											</tr>
 										</table>
 										<!--end fourth table-->
-										<a href="<?php echo JUri::root() . 'index.php?option=com_schedule&view=schedules'; ?>">進入後台送藥排程</a>
-										<a href="http://www.ihealth.com.tw" style="float: right;">
-											<img style="width: 83px; height: 20px;" src="<?php echo JUri::root() . '/media/com_schedule/images/ihealth.png'; ?>" />
-										</a>
+										<div style="padding-top: 20px;">
+											<a href="<?php echo JUri::root() . 'index.php?option=com_schedule&view=schedules'; ?>">進入後台送藥排程</a>
+										</div>
 										<?php endforeach; ?>
 								</td>
 							</tr>
