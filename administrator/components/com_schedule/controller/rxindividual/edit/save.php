@@ -193,9 +193,11 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 				&& ScheduleHelper::checkScheduleChanged($scheduleTable->getProperties(), $this->data["schedules_{$nth}"]))
 			{
 				$this->data["schedules_{$nth}"]['send_confirm_email'] = true;
-			}
 
-			$schedules[] = $this->data["schedules_{$nth}"];
+				$scheduleId = $this->scheduleModel->getState()->get('schedule.id');
+
+				$schedules[] = $this->scheduleModel->getItem($scheduleId);
+			}
 		}
 
 		// 如果有最後地址
