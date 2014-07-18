@@ -160,7 +160,10 @@ class ScheduleControllerPrescriptionEditSave extends ApiSaveController
 				$routeTable->store();
 
 				// When user created a none exists route, send a notify email to iHealth staff
-				MailHelper::sendEmptyRouteMail($notifyMail, $routeTable);
+				if (!empty($notifyMail))
+				{
+					MailHelper::sendEmptyRouteMail($notifyMail, $routeTable);
+				}
 			}
 
 			// Get task

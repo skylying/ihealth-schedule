@@ -104,7 +104,10 @@ class ScheduleControllerScheduleEditSave extends ApiSaveController
 			$routeTable->store();
 
 			// When user created a none exists route, send a notify email to iHealth staff
-			MailHelper::sendEmptyRouteMail($this->notifyMail, $routeTable);
+			if (!empty($this->notifyMail))
+			{
+				MailHelper::sendEmptyRouteMail($this->notifyMail, $routeTable);
+			}
 		}
 
 		// Get task
@@ -146,7 +149,10 @@ class ScheduleControllerScheduleEditSave extends ApiSaveController
 		// When user changed a exist schedule, send a notify email to iHealth staff
 		if (ScheduleHelper::checkScheduleChanged($this->oldScheduleTable->getProperties(), $validData))
 		{
-			MailHelper::scheduleChangeNotify($this->notifyMail);
+			if (!empty($this->notifyMail))
+			{
+				MailHelper::scheduleChangeNotify($this->notifyMail);
+			}
 		}
 
 		parent::postSaveHook($model, $validData);
