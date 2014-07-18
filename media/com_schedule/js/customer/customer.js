@@ -93,10 +93,23 @@
 			 *
 			 * 1. turn itself to green background, turn others back to grey
 			 * 2. update title to "true" for json save later
+			 * 3. Check empty phone number, if it's empty, return and alert user
 			 */
 			this.individualDiv.on('click', '.glyphicon-ok', function()
 			{
-				var spanGroup = $(this).closest('fieldset').find('span');
+				var spanGroup = $(this).closest('fieldset').find('span'),
+					sibling = $(this).siblings();
+
+				// Check empty phone number
+				if ($(sibling).is('input'))
+				{
+					if ($(sibling).val() == 'undefined' || $(sibling).val() == '')
+					{
+						alert('不可將空白電話存成預設');
+
+						return;
+					}
+				}
 
 				$(spanGroup).each(function()
 				{
@@ -106,18 +119,6 @@
 
 				$(this).attr('title', 'true');
 				$(this).addClass('default');
-			});
-
-			// When user type new phone number, auto default this one
-			this.visibleInputs.on('keyup', function()
-			{
-				if (self.defaultSwitch == false)
-				{
-					$(this).siblings().trigger('click');
-
-					// Stop triggering keyup event
-					self.defaultSwitch = true;
-				}
 			});
 
 			// Reset defaultSwitch

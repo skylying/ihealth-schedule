@@ -35,10 +35,12 @@ $css = <<<CSS
 .default
 {
 	background: #53E253 !important;
+	box-shadow: -1px -1px 1px 0px #818080 inset;
 }
 .visibleinput span:hover
 {
 	background: #53E253;
+	box-shadow: -1px -1px 1px 0px #818080 inset;
 	cursor: pointer;
 }
 CSS;
