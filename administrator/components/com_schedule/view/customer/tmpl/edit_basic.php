@@ -124,9 +124,9 @@ $addresses = isset($data->item->addresses) ? $data->item->addresses : array();
 
 
 			<div class="row">
-				<?php echo $officePhones->input;?>
-				<?php echo $homePhones->input;?>
 				<?php echo $mobilePhones->input;?>
+				<?php echo $homePhones->input;?>
+				<?php echo $officePhones->input;?>
 			</div>
 		</div>
 		<div id="residentdiv" class="<?php echo $customerType == 'resident' ? '' : 'hide'; ?>">

@@ -146,8 +146,8 @@
 		<field name="tel_office"
 			type="radioinput"
 			rows="3"
-			label="宅配電話 (Office)"
-			description="填入宅配電話"
+			label="辦公電話 (Office)"
+			description="填入辦公電話"
 			class="input-large"
 			/>
 
@@ -157,8 +157,8 @@
 		<field name="tel_home"
 			type="radioinput"
 			rows="3"
-			label="宅配電話 (Home)"
-			description="填入宅配電話(H)"
+			label="住家電話 (Home)"
+			description="填入住家電話(H)"
 			class="input-large"
 			/>
 
