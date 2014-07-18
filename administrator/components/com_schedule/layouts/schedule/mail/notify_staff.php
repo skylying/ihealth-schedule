@@ -29,7 +29,7 @@ $nthDelivery = array('1st' => '第一次宅配', '2nd' => '第二次宅配', '3r
 											<img style="width: 83px; height: 20px;" src="<?php echo JUri::root() . '/media/com_schedule/images/ihealth.png'; ?>" />
 										</a>
 										<h2 style="letter-spacing: 2px;">
-											<?php echo $schedule['member_name'] ?> 先生/小姐 <br />
+											<?php echo $schedule->member_name; ?> 先生/小姐 <br />
 										</h2>
 										<h2>
 											已成功取消一筆送藥排程。
@@ -40,44 +40,40 @@ $nthDelivery = array('1st' => '第一次宅配', '2nd' => '第二次宅配', '3r
 									<div>
 										<table><!--fourth table-->
 											<tr>
-												<td>排程日期:</td>
-												<td style="padding:10px;"><?php echo $schedule['date']; ?></td>
-											</tr>
-											<tr>
 												<td>第幾次宅配:</td>
-												<td style="padding:10px;"><?php echo $nthDelivery[$schedule['deliver_nth']]; ?></td>
+												<td style="padding:10px;"><?php echo $nthDelivery[$schedule->deliver_nth]; ?></td>
 											</tr>
 											<tr>
 												<td>會員姓名:</td>
-												<td style="padding:10px;"><?php echo $schedule['member_name']; ?></td>
+												<td style="padding:10px;"><?php echo $schedule->member_name; ?></td>
 											</tr>
 											<tr>
 												<td>客戶姓名:</td>
-												<td style="padding:10px;"><?php echo $schedule['customer_name']; ?></td>
+												<td style="padding:10px;"><?php echo $schedule->customer_name; ?></td>
 											</tr>
 											<tr>
 												<td>客戶地址:</td>
-												<td style="padding:10px;"><?php echo $schedule['city_title'] . $schedule['area_title'] . $schedule['address']; ?></td>
+												<td style="padding:10px;"><?php echo $schedule->city_title . $schedule->area_title . $schedule->address; ?></td>
 											</tr>
 											<tr>
 												<td>外送排程日:</td>
-												<td style="padding:10px;"><?php echo $schedule['date']; ?></td>
+												<td style="padding:10px;"><?php echo $schedule->date; ?></td>
 											</tr>
 											<tr>
 												<td>宅配時段:</td>
-												<td style="padding:10px;"><?php echo JText::_('COM_SCHEDULE_SEND_SESSION_' . $schedule['session']); ?></td>
+												<td style="padding:10px;"><?php echo JText::_('COM_SCHEDULE_SEND_SESSION_' . $schedule->session); ?></td>
 											</tr>
 											<tr>
 												<td>手機:</td>
-												<td style="padding:10px;"><?php echo $schedule['mobile']; ?></td>
+												<td style="padding:10px;"><?php echo $schedule->mobile; ?></td>
 											</tr>
 											<tr>
 												<td>辦公室:</td>
-												<td style="padding:10px;"><?php echo $schedule['tel_office']; ?></td>
+												<td style="padding:10px;"><?php echo $schedule->tel_office; ?></td>
 											</tr>
 											<tr>
 												<td>住家:</td>
-												<td style="padding:10px;"><?php echo $schedule['tel_home']; ?></td>
+												<td style="padding:10px;"><?php echo $schedule->tel_home; ?></td>
 											</tr>
 										</table>
 										<!--end fourth table-->

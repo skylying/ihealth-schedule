@@ -21,7 +21,6 @@ $nthDelivery = array('第一次宅配', '第二次宅配', '第三次宅配');
 				<tr>
 					<td valign="top">
 						<table border="0" cellpadding="20" cellspacing="0" width="100%" id="emailBody" style="background-color: #FFFFFF; font-size: 15px;"><!--third table-->
-							<?php foreach ($data['schedules'] as $key => $schedule): ?>
 							<tr>
 								<td align="left" valign="top">
 									<a href="http://www.ihealth.com.tw" style="float: right;">
@@ -29,39 +28,39 @@ $nthDelivery = array('第一次宅配', '第二次宅配', '第三次宅配');
 									</a>
 									<h2 style="letter-spacing: 2px;">您好!</h2>
 									<h2 style="letter-spacing: 2px;">
-										以下是<?php echo $schedule['member_name']; ?> 先生/小姐的預約宅配資料
+										以下是<?php echo $data['rx']['member_name']; ?> 先生/小姐的預約宅配資料
 									</h2>
 									<hr />
-
-										<h3 style="font-family: 微软雅黑;"><?php echo $nthDelivery[$key]; ?></h3>
-
-										<table style="line-height: 1.42857143; vertical-align: top;"><!--fourth table-->
+									<table style="line-height: 1.42857143; vertical-align: top;"><!--fourth table-->
+										<tr>
+											<td style="padding-right: 10px;">處方姓名:</td>
+											<td style="padding:10px;"><?php echo $data['rx']['customer_name']; ?></td>
+										</tr>
+										<tr>
+											<td style="padding-right: 10px;">身分證字號:</td>
+											<td style="padding:10px;"><?php echo $data['rx']['id_number']; ?></td>
+										</tr>
+										<?php foreach ($data['schedules'] as $key => $schedule): ?>
+											<h3 style="font-family: 微软雅黑;"><?php echo $nthDelivery[$key]; ?></h3>
 											<tr>
 												<td style="padding-right: 10px;">宅配編號:</td>
-												<td style="padding:10px;"><?php echo $schedule['id']; ?></td>
-											</tr>
-											<tr>
-												<td style="padding-right: 10px;">處方姓名:</td>
-												<td style="padding:10px;"><?php echo $schedule['customer_name']; ?></td>
-											</tr>
-											<tr>
-												<td style="padding-right: 10px;">身分證字號:</td>
-												<td style="padding:10px;"><?php echo $schedule['customer_id_number']; ?></td>
+												<td style="padding:10px;"><?php echo $schedule->id; ?></td>
 											</tr>
 											<tr>
 												<td style="padding-right: 10px;">藥師送藥日期:</td>
-												<td style="padding:10px;"><?php echo $schedule['date']; ?></td>
+												<td style="padding:10px;"><?php echo $schedule->date; ?></td>
 											</tr>
 											<tr>
 												<td style="padding-right: 10px;">藥師送藥時段:</td>
-												<td style="padding:10px;"><?php echo JText::_('COM_SCHEDULE_SEND_SESSION_' . $schedule['session']); ?></td>
+												<td style="padding:10px;"><?php echo JText::_('COM_SCHEDULE_SEND_SESSION_' . $schedule->session); ?></td>
 											</tr>
 											<tr>
 												<td style="padding-right: 10px;">藥師送藥地址:</td>
-												<td style="padding:10px;"><?php echo $schedule['city_title'] . '' . $schedule['area_title'] . '' . $schedule['address']; ?></td>
+												<td style="padding:10px;"><?php echo $schedule->city_title . '' . $schedule->area_title . '' . $schedule->address; ?></td>
 											</tr>
-										</table><!--end fourth table-->
-									<?php endforeach; ?>
+										<?php endforeach; ?>
+									</table>
+									<!--end fourth table-->
 									<h3 style="font-family: 微软雅黑;">處方箋詳細資訊</h3>
 
 									<table style=" line-height: 1.42857143; vertical-align: top; font-size: 15px;"><!--fifth table-->
@@ -78,17 +77,17 @@ $nthDelivery = array('第一次宅配', '第二次宅配', '第三次宅配');
 											<td style="padding:10px;"><?php echo $data['rx']['times']; ?></td>
 										</tr>
 										<tr>
-										<?php foreach ($data['drugs'] as $key => $drug): ?>
-											<?php if ($key == '0')
-											{
-												echo '<tr><td>藥品健保碼</td><td style="padding:10px;">' . $drug['hicode'] . '</td></tr>';
-											}
-											else
-											{
-												echo '<tr><td></td><td style="padding:10px;">' . $drug['hicode'] . '</td></tr>';
-											}
-											?>
-										<?php endforeach; ?>
+											<?php foreach ($data['drugs'] as $key => $drug): ?>
+												<?php if ($key == '0')
+												{
+													echo '<tr><td>藥品健保碼</td><td style="padding:10px;">' . $drug->hicode . '</td></tr>';
+												}
+												else
+												{
+													echo '<tr><td></td><td style="padding:10px;">' . $drug->hicode . '</td></tr>';
+												}
+												?>
+											<?php endforeach; ?>
 										</tr>
 									</table>
 									<!--end fifth table-->
