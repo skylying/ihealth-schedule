@@ -213,14 +213,11 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 		// Send notify email to member
 		if ($this->sendNotifyMailToMember())
 		{
-			$customerTable = TableCollection::loadTable('Customer', $validData['customer_id']);
 			$memberTable = TableCollection::loadTable('Member', $validData['member_id']);
 
 			$mailData = array(
 				"schedules" => $schedules,
 				"rx"        => $validData,
-				"member"    => $memberTable,
-				"customer"  => $customerTable,
 				"drugs"     => $this->data['drugs'],
 			);
 

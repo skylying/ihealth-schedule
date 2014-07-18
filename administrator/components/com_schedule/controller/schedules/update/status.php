@@ -134,16 +134,24 @@ class ScheduleControllerSchedulesUpdateStatus extends AbstractUpdateStateControl
 			$oldScheduleTable = TableCollection::loadTable('Schedule', $scheduleId);
 
 			$memberTable = TableCollection::loadTable('Member', $oldScheduleTable->member_id);
-			$customerTable = TableCollection::loadTable('Customer', $oldScheduleTable->customer_id);
 			$rxTable = TableCollection::loadTable('Rxresident', $oldScheduleTable->rx_id);
-
 			$schedules = (new DataMapper(Table::SCHEDULES))->find(array('rx_id' => $oldScheduleTable->rx_id));
+			$drugsModel = $this->getModel('Drugs');
+			$drugsModel->getState()->set('filter', array('drug.rx_id' => $oldScheduleTable->rx_id));
+			$drugs = $drugsModel->getItems();
+
+			array_walk(
+				$drugs,
+				function(&$item)
+				{
+					$item = (array) $item;
+				}
+			);
 
 			$mailData = array(
 				"schedules" => $schedules,
 				"rx"        => $rxTable,
-				"member"    => $memberTable,
-				"customer"  => $customerTable,
+				"drugs"     => $drugs,
 			);
 
 			MailHelper::sendMailWhenScheduleChange($memberTable->email, $mailData);

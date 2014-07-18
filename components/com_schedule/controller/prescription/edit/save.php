@@ -223,13 +223,9 @@ class ScheduleControllerPrescriptionEditSave extends ApiSaveController
 
 		if (! empty($memberTable->email))
 		{
-			$customerTable = TableCollection::loadTable('Customer', $validData['customer_id']);
-
 			$mailDataSet = array(
 				"schedules" => $this->data['schedules'],
 				"rx"        => $validData,
-				"member"    => $memberTable,
-				"customer"  => $customerTable,
 				"drugs"     => $this->data['drugs'],
 			);
 

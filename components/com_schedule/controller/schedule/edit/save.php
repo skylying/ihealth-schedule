@@ -150,19 +150,19 @@ class ScheduleControllerScheduleEditSave extends ApiSaveController
 	 */
 	protected function postSaveHook($model, $validData)
 	{
+		$schedule = $model->getItem($this->data['id']);
+
 		// When user changed a exist schedule, send a notify email to iHealth staff
 		if (ScheduleHelper::checkScheduleChanged($this->oldScheduleTable->getProperties(), $validData))
 		{
 			if (!empty($this->notifyEmptyRouteEmails))
 			{
-				MailHelper::scheduleChangeNotify($this->notifyEmptyRouteEmails);
+				MailHelper::scheduleChangeNotify($this->notifyEmptyRouteEmails, array('schedules' => array($schedule)));
 			}
 		}
 
 		if ($this->sendNotifyEmptyRouteMail && !empty($this->notifyEmptyRouteEmails))
 		{
-			$schedule = $model->getItem($this->data['id']);
-
 			MailHelper::sendEmptyRouteMail($this->notifyEmptyRouteEmails, array('schedules' => array($schedule)));
 		}
 
