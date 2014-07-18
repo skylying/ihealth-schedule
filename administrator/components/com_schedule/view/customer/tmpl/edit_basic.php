@@ -67,7 +67,7 @@ $addresses = isset($data->item->addresses) ? $data->item->addresses : array();
 
 	jQuery(document).ready(function()
 	{
-		var isNew = <?php echo $data->isNew; ?>;
+		var isNew = <?php echo $data->isNew; ?>
 
 		CustomerJs.initialize(isNew);
 	});
@@ -109,9 +109,13 @@ $addresses = isset($data->item->addresses) ? $data->item->addresses : array();
 
 						?>
 					</div>
-					<div id="newaddress" class="btn btn-info pull-right">
-						<span class="icon-plus icon-white"></span>
-						新增地址
+					<div id="newaddress" class="row">
+						<div class="col-md-4 col-md-offset-8">
+							<button type="button" class="btn btn-info">
+								<span class="icon-plus icon-white"></span>
+								新增地址
+							</button>
+						</div>
 					</div>
 				</fieldset>
 			</div>
