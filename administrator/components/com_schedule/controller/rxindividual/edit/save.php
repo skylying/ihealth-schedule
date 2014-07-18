@@ -217,7 +217,7 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 
 			$mailData = array(
 				"schedules" => $schedules,
-				"rx"        => $validData,
+				"rx"        => new Data($model->getItem($this->data['id'])),
 				"drugs"     => $this->data['drugs'],
 			);
 

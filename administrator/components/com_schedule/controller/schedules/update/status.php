@@ -134,7 +134,7 @@ class ScheduleControllerSchedulesUpdateStatus extends AbstractUpdateStateControl
 			$oldScheduleTable = TableCollection::loadTable('Schedule', $scheduleId);
 
 			$memberTable = TableCollection::loadTable('Member', $oldScheduleTable->member_id);
-			$rxTable = TableCollection::loadTable('Rxresident', $oldScheduleTable->rx_id);
+			$rx = (new DataMapper(Table::PRESCRIPTIONS))->findOne($oldScheduleTable->rx_id);
 			$schedules = (new DataMapper(Table::SCHEDULES))->find(array('rx_id' => $oldScheduleTable->rx_id));
 			$drugsModel = $this->getModel('Drugs');
 			$drugsModel->getState()->set('filter', array('drug.rx_id' => $oldScheduleTable->rx_id));
@@ -150,7 +150,7 @@ class ScheduleControllerSchedulesUpdateStatus extends AbstractUpdateStateControl
 
 			$mailData = array(
 				"schedules" => $schedules,
-				"rx"        => $rxTable,
+				"rx"        => $rx,
 				"drugs"     => $drugs,
 			);
 

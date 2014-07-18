@@ -225,7 +225,7 @@ class ScheduleControllerPrescriptionEditSave extends ApiSaveController
 		{
 			$mailDataSet = array(
 				"schedules" => $this->data['schedules'],
-				"rx"        => $validData,
+				"rx"        => new Data($model->getItem($rxId)),
 				"drugs"     => $this->data['drugs'],
 			);
 
