@@ -11,7 +11,7 @@ use Windwalker\Model\Exception\ValidateFailException;
 use Schedule\Helper\ScheduleHelper;
 use Schedule\Table\Collection as TableCollection;
 use Schedule\Helper\MailHelper;
-use Schedule\Helper\ConfigHelper;
+use Windwalker\Data\Data;
 
 /**
  * Class ScheduleControllerPrescriptionEditSave
@@ -122,7 +122,7 @@ class ScheduleControllerPrescriptionEditSave extends ApiSaveController
 		/** @var ScheduleModelTask $taskModel */
 		$taskModel = $this->getModel('Task');
 
-		$notifyMail = MailHelper::getNotifyEmptyRouteMails();
+		$notifyEmails = MailHelper::getNotifyEmptyRouteMails();
 
 		$scheduleModel->getState()->set('form.type', 'schedule_individual');
 
@@ -137,6 +137,7 @@ class ScheduleControllerPrescriptionEditSave extends ApiSaveController
 					'type' => 'customer',
 				]
 			);
+			$sendNotifyEmptyRouteMail = false;
 
 			$schedule['route'] = $routeTable;
 
@@ -160,10 +161,7 @@ class ScheduleControllerPrescriptionEditSave extends ApiSaveController
 				$routeTable->store();
 
 				// When user created a none exists route, send a notify email to iHealth staff
-				if (!empty($notifyMail))
-				{
-					MailHelper::sendEmptyRouteMail($notifyMail, $routeTable);
-				}
+				$sendNotifyEmptyRouteMail = true;
 			}
 
 			// Get task
@@ -203,6 +201,13 @@ class ScheduleControllerPrescriptionEditSave extends ApiSaveController
 			$scheduleModel->save($schedule);
 
 			$scheduleModel->getState()->set('schedule.id', null);
+
+			if ($sendNotifyEmptyRouteMail && !empty($notifyEmails))
+			{
+				$data = new Data($scheduleModel->getItem($scheduleModel->getState()->get('schedule.id')));
+
+				MailHelper::sendEmptyRouteMail($notifyEmails, array('schedules' => array($data)));
+			}
 		}
 
 		foreach ($this->data['drugs'] as $drug)
