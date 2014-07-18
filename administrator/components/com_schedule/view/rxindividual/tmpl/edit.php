@@ -359,6 +359,7 @@ jQuery(document).ready(function ()
 
 						<div class="row-fluid">
 							<div class="col-lg-4">
+								<?php echo $schedules["jform_schedules_{$key}_available_receive_date"]->getControlGroup(); ?>
 								<?php echo $schedules["jform_schedules_{$key}_drug_empty_date"]->getControlGroup(); ?>
 							</div>
 							<div class="col-lg-4">
