@@ -193,9 +193,11 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 				&& ScheduleHelper::checkScheduleChanged($scheduleTable->getProperties(), $this->data["schedules_{$nth}"]))
 			{
 				$this->data["schedules_{$nth}"]['send_confirm_email'] = true;
-			}
 
-			$schedules[] = $this->data["schedules_{$nth}"];
+				$scheduleId = $this->scheduleModel->getState()->get('schedule.id');
+
+				$schedules[] = $this->scheduleModel->getItem($scheduleId);
+			}
 		}
 
 		// 如果有最後地址
@@ -213,14 +215,14 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 		// Send notify email to member
 		if ($this->sendNotifyMailToMember())
 		{
-			$customerTable = TableCollection::loadTable('Customer', $validData['customer_id']);
 			$memberTable = TableCollection::loadTable('Member', $validData['member_id']);
+			$drugsModel = $this->getModel('Drugs');
+			$drugsModel->getState()->set('filter', array('drug.rx_id' => $this->data['id']));
 
 			$mailData = array(
 				"schedules" => $schedules,
-				"rx"        => $validData,
-				"member"    => $memberTable,
-				"customer"  => $customerTable,
+				"rx"        => new Data($model->getItem($this->data['id'])),
+				"drugs"     => $drugsModel->getItems(),
 			);
 
 			MailHelper::sendMailWhenScheduleChange($memberTable->email, $mailData);
@@ -263,6 +265,8 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 		$drugs = isset($this->data['drug']) ? json_decode($this->data['drug']) : array();
 		$deleteDrugIds = isset($this->data['delete_drug']) ? json_decode($this->data['delete_drug']) : array();
 
+		$this->data['drugs'] = array();
+
 		// 新增健保碼
 		if (! empty($drugs))
 		{
@@ -270,7 +274,11 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 			{
 				$drug->rx_id = $this->data['id'];
 
-				$drugModel->save((array) $drug);
+				$drug = (array) $drug;
+
+				$this->data['drugs'][] = $drug;
+
+				$drugModel->save($drug);
 			}
 		}
 

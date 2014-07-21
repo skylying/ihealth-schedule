@@ -11,6 +11,7 @@ use Windwalker\Model\Exception\ValidateFailException;
 use Schedule\Helper\ScheduleHelper;
 use Schedule\Table\Collection as TableCollection;
 use Schedule\Helper\MailHelper;
+use Windwalker\Data\Data;
 
 /**
  * Class ScheduleControllerPrescriptionEditSave
@@ -121,8 +122,7 @@ class ScheduleControllerPrescriptionEditSave extends ApiSaveController
 		/** @var ScheduleModelTask $taskModel */
 		$taskModel = $this->getModel('Task');
 
-		$scheduleConfig = \JComponentHelper::getParams('com_schedule')->get("schedule");
-		$notifyMail     = $scheduleConfig->empty_route_mail;
+		$notifyEmails = MailHelper::getNotifyEmptyRouteMails();
 
 		$scheduleModel->getState()->set('form.type', 'schedule_individual');
 
@@ -137,6 +137,7 @@ class ScheduleControllerPrescriptionEditSave extends ApiSaveController
 					'type' => 'customer',
 				]
 			);
+			$sendNotifyEmptyRouteMail = false;
 
 			$schedule['route'] = $routeTable;
 
@@ -160,7 +161,7 @@ class ScheduleControllerPrescriptionEditSave extends ApiSaveController
 				$routeTable->store();
 
 				// When user created a none exists route, send a notify email to iHealth staff
-				MailHelper::sendEmptyRouteMail($notifyMail, $routeTable);
+				$sendNotifyEmptyRouteMail = true;
 			}
 
 			// Get task
@@ -199,7 +200,16 @@ class ScheduleControllerPrescriptionEditSave extends ApiSaveController
 
 			$scheduleModel->save($schedule);
 
+			$schedule['id'] = $scheduleModel->getState()->get('schedule.id');
+
 			$scheduleModel->getState()->set('schedule.id', null);
+
+			if ($sendNotifyEmptyRouteMail && !empty($notifyEmails))
+			{
+				$data = new Data($scheduleModel->getItem($scheduleModel->getState()->get('schedule.id')));
+
+				MailHelper::sendEmptyRouteMail($notifyEmails, array('schedules' => array($data)));
+			}
 		}
 
 		foreach ($this->data['drugs'] as $drug)
@@ -215,13 +225,20 @@ class ScheduleControllerPrescriptionEditSave extends ApiSaveController
 
 		if (! empty($memberTable->email))
 		{
-			$customerTable = TableCollection::loadTable('Customer', $validData['customer_id']);
+			$drugsModel = $this->getModel('Drugs');
+			$drugsModel->getState()->set('filter', array('drug.rx_id' => $rxId));
+
+			$schedules = array();
+
+			foreach ($this->data['schedules'] as $schedule)
+			{
+				$schedules[] = new Data($scheduleModel->getItem($schedule['id']));
+			}
 
 			$mailDataSet = array(
-				"schedules" => $this->data['schedules'],
-				"rx"        => $validData,
-				"member"    => $memberTable,
-				"customer"  => $customerTable
+				"schedules" => $schedules,
+				"rx"        => new Data($model->getItem($rxId)),
+				"drugs"     => $drugsModel->getItems(),
 			);
 
 			MailHelper::sendMailWhenScheduleChange($memberTable->email, $mailDataSet);

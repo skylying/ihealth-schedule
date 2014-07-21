@@ -11,6 +11,7 @@ use Schedule\Helper\ScheduleHelper;
 use Schedule\Table\Collection as TableCollection;
 use Windwalker\Model\Exception\ValidateFailException;
 use Schedule\Helper\MailHelper;
+use Schedule\Helper\ConfigHelper;
 
 /**
  * Class ScheduleControllerPrescriptionEditSave
@@ -31,7 +32,14 @@ class ScheduleControllerScheduleEditSave extends ApiSaveController
 	 *
 	 * @var string
 	 */
-	protected $notifyMail;
+	protected $notifyEmptyRouteEmails;
+
+	/**
+	 * Property notifyMail.
+	 *
+	 * @var string
+	 */
+	protected $sendNotifyEmptyRouteMail;
 
 	/**
 	 * Method to do something before save.
@@ -81,8 +89,7 @@ class ScheduleControllerScheduleEditSave extends ApiSaveController
 			]
 		);
 
-		$scheduleConfig = \JComponentHelper::getParams('com_schedule')->get("schedule");
-		$this->notifyMail = $scheduleConfig->empty_route_mail;
+		$this->notifyEmptyRouteEmails = MailHelper::getNotifyEmptyRouteMails();
 
 		// If no route found, create one
 		if (empty($routeTable->id))
@@ -95,7 +102,7 @@ class ScheduleControllerScheduleEditSave extends ApiSaveController
 			$routeTable->area_title   = $addressTable->area_title;
 
 			$icrmConfig    = \JComponentHelper::getParams('com_schedule')->get("icrm");
-			$defaultSender = \Schedule\Helper\ConfigHelper::getDefaultSender();
+			$defaultSender = ConfigHelper::getDefaultSender();
 
 			$routeTable->sender_id   = $defaultSender['id'];
 			$routeTable->sender_name = $defaultSender['sender'];
@@ -104,7 +111,7 @@ class ScheduleControllerScheduleEditSave extends ApiSaveController
 			$routeTable->store();
 
 			// When user created a none exists route, send a notify email to iHealth staff
-			MailHelper::sendEmptyRouteMail($this->notifyMail, $routeTable);
+			$this->sendNotifyEmptyRouteMail = true;
 		}
 
 		// Get task
@@ -143,10 +150,20 @@ class ScheduleControllerScheduleEditSave extends ApiSaveController
 	 */
 	protected function postSaveHook($model, $validData)
 	{
+		$schedule = $model->getItem($this->data['id']);
+
 		// When user changed a exist schedule, send a notify email to iHealth staff
 		if (ScheduleHelper::checkScheduleChanged($this->oldScheduleTable->getProperties(), $validData))
 		{
-			MailHelper::scheduleChangeNotify($this->notifyMail);
+			if (!empty($this->notifyEmptyRouteEmails))
+			{
+				MailHelper::scheduleChangeNotify($this->notifyEmptyRouteEmails, array('schedules' => array($schedule)));
+			}
+		}
+
+		if ($this->sendNotifyEmptyRouteMail && !empty($this->notifyEmptyRouteEmails))
+		{
+			MailHelper::sendEmptyRouteMail($this->notifyEmptyRouteEmails, array('schedules' => array($schedule)));
 		}
 
 		parent::postSaveHook($model, $validData);
