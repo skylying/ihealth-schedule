@@ -69,16 +69,20 @@ class ScheduleTableCustomer extends Table
 	 * method to make sure the data they are storing in the database is safe and
 	 * as expected before storage.
 	 *
+	 * @throws  RuntimeException
 	 * @return  boolean  True if the instance is sane and able to be stored in the database.
 	 */
 	public function check()
 	{
-		// Check ID Number
-		$item = (new DataMapper(\Schedule\Table\Table::CUSTOMERS))->findOne(['id_number' => $this->id_number]);
-
-		if (!$item->isNull())
+		if ($this->id_number)
 		{
-			throw new \RuntimeException('Customers should not have same ID number: ' . $this->id_number);
+			// Check ID Number
+			$item = (new DataMapper(\Schedule\Table\Table::CUSTOMERS))->findOne(['id_number' => $this->id_number]);
+
+			if (!$item->isNull())
+			{
+				throw new \RuntimeException('Customers should not have same ID number: ' . $this->id_number);
+			}
 		}
 
 		return true;
