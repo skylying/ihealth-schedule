@@ -47,8 +47,12 @@ class ScheduleControllerCustomerEditSave extends ApiSaveController
 			$validData['id'] = $model->getState()->get('customer.id');
 		}
 
+		$mIds = (array) $this->data['member_id'];
+
 		$members = MemberCustomerHelper::loadMembers($validData['id']);
 		$memberIds = JArrayHelper::getColumn($members, 'id');
+
+		$memberIds = array_merge($memberIds, $mIds);
 
 		// Update customer-member mapping
 		MemberCustomerHelper::updateMembers($validData['id'], $memberIds);

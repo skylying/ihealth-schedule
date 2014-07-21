@@ -6,6 +6,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
+use Windwalker\Joomla\DataMapper\DataMapper;
 use Windwalker\Table\Table;
 
 // No direct access
@@ -72,7 +73,15 @@ class ScheduleTableCustomer extends Table
 	 */
 	public function check()
 	{
-		return parent::check();
+		// Check ID Number
+		$item = (new DataMapper(\Schedule\Table\Table::CUSTOMERS))->findOne(['id_number' => $this->id_number]);
+
+		if (!$item->isNull())
+		{
+			throw new \RuntimeException('Customers should not have same ID number: ' . $this->id_number);
+		}
+
+		return true;
 	}
 
 	/**
