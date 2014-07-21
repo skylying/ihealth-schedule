@@ -74,7 +74,7 @@ class ScheduleTableCustomer extends Table
 	 */
 	public function check()
 	{
-		if ($this->id_number)
+		if (!$this->id && $this->id_number)
 		{
 			// Check ID Number
 			$item = (new DataMapper(\Schedule\Table\Table::CUSTOMERS))->findOne(['id_number' => $this->id_number]);

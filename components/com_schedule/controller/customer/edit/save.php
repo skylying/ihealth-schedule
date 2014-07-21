@@ -8,6 +8,8 @@
 
 use Schedule\Controller\Api\ApiSaveController;
 use Schedule\Helper\Mapping\MemberCustomerHelper;
+use Schedule\Table\Table;
+use Windwalker\Joomla\DataMapper\DataMapper;
 
 /**
  * Class ScheduleControllerCustomerEditSave
@@ -27,6 +29,19 @@ class ScheduleControllerCustomerEditSave extends ApiSaveController
 
 		// Restrict the customer type to "individual"
 		$this->data['type'] = 'individual';
+
+		/* We do not update customer now.
+		// If ID Number exists, we update it.
+		if (empty($this->data['id']) && !empty($this->data['id_number']))
+		{
+			$customer = (new DataMapper(Table::CUSTOMERS))->findOne(['id_number' => $this->data['id_number']]);
+
+			if (!$customer->isNull())
+			{
+				$this->data = array_merge($this->data, (array) $customer);
+			}
+		}
+		*/
 	}
 
 	/**
@@ -47,6 +62,7 @@ class ScheduleControllerCustomerEditSave extends ApiSaveController
 			$validData['id'] = $model->getState()->get('customer.id');
 		}
 
+		/* We do not update members now
 		$mIds = (array) $this->data['member_id'];
 
 		$members = MemberCustomerHelper::loadMembers($validData['id']);
@@ -56,6 +72,7 @@ class ScheduleControllerCustomerEditSave extends ApiSaveController
 
 		// Update customer-member mapping
 		MemberCustomerHelper::updateMembers($validData['id'], $memberIds);
+		*/
 
 		// Get address model
 		$addressModel = $this->getModel("Address");
