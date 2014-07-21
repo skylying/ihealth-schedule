@@ -200,6 +200,8 @@ class ScheduleControllerPrescriptionEditSave extends ApiSaveController
 
 			$scheduleModel->save($schedule);
 
+			$schedule['id'] = $scheduleModel->getState()->get('schedule.id');
+
 			$scheduleModel->getState()->set('schedule.id', null);
 
 			if ($sendNotifyEmptyRouteMail && !empty($notifyEmails))
@@ -226,8 +228,15 @@ class ScheduleControllerPrescriptionEditSave extends ApiSaveController
 			$drugsModel = $this->getModel('Drugs');
 			$drugsModel->getState()->set('filter', array('drug.rx_id' => $rxId));
 
+			$schedules = array();
+
+			foreach ($this->data['schedules'] as $schedule)
+			{
+				$schedules[] = new Data($scheduleModel->getItem($schedule['id']));
+			}
+
 			$mailDataSet = array(
-				"schedules" => $this->data['schedules'],
+				"schedules" => $schedules,
 				"rx"        => new Data($model->getItem($rxId)),
 				"drugs"     => $drugsModel->getItems(),
 			);
