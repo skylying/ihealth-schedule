@@ -67,21 +67,23 @@
 
 				// Set finish drug date
 				moment_date.add('days', period);
-
-				var moment_receive_date = moment(moment_date);
-
 				$(drugEmptyDateId).val(moment_date.format("YYYY-MM-DD"));
 
 				// 第一次外送的開始領藥日 = 就醫日期
 				// 第二次外送的開始領藥日 = 第一次吃完藥日 -10 天
 				// 第三次外送的開始領藥日 = 第二次吃完藥日 -10 天
-				if (addressesKeys[i] == '1st')
+				var moment_receive_date = moment(seeDrDate);
+
+				switch (addressesKeys[i])
 				{
-					moment_receive_date = moment(seeDrDate);
-				}
-				else
-				{
-					moment_receive_date = moment_receive_date.subtract('days', parseInt(period) + 10);
+					case '2nd':
+						moment_receive_date.add('days', parseInt(period));
+						moment_receive_date.subtract('days', 10);
+						break;
+					case '3rd':
+						moment_receive_date.add('days', parseInt(period) * 2);
+						moment_receive_date.subtract('days', 10);
+						break;
 				}
 
 				$(availableReceiveDateId).val(moment_receive_date.format("YYYY-MM-DD"));
