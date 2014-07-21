@@ -74,14 +74,14 @@ class ScheduleTableCustomer extends Table
 	 */
 	public function check()
 	{
-		if (!$this->id && $this->id_number)
+		if ($this->id_number)
 		{
 			// Check ID Number
 			$item = (new DataMapper(\Schedule\Table\Table::CUSTOMERS))->findOne(['id_number' => $this->id_number]);
 
-			if (!$item->isNull())
+			if (!$item->isNull() && $item->id != $this->id)
 			{
-				throw new \RuntimeException('Customers should not have same ID number: ' . $this->id_number);
+				throw new \RuntimeException('此身分證字號已有人使用');
 			}
 		}
 
