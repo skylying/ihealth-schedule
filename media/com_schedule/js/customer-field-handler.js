@@ -590,7 +590,6 @@
 		 */
 		updateTelephoneHtmlForSchedule : function(key, telJson, fieldId)
 		{
-			console.log(fieldId);
 			telJson = telJson || {};
 
 			// ex: jform_schedule_1st_tel_office
