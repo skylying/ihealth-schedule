@@ -75,7 +75,7 @@
 				// 第一次外送的開始領藥日 = 就醫日期
 				// 第二次外送的開始領藥日 = 第一次吃完藥日 -10 天
 				// 第三次外送的開始領藥日 = 第二次吃完藥日 -10 天
-				if (i == 0)
+				if (addressesKeys[i] == '1st')
 				{
 					moment_receive_date = moment(seeDrDate);
 				}
