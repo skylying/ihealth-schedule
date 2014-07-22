@@ -221,7 +221,7 @@ $editFormFields = $data->editFormFields;
 	</div>
 </div>
 
-<!-- 分藥註記 Filter Modal -->
+<!-- 打包表 Filter Modal -->
 <div id="modal-sorted-preview" class="modal hide fade" tabindex="-1" role="dialog">
 	<div class="modal-header">
 		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
