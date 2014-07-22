@@ -255,9 +255,14 @@ HTML;
 
 					$row['phones'][] = $instituteTable->tel;
 
+					// 取得 schedule & drug_extra table 中的加購金額
 					$extraExpenses = TaskHelper::getInstituteExtraExpenses($schedule['task_id'], $schedule['institute_id']);
+					$customerExpenses = TaskHelper::getScheduleExtraExpenses($schedule['task_id'], $schedule['institute_id']);
+
+					$rawExpenses = array_merge($extraExpenses, $customerExpenses);
+
 					$totalExtraExpense = array_reduce(
-						$extraExpenses,
+						$rawExpenses,
 						function($carry, $item)
 						{
 							return $carry += $item->price;
@@ -266,7 +271,7 @@ HTML;
 
 					if ($totalExtraExpense > 0)
 					{
-						$row['extraExpenses'] = '加購總額: $' . $totalExtraExpense;
+						$row['extraExpenses'] = '$' . $totalExtraExpense;
 					}
 
 					$data['institutes'][$schedule['institute_id']] = $row;
@@ -330,7 +335,7 @@ HTML;
 			'quantity' => 0,
 			'phones' => $phones,
 			'ices' => [],
-			'expenses' => [],
+			'expense' => '$' . (int) $schedule['price'],
 			'extraExpenses' => '',
 			'session' => JText::_('COM_SCHEDULE_SEND_SESSION_' . $schedule['session']),
 		];
@@ -363,7 +368,7 @@ HTML;
 
 		if ($schedule['expense'])
 		{
-			$row['expenses'][] = [
+			$row['expenses'] = [
 				'customer_name' => $schedule['customer_name'],
 				'price' => $schedule['price'],
 			];
