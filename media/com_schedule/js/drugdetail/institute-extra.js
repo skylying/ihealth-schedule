@@ -79,7 +79,7 @@
 			// New row click event
 			$("." + this.buttonClass).click(function()
 			{
-				self.addInstituteExtraRow($(this).data("instituteId"));
+				self.addInstituteExtraRow(this);
 			});
 
 			// Delete row click event
@@ -122,13 +122,14 @@
 		/**
 		 * 新增機構 row
 		 *
-		 * @param  instituteId
+		 * @param  {object} element
 		 *
 		 * @return  void
 		 */
-		addInstituteExtraRow: function(instituteId)
+		addInstituteExtraRow: function(element)
 		{
-			var rowId = "#" + this.rowIdPrefix + instituteId;
+			var baseRow = $(element).closest('tr');
+			var rowId = "#" + this.rowIdPrefix + $(element).data("instituteId");
 			var row = $(rowId).clone().removeClass("hide");
 
 			var groupTime = Date.now();
@@ -155,7 +156,8 @@
 				}
 			});
 
-			$(rowId).after(row);
+			// Prepend a new row
+			$(baseRow).before(row);
 		},
 
 		/*
