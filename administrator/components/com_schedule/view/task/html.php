@@ -130,8 +130,18 @@ class ScheduleViewTaskHtml extends EditView
 
 			$data->item->schedules = $this->getSummarizeScheduleData(iterator_to_array($schedules));
 
-			$data->item->instituteQuntity = count($data->item->schedules['institutes']);
-			$data->item->customerQuntity = count($data->item->schedules['customers']);
+			// Count institute quantity
+			foreach ($data->item->schedules['institutes'] as $area => $institutes)
+			{
+				$data->item->instituteQuntity += count($institutes);
+			}
+
+			// Count customer quantity
+			foreach ($data->item->schedules['customers'] as $area => $customers)
+			{
+				$data->item->customerQuntity += count($customers);
+			}
+
 			$data->item->totalQuntity = $data->item->instituteQuntity + $data->item->customerQuntity;
 
 			// 確認區域排序由小到大
@@ -363,7 +373,11 @@ HTML;
 
 		$row['area'] = $schedule['area'];
 
-		++$row['quantity'];
+		// 計算非行政排程的數量
+		if ($schedule['type'] == 'individual' || $schedule['type'] == 'resident')
+		{
+			++$row['quantity'];
+		}
 
 		if ($schedule['ice'])
 		{
@@ -373,7 +387,8 @@ HTML;
 			];
 		}
 
-		if ($schedule['noid'])
+		// 計算缺 id 份數
+		if ((new JRegistry($schedule['params']))->get('noid', false))
 		{
 			++$row['noid'];
 		}

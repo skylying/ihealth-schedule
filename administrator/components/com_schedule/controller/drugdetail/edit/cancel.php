@@ -15,4 +15,17 @@ class ScheduleControllerDrugdetailEditCancel extends CancelController
 	 * @var  string
 	 */
 	protected $viewList = 'schedules';
+
+	/**
+	 * prepareExecute
+	 *
+	 * @return  void
+	 */
+	protected function prepareExecute()
+	{
+		// Remove sorted list state
+		JFactory::getApplication()->setUserState('drugdetail.sorted.list', null);
+
+		parent::prepareExecute();
+	}
 }

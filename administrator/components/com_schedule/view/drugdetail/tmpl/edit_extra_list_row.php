@@ -45,8 +45,6 @@ $task    = FieldHelper::resetGroup($form->getField('task_id', null, $taskId), $g
 $sorted  = FieldHelper::resetGroup($form->getField('sorted', null, $sortedValue), $group);
 $ice     = FieldHelper::resetGroup($form->getField('ice', null, $iceValue), $group);
 $price   = FieldHelper::resetGroup($form->getField('price', null, (int) $priceValue), $group);
-// @ 最後編輯者是否要每一筆獨立更新需再和 iHealth 討論
-//$modified_by = FieldHelper::resetGroup($form->getField('modified_by', null, $extra->modified_by), $group);
 
 ?>
 
@@ -65,23 +63,5 @@ $price   = FieldHelper::resetGroup($form->getField('price', null, (int) $priceVa
 		{
 			echo '<button class="row-remove-button btn btn-danger" type="button">刪除</button>';
 		}?>
-		<!-- 最後編輯者 @ 最後編輯者是否要每一筆獨立更新需再和 iHealth 討論-->
-		<?php
-/*
-		else
-		{
-			if (!empty($modified_by))
-			{
-				$userMapper = new DataMapper('#__users');
-
-				$modifier = $userMapper->findOne(['id' => $extra->modified_by]);
-
-				echo $modifier->name;
-			}
-		}
-
-		// Hidden input
-		echo $modified_by->input;
-		*/?>
 	</td>
 </tr>

@@ -149,6 +149,18 @@ class ScheduleControllerDrugdetailEditSave extends SaveController
 				$scheduleData['sorted'] = 0;
 			}
 
+			$scheduleData['params'] = json_encode(['noid' => false]);
+
+			if (isset($scheduleData['noid']))
+			{
+				if ($scheduleData['noid'])
+				{
+					$scheduleData['params'] = json_encode(['noid' => true]);
+				}
+
+				unset($scheduleData['noid']);
+			}
+
 			$this->scheduleModel->save($scheduleData);
 		}
 	}
@@ -217,5 +229,21 @@ class ScheduleControllerDrugdetailEditSave extends SaveController
 				$this->model->save($detail);
 			}
 		}
+	}
+
+	/**
+	 * postSaveHook, used for clear userstate
+	 *
+	 * @param \Windwalker\Model\CrudModel $model
+	 * @param array                       $validData
+	 *
+	 * @return  void
+	 */
+	protected function postSaveHook($model, $validData)
+	{
+		parent::postSaveHook($model, $validData);
+
+		// Remove sortedList after save
+		JFactory::getApplication()->setUserState('drugdetail.sorted.list', null);
 	}
 }

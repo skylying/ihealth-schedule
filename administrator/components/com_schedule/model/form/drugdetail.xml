@@ -28,14 +28,11 @@
 			<option value="1">是</option>
 		</field>
 
-		<!-- 最後修改人是否要獨立更新每一筆需再和 iHealth 討論
-
 		<field name="modified_by"
-			type="hidden"
 			class="modifier"
-			label="最後修改人"
-			description="最後修改人"
-			/>-->
+			label="最後分藥人"
+			description="最後一個更改分藥狀態的使用者, 無論是勾選或是取消勾選"
+			/>
 
 		<field name="price"
 			class="input-small price"

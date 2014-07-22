@@ -19,12 +19,28 @@ use Windwalker\Joomla\DataMapper\DataMapper;
 $form     = $data->form;
 $schedule = $data->schedule;
 
-$noid   = FieldHelper::resetGroup($form->getField('noid', null, $schedule->noid), "schedules.{$schedule->id}");
+$app = JFactory::getApplication();
+$sortedList = $app->getUserState('drugdetail.sorted.list');
+
+$noidValue = (new JRegistry($schedule->params))->get('noid', false);
+
+$noid   = FieldHelper::resetGroup($form->getField('noid', null, $noidValue ? 1 : 0), "schedules.{$schedule->id}");
 $sorted = FieldHelper::resetGroup($form->getField('sorted', null, $schedule->sorted), "schedules.{$schedule->id}");
 $ice    = FieldHelper::resetGroup($form->getField('ice', null, $schedule->ice), "schedules.{$schedule->id}");
 $price  = FieldHelper::resetGroup($form->getField('price', null, (int) $schedule->price), "schedules.{$schedule->id}");
-// @ 最後編輯者是否要每一筆獨立更新需再和 iHealth 討論
-//$modified_by = FieldHelper::resetGroup($form->getField('modified_by', null, 'hello'), "schedules.{$schedule->id}");
+$modified_by = FieldHelper::resetGroup($form->getField('modified_by', null, 'hello'), "schedules.{$schedule->id}");
+
+// Used for compare if sorted field is changed
+if (!isset($sortedList) || empty($sortedList))
+{
+	$app->setUserState('drugdetail.sorted.list', [$schedule->id => $schedule->sorted]);
+}
+else
+{
+	$sortedList[$schedule->id] = $schedule->sorted;
+
+	$app->setUserState('drugdetail.sorted.list', $sortedList);
+}
 ?>
 <tr>
 	<td>
@@ -91,19 +107,13 @@ $price  = FieldHelper::resetGroup($form->getField('price', null, (int) $schedule
 		<?php echo $price->input; ?>
 	</td>
 	<td>
-		<!-- 最後編輯者 @ 最後編輯者是否要每一筆獨立更新需再和 iHealth 討論-->
-
 		<?php
-/*		if (!empty($schedule->modified_by))
+		if (!empty($schedule->modified_by))
 		{
-			$userMapper = new DataMapper('#__users');
+			$userName = (new DataMapper('#__users'))->findOne(['id' => $schedule->modified_by])->name;
 
-			$modifier = $userMapper->findOne(['id' => $schedule->modified_by]);
-
-			echo $modifier->name;
+			echo $userName;
 		}
-
-		echo $modified_by->input;
-		*/?>
+		?>
 	</td>
 </tr>

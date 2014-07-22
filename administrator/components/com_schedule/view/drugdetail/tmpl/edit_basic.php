@@ -81,7 +81,7 @@ $user = JFactory::getUser();
 			自費金額
 		</th>
 		<th>
-			最後編輯者
+			最後分藥人
 		</th>
 	</tr>
 	</thead>
@@ -178,7 +178,7 @@ HTML;
 	<!--End of individual schedules-->
 
 	<tr>
-		<td colspan="11" class="text-right">
+		<td colspan="12" class="text-right">
 			<h3>總計份數： <?php echo $total; ?> 份</h3>
 		</td>
 		<td></td>
