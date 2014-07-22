@@ -79,7 +79,7 @@ abstract class UiHelper
 			return '';
 		}
 
-		$title = $title . ' <small class="glyphicon glyphicon-share"></small>';
+		$title = $title . '<small class="glyphicon glyphicon-share"></small>';
 
 		$attrs['class'] = 'text-muted';
 		$attrs['target'] = '_blank';
