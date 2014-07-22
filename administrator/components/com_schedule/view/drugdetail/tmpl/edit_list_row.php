@@ -19,6 +19,7 @@ use Windwalker\Joomla\DataMapper\DataMapper;
 $form     = $data->form;
 $schedule = $data->schedule;
 
+$noid   = FieldHelper::resetGroup($form->getField('noid', null, $schedule->noid), "schedules.{$schedule->id}");
 $sorted = FieldHelper::resetGroup($form->getField('sorted', null, $schedule->sorted), "schedules.{$schedule->id}");
 $ice    = FieldHelper::resetGroup($form->getField('ice', null, $schedule->ice), "schedules.{$schedule->id}");
 $price  = FieldHelper::resetGroup($form->getField('price', null, (int) $schedule->price), "schedules.{$schedule->id}");
@@ -55,17 +56,27 @@ $price  = FieldHelper::resetGroup($form->getField('price', null, (int) $schedule
 		break;
 	}
 	?>
-	<td>
-		<!-- 縣市 -->
-		<?php echo $schedule->city_title; ?>
-	</td>
-	<td>
-		<!-- 區域 -->
-		<?php echo $schedule->area_title; ?>
-	</td>
+
+	<?php
+	switch ($schedule->type)
+	{
+		case ("resident"):
+			echo "<td colspan='2' class='center'>-</td>";
+			break;
+
+		case ("individual"):
+			echo "<td>" . $schedule->city_title . "</td>";
+			echo "<td>" . $schedule->area_title . "</td>";
+			break;
+	}
+	?>
 	<td>
 		<!-- 客戶 -->
 		<?php echo $schedule->customer_name; ?>
+	</td>
+	<td class="big-checkbox-td text-center">
+		<!-- 缺 ID -->
+		<?php echo $noid->getControlGroup(); ?>
 	</td>
 	<td class="big-checkbox-td text-center">
 		<!-- 分藥完成 form -->

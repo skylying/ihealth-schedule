@@ -51,7 +51,7 @@ $price   = FieldHelper::resetGroup($form->getField('price', null, (int) $priceVa
 ?>
 
 <tr <?php echo $id; ?> <?php echo $class; ?>>
-	<td colspan="7">
+	<td colspan="8">
 		<?php echo $idInput->input; ?>
 		<?php echo $task->input; ?>
 	</td>

@@ -33,7 +33,7 @@ $user = JFactory::getUser();
 	});
 </script>
 
-<h1 class="text-center"><?php echo $data->date; ?> 分藥表</h1>
+<h1 class="text-center"><?php echo $data->date; ?> 打包表</h1>
 
 <?php foreach ($data->items as $sender):?>
 
@@ -67,6 +67,9 @@ $user = JFactory::getUser();
 		</th>
 		<th>
 			客戶
+		</th>
+		<th>
+			缺ID
 		</th>
 		<th width="7%">
 			完成分藥
@@ -142,7 +145,7 @@ $user = JFactory::getUser();
 		?>
 
 	<tr>
-		<td colspan="11" class="text-right">機構小計份數： <?php echo $residentSchedulesCount; ?> 份</td>
+		<td colspan="12" class="text-right">機構小計份數： <?php echo $residentSchedulesCount; ?> 份</td>
 		<td>
 			<button class="add-institute-extra btn btn-success" data-institute-id="<?php echo $instituteId; ?>" type="button">
 				<span class="icon-new"></span>

@@ -19,6 +19,15 @@
 			<option value="1">是</option>
 		</field>
 
+		<field name="noid"
+			type="checkbox"
+			class="big-checkbox"
+			label=""
+			description="是否缺ID"
+			>
+			<option value="1">是</option>
+		</field>
+
 		<!-- 最後修改人是否要獨立更新每一筆需再和 iHealth 討論
 
 		<field name="modified_by"
