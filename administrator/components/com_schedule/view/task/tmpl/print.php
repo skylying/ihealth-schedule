@@ -9,8 +9,6 @@
 // No direct access
 defined('_JEXEC') or die;
 
-use Schedule\Helper\AreaHelper;
-
 /**
  * Prepare data for this template.
  *
@@ -80,12 +78,6 @@ if ($componentTmpl)
 
 		<!--第二層分類 : 排程區域-->
 		<?php foreach ($schedulesByType as $area => $schedulesByArea): ;?>
-
-			<tr>
-				<td colspan="9">
-					<?php echo AreaHelper::getAreaTitle($area); ?>
-				</td>
-			</tr>
 
 			<!--第三層：單筆排程-->
 			<?php foreach ($schedulesByArea as $schedule): ;?>
