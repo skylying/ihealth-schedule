@@ -123,7 +123,9 @@ if ($componentTmpl)
 					</td>
 
 					<!--缺id份數-->
-					<td class="center"><!--todo:缺 id 份數--></td>
+					<td class="center">
+						<?php echo $type == 'customers' ? '-' : $schedule['noid']; ?>
+					</td>
 
 					<!--自費金額-->
 					<td class="center">

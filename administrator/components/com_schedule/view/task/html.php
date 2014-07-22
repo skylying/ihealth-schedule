@@ -338,6 +338,7 @@ HTML;
 			'notes' => [],
 			'quantity' => 0,
 			'phones' => $phones,
+			'noid' => 0,
 			'ices' => [],
 			'expense' => '$' . (int) $schedule['price'],
 			'extraExpenses' => '',
@@ -370,6 +371,11 @@ HTML;
 				'drug_empty_date' => str_replace('-', '/', substr($schedule['drug_empty_date'], 5)),
 				'customer_name' => $schedule['customer_name'],
 			];
+		}
+
+		if ($schedule['noid'])
+		{
+			++$row['noid'];
 		}
 
 		if ($schedule['expense'])
