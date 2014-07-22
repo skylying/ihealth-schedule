@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <form>
-	<fieldset name="edit"
-		align="left"
-		horz="true">
-
+	<fieldset name="basic">
 		<field name="id"
 			type="text"
 			label="客戶編號"
 			description=""
 			readonly="true"
+			/>
+
+		<field name="member_id"
+			type="integer"
+			label="會員編號"
+			description="會員編號"
+			required="true"
 			/>
 
 		<field name="name"
@@ -26,195 +30,7 @@
 			/>
 
 		<field name="birth_date"
-			type="DateTimePicker"
-			class="datetimepicker calendarwidth birthday"
-			label="出生日期"
-			description="出生日期"
-			/>
-
-		<field name="age"
 			type="text"
-			label="年齡"
-			description="年齡"
-			readonly="true"
-			/>
-
-		<field name="state"
-			type="radio"
-			label="服務狀態"
-			description="服務狀態"
-			class="btn-group btn-group-yesno">
-			<option value="0">結案</option>
-			<option value="1">服務中</option>
-		</field>
-	</fieldset>
-
-
-	<field name="type"
-		type="radio"
-		label="客戶類型"
-		description="客戶類型"
-		class="btn-group btn-group-yesno customertype">
-		<option value="resident">住民</option>
-		<option value="individual">散客</option>
-	</field>
-
-
-	<fieldset
-		name="institute"
-		align="right"
-		horz="true">
-
-		<field name="institute_id"
-			type="institute_list"
-			label="機構名稱"
-			description="機構名稱"
-			class="input-large"
-			/>
-
-	</fieldset>
-
-	<fieldset
-		name="rxindividual"
-		align="right"
-		horz="true">
-
-		<field name="members"
-			type="member_list"
-			value_field="name"
-			multiple="true"
-			label="所屬會員"
-			description="所屬會員"
-			class="input-large"
-			/>
-
-		<field name="hospital_id"
-			type="hospital_list"
-			label="開立處方醫院名稱"
-			description="開立處方醫院名稱"
-			class="input-large"
-			/>
-
-		<field name="rx_period"
-			type="list"
-			label="給藥天數"
-			description="給藥天數">
-			<option value="21">21天</option>
-			<option value="28">28天</option>
-			<option value="30">30天</option>
-			<option value="31">31天</option>
-		</field>
-
-		<field name="rx_time"
-			type="list"
-			label="可調劑次數"
-			description="可調劑次數">
-			<option value="1">1次</option>
-			<option value="2">2次</option>
-			<option value="3">3次</option>
-		</field>
-
-		<field name="note"
-			type="textarea"
-			label="備註"
-			description="備註"
-			/>
-	</fieldset>
-
-	<fieldset name="address">
-		<field name="city"
-			type="sql"
-			default=""
-			query="SELECT id, title FROM #__schedule_cities"
-			key_field="id"
-			value_field="title"
-			label="縣市"
-			description="縣市"
-			readonly="false"
-			class="addr_city"
-			>
-			<option></option>
-		</field>
-
-		<field name="area"
-			type="sql"
-			default=""
-			query="SELECT id, title FROM #__schedule_areas"
-			key_field="id"
-			value_field="title"
-			label="區域"
-			description="區域"
-			class="addr_area"
-			readonly="false"
-			>
-			<option></option>
-		</field>
-
-		<field name="address"
-			type="hidden"
-			label="地址"
-			description=""
-			class="pull-left"
-			/>
-
-		<field name="address2"
-			type="text"
-			label="地址"
-			description=""
-			class="col-lg-12 addr_addr"
-			/>
-	</fieldset>
-
-
-	<fieldset name="office">
-		<field name="tel_office"
-			type="radioinput"
-			label="宅配電話(O)"
-			description="填入宅配電話"
-			class="input-large"
-			/>
-
-	</fieldset>
-
-	<fieldset name="home">
-		<field name="tel_home"
-			type="radioinput"
-			label="宅配電話(H)"
-			description="填入宅配電話(H)"
-			class="input-large"
-			/>
-
-	</fieldset>
-
-
-	<fieldset name="mobile">
-		<field name="mobile"
-			type="radioinput"
-			label="手機(M)"
-			description="填入手機(M)"
-
-			class="input-large"
-			/>
-
-	</fieldset>
-
-	<fieldset name="quickadd">
-		<field name="name"
-			type="text"
-			label="客戶姓名"
-			description="客戶姓名"
-			required="true"
-			class="input-large required"
-			/>
-
-		<field name="id_number"
-			type="text"
-			label="客戶身份證字號"
-			description="客戶身份證字號"
-			/>
-
-		<field name="birth_date"
-			type="calendar"
 			label="出生日期"
 			description="出生日期"
 			/>
@@ -223,10 +39,51 @@
 			type="radio"
 			label="客戶類型"
 			description="客戶類型"
-			default="individual"
-			class="btn-group btn-group-yesno">
+			class="btn-group btn-group-yesno customertype">
 			<option value="resident">住民</option>
 			<option value="individual">散客</option>
 		</field>
+
+		<field name="hospital"
+			type="integer"
+			label="開立處方醫院編號"
+			description="開立處方醫院編號"
+			/>
+
+		<field name="tel_office"
+			type="text"
+			label="宅配電話(O)"
+			description="填入宅配電話"
+			/>
+
+		<field name="tel_home"
+			type="text"
+			label="宅配電話(H)"
+			description="填入宅配電話(H)"
+			/>
+
+		<field name="mobile"
+			type="text"
+			label="手機(M)"
+			description="填入手機(M)"
+			/>
+
+		<field name="note"
+			type="textarea"
+			label="備註"
+			description="備註"
+			/>
+
+		<field name="city"
+			type="integer"
+			label="縣市"
+			description="縣市"
+			/>
+
+		<field name="area"
+			type="integer"
+			label="區域"
+			description="區域"
+			/>
 	</fieldset>
 </form>

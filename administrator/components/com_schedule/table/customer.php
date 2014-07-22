@@ -6,6 +6,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
+use Windwalker\Joomla\DataMapper\DataMapper;
 use Windwalker\Table\Table;
 
 // No direct access
@@ -68,11 +69,23 @@ class ScheduleTableCustomer extends Table
 	 * method to make sure the data they are storing in the database is safe and
 	 * as expected before storage.
 	 *
+	 * @throws  RuntimeException
 	 * @return  boolean  True if the instance is sane and able to be stored in the database.
 	 */
 	public function check()
 	{
-		return parent::check();
+		if ($this->id_number)
+		{
+			// Check ID Number
+			$item = (new DataMapper(\Schedule\Table\Table::CUSTOMERS))->findOne(['id_number' => $this->id_number]);
+
+			if (!$item->isNull() && $item->id != $this->id)
+			{
+				throw new \RuntimeException('此身分證字號已有人使用');
+			}
+		}
+
+		return true;
 	}
 
 	/**

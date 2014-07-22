@@ -63,6 +63,51 @@ class ApiSaveController extends SaveController
 	}
 
 	/**
+	 * Do the save action.
+	 *
+	 * @throws \Exception
+	 * @return array Validated data.
+	 */
+	protected function doSave()
+	{
+		$key  = $this->key;
+
+		// Access check.
+		if (!$this->allowSave($this->data, $key))
+		{
+			throw new \Exception(\JText::_('JLIB_APPLICATION_ERROR_SAVE_NOT_PERMITTED'));
+		}
+
+		// Validate the posted data.
+		// Sometimes the form needs some posted data, such as for plugins and modules.
+		$form = $this->model->getForm($this->data, false);
+
+		// Test whether the data is valid.
+		$validData = $this->model->validate($form, $this->data);
+
+		if (!isset($validData['tags']))
+		{
+			$validData['tags'] = null;
+		}
+
+		// Attempt to save the data.
+		try
+		{
+			$this->model->save($validData);
+		}
+		catch (\Exception $e)
+		{
+			// Save the data in the session.
+			$this->app->setUserState($this->context . '.data', $validData);
+
+			// Redirect back to the edit screen.
+			throw $e;
+		}
+
+		return $validData;
+	}
+
+	/**
 	 * Check session token or die.
 	 *
 	 * @return void
