@@ -133,6 +133,10 @@ class ScheduleViewTaskHtml extends EditView
 			$data->item->instituteQuntity = count($data->item->schedules['institutes']);
 			$data->item->customerQuntity = count($data->item->schedules['customers']);
 			$data->item->totalQuntity = $data->item->instituteQuntity + $data->item->customerQuntity;
+
+			// 確認區域排序由小到大
+			ksort($data->item->schedules['institutes']);
+			ksort($data->item->schedules['customers']);
 		}
 	}
 
@@ -236,7 +240,7 @@ HTML;
 			if ($schedule['institute_id'] > 0)
 			{
 				// Summarize resident customers
-				if (! isset($data['institutes'][$schedule['institute_id']]))
+				if (! isset($data['institutes'][$schedule['area']][$schedule['institute_id']]))
 				{
 					$row = $this->getInitSchedule($schedule);
 					$row['title'] = $schedule['institute_title'];
@@ -274,32 +278,32 @@ HTML;
 						$row['extraExpenses'] = '$' . $totalExtraExpense;
 					}
 
-					$data['institutes'][$schedule['institute_id']] = $row;
+					$data['institutes'][$schedule['area']][$schedule['institute_id']] = $row;
 				}
 
-				$this->summarizeSchedules($schedule, $data['institutes'][$schedule['institute_id']]);
+				$this->summarizeSchedules($schedule, $data['institutes'][$schedule['area']][$schedule['institute_id']]);
 			}
 			elseif ($schedule['customer_id'] > 0)
 			{
 				// Summarize individual customers
-				if (! isset($data['customers'][$schedule['customer_id']]))
+				if (! isset($data['customers'][$schedule['area']][$schedule['customer_id']]))
 				{
 					$row = $this->getInitSchedule($schedule);
 					$row['title'] = $schedule['customer_name'];
 
-					$data['customers'][$schedule['customer_id']] = $row;
+					$data['customers'][$schedule['area']][$schedule['customer_id']] = $row;
 				}
 
-				$this->summarizeSchedules($schedule, $data['customers'][$schedule['customer_id']]);
+				$this->summarizeSchedules($schedule, $data['customers'][$schedule['area']][$schedule['customer_id']]);
 			}
 			else
 			{
 				$row = $this->getInitSchedule($schedule);
 				$row['title'] = '行政排程';
 
-				$data['others'][$schedule['id']] = $row;
+				$data['others'][$schedule['area']][$schedule['id']] = $row;
 
-				$this->summarizeSchedules($schedule, $data['others'][$schedule['id']]);
+				$this->summarizeSchedules($schedule, $data['others'][$schedule['area']][$schedule['id']]);
 			}
 		}
 
@@ -355,6 +359,8 @@ HTML;
 		{
 			return;
 		}
+
+		$row['area'] = $schedule['area'];
 
 		++$row['quantity'];
 
