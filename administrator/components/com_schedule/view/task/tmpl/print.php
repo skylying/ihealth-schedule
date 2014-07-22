@@ -27,6 +27,9 @@ if ($componentTmpl)
 {
 	$asset->internalCSS('
 	@media print {
+		@page{
+			size: landscape;
+		}
 		body.component {
 			padding-top: 30px;
 			margin-top: -30px;
