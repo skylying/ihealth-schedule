@@ -82,6 +82,8 @@ class ScheduleModelSql extends \Windwalker\Model\Model
 		$method = $input->get('method', 'loadObjectList');
 		$args   = $input->get('args', array(), 'array');
 
+		$this->state->set('sql.query', $sql);
+
 		if (!trim($sql))
 		{
 			throw new \RuntimeException('No Query?');
