@@ -51,12 +51,6 @@
 			description="機構樓層"
 			/>
 
-		<field name="note"
-			type="hidden"
-			readonly="true"
-			label="備註"
-			description="備註"
-			/>
 	</fieldset>
 
 	<fieldset name="information">
@@ -210,13 +204,6 @@
 			<option value="photo">拍照</option>
 			<option value="paper">正本</option>
 		</field>
-
-		<field name="fileuploadplaceholder"
-			type="textarea"
-			class="fullwidth"
-			label="上傳檔案欄位"
-			description="上傳檔案欄位"
-			/>
 
 		<field name="note"
 			type="textarea"
