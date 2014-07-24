@@ -89,6 +89,9 @@ class ScheduleModelRxindividual extends AdminModel
 		// 客戶名
 		$table->customer_name = $customer->name;
 
+		// Id_number to upper case
+		$table->id_number = strtoupper($table->id_number);
+
 		$member = (new DataMapper(Table::MEMBERS))->findOne($table->member_id);
 
 		// 會員名
