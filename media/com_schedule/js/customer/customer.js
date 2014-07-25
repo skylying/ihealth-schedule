@@ -11,9 +11,9 @@
 	window.CustomerJs = {
 
 		// Initialize all element we need
-		initialize : function(isNew)
+		initialize : function(option)
 		{
-			this.isNew = isNew;
+			this.isNew = option.isNew;
 
 			this.birthday = $('#jform_birth_date');
 			this.age      = $('#jform_age');
@@ -98,17 +98,14 @@
 			this.individualDiv.on('click', '.glyphicon-ok', function()
 			{
 				var spanGroup = $(this).closest('fieldset').find('span'),
-					sibling = $(this).siblings();
+					input = $(this).parent().find('input');
 
 				// Check empty phone number
-				if ($(sibling).is('input'))
+				if (typeof input.val() == 'undefined' || input.val() == '')
 				{
-					if ($(sibling).val() == 'undefined' || $(sibling).val() == '')
-					{
-						alert('不可將空白電話存成預設');
+					alert('不可將空白電話存成預設');
 
-						return;
-					}
+					return;
 				}
 
 				$(spanGroup).each(function()
@@ -346,17 +343,12 @@
 		 */
 		setDefaultAddress : function()
 		{
-			var defaultMarkers = $('.address-row').find('.glyphicon-ok');
+			var defaultMarker = $('.address-row .glyphicon-ok:first');
 
-			// If there is no address, nothing happen
-			if (defaultMarkers.length == 0)
+			// Has address, then we set first one as default
+			if (defaultMarker.length > 0)
 			{
-				return;
-			}
-			else
-			{
-				// Has address, then we set first one as default
-				$(defaultMarkers[0]).addClass('default').attr('title', 'true');
+				$(defaultMarker).addClass('default').attr('title', 'true');
 			}
 		}
 	};

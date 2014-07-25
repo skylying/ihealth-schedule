@@ -69,9 +69,9 @@ $addresses = isset($data->item->addresses) ? $data->item->addresses : array();
 
 	jQuery(document).ready(function()
 	{
-		var isNew = <?php echo $data->isNew; ?>
-
-		CustomerJs.initialize(isNew);
+		CustomerJs.initialize({
+			isNew : <?php echo $data->isNew; ?>
+		});
 	});
 
 </script>
