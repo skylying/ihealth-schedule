@@ -128,7 +128,7 @@
 		 */
 		addInstituteExtraRow: function(element)
 		{
-			var baseRow = $(element).closest('tr');
+			var $baseRow = $(element).closest('tr');
 			var rowId = "#" + this.rowIdPrefix + $(element).data("instituteId");
 			var row = $(rowId).clone().removeClass("hide");
 
@@ -157,7 +157,7 @@
 			});
 
 			// Prepend a new row
-			$(baseRow).before(row);
+			$baseRow.before(row);
 		},
 
 		/*

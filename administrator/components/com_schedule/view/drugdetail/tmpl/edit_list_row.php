@@ -63,11 +63,11 @@ else
 	<?php
 	switch ($schedule->type)
 	{
-		case ("resident"):
+		case "resident" :
 			echo "<td class='alert alert-info'>" . $schedule->institute_title . "</td>";
 		break;
 
-		case ("individual"):
+		case "individual" :
 			echo "<td class='alert alert-warning'>" . $schedule->member_name . "</td>";
 		break;
 	}
@@ -76,11 +76,11 @@ else
 	<?php
 	switch ($schedule->type)
 	{
-		case ("resident"):
+		case "resident" :
 			echo "<td colspan='2' class='center'>-</td>";
 			break;
 
-		case ("individual"):
+		case "individual" :
 			echo "<td>" . $schedule->city_title . "</td>";
 			echo "<td>" . $schedule->area_title . "</td>";
 			break;
@@ -110,9 +110,7 @@ else
 		<?php
 		if (!empty($schedule->modified_by))
 		{
-			$userName = (new DataMapper('#__users'))->findOne(['id' => $schedule->modified_by])->name;
-
-			echo $userName;
+			echo JUser::getInstance($schedule->modified_by)->name;
 		}
 		?>
 	</td>

@@ -150,6 +150,8 @@ class ScheduleModel extends AdminModel
 	 */
 	public function prepareTable(\JTable $table)
 	{
+		parent::prepareTable($table);
+
 		$formName = $this->state->get('form.type', 'schedule_institute');
 
 		if ('schedule_institute' === $formName)

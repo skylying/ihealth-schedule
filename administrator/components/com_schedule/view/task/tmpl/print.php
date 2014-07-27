@@ -43,10 +43,6 @@ if ($componentTmpl)
 
 ?>
 
-	<style>
-
-	</style>
-
 <div class="head-div center">
 	<h2>
 		<?php echo $item->date; ?>
@@ -124,7 +120,7 @@ if ($componentTmpl)
 
 					<!--缺id份數-->
 					<td class="center">
-						<?php echo $type == 'customers' ? '-' : $schedule['noid']; ?>
+						<?php echo $type == 'customers' ? '-' : $schedule['noidCount']; ?>
 					</td>
 
 					<!--自費金額-->

@@ -130,6 +130,9 @@ class ScheduleViewTaskHtml extends EditView
 
 			$data->item->schedules = $this->getSummarizeScheduleData(iterator_to_array($schedules));
 
+			$data->item->customerQuntity = 0;
+			$data->item->instituteQuntity = 0;
+
 			// Count institute quantity
 			foreach ($data->item->schedules['institutes'] as $area => $institutes)
 			{
@@ -269,6 +272,8 @@ HTML;
 
 					$row['phones'][] = $instituteTable->tel;
 
+					// TODO: 總金額應在 Helper 中統一計算
+
 					// 取得 schedule & drug_extra table 中的加購金額
 					$extraExpenses = TaskHelper::getInstituteExtraExpenses($schedule['task_id'], $schedule['institute_id']);
 					$customerExpenses = TaskHelper::getScheduleExtraExpenses($schedule['task_id'], $schedule['institute_id']);
@@ -348,7 +353,7 @@ HTML;
 			'notes' => [],
 			'quantity' => 0,
 			'phones' => $phones,
-			'noid' => 0,
+			'noidCount' => 0,
 			'ices' => [],
 			'expense' => '$' . (int) $schedule['price'],
 			'extraExpenses' => '',
@@ -390,7 +395,7 @@ HTML;
 		// 計算缺 id 份數
 		if ((new JRegistry($schedule['params']))->get('noid', false))
 		{
-			++$row['noid'];
+			++$row['noidCount'];
 		}
 
 		if ($schedule['expense'])
