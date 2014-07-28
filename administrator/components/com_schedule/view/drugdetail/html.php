@@ -239,12 +239,14 @@ class ScheduleViewDrugdetailHtml extends EditView
 			'`task`.`sender` AS sender',
 			'`schedule`.`institute_id` AS institute_id',
 			'`task`.`id` AS task_id',
+			'`customer`.`needsplit` AS needsplit',
 		];
 
 		$q->select($select)
 			->from(Table::SCHEDULES . " AS schedule")
 			->join("LEFT", Table::TASKS . " AS task on schedule.task_id = task.id")
 			->join("LEFT", Table::PRESCRIPTIONS . " AS rx on schedule.rx_id = rx.id")
+			->join("LEFT", Table::CUSTOMERS . " AS customer on schedule.customer_id = customer.id")
 			->where("task.sender " . (new JDatabaseQueryElement('IN ()', $senderIds)))
 			->where("task.date = " . $q->quote($this->data->date))
 			->order("schedule.institute_id DESC")

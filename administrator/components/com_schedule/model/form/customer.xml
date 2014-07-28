@@ -95,23 +95,14 @@
 			class="input-large"
 			/>
 
-		<field name="rx_period"
-			type="list"
-			label="給藥天數"
-			description="給藥天數">
-			<option value="21">21天</option>
-			<option value="28">28天</option>
-			<option value="30">30天</option>
-			<option value="31">31天</option>
-		</field>
-
-		<field name="rx_time"
-			type="list"
-			label="可調劑次數"
-			description="可調劑次數">
-			<option value="1">1次</option>
-			<option value="2">2次</option>
-			<option value="3">3次</option>
+		<field name="needsplit"
+			type="radio"
+			class="btn-group"
+			label="藥品分包"
+			description="是否需要分包藥品"
+			default="0">
+			<option value="1">需要</option>
+			<option value="0">不需要</option>
 		</field>
 
 		<field name="note"

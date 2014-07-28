@@ -68,6 +68,9 @@ $user = JFactory::getUser();
 		<th>
 			客戶
 		</th>
+		<th width="7%">
+			藥品分包
+		</th>
 		<th>
 			缺ID
 		</th>
@@ -145,7 +148,7 @@ $user = JFactory::getUser();
 		?>
 
 	<tr>
-		<td colspan="12" class="text-right">機構小計份數： <?php echo $residentSchedulesCount; ?> 份</td>
+		<td colspan="13" class="text-right">機構小計份數： <?php echo $residentSchedulesCount; ?> 份</td>
 		<td>
 			<button class="add-institute-extra btn btn-success" data-institute-id="<?php echo $instituteId; ?>" type="button">
 				<span class="icon-new"></span>
@@ -166,8 +169,8 @@ $user = JFactory::getUser();
 		}
 
 		$summaryRow = <<<HTML
-<tr>
-		<td colspan="11" class="text-right">散客小計份數： {$individualSchedulesCount} 份</td>
+	<tr>
+		<td colspan="13" class="text-right">散客小計份數： {$individualSchedulesCount} 份</td>
 		<td></td>
 	</tr>
 HTML;
@@ -178,7 +181,7 @@ HTML;
 	<!--End of individual schedules-->
 
 	<tr>
-		<td colspan="12" class="text-right">
+		<td colspan="13" class="text-right">
 			<h3>總計份數： <?php echo $total; ?> 份</h3>
 		</td>
 		<td></td>
