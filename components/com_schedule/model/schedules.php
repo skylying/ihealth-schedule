@@ -97,6 +97,7 @@ class ScheduleModelSchedules extends \Windwalker\Model\ListModel
 	{
 		// Reset select to avoid redundant columns
 		$query->clear('select')
-			->select('schedule.*, map.member_id');
+			->select('schedule.*, map.member_id')
+			->group('schedule.id');
 	}
 }
