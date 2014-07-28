@@ -6,6 +6,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
+use Schedule\Customer\CustomerHelper;
 use Windwalker\Joomla\DataMapper\DataMapper;
 use Windwalker\Table\Table;
 
@@ -74,7 +75,7 @@ class ScheduleTableCustomer extends Table
 	 */
 	public function check()
 	{
-		if ($this->id_number)
+		if ($this->id_number && CustomerHelper::verifyIdNumber($this->id_number))
 		{
 			// Check ID Number
 			$item = (new DataMapper(\Schedule\Table\Table::CUSTOMERS))->findOne(['id_number' => $this->id_number]);
