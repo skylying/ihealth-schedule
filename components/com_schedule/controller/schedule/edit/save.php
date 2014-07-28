@@ -11,7 +11,6 @@ use Schedule\Helper\ScheduleHelper;
 use Schedule\Table\Collection as TableCollection;
 use Windwalker\Model\Exception\ValidateFailException;
 use Schedule\Helper\MailHelper;
-use Schedule\Helper\ConfigHelper;
 
 /**
  * Class ScheduleControllerPrescriptionEditSave
@@ -102,7 +101,7 @@ class ScheduleControllerScheduleEditSave extends ApiSaveController
 			$routeTable->area_title   = $addressTable->area_title;
 
 			$icrmConfig    = \JComponentHelper::getParams('com_schedule')->get("icrm");
-			$defaultSender = ConfigHelper::getDefaultSender();
+			$defaultSender = \Schedule\Helper\SenderHelper::getDefaultSender();
 
 			$routeTable->sender_id   = $defaultSender['id'];
 			$routeTable->sender_name = $defaultSender['sender'];
