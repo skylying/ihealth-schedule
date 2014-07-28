@@ -66,7 +66,7 @@ class ScheduleControllerSchedulesUpdateStatus extends AbstractUpdateStateControl
 
 		if (!in_array($status, $validStatus))
 		{
-			throw new \InvalidArgumentException('無此狀態 "' . $status . '"');
+			$this->redirectToList('無此狀態 "' . $status . '"', 'warning');
 		}
 
 		$this->stateData  = array('status' => $status);
@@ -103,7 +103,7 @@ class ScheduleControllerSchedulesUpdateStatus extends AbstractUpdateStateControl
 
 			if (!in_array($cancel, $validCancel))
 			{
-				throw new \InvalidArgumentException('沒有選擇取消的理由');
+				$this->redirectToList('沒有選擇取消的理由', 'warning');
 			}
 
 			// Update "cancel" and "cancel_note" fields
