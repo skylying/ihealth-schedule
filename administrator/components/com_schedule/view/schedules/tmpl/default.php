@@ -65,6 +65,7 @@ $editFormFields = $data->editFormFields;
 				<input type="hidden" name="status" value="" />
 				<input type="hidden" name="new_date" value="" />
 				<input type="hidden" name="new_sender_id" value="" />
+				<input type="hidden" name="notify_schedule_cid" value="" />
 				<?php echo JHtml::_('form.token'); ?>
 			</div>
 		</div>

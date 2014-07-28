@@ -31,6 +31,18 @@ class ScheduleModelAddresses extends \Windwalker\Model\ListModel
 	);
 
 	/**
+	 * Property filterMapping.
+	 *
+	 * @var  array
+	 */
+	protected $filterMapping = array(
+		'customer_id' => 'address.customer.id',
+		'city' => 'address.city',
+		'area' => 'address.area',
+		'previous' => 'address.previous'
+	);
+
+	/**
 	 * configureTables
 	 *
 	 * @return  void
@@ -56,8 +68,11 @@ class ScheduleModelAddresses extends \Windwalker\Model\ListModel
 	{
 		$input = $this->getContainer()->get('input');
 
-		// Set filter: customer_id
-		$_REQUEST['filter']['address.customer_id'] = $input->get('customer_id');
+		// Set filters
+		foreach ($this->filterMapping as $request => $field)
+		{
+			$_REQUEST['filter'][$field] = $input->get($request);
+		}
 
 		parent::populateState($ordering, $direction);
 	}
