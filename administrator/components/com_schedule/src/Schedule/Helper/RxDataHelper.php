@@ -79,23 +79,23 @@ class RxDataHelper
 	}
 
 	/**
-	 * getCustomerNote
+	 * getCustomerInfo
 	 *
 	 * @param int $customerID
 	 *
 	 * @return  mixed
 	 */
-	public static function getCustomerNote($customerID)
+	public static function getCustomerInfo($customerID)
 	{
 		$db    = \JFactory::getDbo();
 		$query = $db->getQuery(true);
 
-		$query->select('customer.note')
+		$query->select('customer.note, customer.needsplit')
 			->from(Table::CUSTOMERS . ' AS customer')
 			->where('customer.id=' . $customerID);
 
-		$note = $db->setQuery($query)->loadObjectList();
+		$result = $db->setQuery($query)->loadObject();
 
-		return $note;
+		return $result;
 	}
 }

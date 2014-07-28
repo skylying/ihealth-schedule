@@ -10,8 +10,6 @@ use Joomla\DI\Container;
 use Windwalker\Model\Model;
 use Windwalker\View\Engine\PhpEngine;
 use Windwalker\View\Html\EditView;
-use Windwalker\Xul\XulEngine;
-use Schedule\Table\Table;
 
 // No direct access
 defined('_JEXEC') or die;
@@ -166,33 +164,25 @@ HTML;
 		$age      = $birthday->diff(new Datetime('now'))->y;
 
 		$memberList    = '';
-		$customer_note = '';
 
 		// Get print data from helpers
-		$customerNotes = \Schedule\Helper\RxDataHelper::getCustomerNote($data->item->customer_id);
+		$customerInfo = \Schedule\Helper\RxDataHelper::getCustomerInfo($data->item->customer_id);
 		$members       = \Schedule\Helper\Mapping\MemberCustomerHelper::loadMembers($data->item->id);
 		$scheduleInfos = \Schedule\Helper\RxDataHelper::getRxList($data->item->id);
 		$drugs         = \Schedule\Helper\RxDataHelper::getDrugList($data->item->id);
-
-		$reminds = explode(',', $data->item->remind);
 
 		foreach ($members as $member)
 		{
 			$memberList .= $member->name . ' ';
 		}
 
-		foreach ($customerNotes as $CustomerNote)
-		{
-			$customer_note .= $CustomerNote->note . ' ';
-		}
-
 		$data->item->scheduleInfos = $scheduleInfos;
 		$data->item->member_list   = $memberList;
-		$data->item->customer_note = $customer_note;
+		$data->item->customer_note = $customerInfo->note;
 		$data->item->age           = $age;
 		$data->item->drugs         = $drugs;
 		$data->item->count         = count($drugs);
-		$data->item->remindLists   = $reminds;
+		$data->item->needsplit     = $customerInfo->needsplit;
 		$data->print               = $isSaveAndPrint;
 	}
 }
