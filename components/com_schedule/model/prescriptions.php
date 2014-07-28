@@ -26,7 +26,7 @@ class ScheduleModelPrescriptions extends \Windwalker\Model\ListModel
 	 * @var  array
 	 */
 	protected $filterMapping = array(
-		'customer' => 'prescription.customer_id',
+		'customer_id' => 'prescription.customer_id',
 		'member_id' => 'map.member_id',
 		'hospital_id' => 'prescription.hospital_id',
 		'id_number' => 'prescription.id_number',
