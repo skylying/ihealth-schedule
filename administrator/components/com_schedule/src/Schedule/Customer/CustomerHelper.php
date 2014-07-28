@@ -27,10 +27,8 @@ class CustomerHelper
 	 */
 	public static function verifyIdNumber($id, $onlyFormat = true)
 	{
-		$iPidLen = strlen($id);
-
 		// I rewrote this regex. Simple but accurate.
-		if (!preg_match("/^[A-Z]+[0-9]{9}$/", $id))
+		if (!preg_match("/^[A-Z][0-9]{9}$/", $id))
 		{
 			return false;
 		}
@@ -41,46 +39,52 @@ class CustomerHelper
 		}
 
 		$head = array(
-			"A" => 1,
-			"B" => 10,
-			"C" => 19,
-			"D" => 28,
-			"E" => 37,
-			"F" => 46,
-			"G" => 55,
-			"H" => 64,
-			"I" => 39,
-			"J" => 73,
-			"K" => 82,
-			"M" => 11,
-			"N" => 20,
-			"O" => 48,
-			"P" => 29,
-			"Q" => 38,
-			"T" => 65,
-			"U" => 74,
-			"V" => 83,
-			"W" => 21,
-			"X" => 3,
-			"Z" => 30,
-			"L" => 2,
-			"R" => 47,
-			"S" => 56,
-			"Y" => 12
+			'A' => '10',
+			'B' => '11',
+			'C' => '12',
+			'D' => '13',
+			'E' => '14',
+			'F' => '15',
+			'G' => '16',
+			'H' => '17',
+			'I' => '34',
+			'J' => '18',
+			'K' => '19',
+			'M' => '21',
+			'N' => '22',
+			'O' => '35',
+			'P' => '23',
+			'Q' => '24',
+			'T' => '27',
+			'U' => '28',
+			'V' => '29',
+			'W' => '32',
+			'X' => '30',
+			'Z' => '33',
+			'L' => '20',
+			'R' => '25',
+			'S' => '26',
+			'Y' => '31',
 		);
 
-		$pid  = strtoupper($id);
+		$multiples = array(1, 9, 8, 7, 6, 5, 4, 3, 2, 1, 1);
 
-		$iSum = 0;
+		$id = $head[$id[0]] . substr($id, 1);
+		$length = strlen($id);
 
-		for ($i = 0; $i < $iPidLen; $i++)
+		if ($length !== 11)
 		{
-			$sIndex = substr($pid, $i, 1);
-
-			$iSum += (empty($i)) ? $head[$sIndex] : intval($sIndex) * abs(9 - base_convert($i, 10, 9));
+			return false;
 		}
 
-		return ($iSum % 10 == 0) ? true : false;
+		$sum = 0;
+
+		for ($i = 0; $i < $length; ++$i)
+		{
+			$sum += $id[$i] * $multiples[$i];
+		}
+
+		return 0 === $sum % 10;
 	}
 
 	/**
