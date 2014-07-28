@@ -35,10 +35,12 @@ $css = <<<CSS
 .default
 {
 	background: #53E253 !important;
+	box-shadow: -1px -1px 1px 0px #818080 inset;
 }
 .visibleinput span:hover
 {
 	background: #53E253;
+	box-shadow: -1px -1px 1px 0px #818080 inset;
 	cursor: pointer;
 }
 CSS;
@@ -63,6 +65,16 @@ $addresses = isset($data->item->addresses) ? $data->item->addresses : array();
 
 ?>
 
+<script type="text/javascript">
+
+	jQuery(document).ready(function()
+	{
+		CustomerJs.initialize({
+			isNew : <?php echo $data->isNew; ?>
+		});
+	});
+
+</script>
 
 <div class="row-fluid">
 	<div class="span6">
@@ -99,18 +111,22 @@ $addresses = isset($data->item->addresses) ? $data->item->addresses : array();
 
 						?>
 					</div>
-					<div id="newaddress" class="btn btn-info pull-right">
-						<span class="icon-plus icon-white"></span>
-						新增地址
+					<div id="newaddress" class="row">
+						<div class="col-md-4 col-md-offset-8">
+							<button type="button" class="btn btn-info">
+								<span class="icon-plus icon-white"></span>
+								新增地址
+							</button>
+						</div>
 					</div>
 				</fieldset>
 			</div>
 
 
 			<div class="row">
-				<?php echo $officePhones->input;?>
-				<?php echo $homePhones->input;?>
 				<?php echo $mobilePhones->input;?>
+				<?php echo $homePhones->input;?>
+				<?php echo $officePhones->input;?>
 			</div>
 		</div>
 		<div id="residentdiv" class="<?php echo $customerType == 'resident' ? '' : 'hide'; ?>">
@@ -145,12 +161,3 @@ $addresses = isset($data->item->addresses) ? $data->item->addresses : array();
 	</div>
 </script>
 <!--Hidden address block template-->
-
-<script type="text/javascript">
-
-jQuery(document).ready(function()
-{
-	CustomerJs.initialize();
-});
-
-</script>

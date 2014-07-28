@@ -11,8 +11,10 @@
 	window.CustomerJs = {
 
 		// Initialize all element we need
-		initialize : function()
+		initialize : function(option)
 		{
+			this.isNew = option.isNew;
+
 			this.birthday = $('#jform_birth_date');
 			this.age      = $('#jform_age');
 
@@ -66,14 +68,20 @@
 			{
 				if ($(this).val() == 'individual')
 				{
-					alert('由『住民』換為『散客』時，住民資料將不會被儲存');
+					if (!self.isNew)
+					{
+						alert('您剛剛編輯的『住民』資料將不會被儲存');
+					}
 
 					self.individualDiv.removeClass('hide');
 					self.residentDiv.addClass('hide');
 				}
 				else
 				{
-					alert('由『散客』換為『住民』時，散客資料將不會被儲存');
+					if (!self.isNew)
+					{
+						alert('您剛剛編輯的『散客』資料將不會被儲存');
+					}
 
 					self.individualDiv.addClass('hide');
 					self.residentDiv.removeClass('hide');
@@ -85,10 +93,20 @@
 			 *
 			 * 1. turn itself to green background, turn others back to grey
 			 * 2. update title to "true" for json save later
+			 * 3. Check empty phone number, if it's empty, return and alert user
 			 */
 			this.individualDiv.on('click', '.glyphicon-ok', function()
 			{
-				var spanGroup = $(this).closest('fieldset').find('span');
+				var spanGroup = $(this).closest('fieldset').find('span'),
+					input = $(this).parent().find('input');
+
+				// Check empty phone number
+				if (typeof input.val() == 'undefined' || input.val() == '')
+				{
+					alert('不可將空白電話存成預設');
+
+					return;
+				}
 
 				$(spanGroup).each(function()
 				{
@@ -98,18 +116,6 @@
 
 				$(this).attr('title', 'true');
 				$(this).addClass('default');
-			});
-
-			// When user type new phone number, auto default this one
-			this.visibleInputs.on('keyup', function()
-			{
-				if (self.defaultSwitch == false)
-				{
-					$(this).siblings().trigger('click');
-
-					// Stop triggering keyup event
-					self.defaultSwitch = true;
-				}
 			});
 
 			// Reset defaultSwitch
@@ -143,6 +149,14 @@
 				if (confirm('確定要刪除此筆地址嗎?'))
 				{
 					$(this).closest('.address-row').remove();
+
+					var isDefault = $(this).closest('.address-row').find('.glyphicon-ok').attr('title');
+
+					// If user delete the default address, we automatically set first existed address as default
+					if (isDefault == 'true')
+					{
+						self.setDefaultAddress();
+					}
 				}
 			});
 
@@ -322,6 +336,20 @@
 			});
 
 			this.hiddenAddressInput.val(JSON.stringify(result));
+		},
+
+		/*
+		 * Check and set default address after original default address was deleted
+		 */
+		setDefaultAddress : function()
+		{
+			var defaultMarker = $('.address-row .glyphicon-ok:first');
+
+			// Has address, then we set first one as default
+			if (defaultMarker.length > 0)
+			{
+				$(defaultMarker).addClass('default').attr('title', 'true');
+			}
 		}
 	};
 })(jQuery);
