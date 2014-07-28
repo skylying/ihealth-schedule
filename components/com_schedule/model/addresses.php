@@ -38,7 +38,7 @@ class ScheduleModelAddresses extends \Windwalker\Model\ListModel
 	 * @var  array
 	 */
 	protected $filterMapping = array(
-		'customer_id' => 'address.customer.id',
+		'customer_id' => 'address.customer_id',
 		'city' => 'address.city',
 		'area' => 'address.area',
 		'previous' => 'address.previous'
