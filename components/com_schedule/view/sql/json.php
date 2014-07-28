@@ -75,7 +75,7 @@ class ScheduleViewSqlJson extends ApiView
 
 		$data = $this->getData();
 
-		$result = $this->get('Item');
+		$result = $this->get('Result');
 
 		$data['query'] = $this->getModel()->getState()->get('sql.query');
 		$data['result'] = $result;

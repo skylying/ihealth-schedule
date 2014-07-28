@@ -62,14 +62,12 @@ class ScheduleModelSql extends \Windwalker\Model\Model
 	protected $viewList = 'sqls';
 
 	/**
-	 * getItem
-	 *
-	 * @param int $pk
+	 * Get SQL Result
 	 *
 	 * @throws Exception
 	 * @return  mixed|void
 	 */
-	public function getItem($pk = null)
+	public function getResult()
 	{
 		if (!JDEBUG)
 		{
