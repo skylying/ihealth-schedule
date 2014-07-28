@@ -11,7 +11,7 @@ namespace Schedule\Model\Traits;
 use Windwalker\Model\Helper\QueryHelper;
 
 /**
- * Class ExtendedListModelTrait
+ * A traits helping us avoid bother container.
  *
  * @since 1.0
  */
@@ -26,7 +26,7 @@ trait ExtendedListModelTrait
 	 */
 	public function getQueryHelper($forceNew = false)
 	{
-		return $this->container->get('model.' . $this->getName() . '.helper.query');
+		return $this->container->get('model.' . $this->getName() . '.helper.query', $forceNew);
 	}
 
 	/**
@@ -46,12 +46,10 @@ trait ExtendedListModelTrait
 	 *
 	 * @param int $options
 	 *
-	 * @return  static
+	 * @return  array
 	 */
 	public function getSelectFields($options = QueryHelper::COLS_WITH_FIRST)
 	{
-		$this->getQueryHelper()->getSelectFields($options);
-
-		return $this;
+		return $this->getQueryHelper()->getSelectFields($options);
 	}
 }

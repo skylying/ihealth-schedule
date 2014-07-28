@@ -20,6 +20,8 @@ defined('_JEXEC') or die;
  */
 class ScheduleModelAddresses extends \Windwalker\Model\ListModel
 {
+	use \Schedule\Model\Traits\ExtendedListModelTrait;
+
 	/**
 	 * Property filteerFields.
 	 *
@@ -49,11 +51,9 @@ class ScheduleModelAddresses extends \Windwalker\Model\ListModel
 	 */
 	protected function configureTables()
 	{
-		$queryHelper = $this->getContainer()->get('model.addresses.helper.query', Container::FORCE_NEW);
-
 		$this->addTable('address', Table::ADDRESSES);
 
-		$this->filterFields = array_merge($this->filterFields, $queryHelper->getFilterFields());
+		$this->mergeFilterFields();
 	}
 
 	/**

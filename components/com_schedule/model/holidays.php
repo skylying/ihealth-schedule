@@ -20,6 +20,8 @@ defined('_JEXEC') or die;
  */
 class ScheduleModelHolidays extends \Windwalker\Model\ListModel
 {
+	use \Schedule\Model\Traits\ExtendedListModelTrait;
+
 	/**
 	 * Property filteerFields.
 	 *
@@ -51,11 +53,9 @@ class ScheduleModelHolidays extends \Windwalker\Model\ListModel
 	 */
 	protected function configureTables()
 	{
-		$queryHelper = $this->getContainer()->get('model.holidays.helper.query', Container::FORCE_NEW);
+		$this->addTable('holiday', Table::HOLIDAYS);
 
-		$queryHelper->addTable('holiday', Table::HOLIDAYS);
-
-		$this->filterFields = array_merge($this->filterFields, $queryHelper->getFilterFields());
+		$this->mergeFilterFields();
 	}
 
 	/**
@@ -108,11 +108,9 @@ class ScheduleModelHolidays extends \Windwalker\Model\ListModel
 	 */
 	protected function postGetQuery(\JDatabaseQuery $query)
 	{
-		$queryHelper = $this->container->get('model.' . $this->getName() . '.helper.query');
-
 		// Reset select to avoid redundant columns
 		$query->clear('select')
-			->select($queryHelper->getSelectFields(QueryHelper::COLS_WITH_FIRST));
+			->select($this->getSelectFields(QueryHelper::COLS_WITH_FIRST));
 	}
 
 	/**
