@@ -49,7 +49,7 @@
 			/>
 
 		<field name="birth_date"
-			type="calendar"
+			type="DateTimepicker"
 			label="生日"
 			description="生日"
 			/>

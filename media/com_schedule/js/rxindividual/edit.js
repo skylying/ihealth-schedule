@@ -103,7 +103,7 @@
 			window.CustomerFieldHandler.registerEvent();
 
 			// If the new route's weekday is changed, recalculate weekday.
-			$('.js-route-weekday select').on('change', function()
+			$('.js-route-weekday select').on('liszt:updated', function()
 			{
 				var weekday = $(this).val();
 				var nth = $(this).prop('id');

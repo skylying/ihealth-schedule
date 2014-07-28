@@ -85,9 +85,9 @@
 					$(this).closest('.schedules').find('input[id$="_deliver_nth0"]').val()
 				);
 
-				window.DeliverScheduleHandler.updateScheduleDate(currentSchedule);
-
 				self.getSenderWeekdayDataFromAddress(this);
+
+				window.DeliverScheduleHandler.updateScheduleDate(currentSchedule);
 			});
 
 			// Bind add new telephone
@@ -176,6 +176,15 @@
 					{
 						$(this).attr("data-sender", $(self).val());
 					}
+
+					// The sender_id will be change only if the same address is selected.
+					if ($(this).is(':selected'))
+					{
+						$(this).closest('.js-nth-schedule-info')
+							.find('select[id$="_sender_id"]')
+							.val($(self).val())
+							.trigger('liszt:updated');
+					}
 				}
 			});
 		},
@@ -209,6 +218,15 @@
 					else
 					{
 						$(this).attr("data-weekday", $(self).val());
+					}
+
+					// The weekday will be change only if the same address is selected.
+					if ($(this).is(':selected'))
+					{
+						$(this).closest('.js-nth-schedule-info')
+							.find('select[id$="_weekday"]')
+							.val($(self).val())
+							.trigger('liszt:updated');
 					}
 				}
 			});
