@@ -27,7 +27,7 @@ class ScheduleModelHolidays extends \Windwalker\Model\ListModel
 	 *
 	 * @var  array
 	 */
-	protected $filteerFields = array(
+	protected $filterFields = array(
 		'start_date',
 		'end_date',
 	);
