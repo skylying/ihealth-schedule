@@ -35,6 +35,13 @@ class ScheduleModelPrescriptions extends \Windwalker\Model\ListModel
 	);
 
 	/**
+	 * Property items.
+	 *
+	 * @var \stdClass
+	 */
+	protected $items = null;
+
+	/**
 	 * configureTables
 	 *
 	 * @return  void
@@ -58,25 +65,25 @@ class ScheduleModelPrescriptions extends \Windwalker\Model\ListModel
 	 */
 	protected function postGetQuery(\JDatabaseQuery $query)
 	{
-		$prescriptionsApiFields = array(
-			'prescription.`id`',
-			'prescription.`hospital_id`',
-			'prescription.`id_number`',
-			'prescription.`birth_date`',
-			'prescription.`see_dr_date`',
-			'prescription.`period`',
-			'prescription.`times`',
-			'prescription.`deliver_nths`',
-			'prescription.`method`',
-			'prescription.`empty_date_1st`',
-			'prescription.`empty_date_2nd`',
-			'prescription.`note`',
-			'map.`member_id` AS `member_id`'
+		$selects = array(
+			'prescription.id',
+			'prescription.hospital_id',
+			'prescription.id_number',
+			'prescription.birth_date',
+			'prescription.see_dr_date',
+			'prescription.period',
+			'prescription.times',
+			'prescription.deliver_nths',
+			'prescription.method',
+			'prescription.empty_date_1st',
+			'prescription.empty_date_2nd',
+			'prescription.note',
+			'map.member_id'
 		);
 
 		// Reset select and replace actual fields we need
 		$query->clear('select')
-			->select($prescriptionsApiFields);
+			->select(array_map(array($this->db, 'qn'), $selects));
 	}
 
 	/**
@@ -110,23 +117,23 @@ class ScheduleModelPrescriptions extends \Windwalker\Model\ListModel
 		$db = \JFactory::getDbo();
 		$query = $db->getQuery(true);
 
-		$scheduleApiFields = array(
-			'`id`',
-			'`city`',
-			'`city_title`',
-			'`area`',
-			'`area_title`',
-			'`address`',
-			'`date`',
-			'`deliver_nth`',
-			'`drug_empty_date`',
-			'`session`',
-			'`status`',
-			'`cancel`',
-			'`cancel_note`',
+		$selects = array(
+			'id',
+			'city',
+			'city_title',
+			'area',
+			'area_title',
+			'address',
+			'date',
+			'deliver_nth',
+			'drug_empty_date',
+			'session',
+			'status',
+			'cancel',
+			'cancel_note',
 		);
 
-		$query->select($scheduleApiFields)
+		$query->select(array_map(array($db, 'qn'), $selects))
 			->from(Table::SCHEDULES . ' AS schedule')
 			->where('`schedule`.`rx_id` = ' . $rxId);
 
