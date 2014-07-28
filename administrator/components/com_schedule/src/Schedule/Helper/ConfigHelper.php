@@ -24,15 +24,6 @@ class ConfigHelper
 	 */
 	public static function getDefaultSender()
 	{
-		$defaultSender = \JComponentHelper::getParams('com_schedule')->get("icrm.default_sender");
-
-		$defaultSenderFromConfig = (strpos($defaultSender, '-') !== false) ? $defaultSender : '0-0';
-
-		list($id, $name) = explode('-', $defaultSenderFromConfig);
-
-		return array(
-			'id' => $id,
-			'sender' => $name
-		);
+		return SenderHelper::getDefaultSender();
 	}
 }
