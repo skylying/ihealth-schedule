@@ -122,6 +122,7 @@ class ScheduleViewMembersHtml extends GridView
 		// In debug mode, we remove trash button but use delete button instead.
 		$buttonSet['trash']['access'] = false;
 		$buttonSet['delete']['access'] = true;
+
 		$buttonSet['publish']['access'] = false;
 		$buttonSet['edit']['access'] = false;
 		$buttonSet['unpublish']['access'] = false;
