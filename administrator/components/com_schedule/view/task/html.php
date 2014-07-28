@@ -130,9 +130,26 @@ class ScheduleViewTaskHtml extends EditView
 
 			$data->item->schedules = $this->getSummarizeScheduleData(iterator_to_array($schedules));
 
-			$data->item->instituteQuntity = count($data->item->schedules['institutes']);
-			$data->item->customerQuntity = count($data->item->schedules['customers']);
+			$data->item->customerQuntity = 0;
+			$data->item->instituteQuntity = 0;
+
+			// Count institute quantity
+			foreach ($data->item->schedules['institutes'] as $area => $institutes)
+			{
+				$data->item->instituteQuntity += count($institutes);
+			}
+
+			// Count customer quantity
+			foreach ($data->item->schedules['customers'] as $area => $customers)
+			{
+				$data->item->customerQuntity += count($customers);
+			}
+
 			$data->item->totalQuntity = $data->item->instituteQuntity + $data->item->customerQuntity;
+
+			// 確認區域排序由小到大
+			ksort($data->item->schedules['institutes']);
+			ksort($data->item->schedules['customers']);
 		}
 	}
 
@@ -236,7 +253,7 @@ HTML;
 			if ($schedule['institute_id'] > 0)
 			{
 				// Summarize resident customers
-				if (! isset($data['institutes'][$schedule['institute_id']]))
+				if (! isset($data['institutes'][$schedule['area']][$schedule['institute_id']]))
 				{
 					$row = $this->getInitSchedule($schedule);
 					$row['title'] = $schedule['institute_title'];
@@ -255,9 +272,16 @@ HTML;
 
 					$row['phones'][] = $instituteTable->tel;
 
+					// TODO: 總金額應在 Helper 中統一計算
+
+					// 取得 schedule & drug_extra table 中的加購金額
 					$extraExpenses = TaskHelper::getInstituteExtraExpenses($schedule['task_id'], $schedule['institute_id']);
+					$customerExpenses = TaskHelper::getScheduleExtraExpenses($schedule['task_id'], $schedule['institute_id']);
+
+					$rawExpenses = array_merge($extraExpenses, $customerExpenses);
+
 					$totalExtraExpense = array_reduce(
-						$extraExpenses,
+						$rawExpenses,
 						function($carry, $item)
 						{
 							return $carry += $item->price;
@@ -266,35 +290,35 @@ HTML;
 
 					if ($totalExtraExpense > 0)
 					{
-						$row['extraExpenses'] = '加購總額: $' . $totalExtraExpense;
+						$row['extraExpenses'] = '$' . $totalExtraExpense;
 					}
 
-					$data['institutes'][$schedule['institute_id']] = $row;
+					$data['institutes'][$schedule['area']][$schedule['institute_id']] = $row;
 				}
 
-				$this->summarizeSchedules($schedule, $data['institutes'][$schedule['institute_id']]);
+				$this->summarizeSchedules($schedule, $data['institutes'][$schedule['area']][$schedule['institute_id']]);
 			}
 			elseif ($schedule['customer_id'] > 0)
 			{
 				// Summarize individual customers
-				if (! isset($data['customers'][$schedule['customer_id']]))
+				if (! isset($data['customers'][$schedule['area']][$schedule['customer_id']]))
 				{
 					$row = $this->getInitSchedule($schedule);
 					$row['title'] = $schedule['customer_name'];
 
-					$data['customers'][$schedule['customer_id']] = $row;
+					$data['customers'][$schedule['area']][$schedule['customer_id']] = $row;
 				}
 
-				$this->summarizeSchedules($schedule, $data['customers'][$schedule['customer_id']]);
+				$this->summarizeSchedules($schedule, $data['customers'][$schedule['area']][$schedule['customer_id']]);
 			}
 			else
 			{
 				$row = $this->getInitSchedule($schedule);
 				$row['title'] = '行政排程';
 
-				$data['others'][$schedule['id']] = $row;
+				$data['others'][$schedule['area']][$schedule['id']] = $row;
 
-				$this->summarizeSchedules($schedule, $data['others'][$schedule['id']]);
+				$this->summarizeSchedules($schedule, $data['others'][$schedule['area']][$schedule['id']]);
 			}
 		}
 
@@ -329,8 +353,9 @@ HTML;
 			'notes' => [],
 			'quantity' => 0,
 			'phones' => $phones,
+			'noidCount' => 0,
 			'ices' => [],
-			'expenses' => [],
+			'expense' => '$' . (int) $schedule['price'],
 			'extraExpenses' => '',
 			'session' => JText::_('COM_SCHEDULE_SEND_SESSION_' . $schedule['session']),
 		];
@@ -351,7 +376,13 @@ HTML;
 			return;
 		}
 
-		++$row['quantity'];
+		$row['area'] = $schedule['area'];
+
+		// 計算非行政排程的數量
+		if ($schedule['type'] == 'individual' || $schedule['type'] == 'resident')
+		{
+			++$row['quantity'];
+		}
 
 		if ($schedule['ice'])
 		{
@@ -361,9 +392,15 @@ HTML;
 			];
 		}
 
+		// 計算缺 id 份數
+		if ((new JRegistry($schedule['params']))->get('noid', false))
+		{
+			++$row['noidCount'];
+		}
+
 		if ($schedule['expense'])
 		{
-			$row['expenses'][] = [
+			$row['expenses'] = [
 				'customer_name' => $schedule['customer_name'],
 				'price' => $schedule['price'],
 			];

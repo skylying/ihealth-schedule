@@ -177,7 +177,7 @@ class ScheduleViewSchedulesHtml extends GridView
 		{
 			$html = <<<HTML
 <a id="sorted-preview-button" href="#modal-sorted-preview" class="btn btn-small" data-toggle="modal">
-	<span class="icon-print"></span> 分藥註記
+	<span class="icon-print"></span> 打包表
 </a>
 HTML;
 			$bar = JToolbar::getInstance('toolbar');

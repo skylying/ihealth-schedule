@@ -19,11 +19,28 @@ use Windwalker\Joomla\DataMapper\DataMapper;
 $form     = $data->form;
 $schedule = $data->schedule;
 
+$app = JFactory::getApplication();
+$sortedList = $app->getUserState('drugdetail.sorted.list');
+
+$noidValue = (new JRegistry($schedule->params))->get('noid', false);
+
+$noid   = FieldHelper::resetGroup($form->getField('noid', null, $noidValue ? 1 : 0), "schedules.{$schedule->id}");
 $sorted = FieldHelper::resetGroup($form->getField('sorted', null, $schedule->sorted), "schedules.{$schedule->id}");
 $ice    = FieldHelper::resetGroup($form->getField('ice', null, $schedule->ice), "schedules.{$schedule->id}");
 $price  = FieldHelper::resetGroup($form->getField('price', null, (int) $schedule->price), "schedules.{$schedule->id}");
-// @ 最後編輯者是否要每一筆獨立更新需再和 iHealth 討論
-//$modified_by = FieldHelper::resetGroup($form->getField('modified_by', null, 'hello'), "schedules.{$schedule->id}");
+$modified_by = FieldHelper::resetGroup($form->getField('modified_by', null, 'hello'), "schedules.{$schedule->id}");
+
+// Used for compare if sorted field is changed
+if (!isset($sortedList) || empty($sortedList))
+{
+	$app->setUserState('drugdetail.sorted.list', [$schedule->id => $schedule->sorted]);
+}
+else
+{
+	$sortedList[$schedule->id] = $schedule->sorted;
+
+	$app->setUserState('drugdetail.sorted.list', $sortedList);
+}
 ?>
 <tr>
 	<td>
@@ -46,26 +63,36 @@ $price  = FieldHelper::resetGroup($form->getField('price', null, (int) $schedule
 	<?php
 	switch ($schedule->type)
 	{
-		case ("resident"):
+		case "resident" :
 			echo "<td class='alert alert-info'>" . $schedule->institute_title . "</td>";
 		break;
 
-		case ("individual"):
+		case "individual" :
 			echo "<td class='alert alert-warning'>" . $schedule->member_name . "</td>";
 		break;
 	}
 	?>
-	<td>
-		<!-- 縣市 -->
-		<?php echo $schedule->city_title; ?>
-	</td>
-	<td>
-		<!-- 區域 -->
-		<?php echo $schedule->area_title; ?>
-	</td>
+
+	<?php
+	switch ($schedule->type)
+	{
+		case "resident" :
+			echo "<td colspan='2' class='center'>-</td>";
+			break;
+
+		case "individual" :
+			echo "<td>" . $schedule->city_title . "</td>";
+			echo "<td>" . $schedule->area_title . "</td>";
+			break;
+	}
+	?>
 	<td>
 		<!-- 客戶 -->
 		<?php echo $schedule->customer_name; ?>
+	</td>
+	<td class="big-checkbox-td text-center">
+		<!-- 缺 ID -->
+		<?php echo $noid->getControlGroup(); ?>
 	</td>
 	<td class="big-checkbox-td text-center">
 		<!-- 分藥完成 form -->
@@ -80,19 +107,11 @@ $price  = FieldHelper::resetGroup($form->getField('price', null, (int) $schedule
 		<?php echo $price->input; ?>
 	</td>
 	<td>
-		<!-- 最後編輯者 @ 最後編輯者是否要每一筆獨立更新需再和 iHealth 討論-->
-
 		<?php
-/*		if (!empty($schedule->modified_by))
+		if (!empty($schedule->modified_by))
 		{
-			$userMapper = new DataMapper('#__users');
-
-			$modifier = $userMapper->findOne(['id' => $schedule->modified_by]);
-
-			echo $modifier->name;
+			echo JUser::getInstance($schedule->modified_by)->name;
 		}
-
-		echo $modified_by->input;
-		*/?>
+		?>
 	</td>
 </tr>

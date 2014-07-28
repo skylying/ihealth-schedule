@@ -235,6 +235,7 @@ class ScheduleViewDrugdetailHtml extends EditView
 			'`schedule`.`id` AS id',
 			'`schedule`.`type` AS type',
 			'`schedule`.`modified_by` AS modified_by',
+			'`schedule`.`params` AS params',
 			'`task`.`sender` AS sender',
 			'`schedule`.`institute_id` AS institute_id',
 			'`task`.`id` AS task_id',

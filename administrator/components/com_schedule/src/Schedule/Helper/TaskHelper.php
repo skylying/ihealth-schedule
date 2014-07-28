@@ -33,4 +33,27 @@ class TaskHelper
 
 		return $db->setQuery($query)->loadObjectList();
 	}
+
+	/**
+	 * getScheduleExtraExpenses
+	 *
+	 * @param   int $taskId
+	 * @param   int $instituteId
+	 *
+	 * @return  mixed
+	 */
+	public static function getScheduleExtraExpenses($taskId, $instituteId)
+	{
+		$taskId = (int) $taskId;
+		$instituteId = (int) $instituteId;
+		$db = \JFactory::getDbo();
+		$query = $db->getQuery(true);
+
+		$query->select('id, price')
+			->from(Table::SCHEDULES)
+			->where('task_id = ' . $taskId)
+			->where('institute_id = ' . $instituteId);
+
+		return $db->setQuery($query)->loadObjectList();
+	}
 }
