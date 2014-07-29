@@ -53,6 +53,7 @@
         area_title: { Field: area_title, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 區域名稱, From: [area_title] }
         hospital: { Field: hospital, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: '開立處方醫院 id', From: [hospital] }
         hospital_title: { Field: hospital_title, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 開立處方醫院名稱, From: [hospital_title] }
+        need_split: { Field: need_split, Type: tinyint(1), 'Null': NO, Default: null, Extra: '', Comment: '是否需分包 (1:是, 0:否)', From: [need_split] }
         tel_office: { Field: tel_office, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: '宅配電話(O)', From: [tel_office] }
         tel_home: { Field: tel_home, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: '宅配電話(H)', From: [tel_home] }
         mobile: { Field: mobile, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 手機, From: [mobile] }
@@ -215,7 +216,6 @@
         empty_date_1st: { Field: empty_date_1st, Type: date, 'Null': YES, Default: null, Extra: '', Comment: 第一次吃完藥日, From: [empty_date_1st] }
         empty_date_2nd: { Field: empty_date_2nd, Type: date, 'Null': YES, Default: null, Extra: '', Comment: 第二次吃完藥日, From: [empty_date_2nd] }
         note: { Field: note, Type: text, 'Null': YES, Default: null, Extra: '', Comment: 備註, From: [note] }
-        remind: { Field: remind, Type: 'set(''checkorigin'' , ''needsplit'' , ''origincollected'' )', 'Null': YES, Default: null, Extra: '', Comment: 'checkorigin : 需確認正本, needsplit : 藥品需分包, origincollected : 正本已回收', From: [remind] }
         created: { Field: created, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: 建立時間, From: [created] }
         created_by: { Field: created_by, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: '建立者 user id', From: [created_by] }
         modified: { Field: modified, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: 修改時間, From: [modified] }
@@ -293,6 +293,7 @@
         - '#__schedule_senders'
     columns:
         id: { Field: id, Type: 'int(11) unsigned', 'Null': NO, Default: null, Extra: auto_increment, Comment: 'Primary Key', From: [id] }
+        sender_id: { Field: sender_id, Type: int(11), 'Null': YES, Default: null, Extra: '', Comment: 外送藥師編號, From: [sender_id] }
         name: { Field: name, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 藥師姓名, From: [name] }
         note: { Field: note, Type: text, 'Null': NO, Default: null, Extra: '', Comment: '備註', From: [note] }
     index:
