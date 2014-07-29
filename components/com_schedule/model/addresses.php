@@ -20,6 +20,8 @@ defined('_JEXEC') or die;
  */
 class ScheduleModelAddresses extends \Windwalker\Model\ListModel
 {
+	use \Schedule\Model\Traits\ExtendedListModelTrait;
+
 	/**
 	 * Property filteerFields.
 	 *
@@ -31,17 +33,27 @@ class ScheduleModelAddresses extends \Windwalker\Model\ListModel
 	);
 
 	/**
+	 * Property filterMapping.
+	 *
+	 * @var  array
+	 */
+	protected $filterMapping = array(
+		'customer_id' => 'address.customer_id',
+		'city' => 'address.city',
+		'area' => 'address.area',
+		'previous' => 'address.previous'
+	);
+
+	/**
 	 * configureTables
 	 *
 	 * @return  void
 	 */
 	protected function configureTables()
 	{
-		$queryHelper = $this->getContainer()->get('model.addresses.helper.query', Container::FORCE_NEW);
-
 		$this->addTable('address', Table::ADDRESSES);
 
-		$this->filterFields = array_merge($this->filterFields, $queryHelper->getFilterFields());
+		$this->mergeFilterFields();
 	}
 
 	/**
@@ -56,8 +68,11 @@ class ScheduleModelAddresses extends \Windwalker\Model\ListModel
 	{
 		$input = $this->getContainer()->get('input');
 
-		// Set filter: customer_id
-		$_REQUEST['filter']['address.customer_id'] = $input->get('customer_id');
+		// Set filters
+		foreach ($this->filterMapping as $request => $field)
+		{
+			$_REQUEST['filter'][$field] = $input->get($request);
+		}
 
 		parent::populateState($ordering, $direction);
 	}

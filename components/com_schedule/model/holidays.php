@@ -20,13 +20,30 @@ defined('_JEXEC') or die;
  */
 class ScheduleModelHolidays extends \Windwalker\Model\ListModel
 {
+	use \Schedule\Model\Traits\ExtendedListModelTrait;
+
 	/**
 	 * Property filteerFields.
 	 *
 	 * @var  array
 	 */
-	protected $filteerFields = array(
-		'start_date', 'end_date'
+	protected $filterFields = array(
+		'start_date',
+		'end_date',
+	);
+
+	/**
+	 * Property filterMapping.
+	 *
+	 * @var  array
+	 */
+	protected $filterMapping = array(
+		'year' => 'holiday.year',
+		'month' => 'holiday.month',
+		'day' => 'holiday.day',
+		'weekday' => 'holiday.weekday',
+		'date' => 'holiday.date',
+		'state' => 'holiday.state',
 	);
 
 	/**
@@ -36,11 +53,9 @@ class ScheduleModelHolidays extends \Windwalker\Model\ListModel
 	 */
 	protected function configureTables()
 	{
-		$queryHelper = $this->getContainer()->get('model.holidays.helper.query', Container::FORCE_NEW);
+		$this->addTable('holiday', Table::HOLIDAYS);
 
-		$queryHelper->addTable('holiday', Table::HOLIDAYS);
-
-		$this->filterFields = array_merge($this->filterFields, $queryHelper->getFilterFields());
+		$this->mergeFilterFields();
 	}
 
 	/**
@@ -53,11 +68,17 @@ class ScheduleModelHolidays extends \Windwalker\Model\ListModel
 	 */
 	protected function populateState($ordering = null, $direction = null)
 	{
-		parent::populateState($ordering, $direction);
-
 		$container = $this->getContainer();
 
 		$input = $container->get('input');
+
+		// Set filters
+		foreach ($this->filterMapping as $request => $field)
+		{
+			$_REQUEST['filter'][$field] = $input->get($request);
+		}
+
+		parent::populateState($ordering, $direction);
 
 		// Prepare Start and End
 		$start = $input->get('start');
@@ -87,11 +108,9 @@ class ScheduleModelHolidays extends \Windwalker\Model\ListModel
 	 */
 	protected function postGetQuery(\JDatabaseQuery $query)
 	{
-		$queryHelper = $this->container->get('model.' . $this->getName() . '.helper.query');
-
 		// Reset select to avoid redundant columns
 		$query->clear('select')
-			->select($queryHelper->getSelectFields(QueryHelper::COLS_WITH_FIRST));
+			->select($this->getSelectFields(QueryHelper::COLS_WITH_FIRST));
 	}
 
 	/**

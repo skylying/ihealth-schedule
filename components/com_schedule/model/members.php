@@ -19,6 +19,15 @@ defined('_JEXEC') or die;
  */
 class ScheduleModelMembers extends \Windwalker\Model\ListModel
 {
+	use \Schedule\Model\Traits\ExtendedListModelTrait;
+
+	/**
+	 * Property items.
+	 *
+	 * @var  \stdClass
+	 */
+	protected $items = null;
+
 	/**
 	 * configureTables
 	 *
@@ -27,6 +36,8 @@ class ScheduleModelMembers extends \Windwalker\Model\ListModel
 	protected function configureTables()
 	{
 		$this->addTable('member', Table::MEMBERS);
+
+		$this->mergeFilterFields();
 	}
 
 	/**
@@ -38,10 +49,9 @@ class ScheduleModelMembers extends \Windwalker\Model\ListModel
 	 */
 	protected function postGetQuery(\JDatabaseQuery $query)
 	{
-		$queryHelper = $this->container->get('model.' . $this->getName() . '.helper.query');
-
 		// Reset select to avoid redundant columns
 		$query->clear('select')
-			->select($queryHelper->getSelectFields(QueryHelper::COLS_WITH_FIRST));
+			->select($this->getSelectFields(QueryHelper::COLS_WITH_FIRST))
+			->group('member.id');
 	}
 }

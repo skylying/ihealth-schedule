@@ -21,13 +21,25 @@ defined('_JEXEC') or die;
 class ScheduleModelPrescriptions extends \Windwalker\Model\ListModel
 {
 	/**
-	 * Property filterFields.
+	 * Property filterMapping.
 	 *
 	 * @var  array
 	 */
-	protected $filterFields = array(
-		'customer_id',
+	protected $filterMapping = array(
+		'customer_id' => 'prescription.customer_id',
+		'member_id' => 'map.member_id',
+		'hospital_id' => 'prescription.hospital_id',
+		'id_number' => 'prescription.id_number',
+		'method' => 'prescription.method',
+		'times' => 'prescription.times',
 	);
+
+	/**
+	 * Property items.
+	 *
+	 * @var \stdClass
+	 */
+	protected $items = null;
 
 	/**
 	 * configureTables
@@ -38,7 +50,8 @@ class ScheduleModelPrescriptions extends \Windwalker\Model\ListModel
 	{
 		$queryHelper = $this->getContainer()->get('model.prescriptions.helper.query', Container::FORCE_NEW);
 
-		$this->addTable('prescription', Table::PRESCRIPTIONS);
+		$this->addTable('prescription', Table::PRESCRIPTIONS)
+			->addTable('map', Table::CUSTOMER_MEMBER_MAPS, 'prescription.customer_id = map.customer_id');
 
 		$this->filterFields = array_merge($this->filterFields, $queryHelper->getFilterFields());
 	}
@@ -52,24 +65,25 @@ class ScheduleModelPrescriptions extends \Windwalker\Model\ListModel
 	 */
 	protected function postGetQuery(\JDatabaseQuery $query)
 	{
-		$prescriptionsApiFields = array(
-			'`id`',
-			'`hospital_id`',
-			'`id_number`',
-			'`birth_date`',
-			'`see_dr_date`',
-			'`period`',
-			'`times`',
-			'`deliver_nths`',
-			'`method`',
-			'`empty_date_1st`',
-			'`empty_date_2nd`',
-			'`note`',
+		$selects = array(
+			'prescription.id',
+			'prescription.hospital_id',
+			'prescription.id_number',
+			'prescription.birth_date',
+			'prescription.see_dr_date',
+			'prescription.period',
+			'prescription.times',
+			'prescription.deliver_nths',
+			'prescription.method',
+			'prescription.empty_date_1st',
+			'prescription.empty_date_2nd',
+			'prescription.note',
+			'map.member_id'
 		);
 
 		// Reset select and replace actual fields we need
 		$query->clear('select')
-			->select($prescriptionsApiFields);
+			->select(array_map(array($this->db, 'qn'), $selects));
 	}
 
 	/**
@@ -103,23 +117,23 @@ class ScheduleModelPrescriptions extends \Windwalker\Model\ListModel
 		$db = \JFactory::getDbo();
 		$query = $db->getQuery(true);
 
-		$scheduleApiFields = array(
-			'`id`',
-			'`city`',
-			'`city_title`',
-			'`area`',
-			'`area_title`',
-			'`address`',
-			'`date`',
-			'`deliver_nth`',
-			'`drug_empty_date`',
-			'`session`',
-			'`status`',
-			'`cancel`',
-			'`cancel_note`',
+		$selects = array(
+			'id',
+			'city',
+			'city_title',
+			'area',
+			'area_title',
+			'address',
+			'date',
+			'deliver_nth',
+			'drug_empty_date',
+			'session',
+			'status',
+			'cancel',
+			'cancel_note',
 		);
 
-		$query->select($scheduleApiFields)
+		$query->select(array_map(array($db, 'qn'), $selects))
 			->from(Table::SCHEDULES . ' AS schedule')
 			->where('`schedule`.`rx_id` = ' . $rxId);
 
@@ -159,8 +173,11 @@ class ScheduleModelPrescriptions extends \Windwalker\Model\ListModel
 	{
 		$input = $this->getContainer()->get('input');
 
-		// Set filter: customer_id
-		$_REQUEST['filter']['prescription.customer_id'] = $input->get('customer_id');
+		// Set filters
+		foreach ($this->filterMapping as $request => $field)
+		{
+			$_REQUEST['filter'][$field] = $input->get($request);
+		}
 
 		parent::populateState($ordering, $direction);
 	}

@@ -19,6 +19,8 @@ defined('_JEXEC') or die;
  */
 class ScheduleModelHospitals extends \Windwalker\Model\ListModel
 {
+	use \Schedule\Model\Traits\ExtendedListModelTrait;
+
 	/**
 	 * configureTables
 	 *
@@ -38,11 +40,9 @@ class ScheduleModelHospitals extends \Windwalker\Model\ListModel
 	 */
 	protected function postGetQuery(\JDatabaseQuery $query)
 	{
-		$queryHelper = $this->container->get('model.' . $this->getName() . '.helper.query');
-
 		// Reset select to avoid redundant columns
 		$query->clear('select')
-			->select($queryHelper->getSelectFields(QueryHelper::COLS_WITH_FIRST));
+			->select($this->getSelectFields(QueryHelper::COLS_WITH_FIRST));
 	}
 
 	/**
