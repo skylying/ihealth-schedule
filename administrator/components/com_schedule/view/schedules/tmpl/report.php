@@ -17,6 +17,24 @@ JHtmlBehavior::multiselect('adminForm');
 $tmpl = JUri::getInstance()->getVar('tmpl');
 $filterFormLayout = new FileLayout('schedule.schedules.report_form');
 ?>
+
+<script>
+	/**
+	 * Trigger auto select table
+	 *
+	 * @param containerid
+	 */
+	function selectText(containerid)
+	{
+		if (window.getSelection)
+		{
+			var range = document.createRange();
+			range.selectNode(document.getElementById(containerid));
+			window.getSelection().addRange(range);
+		}
+	}
+</script>
+
 <div id="schedule" class="windwalker schedule edit-form row-fluid" >
 <?php if ($tmpl != 'component'): ?>
 	<div style="width:90%; text-align:right;">
@@ -38,12 +56,22 @@ $filterFormLayout = new FileLayout('schedule.schedules.report_form');
 
 	<!-- LIST TABLE -->
 
-	<div style="width: 90%; text-align: right; padding-bottom: 20px;">
-		<a href="<?php echo JURI::getInstance(); ?>&tmpl=component" type="button" class="btn btn-success" target="_blank">
-			<span class="glyphicon glyphicon-print"></span>
-			列印
-		</a>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-3 col-md-offset-1">
+				<button class="btn btn-info" type="button" onclick="selectText('schedulereportList');">
+					全選整份報表
+				</button>
+			</div>
+			<div class="col-md-3 col-md-offset-5">
+				<a href="<?php echo JURI::getInstance(); ?>&tmpl=component" type="button" class="btn btn-success" target="_blank">
+					<span class="glyphicon glyphicon-print"></span>
+					列印
+				</a>
+			</div>
+		</div>
 	</div>
+
 <?php else: ?>
 	<script>
 		print();
