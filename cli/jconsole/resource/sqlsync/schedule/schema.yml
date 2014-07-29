@@ -293,7 +293,7 @@
         - '#__schedule_senders'
     columns:
         id: { Field: id, Type: 'int(11) unsigned', 'Null': NO, Default: null, Extra: auto_increment, Comment: 'Primary Key', From: [id] }
-        sender_id: { Field: sender_id, Type: int(11), 'Null': YES, Default: null, Extra: '', Comment: 外送藥師編號, From: [sender_id] }
+        user_id: { Field: user_id, Type: int(11), 'Null': YES, Default: null, Extra: '', Comment: 外送藥師編號, From: [user_id] }
         name: { Field: name, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 藥師姓名, From: [name] }
         note: { Field: note, Type: text, 'Null': NO, Default: null, Extra: '', Comment: '備註', From: [note] }
     index:
