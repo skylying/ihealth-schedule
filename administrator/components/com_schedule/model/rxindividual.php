@@ -105,6 +105,13 @@ class ScheduleModelRxindividual extends AdminModel
 		// 客戶類型
 		$table->type = "individual";
 
+        $birthDate = $table->birth_date;
+
+        if (!preg_match('/^[12][0-9]{3}-[01][0-9]-[0-3][0-9]/', $birthDate))
+        {
+            throw new \Exception('無法儲存，請檢查您的生日輸入格式是否正確。');
+        }
+
 		parent::prepareTable($table);
 	}
 
