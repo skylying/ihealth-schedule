@@ -69,6 +69,10 @@ class ScheduleViewScheduleJson extends ApiView
 	{
 		$data = $this->getData();
 
-		$data['item'] = $this->get('Item');
+		$item = $this->get('Item');
+
+		$item->prescription = $this->get('Prescription', null, array($item->rx_id));
+
+		$data['item'] = $item;
 	}
 }
