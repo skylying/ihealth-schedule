@@ -8,8 +8,6 @@
 
 use Schedule\Controller\Api\ApiSaveController;
 use Schedule\Helper\Mapping\MemberCustomerHelper;
-use Schedule\Table\Table;
-use Windwalker\Joomla\DataMapper\DataMapper;
 
 /**
  * Class ScheduleControllerCustomerEditSave
@@ -62,18 +60,20 @@ class ScheduleControllerCustomerEditSave extends ApiSaveController
 			$validData['id'] = $model->getState()->get('customer.id');
 		}
 
-		$mIds = (array) $this->data['member_id'];
-
 		/* We do not update members now
+		$mIds = (array) $this->data['member_id'];
 
 		$members = MemberCustomerHelper::loadMembers($validData['id']);
 		$memberIds = JArrayHelper::getColumn($members, 'id');
 
 		$memberIds = array_merge($memberIds, $mIds);
-		*/
 
 		// Update customer-member mapping
 		MemberCustomerHelper::updateMembers($validData['id'], $mIds);
+		*/
+
+		// Create member-customer mapping
+		MemberCustomerHelper::createRelation((int) $this->data['member_id'], (int) $validData['id']);
 
 		// Get address model
 		$addressModel = $this->getModel("Address");

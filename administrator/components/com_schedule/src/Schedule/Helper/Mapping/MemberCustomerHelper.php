@@ -322,4 +322,63 @@ class MemberCustomerHelper
 
 		return true;
 	}
+
+	/**
+	 * createRelation
+	 *
+	 * @param int $memberId
+	 * @param int $customerId
+	 *
+	 * @throws  \Exception
+	 * @return  bool
+	 */
+	public static function createRelation($memberId, $customerId)
+	{
+		$db = \JFactory::getDbo();
+		$query = $db->getQuery(true);
+
+		$query->select('id')
+			->from(self::RELATION_TABLE)
+			->where('member_id = ' . $memberId)
+			->where('customer_id = ' . $customerId);
+
+		$id = (int) $db->setQuery($query)->loadColumn();
+
+		// Do nothing when relation is already exists
+		if ($id > 0)
+		{
+			return true;
+		}
+
+		$app = \JFactory::getApplication();
+
+		$query->clear()
+			->insert(static::RELATION_TABLE)
+			->columns(array('member_id', 'customer_id'))
+			->values($memberId . ', ' . $customerId);
+
+		$db->transactionStart(true);
+
+		try
+		{
+			$db->setQuery($query)->execute();
+		}
+		catch (\Exception $e)
+		{
+			$db->transactionRollback(true);
+
+			$app->enqueueMessage($e->getMessage());
+
+			if (JDEBUG)
+			{
+				throw $e;
+			}
+
+			return false;
+		}
+
+		$db->transactionCommit(true);
+
+		return true;
+	}
 }
