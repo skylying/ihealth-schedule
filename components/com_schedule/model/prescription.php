@@ -62,28 +62,6 @@ class ScheduleModelPrescription extends \Windwalker\Model\AdminModel
 	protected $viewList = 'prescriptions';
 
 	/**
-	 * Method to get a single record.
-	 *
-	 * @param   integer  $pk  The id of the primary key.
-	 *
-	 * @return  mixed    Object on success, false on failure.
-	 */
-	public function getItem($pk = null)
-	{
-		$item = parent::getItem($pk);
-
-		if (empty($item->id))
-		{
-			return $item;
-		}
-
-		$item->schedules = $this->getSchedules($item->id);
-		$item->drugs = $this->getDrugs($item->id);
-
-		return $item;
-	}
-
-	/**
 	 * getSchedules
 	 *
 	 * @param   int  $rxId  Prescription id
