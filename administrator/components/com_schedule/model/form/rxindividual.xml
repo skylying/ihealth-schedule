@@ -488,16 +488,10 @@
 		<!-- 存入 prescription 的備註 -->
 		<field name="note"
 			type="textarea"
-			label="備註"
-			description="備註"
+			label="處方箋備註"
+			description="跟著處方箋的備註欄位"
 			/>
 
-		<field name="remind"
-			type="text"
-			label="註記選項"
-			description="藥品需分包"
-			>
-		</field>
 	</fieldset>
 
 	<fieldset name="city">

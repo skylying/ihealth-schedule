@@ -8,7 +8,7 @@
 
 // No direct access
 defined('_JEXEC') or die;
-$remindList = $data->item->remindLists;
+$need_split = $data->item->need_split;
 $scheduleInfos = $data->item->scheduleInfos;
 $drugs = $data->item->drugs;
 ?>
@@ -138,13 +138,9 @@ function markPrinted()
 				<tr>
 					<td>可調劑次數</td>
 					<td><?php echo $data->item->times; ?>次</td>
-					<td>註記選項</td>
+					<td>是否分包</td>
 					<td>
-						<?php
-						foreach ($remindList as $remind):
-							echo JText::_('COM_SCHEDULE_RXINDIVIDUAL_PRINT_' . $remind) . '<br />';
-						endforeach;
-						?>
+						<?php echo JText::_('COM_SCHEDULE_RXINDIVIDUAL_PRINT_NEEDSPLIT_' . $data->item->need_split);?>
 					</td>
 				</tr>
 				<tr>

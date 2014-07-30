@@ -43,11 +43,11 @@ else
 }
 ?>
 <tr>
-	<td>
+	<td class="text-center">
 		<!-- 排程編號 -->
 		<?php echo $schedule->id; ?>
 	</td>
-	<td>
+	<td class="text-center">
 		<!-- 處方編號 -->
 		<?php echo $schedule->rx_id; ?>
 	</td>
@@ -77,7 +77,7 @@ else
 	switch ($schedule->type)
 	{
 		case "resident" :
-			echo "<td colspan='2' class='center'>-</td>";
+			echo "<td colspan='2' class='center'>--</td>";
 			break;
 
 		case "individual" :
@@ -89,6 +89,23 @@ else
 	<td>
 		<!-- 客戶 -->
 		<?php echo $schedule->customer_name; ?>
+	</td>
+	<td class="text-center">
+		<?php
+		if ($schedule->type == 'individual')
+		{
+			$trueConfig = ['class' => 'btn btn-primary', 'content' => 'Y'];
+			$falseConfig = ['class' => 'btn btn-danger', 'content' => 'N'];
+
+			$config = $schedule->need_split ? $trueConfig : $falseConfig;
+
+			echo '<span class="' . $config['class'] . '">' . $config['content'] . '</span>';
+		}
+		else
+		{
+			echo '--';
+		}
+		?>
 	</td>
 	<td class="big-checkbox-td text-center">
 		<!-- 缺 ID -->

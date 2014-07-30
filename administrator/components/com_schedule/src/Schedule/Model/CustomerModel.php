@@ -158,6 +158,9 @@ class CustomerModel extends AdminModel
 		$table->city_title = $tableCity->title;
 		$table->area_title = $tableArea->title;
 		$table->hospital_title = $tableHospital->title;
+
+		// Id_number to upper case
+		$table->id_number = strtoupper($table->id_number);
 	}
 
 	/**

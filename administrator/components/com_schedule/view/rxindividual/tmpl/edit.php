@@ -195,17 +195,6 @@ jQuery(document).ready(function ()
 	{
 		overflow: auto;
 	}
-
-	.remind
-	{
-		border-radius: 7px;
-		border: 1px solid hotpink;
-		padding: 8px;
-		font-size: 1.2em;
-		width: 67%;
-		text-align: center;
-		display: block;
-	}
 	#jform_note
 	{
 		width: 67%;
@@ -303,17 +292,8 @@ jQuery(document).ready(function ()
 				echo $field->getControlGroup();
 			}
 			?>
+
 			<?php echo $data->form->getControlGroup('note'); ?>
-			<div class="control-group">
-				<div class="control-label">
-					<?php echo $data->form->getLabel('remind'); ?>
-				</div>
-				<div class="controls">
-						<span class="remind">
-						<?php echo JText::_('COM_SCHEDULE_RXINDIVIDUAL_REMIND_' . $data->form->getValue('remind')); ?>
-						</span>
-				</div>
-			</div>
 
 		</div>
 		<div class="col-lg-7 col-md-7 col-sm-12">

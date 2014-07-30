@@ -177,7 +177,7 @@ class ScheduleViewSchedulesHtml extends GridView
 		{
 			$html = <<<HTML
 <a id="sorted-preview-button" href="#modal-sorted-preview" class="btn btn-small" data-toggle="modal">
-	<span class="icon-print"></span> 打包表
+	<span class="icon-list"></span> 打包表
 </a>
 HTML;
 			$bar = JToolbar::getInstance('toolbar');
@@ -249,7 +249,7 @@ HTML;
 			{
 				$dHtml = <<<HTML
 <a id="report-print-button" href="#modal-report-print" class="btn btn-small" data-toggle="modal">
-	<span class="icon-print"></span> 列印排程統計報表
+	<span class="icon-print"></span> 處方統計表
 </a>
 HTML;
 				$bar = JToolbar::getInstance('toolbar');
@@ -281,5 +281,23 @@ HTML;
 		};
 
 		return $buttonSet;
+	}
+
+	/**
+	 * setTitle
+	 *
+	 * @param null   $title
+	 * @param string $icons
+	 *
+	 * @return  void
+	 */
+	protected function setTitle($title = null, $icons = 'stack article')
+	{
+		if ('report' == $this->getLayout())
+		{
+			$title = '處方統計表';
+		}
+
+		parent::setTitle($title, $icons);
 	}
 }

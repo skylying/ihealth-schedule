@@ -84,7 +84,6 @@ $jsOption = [
 				備註：
 				<span id="note-from-js">
 					<?php echo $data->institute['note']; ?>
-					<?php echo $instituteForm->getField('note')->input; ?>
 				</span>
 			</div>
 		</div>
@@ -120,8 +119,7 @@ $jsOption = [
 				<th width="6%">處方箋外送次數</th>
 				<th width="6.57%">藥吃完日</th>
 				<th width="7.1%">處方箋取得方式</th>
-				<th width="9.82%">處方箋上傳</th>
-				<th width="9.91%">備註</th>
+				<th width="9.82%">備註</th>
 				<?php if (! $data->isEdit): ?>
 				<th width="8.33%">複製/刪除</th>
 				<?php endif; ?>

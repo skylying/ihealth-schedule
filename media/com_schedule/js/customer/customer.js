@@ -101,7 +101,7 @@
 					input = $(this).parent().find('input');
 
 				// Check empty phone number
-				if (typeof input.val() == 'undefined' || input.val() == '')
+				if (input.length > 0 && !input.val())
 				{
 					alert('不可將空白電話存成預設');
 
