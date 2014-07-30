@@ -30,6 +30,8 @@ $ice    = FieldHelper::resetGroup($form->getField('ice', null, $schedule->ice), 
 $price  = FieldHelper::resetGroup($form->getField('price', null, (int) $schedule->price), "schedules.{$schedule->id}");
 $modified_by = FieldHelper::resetGroup($form->getField('modified_by', null, 'hello'), "schedules.{$schedule->id}");
 
+$floor = $schedule->floor ? $schedule->floor : '';
+
 // Used for compare if sorted field is changed
 if (!isset($sortedList) || empty($sortedList))
 {
@@ -64,7 +66,7 @@ else
 	switch ($schedule->type)
 	{
 		case "resident" :
-			echo "<td class='alert alert-info'>" . $schedule->institute_title . "</td>";
+			echo "<td class='alert alert-info'>" . $schedule->institute_title . $floor . "</td>";
 		break;
 
 		case "individual" :
