@@ -34,6 +34,11 @@ $asset->internalCSS('
 div.modal.hide
 {
 	overflow: visible;
+	top:300px;
+}
+div.modal.hide.in
+{
+	top:0px !important;
 }
 ');
 
