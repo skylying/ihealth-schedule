@@ -8,7 +8,7 @@
 
 // No direct access
 defined('_JEXEC') or die;
-$needsplit = $data->item->needsplit;
+$need_split = $data->item->need_split;
 $scheduleInfos = $data->item->scheduleInfos;
 $drugs = $data->item->drugs;
 ?>
@@ -140,7 +140,7 @@ function markPrinted()
 					<td><?php echo $data->item->times; ?>次</td>
 					<td>是否分包</td>
 					<td>
-						<?php echo JText::_('COM_SCHEDULE_RXINDIVIDUAL_PRINT_NEEDSPLIT_' . $data->item->needsplit);?>
+						<?php echo JText::_('COM_SCHEDULE_RXINDIVIDUAL_PRINT_NEEDSPLIT_' . $data->item->need_split);?>
 					</td>
 				</tr>
 				<tr>

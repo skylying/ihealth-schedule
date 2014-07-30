@@ -97,7 +97,7 @@ else
 			$trueConfig = ['class' => 'btn btn-primary', 'content' => 'Y'];
 			$falseConfig = ['class' => 'btn btn-danger', 'content' => 'N'];
 
-			$config = $schedule->needsplit ? $trueConfig : $falseConfig;
+			$config = $schedule->need_split ? $trueConfig : $falseConfig;
 
 			echo '<span class="' . $config['class'] . '">' . $config['content'] . '</span>';
 		}

@@ -90,7 +90,7 @@ class RxDataHelper
 		$db    = \JFactory::getDbo();
 		$query = $db->getQuery(true);
 
-		$query->select('customer.note, customer.needsplit')
+		$query->select('customer.note, customer.need_split')
 			->from(Table::CUSTOMERS . ' AS customer')
 			->where('customer.id=' . $customerID);
 

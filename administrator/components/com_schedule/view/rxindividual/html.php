@@ -182,7 +182,7 @@ HTML;
 		$data->item->age           = $age;
 		$data->item->drugs         = $drugs;
 		$data->item->count         = count($drugs);
-		$data->item->needsplit     = $customerInfo->needsplit;
+		$data->item->need_split    = $customerInfo->need_split;
 		$data->print               = $isSaveAndPrint;
 	}
 }

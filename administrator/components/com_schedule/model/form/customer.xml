@@ -95,7 +95,7 @@
 			class="input-large"
 			/>
 
-		<field name="needsplit"
+		<field name="need_split"
 			type="radio"
 			class="btn-group"
 			label="藥品分包"
