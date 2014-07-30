@@ -5,7 +5,7 @@
 			type="checkbox"
 			class="big-checkbox"
 			label=""
-			description="是否有冰品"
+			description=""
 			>
 			<option value="1">是</option>
 		</field>
@@ -14,7 +14,7 @@
 			type="checkbox"
 			class="big-checkbox"
 			label=""
-			description="是否完成分藥"
+			description=""
 			>
 			<option value="1">是</option>
 		</field>
@@ -23,7 +23,7 @@
 			type="checkbox"
 			class="big-checkbox"
 			label=""
-			description="是否缺ID"
+			description=""
 			>
 			<option value="1">是</option>
 		</field>
