@@ -126,7 +126,7 @@ class ScheduleViewTaskHtml extends EditView
 		{
 			$data = $this->getData();
 
-			$schedules = (new DataMapper(Table::SCHEDULES))->find(['task_id' => $data->item->id]);
+			$schedules = (new DataMapper(Table::SCHEDULES))->find(['task_id' => $data->item->id, 'status' => 'scheduled']);
 
 			$data->item->schedules = $this->getSummarizeScheduleData(iterator_to_array($schedules));
 
