@@ -75,17 +75,36 @@ class ScheduleTableCustomer extends Table
 	 */
 	public function check()
 	{
-		if ($this->id_number && CustomerHelper::verifyIdNumber($this->id_number))
+		// No id number, abort.
+		if (!trim($this->id_number))
 		{
-			// Check ID Number
-			$item = (new DataMapper(\Schedule\Table\Table::CUSTOMERS))->findOne(['id_number' => $this->id_number]);
+			throw new \RuntimeException('請輸入身分證字號');
+		}
 
-			if (!$item->isNull() && $item->id != $this->id)
+		// Has id number, no stars
+		elseif (strpos($this->id_number, '*') === false)
+		{
+			// Is correct id number
+			if (CustomerHelper::verifyIdNumber($this->id_number))
 			{
-				throw new \RuntimeException('此身分證字號已有人使用');
+				// Check is this ID Number exists
+				$item = (new DataMapper(\Schedule\Table\Table::CUSTOMERS))->findOne(['id_number' => $this->id_number]);
+
+				// If id number found but not self, throw error
+				if (!$item->isNull() && $item->id != $this->id)
+				{
+					throw new \RuntimeException('此身分證字號已有人使用');
+				}
+			}
+
+			// Not correct id number
+			else
+			{
+				throw new \RuntimeException('請輸入正確的身分證字號');
 			}
 		}
 
+		// Has id number, and has stars
 		return true;
 	}
 
