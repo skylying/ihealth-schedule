@@ -282,6 +282,9 @@ class ScheduleControllerRxresidentEditSave extends SaveController
 			$task = $this->createTaskData($sendDate, $instituteTable);
 		}
 
+		// The sender info is being done inside the prepareTable scheduleModel
+		$this->scheduleState->set('sender_id', $instituteTable->sender_id);
+
 		$schedule = $this->getScheduleData($rx, $nth, $task['id'], $sendDate);
 
 		$this->scheduleState->set('schedule.id', 0);
