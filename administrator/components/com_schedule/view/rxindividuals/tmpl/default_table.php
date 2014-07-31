@@ -36,72 +36,72 @@ $date      = $container->get('date');
 <thead>
 <tr>
 	<!--CHECKBOX-->
-	<th class="center">
+	<th width="2%" class="center">
 		<?php echo JHtml::_('grid.checkAll'); ?>
 	</th>
 
 	<!-- EDIT -->
-	<th width="3%" class="center nowrap">
+	<th width="4%" class="center nowrap">
 		編輯
 	</th>
 
 	<!-- 編號 -->
-	<th class="center">
+	<th width="4%" class="center">
 		<?php echo $grid->sortTitle('編號', 'rxindividual.id'); ?>
 	</th>
 
 	<!-- 散客姓名 -->
-	<th>
+	<th width="8%">
 		<?php echo $grid->sortTitle('散客姓名', 'rxindividual.customer_name'); ?>
 	</th>
 
 	<!-- 所屬會員 -->
-	<th>
+	<th width="9%">
 		<?php echo $grid->sortTitle('所屬會員', 'rxindividual.member_name'); ?>
 	</th>
 
 	<!-- 上傳方式 -->
-	<th>
+	<th  width="9%">
 		<?php echo $grid->sortTitle('上傳方式', 'rxindividual.method'); ?>
 	</th>
 
 	<!-- 處方箋狀態 -->
-	<th class="center">
+	<th width="9%" class="center">
 		<?php echo $grid->sortTitle('處方箋狀態', 'rxindividual.received'); ?>
 	</th>
 
 	<!-- 電聯紀錄 -->
-	<th class="center">
+	<th width="9%" class="center">
 		<?php echo $grid->sortTitle('電聯紀錄', 'rxindividual.called'); ?>
 	</th>
 
 	<!-- 就醫日期 -->
-	<th class="center">
+	<th width="10%" class="center">
 		<?php echo $grid->sortTitle('就醫日期', 'rxindividual.see_dr_date'); ?>
 	</th>
 
 	<!-- 可調劑次數 -->
-	<th class="center">
+	<th width="10%" class="center">
 		<?php echo $grid->sortTitle('可調劑次數', 'rxindividual.times'); ?>
 	</th>
 
 	<!-- 宅配次數 -->
-	<th>
+	<th width="15%">
 		<?php echo $grid->sortTitle('宅配次數', 'rxindividual.deliver_nths'); ?>
 	</th>
 
 	<!-- 新增人 -->
-	<th>
+	<th width="8%">
 		<?php echo $grid->sortTitle('新增人', 'rxindividual.created_by'); ?>
 	</th>
 
 	<!-- 最後修改人 -->
-	<th>
+	<th width="8%">
 		<?php echo $grid->sortTitle('最後修改人', 'rxindividual.modified_by'); ?>
 	</th>
 
 	<!-- 已列印 -->
-	<th class="center">
+	<th width="5%" class="center">
 		<?php echo $grid->sortTitle('已列印', 'rxindividual.printed'); ?>
 	</th>
 </tr>

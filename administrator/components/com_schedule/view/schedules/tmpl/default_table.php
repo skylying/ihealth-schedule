@@ -58,42 +58,42 @@ $date      = $container->get('date');
 	</th>
 
 	<!-- schedule.institute_id | schedule.customer_id -->
-	<th>
+	<th width="30%">
 		<?php echo $grid->sortTitle('所屬機構/所屬會員', 'schedule.type, schedule.institute_id, schedule.customer_id'); ?>
 	</th>
 
 	<!-- schedule.city -->
-	<th class="center">
+	<th width="12%" class="center">
 		<?php echo $grid->sortTitle('縣市', 'schedule.city'); ?>
 	</th>
 
 	<!-- schedule.area -->
-	<th class="center">
+	<th width="10%" class="center">
 		<?php echo $grid->sortTitle('區域', 'schedule.area'); ?>
 	</th>
 
 	<!-- schedule.customer_id -->
-	<th class="center">
+	<th width="10%" class="center">
 		<?php echo $grid->sortTitle('客戶', 'schedule.customer_id'); ?>
 	</th>
 
 	<!-- schedule.date -->
-	<th class="center">
+	<th width="10%" class="center">
 		<?php echo $grid->sortTitle('預計外送日', 'schedule.date'); ?>
 	</th>
 
 	<!-- route.sender_id -->
-	<th class="center">
+	<th width="10%" class="center">
 		<?php echo $grid->sortTitle('外送藥師', 'route.sender_id'); ?>
 	</th>
 
 	<!-- schedule.sorted -->
-	<th class="center">
+	<th width="10%" class="center">
 		<?php echo $grid->sortTitle('分藥', 'schedule.sorted'); ?>
 	</th>
 
 	<!-- schedule.status -->
-	<th>
+	<th width="10%" class="center">
 		<?php echo $grid->sortTitle('狀態', 'schedule.status'); ?>
 	</th>
 </tr>
