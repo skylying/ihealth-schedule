@@ -47,7 +47,7 @@
 			readonly="true"
 			/>
 
-		<field name="type"
+		<field name="institute_type"
 			type="radio"
 			default=""
 			class=""
@@ -68,6 +68,9 @@
 			default=""
 			label="備註說明"
 			description="備註說明"
+		<field name="type"
+			type="hidden"
+			default="scheduled"
 			/>
 
 		<field id="institute_date"

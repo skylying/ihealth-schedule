@@ -37,7 +37,7 @@
 			class="input-xxlarge"
 			/>
 
-		<field name="type"
+		<field name="individual_type"
 			type="radio"
 			default=""
 			class=""
@@ -54,6 +54,9 @@
 			default=""
 			label="備註說明"
 			description="備註說明"
+		<field name="type"
+			type="hidden"
+			default="scheduled"
 			/>
 
 		<field id="individual_date"
