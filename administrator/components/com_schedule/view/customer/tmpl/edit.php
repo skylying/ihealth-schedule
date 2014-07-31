@@ -28,18 +28,27 @@ $item      = $data->item;
 <script type="text/javascript">
 	Joomla.submitbutton = function(task)
 	{
-		// Remove unnecessary form
-		window.CustomerJs.removeForm();
-
-		// Update hidden json inputs (for phone numbers)
-		window.CustomerJs.updatePhoneJson();
-
-		// Update hidden json inputs (for addresses)
-		window.CustomerJs.updateAddressJson();
-
-		if (task == 'customer.edit.cancel' || document.formvalidator.isValid(document.id('adminForm')))
+		if (CustomerJs.validateBirthday() == false)
 		{
-			Joomla.submitform(task, document.getElementById('adminForm'));
+			Joomla.renderMessages( [['請確認生日格式是否符合8位數字或(YYYY-MM-DD)格式。']] );
+
+			return false;
+		}
+		else
+		{
+			// Remove unnecessary form
+			window.CustomerJs.removeForm();
+
+			// Update hidden json inputs (for phone numbers)
+			window.CustomerJs.updatePhoneJson();
+
+			// Update hidden json inputs (for addresses)
+			window.CustomerJs.updateAddressJson();
+
+			if (task == 'customer.edit.cancel' || document.formvalidator.isValid(document.id('adminForm')))
+			{
+				Joomla.submitform(task, document.getElementById('adminForm'));
+			}
 		}
 	}
 </script>

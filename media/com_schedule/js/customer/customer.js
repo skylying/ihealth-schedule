@@ -220,6 +220,7 @@
 			{
 				self.defaultSwitch = false;
 			});
+
 		},
 
 		/**
@@ -349,6 +350,22 @@
 			if (defaultMarker.length > 0)
 			{
 				$(defaultMarker).addClass('default').attr('title', 'true');
+			}
+		},
+
+		/**
+		 * Validate birthday
+		 */
+		validateBirthday: function()
+		{
+
+			var birthday = this.birthday.val();
+			var pattern = /^[12][0-9]{3}-[01][0-9]-[0-3][0-9]/;
+			var validatedBirthday = birthday.match(pattern);
+
+			if (validatedBirthday == null)
+			{
+				return false;
 			}
 		}
 	};
