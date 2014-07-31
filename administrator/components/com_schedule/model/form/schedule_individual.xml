@@ -49,11 +49,6 @@
 			<option value="other">其他</option>
 		</field>
 
-		<field name="note"
-			type="textarea"
-			default=""
-			label="備註說明"
-			description="備註說明"
 		<field name="type"
 			type="hidden"
 			default="scheduled"
@@ -67,6 +62,13 @@
 			label="拜訪日期"
 			description="拜訪日期"
 			onchange="ScheduleEdit.updateScheduleLink(this, 'individual');"
+			/>
+
+		<field name="note"
+			type="textarea"
+			default=""
+			label="備註說明"
+			description="備註說明"
 			/>
 
 		<field name="task_id"
