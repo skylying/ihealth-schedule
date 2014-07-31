@@ -6,7 +6,10 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
+use Windwalker\Joomla\DataMapper\DataMapper;
 use Windwalker\Table\Table;
+use Schedule\Table\Table as TableAlias;
+use Windwalker\Data\Data;
 
 // No direct access
 defined('_JEXEC') or die;
@@ -105,6 +108,41 @@ class ScheduleTableSchedule extends Table
 	 */
 	public function delete($pk = null)
 	{
+		$isDeleted = parent::delete($pk);
+
+		if ($isDeleted)
+		{
+			$rx_id = $this->rx_id;
+			$nthToDelete = $this->deliver_nth;
+			$prescriptionMapper = new DataMapper(TableAlias::PRESCRIPTIONS);
+
+			// We only need 1 column "deliver_nths", so we use query
+			$db = JFactory::getDbo();
+
+			$query = $db->getQuery(true);
+			$query->select('`deliver_nths`')
+				->from('#__schedule_prescriptions')
+				->where('`id` = ' . $rx_id);
+
+			$oldNth = $db->setQuery($query)->loadResult();
+
+			$oldNthArray = explode(',', $oldNth);
+			$nthToDeleteArray = array($nthToDelete);
+
+			$resultNthArray = array_diff($oldNthArray, $nthToDeleteArray);
+
+			// If we delete the last schedule of prescription, then we directly delete the prescription
+			if (count($resultNthArray) == 0)
+			{
+				$prescriptionMapper->delete(['id' => $rx_id]);
+			}
+			else
+			{
+				$resultNth = implode(',', $resultNthArray);
+				$prescriptionMapper->updateOne(new Data(array('id' => $rx_id, 'deliver_nths' => $resultNth)));
+			}
+		}
+
 		return parent::delete($pk);
 	}
 }
