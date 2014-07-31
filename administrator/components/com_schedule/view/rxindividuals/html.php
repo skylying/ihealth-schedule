@@ -119,6 +119,12 @@ class ScheduleViewRxindividualsHtml extends GridView
 		// Get default button set.
 		$buttonSet = parent::configureToolbar($buttonSet, $canDo);
 
+		// Override delete handler
+		$buttonSet['delete']['handler'] = function()
+		{
+			JToolbarHelper::deleteList('此筆處方所屬排程皆會同時被刪除，確定要刪除? ', 'rxindividuals.state.delete', '刪除');
+		};
+
 		$buttonSet['duplicate']['access'] = false;
 		$buttonSet['edit']['access']      = false;
 		$buttonSet['publish']['access']   = false;
