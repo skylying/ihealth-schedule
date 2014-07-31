@@ -120,11 +120,8 @@ class ScheduleViewDrugpricesHtml extends GridView
 		$buttonSet = parent::configureToolbar($buttonSet, $canDo);
 
 		// In debug mode, we remove trash button but use delete button instead.
-		if (JDEBUG)
-		{
-			$buttonSet['trash']['access'] = false;
-			$buttonSet['delete']['access'] = true;
-		}
+		$buttonSet['trash']['access'] = false;
+		$buttonSet['delete']['access'] = true;
 
 		$buttonSet['publish']['access'] = false;
 		$buttonSet['edit']['access'] = false;
