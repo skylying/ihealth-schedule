@@ -56,7 +56,7 @@
 			required="true"
 			>
 			<option value="speech">演講</option>
-			<option value="discuss">討論</option>
+			<option value="discuss">個案討論</option>
 			<option value="collect">收單</option>
 			<option value="visit">新簽約後拜訪</option>
 			<option value="other">其他</option>
