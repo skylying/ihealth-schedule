@@ -56,7 +56,7 @@
 
 		<field id="individual_date"
 			name="date"
-			type="calendar"
+			type="datetimepicker"
 			default=""
 			format="%Y-%m-%d"
 			label="拜訪日期"

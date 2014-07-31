@@ -70,9 +70,7 @@
 
 		<field id="institute_date"
 			name="date"
-			type="calendar"
-			default=""
-			format="%Y-%m-%d"
+			type="datetimepicker"
 			label="拜訪日期"
 			description="拜訪日期"
 			onchange="ScheduleEdit.updateScheduleLink(this, 'institute');"
