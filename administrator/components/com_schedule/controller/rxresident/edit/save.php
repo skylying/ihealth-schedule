@@ -418,6 +418,7 @@ class ScheduleControllerRxresidentEditSave extends SaveController
 			'drug_empty_date' => $drugEmptyDate->toSql(),
 			'session' => 'daytime',
 			'status' => 'scheduled',
+			'sorted' => 0,
 		);
 	}
 }
