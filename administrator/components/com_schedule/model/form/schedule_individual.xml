@@ -28,6 +28,7 @@
 			type="list"
 			label="會員名稱"
 			description="會員名稱"
+			required="true"
 			/>
 
 		<field
@@ -35,6 +36,7 @@
 			type="list"
 			label="地址"
 			class="input-xxlarge"
+			required="true"
 			/>
 
 		<field name="individual_type"
