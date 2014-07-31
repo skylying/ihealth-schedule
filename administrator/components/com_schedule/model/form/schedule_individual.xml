@@ -13,7 +13,8 @@
 		</field>
 
 		<field name="customer_id"
-			type="customer_list"
+			type="sql"
+			query="SELECT id, name FROM #__schedule_customers WHERE type = 'individual'"
 			default=""
 			key_field="id"
 			value_field="name"
