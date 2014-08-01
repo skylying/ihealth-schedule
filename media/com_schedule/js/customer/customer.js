@@ -250,16 +250,6 @@
 				age--;
 			}
 
-			// BJ4
-			if (today.getDate() == birthday.getDate())
-			{
-				var happyBirthday = ' ' +
-					'<button type="button" class="btn btn-default" style="background: #ff78bb; color: white">' +
-					'<span class="glyphicon glyphicon-music"></span> 生日快樂</button>';
-
-				self.birthday.after(happyBirthday);
-			}
-
 			// Update age field
 			self.age.val(age);
 		},
@@ -349,6 +339,25 @@
 			if (defaultMarker.length > 0)
 			{
 				$(defaultMarker).addClass('default').attr('title', 'true');
+			}
+		},
+
+		/**
+		 * Validate birthday
+		 */
+		validateBirthday: function()
+		{
+			var birthday = this.birthday.val();
+			var pattern = /^[12][0-9]{3}-[01][0-9]-[0-3][0-9]/;
+			var validatedBirthday = birthday.match(pattern);
+
+			if (validatedBirthday === null)
+			{
+				return false;
+			}
+			else
+			{
+				return true;
 			}
 		}
 	};

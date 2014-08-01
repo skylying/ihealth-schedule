@@ -97,7 +97,37 @@ class ScheduleControllerRxresidentEditSave extends SaveController
 			$item['floor'] = $this->data['floor'];
 		}
 
+		// Validation birthday
+		foreach ($this->data['items'] as $item)
+		{
+			$birthDate = $item['birth_date'];
+
+			$this->validateBirth($birthDate);
+		}
+
 		$this->createCustomers();
+	}
+
+	/**
+	 * validateBirth
+	 *
+	 * @param string $birthDate
+	 *
+	 * @return bool
+	 *
+	 * @throws Windwalker\Model\Exception\ValidateFailException
+	 */
+	protected function validateBirth($birthDate)
+	{
+		if (preg_match('/^[12][0-9]{3}[01][0-9][0-3][0-9]$/', $birthDate)
+			|| preg_match('/^[12][0-9]{3}-[01][0-9]-[0-3][0-9]$/', $birthDate))
+		{
+			return true;
+		}
+		else
+		{
+			throw new ValidateFailException(array('請確認生日格式是否符合8位數字或(YYYY-MM-DD)格式。'));
+		}
 	}
 
 	/**
