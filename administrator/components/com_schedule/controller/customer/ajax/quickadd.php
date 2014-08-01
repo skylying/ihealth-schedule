@@ -40,8 +40,9 @@ class ScheduleControllerCustomerAjaxQuickadd extends QuickaddController
 
 		switch (true)
 		{
-			case (preg_match('/^[12][0-9]{3}[01][0-9][0-3][0-9]/', $birthDate)) :
-			case (preg_match('/^[12][0-9]{3}-[01][0-9]-[0-3][0-9]/', $birthDate)) :
+			case (preg_match('/^[12][0-9]{3}[01][0-9][0-3][0-9]$/', $birthDate)) :
+				break;
+			case (preg_match('/^[12][0-9]{3}-[01][0-9]-[0-3][0-9]$/', $birthDate)) :
 				break;
 			default:
 				$result->set('Result', false);
