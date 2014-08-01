@@ -9,7 +9,6 @@
 // No direct access
 defined('_JEXEC') or die;
 
-JHtmlBootstrap::tooltip();
 JHtmlFormbehavior::chosen('select');
 JHtmlBehavior::formvalidation();
 
