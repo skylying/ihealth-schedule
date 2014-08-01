@@ -220,7 +220,6 @@
 			{
 				self.defaultSwitch = false;
 			});
-
 		},
 
 		/**
@@ -363,10 +362,15 @@
 			var pattern = /^[12][0-9]{3}-[01][0-9]-[0-3][0-9]/;
 			var validatedBirthday = birthday.match(pattern);
 
-			if (validatedBirthday == null)
+			if (validatedBirthday === null)
 			{
 				return false;
 			}
+			else
+			{
+				return true;
+			}
+
 		}
 	};
 })(jQuery);
