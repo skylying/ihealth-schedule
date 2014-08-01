@@ -6,7 +6,9 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
+use Windwalker\Joomla\DataMapper\DataMapper;
 use Windwalker\Table\Table;
+use Schedule\Table\Table as TableAlias;
 
 // No direct access
 defined('_JEXEC') or die;
@@ -105,6 +107,18 @@ class ScheduleTableRxresident extends Table
 	 */
 	public function delete($pk = null)
 	{
+		$isDeleted = parent::delete($pk);
+
+		// When prescription data is deleted, all the related schedules should be deleted too.
+		if ($isDeleted)
+		{
+			$scheduleMapper = new DataMapper(TableAlias::SCHEDULES);
+
+			$scheduleMapper->delete(['rx_id' => $this->id]);
+
+			return true;
+		}
+
 		return parent::delete($pk);
 	}
 }

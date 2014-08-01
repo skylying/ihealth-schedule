@@ -256,6 +256,17 @@ HTML;
 				$bar->appendButton('Custom', $dHtml);
 			};
 
+			// Get default delete button config from parent, but override the handler
+			$parentButtonSet = parent::configureToolbar($buttonSet, $canDo = null);
+
+			$buttonSet['delete'] = $parentButtonSet['delete'];
+			$buttonSet['delete']['handler'] = function()
+			{
+				JToolbarHelper::deleteList('確定要刪除排程嗎？', 'schedules.state.delete', '刪除');
+			};
+
+			$buttonSet['delete']['access'] = true;
+
 			return $buttonSet;
 		}
 
