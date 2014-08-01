@@ -114,9 +114,7 @@ class ScheduleTableRxresident extends Table
 		{
 			$scheduleMapper = new DataMapper(TableAlias::SCHEDULES);
 
-			$id = $this->id;
-
-			$scheduleMapper->delete(['rx_id' => $id]);
+			$scheduleMapper->delete(['rx_id' => $this->id]);
 
 			return true;
 		}
