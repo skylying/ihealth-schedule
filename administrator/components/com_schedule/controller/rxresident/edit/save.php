@@ -181,6 +181,9 @@ class ScheduleControllerRxresidentEditSave extends SaveController
 			$deliverNths = array_flip($rx['deliver_nths']);
 			$schedules = $this->scheduleMapper->find(array('rx_id' => $rx['id']));
 
+			// The sender info is being done inside the prepareTable scheduleModel
+			$this->scheduleState->set('sender_id', $instituteTable->sender_id);
+
 			// Update exists schedule
 			foreach ($schedules as $schedule)
 			{
@@ -281,9 +284,6 @@ class ScheduleControllerRxresidentEditSave extends SaveController
 		{
 			$task = $this->createTaskData($sendDate, $instituteTable);
 		}
-
-		// The sender info is being done inside the prepareTable scheduleModel
-		$this->scheduleState->set('sender_id', $instituteTable->sender_id);
 
 		$schedule = $this->getScheduleData($rx, $nth, $task['id'], $sendDate);
 
