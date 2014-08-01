@@ -9,6 +9,7 @@
 use Windwalker\DI\Container;
 use Windwalker\Model\Filter\FilterHelper;
 use Windwalker\Model\ListModel;
+use Schedule\Table\Table;
 
 // No direct access
 defined('_JEXEC') or die;
@@ -177,5 +178,21 @@ class ScheduleModelTasks extends ListModel
 	 */
 	protected function configureSearches($searchHelper)
 	{
+	}
+
+	/**
+	 * The post getQuery object.
+	 *
+	 * @param JDatabaseQuery $query The db query object.
+	 *
+	 * @return  void
+	 */
+	protected function postGetQuery(\JDatabaseQuery $query)
+	{
+		$query->leftJoin(Table::SCHEDULES . ' AS schedule ON task.id=schedule.task_id')
+			->where('schedule.id > 0')
+			->group('task.id');
+
+		parent::postGetQuery($query);
 	}
 }

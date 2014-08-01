@@ -114,17 +114,21 @@ JAVASCRIPT;
 
 			$memberTable = TableCollection::loadTable('Member', $oldScheduleTable->member_id);
 			$rx = (new DataMapper(Table::PRESCRIPTIONS))->findOne($oldScheduleTable->rx_id);
-			$schedules = (new DataMapper(Table::SCHEDULES))->find(array('rx_id' => $oldScheduleTable->rx_id));
-			$drugsModel = $this->getModel('Drugs');
-			$drugsModel->getState()->set('filter', array('drug.rx_id' => $oldScheduleTable->rx_id));
 
-			$mailData = array(
-				"schedules" => $schedules,
-				"rx"        => $rx,
-				"drugs"     => $drugsModel->getItems(),
-			);
+			if (!empty($memberTable->email) && 'individual' === $rx->type)
+			{
+				$schedules = (new DataMapper(Table::SCHEDULES))->find(array('rx_id' => $oldScheduleTable->rx_id));
+				$drugsModel = $this->getModel('Drugs');
+				$drugsModel->getState()->set('filter', array('drug.rx_id' => $oldScheduleTable->rx_id));
 
-			MailHelper::sendMailWhenScheduleChange($memberTable->email, $mailData);
+				$mailData = array(
+					"schedules" => $schedules,
+					"rx"        => $rx,
+					"drugs"     => $drugsModel->getItems(),
+				);
+
+				MailHelper::sendMailWhenScheduleChange($memberTable->email, $mailData);
+			}
 		}
 	}
 
