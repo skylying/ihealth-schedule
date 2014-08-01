@@ -18,6 +18,19 @@
 			required="true"
 			class="input-xlarge required"
 			/>
+
+		<field name="user_id"
+			type="sql"
+			query="SELECT id, name FROM #__users"
+			key_field="id"
+			value_field="name"
+			label="對應系統使用者"
+			description="請選擇對應的藥師名稱，如果未新增請先至 joomla 會員管理新增對應藥師帳號"
+			default="0"
+			class="input-medium">
+			<option value="0">非藥師(預設值)</option>
+		</field>
+
 		<field name="note"
 			type="textarea"
 			label="備註"
