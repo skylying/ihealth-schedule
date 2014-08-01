@@ -62,7 +62,7 @@ abstract class ScheduleHelper
 			$menus = array_merge($menus, $noMvcMenus);
 		}
 
-		if (SenderHelper::isSenderLogin())
+		if (SenderHelper::checkSender())
 		{
 			$menus = $menusForSender;
 		}
