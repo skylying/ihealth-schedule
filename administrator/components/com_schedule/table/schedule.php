@@ -110,7 +110,7 @@ class ScheduleTableSchedule extends Table
 	{
 		$isDeleted = parent::delete($pk);
 
-		if ($isDeleted)
+		if ($isDeleted && ($this->type == 'individual' || $this->type == 'resident'))
 		{
 			$rx_id = $this->rx_id;
 			$nthToDelete = $this->deliver_nth;

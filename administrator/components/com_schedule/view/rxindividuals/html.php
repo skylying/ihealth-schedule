@@ -122,7 +122,7 @@ class ScheduleViewRxindividualsHtml extends GridView
 		// Override delete handler
 		$buttonSet['delete']['handler'] = function()
 		{
-			JToolbarHelper::deleteList('此筆處方所屬排程皆會同時被刪除，確定要刪除? ', 'rxindividuals.state.delete', '刪除');
+			JToolbarHelper::deleteList('此筆處方所屬排程皆會同時被刪除，確定要刪除?', 'rxindividuals.state.delete', '刪除');
 		};
 
 		$buttonSet['duplicate']['access'] = false;
