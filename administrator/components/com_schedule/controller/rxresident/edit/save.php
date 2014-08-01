@@ -74,11 +74,7 @@ class ScheduleControllerRxresidentEditSave extends SaveController
 		{
 			$item = $this->data;
 
-			$this->data = array(
-				'institute_id' => $this->data['institute_id'],
-				'floor' => $this->data['floor'],
-				'items' => array(),
-			);
+			$this->data['items'] = array();
 
 			if (! empty($item['customer_id']))
 			{
