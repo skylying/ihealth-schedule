@@ -14,42 +14,6 @@ use Windwalker\Joomla\DataMapper\DataMapper;
 class SenderHelper
 {
 	/**
-	 * isSenderLogin
-	 *
-	 * @return  bool
-	 */
-	public static function isSenderLogin()
-	{
-		$sender = static::sender();
-
-		return ! $sender->isNull();
-	}
-
-	/**
-	 * getSenderId
-	 *
-	 * @return  int
-	 */
-	public static function getSenderId()
-	{
-		$sender = static::sender();
-
-		return $sender->id;
-	}
-
-	/**
-	 * sender
-	 *
-	 * @return  mixed
-	 */
-	public static function sender()
-	{
-		$user = \JFactory::getUser();
-
-		return (new DataMapper(Table::SENDERS))->findOne(array('name' => $user->name));
-	}
-
-	/**
 	 * getDefaultSender
 	 *
 	 * @return  array
@@ -66,5 +30,25 @@ class SenderHelper
 			'id' => $id,
 			'sender' => $name
 		);
+	}
+
+	/**
+	 * checkSender, if user belongs to sender, return an array of sender information, else return false
+	 *
+	 * @return  array|bool
+	 */
+	public static function checkSender()
+	{
+		$user = \JFactory::getUser();
+
+		// Find user in sender table
+		$result = (array) (new DataMapper(Table::SENDERS))->findOne(['user_id' => $user->id]);
+
+		if (empty($result))
+		{
+			return false;
+		}
+
+		return $result;
 	}
 }
