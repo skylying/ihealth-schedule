@@ -120,17 +120,16 @@ class ScheduleModelTasks extends ListModel
 	protected function processFilters(\JDatabaseQuery $query, $filters = array())
 	{
 		// If no state filter, set published >= 0
-		if (!isset($filters['task.state']) && property_exists($this->getTable(), 'state'))
+		if (!isset($filters['task.status']) && property_exists($this->getTable(), 'status'))
 		{
-			$query->where($query->quoteName('task.state') . ' >= 0');
+			$query->where($query->quoteName('task.status') . ' = 0');
 		}
 
-		$senderId = Schedule\Helper\SenderHelper::getSenderId();
-		$isSender = Schedule\Helper\SenderHelper::isSenderLogin();
+		$sender = Schedule\Helper\SenderHelper::checkSender();
 
-		if ($isSender)
+		if ($sender)
 		{
-			$query->where('sender = ' . $senderId);
+			$query->where('sender = ' . $sender['id']);
 		}
 
 		return parent::processFilters($query, $filters);

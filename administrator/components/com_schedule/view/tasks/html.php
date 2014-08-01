@@ -104,9 +104,9 @@ class ScheduleViewTasksHtml extends GridView
 	 */
 	protected function prepareData()
 	{
-		$isSender = Schedule\Helper\SenderHelper::isSenderLogin();
+		$sender = Schedule\Helper\SenderHelper::checkSender();
 
-		if ($isSender)
+		if ($sender)
 		{
 			$filters = $this->data->filterForm;
 			$filters->removeField('task.sender', 'filter');
@@ -137,9 +137,9 @@ class ScheduleViewTasksHtml extends GridView
 		$buttonSet['trash']['access'] = false;
 
 		// Add custom controller redirect to routes overview layout
-		$senderLoginStat = \Schedule\Helper\SenderHelper::isSenderLogin();
+		$sender = \Schedule\Helper\SenderHelper::checkSender();
 
-		if (!$senderLoginStat)
+		if (!$sender)
 		{
 			$buttonSet['route']['handler'] = function()
 			{
