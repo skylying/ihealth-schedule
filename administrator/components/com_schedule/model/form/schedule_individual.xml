@@ -13,7 +13,8 @@
 		</field>
 
 		<field name="customer_id"
-			type="customer_list"
+			type="sql"
+			query="SELECT id, name FROM #__schedule_customers WHERE type = 'individual'"
 			default=""
 			key_field="id"
 			value_field="name"
@@ -28,6 +29,7 @@
 			type="list"
 			label="會員名稱"
 			description="會員名稱"
+			required="true"
 			/>
 
 		<field
@@ -35,9 +37,10 @@
 			type="list"
 			label="地址"
 			class="input-xxlarge"
+			required="true"
 			/>
 
-		<field name="type"
+		<field name="individual_type"
 			type="radio"
 			default=""
 			class=""
@@ -49,21 +52,26 @@
 			<option value="other">其他</option>
 		</field>
 
-		<field name="note"
-			type="textarea"
-			default=""
-			label="備註說明"
-			description="備註說明"
+		<field name="type"
+			type="hidden"
+			default="scheduled"
 			/>
 
 		<field id="individual_date"
 			name="date"
-			type="calendar"
+			type="datetimepicker"
 			default=""
 			format="%Y-%m-%d"
 			label="拜訪日期"
 			description="拜訪日期"
 			onchange="ScheduleEdit.updateScheduleLink(this, 'individual');"
+			/>
+
+		<field name="note"
+			type="textarea"
+			default=""
+			label="備註說明"
+			description="備註說明"
 			/>
 
 		<field name="task_id"

@@ -125,7 +125,8 @@
 			<option>--請選擇類別--</option>
 			<option value="individual">散客</option>
 			<option value="resident">住民</option>
-			<option value="discuss">討論</option>
+			<option value="discuss">個案討論</option>
+			<option value="evaluation">評鑑</option>
 			<option value="speech">演講</option>
 			<option value="collect">拿處方箋</option>
 			<option value="visit">新簽約後拜訪</option>

@@ -47,7 +47,7 @@
 			readonly="true"
 			/>
 
-		<field name="type"
+		<field name="institute_type"
 			type="radio"
 			default=""
 			class=""
@@ -56,27 +56,31 @@
 			required="true"
 			>
 			<option value="speech">演講</option>
-			<option value="discuss">討論</option>
+			<option value="discuss">個案討論</option>
+			<option value="evaluation">評鑑</option>
 			<option value="collect">收單</option>
 			<option value="visit">新簽約後拜訪</option>
 			<option value="other">其他</option>
 		</field>
+
+		<field name="type"
+			type="hidden"
+			default="scheduled"
+			/>
+
+		<field id="institute_date"
+			name="date"
+			type="datetimepicker"
+			label="拜訪日期"
+			description="拜訪日期"
+			onchange="ScheduleEdit.updateScheduleLink(this, 'institute');"
+			/>
 
 		<field name="note"
 			type="textarea"
 			default=""
 			label="備註說明"
 			description="備註說明"
-			/>
-
-		<field id="institute_date"
-			name="date"
-			type="calendar"
-			default=""
-			format="%Y-%m-%d"
-			label="拜訪日期"
-			description="拜訪日期"
-			onchange="ScheduleEdit.updateScheduleLink(this, 'institute');"
 			/>
 
 		<field name="task_id"

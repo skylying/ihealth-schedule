@@ -34,6 +34,16 @@ class ScheduleControllerScheduleEditSave extends SaveController
 		$state->set('sender_id', $this->data['sender_id']);
 		$state->set('form.type', $this->input->get('form_type', 'schedule_institute'));
 
+		// Put xml bi-type into data type
+		if (isset($this->data['institute_type']))
+		{
+			$this->data['type'] = $this->data['institute_type'];
+		}
+		elseif (isset($this->data['individual_type']))
+		{
+			$this->data['type'] = $this->data['individual_type'];
+		}
+
 		if (!empty($this->data['id']) && $this->data['id'] > 0)
 		{
 			$oldScheduleTable = TableCollection::loadTable('Schedule', $this->data['id']);

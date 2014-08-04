@@ -93,7 +93,7 @@ $date      = $container->get('date');
 	</th>
 
 	<!-- schedule.status -->
-	<th>
+	<th class="center">
 		<?php echo $grid->sortTitle('狀態', 'schedule.status'); ?>
 	</th>
 </tr>
