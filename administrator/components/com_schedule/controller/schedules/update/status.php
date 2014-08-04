@@ -90,6 +90,7 @@ class ScheduleControllerSchedulesUpdateStatus extends AbstractUpdateStateControl
 		elseif ('pause' === $status)
 		{
 			$validCancel = ['hospitalized', 'other'];
+			$checkCancel = false;
 		}
 		else
 		{
