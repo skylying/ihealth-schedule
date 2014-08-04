@@ -33,7 +33,8 @@ $user = JFactory::getUser();
 	});
 </script>
 
-<h1 class="text-center"><?php echo $data->date; ?> 打包表</h1>
+<h1 class="text-center">打包表</h1>
+<h2 class="text-center"><?php echo $data->date_start . ' ~ ' . $data->date_end; ?></h2>
 
 <?php foreach ($data->items as $sender):?>
 
