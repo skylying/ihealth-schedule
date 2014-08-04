@@ -96,16 +96,17 @@ class ScheduleViewDrugdetailHtml extends EditView
 
 		// Prepare filter input data
 		$senderIds = $app->input->getVar('senderIds', array());
-		$this->data->date = $app->input->get("date");
+		$this->data->date_start = $app->input->get("date_start");
+		$this->data->date_end = $app->input->get("date_end");
 
 		if (empty($senderIds))
 		{
 			throw new \Exception("請選擇至少一位外送藥師");
 		}
 
-		if (empty($this->data->date))
+		if (empty($this->data->date_start) && empty($this->data->date_end))
 		{
-			throw new \Exception("請選擇外送日期");
+			throw new \Exception("請選擇外送日期區間");
 		}
 
 		// Get schedules
@@ -248,9 +249,14 @@ class ScheduleViewDrugdetailHtml extends EditView
 			->join("LEFT", Table::PRESCRIPTIONS . " AS rx on schedule.rx_id = rx.id")
 			->join("LEFT", Table::CUSTOMERS . " AS customer on schedule.customer_id = customer.id")
 			->where("task.sender " . (new JDatabaseQueryElement('IN ()', $senderIds)))
-			->where("task.date = " . $q->quote($this->data->date))
+			->where("task.date >= " . $q->quote($this->data->date_start))
 			->order("schedule.institute_id DESC")
 			->order("task.sender DESC");
+
+		if (!empty($this->data->date_end))
+		{
+			$q->where("task.date <= " . $q->quote($this->data->date_end));
+		}
 
 		return $db->setQuery($q)->loadObjectList();
 	}

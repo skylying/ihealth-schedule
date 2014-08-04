@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <form>
 	<fieldset name="filter">
-		<field name="date"
+		<field name="date_start"
 			type="datetimepicker"
-			label="預計外送日"
-			description="預計外送日"
+			label="預計外送日(起)"
+			description="預計外送日(起)"
+			/>
+
+		<field name="date_end"
+			type="datetimepicker"
+			label="預計外送日(屹)"
+			description="預計外送日(屹)"
 			/>
 
 		<field name="senderIds"

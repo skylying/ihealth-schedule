@@ -33,7 +33,16 @@ $fieldsets = $form->getFieldset("filter");
 	id="<?php echo $formId; ?>"
 	action="<?php echo JRoute::_('index.php?option=com_schedule&view=drugdetail&layout=edit'); ?>"
 	method="post" class="form-horizontal">
-	<?php echo $fieldsets['date']->getControlGroup(); ?>
+	<div class="control-group">
+		<div class="control-label">
+			預計外送日:
+		</div>
+		<div class="controls">
+			<?php echo $fieldsets['date_start']->input; ?>
+			~
+			<?php echo $fieldsets['date_end']->input; ?>
+		</div>
+	</div>
 
 	<?php echo $fieldsets['senderIds']->getControlGroup(); ?>
 
