@@ -28,7 +28,7 @@ $item      = $data->item;
 <script type="text/javascript">
 	Joomla.submitbutton = function(task)
 	{
-		if (CustomerJs.validateBirthday() == false)
+		if (CustomerJs.validateBirthday() == false && task != 'customer.edit.cancel')
 		{
 			Joomla.renderMessages( [['請確認生日格式是否符合8位數字或(YYYY-MM-DD)格式。']] );
 		}
