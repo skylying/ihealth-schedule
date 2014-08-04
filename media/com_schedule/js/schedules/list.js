@@ -135,6 +135,25 @@
 	}
 
 	/**
+	 * Bind "onClick" event on edit item button
+	 */
+	function bindEditItemButton()
+	{
+		var $fieldDate = $('#edit_item_field_date'),
+			$fieldSenderId = $('#edit_item_field_sender_id');
+
+		$('#edit-item-button').on('click', function()
+		{
+			if ($('input[name="cid[]"]:checkbox:checked').size() > 1)
+			{
+				$fieldDate.val('');
+				$fieldSenderId.val('');
+				$fieldSenderId.trigger('liszt:updated');
+			}
+		});
+	}
+
+	/**
 	 * Class SchedulesList
 	 */
 	window.SchedulesList = window.SchedulesList || {
@@ -181,5 +200,7 @@
 		bindStatusDropdownMenu();
 
 		bindEditSubmitButton();
+
+		bindEditItemButton();
 	});
 })(jQuery);
