@@ -34,7 +34,7 @@ class ScheduleControllerScheduleEditSave extends SaveController
 		$state->set('sender_id', $this->data['sender_id']);
 		$state->set('form.type', $this->input->get('form_type', 'schedule_institute'));
 
-		//put xml bi-type to data type
+		// Put xml bi-type into data type
 		if (isset($this->data['institute_type']))
 		{
 			$this->data['type'] = $this->data['institute_type'];
