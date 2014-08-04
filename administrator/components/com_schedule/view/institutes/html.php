@@ -119,6 +119,21 @@ class ScheduleViewInstitutesHtml extends GridView
 		// Get default button set.
 		$buttonSet = parent::configureToolbar($buttonSet, $canDo);
 
+		$buttonSet['sync'] = array(
+			'handler' => function ()
+			{
+				$html = <<<HTML
+<button class="btn btn-small" type="button"
+	onclick="if(confirm('同步資料會需要花點時間，確定要同步嗎?')){Joomla.submitbutton('institutes.sync');}">
+	<span class="glyphicon glyphicon-transfer"></span> 同步
+</button>
+HTML;
+				$bar = JToolbar::getInstance('toolbar');
+
+				$bar->appendButton('custom', $html);
+			},
+		);
+
 		// In debug mode, we remove trash button but use delete button instead.
 		$buttonSet['trash']['access'] = false;
 		$buttonSet['delete']['access'] = true;
