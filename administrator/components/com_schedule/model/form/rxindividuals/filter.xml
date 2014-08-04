@@ -95,6 +95,7 @@
 			<option value="file">上傳檔案</option>
 			<option value="photo">拍照</option>
 			<option value="paper">正本</option>
+			<option value="tmp_no_rx">暫缺正本</option>
 		</field>
 	</fields>
 
