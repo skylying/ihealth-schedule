@@ -95,6 +95,8 @@ class ScheduleViewRoutesHtml extends GridView
 		$this->engine = new PhpEngine;
 
 		parent::__construct($model, $container, $config, $paths);
+
+		$this->getModel()->getState()->set('list.limit', 0);
 	}
 
 	/**
