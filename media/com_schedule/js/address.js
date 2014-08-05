@@ -80,6 +80,7 @@
 
 				$area.html(areaOptions);
 				$area.val('');
+				$area.attr("data-placeholder", "--選擇區域--");
 
 				// Trigger Chosen update event
 				if ($area.data('chosen'))
