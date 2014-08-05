@@ -18,15 +18,14 @@ class ScheduleControllerDrugdetailEditApply extends ScheduleControllerDrugdetail
 	 */
 	public function redirect($url, $msg = null, $type = 'message')
 	{
-		$ids  = $this->data["senderIds"];
-		$date = $this->data["date"];
 		$url  = $this->getRedirectItemUrl();
 
 		$urlValue = http_build_query(
 			array(
 				'layout' => 'edit',
-				'date' => $date,
-				'senderIds' => $ids
+				'date_start' => $this->data['date_start'],
+				'date_end' => $this->data['date_end'],
+				'senderIds' => $this->data['senderIds'],
 			)
 		);
 

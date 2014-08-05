@@ -154,8 +154,9 @@ class ScheduleViewDrugdetailHtml extends EditView
 
 		$this->data->items = $items;
 
-		$filterData['senderIds'] = $app->input->getVar("senderIds", array());
-		$filterData['date']      = $app->input->get("date", "");
+		$filterData['senderIds']  = $senderIds;
+		$filterData['date_start'] = $this->data->date_start;
+		$filterData['date_end']   = $this->data->date_end;
 
 		$this->data->filterForm = $this->get('FilterForm', null, array($filterData));
 
