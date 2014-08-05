@@ -189,7 +189,7 @@ class ScheduleModelTasks extends ListModel
 	protected function postGetQuery(\JDatabaseQuery $query)
 	{
 		$query->leftJoin(Table::SCHEDULES . ' AS schedule ON task.id = schedule.task_id')
-			->where("`schedule`.`status` " . (new JDatabaseQueryElement('IN ()', $query->q(["scheduled", "delivered"]))))
+			->where('`schedule`.`status` IN ("scheduled", "delivered")')
 			->where('`schedule`.`id` > 0')
 			->group('task.id');
 
