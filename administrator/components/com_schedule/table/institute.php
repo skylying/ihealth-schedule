@@ -130,7 +130,7 @@ class ScheduleTableInstitute extends Table
 	{
 		if (!($this->tableHelper instanceof TableHelper))
 		{
-			$this->tableHelper = new TableHelper($this, $this->_db, 'id');
+			$this->tableHelper = new TableHelper($this->_tbl, $this->_db, 'id');
 		}
 
 		return $this->tableHelper;
