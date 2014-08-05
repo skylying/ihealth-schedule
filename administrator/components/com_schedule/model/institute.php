@@ -82,6 +82,8 @@ class ScheduleModelInstitute extends AdminModel
 	 */
 	public function prepareTable(JTable $table)
 	{
+		parent::prepareTable($table);
+
 		// Prepare address title from addres table
 		$tableCity = $this->getTable('City');
 		$tableCity->load($table->city);
