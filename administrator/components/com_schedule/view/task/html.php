@@ -126,13 +126,7 @@ class ScheduleViewTaskHtml extends EditView
 		{
 			$data = $this->getData();
 
-			/*
-			 * If status = '0' (未外送), find schedules with 'scheduled' status
-			 * If status = '1' (已外送), find schedules with 'delivered' status
-			 */
-			$scheduleStatus = ($data->item->status == 0) ? 'scheduled' : 'delivered';
-
-			$schedules = (new DataMapper(Table::SCHEDULES))->find(['task_id' => $data->item->id, 'status' => $scheduleStatus]);
+			$schedules = (new DataMapper(Table::SCHEDULES))->find(['task_id' => $data->item->id, 'status' => ['scheduled', 'delivered']]);
 
 			$data->item->schedules = $this->getSummarizeScheduleData(iterator_to_array($schedules));
 
