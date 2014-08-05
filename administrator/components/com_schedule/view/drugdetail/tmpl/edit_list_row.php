@@ -44,10 +44,46 @@ else
 	$app->setUserState('drugdetail.sorted.list', $sortedList);
 }
 ?>
+
+<!--style for schedules being cancelled-->
+<style>
+	 .status-mark
+	 {
+		 padding: 3px;
+		 color: #ffffff;
+		 border-radius: 5px;
+	 }
+	.cancel_reject
+	{
+		background: #95a5a6;
+	}
+	.cancel_only
+	{
+		background: #B766AD;
+	}
+	.pause
+	{
+		background: #f5ab35;
+	}
+	.emergency
+	{
+		background: #e74c3c;
+	}
+	.delivered
+	{
+		background: #16c02d;
+	}
+</style>
+
 <tr>
 	<td class="text-center">
 		<!-- 排程編號 -->
-		<?php echo $schedule->id; ?>
+		<div class="row"><?php echo $schedule->id; ?></div>
+		<div class="row">
+			<span class="status-mark <?php echo $schedule->status; ?>">
+				<?php echo JText::_('COM_SCHEDULE_DRUGDETAIL_CANCEL_STATUS_' . strtoupper($schedule->status)); ?>
+			</span>
+		</div>
 	</td>
 	<td class="text-center">
 		<!-- 處方編號 -->
