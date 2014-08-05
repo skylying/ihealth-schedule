@@ -70,7 +70,7 @@ class TableHelper
 
 		$row->{$this->pkName} = $id;
 
-		if (! $this->db->insertObject($this->table->getTableName(), $row, $this->pkName))
+		if (! $this->db->insertObject($this->table, $row, $this->pkName))
 		{
 			return false;
 		}
@@ -90,7 +90,7 @@ class TableHelper
 		$query = $this->db->getQuery(true);
 
 		$query->select($this->pkName)
-			->from($this->table->getTableName())
+			->from($this->table)
 			->where($query->format('%n = %q', $this->pkName, $id));
 
 		if ($this->db->setQuery($query)->loadResult())
