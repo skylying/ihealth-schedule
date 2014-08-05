@@ -37,13 +37,18 @@ $date      = $container->get('date');
 	<thead>
 	<tr>
 		<!--CHECKBOX-->
-		<th width="10%" class="center">
+		<th width="5%" class="center">
 			<?php echo JHtml::_('grid.checkAll'); ?>
 		</th>
 
 		<!--EDIT BUTTON-->
 		<th width="8%" class="center">
 			編輯
+		</th>
+
+		<!--ID-->
+		<th width="5%" class="nowrap center">
+			<?php echo $grid->sortTitle('JGLOBAL_FIELD_ID_LABEL', 'task.id'); ?>
 		</th>
 
 		<!--TASK DATE-->
@@ -99,6 +104,11 @@ $date      = $container->get('date');
 			<!-- EDIT BUTTON -->
 			<td class="center">
 				<?php echo \Schedule\Helper\UiHelper::editButton('task', $item->task_id); ?>
+			</td>
+
+			<!-- ID -->
+			<td class="center">
+				<?php echo $item->id; ?>
 			</td>
 
 			<!--TASK DATE-->

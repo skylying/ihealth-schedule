@@ -21,7 +21,9 @@ class DeliveryHelper
 	{
 		if ($status == 1)
 		{
-			$html = '<div class="btn btn-success" onclick="return listItemTask(\'cb' . $id . '\', \'tasks.state.undelivery\')">';
+			// 原本已外送可以改回待外送的 js, 先暫時註解掉, 避免 task 撈出一堆空白排程
+			// $html = '<div class="btn btn-success" onclick="return listItemTask(\'cb' . $id . '\', \'tasks.state.undelivery\')">';
+			$html = '<div class="btn btn-success" onclick="alert(\'您無法將已外送排程改回待外送\')">';
 			$html .= '<span class="glyphicon glyphicon-ok-circle"></span> 已外送</div>';
 		}
 		else

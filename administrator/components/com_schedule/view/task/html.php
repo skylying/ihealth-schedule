@@ -126,7 +126,7 @@ class ScheduleViewTaskHtml extends EditView
 		{
 			$data = $this->getData();
 
-			$schedules = (new DataMapper(Table::SCHEDULES))->find(['task_id' => $data->item->id, 'status' => 'scheduled']);
+			$schedules = (new DataMapper(Table::SCHEDULES))->find(['task_id' => $data->item->id, 'status' => ['scheduled', 'delivered']]);
 
 			$data->item->schedules = $this->getSummarizeScheduleData(iterator_to_array($schedules));
 
@@ -265,7 +265,7 @@ HTML;
 					if (! empty($note))
 					{
 						$row['notes'][] = [
-							'type' => '',
+							'type' => '[機構] ',
 							'message' => $note,
 						];
 					}
@@ -420,9 +420,10 @@ HTML;
 			case 'speech':
 			case 'collect':
 			case 'visit':
+			case 'evaluation':
 			case 'other':
 				$row['notes'][] = [
-					'type' => JText::_('COM_SCHEDULE_SCHEDULE_FIELD_TYPE_' . $schedule['type']),
+					'type' => '[行政] ' . JText::_('COM_SCHEDULE_SCHEDULE_FIELD_TYPE_' . $schedule['type']),
 					'message' => $schedule['note'],
 				];
 				break;
