@@ -157,8 +157,8 @@ class ScheduleControllerInstitutesSync extends AbstractRedirectController
 	/**
 	 * updateInstituteState
 	 *
-	 * Set state not "-11" => "0"
-	 * Set state "-11" => "1"
+	 * Step 1: If state is not "-11", set state to "0"
+	 * Step 2: If state is     "-11", set state to "1"
 	 *
 	 * @return  void
 	 */
