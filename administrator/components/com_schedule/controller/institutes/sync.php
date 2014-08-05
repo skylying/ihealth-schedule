@@ -76,7 +76,7 @@ class ScheduleControllerInstitutesSync extends AbstractRedirectController
 		$start = ArrayHelper::getValue($list, 'start', 0);
 		$limit = ArrayHelper::getValue($list, 'limit', $query['limit']);
 
-		// Get all facilities
+		// Get all other facilities
 		for ($start = $start + $limit; $start < $total; $start += $limit)
 		{
 			$query['limitstart'] = $start;
@@ -86,6 +86,8 @@ class ScheduleControllerInstitutesSync extends AbstractRedirectController
 
 			$this->saveInstitutes((array) $result['items']);
 		}
+
+		$this->updateInstituteState();
 
 		$this->setMessage(sprintf('同步完成, 已同步 %d 筆資料', $total));
 
@@ -145,9 +147,38 @@ class ScheduleControllerInstitutesSync extends AbstractRedirectController
 			'area' => $areaId,
 			'area_title' => $item->area_title,
 			'address' => $item->address,
+			// Set state to "-11" to mark a updated record
+			'state' => -11,
 		);
 
 		$model->save($institute);
+	}
+
+	/**
+	 * updateInstituteState
+	 *
+	 * Set state not "-11" => "0"
+	 * Set state "-11" => "1"
+	 *
+	 * @return  void
+	 */
+	protected function updateInstituteState()
+	{
+		$db = \JFactory::getDbo();
+		$query = $db->getQuery(true);
+
+		$query->update(Table::INSTITUTES)
+			->set('state = 0')
+			->where('state <> -11');
+
+		$db->setQuery($query)->execute();
+
+		$query->clear()
+			->update(Table::INSTITUTES)
+			->set('state = 1')
+			->where('state = -11');
+
+		$db->setQuery($query)->execute();
 	}
 
 	/**
