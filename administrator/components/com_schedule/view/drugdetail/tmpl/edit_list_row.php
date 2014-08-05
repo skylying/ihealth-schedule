@@ -81,30 +81,7 @@ else
 		<div class="row"><?php echo $schedule->id; ?></div>
 		<div class="row">
 			<span class="status-mark <?php echo $schedule->status; ?>">
-				<?php
-				switch ($schedule->status)
-				{
-					case 'cancel_reject':
-						echo '取退';
-						break;
-
-					case 'cancel_only':
-						echo '取不';
-						break;
-
-					case 'pause':
-						echo '緩';
-						break;
-
-					case 'emergency':
-						echo '急';
-						break;
-
-					case 'delivered':
-						echo '送';
-						break;
-				}
-				?>
+				<?php echo JText::_('COM_SCHEDULE_DRUGDETAIL_CANCEL_STATUS_' . strtoupper($schedule->status)); ?>
 			</span>
 		</div>
 	</td>
