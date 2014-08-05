@@ -128,7 +128,7 @@ class ScheduleViewSchedulesHtml extends GridView
 		// Get edit form fields
 		$editFormFields = array();
 
-		foreach (['date' => 'schedule.date_start', 'sender_id' => 'route.sender_id'] as $fieldName => $key)
+		foreach (['date' => 'schedule.date_start', 'sender_id' => 'schedule.sender_id'] as $fieldName => $key)
 		{
 			$field = $filterForm->getField($key, 'filter');
 			$field->group = '';

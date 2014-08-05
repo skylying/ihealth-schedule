@@ -153,7 +153,7 @@
 			/>
 
 		<field
-			name="route.sender_id"
+			name="schedule.sender_id"
 			type="sql"
 			query="SELECT `id`, `name` FROM #__schedule_senders"
 			key_field="id"
