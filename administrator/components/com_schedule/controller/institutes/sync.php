@@ -71,10 +71,9 @@ class ScheduleControllerInstitutesSync extends AbstractRedirectController
 
 		$this->saveInstitutes((array) $result['items']);
 
-		$list = (array) $result['list'];
-		$total = ArrayHelper::getValue($list, 'total', 0);
-		$start = ArrayHelper::getValue($list, 'start', 0);
-		$limit = ArrayHelper::getValue($list, 'limit', $query['limit']);
+		$total = $result->get('list.total', 0);
+		$start = $result->get('list.start', 0);
+		$limit = $result->get('list.limit', $query['limit']);
 
 		// Get all other facilities
 		for ($start = $start + $limit; $start < $total; $start += $limit)
