@@ -61,6 +61,7 @@ class ScheduleControllerInstitutesSync extends AbstractRedirectController
 		$query = array(
 			'session_key' => $sessionKey,
 			'filter' => array(
+				'facility.published' => 1,
 				'facility.status' => 1,
 				'contact.status' => 1,
 			),
