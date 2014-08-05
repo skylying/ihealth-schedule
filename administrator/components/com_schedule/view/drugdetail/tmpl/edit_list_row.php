@@ -44,10 +44,69 @@ else
 	$app->setUserState('drugdetail.sorted.list', $sortedList);
 }
 ?>
+
+<!--style for schedules being cancelled-->
+<style>
+	 .status-mark
+	 {
+		 padding: 3px;
+		 color: #ffffff;
+		 border-radius: 5px;
+	 }
+	.cancel_reject
+	{
+		background: #95a5a6;
+	}
+	.cancel_only
+	{
+		background: #B766AD;
+	}
+	.pause
+	{
+		background: #f5ab35;
+	}
+	.emergency
+	{
+		background: #e74c3c;
+	}
+	.delivered
+	{
+		background: #16c02d;
+	}
+</style>
+
 <tr>
 	<td class="text-center">
 		<!-- 排程編號 -->
-		<?php echo $schedule->id; ?>
+		<div class="row"><?php echo $schedule->id; ?></div>
+		<div class="row">
+			<span class="status-mark <?php echo $schedule->status; ?>">
+				<?php
+				switch ($schedule->status)
+				{
+					case 'cancel_reject':
+						echo '取退';
+						break;
+
+					case 'cancel_only':
+						echo '取不';
+						break;
+
+					case 'pause':
+						echo '緩';
+						break;
+
+					case 'emergency':
+						echo '急';
+						break;
+
+					case 'delivered':
+						echo '送';
+						break;
+				}
+				?>
+			</span>
+		</div>
 	</td>
 	<td class="text-center">
 		<!-- 處方編號 -->
