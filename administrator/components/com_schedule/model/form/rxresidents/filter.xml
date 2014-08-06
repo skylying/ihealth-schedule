@@ -41,15 +41,21 @@
 
 	<!-- Filter -->
 	<fields name="filter">
-		<field
-			name="institute_id"
-			type="Institute_List"
+		<field name="rxresident.institute_id"
+			type="select2"
+			class="input-large"
 			label="機構名稱"
 			description="機構名稱"
-			onchange="this.form.submit();"
-			>
-			<option></option>
-		</field>
+			hint="輸入機構名稱"
+			minimumInputLength="1"
+			apiUrl="index.php?option=com_schedule&amp;task=institutes.search.json"
+			apiQueryKey="filter_search"
+			query="SELECT `id`, `short_title` FROM #__schedule_institutes WHERE `id` = '%s'"
+			idField="id"
+			textField="short_title"
+			allowClear="true"
+			onchange="filterInstituteOnChange();"
+			/>
 
 		<field
 			name="see_dr_date_start"
@@ -75,6 +81,7 @@
 			onchange="this.form.submit();"
 			>
 			<option></option>
+			<option>--是否已外送--</option>
 			<option value="0">否</option>
 			<option value="1">是</option>
 		</field>
@@ -86,6 +93,7 @@
 			onchange="this.form.submit();"
 			>
 			<option></option>
+			<option>--處方箋取得方式--</option>
 			<option value="fax">傳真</option>
 			<option value="line">line</option>
 			<option value="form">自行填表</option>

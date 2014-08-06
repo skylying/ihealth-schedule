@@ -27,6 +27,7 @@ $container = $this->getContainer();
 $asset     = $container->get('helper.asset');
 $grid      = $data->grid;
 $date      = $container->get('date');
+$asset->addJS('schedules/list.js')
 ?>
 
 <!-- LIST TABLE -->
