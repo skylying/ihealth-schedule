@@ -31,12 +31,16 @@ $fieldsets = $form->getFieldset("filter");
 ?>
 <form name="<?php echo $formId; ?>"
 	id="<?php echo $formId; ?>"
-	action="<?php echo JRoute::_('index.php?option=com_schedule&view=drugdetail&layout=edit'); ?>"
-	method="post" class="form-horizontal">
+	action="<?php echo JRoute::_('index.php'); ?>"
+	method="get" class="form-horizontal">
 	<div class="control-group">
 		<div class="control-label">
 			預計外送日:
 		</div>
+		<input type="hidden" name="option" value="com_schedule"/>
+		<input type="hidden" name="view" value="drugdetail"/>
+		<input type="hidden" name="layout" value="edit"/>
+
 		<div class="controls">
 			<?php echo $fieldsets['date_start']->input; ?>
 			~
