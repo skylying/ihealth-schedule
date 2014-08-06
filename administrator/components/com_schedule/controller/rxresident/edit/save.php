@@ -94,7 +94,7 @@ class ScheduleControllerRxresidentEditSave extends SaveController
 		}
 
 		// Validation birthday
-		foreach ($this->data['items'] as $item)
+		foreach ($this->data['items'] as &$item)
 		{
 			$birthDate = $item['birth_date'];
 
