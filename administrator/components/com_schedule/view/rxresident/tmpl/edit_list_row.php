@@ -39,7 +39,7 @@ $id    = FieldHelper::resetGroup($form->getField('id'), $group);
 		<?php
 		$customerName = FieldHelper::resetGroup($form->getField('id_number'), $group);
 
-		if ($data->isEdit)
+		if ($customerId->value > 0)
 		{
 			$customerName->readonly = true;
 		}
@@ -51,7 +51,7 @@ $id    = FieldHelper::resetGroup($form->getField('id'), $group);
 		<?php
 		$birthDate = FieldHelper::resetGroup($form->getField('birth_date'), $group);
 
-		if ($data->isEdit)
+		if ($customerId->value > 0)
 		{
 			$birthDate->readonly = true;
 		}

@@ -437,6 +437,17 @@
 					if (data.id)
 					{
 						$customerId.val(data.id);
+
+						if (data.id > 0)
+						{
+							$idNumber.prop('readonly', true);
+							$birthDate.prop('readonly', true);
+						}
+						else
+						{
+							$idNumber.prop('readonly', false);
+							$birthDate.prop('readonly', false);
+						}
 					}
 
 					if (data.id_number)
