@@ -36,7 +36,7 @@ class JCacheControllerClosure extends \JCacheControllerCallback
 
 		$data = $this->cache->get($key);
 
-		if ($data)
+		if ($data !== false)
 		{
 			return $data;
 		}
