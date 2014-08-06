@@ -9,6 +9,7 @@
 use Schedule\Customer\CustomerHelper;
 use Windwalker\Joomla\DataMapper\DataMapper;
 use Windwalker\Table\Table;
+use Windwalker\Model\Exception\ValidateFailException;
 
 // No direct access
 defined('_JEXEC') or die;
@@ -70,7 +71,7 @@ class ScheduleTableCustomer extends Table
 	 * method to make sure the data they are storing in the database is safe and
 	 * as expected before storage.
 	 *
-	 * @throws  RuntimeException
+	 * @throws  ValidateFailException
 	 * @return  boolean  True if the instance is sane and able to be stored in the database.
 	 */
 	public function check()
@@ -78,7 +79,7 @@ class ScheduleTableCustomer extends Table
 		// No id number, abort.
 		if (!trim($this->id_number))
 		{
-			throw new \RuntimeException('請輸入身分證字號');
+			throw new ValidateFailException(['請輸入身分證字號']);
 		}
 
 		// Has id number, no stars
@@ -93,14 +94,14 @@ class ScheduleTableCustomer extends Table
 				// If id number found but not self, throw error
 				if (!$item->isNull() && $item->id != $this->id)
 				{
-					throw new \RuntimeException('此身分證字號已有人使用');
+					throw new ValidateFailException(['此身分證字號已有人使用']);
 				}
 			}
 
 			// Not correct id number
 			else
 			{
-				throw new \RuntimeException('請輸入正確的身分證字號');
+				throw new ValidateFailException(['請輸入正確的身分證字號']);
 			}
 		}
 
