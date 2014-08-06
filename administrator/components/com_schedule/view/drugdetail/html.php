@@ -252,6 +252,7 @@ class ScheduleViewDrugdetailHtml extends EditView
 			->join("LEFT", Table::CUSTOMERS . " AS customer on schedule.customer_id = customer.id")
 			->where("task.sender " . (new JDatabaseQueryElement('IN ()', $senderIds)))
 			->where("task.date >= " . $q->quote($this->data->date_start))
+			->where('schedule.status != "delivered"')
 			->order("schedule.institute_id DESC")
 			->order("task.sender DESC");
 

@@ -69,10 +69,6 @@ else
 	{
 		background: #e74c3c;
 	}
-	.delivered
-	{
-		background: #16c02d;
-	}
 </style>
 
 <tr>
@@ -81,7 +77,13 @@ else
 		<div class="row"><?php echo $schedule->id; ?></div>
 		<div class="row">
 			<span class="status-mark <?php echo $schedule->status; ?>">
-				<?php echo JText::_('COM_SCHEDULE_DRUGDETAIL_CANCEL_STATUS_' . strtoupper($schedule->status)); ?>
+				<?php
+				// 已外送 & 已排程不需要顯示
+				if ($schedule->status !== 'scheduled' && $schedule->status !== 'delivered')
+				{
+					echo JText::_('COM_SCHEDULE_DRUGDETAIL_CANCEL_STATUS_' . strtoupper($schedule->status));
+				}
+				?>
 			</span>
 		</div>
 	</td>
