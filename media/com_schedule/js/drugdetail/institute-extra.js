@@ -106,6 +106,26 @@
 					$(this).closest('td .big-checkbox').prop('checked', false);
 				}
 			});
+
+			// Bind mobile device swipe event
+			$('table tr').swipe({
+				swipeLeft : function(event, direction, distance, duration, fingerCount)
+				{
+					var id = $(this).data('id');
+
+					$(this).css('background', '#FCBCBC');
+
+					if (confirm('要刪除' + id + '號排程嗎?'))
+					{
+						$(this).remove();
+					}
+					else
+					{
+						$(this).css('background', '#FFFFFF');
+					}
+				},
+				allowPageScroll: "vertical"
+			});
 		},
 
 		/*

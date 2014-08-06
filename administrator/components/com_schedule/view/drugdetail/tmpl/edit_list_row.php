@@ -71,7 +71,7 @@ else
 	}
 </style>
 
-<tr>
+<tr data-id="<?php echo $schedule->id; ?>">
 	<td class="text-center">
 		<!-- 排程編號 -->
 		<div class="row"><?php echo $schedule->id; ?></div>
