@@ -44,4 +44,3 @@ class RuntimeCache
 		return $cache;
 	}
 }
- 

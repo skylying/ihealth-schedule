@@ -95,4 +95,3 @@ class RuntimeStorage
 		return $this;
 	}
 }
- 

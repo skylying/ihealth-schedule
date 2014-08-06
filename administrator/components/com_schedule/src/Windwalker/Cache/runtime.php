@@ -99,4 +99,3 @@ class JCacheStorageRuntime extends \JCacheStorage
 		return $this;
 	}
 }
- 

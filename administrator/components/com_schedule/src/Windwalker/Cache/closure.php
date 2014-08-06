@@ -48,4 +48,3 @@ class JCacheControllerClosure extends \JCacheControllerCallback
 		return $this->cache->get($key, 'closure');
 	}
 }
- 

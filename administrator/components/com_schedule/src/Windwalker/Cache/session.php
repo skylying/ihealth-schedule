@@ -104,4 +104,3 @@ class JCacheStorageSession extends JCacheStorage
 		return $this;
 	}
 }
- 
