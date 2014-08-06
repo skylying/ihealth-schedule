@@ -1,8 +1,8 @@
 <?php
 /**
- * Part of csi project. 
+ * Part of Windwalker project.
  *
- * @copyright  Copyright (C) 2014 {ORGANIZATION}. All rights reserved.
+ * @copyright  Copyright (C) 2014 SMS Taiwan. All rights reserved.
  * @license    GNU General Public License version 2 or later;
  */
 
@@ -104,3 +104,4 @@ class JCacheStorageSession extends JCacheStorage
 		return $this;
 	}
 }
+ 
