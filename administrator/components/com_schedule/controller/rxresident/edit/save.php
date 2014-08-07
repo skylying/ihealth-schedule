@@ -116,7 +116,8 @@ class ScheduleControllerRxresidentEditSave extends SaveController
 	protected function validateBirth($birthDate)
 	{
 		if (preg_match('/^[12][0-9]{3}[01][0-9][0-3][0-9]$/', $birthDate)
-			|| preg_match('/^[12][0-9]{3}-[01][0-9]-[0-3][0-9]$/', $birthDate))
+			|| preg_match('/^[12][0-9]{3}-[01][0-9]-[0-3][0-9]$/', $birthDate)
+			|| $birthDate === '')
 		{
 			return true;
 		}
