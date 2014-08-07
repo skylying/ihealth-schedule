@@ -186,7 +186,6 @@ class ScheduleModelSchedules extends ListModel
 			}
 		);
 
-
 		$filterHelper->setHandler(
 			'schedule.date_end',
 			function ($query, $field, $end)
