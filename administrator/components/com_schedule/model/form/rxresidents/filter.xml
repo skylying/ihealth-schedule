@@ -100,6 +100,7 @@
 			<option value="file">上傳檔案</option>
 			<option value="photo">拍照</option>
 			<option value="paper">正本</option>
+			<option value="email">E-MAIL</option>
 		</field>
 	</fields>
 
