@@ -138,6 +138,19 @@ class ScheduleViewDrugdetailHtml extends EditView
 
 					$items[$senderId]['institutes'][$instituteId]['schedules'][] = $schedule;
 				break;
+
+				// 行政排程
+				case "discuss":
+				case "speech":
+				case "collect":
+				case "visit":
+				case "evaluation":
+				case "other":
+					$items[$senderId]['admin'][] = array(
+						'date' => $schedule->date,
+						'type' => JText::_('COM_SCHEDULE_SCHEDULE_FIELD_TYPE_' . $schedule->type) ,
+						'to' => empty($schedule->name) ? $schedule->institute_title : $schedule->name,
+					);
 			}
 		}
 

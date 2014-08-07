@@ -41,7 +41,47 @@ $user = JFactory::getUser();
 <span class="btn btn-info" style="font-size: 20px;">
 	<span class="icon-signup"></span>&nbsp;&nbsp;<?php echo $sender['name']; ?>
 </span>
-	<hr />
+
+<hr />
+
+	<!--行政排程區塊-->
+	<?php if (!empty($sender['admin'])): ?>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-5">
+				<table class="table table-bordered">
+					<thead>
+					<tr>
+						<th class="center" width="20%">日期</th>
+						<th class="center" width="20%">類型</th>
+						<th class="center">目的地 / 客戶</th>
+					</tr>
+					</thead>
+					<tbody>
+					<?php
+
+					$html = "";
+
+					foreach ($sender['admin'] as $admin)
+					{
+						$html .= <<<HTML
+	<tr>
+		<td class="center">{$admin["date"]}</td>
+		<td class="center">{$admin["type"]}</td>
+		<td class="center">{$admin["to"]}</td>
+	</tr>
+HTML;
+					}
+
+					echo $html;
+					?>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	<?php endif; ?>
+
 <table id="drug-details" class="table table-bordered">
 	<thead>
 	<tr>
