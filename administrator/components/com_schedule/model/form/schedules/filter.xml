@@ -192,6 +192,15 @@
 			<option value="1">已分藥</option>
 			<option value="0">未分藥</option>
 		</field>
+
+		<field name="prescription.created"
+			type="datetimepicker"
+			default=""
+			label="預約日"
+			hint="預約日"
+			description="預約日"
+			onchange="this.form.submit();"
+			/>
 	</fields>
 
 	<fields name="list">
