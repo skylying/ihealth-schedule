@@ -76,20 +76,22 @@
 			// Register self as "this" alias
 			var self = this;
 
+			var clickOrTouch = self.isIpad() ? 'touchend' : 'click';
+
 			// New row click event
-			$("." + this.buttonClass).click(function()
+			$("." + self.buttonClass).on(clickOrTouch, function()
 			{
 				self.addInstituteExtraRow(this);
 			});
 
 			// Delete row click event
-			$("#schedule").on('click', '.' + self.removeButtonClass, function()
+			$("#schedule").on(clickOrTouch, '.' + self.removeButtonClass, function()
 			{
 				$(this).closest('tr').remove();
 			});
 
 			// Bind big checkbox label click event
-			self.bigCheckboxesLabel.on('click', function()
+			self.bigCheckboxesLabel.on(clickOrTouch, function()
 			{
 				var hasTickClass = $(this).attr('class').indexOf('tick');
 
@@ -194,6 +196,16 @@
 					$(this).closest('tr').remove();
 				}
 			})
+		},
+
+		/**
+		 * Detect is iPad or not
+		 *
+		 * @returns {boolean}
+		 */
+		isIpad : function()
+		{
+			return  (navigator.userAgent.indexOf('iPad') !== -1);
 		}
 	};
 
