@@ -15,7 +15,7 @@ use Windwalker\Joomla\DataMapper\DataMapper;
 use Windwalker\System\ExtensionHelper;
 
 /**
- * Class SaveController
+ * Class ScheduleControllerInstitutesSync
  *
  * @since 1.0
  */
