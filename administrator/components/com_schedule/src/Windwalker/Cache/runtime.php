@@ -11,7 +11,7 @@ use Windwalker\Cache\RuntimeStorage;
 /**
  * The RuntimeStorage class.
  * 
- * @since  {DEPLOY_VERSION}
+ * @since  1.0
  */
 class JCacheStorageRuntime extends \JCacheStorage
 {
