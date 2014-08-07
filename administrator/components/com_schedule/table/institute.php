@@ -7,6 +7,7 @@
  */
 
 use Windwalker\Table\Table;
+use Windwalker\Table\TableHelper;
 
 // No direct access
 defined('_JEXEC') or die;
@@ -18,6 +19,13 @@ defined('_JEXEC') or die;
  */
 class ScheduleTableInstitute extends Table
 {
+	/**
+	 * Property tableHelper.
+	 *
+	 * @var TableHelper
+	 */
+	protected $tableHelper;
+
 	/**
 	 * Constructor
 	 */
@@ -91,6 +99,11 @@ class ScheduleTableInstitute extends Table
 	 */
 	public function store($updateNulls = false)
 	{
+		if ($this->id > 0)
+		{
+			$this->getTableHelper()->initRow($this->id);
+		}
+
 		return parent::store($updateNulls);
 	}
 
@@ -106,5 +119,20 @@ class ScheduleTableInstitute extends Table
 	public function delete($pk = null)
 	{
 		return parent::delete($pk);
+	}
+
+	/**
+	 * getTableHelper
+	 *
+	 * @return  \Windwalker\Table\TableHelper
+	 */
+	public function getTableHelper()
+	{
+		if (!($this->tableHelper instanceof TableHelper))
+		{
+			$this->tableHelper = new TableHelper($this->_tbl, $this->_db, 'id');
+		}
+
+		return $this->tableHelper;
 	}
 }

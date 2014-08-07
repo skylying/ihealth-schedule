@@ -9,9 +9,19 @@
 			<field
 				name="host"
 				type="text"
-				label="iCRM API 網址"
-				class=""
-				default=""
+				label="URL"
+				/>
+
+			<field
+				name="username"
+				type="text"
+				label="Access Username"
+				/>
+
+			<field
+				name="password"
+				type="password"
+				label="Access Password"
 				/>
 
 			<field name="default_sender"
