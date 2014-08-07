@@ -9,7 +9,7 @@
 /**
  * The JCacheControllerClosure class.
  * 
- * @since  {DEPLOY_VERSION}
+ * @since  1.0
  */
 class JCacheControllerClosure extends \JCacheControllerCallback
 {
@@ -48,4 +48,3 @@ class JCacheControllerClosure extends \JCacheControllerCallback
 		return $this->cache->get($key, 'windwalker');
 	}
 }
- 
