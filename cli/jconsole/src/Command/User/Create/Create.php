@@ -81,23 +81,18 @@ class Create extends JCommand
 	 */
 	protected function doExecute()
 	{
-		if (!version_compare(PHP_VERSION, '5.4', '>='))
-		{
-			throw new \RuntimeException('PHP need 5.4 or upper.');
-		}
-
 		// Install User
 		$userdata = array();
 
-		$userdata['username'] = (new NotNullPrompter)->ask('Please enter account: ');
+		$userdata['username'] = $this->with(new NotNullPrompter)->ask('Please enter account: ');
 
-		$userdata['name'] = (new NotNullPrompter)->ask('Please enter user name: ');
+		$userdata['name'] = $this->with(new NotNullPrompter)->ask('Please enter user name: ');
 
-		$userdata['email'] = (new NotNullPrompter)->ask('Please enter your email: ');
+		$userdata['email'] = $this->with(new NotNullPrompter)->ask('Please enter your email: ');
 
-		$userdata['password'] = (new PasswordPrompter)->ask('Please enter password: ');
+		$userdata['password'] = $this->with(new PasswordPrompter)->ask('Please enter password: ');
 
-		$userdata['password2'] = (new PasswordPrompter)->ask('Please valid password: ');
+		$userdata['password2'] = $this->with(new PasswordPrompter)->ask('Please valid password: ');
 
 		if ($userdata['password'] != $userdata['password2'])
 		{
@@ -137,5 +132,17 @@ class Create extends JCommand
 		$this->out()->out('Create user success.');
 
 		return true;
+	}
+
+	/**
+	 * For php 5.3 B/C.
+	 *
+	 * @param object $object
+	 *
+	 * @return  object
+	 */
+	public function with($object)
+	{
+		return $object;
 	}
 }

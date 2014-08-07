@@ -1,84 +1,99 @@
-# iHealth 排程管理 (ihealth-schedule)
+# Joomla! Content Management Framework
 
-## 注意事項
+A light Joomla! with limited core extensions.
 
-- [Prototype](http://ihealth.prototype.ipharmacy.com.tw/index)
-- [Trello](http://trello.com/b/74CnbCQs/ihealth-crm-schedule-ow)
-- [API 文件](https://docs.google.com/document/d/1nhkLdqX7ZH-_5MvIzj_oDtnzwqk3xRe1oQpNQSWFW9Q/edit)
+## Installation
 
-## 專案初始化流程
+Download [this repo](https://github.com/asika32764/joomla-cmf/archive/master.zip) to your project path.
 
-### Step 1: 先將專案從 GitHub 上 Fork 回來後，clone 回自己的電腦
+Copy `configuration.dist.php` to `configuration.php`, then fill database information.
 
-```bash
-$ git clone git@github.com:{your-account}/ihealth-schedule.git
+``` bash
+cp configuration.dist.php configuration.php
+EDITOR configuration.php
 ```
 
-### Step 2: Checkout to dev branch
+Execute these commands:
 
-```bash
-$ git checkout dev
+``` bash
+php cli/console sql import default -y
+php cli/console cmf make
 ```
 
-### Step 3: 設定 `configuration.php`
+The CMF system will convert this Joomla! package to CMF package, and ask you to create a new user.
 
-```bash
-$ cp configuration.php.dist configuration.php
-$ EDITOR configuration.php
-```
+## Removed Core Extensions
 
-### Step 4: 複製 `.htaccess`
-
-```bash
-$ cp htaccess.dist.txt .htaccess
-```
-
-### Step 5: 匯入資料
-
-匯入新專案預設的資訊
-
-```bash
-$ php cli/console sql import default schedule fixtures default-user -y
-```
-
-## 後台
-
-網址: http://localhost/ihealth-schedule/administrator/index.php?ihealth-schedule
-
-使用預設帳戶登入，帳密: **smstw /  低強度基隆**
-
-## 測試機
-
-網址: http://test.ihealth-schedule.ipharmacy.com.tw/administrator/index.php?ihealth-schedule
-
-## 元件資訊
-
-- com_schedule  
-  資料表:
-    - `#__schedule_addresses`
-    - `#__schedule_colors`
-    - `#__schedule_customers`
-    - `#__schedule_drugprices`
-    - `#__schedule_drugs`
-    - `#__schedule_holidays`
-    - `#__schedule_hospitals`
-    - `#__schedule_images`
-    - `#__schedule_institutes`
-    - `#__schedule_members`
-    - `#__schedule_prescriptions`
-    - `#__schedule_routes`
-    - `#__schedule_schedules`
-    - `#__schedule_senders`
-    - `#__schedule_tasks`
-
-## 各大系統編號規則
-
-| 元件 | 範例 | 編號規則 | 備註
-| --- | --- | --- | --- |
-| 處方箋編號 | P1 | P+id |	1.Bar code會貼在處方箋上  2.可能前面需要補0 |
-| 排程編號 | S394-2 | S+id+第幾次配送	後面數字不會超過 3 |
-| 機構編號 | (需討論) | 流水號	要跟iCRM、爸媽Home、爸媽CRM同步 |
-| 外送藥師編號 | T30 | T+id |
-| 客戶編號 | C100 | C+id |
-| 會員編號 | M55 | M+id |
-| 醫院編號 | H1073 | H+id	|
+- component:
+    - admin
+        - com_ajax
+        - com_banners
+        - com_contact
+        - com_contenthistory
+        - com_finder
+        - com_newsfeeds
+        - com_search
+        - com_weblinks
+        - com_mailto
+        - com_wrapper
+        - com_messages
+        - com_content
+        - com_joomlaupdate
+        - com_postinstall
+- module:
+    - site
+        - mod_articles_archive
+        - mod_articles_latest
+        - mod_articles_popular
+        - mod_banners
+        - mod_feed
+        - mod_footer
+        - mod_articles_news
+        - mod_random_image
+        - mod_related_items
+        - mod_search
+        - mod_stats
+        - mod_weblinks
+        - mod_whosonline
+        - mod_wrapper
+        - mod_articles_category
+        - mod_articles_categories
+        - mod_finder
+    - admin
+        - mod_feed
+        - mod_latest
+        - mod_popular
+        - mod_status
+        - mod_multilangstatus
+        - mod_version
+        - mod_stats_admin
+        - mod_tags_popular
+        - mod_tags_similar
+- plugin:
+    - plg_content_contact
+    - plg_content_emailcloak
+    - plg_content_pagebreak
+    - plg_content_pagenavigation
+    - plg_content_vote
+    - plg_editors-xtd_article
+    - plg_editors-xtd_pagebreak
+    - plg_search_categories
+    - plg_search_contacts
+    - plg_search_content
+    - plg_search_newsfeeds
+    - plg_search_weblinks
+    - plg_user_profile
+    - plg_extension_joomla
+    - plg_content_joomla
+    - plg_quickicon_joomlaupdate
+    - plg_quickicon_extensionupdate
+    - plg_system_highlight
+    - plg_content_finder
+    - plg_finder_categories
+    - plg_finder_contacts
+    - plg_finder_content
+    - plg_finder_newsfeeds
+    - plg_finder_weblinks
+    - plg_finder_tags
+    - plg_twofactorauth_totp
+    - plg_twofactorauth_yubikey
