@@ -87,6 +87,11 @@ $date      = $container->get('date');
 		<?php echo $grid->sortTitle('外送藥師', 'route.sender_id'); ?>
 	</th>
 
+	<!-- route.sender_id -->
+	<th class="center">
+		<?php echo $grid->sortTitle('預約日', 'prescription.created'); ?>
+	</th>
+
 	<!-- schedule.sorted -->
 	<th class="center">
 		<?php echo $grid->sortTitle('分藥', 'schedule.sorted'); ?>
@@ -102,7 +107,7 @@ $date      = $container->get('date');
 <!--PAGINATION-->
 <tfoot>
 <tr>
-	<td colspan="12">
+	<td colspan="13">
 		<div class="pull-left">
 			<?php echo $data->pagination->getListFooter(); ?>
 		</div>
@@ -196,6 +201,11 @@ foreach ($data->items as $i => $item):
 		<!-- route_sender_name -->
 		<td class="center field-sender-id" data-sender-id="<?php echo $item->sender_id; ?>">
 			<?php echo $item->sender_name; ?>
+		</td>
+
+		<!-- prescription created -->
+		<td class="center">
+			<?php echo date('Y-m-d', strtotime($item->prescription_created)); ?>
 		</td>
 
 		<!-- sorted -->
