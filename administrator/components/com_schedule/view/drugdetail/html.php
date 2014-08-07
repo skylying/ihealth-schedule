@@ -94,20 +94,9 @@ class ScheduleViewDrugdetailHtml extends EditView
 	{
 		$app = JFactory::getApplication();
 
-		// Prepare filter input data
-		$senderIds = $app->input->getVar('senderIds', array());
-		$this->data->date_start = $app->input->get("date_start");
-		$this->data->date_end = $app->input->get("date_end");
-
-		if (empty($senderIds))
-		{
-			throw new \Exception("請選擇至少一位外送藥師");
-		}
-
-		if (empty($this->data->date_start) && empty($this->data->date_end))
-		{
-			throw new \Exception("請選擇外送日期區間");
-		}
+		$senderIds = $this->handleFilterVar('senderIds');
+		$this->data->date_start = $this->handleFilterVar('date_start');
+		$this->data->date_end = $this->handleFilterVar('date_end');
 
 		// Get schedules
 		$schedules = $this->getRelatedSchedules($senderIds);
@@ -280,5 +269,41 @@ class ScheduleViewDrugdetailHtml extends EditView
 		unset($buttonSet['save2copy']);
 
 		return $buttonSet;
+	}
+
+	/**
+	 * handleFilterVar (simulate populate state)
+	 *
+	 * @param   string $key
+	 *
+	 * @return  mixed
+	 */
+	protected function handleFilterVar($key)
+	{
+		$app = JFactory::getApplication();
+
+		$var = $app->input->getVar($key);
+		$varInState = $app->getUserState('drugdetail.filter.' . $key);
+
+		if (!$var && !$varInState)
+		{
+			$app->redirect(JRoute::_('index.php?option=com_schedule&view=schedules', false), JText::_('COM_SCHEDULE_DRUGDETAIL_FILTER_' . $key . '_NOT_EXIST'), 'warning');
+		}
+		elseif ($var && $varInState)
+		{
+			$app->setUserState('drugdetail.filter.' . $key, $var);
+
+			return $var;
+		}
+		elseif (!$var && $varInState)
+		{
+			return $varInState;
+		}
+		else
+		{
+			$app->setUserState('drugdetail.filter.' . $key, $var);
+
+			return $var;
+		}
 	}
 }
