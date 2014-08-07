@@ -11,7 +11,7 @@ namespace Windwalker\Cache;
 /**
  * The RuntimeCache class.
  * 
- * @since  {DEPLOY_VERSION}
+ * @since  1.0
  */
 class RuntimeCache
 {
