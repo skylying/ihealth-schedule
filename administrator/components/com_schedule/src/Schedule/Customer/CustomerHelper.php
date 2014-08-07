@@ -28,7 +28,7 @@ class CustomerHelper
 	public static function verifyIdNumber($id, $onlyFormat = true)
 	{
 		// I rewrote this regex. Simple but accurate.
-		if (!preg_match("/^[A-Z][0-9]{9}$/", $id))
+		if (!preg_match("/^[A-Z][0-9]{9}$/i", $id))
 		{
 			return false;
 		}
@@ -69,7 +69,7 @@ class CustomerHelper
 
 		$multiples = array(1, 9, 8, 7, 6, 5, 4, 3, 2, 1, 1);
 
-		$id = $head[$id[0]] . substr($id, 1);
+		$id = $head[strtoupper($id[0])] . substr($id, 1);
 		$length = strlen($id);
 
 		if ($length !== 11)

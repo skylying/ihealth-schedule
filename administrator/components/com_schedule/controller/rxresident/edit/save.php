@@ -135,6 +135,9 @@ class ScheduleControllerRxresidentEditSave extends SaveController
 	 */
 	protected function createCustomers()
 	{
+		$newCustomerIds = array();
+
+		// Filter duplicated new customers
 		foreach ($this->data['items'] as &$item)
 		{
 			$item['customer_id'] = trim($item['customer_id']);
@@ -145,6 +148,16 @@ class ScheduleControllerRxresidentEditSave extends SaveController
 			}
 
 			if (! is_numeric($item['customer_id']))
+			{
+				$newCustomerIds[$item['customer_id']] = 0;
+			}
+		}
+
+		foreach ($this->data['items'] as &$item)
+		{
+			$customerId = $item['customer_id'];
+
+			if (! is_numeric($item['customer_id']) && 0 === $newCustomerIds[$customerId])
 			{
 				$customer = array(
 					'name' => $item['customer_id'],
@@ -161,12 +174,18 @@ class ScheduleControllerRxresidentEditSave extends SaveController
 				$customerModel->save($customer);
 
 				$customer['id'] = $customerModel->getState()->get('customer.id');
+				$newCustomerIds[$customerId] = $customer['id'];
 			}
 			else
 			{
 				$customerMapper = new DataMapper(Table::CUSTOMERS);
 
-				$customer = $customerMapper->findOne($item['customer_id']);
+				if (isset($newCustomerIds[$customerId]) && $newCustomerIds[$customerId] > 0)
+				{
+					$customerId = $newCustomerIds[$customerId];
+				}
+
+				$customer = $customerMapper->findOne($customerId);
 			}
 
 			$item['customer_id'] = $customer['id'];

@@ -318,10 +318,7 @@
 			// Update total row number first
 			updateTotalRowNumber();
 
-			if (! this.option.isEdit)
-			{
-				$instituteIdSelection.change();
-			}
+			$instituteIdSelection.change();
 		},
 
 		/**
