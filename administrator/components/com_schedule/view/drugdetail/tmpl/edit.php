@@ -24,6 +24,11 @@ $form       = $data->form;
 $filterForm = $data->filterForm;
 $item       = $data->item;
 
+$doc = JFactory::getDocument();
+
+$asset = $container->get('helper.asset');
+$asset->addJs('library/jquery.touchSwipe.js');
+
 ?>
 <!-- Validate Script -->
 <script type="text/javascript">

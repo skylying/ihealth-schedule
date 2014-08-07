@@ -37,6 +37,7 @@ $fieldsets = $form->getFieldset("filter");
 		<div class="control-label">
 			預計外送日:
 		</div>
+
 		<div class="controls">
 			<?php echo $fieldsets['date_start']->input; ?>
 			~

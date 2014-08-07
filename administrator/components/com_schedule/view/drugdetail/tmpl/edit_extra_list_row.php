@@ -48,7 +48,7 @@ $price   = FieldHelper::resetGroup($form->getField('price', null, (int) $priceVa
 
 ?>
 
-<tr <?php echo $id; ?> <?php echo $class; ?>>
+<tr <?php echo $id; ?> <?php echo $class; ?> data-id="noid">
 	<td colspan="9">
 		<?php echo $idInput->input; ?>
 		<?php echo $task->input; ?>
