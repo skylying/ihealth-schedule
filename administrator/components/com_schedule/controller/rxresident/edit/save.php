@@ -123,7 +123,7 @@ class ScheduleControllerRxresidentEditSave extends SaveController
 		}
 		else
 		{
-			throw new ValidateFailException(array('請確認生日格式是否符合8位數字或(YYYY-MM-DD)格式。'));
+			throw new ValidateFailException(array('請確認生日格式是否符合8位數字或(YYYY-MM-DD)格式，若不知道生日請將欄位留白。'));
 		}
 	}
 
