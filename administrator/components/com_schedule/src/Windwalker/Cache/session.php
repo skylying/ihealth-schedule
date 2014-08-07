@@ -9,7 +9,7 @@
 /**
  * The JCacheStorageSession class.
  * 
- * @since  {DEPLOY_VERSION}
+ * @since  1.0
  */
 class JCacheStorageSession extends JCacheStorage
 {
@@ -104,4 +104,3 @@ class JCacheStorageSession extends JCacheStorage
 		return $this;
 	}
 }
- 
