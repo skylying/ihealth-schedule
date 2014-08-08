@@ -53,17 +53,21 @@
 			<option value="resident">住民</option>
 		</field>
 
-		<field
-			name="customer.institute_id"
-			type="institute_list"
-			value_field="short_title"
-			label="選擇機構"
-			default=""
-			onchange="this.form.submit();"
-			>
-			<option></option>
-			<option>選擇機構</option>
-		</field>
+		<field name="customer.institute_id"
+			type="select2"
+			class="input-large"
+			label="機構名稱"
+			description="機構名稱"
+			hint="輸入機構名稱"
+			minimumInputLength="1"
+			apiUrl="index.php?option=com_schedule&amp;task=institutes.search.json"
+			apiQueryKey="filter_search"
+			query="SELECT `id`, `short_title` FROM #__schedule_institutes WHERE `id` = '%s'"
+			idField="id"
+			textField="short_title"
+			allowClear="true"
+			onchange="filterInstituteOnChange();"
+			/>
 
 		<field
 			name="customer.city"
