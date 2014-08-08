@@ -26,6 +26,7 @@ $container = $this->getContainer();
 $asset     = $container->get('helper.asset');
 
 AddressScript::bind('filter_customer_city', 'filter_customer_area');
+
 $asset->addJS('schedules/list.js');
 
 ?>
