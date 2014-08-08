@@ -152,27 +152,57 @@
 	 */
 	function bindSeeDrDateEvent($node)
 	{
-		function change()
-		{
-			// Focus out DatetimePicker element
-			$node.closest('tr').find('.period').focus().blur();
+		updateDrugEmptyDate.call(this);
+	}
 
-			updateDrugEmptyDate.call(this);
-		}
+	/**
+	 * Valid date manually entered by user
+	 *
+	 * @param {string} date
+	 * @param {object} elem
+	 */
+	function validateDate(date, elem)
+	{
+		// 10 digits like 2014-01-23, and has to be reasonable date
+		var validDashedDateExp = new RegExp(/([1-2]{1}[0-9]{1}[0-9]{2}[-]{1}[0-1]{1}[0-9]{1}[-]{1}[0-3]{1}[0-9]{1})/g);
 
-		$node.on('dp.change', function(e)
-		{
-			change.call(this);
-		});
+		// Date has to be reasonable 8 digits, EX : 30002359 is not allow here
+		var validDateExp = new RegExp(/([1-2]{1}[0-9]{1}[0-9]{2}[0-1]{1}[0-9]{1}[0-3]{1}[0-9]{1})/g);
 
-		$node.on('dp.hide', function(e)
+		var validState = {
+			validDashedDate : validDashedDateExp.test(date),
+			validDate : validDateExp.test(date)
+		};
+
+		var length = date.length;
+
+		if (length == 10)
 		{
-			// Trigger event "dp.change" when select today's date
-			if (0 === moment().diff(e.date, 'days'))
+			if (!validState.validDashedDate)
 			{
-				change.call(this);
+				throw new UserException('年、月、日必須落在合理範圍');
 			}
-		});
+		}
+		else if (length == 8)
+		{
+			if (!validState.validDate)
+			{
+				throw new UserException('年、月、日必須落在合理範圍');
+			}
+
+			// Replace formatted date "YY-MM-DD"
+			$(elem).val(date.substr(0, 4) + '-' + date.substr(4, 2) + '-' + date.substr(6, 2));
+		}
+		else
+		{
+			throw new UserException('正確日期格式應為 "2014-02-01" 或是 "20140201"');
+		}
+	}
+
+	function UserException(message)
+	{
+		this.message = message;
+		this.name = "UserException";
 	}
 
 	/**
@@ -196,9 +226,27 @@
 		// big-checkbox click event
 		$panel.find('.large-checkbox-fieldset label').click(clickLargeLabel);
 
+		// 就醫日期
 		$('.see-dr-date').each(function()
 		{
-			bindSeeDrDateEvent($(this));
+			$(this).on('focusout', function()
+			{
+				var seeDrDate = $(this).val();
+
+				try
+				{
+					validateDate(seeDrDate, this);
+				}
+				catch(e)
+				{
+					alert(e.message);
+
+					// Remind user
+					$(this).focus();
+				}
+
+				updateDrugEmptyDate.call(this);
+			});
 		});
 
 		// Bind form submit event
@@ -280,16 +328,25 @@
 			// Bind initialize event
 			handler.on('initializeRow', function($row)
 			{
-				var $datetimePicker = $row.find('.datetimepicker');
+				// 就醫日期連動
+				$row.find('.see-dr-date').on('focusout', function()
+				{
+					var seeDrDate = $(this).val();
 
-				$datetimePicker.datetimepicker({
-					pickTime: false,
+					try
+					{
+						validateDate(seeDrDate, this);
+					}
+					catch(e)
+					{
+						alert(e.message);
 
-					// 禁用點選未來的日期
-					maxDate: new Date()
+						// Remind user
+						$(this).focus();
+					}
+
+					updateDrugEmptyDate.call(this);
 				});
-
-				bindSeeDrDateEvent($datetimePicker);
 
 				// Bind onchange event to update "就醫日期" & "給藥天數"
 				$row.find('.period').change(updateDrugEmptyDate);

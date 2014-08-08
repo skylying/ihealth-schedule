@@ -85,9 +85,9 @@
 			/>
 
 		<field name="see_dr_date"
-			type="DateTimePicker"
+			type="text"
 			hint="選擇日期"
-			class="datetimepicker calendarwidth see-dr-date"
+			class="calendarwidth see-dr-date"
 			label="就醫日期"
 			description="就醫日期"
 			required="true"
