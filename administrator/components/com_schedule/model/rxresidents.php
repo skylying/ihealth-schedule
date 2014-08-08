@@ -157,7 +157,7 @@ class ScheduleModelRxresidents extends ListModel
 			{
 				if ($min)
 				{
-					$query->where('`rxindividual`.`see_dr_date` >= ' . $query->q($min));
+					$query->where('`rxresident`.`see_dr_date` >= ' . $query->q($min));
 				}
 			}
 		);
@@ -168,7 +168,7 @@ class ScheduleModelRxresidents extends ListModel
 			{
 				if ($max)
 				{
-					$query->where('`rxindividual`.`see_dr_date` <= ' . $query->q($max));
+					$query->where('`rxresident`.`see_dr_date` <= ' . $query->q($max));
 				}
 			}
 		);

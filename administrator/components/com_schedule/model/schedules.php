@@ -71,7 +71,8 @@ class ScheduleModelSchedules extends ListModel
 	 */
 	protected $filterFields = array(
 		'schedule.date_start',
-		'schedule.date_end'
+		'schedule.date_end',
+		'prescription.created'
 	);
 
 	/**
@@ -100,6 +101,7 @@ class ScheduleModelSchedules extends ListModel
 		$queryHelper->addTable('schedule', '#__schedule_schedules')
 			->addTable('route', '#__schedule_routes', 'schedule.route_id = route.id')
 			->addTable('memberMap', '#__schedule_customer_member_maps', 'memberMap.customer_id = schedule.customer_id')
+			->addTable('prescription', '#__schedule_prescriptions', 'schedule.rx_id = prescription.id')
 			->addTable('member', '#__schedule_members', 'member.id = memberMap.member_id');
 
 		$this->filterFields = array_merge($this->filterFields, $queryHelper->getFilterFields());
@@ -169,6 +171,17 @@ class ScheduleModelSchedules extends ListModel
 				if ($start)
 				{
 					$query->where('`schedule`.`date` >= ' . $query->q($start));
+				}
+			}
+		);
+
+		$filterHelper->setHandler(
+			'prescription.created',
+			function ($query, $field, $created)
+			{
+				if ($created)
+				{
+					$query->where('`prescription`.`created` LIKE ' . $query->q($created . '%'));
 				}
 			}
 		);

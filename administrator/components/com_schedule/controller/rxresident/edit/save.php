@@ -116,13 +116,14 @@ class ScheduleControllerRxresidentEditSave extends SaveController
 	protected function validateBirth($birthDate)
 	{
 		if (preg_match('/^[12][0-9]{3}[01][0-9][0-3][0-9]$/', $birthDate)
-			|| preg_match('/^[12][0-9]{3}-[01][0-9]-[0-3][0-9]$/', $birthDate))
+			|| preg_match('/^[12][0-9]{3}-[01][0-9]-[0-3][0-9]$/', $birthDate)
+			|| $birthDate === '')
 		{
 			return true;
 		}
 		else
 		{
-			throw new ValidateFailException(array('請確認生日格式是否符合8位數字或(YYYY-MM-DD)格式。'));
+			throw new ValidateFailException(array('請確認生日格式是否符合8位數字或(YYYY-MM-DD)格式，若不知道生日請將欄位留白。'));
 		}
 	}
 

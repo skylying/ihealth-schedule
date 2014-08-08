@@ -27,6 +27,8 @@ $container = $this->getContainer();
 $asset     = $container->get('helper.asset');
 $grid      = $data->grid;
 $date      = $container->get('date');
+
+$asset->addJS('schedules/list.js');
 ?>
 
 <!-- LIST TABLE -->
@@ -47,52 +49,52 @@ $date      = $container->get('date');
 
 	<!-- 處方箋編號 -->
 	<th class="center">
-		<?php echo $grid->sortTitle('處方箋編號', 'rxindividual.id'); ?>
+		<?php echo $grid->sortTitle('處方箋編號', 'rxresident.id'); ?>
 	</th>
 
 	<!-- 機構名稱 -->
 	<th class="center">
-		<?php echo $grid->sortTitle('機構名稱', 'rxindividual.institute_short_title'); ?>
+		<?php echo $grid->sortTitle('機構名稱', 'rxresident.institute_short_title'); ?>
 	</th>
 
 	<!-- 住民姓名 -->
 	<th class="center">
-		<?php echo $grid->sortTitle('住民姓名', 'rxindividual.customer_name'); ?>
+		<?php echo $grid->sortTitle('住民姓名', 'rxresident.customer_name'); ?>
 	</th>
 
 	<!-- 身分證字號 -->
 	<th class="center">
-		<?php echo $grid->sortTitle('身分證字號', 'rxindividual.id_number'); ?>
+		<?php echo $grid->sortTitle('身分證字號', 'rxresident.id_number'); ?>
 	</th>
 
 	<!-- 就醫日期 -->
 	<th class="center">
-		<?php echo $grid->sortTitle('就醫日期', 'rxindividual.see_dr_date'); ?>
+		<?php echo $grid->sortTitle('就醫日期', 'rxresident.see_dr_date'); ?>
 	</th>
 
 	<!-- 處方箋天數 -->
 	<th class="center">
-		<?php echo $grid->sortTitle('處方箋天數', 'rxindividual.period'); ?>
+		<?php echo $grid->sortTitle('處方箋天數', 'rxresident.period'); ?>
 	</th>
 
 	<!-- 可調劑次數 -->
 	<th class="center">
-		<?php echo $grid->sortTitle('可調劑次數', 'rxindividual.times'); ?>
+		<?php echo $grid->sortTitle('可調劑次數', 'rxresident.times'); ?>
 	</th>
 
 	<!-- 處方箋取得方式 -->
 	<th class="center">
-		<?php echo $grid->sortTitle('處方箋取得方式', 'rxindividual.method'); ?>
+		<?php echo $grid->sortTitle('處方箋取得方式', 'rxresident.method'); ?>
 	</th>
 
 	<!-- 新增人 -->
 	<th class="center">
-		<?php echo $grid->sortTitle('新增人', 'user.created_by'); ?>
+		<?php echo $grid->sortTitle('新增人', 'rxresident.created_by'); ?>
 	</th>
 
 	<!-- 最後修改人 -->
 	<th class="center">
-		<?php echo $grid->sortTitle('最後修改人', 'user.modified_by'); ?>
+		<?php echo $grid->sortTitle('最後修改人', 'rxresident.modified_by'); ?>
 	</th>
 </tr>
 </thead>
