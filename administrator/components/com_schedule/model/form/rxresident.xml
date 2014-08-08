@@ -84,22 +84,6 @@
 			readonly="true"
 			/>
 
-		<field name="id_number"
-			type="text"
-			class="fullwidth id-number"
-			label="身分證字號"
-			description="身分證字號"
-			default="**********"
-			/>
-
-		<field name="birth_date"
-			type="DateTimePicker"
-			hint="選擇日期"
-			class="datetimepicker calendarwidth birth-date"
-			label="生日"
-			description="生日"
-			/>
-
 		<field name="see_dr_date"
 			type="DateTimePicker"
 			hint="選擇日期"

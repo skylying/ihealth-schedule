@@ -111,8 +111,6 @@ $jsOption = [
 		<thead>
 			<tr>
 				<th width="11%">客戶</th>
-				<th width="10%">身分證字號</th>
-				<th width="9.7%">生日</th>
 				<th width="9.7%">就醫日期</th>
 				<th width="5.87%">給藥天數</th>
 				<th width="5.26%">可調劑次數</th>

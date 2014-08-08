@@ -36,30 +36,6 @@ $id    = FieldHelper::resetGroup($form->getField('id'), $group);
 		?>
 	</td>
 	<td>
-		<?php
-		$customerName = FieldHelper::resetGroup($form->getField('id_number'), $group);
-
-		if ($customerId->value > 0)
-		{
-			$customerName->readonly = true;
-		}
-
-		echo $customerName->input;
-		?>
-	</td>
-	<td>
-		<?php
-		$birthDate = FieldHelper::resetGroup($form->getField('birth_date'), $group);
-
-		if ($customerId->value > 0)
-		{
-			$birthDate->readonly = true;
-		}
-
-		echo $birthDate->input;
-		?>
-	</td>
-	<td>
 		<?php echo FieldHelper::resetGroup($form->getField('see_dr_date'), $group)->input; ?>
 	</td>
 	<td>
