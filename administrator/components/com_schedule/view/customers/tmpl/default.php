@@ -7,6 +7,7 @@
  */
 
 use Windwalker\View\Layout\FileLayout;
+use Schedule\Script\AddressScript;
 
 // No direct access
 defined('_JEXEC') or die;
@@ -22,6 +23,8 @@ JHtmlDropdown::init();
  * @var Windwalker\DI\Container $container
  */
 $container = $this->getContainer();
+AddressScript::bind('filter_customer_city', 'filter_customer_area');
+
 ?>
 
 <div id="schedule" class="windwalker customers tablelist row-fluid">

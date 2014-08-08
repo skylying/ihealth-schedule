@@ -66,13 +66,12 @@
 		</field>
 
 		<field
-			name="customer.city_title"
+			name="customer.city"
 			type="sql"
-			query="SELECT title FROM #__schedule_cities"
-			key_field="title"
+			query="SELECT id,title FROM #__schedule_cities"
+			key_field="id"
 			value_field="title"
 			label="選擇縣市"
-			default=""
 			onchange="this.form.submit();"
 			>
 			<option></option>
@@ -80,13 +79,12 @@
 		</field>
 
 		<field
-			name="customer.area_title"
+			name="customer.area"
 			type="sql"
-			query="SELECT title FROM #__schedule_areas"
-			key_field="title"
+			query="SELECT id,title FROM #__schedule_areas"
+			key_field="id"
 			value_field="title"
 			label="選擇區域"
-			default=""
 			onchange="this.form.submit();"
 			>
 			<option></option>
