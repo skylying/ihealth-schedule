@@ -71,20 +71,8 @@
 			label="選擇就醫日期(訖)"
 			description="選擇就醫日期(訖)"
 			hint="選擇就醫日期(訖)"
-			/>
-
-		<field
-			name="rxresident.delivered"
-			type="list"
-			label="是否已外送"
-			description="是否已外送"
 			onchange="this.form.submit();"
-			>
-			<option></option>
-			<option>--是否已外送--</option>
-			<option value="0">否</option>
-			<option value="1">是</option>
-		</field>
+			/>
 
 		<field name="rxresident.method"
 			type="list"
