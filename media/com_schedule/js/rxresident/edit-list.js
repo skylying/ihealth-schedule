@@ -136,6 +136,14 @@
 	}
 
 	/**
+	 * Large checkbox check function
+	 */
+	function clickLargeLabel()
+	{
+		$(this).closest('li input[type="checkbox"]').click();
+	}
+
+	/**
 	 * bindSeeDrDateEvent
 	 *
 	 * @param {jQuery} $node DatetimePicker element
@@ -181,6 +189,12 @@
 
 		// 可調劑次數與處方箋外送次數連動處理
 		$panel.find('.times').change(timesChange);
+
+		// 編輯時先 trigger 一次
+		$panel.find('.times').change();
+
+		// big-checkbox click event
+		$panel.find('.large-checkbox-fieldset label').click(clickLargeLabel);
 
 		$('.see-dr-date').each(function()
 		{
@@ -282,6 +296,9 @@
 
 				// 可調劑次數與處方箋外送次數連動處理
 				$row.find('.times').change(timesChange);
+
+				// large checkbox click event
+				$row.find('.large-checkbox-fieldset label').click(clickLargeLabel);
 			});
 
 			// Add row

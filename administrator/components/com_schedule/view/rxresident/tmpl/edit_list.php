@@ -39,6 +39,56 @@ $jsOption = [
 	});
 </script>
 
+<style>
+	.large-checkbox-fieldset input[type="checkbox"]
+	{
+		position: absolute;
+	}
+	.large-checkbox-fieldset input[type="checkbox"]:focus ~ label
+	{
+		box-shadow: 0px 1px 1px 3px #79CFFF;
+	}
+	.large-checkbox-fieldset label
+	{
+		background-color: #fafafa;
+		border: 1px solid #cacece;
+		margin-right: 10px;
+		box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05);
+		padding: 16px;
+		border-radius: 3px;
+		display: inline-block;
+		position: relative;
+		width: 10px;
+		height: 33px;
+		color: #fafafa;
+	}
+
+	.large-checkbox-fieldset label:hover
+	{
+		cursor: pointer;
+	}
+
+	.large-checkbox-fieldset input[type="checkbox"]:checked + label:after
+	{
+		content: '\2714';
+		font-size: 35px;
+		position: absolute;
+		color: #08A24C;
+		left: 7px;
+		bottom: 8px;
+	}
+
+	.large-checkbox-fieldset input[type="checkbox"]:disabled + label:after
+	{
+		content: '\2716';
+		font-size: 35px;
+		position: absolute;
+		color: #F394A7;
+		left: 3px;
+		bottom: 6px;
+	}
+</style>
+
 <form id="adminForm" name="adminForm" action="" method="post" class="form-horizontal">
 	<div id="institute-information" class="row-fluid">
 		<div class="col-md-4">
@@ -111,15 +161,15 @@ $jsOption = [
 		<thead>
 			<tr>
 				<th width="11%">客戶</th>
-				<th width="9.7%">就醫日期</th>
-				<th width="5.87%">給藥天數</th>
-				<th width="5.26%">可調劑次數</th>
-				<th width="6%">處方箋外送次數</th>
-				<th width="6.57%">藥吃完日</th>
-				<th width="7.1%">處方箋取得方式</th>
-				<th width="9.82%">備註</th>
+				<th width="5%">就醫日期</th>
+				<th width="6%">給藥天數</th>
+				<th width="6%">可調劑次數</th>
+				<th width="10%">處方箋外送次數</th>
+				<th width="6%">藥吃完日</th>
+				<th width="7%">處方箋取得方式</th>
+				<th width="10%">備註</th>
 				<?php if (! $data->isEdit): ?>
-				<th width="8.33%">複製/刪除</th>
+				<th width="10%">複製/刪除</th>
 				<?php endif; ?>
 			</tr>
 		</thead>

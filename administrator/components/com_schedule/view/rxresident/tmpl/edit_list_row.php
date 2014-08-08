@@ -53,13 +53,13 @@ $id    = FieldHelper::resetGroup($form->getField('id'), $group);
 		$emptyDate2nd = FieldHelper::resetGroup($form->getField('empty_date_2nd'), $group);
 		?>
 
-		(1)
+		(2)
 		<span class="drug-empty-date-text1">
 			<?php echo substr($emptyDate1st->value, 5); ?>
 		</span>
 		<br />
 
-		(2)
+		(3)
 		<span class="drug-empty-date-text2">
 			<?php echo substr($emptyDate2nd->value, 5); ?>
 		</span>

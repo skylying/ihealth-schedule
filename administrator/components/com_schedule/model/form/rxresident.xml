@@ -149,7 +149,7 @@
 
 		<field name="deliver_nths"
 			type="checkboxes"
-			class="fullwidth fullwidth-checkboxes"
+			class="fullwidth fullwidth-checkboxes large-checkbox-fieldset"
 			label="處方箋外送次數"
 			description="處方箋外送次數"
 			default="2nd,3rd"
