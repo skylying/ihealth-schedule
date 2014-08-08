@@ -89,12 +89,12 @@ $asset->addJS('schedules/list.js');
 
 	<!-- 新增人 -->
 	<th class="center">
-		<?php echo $grid->sortTitle('新增人', 'user.created_by'); ?>
+		<?php echo $grid->sortTitle('新增人', 'rxresident.created_by'); ?>
 	</th>
 
 	<!-- 最後修改人 -->
 	<th class="center">
-		<?php echo $grid->sortTitle('最後修改人', 'user.modified_by'); ?>
+		<?php echo $grid->sortTitle('最後修改人', 'rxresident.modified_by'); ?>
 	</th>
 </tr>
 </thead>
