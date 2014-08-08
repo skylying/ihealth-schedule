@@ -124,11 +124,6 @@ class ScheduleModelRxresident extends AdminModel
 		$table->deliver_nths          = implode(',', (array) $table->deliver_nths);
 		$table->institute_short_title = $tableInstitute->short_title;
 		$table->customer_name         = $tableCustomer->name;
-		$table->id_number             = $tableCustomer->id_number;
-		$table->birth_date            = $tableCustomer->birth_date;
-
-		// Id_number to upper case
-		$table->id_number = strtoupper($table->id_number);
 
 		if (empty($table->empty_date_1st))
 		{
