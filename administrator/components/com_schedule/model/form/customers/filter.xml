@@ -48,45 +48,51 @@
 			onchange="this.form.submit();"
 			>
 			<option></option>
-			<option>選擇類別</option>
+			<option>選擇客戶類別</option>
 			<option value="individual">散客</option>
 			<option value="resident">住民</option>
 		</field>
 
+		<field name="customer.institute_id"
+			type="select2"
+			class="input-large"
+			label="機構名稱"
+			description="機構名稱"
+			hint="輸入機構名稱"
+			minimumInputLength="1"
+			apiUrl="index.php?option=com_schedule&amp;task=institutes.search.json"
+			apiQueryKey="filter_search"
+			query="SELECT `id`, `short_title` FROM #__schedule_institutes WHERE `id` = '%s'"
+			idField="id"
+			textField="short_title"
+			allowClear="true"
+			onchange="filterInstituteOnChange();"
+			/>
+
 		<field
-			name="customer.institute_id"
-			type="institute_list"
-			value_field="short_title"
-			label="選擇機構"
-			default=""
+			name="customer.city"
+			type="sql"
+			query="SELECT id,title FROM #__schedule_cities"
+			key_field="id"
+			value_field="title"
+			label="選擇縣市"
 			onchange="this.form.submit();"
 			>
 			<option></option>
-			<option>選擇</option>
+			<option>選擇縣市</option>
 		</field>
 
 		<field
-			name="customer.city_title"
-			type="list"
-			query=""
-			label="選擇都市"
-			default=""
-			onchange="this.form.submit();"
-			>
-			<option></option>
-			<option>選擇</option>
-		</field>
-
-		<field
-			name="customer.area_title"
-			type="list"
-			query=""
+			name="customer.area"
+			type="sql"
+			query="SELECT id,title FROM #__schedule_areas"
+			key_field="id"
+			value_field="title"
 			label="選擇區域"
-			default=""
 			onchange="this.form.submit();"
 			>
 			<option></option>
-			<option>選擇</option>
+			<option>選擇區域</option>
 		</field>
 
 		<field
@@ -94,14 +100,15 @@
 			type="input"
 			label="年齡(從)"
 			default=""
-
+			hint="輸入年齡(從)"
 			/>
 
 		<field
 			name="customers.age_end"
 			type="input"
-			label="到"
+			label="年齡(到)"
 			default=""
+			hint="輸入年齡(到)"
 			onchange="this.form.submit();"
 			/>
 
@@ -144,24 +151,22 @@
 			default="a.title ASC"
 			>
 			<option value="">JGLOBAL_SORT_BY</option>
-			<option value="customer.catid, customer.ordering ASC">JGRID_HEADING_ORDERING_ASC</option>
-			<option value="customer.catid, customer.ordering DESC">JGRID_HEADING_ORDERING_DESC</option>
-			<option value="customer.state ASC">JSTATUS_ASC</option>
-			<option value="customer.state DESC">JSTATUS_DESC</option>
-			<option value="customer.title ASC">JGLOBAL_TITLE_ASC</option>
-			<option value="customer.title DESC">JGLOBAL_TITLE_DESC</option>
-			<option value="category.title ASC">JCATEGORY_ASC</option>
-			<option value="category.title DESC">JCATEGORY_DESC</option>
-			<option value="customer.access ASC">JGRID_HEADING_ACCESS_ASC</option>
-			<option value="customer.access DESC">JGRID_HEADING_ACCESS_DESC</option>
-			<option value="customer.created_by ASC">JAUTHOR_ASC</option>
-			<option value="customer.created_by DESC">JAUTHOR_DESC</option>
-			<option value="customer.language ASC">JGRID_HEADING_LANGUAGE_ASC</option>
-			<option value="customer.language DESC">JGRID_HEADING_LANGUAGE_DESC</option>
-			<option value="customer.created ASC">JDATE_ASC</option>
-			<option value="customer.created DESC">JDATE_DESC</option>
-			<option value="customer.id ASC">JGRID_HEADING_ID_ASC</option>
-			<option value="customer.id DESC">JGRID_HEADING_ID_DESC</option>
+			<option value="customer.id ASC">依編號升序排列</option>
+			<option value="customer.id DESC">依編號降序排列</option>
+			<option value="customer.type ASC">依類別升序排列</option>
+			<option value="customer.type DESC">依類別降序排列</option>
+			<option value="customer.name ASC">依姓名升序排列</option>
+			<option value="customer.name DESC">依姓名降序排列</option>
+			<option value="customer.id_number ASC">依身份證字號升序排列</option>
+			<option value="customer.id_number DESC">依身份證字號降序排列</option>
+			<option value="customer.age ASC">依年齡升序排列</option>
+			<option value="customer.age DESC">依年齡降序排列</option>
+			<option value="customer.city_title ASC">依外送縣市升序排列</option>
+			<option value="customer.city_title DESC">依外送縣市降序排列</option>
+			<option value="customer.area_title ASC">依外送區域升序排列</option>
+			<option value="customer.area_title DESC">依外送區域降序排列</option>
+			<option value="customer.state ASC">依狀態升序排列</option>
+			<option value="customer.state DESC">依狀態降序排列</option>
 		</field>
 
 		<field
