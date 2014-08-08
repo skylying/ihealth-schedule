@@ -199,7 +199,7 @@
 			label="預約日"
 			hint="預約日"
 			description="預約日"
-			onchange="this.form.submit();"
+			dpBindEvent="bindDateFilter"
 			/>
 	</fields>
 
