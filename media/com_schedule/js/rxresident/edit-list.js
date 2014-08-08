@@ -147,7 +147,7 @@
 		function change()
 		{
 			// Focus out DatetimePicker element
-			$node.closest('tr').find('.id-number').focus().blur();
+			$node.closest('tr').find('.period').focus().blur();
 
 			updateDrugEmptyDate.call(this);
 		}
@@ -424,8 +424,6 @@
 			return function(e, $node)
 			{
 				var $row = $node.closest('tr'),
-					$idNumber = $row.find('.id-number'),
-					$birthDate = $row.find('.birth-date'),
 					$customerId = $row.find('.customer-id'),
 					data = $node.select2('data');
 
@@ -434,33 +432,10 @@
 					if (data.id)
 					{
 						$customerId.val(data.id);
-
-						if (data.id > 0)
-						{
-							$idNumber.prop('readonly', true);
-							$birthDate.prop('readonly', true);
-						}
-						else
-						{
-							$idNumber.prop('readonly', false);
-							$birthDate.prop('readonly', false);
-						}
-					}
-
-					if (data.id_number)
-					{
-						$idNumber.val(data.id_number);
-					}
-
-					if (data.birth_date)
-					{
-						$birthDate.val(data.birth_date);
 					}
 				}
 				else
 				{
-					$idNumber.val('');
-					$birthDate.val('');
 					$customerId.val('');
 				}
 			};
