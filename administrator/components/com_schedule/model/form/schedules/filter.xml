@@ -52,10 +52,12 @@
 			<option></option>
 			<option>--請選擇排程狀態--</option>
 			<option value="scheduled">已排程</option>
+			<option value="delivered">已外送</option>
 			<option value="emergency">急件</option>
-			<option value="cancelonly">取消要退單</option>
-			<option value="cancelreject">取消不退單</option>
+			<option value="cancel_only">取消-不退單</option>
+			<option value="cancel_reject">取消-要退單</option>
 			<option value="pause">暫緩</option>
+			<option value="deleted">已刪除</option>
 		</field>
 
 		<field name="schedule.institute_id"
@@ -152,7 +154,7 @@
 			/>
 
 		<field
-			name="route.sender_id"
+			name="schedule.sender_id"
 			type="sql"
 			query="SELECT `id`, `name` FROM #__schedule_senders"
 			key_field="id"
