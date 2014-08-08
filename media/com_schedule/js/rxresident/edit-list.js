@@ -128,6 +128,45 @@
 	}
 
 	/**
+	 * 編輯處方箋時, 處方箋連動只需要更改 disabled 狀態, 不做 check, 否則會把 form data 洗掉
+	 */
+	function setDisabledBox()
+	{
+		var $node = $('.times'),
+			cb1 = $panel.find('input[value="1st"]'),
+			cb2 = $panel.find('input[value="2nd"]'),
+			cb3 = $panel.find('input[value="3rd"]'),
+			$drugEmptyDateText2 = $panel.find('.drug-empty-date-text2');
+
+		switch ($node.find('option:selected').val())
+		{
+			case '1':
+				cb2.attr('disabled', true);
+				cb3.attr('disabled', true);
+
+				$drugEmptyDateText2.hide();
+
+				break;
+
+			case '2':
+				cb2.attr('disabled', false);
+				cb3.attr('disabled', true);
+
+				$drugEmptyDateText2.show();
+
+				break;
+
+			case '3':
+				cb2.attr('disabled', false);
+				cb3.attr('disabled', false);
+
+				$drugEmptyDateText2.show();
+
+				break;
+		}
+	}
+
+	/**
 	 * Update total number of rows
 	 */
 	function updateTotalRowNumber()
@@ -199,6 +238,12 @@
 		}
 	}
 
+	/**
+	 * Exception object
+	 *
+	 * @param message
+	 * @constructor
+	 */
 	function UserException(message)
 	{
 		this.message = message;
@@ -219,9 +264,6 @@
 
 		// 可調劑次數與處方箋外送次數連動處理
 		$panel.find('.times').change(timesChange);
-
-		// 編輯時先 trigger 一次
-		$panel.find('.times').change();
 
 		// big-checkbox click event
 		$panel.find('.large-checkbox-fieldset label').click(clickLargeLabel);
@@ -287,6 +329,8 @@
 		{
 			initSelectors();
 			bindEvents();
+
+			setDisabledBox();
 
 			this.option = $.extend(this.option, option);
 
