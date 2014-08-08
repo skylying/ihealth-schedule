@@ -131,8 +131,6 @@ class ScheduleControllerRxresidentEditSave extends SaveController
 			{
 				$customer = array(
 					'name' => $item['customer_id'],
-					'id_number' => $item['id_number'],
-					'birth_date' => $item['birth_date'],
 					'type' => 'resident',
 					'institute_id' => $item['institute_id'],
 				);

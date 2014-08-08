@@ -10,7 +10,6 @@
 			>
 			<option value="*">JALL</option>
 			<option value="rxresident.customer_name">住民姓名</option>
-			<option value="rxresident.id_number">身分證字號</option>
 		</field>
 
 		<field
