@@ -94,7 +94,7 @@ $jsOption = [
 	<hr />
 	<?php if (! $data->isEdit): ?>
 		<p>
-			<button type="button" class="btn btn-primary button-add-row" value="1">
+			<button type="button" class="btn btn-primary button-add-row add-1-row" value="1">
 				<span class="glyphicon glyphicon-plus"></span>
 				新增 1 筆
 			</button>
@@ -102,7 +102,7 @@ $jsOption = [
 				<span class="glyphicon glyphicon-plus"></span>
 				新增 5 筆
 			</button>
-			<button type="button" class="btn btn-primary button-add-row" value="10">
+			<button type="button" class="btn btn-primary button-add-row add-10-row" value="10">
 				<span class="glyphicon glyphicon-plus"></span>
 				新增 10 筆
 			</button>

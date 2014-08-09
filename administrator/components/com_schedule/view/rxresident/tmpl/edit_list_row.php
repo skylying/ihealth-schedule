@@ -47,7 +47,7 @@ $id    = FieldHelper::resetGroup($form->getField('id'), $group);
 	<td>
 		<?php echo FieldHelper::resetGroup($form->getField('deliver_nths'), $group)->input; ?>
 	</td>
-	<td>
+	<td class="drug-finish-date">
 		<?php
 		$emptyDate1st = FieldHelper::resetGroup($form->getField('empty_date_1st'), $group);
 		$emptyDate2nd = FieldHelper::resetGroup($form->getField('empty_date_2nd'), $group);

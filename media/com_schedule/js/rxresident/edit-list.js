@@ -335,6 +335,7 @@
 			this.option = $.extend(this.option, option);
 
 			var handler = new MultiRowHandler({$panel:$panel});
+			var keyEventHandler = new KeyEventHandler({$panel:$panel});
 
 			// Bind afterInsert event
 			handler.on('afterInsert', function($row)
