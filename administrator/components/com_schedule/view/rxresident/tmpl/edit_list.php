@@ -25,6 +25,7 @@ JHtmlJquery::framework(true);
 
 $asset->addCSS('rxresident.css');
 $asset->addJS('multi-row-handler.js');
+$asset->addJS('key-event-handler.js');
 $asset->addJS('rxresident/edit-list.js');
 $asset->addJS('moment-with-langs.min.js');
 
