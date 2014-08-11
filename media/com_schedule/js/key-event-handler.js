@@ -1,5 +1,5 @@
 /**
- * MultiRowHandler Javascript Library v1.0
+ * KeyEventHandler Javascript Library v1.0
  */
 ;(function($, undefined)
 {
@@ -19,7 +19,6 @@
 	 *  - 37 left arrow
 	 *  - 39 right arrow
 	 *  - 13 enter
-	 *
 	 *
 	 * @param options
 	 * @constructor
@@ -273,7 +272,6 @@
 		 */
 		focusNextCb : function(element)
 		{
-			//var availableCbs = $(element).closest('ul').find('input[type="checkbox"]:not([disabled])');
 			var self = this,
 				$nextNode = $(element).parent().next();
 
@@ -305,7 +303,6 @@
 		 */
 		focusPrevCb : function(element)
 		{
-			//var availableCbs = $(element).closest('ul').find('input[type="checkbox"]:not([disabled])');
 			var self = this,
 				$prevNode = $(element).parent().prev();
 
@@ -342,7 +339,7 @@
 
 			// Time to go to next row
 			if ($nextNode.length < 1)
-			{console.log($(element).closest('tr').next().find('.customer-id-selection'));
+			{
 				$(element).closest('tr').next().find('.customer-id-selection').select2('open');
 			}
 			else
