@@ -62,7 +62,7 @@ class MailHelper
 		// Set layouts from admin
 		$layout = new FileLayout("schedule.mail.emptyroute", SCHEDULE_ADMIN . '/layouts');
 
-		$mailer->setSubject("沒有路線通知");
+		$mailer->setSubject(sprintf('[無送藥路線] %s 宅配日期: %s', $displayData['memberName'], $displayData['date']));
 		$mailer->setBody($layout->render($displayData));
 		$mailer->addRecipient($mailTo);
 		$mailer->setSender($from);

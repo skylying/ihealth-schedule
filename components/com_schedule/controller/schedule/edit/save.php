@@ -11,6 +11,7 @@ use Schedule\Helper\ScheduleHelper;
 use Schedule\Table\Collection as TableCollection;
 use Windwalker\Model\Exception\ValidateFailException;
 use Schedule\Helper\MailHelper;
+use Windwalker\Data\Data;
 
 /**
  * Class ScheduleControllerPrescriptionEditSave
@@ -149,7 +150,7 @@ class ScheduleControllerScheduleEditSave extends ApiSaveController
 	 */
 	protected function postSaveHook($model, $validData)
 	{
-		$schedule = $model->getItem($this->data['id']);
+		$schedule = new Data($model->getItem($this->data['id']));
 
 		// When user changed a exist schedule, send a notify email to iHealth staff
 		if (ScheduleHelper::checkScheduleChanged($this->oldScheduleTable->getProperties(), $validData))
@@ -162,7 +163,13 @@ class ScheduleControllerScheduleEditSave extends ApiSaveController
 
 		if ($this->sendNotifyEmptyRouteMail && !empty($this->notifyEmptyRouteEmails))
 		{
-			MailHelper::sendEmptyRouteMail($this->notifyEmptyRouteEmails, array('schedules' => array($schedule)));
+			$mailData = array(
+				'schedules' => array($schedule),
+				'memberName' => $schedule['member_name'],
+				'date' => $schedule['date'],
+			);
+
+			MailHelper::sendEmptyRouteMail($this->notifyEmptyRouteEmails, $mailData);
 		}
 
 		parent::postSaveHook($model, $validData);
