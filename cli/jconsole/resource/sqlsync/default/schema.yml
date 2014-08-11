@@ -899,6 +899,7 @@
         resetCount: { Field: resetCount, Type: int(11), 'Null': NO, Default: '0', Extra: '', Comment: 'Count of password resets since lastResetTime', From: [resetCount] }
         otpKey: { Field: otpKey, Type: varchar(1000), 'Null': NO, Default: '', Extra: '', Comment: 'Two factor authentication encrypted keys', From: [otpKey] }
         otep: { Field: otep, Type: varchar(1000), 'Null': NO, Default: '', Extra: '', Comment: 'One time emergency passwords', From: [otep] }
+        requireReset: { Field: requireReset, Type: tinyint(4), 'Null': NO, Default: '0', Extra: '', Comment: 'Require user to reset password on next login', From: [requireReset] }
     index:
         - { Table: '#__users', Non_unique: '0', Key_name: PRIMARY, Seq_in_index: '1', Column_name: id, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
         - { Table: '#__users', Non_unique: '1', Key_name: idx_name, Seq_in_index: '1', Column_name: name, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
