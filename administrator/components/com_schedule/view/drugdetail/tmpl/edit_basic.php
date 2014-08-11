@@ -33,6 +33,36 @@ $user = JFactory::getUser();
 	});
 </script>
 
+<!--style for schedules being cancelled-->
+<style>
+	.status-mark
+	{
+		padding: 3px;
+		color: #ffffff;
+		border-radius: 5px;
+	}
+	.cancel_reject
+	{
+		background: #95a5a6;
+	}
+	.cancel_only
+	{
+		background: #B766AD;
+	}
+	.pause
+	{
+		background: #f5ab35;
+	}
+	.emergency
+	{
+		background: #e74c3c;
+	}
+	.canceled
+	{
+		background: #8080C0;
+	}
+</style>
+
 <h1 class="text-center">打包表</h1>
 <h2 class="text-center"><?php echo $data->date_start . ' ~ ' . $data->date_end; ?></h2>
 
@@ -64,9 +94,27 @@ $user = JFactory::getUser();
 
 					foreach ($sender['admin'] as $admin)
 					{
+						$cancelBlockClass = 'hide';
+						$status = '';
+
+						if ($admin['status'] !== 'scheduled')
+						{
+							$status = JText::_('COM_SCHEDULE_DRUGDETAIL_CANCEL_STATUS_' . strtoupper($admin['status']));
+							$cancelBlockClass = '';
+						}
+
 						$html .= <<<HTML
 	<tr>
-		<td class="center">{$admin["date"]}</td>
+		<td class="center">
+			<div class="row">
+				{$admin["date"]}
+			</div>
+			<div class="row">
+				<span class="status-mark {$admin["status"]} {$cancelBlockClass}">
+					{$status}
+				</span>
+			</div>
+		</td>
 		<td class="center">{$admin["type"]}</td>
 		<td class="center">{$admin["to"]}</td>
 	</tr>
