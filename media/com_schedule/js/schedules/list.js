@@ -130,7 +130,7 @@
 			$adminDateInput.val($dateInput.val());
 			$adminSenderIdInput.val($senderIdSelect.val());
 
-			window.Joomla.submitbutton('schedules.edit');
+			window.Joomla.submitbutton('schedule.edit');
 		});
 	}
 

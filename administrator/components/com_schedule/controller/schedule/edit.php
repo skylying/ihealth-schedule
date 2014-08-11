@@ -1,29 +1,37 @@
 <?php
 
-use Windwalker\Controller\State\AbstractUpdateStateController;
+use Windwalker\Controller\Edit\SaveController;
 use Schedule\Table\Table as Table;
 use Windwalker\Joomla\DataMapper\DataMapper;
 use Windwalker\Data\Data;
 use Schedule\Table\Collection as TableCollection;
 use Schedule\Helper\ScheduleHelper;
 use Schedule\Helper\MailHelper;
+use Windwalker\Model\Exception\ValidateFailException;
 
 /**
  * Class ScheduleControllerSchedulesEdit
  *
  * @since 1.0
  */
-class ScheduleControllerSchedulesEdit extends AbstractUpdateStateController
+class ScheduleControllerScheduleEdit extends SaveController
 {
+	/**
+	 * Property cid.
+	 *
+	 * @var
+	 */
+	protected $cid;
+
 	/**
 	 * The data fields to update.
 	 *
 	 * @var string
 	 */
 	protected $stateData = array(
-		'date' => '',
+		'date'        => '',
 		'sender_name' => '',
-		'task_id' => '',
+		'task_id'     => '',
 	);
 
 	/**
@@ -52,7 +60,7 @@ class ScheduleControllerSchedulesEdit extends AbstractUpdateStateController
 	 *
 	 * @var  boolean
 	 */
-	protected $useTransaction = true;
+	protected $useTransaction = false;
 
 	/**
 	 * Property sendNotifyMail.
@@ -71,26 +79,35 @@ class ScheduleControllerSchedulesEdit extends AbstractUpdateStateController
 	{
 		parent::prepareExecute();
 
-		$taskMapper = new DataMapper(Table::TASKS);
-		$scheduleMapper = new DataMapper(Table::SCHEDULES);
+		$taskMapper     = new DataMapper(Table::TASKS);
+
+		$this->cid = $this->input->get('cid', array(), 'ARRAY');
 
 		$this->validData = $this->validate();
 
-		foreach ($this->input->get('cid', array(), 'ARRAY') as $id)
+		if (!isset($this->data['items']))
+		{
+			$item = $this->validData;
+
+			$this->data['items'] = array();
+		}
+
+		foreach ($this->cid as $id)
 		{
 			if ($id > 0)
 			{
-				$schedule = $scheduleMapper->findOne(['id' => $id]);
+				$schedule = $this->model->getItem($id);
 
-				$this->stateData['date']        = !empty($this->validData['date']) ? $this->validData['date'] : $schedule->date;
-				$this->stateData['sender_name'] = !empty($this->validData['sender_name']) ? $this->validData['sender_name'] : $schedule->sender_name;
-				$this->stateData['sender_id']   = !empty($this->validData['sender_id']) ? $this->validData['sender_id'] : $schedule->sender_id;
+				$this->data['items'][$id]['id']          = $id;
+				$this->data['items'][$id]['date']        = !empty($this->validData['date']) ? $this->validData['date'] : $schedule->date;
+				$this->data['items'][$id]['sender_name'] = !empty($this->validData['sender_name']) ? $this->validData['sender_name'] : $schedule->sender_name;
+				$this->data['items'][$id]['sender_id']   = !empty($this->validData['sender_id']) ? $this->validData['sender_id'] : $schedule->sender_id;
 
 				// Get task data
 				$task = $taskMapper->findOne(
 					[
-						'date' => $this->stateData['date'],
-						'sender' => $this->stateData['sender_id'],
+						'date'   => $this->data['items'][$id]['date'],
+						'sender' => $this->data['items'][$id]['sender_id'],
 					]
 				);
 
@@ -98,11 +115,11 @@ class ScheduleControllerSchedulesEdit extends AbstractUpdateStateController
 				if ($task->isNull())
 				{
 					$taskModel = $this->getModel('Task');
-					$task = [
-						'date' => $this->stateData['date'],
-						'sender' => $this->stateData['sender_id'],
-						'sender_name' => $this->stateData['sender_name'],
-						'status' => 0,
+					$task      = [
+						'date'        => $this->data['items'][$id]['date'],
+						'sender'      => $this->data['items'][$id]['sender_id'],
+						'sender_name' => $this->data['items'][$id]['sender_name'],
+						'status'      => 0,
 					];
 
 					$taskModel->save($task);
@@ -112,11 +129,11 @@ class ScheduleControllerSchedulesEdit extends AbstractUpdateStateController
 					$task = new Data($task);
 				}
 
-				$this->stateData['task_id'] = $task->id;
+				$this->data['items'][$id]['task_id'] = $task->id;
 
 				$oldScheduleTable = TableCollection::loadTable('Schedule', $id);
 
-				if (! empty($oldScheduleTable->id)
+				if (!empty($oldScheduleTable->id)
 					&& ScheduleHelper::checkScheduleChanged($oldScheduleTable->getProperties(), $this->stateData))
 				{
 					$this->sendNotifyMail[] = $id;
@@ -126,26 +143,75 @@ class ScheduleControllerSchedulesEdit extends AbstractUpdateStateController
 	}
 
 	/**
-	 * postUpdateHook
+	 * doSave
 	 *
-	 * @param \Windwalker\Model\Model $model
+	 * @return  array|void
+	 *
+	 * @throws Exception
+	 * @throws ValidateFailException
+	 * @throws Exception
+	 */
+	protected function doSave()
+	{
+		$scheduleState = $this->model->getState();
+
+		// Access check.
+		if (!$this->allowSave($this->data, $this->key))
+		{
+			throw new \Exception(\JText::_('JLIB_APPLICATION_ERROR_SAVE_NOT_PERMITTED'));
+		}
+
+		// Attempt to save the data.
+		try
+		{
+			foreach ($this->data['items'] as $item)
+			{
+				$scheduleState->set('sender_id', $item['sender_id']);
+				$this->model->save($item);
+			}
+		} catch (ValidateFailException $e)
+		{
+			throw $e;
+		} catch (\Exception $e)
+		{
+			// Save the data in the session.
+			$this->app->setUserState($this->context . '.data', $this->data);
+
+			// Redirect back to the edit screen.
+			throw $e;
+		}
+
+		// Set success message
+		$this->setMessage(
+			\JText::_(
+				($this->lang->hasKey(strtoupper($this->option) . ($this->recordId == 0 && $this->app->isSite() ? '_SUBMIT' : '') . '_SAVE_SUCCESS')
+					? strtoupper($this->option)
+					: 'JLIB_APPLICATION') . ($this->recordId == 0 && $this->app->isSite() ? '_SUBMIT' : '') . '_SAVE_SUCCESS'
+			),
+			'message'
+		);
+	}
+
+	/**
+	 * postSaveHook
+	 *
+	 * @param \Windwalker\Model\CrudModel $model
+	 * @param array                       $validDataSet
 	 *
 	 * @return  void
 	 */
-	protected function postUpdateHook($model)
+	protected function postSaveHook($model, $validDataSet)
 	{
-		parent::postUpdateHook($model);
-
 		foreach ($this->sendNotifyMail as $scheduleId)
 		{
 			$oldScheduleTable = TableCollection::loadTable('Schedule', $scheduleId);
 
 			$memberTable = TableCollection::loadTable('Member', $oldScheduleTable->member_id);
-			$rx = (new DataMapper(Table::PRESCRIPTIONS))->findOne($oldScheduleTable->rx_id);
+			$rx          = (new DataMapper(Table::PRESCRIPTIONS))->findOne($oldScheduleTable->rx_id);
 
 			if (!empty($memberTable->email) && 'individual' === $rx->type)
 			{
-				$schedules = (new DataMapper(Table::SCHEDULES))->find(array('rx_id' => $oldScheduleTable->rx_id));
+				$schedules  = (new DataMapper(Table::SCHEDULES))->find(array('rx_id' => $oldScheduleTable->rx_id));
 				$drugsModel = $this->getModel('Drugs');
 				$drugsModel->getState()->set('filter', array('drug.rx_id' => $oldScheduleTable->rx_id));
 
@@ -159,6 +225,8 @@ class ScheduleControllerSchedulesEdit extends AbstractUpdateStateController
 				MailHelper::sendMailWhenScheduleChange($memberTable->email, $mailData);
 			}
 		}
+
+		$this->redirect(JRoute::_('index.php?option=com_schedule&view=schedules', false));
 	}
 
 	/**
@@ -212,7 +280,7 @@ class ScheduleControllerSchedulesEdit extends AbstractUpdateStateController
 		}
 
 		$senderMapper = new DataMapper(Table::SENDERS);
-		$sender = $senderMapper->findOne($senderId);
+		$sender       = $senderMapper->findOne($senderId);
 
 		if ($sender->isNull())
 		{
@@ -221,8 +289,8 @@ class ScheduleControllerSchedulesEdit extends AbstractUpdateStateController
 
 		// Return validated data
 		return array(
-			'date' => $date,
-			'sender_id' => $senderId,
+			'date'        => $date,
+			'sender_id'   => $senderId,
 			'sender_name' => $sender->name,
 		);
 	}
