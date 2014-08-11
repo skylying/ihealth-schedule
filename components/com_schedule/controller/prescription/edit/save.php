@@ -236,9 +236,10 @@ class ScheduleControllerPrescriptionEditSave extends ApiSaveController
 			}
 
 			$mailDataSet = array(
-				"schedules" => $schedules,
-				"rx"        => new Data($model->getItem($rxId)),
-				"drugs"     => $drugsModel->getItems(),
+				'schedules' => $schedules,
+				'rx'        => new Data($model->getItem($rxId)),
+				'drugs'     => $drugsModel->getItems(),
+				'member'    => $memberTable,
 			);
 
 			MailHelper::sendMailWhenScheduleChange($memberTable->email, $mailDataSet);

@@ -30,7 +30,7 @@ class MailHelper
 		// Set layouts from admin
 		$layout = new FileLayout("schedule.mail.confirm", SCHEDULE_ADMIN . '/layouts');
 
-		$mailer->setSubject("處方預約確認信");
+		$mailer->setSubject(sprintf('[iHealth] 處方預約確認: %s您好! 您的處方宅配已預約完成', $displayData['member']->name));
 		$mailer->setBody($layout->render($displayData));
 		$mailer->addRecipient($mailTo);
 		$mailer->setSender($from);

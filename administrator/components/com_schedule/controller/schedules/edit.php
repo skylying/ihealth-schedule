@@ -146,9 +146,10 @@ class ScheduleControllerSchedulesEdit extends AbstractUpdateStateController
 				$drugsModel->getState()->set('filter', array('drug.rx_id' => $oldScheduleTable->rx_id));
 
 				$mailData = array(
-					"schedules" => $schedules,
-					"rx"        => $rx,
-					"drugs"     => $drugsModel->getItems(),
+					'schedules' => $schedules,
+					'rx'        => $rx,
+					'drugs'     => $drugsModel->getItems(),
+					'member'    => $memberTable,
 				);
 
 				MailHelper::sendMailWhenScheduleChange($memberTable->email, $mailData);
