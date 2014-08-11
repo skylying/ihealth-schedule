@@ -176,10 +176,23 @@
 
 	/**
 	 * Large checkbox check function
+	 *
+	 * I don't know why in edit mode $.closest works but the other is not
+	 * After 1 hour debugging I gave up
+	 *                                       Tim
 	 */
 	function clickLargeLabel()
 	{
-		$(this).closest('li input[type="checkbox"]').click();
+		if (RxResidentEditList.option.isEdit)
+		{
+			// works in edit mode
+			$(this).closest('li input[type="checkbox"]').click();
+		}
+		else
+		{
+			// works in new item mode
+			$(this).parent().find('input[type="checkbox"]').click();
+		}
 	}
 
 	/**
