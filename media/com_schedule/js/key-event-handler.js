@@ -47,18 +47,22 @@
 		{
 			var self = this;
 
+			var LEFT = 37,
+				RIGHT = 39,
+				ENTER = 13;
+
 			/*
 			 * Bind <select> key event
 			 */
 			self.$panel.on('keydown', 'select, textarea', function(e)
 			{
 				// Bind right arrow key
-				if(e.keyCode == 39 || e.which == 39)
+				if(e.keyCode == RIGHT || e.which == RIGHT)
 				{
 					self.focusNext(this);
 				}
 				// Bind left arrow key
-				else if (e.keyCode == 37 || e.which == 37)
+				else if (e.keyCode == LEFT || e.which == LEFT)
 				{
 					self.focusPrev(this);
 				}
@@ -70,17 +74,17 @@
 			self.$panel.on('keydown', 'input[type="checkbox"]:not([disabled])', function(e)
 			{
 				// Bind right arrow key
-				if(e.keyCode == 39 || e.which == 39)
+				if(e.keyCode == RIGHT || e.which == RIGHT)
 				{
 					self.focusNextCb(this);
 				}
 				// Bind left arrow key
-				else if (e.keyCode == 37 || e.which == 37)
+				else if (e.keyCode == LEFT || e.which == LEFT)
 				{
 					self.focusPrevCb(this);
 				}
 				// Bind enter key event
-				else if (e.keyCode == 13 || e.which == 13)
+				else if (e.keyCode == ENTER || e.which == ENTER)
 				{
 					$(this).click();
 				}
@@ -92,12 +96,12 @@
 			self.$panel.on('keydown', 'button', function(e)
 			{
 				// Bind right arrow key
-				if(e.keyCode == 39 || e.which == 39)
+				if(e.keyCode == RIGHT || e.which == RIGHT)
 				{
 					self.focusNextBtn(this);
 				}
 				// Bind left arrow key
-				else if (e.keyCode == 37 || e.which == 37)
+				else if (e.keyCode == LEFT || e.which == LEFT)
 				{
 					self.focusPrevBtn(this);
 				}
@@ -113,7 +117,7 @@
 			self.$panel.on('keydown', 'input[type="text"]', function(e)
 			{
 				// Bind right arrow key
-				if (e.keyCode == 39 || e.which == 39)
+				if (e.keyCode == RIGHT || e.which == RIGHT)
 				{
 					if (self.doubleKeyFlag)
 					{
@@ -132,7 +136,7 @@
 					self.doubleKeyFlag = true;
 				}
 				// Bind left arrow key
-				else if (e.keyCode == 37 || e.which == 37)
+				else if (e.keyCode == LEFT || e.which == LEFT)
 				{
 					if (self.doubleKeyFlag)
 					{
@@ -171,7 +175,7 @@
 			$('.button-add-row').on('keydown', function(e)
 			{
 				// Bind right arrow key
-				if(e.keyCode == 39 || e.which == 39)
+				if(e.keyCode == RIGHT || e.which == RIGHT)
 				{
 					var $nextNode = $(this).next();
 
@@ -183,7 +187,7 @@
 					$nextNode.focus();
 				}
 				// Bind left arrow key
-				else if (e.keyCode == 37 || e.which == 37)
+				else if (e.keyCode == LEFT || e.which == LEFT)
 				{
 					var $prevNode = $(this).prev();
 
@@ -199,7 +203,7 @@
 			$('#s2id_jform_institute_id_selection input[type="text"]').on('keydown', function(e)
 			{
 				// Bind right arrow key
-				if(e.keyCode == 39 || e.which == 39)
+				if(e.keyCode == RIGHT || e.which == RIGHT)
 				{
 					if (self.doubleKeyFlag)
 					{
