@@ -94,7 +94,11 @@ class MailHelper
 		// Set layouts from admin
 		$layout = new FileLayout("schedule.mail.notify_staff", SCHEDULE_ADMIN . '/layouts');
 
-		$mailer->setSubject("排程修改通知");
+		$changedText = \JText::_('COM_SCHEDULE_EMAIL_TILE_SCHEDULE_' . $displayData['changed']);
+
+		$displayData['changedText'] = $changedText;
+
+		$mailer->setSubject(sprintf('[排程更改] %s%s %s 的外送排程', $displayData['memberName'], $changedText, $displayData['date']));
 		$mailer->setBody($layout->render($displayData));
 		$mailer->addRecipient($mailTo);
 		$mailer->setSender($from);

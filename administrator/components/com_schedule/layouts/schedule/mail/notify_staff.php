@@ -32,7 +32,7 @@ $nthDelivery = array('1st' => '第一次宅配', '2nd' => '第二次宅配', '3r
 											<?php echo $schedule->member_name; ?> 先生/小姐 <br />
 										</h2>
 										<h2>
-											已成功取消一筆送藥排程。
+											已成功<?php echo $data['changedText']; ?>一筆送藥排程。
 										</h2>
 									</div>
 									<hr />
