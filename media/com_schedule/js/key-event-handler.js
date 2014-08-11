@@ -58,11 +58,17 @@
 				// Bind right arrow key
 				if(e.keyCode == RIGHT || e.which == RIGHT)
 				{
+					// For windows system, prevent RIGHT arrow key triggering <select> onchange
+					e.preventDefault();
+
 					self.focusNext(this);
 				}
 				// Bind left arrow key
 				else if (e.keyCode == LEFT || e.which == LEFT)
 				{
+					// For windows system, prevent LEFT arrow key triggering <select> onchange
+					e.preventDefault();
+
 					self.focusPrev(this);
 				}
 			});
