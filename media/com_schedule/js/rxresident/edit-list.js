@@ -176,23 +176,10 @@
 
 	/**
 	 * Large checkbox check function
-	 *
-	 * I don't know why in edit mode $.closest works but the other is not
-	 * After 1 hour debugging I gave up
-	 *                                       Tim
 	 */
 	function clickLargeLabel()
 	{
-		if (RxResidentEditList.option.isEdit)
-		{
-			// works in edit mode
-			$(this).closest('li input[type="checkbox"]').click();
-		}
-		else
-		{
-			// works in new item mode
-			$(this).parent().find('input[type="checkbox"]').click();
-		}
+		$(this).prev().click();
 	}
 
 	/**
@@ -277,9 +264,6 @@
 
 		// 可調劑次數與處方箋外送次數連動處理
 		$panel.find('.times').change(timesChange);
-
-		// big-checkbox click event
-		$panel.find('.large-checkbox-fieldset label').click(clickLargeLabel);
 
 		// 就醫日期
 		$('.see-dr-date').each(function()
