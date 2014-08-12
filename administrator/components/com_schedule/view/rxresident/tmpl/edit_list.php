@@ -25,7 +25,9 @@ JHtmlJquery::framework(true);
 
 $asset->addCSS('rxresident.css');
 $asset->addJS('multi-row-handler.js');
+$asset->addJS('key-event-handler.js');
 $asset->addJS('rxresident/edit-list.js');
+$asset->addJS('moment-with-langs.min.js');
 
 $jsOption = [
 	'customerApi' => JRoute::_('index.php?option=com_schedule&task=customer.ajax.json&institute_id=', false),
@@ -92,7 +94,7 @@ $jsOption = [
 	<hr />
 	<?php if (! $data->isEdit): ?>
 		<p>
-			<button type="button" class="btn btn-primary button-add-row" value="1">
+			<button type="button" class="btn btn-primary button-add-row add-1-row" value="1">
 				<span class="glyphicon glyphicon-plus"></span>
 				新增 1 筆
 			</button>
@@ -100,7 +102,7 @@ $jsOption = [
 				<span class="glyphicon glyphicon-plus"></span>
 				新增 5 筆
 			</button>
-			<button type="button" class="btn btn-primary button-add-row" value="10">
+			<button type="button" class="btn btn-primary button-add-row add-10-row" value="10">
 				<span class="glyphicon glyphicon-plus"></span>
 				新增 10 筆
 			</button>
@@ -111,17 +113,15 @@ $jsOption = [
 		<thead>
 			<tr>
 				<th width="11%">客戶</th>
-				<th width="10%">身分證字號</th>
-				<th width="9.7%">生日</th>
-				<th width="9.7%">就醫日期</th>
-				<th width="5.87%">給藥天數</th>
-				<th width="5.26%">可調劑次數</th>
-				<th width="6%">處方箋外送次數</th>
-				<th width="6.57%">藥吃完日</th>
-				<th width="7.1%">處方箋取得方式</th>
-				<th width="9.82%">備註</th>
+				<th width="7%">就醫日期</th>
+				<th width="6%">給藥天數</th>
+				<th width="6%">可調劑次數</th>
+				<th width="10%">處方箋外送次數</th>
+				<th width="6%">藥吃完日</th>
+				<th width="7%">處方箋取得方式</th>
+				<th width="10%">備註</th>
 				<?php if (! $data->isEdit): ?>
-				<th width="8.33%">複製/刪除</th>
+				<th width="10%">複製/刪除</th>
 				<?php endif; ?>
 			</tr>
 		</thead>

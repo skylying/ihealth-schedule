@@ -84,26 +84,10 @@
 			readonly="true"
 			/>
 
-		<field name="id_number"
-			type="text"
-			class="fullwidth id-number"
-			label="身分證字號"
-			description="身分證字號"
-			default="**********"
-			/>
-
-		<field name="birth_date"
-			type="DateTimePicker"
-			hint="選擇日期"
-			class="datetimepicker calendarwidth birth-date"
-			label="生日"
-			description="生日"
-			/>
-
 		<field name="see_dr_date"
-			type="DateTimePicker"
+			type="text"
 			hint="選擇日期"
-			class="datetimepicker calendarwidth see-dr-date"
+			class="calendarwidth see-dr-date"
 			label="就醫日期"
 			description="就醫日期"
 			required="true"
@@ -165,7 +149,7 @@
 
 		<field name="deliver_nths"
 			type="checkboxes"
-			class="fullwidth fullwidth-checkboxes"
+			class="fullwidth fullwidth-checkboxes large-checkbox-fieldset"
 			label="處方箋外送次數"
 			description="處方箋外送次數"
 			default="2nd,3rd"

@@ -62,11 +62,6 @@ $asset->addJS('schedules/list.js');
 		<?php echo $grid->sortTitle('住民姓名', 'rxresident.customer_name'); ?>
 	</th>
 
-	<!-- 身分證字號 -->
-	<th class="center">
-		<?php echo $grid->sortTitle('身分證字號', 'rxresident.id_number'); ?>
-	</th>
-
 	<!-- 就醫日期 -->
 	<th class="center">
 		<?php echo $grid->sortTitle('就醫日期', 'rxresident.see_dr_date'); ?>
@@ -145,11 +140,6 @@ $asset->addJS('schedules/list.js');
 		<!-- 住民姓名 -->
 		<td class="center">
 			<?php echo Schedule\Helper\UiHelper::foreignLink('customer', $item->customer_name, $item->customer_id, '', array('target' => '_blank')); ?>
-		</td>
-
-		<!-- 身分證字號 -->
-		<td class="center">
-			<?php echo $this->escape($item->id_number); ?>
 		</td>
 
 		<!-- 就醫日期 -->

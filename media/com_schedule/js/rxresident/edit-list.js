@@ -128,11 +128,58 @@
 	}
 
 	/**
+	 * 編輯處方箋時, 處方箋連動只需要更改 disabled 狀態, 不做 check, 否則會把 form data 洗掉
+	 */
+	function setDisabledBox()
+	{
+		var $node = $('.times'),
+			cb1 = $panel.find('input[value="1st"]'),
+			cb2 = $panel.find('input[value="2nd"]'),
+			cb3 = $panel.find('input[value="3rd"]'),
+			$drugEmptyDateText2 = $panel.find('.drug-empty-date-text2');
+
+		switch ($node.find('option:selected').val())
+		{
+			case '1':
+				cb2.attr('disabled', true);
+				cb3.attr('disabled', true);
+
+				$drugEmptyDateText2.hide();
+
+				break;
+
+			case '2':
+				cb2.attr('disabled', false);
+				cb3.attr('disabled', true);
+
+				$drugEmptyDateText2.show();
+
+				break;
+
+			case '3':
+				cb2.attr('disabled', false);
+				cb3.attr('disabled', false);
+
+				$drugEmptyDateText2.show();
+
+				break;
+		}
+	}
+
+	/**
 	 * Update total number of rows
 	 */
 	function updateTotalRowNumber()
 	{
 		$totalRow.text($panel.find('tr').length);
+	}
+
+	/**
+	 * Large checkbox check function
+	 */
+	function clickLargeLabel()
+	{
+		$(this).prev().click();
 	}
 
 	/**
@@ -144,27 +191,63 @@
 	 */
 	function bindSeeDrDateEvent($node)
 	{
-		function change()
-		{
-			// Focus out DatetimePicker element
-			$node.closest('tr').find('.id-number').focus().blur();
+		updateDrugEmptyDate.call(this);
+	}
 
-			updateDrugEmptyDate.call(this);
-		}
+	/**
+	 * Valid date manually entered by user
+	 *
+	 * @param {string} date
+	 * @param {object} elem
+	 */
+	function validateDate(date, elem)
+	{
+		// 10 digits like 2014-01-23, and has to be reasonable date
+		var validDashedDateExp = new RegExp(/([1-2]{1}[0-9]{1}[0-9]{2}[-]{1}[0-1]{1}[0-9]{1}[-]{1}[0-3]{1}[0-9]{1})/g);
 
-		$node.on('dp.change', function(e)
-		{
-			change.call(this);
-		});
+		// Date has to be reasonable 8 digits, EX : 30002359 is not allow here
+		var validDateExp = new RegExp(/([1-2]{1}[0-9]{1}[0-9]{2}[0-1]{1}[0-9]{1}[0-3]{1}[0-9]{1})/g);
 
-		$node.on('dp.hide', function(e)
+		var validState = {
+			validDashedDate : validDashedDateExp.test(date),
+			validDate : validDateExp.test(date)
+		};
+
+		var length = date.length;
+
+		if (length == 10)
 		{
-			// Trigger event "dp.change" when select today's date
-			if (0 === moment().diff(e.date, 'days'))
+			if (!validState.validDashedDate)
 			{
-				change.call(this);
+				throw new UserException('年、月、日必須落在合理範圍');
 			}
-		});
+		}
+		else if (length == 8)
+		{
+			if (!validState.validDate)
+			{
+				throw new UserException('年、月、日必須落在合理範圍');
+			}
+
+			// Replace formatted date "YY-MM-DD"
+			$(elem).val(date.substr(0, 4) + '-' + date.substr(4, 2) + '-' + date.substr(6, 2));
+		}
+		else
+		{
+			throw new UserException('正確日期格式應為 "2014-02-01" 或是 "20140201"');
+		}
+	}
+
+	/**
+	 * Exception object
+	 *
+	 * @param message
+	 * @constructor
+	 */
+	function UserException(message)
+	{
+		this.message = message;
+		this.name = "UserException";
 	}
 
 	/**
@@ -182,9 +265,27 @@
 		// 可調劑次數與處方箋外送次數連動處理
 		$panel.find('.times').change(timesChange);
 
+		// 就醫日期
 		$('.see-dr-date').each(function()
 		{
-			bindSeeDrDateEvent($(this));
+			$(this).on('focusout', function()
+			{
+				var seeDrDate = $(this).val();
+
+				try
+				{
+					validateDate(seeDrDate, this);
+				}
+				catch(e)
+				{
+					alert(e.message);
+
+					// Remind user
+					$(this).focus();
+				}
+
+				updateDrugEmptyDate.call(this);
+			});
 		});
 
 		// Bind form submit event
@@ -226,9 +327,12 @@
 			initSelectors();
 			bindEvents();
 
+			setDisabledBox();
+
 			this.option = $.extend(this.option, option);
 
 			var handler = new MultiRowHandler({$panel:$panel});
+			var keyEventHandler = new KeyEventHandler({$panel:$panel});
 
 			// Bind afterInsert event
 			handler.on('afterInsert', function($row)
@@ -266,22 +370,34 @@
 			// Bind initialize event
 			handler.on('initializeRow', function($row)
 			{
-				var $datetimePicker = $row.find('.datetimepicker');
+				// 就醫日期連動
+				$row.find('.see-dr-date').on('focusout', function()
+				{
+					var seeDrDate = $(this).val();
 
-				$datetimePicker.datetimepicker({
-					pickTime: false,
+					try
+					{
+						validateDate(seeDrDate, this);
+					}
+					catch(e)
+					{
+						alert(e.message);
 
-					// 禁用點選未來的日期
-					maxDate: new Date()
+						// Remind user
+						$(this).focus();
+					}
+
+					updateDrugEmptyDate.call(this);
 				});
-
-				bindSeeDrDateEvent($datetimePicker);
 
 				// Bind onchange event to update "就醫日期" & "給藥天數"
 				$row.find('.period').change(updateDrugEmptyDate);
 
 				// 可調劑次數與處方箋外送次數連動處理
 				$row.find('.times').change(timesChange);
+
+				// large checkbox click event
+				$row.find('.large-checkbox-fieldset label').click(clickLargeLabel);
 			});
 
 			// Add row
@@ -424,8 +540,6 @@
 			return function(e, $node)
 			{
 				var $row = $node.closest('tr'),
-					$idNumber = $row.find('.id-number'),
-					$birthDate = $row.find('.birth-date'),
 					$customerId = $row.find('.customer-id'),
 					data = $node.select2('data');
 
@@ -434,33 +548,10 @@
 					if (data.id)
 					{
 						$customerId.val(data.id);
-
-						if (data.id > 0)
-						{
-							$idNumber.prop('readonly', true);
-							$birthDate.prop('readonly', true);
-						}
-						else
-						{
-							$idNumber.prop('readonly', false);
-							$birthDate.prop('readonly', false);
-						}
-					}
-
-					if (data.id_number)
-					{
-						$idNumber.val(data.id_number);
-					}
-
-					if (data.birth_date)
-					{
-						$birthDate.val(data.birth_date);
 					}
 				}
 				else
 				{
-					$idNumber.val('');
-					$birthDate.val('');
 					$customerId.val('');
 				}
 			};

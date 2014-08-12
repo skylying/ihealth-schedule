@@ -81,8 +81,6 @@ class ScheduleControllerCustomerAjaxJson extends DisplayController
 
 				$data[$i]->id         = $item->id;
 				$data[$i]->name       = $item->name;
-				$data[$i]->id_number  = $item->id_number;
-				$data[$i]->birth_date = $item->birth_date;
 			}
 
 			jexit(json_encode($data));

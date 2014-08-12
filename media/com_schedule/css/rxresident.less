@@ -1,3 +1,12 @@
+select:focus, div:focus, .see-dr-date:focus
+{
+	box-shadow: 0px 0px 10px 2px #075E74 !important;
+}
+.btn-primary:focus
+{
+	font-size: 1.3em;
+}
+
 .fullwidth
 {
 	width: 100%;
@@ -5,7 +14,7 @@
 
 .calendarwidth
 {
-	width: 90px !important;
+	width: 120px !important;
 }
 
 .fullwidth-checkboxes
@@ -59,4 +68,55 @@
 		padding-right: 10px;
 		margin-left: 125px;
 	}
+}
+
+.large-checkbox-fieldset
+{
+	input[type="checkbox"]
+	{
+		position: absolute;
+	}
+	label
+	{
+		background-color: #fafafa;
+		border: 1px solid #cacece;
+		margin-right: 10px;
+		box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05);
+		padding: 16px;
+		border-radius: 3px;
+		display: inline-block;
+		position: relative;
+		width: 10px;
+		height: 33px;
+		color: #fafafa;
+	}
+	&:hover
+	{
+		cursor: pointer;
+	}
+
+}
+.large-checkbox-fieldset input[type="checkbox"]:focus ~ label
+{
+	box-shadow: 0px 0px 10px 2px #075E74;
+}
+
+.large-checkbox-fieldset input[type="checkbox"]:checked + label:after
+{
+	content: '\2714';
+	font-size: 35px;
+	position: absolute;
+	color: #08A24C;
+	left: 7px;
+	bottom: 8px;
+}
+
+.large-checkbox-fieldset input[type="checkbox"]:disabled + label:after
+{
+	content: '\2716';
+	font-size: 35px;
+	position: absolute;
+	color: #F394A7;
+	left: 3px;
+	bottom: 6px;
 }

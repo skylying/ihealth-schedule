@@ -36,30 +36,6 @@ $id    = FieldHelper::resetGroup($form->getField('id'), $group);
 		?>
 	</td>
 	<td>
-		<?php
-		$customerName = FieldHelper::resetGroup($form->getField('id_number'), $group);
-
-		if ($customerId->value > 0)
-		{
-			$customerName->readonly = true;
-		}
-
-		echo $customerName->input;
-		?>
-	</td>
-	<td>
-		<?php
-		$birthDate = FieldHelper::resetGroup($form->getField('birth_date'), $group);
-
-		if ($customerId->value > 0)
-		{
-			$birthDate->readonly = true;
-		}
-
-		echo $birthDate->input;
-		?>
-	</td>
-	<td>
 		<?php echo FieldHelper::resetGroup($form->getField('see_dr_date'), $group)->input; ?>
 	</td>
 	<td>
@@ -71,19 +47,19 @@ $id    = FieldHelper::resetGroup($form->getField('id'), $group);
 	<td>
 		<?php echo FieldHelper::resetGroup($form->getField('deliver_nths'), $group)->input; ?>
 	</td>
-	<td>
+	<td class="drug-finish-date">
 		<?php
 		$emptyDate1st = FieldHelper::resetGroup($form->getField('empty_date_1st'), $group);
 		$emptyDate2nd = FieldHelper::resetGroup($form->getField('empty_date_2nd'), $group);
 		?>
 
-		(1)
+		(2)
 		<span class="drug-empty-date-text1">
 			<?php echo substr($emptyDate1st->value, 5); ?>
 		</span>
 		<br />
 
-		(2)
+		(3)
 		<span class="drug-empty-date-text2">
 			<?php echo substr($emptyDate2nd->value, 5); ?>
 		</span>
