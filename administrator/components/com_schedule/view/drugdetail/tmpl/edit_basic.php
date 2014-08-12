@@ -33,6 +33,36 @@ $user = JFactory::getUser();
 	});
 </script>
 
+<!--style for schedules being cancelled-->
+<style>
+	.status-mark
+	{
+		padding: 3px;
+		color: #ffffff;
+		border-radius: 5px;
+	}
+	.cancel_reject
+	{
+		background: #95a5a6;
+	}
+	.cancel_only
+	{
+		background: #B766AD;
+	}
+	.pause
+	{
+		background: #f5ab35;
+	}
+	.emergency
+	{
+		background: #e74c3c;
+	}
+	.canceled
+	{
+		background: #8080C0;
+	}
+</style>
+
 <h1 class="text-center">打包表</h1>
 <h2 class="text-center"><?php echo $data->date_start . ' ~ ' . $data->date_end; ?></h2>
 
@@ -41,7 +71,65 @@ $user = JFactory::getUser();
 <span class="btn btn-info" style="font-size: 20px;">
 	<span class="icon-signup"></span>&nbsp;&nbsp;<?php echo $sender['name']; ?>
 </span>
-	<hr />
+
+<hr />
+
+	<!--行政排程區塊-->
+	<?php if (!empty($sender['admin'])): ?>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-5">
+				<table class="table table-bordered">
+					<thead>
+					<tr>
+						<th class="center" width="20%">日期</th>
+						<th class="center" width="20%">類型</th>
+						<th class="center">目的地 / 客戶</th>
+					</tr>
+					</thead>
+					<tbody>
+					<?php
+
+					$html = "";
+
+					foreach ($sender['admin'] as $admin)
+					{
+						$cancelBlockClass = 'hide';
+						$status = '';
+
+						if ($admin['status'] !== 'scheduled')
+						{
+							$status = JText::_('COM_SCHEDULE_DRUGDETAIL_CANCEL_STATUS_' . strtoupper($admin['status']));
+							$cancelBlockClass = '';
+						}
+
+						$html .= <<<HTML
+	<tr>
+		<td class="center">
+			<div class="row">
+				{$admin["date"]}
+			</div>
+			<div class="row">
+				<span class="status-mark {$admin["status"]} {$cancelBlockClass}">
+					{$status}
+				</span>
+			</div>
+		</td>
+		<td class="center">{$admin["type"]}</td>
+		<td class="center">{$admin["to"]}</td>
+	</tr>
+HTML;
+					}
+
+					echo $html;
+					?>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	<?php endif; ?>
+
 <table id="drug-details" class="table table-bordered">
 	<thead>
 	<tr>

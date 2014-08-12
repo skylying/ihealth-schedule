@@ -45,32 +45,6 @@ else
 }
 ?>
 
-<!--style for schedules being cancelled-->
-<style>
-	 .status-mark
-	 {
-		 padding: 3px;
-		 color: #ffffff;
-		 border-radius: 5px;
-	 }
-	.cancel_reject
-	{
-		background: #95a5a6;
-	}
-	.cancel_only
-	{
-		background: #B766AD;
-	}
-	.pause
-	{
-		background: #f5ab35;
-	}
-	.emergency
-	{
-		background: #e74c3c;
-	}
-</style>
-
 <tr data-id="<?php echo $schedule->id; ?>">
 	<td class="text-center">
 		<!-- 排程編號 -->
