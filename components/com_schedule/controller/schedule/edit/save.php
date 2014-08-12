@@ -100,12 +100,12 @@ class ScheduleControllerScheduleEditSave extends ApiSaveController
 			$routeTable->area         = $addressTable->area;
 			$routeTable->area_title   = $addressTable->area_title;
 
-			$icrmConfig    = \JComponentHelper::getParams('com_schedule')->get("icrm");
+			$defaultWeekday = \JComponentHelper::getParams('com_schedule')->get('sender.default_weekday', 'MON');
 			$defaultSender = \Schedule\Helper\SenderHelper::getDefaultSender();
 
 			$routeTable->sender_id   = $defaultSender['id'];
 			$routeTable->sender_name = $defaultSender['sender'];
-			$routeTable->weekday     = $icrmConfig->default_weekday;
+			$routeTable->weekday     = $defaultWeekday;
 
 			$routeTable->store();
 

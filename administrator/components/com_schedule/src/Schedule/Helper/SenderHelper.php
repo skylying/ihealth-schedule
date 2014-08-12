@@ -20,7 +20,7 @@ class SenderHelper
 	 */
 	public static function getDefaultSender()
 	{
-		$defaultSender = \JComponentHelper::getParams('com_schedule')->get("icrm.default_sender");
+		$defaultSender = \JComponentHelper::getParams('com_schedule')->get('sender.default_sender');
 
 		$defaultSenderFromConfig = (strpos($defaultSender, '-') !== false) ? $defaultSender : '0-0';
 
