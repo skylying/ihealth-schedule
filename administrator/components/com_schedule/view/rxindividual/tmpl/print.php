@@ -21,7 +21,7 @@ $drugs = $data->item->drugs;
 	@media print {
 		.printButton
 		{
-			display : none;
+			display: none;
 		}
 		.pagebreak
 		{
@@ -84,7 +84,7 @@ function markPrinted()
 					<thead>
 					<tr>
 						<th class="left" style="width: 20%;">項次</th>
-						<th class="left" style="width: 30%;">內容</th>
+						<th class="left" style="width: 30%; border-right: 1px solid #efefef;">內容</th>
 						<th class="left" style="width: 20%;">項次</th>
 						<th class="left" style="width: 30%;">內容</th>
 					</tr>
