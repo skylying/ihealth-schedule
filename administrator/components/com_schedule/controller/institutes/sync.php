@@ -62,8 +62,7 @@ class ScheduleControllerInstitutesSync extends AbstractRedirectController
 			'session_key' => $sessionKey,
 			'filter' => array(
 				'facility.published' => 1,
-				'facility.status' => 1,
-				'contact.status' => 1,
+				'facility.in_service' => 1,
 			),
 			'limit' => 500,
 		);
