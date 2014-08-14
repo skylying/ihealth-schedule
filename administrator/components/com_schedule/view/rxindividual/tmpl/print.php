@@ -33,6 +33,10 @@ $drugs = $data->item->drugs;
 			margin: 0mm;  /* this affects the margin in the printer settings */
 		}
 	}
+	.boldfont
+	{
+		font-weight: bold; font-size: 16px;"
+	}
 </style>
 <script>
 function markPrinted()
@@ -97,56 +101,56 @@ function markPrinted()
 						<td><?php echo $data->item->id_number; ?></td>
 					</tr>
 					<tr>
-						<td style="font-weight: bold; font-size: 16px;">處方姓名</td>
-						<td style="font-weight: bold; font-size: 16px;"><?php echo $data->item->customer_name; ?></td>
+						<td class="boldfont">處方姓名</td>
+						<td class="boldfont"><?php echo $data->item->customer_name; ?></td>
 						<td>客戶生日</td>
 						<td><?php echo $data->item->birth_date; ?></td>
 					</tr>
 					<tr>
-						<td style="font-weight: bold; font-size: 16px;">客戶備註</td>
-						<td style="font-weight: bold; font-size: 16px;"><?php echo nl2br($data->item->customer_note); ?></td>
+						<td class="boldfont">客戶備註</td>
+						<td class="boldfont"><?php echo nl2br($data->item->customer_note); ?></td>
 						<td>處方開立醫院</td>
 						<td><?php echo $data->item->hospital_title; ?></td>
 					</tr>
 					<tr>
-						<td style="font-weight: bold; font-size: 16px;">本次外送備註</td>
-						<td style="font-weight: bold; font-size: 16px;"><?php echo nl2br($data->item->note); ?></td>
+						<td class="boldfont">本次外送備註</td>
+						<td class="boldfont"><?php echo nl2br($data->item->note); ?></td>
 						<td><!--科別--></td>
 						<td><!--科別--></td>
 					</tr>
 					<tr>
-						<td style="font-weight: bold; font-size: 16px;">地址</td>
-						<td style="font-weight: bold; font-size: 16px;"><?php echo $scheduleInfo->city_title . ' - ' . $scheduleInfo->area_title . ' - ' . $scheduleInfo->address; ?></td>
+						<td class="boldfont">地址</td>
+						<td class="boldfont"><?php echo $scheduleInfo->city_title . ' - ' . $scheduleInfo->area_title . ' - ' . $scheduleInfo->address; ?></td>
 						<td>就醫日期</td>
 						<td><?php echo $data->item->see_dr_date; ?></td>
 					</tr>
 					<tr>
-						<td style="font-weight: bold; font-size: 16px;">電話(H)</td>
-						<td style="font-weight: bold; font-size: 16px;"><?php echo $scheduleInfo->tel_home; ?></td>
+						<td class="boldfont">電話(H)</td>
+						<td class="boldfont"><?php echo $scheduleInfo->tel_home; ?></td>
 						<td>給藥天數</td>
 						<td><?php echo $data->item->period; ?>天</td>
 					</tr>
 					<tr>
-						<td style="font-weight: bold; font-size: 16px;">電話(O)</td>
-						<td style="font-weight: bold; font-size: 16px;"><?php echo $scheduleInfo->tel_office; ?></td>
+						<td class="boldfont">電話(O)</td>
+						<td class="boldfont"><?php echo $scheduleInfo->tel_office; ?></td>
 						<td>可調劑次數</td>
 						<td><?php echo $data->item->times; ?>次</td>
 					</tr>
 					<tr>
-						<td style="font-weight: bold; font-size: 16px;">手機(M)</td>
-						<td style="font-weight: bold; font-size: 16px;"><?php echo $scheduleInfo->mobile; ?></td>
+						<td class="boldfont">手機(M)</td>
+						<td class="boldfont"><?php echo $scheduleInfo->mobile; ?></td>
 						<td><!--是否分包--></td>
 						<td><?php // echo JText::_('COM_SCHEDULE_RXINDIVIDUAL_PRINT_NEEDSPLIT_' . $data->item->need_split);?></td>
 					</tr>
 					<tr>
-						<td style="font-weight: bold; font-size: 16px;">預約宅配日</td>
-						<td style="font-weight: bold; font-size: 16px;"><?php echo $scheduleInfo->date; ?></td>
+						<td class="boldfont">預約宅配日</td>
+						<td class="boldfont"><?php echo $scheduleInfo->date; ?></td>
 						<td><!--外送次數--></td>
 						<td><?php // echo $data->item->times; ?></td>
 					</tr>
 					<tr>
-						<td style="font-weight: bold; font-size: 16px;">時段</td>
-						<td style="font-weight: bold; font-size: 16px;"><?php echo JText::_('COM_SCHEDULE_RXINDIVIDUAL_PRINT_' . $scheduleInfo->session); ?></td>
+						<td class="boldfont">時段</td>
+						<td class="boldfont"><?php echo JText::_('COM_SCHEDULE_RXINDIVIDUAL_PRINT_' . $scheduleInfo->session); ?></td>
 						<td><!--客戶年齡--></td>
 						<td><?php // echo $data->item->age; ?></td>
 					</tr>
