@@ -10,7 +10,9 @@
 defined('_JEXEC') or die;
 
 JHtmlFormbehavior::chosen('select');
-JHtmlBehavior::formvalidation();
+
+/* Remove for potential js error cause by Joomla 3.3 update, 2014/8/14, Tim */
+//JHtmlBehavior::formvalidation();
 
 /**
  * Prepare data for this template.
@@ -37,10 +39,7 @@ $asset->addJs('library/jquery.touchSwipe.js');
 		// Delete empty extra purchase inputs
 		window.InstituteExtraObject.deleteEmptyPrice();
 
-		if (task == 'drugdetails.edit.cancel' || document.formvalidator.isValid(document.id('adminForm')))
-		{
-			Joomla.submitform(task, document.getElementById('adminForm'));
-		}
+		Joomla.submitform(task, document.getElementById('adminForm'));
 	}
 </script>
 
