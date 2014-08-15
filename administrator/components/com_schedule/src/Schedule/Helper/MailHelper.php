@@ -30,7 +30,7 @@ class MailHelper
 		// Set layouts from admin
 		$layout = new FileLayout("schedule.mail.confirm", SCHEDULE_ADMIN . '/layouts');
 
-		$mailer->setSubject("處方預約確認信");
+		$mailer->setSubject(sprintf('[iHealth] 處方預約確認: %s您好! 您的處方宅配已預約完成', $displayData['member']->name));
 		$mailer->setBody($layout->render($displayData));
 		$mailer->addRecipient($mailTo);
 		$mailer->setSender($from);
@@ -62,7 +62,7 @@ class MailHelper
 		// Set layouts from admin
 		$layout = new FileLayout("schedule.mail.emptyroute", SCHEDULE_ADMIN . '/layouts');
 
-		$mailer->setSubject("沒有路線通知");
+		$mailer->setSubject(sprintf('[無送藥路線] %s 宅配日期: %s', $displayData['memberName'], $displayData['date']));
 		$mailer->setBody($layout->render($displayData));
 		$mailer->addRecipient($mailTo);
 		$mailer->setSender($from);
@@ -94,7 +94,11 @@ class MailHelper
 		// Set layouts from admin
 		$layout = new FileLayout("schedule.mail.notify_staff", SCHEDULE_ADMIN . '/layouts');
 
-		$mailer->setSubject("排程修改通知");
+		$changedText = \JText::_('COM_SCHEDULE_EMAIL_TILE_SCHEDULE_' . $displayData['changed']);
+
+		$displayData['changedText'] = $changedText;
+
+		$mailer->setSubject(sprintf('[排程更改] %s%s %s 的外送排程', $displayData['memberName'], $changedText, $displayData['date']));
 		$mailer->setBody($layout->render($displayData));
 		$mailer->addRecipient($mailTo);
 		$mailer->setSender($from);
@@ -131,13 +135,13 @@ class MailHelper
 	 * sendCancelLayout
 	 *
 	 * @param   string|array $mailTo
-	 * @param   mixed        $Data
+	 * @param   mixed        $displayData
 	 *
 	 * @return  void
 	 *
 	 * @throws \Exception
 	 */
-	public static function sendCancelLayout($mailTo, $Data)
+	public static function sendCancelLayout($mailTo, $displayData = array())
 	{
 		$mailer = \JFactory::getMailer();
 		$from   = \JFactory::getConfig()->get('mailfrom');
@@ -145,8 +149,8 @@ class MailHelper
 		// Set layouts from admin
 		$layout = new FileLayout("schedule.mail.cancel", SCHEDULE_ADMIN . '/layouts');
 
-		$mailer->setSubject("排程取消通知");
-		$mailer->setBody($layout->render($Data));
+		$mailer->setSubject(sprintf('[iHealth] 取消確認: %s您好! 您的處方宅配預約已取消', $displayData['member']->name));
+		$mailer->setBody($layout->render($displayData));
 		$mailer->addRecipient($mailTo);
 		$mailer->setSender($from);
 		$mailer->isHtml(true);

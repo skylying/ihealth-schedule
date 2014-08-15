@@ -208,7 +208,13 @@ class ScheduleControllerPrescriptionEditSave extends ApiSaveController
 			{
 				$data = new Data($scheduleModel->getItem($scheduleModel->getState()->get('schedule.id')));
 
-				MailHelper::sendEmptyRouteMail($notifyEmails, array('schedules' => array($data)));
+				$mailData = array(
+					'schedules' => array($data),
+					'memberName' => $data['member_name'],
+					'date' => $data['date'],
+				);
+
+				MailHelper::sendEmptyRouteMail($notifyEmails, $mailData);
 			}
 		}
 
@@ -236,11 +242,13 @@ class ScheduleControllerPrescriptionEditSave extends ApiSaveController
 			}
 
 			$mailDataSet = array(
-				"schedules" => $schedules,
-				"rx"        => new Data($model->getItem($rxId)),
-				"drugs"     => $drugsModel->getItems(),
+				'schedules' => $schedules,
+				'rx'        => new Data($model->getItem($rxId)),
+				'drugs'     => $drugsModel->getItems(),
+				'member'    => $memberTable,
 			);
 
+			// This API is only for creating a new individual prescription, so we use "confirm" email layout
 			MailHelper::sendMailWhenScheduleChange($memberTable->email, $mailDataSet);
 		}
 	}

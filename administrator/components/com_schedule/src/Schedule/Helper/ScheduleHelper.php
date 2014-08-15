@@ -237,25 +237,25 @@ class ScheduleHelper
 		if (isset($validData['address_id'])
 			&& $oldData['address_id'] != $validData['address_id'])
 		{
-			return true;
+			return 'modify';
 		}
 
 		if (isset($validData['date'])
 			&& $oldData['date'] != $validData['date'])
 		{
-			return true;
+			return 'modify';
 		}
 
 		if (isset($validData['session'])
 			&& $oldData['session'] != $validData['session'])
 		{
-			return true;
+			return 'modify';
 		}
 
 		if (isset($validData['status'])
 			&& 'deleted' === $validData['status'])
 		{
-			return true;
+			return 'cancel';
 		}
 
 		return false;

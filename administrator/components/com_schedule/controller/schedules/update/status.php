@@ -137,12 +137,23 @@ class ScheduleControllerSchedulesUpdateStatus extends AbstractUpdateStateControl
 				$drugsModel->getState()->set('filter', array('drug.rx_id' => $oldScheduleTable->rx_id));
 
 				$mailData = array(
-					"schedules" => $schedules,
-					"rx"        => $rx,
-					"drugs"     => $drugsModel->getItems(),
+					'rx'        => $rx,
+					'drugs'     => $drugsModel->getItems(),
+					'member'    => $memberTable,
 				);
 
-				MailHelper::sendMailWhenScheduleChange($memberTable->email, $mailData);
+				if (in_array($this->stateData['status'], ['cancel_reject', 'cancel_only']))
+				{
+					$mailData['schedule'] = $oldScheduleTable;
+
+					MailHelper::sendCancelLayout($memberTable->email, $mailData);
+				}
+				else
+				{
+					$mailData['schedules'] = $schedules;
+
+					MailHelper::sendMailWhenScheduleChange($memberTable->email, $mailData);
+				}
 			}
 		}
 	}
