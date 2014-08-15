@@ -11,7 +11,6 @@ defined('_JEXEC') or die;
 
 JHtmlBootstrap::tooltip();
 JHtmlFormbehavior::chosen('select');
-JHtmlBehavior::formvalidation();
 
 /**
  * Prepare data for this template.
@@ -28,16 +27,6 @@ $fieldsets = $data->form->getFieldsets();
 $infoFieldset = $fieldsets['information'];
 $relatedCustomersFieldset = $fieldsets['related_customers'];
 ?>
-<!-- Validate Script -->
-<script type="text/javascript">
-	Joomla.submitbutton = function(task)
-	{
-		if (task == 'member.edit.cancel' || document.formvalidator.isValid(document.id('adminForm')))
-		{
-			Joomla.submitform(task, document.getElementById('adminForm'));
-		}
-	};
-</script>
 
 <div id="schedule" class="windwalker member edit-form row-fluid">
 	<form action="<?php echo JURI::getInstance(); ?>"  method="post" name="adminForm" id="adminForm"
