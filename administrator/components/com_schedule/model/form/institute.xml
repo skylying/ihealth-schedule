@@ -32,7 +32,7 @@
 			type="TagsInput"
 			label="樓層(可複選)"
 			description="選擇機構所有的樓層(複選)"
-			class="input-xxlarge required"
+			class="input-xxlarge"
 			/>
 
 		<field name="tel"
