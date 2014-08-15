@@ -126,4 +126,36 @@ class MailHelper
 
 		return $mails;
 	}
+
+	/**
+	 * sendCancelLayout
+	 *
+	 * @param   string|array $mailTo
+	 * @param   mixed        $Data
+	 *
+	 * @return  void
+	 *
+	 * @throws \Exception
+	 */
+	public static function sendCancelLayout($mailTo, $Data)
+	{
+		$mailer = \JFactory::getMailer();
+		$from   = \JFactory::getConfig()->get('mailfrom');
+
+		// Set layouts from admin
+		$layout = new FileLayout("schedule.mail.cancel", SCHEDULE_ADMIN . '/layouts');
+
+		$mailer->setSubject("排程取消通知");
+		$mailer->setBody($layout->render($Data));
+		$mailer->addRecipient($mailTo);
+		$mailer->setSender($from);
+		$mailer->isHtml(true);
+
+		$sendMailDone = $mailer->Send();
+
+		if (! $sendMailDone)
+		{
+			throw new \Exception("Email send failure");
+		}
+	}
 }
