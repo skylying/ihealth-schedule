@@ -1,66 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
 <config>
-	<fieldset name="sender"
-		label="外送設定">
-		<field name="default_sender"
-			type="sql"
-			query="SELECT CONCAT(id, '-', name) AS sender, name FROM #__schedule_senders"
-			key_field="sender"
-			value_field="name"
-			label="預設外送藥師"
-			description="預設外送藥師"
-			class=""
-			/>
+	<fields name="sender">
+		<fieldset name="sender"
+			label="外送設定">
+			<field name="default_sender"
+				type="sql"
+				query="SELECT CONCAT(id, '-', name) AS sender, name FROM #__schedule_senders"
+				key_field="sender"
+				value_field="name"
+				label="預設外送藥師"
+				description="預設外送藥師"
+				class=""
+				/>
 
-		<field name="default_weekday"
-			type="list"
-			label="預設外送日"
-			description="預設外送日"
-			class=""
+			<field name="default_weekday"
+				type="list"
+				label="預設外送日"
+				description="預設外送日"
+				class=""
+				>
+				<option value="MON">MON</option>
+				<option value="TUE">TUE</option>
+				<option value="WED">WED</option>
+				<option value="THU">THU</option>
+				<option value="FRI">FRI</option>
+			</field>
+		</fieldset>
+	</fields>
+
+	<fields name="icrm_api">
+		<fieldset name="icrm_api"
+			label="iCRM API"
+			addfieldpath="administrator/components/com_schedule/model/field"
 			>
-			<option value="MON">MON</option>
-			<option value="TUE">TUE</option>
-			<option value="WED">WED</option>
-			<option value="THU">THU</option>
-			<option value="FRI">FRI</option>
-		</field>
-	</fieldset>
 
-	<fieldset name="icrm_api"
-		label="iCRM API"
-		addfieldpath="administrator/components/com_schedule/model/field"
-		>
+			<field
+				name="host"
+				type="text"
+				label="URL"
+				/>
 
-		<field
-			name="host"
-			type="text"
-			label="URL"
-			/>
+			<field
+				name="username"
+				type="text"
+				label="Access Username"
+				/>
 
-		<field
-			name="username"
-			type="text"
-			label="Access Username"
-			/>
+			<field
+				name="password"
+				type="password"
+				label="Access Password"
+				/>
+		</fieldset>
+	</fields>
 
-		<field
-			name="password"
-			type="password"
-			label="Access Password"
-			/>
-	</fieldset>
-
-	<fieldset name="schedule"
-		label="郵件設定"
-		>
-		<field name="empty_route_mail"
-			type="sql"
-			query="SELECT CONCAT(`name`, ' &lt;', `email`, '&gt;') AS empty_route_mail, `email` AS `value` FROM #__users"
-			multiple="true"
-			label="無路線提醒信箱"
-			description="無路線提醒信箱"
-			/>
-	</fieldset>
+	<fields name="schedule">
+		<fieldset name="schedule"
+			label="郵件設定"
+			>
+			<field name="empty_route_mail"
+				type="sql"
+				query="SELECT CONCAT(`name`, ' &lt;', `email`, '&gt;') AS empty_route_mail, `email` AS `value` FROM #__users"
+				multiple="true"
+				label="無路線提醒信箱"
+				description="無路線提醒信箱"
+				/>
+		</fieldset>
+	</fields>
 
 	<fieldset
 		name="permissions"
