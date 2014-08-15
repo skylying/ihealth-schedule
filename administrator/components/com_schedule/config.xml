@@ -1,29 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <config>
-	<fields name="icrm">
-		<fieldset name="api"
-			label="API"
-			addfieldpath="administrator/components/com_schedule/model/field"
-			>
-
-			<field
-				name="host"
-				type="text"
-				label="URL"
-				/>
-
-			<field
-				name="username"
-				type="text"
-				label="Access Username"
-				/>
-
-			<field
-				name="password"
-				type="password"
-				label="Access Password"
-				/>
-
+	<fields name="sender">
+		<fieldset name="sender"
+			label="外送設定">
 			<field name="default_sender"
 				type="sql"
 				query="SELECT CONCAT(id, '-', name) AS sender, name FROM #__schedule_senders"
@@ -49,9 +28,35 @@
 		</fieldset>
 	</fields>
 
+	<fields name="icrm_api">
+		<fieldset name="icrm_api"
+			label="iCRM API"
+			addfieldpath="administrator/components/com_schedule/model/field"
+			>
+
+			<field
+				name="host"
+				type="text"
+				label="URL"
+				/>
+
+			<field
+				name="username"
+				type="text"
+				label="Access Username"
+				/>
+
+			<field
+				name="password"
+				type="password"
+				label="Access Password"
+				/>
+		</fieldset>
+	</fields>
+
 	<fields name="schedule">
 		<fieldset name="schedule"
-			label="Schedule"
+			label="郵件設定"
 			>
 			<field name="empty_route_mail"
 				type="sql"
@@ -68,7 +73,6 @@
 		label="JCONFIG_PERMISSIONS_LABEL"
 		description="JCONFIG_PERMISSIONS_DESC"
 		>
-
 		<field
 			name="rules"
 			type="rules"
@@ -77,7 +81,7 @@
 			validate="rules"
 			filter="rules"
 			component="com_schedule"
-			section="component" />
+			section="component"
+			/>
 	</fieldset>
-
 </config>

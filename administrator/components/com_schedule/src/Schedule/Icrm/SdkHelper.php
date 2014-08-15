@@ -37,7 +37,7 @@ abstract class SdkHelper
 
 		$params = ExtensionHelper::getParams('com_schedule');
 
-		$host = $params->get('icrm.host');
+		$host = $params->get('icrm_api.host');
 
 		if (strpos($host, 'http') === false)
 		{

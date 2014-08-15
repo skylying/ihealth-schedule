@@ -51,8 +51,8 @@ class ScheduleControllerInstitutesSync extends AbstractRedirectController
 
 		$params = ExtensionHelper::getParams('com_schedule');
 
-		$username = $params->get('icrm.username', '');
-		$password = $params->get('icrm.password', '');
+		$username = $params->get('icrm_api.username', '');
+		$password = $params->get('icrm_api.password', '');
 
 		// Get session_key
 		$result = $sdk->execute('/user/login', array('username' => $username, 'password' => $password));
