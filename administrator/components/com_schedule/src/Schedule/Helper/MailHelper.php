@@ -135,13 +135,13 @@ class MailHelper
 	 * sendCancelLayout
 	 *
 	 * @param   string|array $mailTo
-	 * @param   mixed        $Data
+	 * @param   mixed        $displayData
 	 *
 	 * @return  void
 	 *
 	 * @throws \Exception
 	 */
-	public static function sendCancelLayout($mailTo, $Data)
+	public static function sendCancelLayout($mailTo, $displayData = array())
 	{
 		$mailer = \JFactory::getMailer();
 		$from   = \JFactory::getConfig()->get('mailfrom');
@@ -149,8 +149,8 @@ class MailHelper
 		// Set layouts from admin
 		$layout = new FileLayout("schedule.mail.cancel", SCHEDULE_ADMIN . '/layouts');
 
-		$mailer->setSubject("排程取消通知");
-		$mailer->setBody($layout->render($Data));
+		$mailer->setSubject(sprintf('[iHealth] 取消確認: %s您好! 您的處方宅配預約已取消', $displayData['member']->name));
+		$mailer->setBody($layout->render($displayData));
 		$mailer->addRecipient($mailTo);
 		$mailer->setSender($from);
 		$mailer->isHtml(true);
