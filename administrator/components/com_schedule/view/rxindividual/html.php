@@ -163,10 +163,10 @@ HTML;
 		$birthday = new DateTime($data->item->birth_date);
 		$age      = $birthday->diff(new Datetime('now'))->y;
 
-		$memberList    = '';
+		$memberList = '';
 
 		// Get print data from helpers
-		$customerInfo = \Schedule\Helper\RxDataHelper::getCustomerInfo($data->item->customer_id);
+		$customerInfo  = \Schedule\Helper\RxDataHelper::getCustomerInfo($data->item->customer_id);
 		$members       = \Schedule\Helper\Mapping\MemberCustomerHelper::loadMembers($data->item->id);
 		$scheduleInfos = \Schedule\Helper\RxDataHelper::getRxList($data->item->id);
 		$drugs         = \Schedule\Helper\RxDataHelper::getDrugList($data->item->id);

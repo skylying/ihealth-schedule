@@ -8,7 +8,6 @@
 
 // No direct access
 defined('_JEXEC') or die;
-$need_split = $data->item->need_split;
 $scheduleInfos = $data->item->scheduleInfos;
 $drugs = $data->item->drugs;
 ?>
