@@ -35,7 +35,7 @@ $drugs = $data->item->drugs;
 	}
 	.boldfont
 	{
-		font-weight: bold; font-size: 16px;"
+		font-weight: bold; font-size: 16px;
 	}
 </style>
 <script>
@@ -64,16 +64,14 @@ function markPrinted()
 </div>
 <?php foreach ($scheduleInfos as $scheduleInfo): ?>
 	<div class="content">
-		<div class="row-fluid" >
+		<div class="row-fluid">
 			<div class="col-lg-12">
 				<h2 class="center">
 					<?php echo $data->item->customer_name; ?>
 					第
 					<?php echo substr($scheduleInfo->deliver_nth, 0, 1); ?>
 					次的外送資料
-					(處方箋編號:
-					<?php echo $data->item->id; ?>
-					)
+					(處方箋編號: <?php echo $data->item->id; ?>)
 				</h2>
 				<?php if ($data->item->method == 'form')
 				{
