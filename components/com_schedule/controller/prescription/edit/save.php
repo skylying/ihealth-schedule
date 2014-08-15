@@ -248,6 +248,7 @@ class ScheduleControllerPrescriptionEditSave extends ApiSaveController
 				'member'    => $memberTable,
 			);
 
+			// This API is only for creating a new individual prescription, so we use "confirm" email layout
 			MailHelper::sendMailWhenScheduleChange($memberTable->email, $mailDataSet);
 		}
 	}
