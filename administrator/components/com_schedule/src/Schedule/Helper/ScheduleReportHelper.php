@@ -30,6 +30,8 @@ class ScheduleReportHelper
 		$select = [
 			'`city`',
 			'`city_title`',
+			'`area`',
+			'`area_title`',
 			'`type`',
 			'`institute_id`',
 			'`institute_title`',
@@ -42,8 +44,9 @@ class ScheduleReportHelper
 		$query = $db->getQuery(true)
 			->select($select)
 			->from(TABLE::SCHEDULES)
-			->group("`city`, `institute_id`, `type`, `year_month`")
-			->order("`year_month`, `city`, `type` DESC, `institute_id`");
+			->group("`city`, `area`, `institute_id`, `type`, `year_month`")
+			->having("`type` = 'resident' or `type` = 'individual'")
+			->order("`year_month`, `city`, `area`, `type` DESC, `institute_id`");
 
 		$this->extraFilter($query, $filter);
 
@@ -72,9 +75,8 @@ class ScheduleReportHelper
 		if (!empty($filterCity))
 		{
 			// Borrow from dbo to make quotes for city_title is string, and will drop if use the IDs.
-			$db = \JFactory::getDbo();
-			$filterCity = $db->quote($filterCity);
-			$sqlWhereCity = (string) new InCompare('`city_title`', $filterCity);
+			$sqlWhereCity = (string) new InCompare('`city`', $filterCity);
+
 			$query = $query->where($sqlWhereCity);
 		}
 
@@ -102,53 +104,86 @@ class ScheduleReportHelper
 			{
 				$data[$item->year] = array(
 					$item->city => array(
-						"city_title" => $item->city_title,
-						"institutes" => array(),
-						"customers" => array(
-							"months" => array_fill(0, 12, 0),
-							"sub_total" => 0,
-						),
 						"total" => 0,
-					)
+						"city_title" => $item->city_title,
+						"areas" => array(
+							$item->area => array(
+								"area_title" => $item->area_title,
+								"institutes" => array(),
+								"customers" => array(
+									"months" => array_fill(0, 12, 0),
+									"sub_total" => 0,
+								),
+							),
+						),
+					),
 				);
 			}
 
 			if (!isset($data[$item->year][$item->city]))
 			{
 				$data[$item->year][$item->city] = array(
+					"total" => 0,
 					"city_title" => $item->city_title,
+					"areas" => array(
+						$item->area => array(
+							"area_title" => $item->area_title,
+							"institutes" => array(),
+							"customers" => array(
+								"months" => array_fill(0, 12, 0),
+								"sub_total" => 0,
+							),
+						),
+					),
+				);
+			}
+
+			if (!isset($data[$item->year][$item->city]["areas"][$item->area]))
+			{
+				$data[$item->year][$item->city]["areas"][$item->area] = array(
+					"area_title" => $item->area_title,
 					"institutes" => array(),
 					"customers" => array(
 						"months" => array_fill(0, 12, 0),
 						"sub_total" => 0,
 					),
-					"total" => 0,
 				);
 			}
 
-			if (!isset($data[$item->year][$item->city]["institutes"][$item->institute_id]) && $item->type == 'resident')
+			if (!isset($data[$item->year][$item->city]["areas"][$item->area]["institutes"][$item->institute_id]) && $item->type == 'resident')
 			{
-				$data[$item->year][$item->city]["institutes"][$item->institute_id] = array(
+				$data[$item->year][$item->city]["areas"][$item->area]["institutes"][$item->institute_id] = array(
 					"title" => $item->institute_title,
 					"months" => array_fill(0, 12, 0),
 					"sub_total" => 0,
 				);
 			}
 
+			if (!isset($data[$item->year][$item->city]["areas"][$item->area]["customers"]) && $item->type == 'individual')
+			{
+				$data[$item->year][$item->city]["areas"][$item->area]["customers"] = array(
+					"months" => array_fill(0, 12, 0),
+					"sub_total" => 0,
+				);
+			}
+
+
 			$month = (int) $item->month;
+
 
 			if ($item->type == 'individual')
 			{
-				$data[$item->year][$item->city]["customers"]["months"][$month - 1] = $item->amount;
-				$data[$item->year][$item->city]["customers"]["sub_total"] += $item->amount;
+				$data[$item->year][$item->city]["areas"][$item->area]["customers"]["months"][$month - 1] = $item->amount;
+				$data[$item->year][$item->city]["areas"][$item->area]["customers"]["sub_total"] += $item->amount;
 			}
 			else
 			{
-				$data[$item->year][$item->city]["institutes"][$item->institute_id]["months"][$month - 1] = $item->amount;
-				$data[$item->year][$item->city]["institutes"][$item->institute_id]["sub_total"] += $item->amount;
+				$data[$item->year][$item->city]["areas"][$item->area]["institutes"][$item->institute_id]["months"][$month - 1] = $item->amount;
+				$data[$item->year][$item->city]["areas"][$item->area]["institutes"][$item->institute_id]["sub_total"] += $item->amount;
 			}
 
 			$data[$item->year][$item->city]["total"] += $item->amount;
+
 		}
 
 		return $data;
