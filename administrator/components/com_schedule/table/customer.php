@@ -9,7 +9,6 @@
 use Schedule\Customer\CustomerHelper;
 use Windwalker\Joomla\DataMapper\DataMapper;
 use Windwalker\Table\Table;
-use Windwalker\Model\Exception\ValidateFailException;
 
 // No direct access
 defined('_JEXEC') or die;
@@ -71,26 +70,48 @@ class ScheduleTableCustomer extends Table
 	 * method to make sure the data they are storing in the database is safe and
 	 * as expected before storage.
 	 *
-	 * @throws  ValidateFailException
 	 * @return  boolean  True if the instance is sane and able to be stored in the database.
 	 */
 	public function check()
 	{
-		// Is correct id number
-		if (CustomerHelper::verifyIdNumber($this->id_number))
+		// Check id_number when type is "individual"
+		if ('individual' === $this->type)
 		{
-			// Check is this ID Number exists
-			$item = (new DataMapper(\Schedule\Table\Table::CUSTOMERS))->findOne(['id_number' => $this->id_number]);
+			$idNumber = (string) $this->id_number;
 
-			// If id number found but not self, throw error
-			if (!$item->isNull() && $item->id != $this->id)
+			// Check id number
+			if (empty($idNumber))
 			{
-				throw new ValidateFailException(['此身分證字號已有人使用']);
+				$this->setError('請輸入身分證字號');
+
+				return false;
+			}
+			elseif (strpos($idNumber, '*') === false)
+			{
+				// Check id number format
+				if (CustomerHelper::verifyIdNumber($idNumber))
+				{
+					// Check is this ID Number exists
+					$item = (new DataMapper(\Schedule\Table\Table::CUSTOMERS))->findOne(['id_number' => $idNumber]);
+
+					// If id number found but not self, throw error
+					if (!$item->isNull() && $item->id != $this->id)
+					{
+						$this->setError('此身分證字號已有人使用');
+
+						return false;
+					}
+				}
+				else
+				{
+					$this->setError('請輸入正確的身分證字號');
+
+					return false;
+				}
 			}
 		}
 
-		// Has id number, and has stars
-		return true;
+		return parent::check();
 	}
 
 	/**

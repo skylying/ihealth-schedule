@@ -31,6 +31,8 @@ class ScheduleControllerCustomerEditSave extends SaveController
 			}
 		}
 
+		$this->data['id_number'] = trim($this->data['id_number']);
+
 		parent::preSaveHook();
 	}
 
