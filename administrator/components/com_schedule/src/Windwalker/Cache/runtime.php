@@ -52,7 +52,7 @@ class JCacheStorageRuntime extends \JCacheStorage
 	/**
 	 * Store the data to cache by id and group
 	 *
-	 * @param   string  $key     The cache data id
+	 * @param   string  $key    The cache data id
 	 * @param   string  $group  The cache data group
 	 * @param   string  $data   The data to store in cache
 	 *
@@ -68,10 +68,10 @@ class JCacheStorageRuntime extends \JCacheStorage
 	/**
 	 * Remove an item from the cache by its unique key
 	 *
-	 * @param string $key The unique cache key of the item to remove
+	 * @param   string  $key    The unique cache key of the item to remove
 	 * @param   string  $group  The cache data group
 	 *
-	 * @return static Return self to support chaining
+	 * @return  static Return self to support chaining
 	 */
 	public function remove($key, $group = null)
 	{

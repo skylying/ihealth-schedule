@@ -15,8 +15,8 @@ class JCacheControllerClosure extends \JCacheControllerCallback
 {
 	/**
 	 * call
-	 * @param   mixed    $callback    Callback or string shorthand for a callback
-	 * @param   array    $args        Callback arguments
+	 * @param   mixed  $callback  Callback or string shorthand for a callback
+	 * @param   array  $args      Callback arguments
 	 *
 	 * @return  mixed
 	 *
@@ -45,6 +45,6 @@ class JCacheControllerClosure extends \JCacheControllerCallback
 
 		$this->cache->store($value, $key, 'windwalker');
 
-		return $this->cache->get($key, 'windwalker');
+		return $this->cache->get($key, 'windwalker') ? : $value;
 	}
 }
