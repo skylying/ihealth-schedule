@@ -70,8 +70,6 @@ class Member extends JCommand
 	 */
 	protected function doExecute()
 	{
-		include_once JPATH_LIBRARIES . '/windwalker/src/init.php';
-
 		$db = \JFactory::getDbo();
 
 		$query = $db->getQuery(true);
@@ -81,15 +79,19 @@ class Member extends JCommand
 
 		foreach ($db->setQuery($query)->loadObjectList() as $member)
 		{
+			// If already encoded, ignore this record.
 			if (strpos($member->password, '$2y$') === 0)
 			{
 				continue;
 			}
 
+			// Hash it
 			$member->password = \JUserHelper::hashPassword($member->password);
 
+			// Restore back to DB
 			$db->updateObject('#__schedule_members', $member, 'id');
 
+			// Print result
 			$this->out('Updated ID :' . $member->id . ' Name: ' . $member->name);
 		}
 
