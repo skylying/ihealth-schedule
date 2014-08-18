@@ -36,7 +36,19 @@ $relatedCustomersFieldset = $fieldsets['related_customers'];
 				<fieldset id="member-edit-fieldset-<?php echo $infoFieldset->name ?>" class="form-horizontal">
 					<?php foreach ($data->form->getFieldset($infoFieldset->name) as $field): ?>
 						<div id="control_<?php echo $field->id; ?>">
-							<?php echo $field->getControlGroup() . "\n\n"; ?>
+							<div class="control-group">
+								<div class="control-label">
+									<?php echo $field->label; ?>
+								</div>
+								<div class="controls">
+									<?php echo $field->input; ?>
+									<?php if ('password' === $field->fieldname): ?>
+										<div class="text-danger">
+											<small>密碼至少需要輸入 4 個字元</small>
+										</div>
+									<?php endif; ?>
+								</div>
+							</div>
 						</div>
 					<?php endforeach;?>
 				</fieldset>
@@ -60,4 +72,3 @@ $relatedCustomersFieldset = $fieldsets['related_customers'];
 		</div>
 	</form>
 </div>
-
