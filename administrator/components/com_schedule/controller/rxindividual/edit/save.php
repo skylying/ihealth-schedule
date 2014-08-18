@@ -132,7 +132,7 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 		$this->scheduleModel = $this->getModel("Schedule");
 
 		$scheduleState = $this->scheduleModel->getState();
-		$scheduleState->set('form.type', 'schedule_individule');
+		$scheduleState->set('form.type', 'schedule_individual');
 
 		// 圖片處理
 		$this->rxImageHandler();
