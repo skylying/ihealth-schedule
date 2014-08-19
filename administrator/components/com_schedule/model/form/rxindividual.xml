@@ -31,6 +31,7 @@
 			key_field="id"
 			value_field="name"
 			quickadd="true"
+			required="true"
 			>
 			<option></option>
 		</field>
@@ -39,6 +40,7 @@
 			type="text"
 			label="會員"
 			description="會員"
+			required="true"
 			/>
 
 		<field name="type"
@@ -82,6 +84,7 @@
 			type="hospital_list"
 			label="處方開立醫院"
 			description="處方開立醫院"
+			required="true"
 			>
 			<option></option>
 		</field>
@@ -94,6 +97,7 @@
 			type="DateTimepicker"
 			label="就醫日期"
 			description="就醫日期"
+			required="true"
 			/>
 
 		<field name="period"
@@ -119,8 +123,8 @@
 			type="list"
 			label="可調劑次數"
 			description="可調劑次數"
+			default="3"
 			>
-			<option></option>
 			<option value="1">1</option>
 			<option value="2">2</option>
 			<option value="3">3</option>
@@ -201,6 +205,7 @@
 			type="text"
 			label="地址"
 			description="地址"
+			required="true"
 			/>
 
 		<field name="available_receive_date"
@@ -223,12 +228,14 @@
 			type="calendar"
 			label="預約宅配日"
 			description="預約宅配日"
+			required="true"
 			/>
 
 		<field name="session"
 			type="list"
 			label="時段"
 			description="時段"
+			required="true"
 			>
 			<option value="daytime">白天皆可 0900-1800</option>
 			<option value="morning">早上 0900-1300</option>
@@ -294,6 +301,7 @@
 			type="text"
 			label="地址"
 			description="地址"
+			required="true"
 			/>
 
 		<field name="available_receive_date"
@@ -316,12 +324,14 @@
 			type="calendar"
 			label="預約宅配日"
 			description="預約宅配日"
+			required="true"
 			/>
 
 		<field name="session"
 			type="list"
 			label="時段"
 			description="時段"
+			required="true"
 			>
 			<option value="daytime">白天皆可 0900-1800</option>
 			<option value="morning">早上 0900-1300</option>
@@ -387,6 +397,7 @@
 			type="text"
 			label="地址"
 			description="地址"
+			required="true"
 			/>
 
 		<field name="available_receive_date"
@@ -409,12 +420,14 @@
 			type="calendar"
 			label="預約宅配日"
 			description="預約宅配日"
+			required="true"
 			/>
 
 		<field name="session"
 			type="list"
 			label="時段"
 			description="時段"
+			required="true"
 			>
 			<option value="daytime">白天皆可 0900-1800</option>
 			<option value="morning">早上 0900-1300</option>
