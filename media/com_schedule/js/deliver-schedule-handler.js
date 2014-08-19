@@ -50,6 +50,13 @@
 		updateScheduleDate: function(addressesKeys)
 		{
 			var seeDrDate = $('#' + this.options.seeDrDateId).val();
+
+			// Do nothing when see-dr-date is empty
+			if (!seeDrDate)
+			{
+				return;
+			}
+
 			var period = $('#' + this.options.periodId).val();
 			addressesKeys = addressesKeys || this.options.addressesKeys;
 
