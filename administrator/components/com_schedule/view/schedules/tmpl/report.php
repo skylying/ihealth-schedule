@@ -77,6 +77,7 @@ $filterFormLayout = new FileLayout('schedule.schedules.report_form');
 		print();
 	</script>
 <?php endif; ?>
+
 <?php foreach ($data->items as $year => $item): ?>
 	<h1 style="text-align: center"><?php echo $year; ?></h1>
 	<table id="schedulereportList" class="table table-bordered adminlist">
@@ -144,7 +145,7 @@ $filterFormLayout = new FileLayout('schedule.schedules.report_form');
 				<td class="left" rowspan="<?php echo $cityRowSpan; ?>">
 					<?php echo $cityItem['city_title']; ?>
 				</td>
-				<?php endif;?>
+				<?php endif; ?>
 
 				<!-- AREA -->
 				<?php $areaSpan = $areaRepeat++;?>
@@ -152,7 +153,7 @@ $filterFormLayout = new FileLayout('schedule.schedules.report_form');
 				<td class="left" rowspan="<?php echo $areaRowSpan; ?>">
 					<?php echo $areaItem['area_title']; ?>
 				</td>
-				<?php endif;?>
+				<?php endif; ?>
 
 				<!-- Institute -->
 				<td class="left">
@@ -176,7 +177,7 @@ $filterFormLayout = new FileLayout('schedule.schedules.report_form');
 				<td class="left"  style="vertical-align: bottom;" rowspan="<?php echo $cityRowSpan; ?>">
 					<?php echo $cityItem['total']; ?>
 				</td>
-				<?php endif;?>
+				<?php endif; ?>
 			</tr>
 				<?php endforeach; ?>
 			<!-- Customers -->
@@ -187,15 +188,15 @@ $filterFormLayout = new FileLayout('schedule.schedules.report_form');
 				<td class="left" rowspan="<?php echo $cityRowSpan; ?>">
 					<?php echo $cityItem['city_title']; ?>
 				</td>
-				<?php endif;?>
+				<?php endif; ?>
 
 				<!-- AREA -->
-				<?php $areaSpan = $areaRepeat++;?>
+				<?php $areaSpan = $areaRepeat++; ?>
 				<?php if ($areaSpan == 1):?>
 				<td class="left" rowspan="<?php echo $areaRowSpan; ?>">
 					<?php echo $areaItem['area_title']; ?>
 				</td>
-				<?php endif;?>
+				<?php endif; ?>
 
 				<!-- Customer -->
 				<td class="left">
@@ -219,7 +220,7 @@ $filterFormLayout = new FileLayout('schedule.schedules.report_form');
 				<td class="left"  style="vertical-align: bottom;" rowspan="<?php echo $cityRowSpan; ?>">
 					<?php echo $cityItem['total']; ?>
 				</td>
-				<?php endif;?>
+				<?php endif; ?>
 			</tr>
 			<?php endforeach; ?>
 		<?php endforeach; ?>

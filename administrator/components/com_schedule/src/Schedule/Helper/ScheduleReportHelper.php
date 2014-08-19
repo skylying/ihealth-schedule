@@ -167,9 +167,7 @@ class ScheduleReportHelper
 				);
 			}
 
-
 			$month = (int) $item->month;
-
 
 			if ($item->type == 'individual')
 			{
@@ -183,7 +181,6 @@ class ScheduleReportHelper
 			}
 
 			$data[$item->year][$item->city]["total"] += $item->amount;
-
 		}
 
 		return $data;
