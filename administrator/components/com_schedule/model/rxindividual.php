@@ -118,7 +118,7 @@ class ScheduleModelRxindividual extends AdminModel
 		$returnVal = parent::loadFormData();
 
 		// 如果沒值就直接回傳
-		if (empty($returnVal))
+		if (empty($returnVal) || empty($returnVal->id))
 		{
 			return $returnVal;
 		}
