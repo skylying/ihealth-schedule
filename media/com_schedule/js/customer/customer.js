@@ -355,17 +355,15 @@
 		validateBirthday: function()
 		{
 			var birthday = this.birthday.val();
-			var pattern = /^[12][0-9]{3}-[01][0-9]-[0-3][0-9]/;
-			var validatedBirthday = birthday.match(pattern);
 
-			if (validatedBirthday === null)
-			{
-				return false;
-			}
-			else
+			if ('' === birthday)
 			{
 				return true;
 			}
+
+			var pattern = /^[12][0-9]{3}-[01][0-9]-[0-3][0-9]/;
+
+			return birthday.match(pattern) ? true : false;
 		}
 	};
 })(jQuery);
