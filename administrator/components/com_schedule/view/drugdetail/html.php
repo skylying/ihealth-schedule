@@ -246,6 +246,7 @@ class ScheduleViewDrugdetailHtml extends EditView
 			'`schedule`.`institute_id` AS institute_id',
 			'`task`.`id` AS task_id',
 			'`customer`.`need_split` AS need_split',
+			'`rx`.`created` AS created',
 		];
 
 		$q->select($select)
