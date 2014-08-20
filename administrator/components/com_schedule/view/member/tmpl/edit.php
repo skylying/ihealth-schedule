@@ -11,7 +11,6 @@ defined('_JEXEC') or die;
 
 JHtmlBootstrap::tooltip();
 JHtmlFormbehavior::chosen('select');
-JHtmlBehavior::formvalidation();
 
 /**
  * Prepare data for this template.
@@ -28,16 +27,6 @@ $fieldsets = $data->form->getFieldsets();
 $infoFieldset = $fieldsets['information'];
 $relatedCustomersFieldset = $fieldsets['related_customers'];
 ?>
-<!-- Validate Script -->
-<script type="text/javascript">
-	Joomla.submitbutton = function(task)
-	{
-		if (task == 'member.edit.cancel' || document.formvalidator.isValid(document.id('adminForm')))
-		{
-			Joomla.submitform(task, document.getElementById('adminForm'));
-		}
-	};
-</script>
 
 <div id="schedule" class="windwalker member edit-form row-fluid">
 	<form action="<?php echo JURI::getInstance(); ?>"  method="post" name="adminForm" id="adminForm"
@@ -47,7 +36,19 @@ $relatedCustomersFieldset = $fieldsets['related_customers'];
 				<fieldset id="member-edit-fieldset-<?php echo $infoFieldset->name ?>" class="form-horizontal">
 					<?php foreach ($data->form->getFieldset($infoFieldset->name) as $field): ?>
 						<div id="control_<?php echo $field->id; ?>">
-							<?php echo $field->getControlGroup() . "\n\n"; ?>
+							<div class="control-group">
+								<div class="control-label">
+									<?php echo $field->label; ?>
+								</div>
+								<div class="controls">
+									<?php echo $field->input; ?>
+									<?php if ('password' === $field->fieldname): ?>
+										<div class="text-danger">
+											<small>密碼至少需要輸入 4 個字元</small>
+										</div>
+									<?php endif; ?>
+								</div>
+							</div>
 						</div>
 					<?php endforeach;?>
 				</fieldset>
@@ -71,4 +72,3 @@ $relatedCustomersFieldset = $fieldsets['related_customers'];
 		</div>
 	</form>
 </div>
-
