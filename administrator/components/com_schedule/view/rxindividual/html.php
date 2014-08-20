@@ -132,7 +132,7 @@ HTML;
 	 */
 	protected function prepareData()
 	{
-		$data       = $this->data;
+		$data       = $this->getData();
 		$customerId = $data->item->customer_id;
 		$itemId     = $data->item->id;
 
@@ -141,6 +141,9 @@ HTML;
 		{
 			$this->preparePrintData();
 		}
+
+		// Get schedules form instance
+		$data->schedulesForm = $this->get('SchedulesForm');
 	}
 
 	/**

@@ -298,7 +298,7 @@ jQuery(document).ready(function ()
 		</div>
 		<div class="col-lg-7 col-md-7 col-sm-12">
 			<?php foreach (array("1st", "2nd", "3rd") as $key): ?>
-				<?php $schedules = $data->form->getGroup("schedules_{$key}"); ?>
+				<?php $schedules = $data->schedulesForm->getGroup("schedules_{$key}"); ?>
 				<div id="schedules_<?php echo $key; ?>" class="row-fluid schedules schedules_<?php echo $key; ?>">
 					<div class="col-lg-3 js-nth-schedule-check">
 						<?php echo $schedules["jform_schedules_{$key}_deliver_nth"]->getControlGroup(); ?>

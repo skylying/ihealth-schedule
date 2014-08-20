@@ -170,7 +170,7 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 			$this->data["schedules_{$nth}"] = $this->getScheduleUploadData($task->id, $address, $nth, $schedule, $route);
 
 			$scheduleModel->getState()->set("sender_id", $route->sender_id);
-			//$scheduleModel->save($this->data["schedules_{$nth}"]);
+			$scheduleModel->save($this->data["schedules_{$nth}"]);
 
 			if (! empty($scheduleTable->id)
 				&& ScheduleHelper::checkScheduleChanged($scheduleTable->getProperties(), $this->data["schedules_{$nth}"]))
