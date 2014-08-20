@@ -89,6 +89,11 @@ $filterFormLayout = new FileLayout('schedule.schedules.report_form');
 				縣市
 			</th>
 
+			<!-- AREA -->
+			<th class="left">
+				區域
+			</th>
+
 			<!-- Institute-->
 			<th class="left">
 				所屬機構
@@ -107,7 +112,7 @@ $filterFormLayout = new FileLayout('schedule.schedules.report_form');
 
 			<!-- Sub Total -->
 			<th class="left">
-				排程小計
+				排程總合
 			</th>
 		</tr>
 		</thead>
@@ -115,23 +120,38 @@ $filterFormLayout = new FileLayout('schedule.schedules.report_form');
 		<tbody>
 
 		<?php
-		foreach ($item as $subItem):
-			$instituteAmount = count($subItem['institutes']);
+		foreach ($item as $cityItem):
+			$cityRepeat = 1;
+			$cityAmount = count($cityItem['areas']);
+			$instituteSubAmount = 0;
 
-			// 重設表格的 rowSpanRepeat 讓表格的 rowSpan 數值出現給下個縣市印出
-			$rowSpanRepeat = 0;
+			foreach ($cityItem['areas'] as $areaSubItem):
+				$instituteSubAmount = $instituteSubAmount + count($areaSubItem['institutes']);
+			endforeach;
 
-			$rowSpan = $instituteAmount + 1;
+			$cityRowSpan = $cityAmount + $instituteSubAmount;
 
-			foreach ($subItem['institutes'] as $institute):
-				$rowSpanRepeat++;
+			foreach ($cityItem['areas'] as $areaItem):
+				$instituteAmount = count($areaItem['institutes']);
+				$areaRowSpan = $instituteAmount + 1;
+				$areaRepeat = 1;
+
+				foreach ($areaItem['institutes'] as $institute):
 		?>
-			<!-- 列出 $item['institutes'] 的資料 -->
 			<tr class="report-row">
 				<!-- 縣市 -->
-				<?php if ($rowSpanRepeat == 1): ?>
-				<td class="left" rowspan="<?php echo $rowSpan; ?>">
-					<?php echo $subItem['city_title']; ?>
+				<?php $citySpan = $cityRepeat++; ?>
+				<?php if ($citySpan == 1):?>
+				<td class="left" rowspan="<?php echo $cityRowSpan; ?>">
+					<?php echo $cityItem['city_title']; ?>
+				</td>
+				<?php endif; ?>
+
+				<!-- AREA -->
+				<?php $areaSpan = $areaRepeat++;?>
+				<?php if ($areaSpan == 1):?>
+				<td class="left" rowspan="<?php echo $areaRowSpan; ?>">
+					<?php echo $areaItem['area_title']; ?>
 				</td>
 				<?php endif; ?>
 
@@ -152,47 +172,57 @@ $filterFormLayout = new FileLayout('schedule.schedules.report_form');
 					<?php echo $institute['sub_total']; ?>
 				</td>
 
-				<?php if ($rowSpanRepeat == 1): ?>
-				<!-- 排程小計 -->
-				<td class="left" rowspan="<?php echo $rowSpan; ?>" style="vertical-align: bottom;">
-					<?php echo $subItem['total']; ?>
+				<!-- 排程總合 -->
+				<?php if ($citySpan == 1):?>
+				<td class="left"  style="vertical-align: bottom;" rowspan="<?php echo $cityRowSpan; ?>">
+					<?php echo $cityItem['total']; ?>
 				</td>
 				<?php endif; ?>
 			</tr>
-			<?php endforeach; ?>
-			<!-- 列出 $item['customers'] 的資料 -->
+				<?php endforeach; ?>
+			<!-- Customers -->
 			<tr class="report-row">
-				<!-- 如果該縣市沒有機構，則補印縣市 -->
-				<?php if ($instituteAmount == 0): ?>
-				<td class="left">
-					<?php echo $subItem['city_title']; ?>
+				<!-- City -->
+				<?php $citySpan = $cityRepeat++; ?>
+				<?php if ($citySpan == 1):?>
+				<td class="left" rowspan="<?php echo $cityRowSpan; ?>">
+					<?php echo $cityItem['city_title']; ?>
 				</td>
 				<?php endif; ?>
 
-				<!-- individual -->
+				<!-- AREA -->
+				<?php $areaSpan = $areaRepeat++; ?>
+				<?php if ($areaSpan == 1):?>
+				<td class="left" rowspan="<?php echo $areaRowSpan; ?>">
+					<?php echo $areaItem['area_title']; ?>
+				</td>
+				<?php endif; ?>
+
+				<!-- Customer -->
 				<td class="left">
 					散客
 				</td>
 
-				<?php for ($month = 0; $month <= 11; $month ++): ?>
+				<?php for ($month = 0; $month <= 11; $month++): ?>
 				<!-- 月 -->
 				<td class="right">
-					<?php echo $subItem['customers']['months'][$month]; ?>
+					<?php echo $areaItem["customers"]["months"][$month]; ?>
 				</td>
 				<?php endfor; ?>
 
-				<!-- 排程小計 -->
-				<td class="left">
-					<?php echo $subItem['customers']['sub_total']; ?>
+				<!-- 全年 -->
+				<td class="right">
+					<?php echo $areaItem["customers"]['sub_total']; ?>
 				</td>
 
-				<!-- 如果該縣市沒有機構，則補印散客的排程小計 -->
-				<?php if ($instituteAmount == 0): ?>
-				<td class="left">
-					<?php echo $subItem['total']; ?>
+				<!-- 排程總合 -->
+				<?php if ($citySpan == 1):?>
+				<td class="left"  style="vertical-align: bottom;" rowspan="<?php echo $cityRowSpan; ?>">
+					<?php echo $cityItem['total']; ?>
 				</td>
 				<?php endif; ?>
 			</tr>
+			<?php endforeach; ?>
 		<?php endforeach; ?>
 		</tbody>
 	</table>
