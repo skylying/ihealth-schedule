@@ -180,9 +180,11 @@
     columns:
         id: { Field: id, Type: 'int(11) unsigned', 'Null': NO, Default: null, Extra: auto_increment, Comment: 'Primary Key', From: [id] }
         name: { Field: name, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 'Member name', From: [name] }
+        username: { Field: username, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: '舊散客帳號', From: [username] }
         email: { Field: email, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 'Member email', From: [email] }
         password: { Field: password, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 'Member password', From: [password] }
         tel: { Field: tel, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 'Member Phone Number', From: [tel] }
+        activated: { Field: activated, Type: tinyint(1), 'Null': YES, Default: null, Extra: '', Comment: '帳號是否啟動', From: [activated] }
         created: { Field: created, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: '新增時間', From: [created] }
         modified: { Field: modified, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: '更新時間', From: [modified] }
     index:

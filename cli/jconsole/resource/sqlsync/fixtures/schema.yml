@@ -367,24 +367,26 @@
     columns:
         id: { Field: id, Type: 'int(11) unsigned', 'Null': NO, Default: null, Extra: auto_increment, Comment: 'Primary Key', From: [id] }
         name: { Field: name, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 'Member name', From: [name] }
+        username: { Field: username, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: '舊散客帳號', From: [username] }
         email: { Field: email, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 'Member email', From: [email] }
         password: { Field: password, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 'Member password', From: [password] }
         tel: { Field: tel, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 'Member Phone Number', From: [tel] }
+        activated: { Field: activated, Type: tinyint(1), 'Null': YES, Default: null, Extra: '', Comment: '帳號是否啟動', From: [activated] }
         created: { Field: created, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: '新增時間', From: [created] }
         modified: { Field: modified, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: '更新時間', From: [modified] }
     index:
         - { Table: '#__schedule_members', Non_unique: '0', Key_name: PRIMARY, Seq_in_index: '1', Column_name: id, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
         - { Table: '#__schedule_members', Non_unique: '1', Key_name: idx_alias, Seq_in_index: '1', Column_name: email, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
     data:
-        - ['1', 張倩修, Sophia@gmail.com, $P$DtVxKZKNe29MC5yR1DTDnsyggczpKd., '0911123123', '', '']
-        - ['2', 黃火鈺, Aiden@gmail.com, $P$Dv8Grox.wrTYbSOeNDA/p.gm.wNaWi/, '0922123123', '', '']
-        - ['3', 駱文豪, Jackson@gmail.com, $P$D5o0YEd3LOj2b/6pSDefB.hrwvsFGW1, '0988123123', '', '']
-        - ['4', '林筱珠', Olivia@gmail.com, $P$DAf7FilOfiaLYOlxRDXdZ.PnY2EBnO0, '0965324321', '', '']
-        - ['5', 方蕙聖, Isabella@gmail.com, $P$DzVFpfCpdXITVsI5NiJsl52spwqxCe/, '0966456336', '', '']
-        - ['6', 柳家瑜, Ava@gmail.com, $P$DQRu69ihS9Fi6oEdBo4JSntOtSaL4n., '0977345654', '', '']
-        - ['7', 張思賢, Mason@gmail.com, $P$Dun1W076xuGMmRdH3mE1CkSp3sEIfE0, '0934000222', '', '']
-        - ['8', '王雅萍', Isabella22@gmail.com, $P$DVkrytBe40HOBYg/D09F4tqhEftt8U/, '0987187178', '', '']
-        - ['9', 張思賢, Jacob@gmail.com, $P$DnYTrNd12WcSwpCO6gdOvQ1I0xodcI1, '0965345643', '', '']
+        - ['1', 張倩修, 'user1', Sophia@gmail.com, $P$DtVxKZKNe29MC5yR1DTDnsyggczpKd., '0911123123', '1', '', '']
+        - ['2', 黃火鈺, 'user2', Aiden@gmail.com, $P$Dv8Grox.wrTYbSOeNDA/p.gm.wNaWi/, '0922123123', '1', '', '']
+        - ['3', 駱文豪, 'user3', Jackson@gmail.com, $P$D5o0YEd3LOj2b/6pSDefB.hrwvsFGW1, '0988123123', '1', '', '']
+        - ['4', '林筱珠', 'user4', Olivia@gmail.com, $P$DAf7FilOfiaLYOlxRDXdZ.PnY2EBnO0, '0965324321', '1', '', '']
+        - ['5', 方蕙聖, 'user5', Isabella@gmail.com, $P$DzVFpfCpdXITVsI5NiJsl52spwqxCe/, '0966456336', '1', '', '']
+        - ['6', 柳家瑜, 'user6', Ava@gmail.com, $P$DQRu69ihS9Fi6oEdBo4JSntOtSaL4n., '0977345654', '1', '', '']
+        - ['7', 張思賢, 'user7', Mason@gmail.com, $P$Dun1W076xuGMmRdH3mE1CkSp3sEIfE0, '0934000222', '1', '', '']
+        - ['8', '王雅萍', 'user8', Isabella22@gmail.com, $P$DVkrytBe40HOBYg/D09F4tqhEftt8U/, '0987187178', '1', '', '']
+        - ['9', 張思賢, 'user9', Jacob@gmail.com, $P$DnYTrNd12WcSwpCO6gdOvQ1I0xodcI1, '0965345643', '1', '', '']
 '#__schedule_prescriptions':
     name: '#__schedule_prescriptions'
     from:
