@@ -79,65 +79,70 @@ class ScheduleControllerScheduleEdit extends SaveController
 	{
 		parent::prepareExecute();
 
-		$taskMapper     = new DataMapper(Table::TASKS);
+		$taskMapper = new DataMapper(Table::TASKS);
 
 		$this->cid = $this->input->get('cid', array(), 'ARRAY');
 
-		$this->validData = $this->validate();
+		$this->validate();
 
 		if (!isset($this->data['items']))
 		{
-			$item = $this->validData;
-
 			$this->data['items'] = array();
 		}
 
+		$items =& $this->data['items'];
+
 		foreach ($this->cid as $id)
 		{
-			if ($id > 0)
+			$id = (int) $id;
+
+			if ($id <= 0)
 			{
-				$schedule = $this->model->getItem($id);
+				continue;
+			}
 
-				$this->data['items'][$id]['id']          = $id;
-				$this->data['items'][$id]['date']        = !empty($this->validData['date']) ? $this->validData['date'] : $schedule->date;
-				$this->data['items'][$id]['sender_name'] = !empty($this->validData['sender_name']) ? $this->validData['sender_name'] : $schedule->sender_name;
-				$this->data['items'][$id]['sender_id']   = !empty($this->validData['sender_id']) ? $this->validData['sender_id'] : $schedule->sender_id;
+			$schedule = $this->model->getItem($id);
 
-				// Get task data
-				$task = $taskMapper->findOne(
-					[
-						'date'   => $this->data['items'][$id]['date'],
-						'sender' => $this->data['items'][$id]['sender_id'],
-					]
-				);
+			$items[$id]['id']          = $id;
+			$items[$id]['date']        = !empty($this->validData['date']) ? $this->validData['date'] : $schedule->date;
+			$items[$id]['sender_name'] = !empty($this->validData['sender_name']) ? $this->validData['sender_name'] : $schedule->sender_name;
+			$items[$id]['sender_id']   = !empty($this->validData['sender_id']) ? $this->validData['sender_id'] : $schedule->sender_id;
 
-				// If task data is not found, create a new task
-				if ($task->isNull())
-				{
-					$taskModel = $this->getModel('Task');
-					$task      = [
-						'date'        => $this->data['items'][$id]['date'],
-						'sender'      => $this->data['items'][$id]['sender_id'],
-						'sender_name' => $this->data['items'][$id]['sender_name'],
-						'status'      => 0,
-					];
+			// Get task data
+			$task = $taskMapper->findOne(
+				[
+					'date'   => $items[$id]['date'],
+					'sender' => $items[$id]['sender_id'],
+				]
+			);
 
-					$taskModel->save($task);
+			// If task data is not found, create a new task
+			if ($task->isNull())
+			{
+				$taskModel = $this->getModel('Task');
+				$task      = [
+					'date'        => $items[$id]['date'],
+					'sender'      => $items[$id]['sender_id'],
+					'sender_name' => $items[$id]['sender_name'],
+					'status'      => 0,
+				];
 
-					$task['id'] = $taskModel->getState()->get('task.id');
+				$taskModel->save($task);
 
-					$task = new Data($task);
-				}
+				$task['id'] = $taskModel->getState()->get('task.id');
 
-				$this->data['items'][$id]['task_id'] = $task->id;
+				$task = new Data($task);
+			}
 
-				$oldScheduleTable = TableCollection::loadTable('Schedule', $id);
+			$items[$id]['task_id'] = $task->id;
 
-				if (!empty($oldScheduleTable->id)
-					&& ScheduleHelper::checkScheduleChanged($oldScheduleTable->getProperties(), $this->stateData))
-				{
-					$this->sendNotifyMail[] = $id;
-				}
+			$oldScheduleTable = TableCollection::loadTable('Schedule', $id);
+
+			if (!empty($oldScheduleTable->id)
+				&& ScheduleHelper::checkScheduleChanged($oldScheduleTable->getProperties(), $this->stateData)
+			)
+			{
+				$this->sendNotifyMail[] = $id;
 			}
 		}
 	}
@@ -169,10 +174,12 @@ class ScheduleControllerScheduleEdit extends SaveController
 				$scheduleState->set('sender_id', $item['sender_id']);
 				$this->model->save($item);
 			}
-		} catch (ValidateFailException $e)
+		}
+		catch (ValidateFailException $e)
 		{
 			throw $e;
-		} catch (\Exception $e)
+		}
+		catch (\Exception $e)
 		{
 			// Save the data in the session.
 			$this->app->setUserState($this->context . '.data', $this->data);
