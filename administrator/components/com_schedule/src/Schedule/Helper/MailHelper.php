@@ -4,6 +4,7 @@ namespace Schedule\Helper;
 
 use Windwalker\Data\Data;
 use Windwalker\View\Layout\FileLayout;
+use Windwalker\System\ExtensionHelper;
 
 /**
  * Class MailHelper
@@ -30,7 +31,7 @@ class MailHelper
 		// Set layouts from admin
 		$layout = new FileLayout("schedule.mail.confirm", SCHEDULE_ADMIN . '/layouts');
 
-		$mailer->setSubject(sprintf('[iHealth] 處方預約確認: %s您好! 您的處方宅配已預約完成', $displayData['member']->name));
+		$mailer->setSubject(sprintf('[iHealth] 處方預約確認: %s 您好! 您的處方宅配已預約完成', $displayData['member']->name));
 		$mailer->setBody($layout->render($displayData));
 		$mailer->addRecipient($mailTo);
 		$mailer->setSender($from);
@@ -149,7 +150,42 @@ class MailHelper
 		// Set layouts from admin
 		$layout = new FileLayout("schedule.mail.cancel", SCHEDULE_ADMIN . '/layouts');
 
-		$mailer->setSubject(sprintf('[iHealth] 取消確認: %s您好! 您的處方宅配預約已取消', $displayData['member']->name));
+		$mailer->setSubject(sprintf('[iHealth] 取消確認: %s 您好! 您的處方宅配預約已取消', $displayData['member']->name));
+		$mailer->setBody($layout->render($displayData));
+		$mailer->addRecipient($mailTo);
+		$mailer->setSender($from);
+		$mailer->isHtml(true);
+
+		$sendMailDone = $mailer->Send();
+
+		if (! $sendMailDone)
+		{
+			throw new \Exception("Email send failure");
+		}
+	}
+
+	/**
+	 * sendRegisteredLayout
+	 *
+	 * @param string|array $mailTo
+	 * @param array	       $displayData
+	 *
+	 * @return void
+	 *
+	 * @throws \Exception
+	 */
+	public static function sendRegisteredLayout($mailTo, $displayData = array())
+	{
+		$mailer = \JFactory::getMailer();
+		$from   = \JFactory::getConfig()->get('mailfrom');
+
+		// Set layouts from admin
+		$layout = new FileLayout("schedule.mail.registered", SCHEDULE_ADMIN . '/layouts');
+
+		$params = ExtensionHelper::getParams('com_schedule');
+		$displayData['ihealthSiteUrl'] = $params->get('ihealth_site.url', '');
+
+		$mailer->setSubject(sprintf('[iHealth] 註冊成功: %s 您好! 恭喜您已註冊成功。', $displayData['name']));
 		$mailer->setBody($layout->render($displayData));
 		$mailer->addRecipient($mailTo);
 		$mailer->setSender($from);
