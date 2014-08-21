@@ -417,37 +417,21 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 	 */
 	protected function getScheduleUploadData($task, $address, $nth, $formData, $route)
 	{
-		// Schedule data
 		$scheduleUploadData = array(
-			// Id
-			"id"            => $formData['schedule_id'],
-
-			// Rx id
-			"rx_id"         => $this->data['id'],
-			"route_id"      => $route->id,
-
-			// Member
-			"member_id"     => $this->data['member_id'],
-
-			// 對應外送 id
-			"task_id"       => $task,
-			"type"          => "individual",
-			"customer_id"   => $this->customer->id,
-
-			// 地址
-			"address_id"    => $address->id,
-
-			// 第幾次宅配
-			"deliver_nth"   => $nth,
-
-			// Telephone Info
-			"tel_office"   => isset($formData['tel_office']) ? $formData['tel_office'] : "",
-			"tel_home"     => isset($formData['tel_home']) ? $formData['tel_home'] : "",
-			"mobile"       => isset($formData['mobile']) ? $formData['mobile'] : "",
-
-			// Default
-			"status"        => "scheduled",
-			"sorted"        => 0
+			"id"          => $formData['schedule_id'],
+			"rx_id"       => $this->data['id'],
+			"route_id"    => $route->id,
+			"member_id"   => $this->data['member_id'],
+			"task_id"     => $task,
+			"type"        => "individual",
+			"customer_id" => $this->customer->id,
+			"address_id"  => $address->id,
+			"deliver_nth" => $nth,
+			"tel_office"  => isset($formData['tel_office']) ? $formData['tel_office'] : "",
+			"tel_home"    => isset($formData['tel_home']) ? $formData['tel_home'] : "",
+			"mobile"      => isset($formData['mobile']) ? $formData['mobile'] : "",
+			"status"      => "scheduled",
+			"sorted"      => 0
 		);
 
 		return array_merge($formData, $scheduleUploadData);
