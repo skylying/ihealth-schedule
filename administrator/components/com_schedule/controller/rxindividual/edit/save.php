@@ -8,6 +8,7 @@ use Schedule\Helper\ImageHelper;
 use Schedule\Table\Collection as TableCollection;
 use Schedule\Helper\ScheduleHelper;
 use Schedule\Helper\MailHelper;
+use Windwalker\Model\Exception\ValidateFailException;
 
 /**
  * Class SaveController
@@ -526,6 +527,8 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 	 * @param array $nthList
 	 *
 	 * @return  void
+	 *
+	 * @throws \Windwalker\Model\Exception\ValidateFailException
 	 */
 	protected function validateSchedules(array $nthList)
 	{
@@ -538,6 +541,20 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 			if (! in_array($nth, $nthList))
 			{
 				$form->removeGroup("schedules_{$nth}");
+
+				continue;
+			}
+
+			$schedule = $this->data["schedules_{$nth}"];
+
+			// Check tel_office, tel_home, and mobile
+			if (empty($schedule['tel_office'])
+				&& empty($schedule['tel_home'])
+				&& empty($schedule['mobile']))
+			{
+				$error = JText::_('COM_SCHEDULE_SCHEDULE_' . $nth) . '排程請輸入至少一個連絡方式';
+
+				throw new ValidateFailException([$error]);
 			}
 		}
 
