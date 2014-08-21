@@ -90,25 +90,20 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 	 */
 	protected function preSaveHook()
 	{
+		$nthList = $this->getSelectedNthList();
+
+		$this->validateSchedules($nthList);
+
 		$this->addressModel = $this->getModel("Address");
-
 		$this->customer = $this->getUpdatedCustomerData($this->data['customer_id']);
+		$this->isNew = empty($this->data['id']) || $this->data['id'] <= 0;
 
-		// Update customer data
-		$this->getModel("Customer")->save((array) $this->customer);
-
-		$this->createAddress();
-
-		$this->buildNthOfScheduleToRxData();
-
-		// Rx 吃完藥日
+		$this->data["deliver_nths"] = implode(",", $nthList);
 		$this->data["empty_date_1st"] = $this->data["schedules_1st"]["drug_empty_date"];
 		$this->data["empty_date_2nd"] = $this->data["schedules_2nd"]["drug_empty_date"];
-
-		// Remind
 		$this->data["remind"] = isset($this->data['remind']) ? implode(",", $this->data['remind']) : "";
 
-		$this->isNew = empty($this->data['id']) || $this->data['id'] <= 0;
+		$this->createAddress();
 
 		parent::preSaveHook();
 	}
@@ -123,6 +118,9 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 	 */
 	protected function postSaveHook($model, $validData)
 	{
+		// Update customer data
+		$this->getModel("Customer")->save((array) $this->customer);
+
 		$this->data['id'] = $model->getState()->get("rxindividual.id");
 
 		/** @var ScheduleModelSchedule $scheduleModel */
@@ -304,7 +302,7 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 	 */
 	protected function getUpdatedRouteData($address, $schedule)
 	{
-		$routeModel   = $this->getModel("Route");
+		$routeModel = $this->getModel("Route");
 
 		// 外送路線
 		$route = $this->mapper['routes']->findOne(array("city" => $address->city, "area" => $address->area, "type" => "customer"));
@@ -503,27 +501,46 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 	}
 
 	/**
-	 * 把 schedule 有選擇的 nth 組起來給 rx 儲存用
+	 * 取得有被勾選的 nth 清單
 	 *
-	 * @return  void
+	 * @return  array
 	 */
-	protected function buildNthOfScheduleToRxData()
+	protected function getSelectedNthList()
 	{
-		// 外送次數
-		$nths = array();
+		$nthList = array();
 
-		foreach (array("1st", "2nd", "3rd") as $val)
+		foreach (array("1st", "2nd", "3rd") as $nth)
 		{
-			// 有值就給
-			if (! empty($this->data["schedules_{$val}"]["deliver_nth"]))
+			if (! empty($this->data["schedules_{$nth}"]["deliver_nth"]))
 			{
-				$nths[] = $val;
+				$nthList[] = $nth;
 			}
 		}
 
-		// 把勾選的值存成資料庫形式
-		$nths = implode(",", $nths);
+		return $nthList;
+	}
 
-		$this->data["deliver_nths"] = $nths;
+	/**
+	 * validateSchedules
+	 *
+	 * @param array $nthList
+	 *
+	 * @return  void
+	 */
+	protected function validateSchedules(array $nthList)
+	{
+		/** @var ScheduleModelRxIndividual $model */
+		$model = $this->getModel();
+		$form = $model->getSchedulesForm();
+
+		foreach (array('1st', '2nd', '3rd') as $nth)
+		{
+			if (! in_array($nth, $nthList))
+			{
+				$form->removeGroup("schedules_{$nth}");
+			}
+		}
+
+		$model->validate($form, $this->data);
 	}
 }
