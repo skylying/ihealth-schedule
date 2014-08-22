@@ -83,7 +83,7 @@ class ScheduleControllerScheduleEdit extends SaveController
 
 		$this->cid = $this->input->get('cid', array(), 'ARRAY');
 
-		$this->validate();
+		$validData = $this->validate();
 
 		if (!isset($this->data['items']))
 		{
@@ -104,9 +104,9 @@ class ScheduleControllerScheduleEdit extends SaveController
 			$schedule = $this->model->getItem($id);
 
 			$items[$id]['id']          = $id;
-			$items[$id]['date']        = !empty($this->validData['date']) ? $this->validData['date'] : $schedule->date;
-			$items[$id]['sender_name'] = !empty($this->validData['sender_name']) ? $this->validData['sender_name'] : $schedule->sender_name;
-			$items[$id]['sender_id']   = !empty($this->validData['sender_id']) ? $this->validData['sender_id'] : $schedule->sender_id;
+			$items[$id]['date']        = !empty($validData['date']) ? $validData['date'] : $schedule->date;
+			$items[$id]['sender_name'] = !empty($validData['sender_name']) ? $validData['sender_name'] : $schedule->sender_name;
+			$items[$id]['sender_id']   = !empty($validData['sender_id']) ? $validData['sender_id'] : $schedule->sender_id;
 
 			// Get task data
 			$task = $taskMapper->findOne(
