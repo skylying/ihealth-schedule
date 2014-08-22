@@ -277,9 +277,9 @@
 							data[index].default = 'true';
 							b_set = true;
 
-							Joomla.renderMessages([
-								['提醒您，您已新增散客電話或地址，記得按儲存喲。']
-							]);
+							Joomla.renderMessages({
+								warning: ['提醒您，您已新增散客電話或地址，記得按儲存喲。']
+							});
 
 							continue;
 						}
@@ -309,16 +309,16 @@
 							this.updateTelephoneHtmlForSchedule(this.options.addressesKeys[i], data, tag);
 						}
 
-						Joomla.renderMessages([
-							['提醒您，您已新增散客電話或地址，記得按儲存喲。']
-						]);
+						Joomla.renderMessages({
+							warning: ['提醒您，您已新增散客電話或地址，記得按儲存喲。']
+						});
 					}
 				}
 				else
 				{
-					Joomla.renderMessages([
-						['提醒您，電話目前上限為最多三筆。']
-					]);
+					Joomla.renderMessages({
+						warning: ['提醒您，電話目前上限為最多三筆。']
+					});
 				}
 			}
 
@@ -375,9 +375,9 @@
 				|| (objectToAdd.address == ''))
 			{
 				// Notify user to make sure they input correctly
-				Joomla.renderMessages([
-					['欄位輸入不完整']
-				]);
+				Joomla.renderMessages({
+					warning: ['欄位輸入不完整']
+				});
 
 				return;
 			}
@@ -416,9 +416,9 @@
 			// Update Schedule date once
 			window.DeliverScheduleHandler.updateScheduleDate();
 
-			Joomla.renderMessages([
-				['提醒您，您已新增散客電話或地址，記得按儲存喲。']
-			]);
+			Joomla.renderMessages({
+				warning: ['提醒您，您已新增散客電話或地址，記得按儲存喲。']
+			});
 		},
 
 		/**
