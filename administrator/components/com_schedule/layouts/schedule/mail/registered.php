@@ -29,7 +29,7 @@ $data = $displayData;
 											<?php echo $data['name']; ?> 先生/小姐 <br />
 										</h2>
 										<h2>
-											恭喜您已成為IHEALTH網站會員<br />
+											您已成功註冊iHealth服務。
 										</h2>
 									</div>
 									<hr />
@@ -47,7 +47,8 @@ $data = $displayData;
 											</tr>
 										</table>
 										<br />
-										<a href="<?php echo $data['ihealthSiteUrl']; ?>">點擊這裡即可預約處方宅配</a>
+										可以開始預約處方宅配，
+										<a href="<?php echo $data['ihealthSiteUrl']; ?>">點擊這裡即可預約處方宅配</a>。
 										<!--end fourth table-->
 									</div>
 								</td>
