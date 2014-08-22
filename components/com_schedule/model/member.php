@@ -48,7 +48,7 @@ class ScheduleModelMember extends MemberModel
 		// If member not found, fallback to old username and find again.
 		if (! $this->item->id && isset($pk['email']))
 		{
-			$this->item = $this->getItem(array('name' => $pk['email']));
+			$this->item = $this->getItem(array('username' => $pk['email']));
 		}
 
 		if (empty($this->item->id))
