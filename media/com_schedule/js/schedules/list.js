@@ -130,7 +130,26 @@
 			$adminDateInput.val($dateInput.val());
 			$adminSenderIdInput.val($senderIdSelect.val());
 
-			window.Joomla.submitbutton('schedules.edit');
+			window.Joomla.submitbutton('schedule.edit');
+		});
+	}
+
+	/**
+	 * Bind "onClick" event on edit item button
+	 */
+	function bindEditItemButton()
+	{
+		var $fieldDate = $('#edit_item_field_date'),
+			$fieldSenderId = $('#edit_item_field_sender_id');
+
+		$('#edit-item-button').on('click', function()
+		{
+			if ($('input[name="cid[]"]:checkbox:checked').size() > 1)
+			{
+				$fieldDate.val('');
+				$fieldSenderId.val('');
+				$fieldSenderId.trigger('liszt:updated');
+			}
 		});
 	}
 
@@ -181,5 +200,7 @@
 		bindStatusDropdownMenu();
 
 		bindEditSubmitButton();
+
+		bindEditItemButton();
 	});
 })(jQuery);

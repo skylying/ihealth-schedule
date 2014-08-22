@@ -29,8 +29,8 @@ $optionForDelivery = [
 ];
 $optionForNormal = [
 	'scheduled' => ['updateMethod' => 'submit'],
-	'canceled'  => ['updateMethod' => 'modal-cancel'],
-	'pause'     => ['updateMethod' => 'modal-pause'],
+	'canceled'  => ['updateMethod' => 'submit'],
+	'pause'     => ['updateMethod' => 'submit'],
 	'delivered' => ['updateMethod' => 'submit'],
 ];
 
