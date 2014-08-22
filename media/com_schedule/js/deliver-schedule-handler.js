@@ -57,9 +57,9 @@
 				return;
 			}
 
-			var period = $('#' + this.options.periodId).val();
 			addressesKeys = addressesKeys || this.options.addressesKeys;
 
+			var period = $('#' + this.options.periodId).val();
 			var self = this;
 			var moment_date = moment(seeDrDate);
 
@@ -101,7 +101,7 @@
 					var area = $(selectedAddressId).find('option:selected').data('area');
 
 					// fire ajax only if address info is sufficient
-					if(city && area)
+					if (city && area)
 					{
 						$.ajax({
 							type: "POST",
