@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fields name="schedules_1st">
+		<field name="deliver_nth"
+			type="checkboxes"
+			label=""
+			description="宅配第幾次"
+			>
+			<option value="1st">第一次</option>
+		</field>
+
+		<field name="address_id"
+			type="text"
+			label="地址"
+			description="地址"
+			required="true"
+			/>
+
+		<field name="available_receive_date"
+			type="text"
+			class="js-available-receive-date"
+			label="開始領藥日"
+			description="開始領藥日"
+			readonly="true"
+			/>
+
+		<field name="drug_empty_date"
+			type="hidden"
+			class="js-drug-empty-date"
+			label="吃完藥日"
+			description="吃完藥日"
+			readonly="true"
+			/>
+
+		<field name="date"
+			type="calendar"
+			label="預約宅配日"
+			description="預約宅配日"
+			required="true"
+			/>
+
+		<field name="session"
+			type="list"
+			label="時段"
+			description="時段"
+			required="true"
+			>
+			<option value="daytime">白天皆可 0900-1800</option>
+			<option value="morning">早上 0900-1300</option>
+			<option value="afternoon">下午 1300-1800</option>
+			<option value="night">晚上 1800-2100</option>
+			<option value="other">其他</option>
+		</field>
+
+		<field name="schedule_id"
+			type="hidden"
+			/>
+
+		<field name="sender_id"
+			type="sender_list"
+			value_field="name"
+			label="配送藥師"
+			description="配送藥師">
+			<option></option>
+		</field>
+
+		<field name="weekday"
+			type="list"
+			label="配送日"
+			description="配送日"
+			>
+			<option></option>
+			<option value="MON">星期一</option>
+			<option value="TUE">星期二</option>
+			<option value="WED">星期三</option>
+			<option value="THU">星期四</option>
+			<option value="FRI">星期五</option>
+		</field>
+
+		<field name="tel_office"
+			type="text"
+			label="聯絡電話(O)"
+			description="聯絡電話(O)"
+			/>
+
+		<field name="tel_home"
+			type="text"
+			label="聯絡電話(H)"
+			description="聯絡電話(H)"
+			/>
+
+		<field name="mobile"
+			type="text"
+			label="手機(M)"
+			description="手機(M)"
+			/>
+	</fields>
+
+	<fields name="schedules_2nd">
+		<field name="deliver_nth"
+			type="checkboxes"
+			label=""
+			description="宅配第幾次"
+			>
+			<option value="2nd">第二次</option>
+		</field>
+
+		<field name="address_id"
+			type="text"
+			label="地址"
+			description="地址"
+			required="true"
+			/>
+
+		<field name="available_receive_date"
+			type="text"
+			class="js-available-receive-date"
+			label="開始領藥日"
+			description="開始領藥日"
+			readonly="true"
+			/>
+
+		<field name="drug_empty_date"
+			type="hidden"
+			class="js-drug-empty-date"
+			label="吃完藥日"
+			description="吃完藥日"
+			readonly="true"
+			/>
+
+		<field name="date"
+			type="calendar"
+			label="預約宅配日"
+			description="預約宅配日"
+			required="true"
+			/>
+
+		<field name="session"
+			type="list"
+			label="時段"
+			description="時段"
+			required="true"
+			>
+			<option value="daytime">白天皆可 0900-1800</option>
+			<option value="morning">早上 0900-1300</option>
+			<option value="afternoon">下午 1300-1800</option>
+			<option value="night">晚上 1800-2100</option>
+			<option value="other">其他</option>
+		</field>
+
+		<field name="schedule_id"
+			type="hidden"
+			/>
+
+		<field name="sender_id"
+			type="sender_list"
+			value_field="name"
+			label="配送藥師"
+			description="配送藥師">
+			<option></option>
+		</field>
+
+		<field name="weekday"
+			type="list"
+			label="配送日"
+			description="配送日"
+			>
+			<option></option>
+			<option value="MON">星期一</option>
+			<option value="TUE">星期二</option>
+			<option value="WED">星期三</option>
+			<option value="THU">星期四</option>
+			<option value="FRI">星期五</option>
+		</field>
+
+		<field name="tel_office"
+			type="text"
+			label="聯絡電話(O)"
+			description="聯絡電話(O)"
+			/>
+
+		<field name="tel_home"
+			type="text"
+			label="聯絡電話(H)"
+			description="聯絡電話(H)"
+			/>
+
+		<field name="mobile"
+			type="text"
+			label="手機(M)"
+			description="手機(M)"
+			/>
+	</fields>
+
+	<fields name="schedules_3rd">
+		<field name="deliver_nth"
+			type="checkboxes"
+			label=""
+			description="宅配第幾次"
+			>
+			<option value="3rd">第三次</option>
+		</field>
+
+		<field name="address_id"
+			type="text"
+			label="地址"
+			description="地址"
+			required="true"
+			/>
+
+		<field name="available_receive_date"
+			type="text"
+			class="js-available-receive-date"
+			label="開始領藥日"
+			description="開始領藥日"
+			readonly="true"
+			/>
+
+		<field name="drug_empty_date"
+			type="hidden"
+			class="js-drug-empty-date"
+			label="吃完藥日"
+			description="吃完藥日"
+			readonly="true"
+			/>
+
+		<field name="date"
+			type="calendar"
+			label="預約宅配日"
+			description="預約宅配日"
+			required="true"
+			/>
+
+		<field name="session"
+			type="list"
+			label="時段"
+			description="時段"
+			required="true"
+			>
+			<option value="daytime">白天皆可 0900-1800</option>
+			<option value="morning">早上 0900-1300</option>
+			<option value="afternoon">下午 1300-1800</option>
+			<option value="night">晚上 1800-2100</option>
+			<option value="other">其他</option>
+		</field>
+
+		<field name="schedule_id"
+			type="hidden"
+			/>
+
+		<field name="sender_id"
+			type="sender_list"
+			value_field="name"
+			label="配送藥師"
+			description="配送藥師">
+			<option></option>
+		</field>
+
+		<field name="weekday"
+			type="list"
+			label="配送日"
+			description="配送日"
+			>
+			<option></option>
+			<option value="MON">星期一</option>
+			<option value="TUE">星期二</option>
+			<option value="WED">星期三</option>
+			<option value="THU">星期四</option>
+			<option value="FRI">星期五</option>
+		</field>
+
+		<field name="tel_office"
+			type="text"
+			label="聯絡電話(O)"
+			description="聯絡電話(O)"
+			/>
+
+		<field name="tel_home"
+			type="text"
+			label="聯絡電話(H)"
+			description="聯絡電話(H)"
+			/>
+
+		<field name="mobile"
+			type="text"
+			label="手機(M)"
+			description="手機(M)"
+			/>
+	</fields>
+</form>

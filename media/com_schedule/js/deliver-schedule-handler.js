@@ -50,9 +50,16 @@
 		updateScheduleDate: function(addressesKeys)
 		{
 			var seeDrDate = $('#' + this.options.seeDrDateId).val();
-			var period = $('#' + this.options.periodId).val();
+
+			// Do nothing when see-dr-date is empty
+			if (!seeDrDate)
+			{
+				return;
+			}
+
 			addressesKeys = addressesKeys || this.options.addressesKeys;
 
+			var period = $('#' + this.options.periodId).val();
 			var self = this;
 			var moment_date = moment(seeDrDate);
 
@@ -94,7 +101,7 @@
 					var area = $(selectedAddressId).find('option:selected').data('area');
 
 					// fire ajax only if address info is sufficient
-					if(city && area)
+					if (city && area)
 					{
 						$.ajax({
 							type: "POST",

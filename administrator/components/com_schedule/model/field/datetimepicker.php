@@ -114,12 +114,13 @@ class JFormFieldDateTimePicker extends JFormField
 		$style       = $this->getStyle();
 		$dateFormat  = $this->date_format;
 		$dpBindEvent = $this->dpBindEvent;
+		$value       = ('0000-00-00' === $this->value) ? '' : $this->value;
 
 		$attr = array(
 			'type'             => 'text',
 			'name'             => $this->name,
 			'id'               => $this->id . (false === $showButton ? '' : '_input'),
-			'value'            => $this->value,
+			'value'            => $value,
 			'style'            => $style,
 			'class'            => 'form-control ' . (false === $showButton ? $this->class : ''),
 			'readonly'         => $this->readonly,

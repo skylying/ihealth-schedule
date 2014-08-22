@@ -88,12 +88,14 @@
 			class="input-large"
 			/>
 
-		<field name="hospital_id"
+		<field name="hospital"
 			type="hospital_list"
 			label="開立處方醫院名稱"
 			description="開立處方醫院名稱"
 			class="input-large"
-			/>
+			>
+			<option></option>
+		</field>
 
 		<field name="need_split"
 			type="radio"

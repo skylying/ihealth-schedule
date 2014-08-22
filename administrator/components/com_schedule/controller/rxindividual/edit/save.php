@@ -8,6 +8,7 @@ use Schedule\Helper\ImageHelper;
 use Schedule\Table\Collection as TableCollection;
 use Schedule\Helper\ScheduleHelper;
 use Schedule\Helper\MailHelper;
+use Windwalker\Model\Exception\ValidateFailException;
 
 /**
  * Class SaveController
@@ -36,13 +37,6 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 	 * @var  ScheduleModelAddress
 	 */
 	protected $addressModel;
-
-	/**
-	 * Property scheduleModel.
-	 *
-	 * @var  ScheduleModelSchedule
-	 */
-	protected $scheduleModel;
 
 	/**
 	 * Property customer.
@@ -97,22 +91,20 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 	 */
 	protected function preSaveHook()
 	{
+		$nthList = $this->getSelectedNthList();
+
+		$this->validateSchedules($nthList);
+
 		$this->addressModel = $this->getModel("Address");
-
 		$this->customer = $this->getUpdatedCustomerData($this->data['customer_id']);
+		$this->isNew = empty($this->data['id']) || $this->data['id'] <= 0;
 
-		$this->createAddress();
-
-		$this->buildNthOfScheduleToRxData();
-
-		// Rx 吃完藥日
+		$this->data["deliver_nths"] = implode(",", $nthList);
 		$this->data["empty_date_1st"] = $this->data["schedules_1st"]["drug_empty_date"];
 		$this->data["empty_date_2nd"] = $this->data["schedules_2nd"]["drug_empty_date"];
-
-		// Remind
 		$this->data["remind"] = isset($this->data['remind']) ? implode(",", $this->data['remind']) : "";
 
-		$this->isNew = empty($this->data['id']) || $this->data['id'] <= 0;
+		$this->createAddress();
 
 		parent::preSaveHook();
 	}
@@ -127,33 +119,34 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 	 */
 	protected function postSaveHook($model, $validData)
 	{
+		// Update customer data
+		$this->getModel("Customer")->save((array) $this->customer);
+
 		$this->data['id'] = $model->getState()->get("rxindividual.id");
 
-		$this->scheduleModel = $this->getModel("Schedule");
+		/** @var ScheduleModelSchedule $scheduleModel */
+		$scheduleModel = $this->getModel("Schedule");
+		$scheduleState = $scheduleModel->getState();
 
-		$scheduleState = $this->scheduleModel->getState();
-		$scheduleState->set('form.type', 'schedule_individule');
+		$scheduleState->set('form.type', 'schedule_individual');
 
 		// 圖片處理
 		$this->rxImageHandler();
 
-		// 健保處理
+		// 藥品健保碼處理
 		$this->processDrug();
 
-		// 最後更改地址
+		// 最後一次更改的地址
 		$lastAddress = null;
 
 		// Get a simple array of schedule data
 		$schedules = array();
 
-		// 新增排程
 		foreach (array("1st", "2nd", "3rd") as $nth)
 		{
-			// 使用者上傳的排程資料
 			$schedule = $this->data["schedules_{$nth}"];
-			$scheduleTable = TableCollection::loadTable('Schedule', $schedule['schedule_id']);
 
-			// 沒有需要外送的次數跳過
+			// 跳過沒有需要外送的次數
 			if (empty($schedule["deliver_nth"]) || ! isset($schedule["deliver_nth"]))
 			{
 				$this->deleteSchedule($schedule['schedule_id']);
@@ -166,44 +159,32 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 				continue;
 			}
 
-			// 外送地址比對
-			$address = $this->mapper['address']->findOne($schedule["address_id"]);
-
-			// 外送路線
-			$route = $this->getUpdatedRouteData($address, $schedule);
-
-			// 外送者
-			$sender = $this->mapper['sender']->findOne($route->sender_id);
-
-			// Get task
-			$task = $this->getUpdatedScheduleTaskData($sender, $schedule);
-
-			// Schedule sender id
-			$this->scheduleModel->getState()->set("sender_id", $route->sender_id);
+			$scheduleTable = TableCollection::loadTable('Schedule', $schedule['schedule_id']);
+			$address       = $this->mapper['address']->findOne($schedule["address_id"]);
+			$lastAddress   = $address;
+			$route         = $this->getUpdatedRouteData($address, $schedule);
+			$sender        = $this->mapper['sender']->findOne($route->sender_id);
+			$task          = $this->getUpdatedScheduleTaskData($sender, $schedule);
 
 			$this->data["schedules_{$nth}"] = $this->getScheduleUploadData($task->id, $address, $nth, $schedule, $route);
 
-			// 新增排程
-			$this->scheduleModel->save($this->data["schedules_{$nth}"]);
-
-			// 最後更改地址
-			$lastAddress = $address;
+			$scheduleModel->getState()->set("sender_id", $route->sender_id);
+			$scheduleModel->save($this->data["schedules_{$nth}"]);
 
 			if (! empty($scheduleTable->id)
 				&& ScheduleHelper::checkScheduleChanged($scheduleTable->getProperties(), $this->data["schedules_{$nth}"]))
 			{
 				$this->data["schedules_{$nth}"]['send_confirm_email'] = true;
 
-				$scheduleId = $this->scheduleModel->getState()->get('schedule.id');
+				$scheduleId = $scheduleModel->getState()->get('schedule.id');
 
-				$schedules[] = $this->scheduleModel->getItem($scheduleId);
+				$schedules[] = $scheduleModel->getItem($scheduleId);
 			}
 		}
 
-		// 如果有最後地址
+		// Flush default address when lastAddress is not empty
 		if (! empty($lastAddress))
 		{
-			// Flush Default Address
 			$this->addressModel->flushDefaultAddress($this->customer->id, $lastAddress->id);
 		}
 
@@ -217,6 +198,7 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 		{
 			$memberTable = TableCollection::loadTable('Member', $validData['member_id']);
 			$drugsModel = $this->getModel('Drugs');
+
 			$drugsModel->getState()->set('filter', array('drug.rx_id' => $this->data['id']));
 
 			$mailData = array(
@@ -321,7 +303,7 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 	 */
 	protected function getUpdatedRouteData($address, $schedule)
 	{
-		$routeModel   = $this->getModel("Route");
+		$routeModel = $this->getModel("Route");
 
 		// 外送路線
 		$route = $this->mapper['routes']->findOne(array("city" => $address->city, "area" => $address->area, "type" => "customer"));
@@ -408,21 +390,15 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 	{
 		$customer = $this->mapper['customer']->findOne($id);
 
-		// 找不到客戶
 		if ($customer->isNull())
 		{
 			throw new \Exception("error customer id");
 		}
 
-		$customerModel = $this->getModel("Customer");
-
-		$customer->hospital   = $this->data['hospital_id'];
-		$customer->tel_office = $this->data['tel_office'];
-		$customer->tel_home   = $this->data['tel_home'];
-		$customer->mobile     = $this->data['mobile'];
-
-		// 更新客戶電話
-		$customerModel->save((array) $customer);
+		$customer->hospital   = JArrayHelper::getValue($this->data, 'hospital_id', 0);
+		$customer->tel_office = JArrayHelper::getValue($this->data, 'tel_office', '');
+		$customer->tel_home   = JArrayHelper::getValue($this->data, 'tel_home', '');
+		$customer->mobile     = JArrayHelper::getValue($this->data, 'mobile', '');
 
 		return $customer;
 	}
@@ -440,37 +416,21 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 	 */
 	protected function getScheduleUploadData($task, $address, $nth, $formData, $route)
 	{
-		// Schedule data
 		$scheduleUploadData = array(
-			// Id
-			"id"            => $formData['schedule_id'],
-
-			// Rx id
-			"rx_id"         => $this->data['id'],
-			"route_id"      => $route->id,
-
-			// Member
-			"member_id"     => $this->data['member_id'],
-
-			// 對應外送 id
-			"task_id"       => $task,
-			"type"          => "individual",
-			"customer_id"   => $this->customer->id,
-
-			// 地址
-			"address_id"    => $address->id,
-
-			// 第幾次宅配
-			"deliver_nth"   => $nth,
-
-			// Telephone Info
-			"tel_office"   => isset($formData['tel_office']) ? $formData['tel_office'] : "",
-			"tel_home"     => isset($formData['tel_home']) ? $formData['tel_home'] : "",
-			"mobile"       => isset($formData['mobile']) ? $formData['mobile'] : "",
-
-			// Default
-			"status"        => "scheduled",
-			"sorted"        => 0
+			"id"          => $formData['schedule_id'],
+			"rx_id"       => $this->data['id'],
+			"route_id"    => $route->id,
+			"member_id"   => $this->data['member_id'],
+			"task_id"     => $task,
+			"type"        => "individual",
+			"customer_id" => $this->customer->id,
+			"address_id"  => $address->id,
+			"deliver_nth" => $nth,
+			"tel_office"  => isset($formData['tel_office']) ? $formData['tel_office'] : "",
+			"tel_home"    => isset($formData['tel_home']) ? $formData['tel_home'] : "",
+			"mobile"      => isset($formData['mobile']) ? $formData['mobile'] : "",
+			"status"      => "scheduled",
+			"sorted"      => 0
 		);
 
 		return array_merge($formData, $scheduleUploadData);
@@ -542,27 +502,62 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 	}
 
 	/**
-	 * 把 schedule 有選擇的 nth 組起來給 rx 儲存用
+	 * 取得有被勾選的 nth 清單
 	 *
-	 * @return  void
+	 * @return  array
 	 */
-	protected function buildNthOfScheduleToRxData()
+	protected function getSelectedNthList()
 	{
-		// 外送次數
-		$nths = array();
+		$nthList = array();
 
-		foreach (array("1st", "2nd", "3rd") as $val)
+		foreach (array("1st", "2nd", "3rd") as $nth)
 		{
-			// 有值就給
-			if (! empty($this->data["schedules_{$val}"]["deliver_nth"]))
+			if (! empty($this->data["schedules_{$nth}"]["deliver_nth"]))
 			{
-				$nths[] = $val;
+				$nthList[] = $nth;
 			}
 		}
 
-		// 把勾選的值存成資料庫形式
-		$nths = implode(",", $nths);
+		return $nthList;
+	}
 
-		$this->data["deliver_nths"] = $nths;
+	/**
+	 * validateSchedules
+	 *
+	 * @param array $nthList
+	 *
+	 * @return  void
+	 *
+	 * @throws \Windwalker\Model\Exception\ValidateFailException
+	 */
+	protected function validateSchedules(array $nthList)
+	{
+		/** @var ScheduleModelRxIndividual $model */
+		$model = $this->getModel();
+		$form = $model->getSchedulesForm();
+
+		foreach (array('1st', '2nd', '3rd') as $nth)
+		{
+			if (! in_array($nth, $nthList))
+			{
+				$form->removeGroup("schedules_{$nth}");
+
+				continue;
+			}
+
+			$schedule = $this->data["schedules_{$nth}"];
+
+			// Check tel_office, tel_home, and mobile
+			if (empty($schedule['tel_office'])
+				&& empty($schedule['tel_home'])
+				&& empty($schedule['mobile']))
+			{
+				$error = JText::_('COM_SCHEDULE_SCHEDULE_' . $nth) . '排程請輸入至少一個連絡方式';
+
+				throw new ValidateFailException([$error]);
+			}
+		}
+
+		$model->validate($form, $this->data);
 	}
 }

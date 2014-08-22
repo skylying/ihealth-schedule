@@ -118,7 +118,7 @@ class ScheduleModelRxindividual extends AdminModel
 		$returnVal = parent::loadFormData();
 
 		// 如果沒值就直接回傳
-		if (empty($returnVal))
+		if (empty($returnVal) || empty($returnVal->id))
 		{
 			return $returnVal;
 		}
@@ -175,5 +175,25 @@ class ScheduleModelRxindividual extends AdminModel
 		}
 
 		return $returnVal;
+	}
+
+	/**
+	 * getSchedulesForm
+	 *
+	 * @param   array  $data
+	 * @param   bool   $loadData
+	 *
+	 * @return  \JForm
+	 */
+	public function getSchedulesForm($data = array(), $loadData = true)
+	{
+		$config = array(
+			'control'   => 'jform',
+			'load_data' => $loadData
+		);
+
+		$formName = 'rxindividual_schedules';
+
+		return $this->loadForm($this->option . '.' . $formName . '.form', $formName, $config);
 	}
 }

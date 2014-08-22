@@ -206,7 +206,7 @@ class ScheduleControllerPrescriptionEditSave extends ApiSaveController
 
 			if ($sendNotifyEmptyRouteMail && !empty($notifyEmails))
 			{
-				$data = new Data($scheduleModel->getItem($scheduleModel->getState()->get('schedule.id')));
+				$data = new Data($scheduleModel->getItem($schedule['id']));
 
 				$mailData = array(
 					'schedules' => array($data),

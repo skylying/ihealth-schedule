@@ -237,15 +237,22 @@
 				self = event.data.self;
 			}
 
+			var date = self.birthday.val();
+
+			if (!date)
+			{
+				return;
+			}
+
 			var today    = new Date,
-				birthday = new Date(self.birthday.val()),
+				birthday = new Date(date),
 				age      = today.getFullYear() - birthday.getFullYear();
 
 			// Set birth year to this year
 			birthday.setFullYear(today.getFullYear());
 
 			// 還沒過生日就扣掉一歲
-			if (today > birthday)
+			if (age > 0 && today > birthday)
 			{
 				age--;
 			}
@@ -348,17 +355,15 @@
 		validateBirthday: function()
 		{
 			var birthday = this.birthday.val();
-			var pattern = /^[12][0-9]{3}-[01][0-9]-[0-3][0-9]/;
-			var validatedBirthday = birthday.match(pattern);
 
-			if (validatedBirthday === null)
-			{
-				return false;
-			}
-			else
+			if ('' === birthday)
 			{
 				return true;
 			}
+
+			var pattern = /^[12][0-9]{3}-[01][0-9]-[0-3][0-9]/;
+
+			return birthday.match(pattern) ? true : false;
 		}
 	};
 })(jQuery);
