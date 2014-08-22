@@ -183,7 +183,7 @@ class MailHelper
 		$layout = new FileLayout("schedule.mail.registered", SCHEDULE_ADMIN . '/layouts');
 
 		$params = ExtensionHelper::getParams('com_schedule');
-		$displayData['ihealthSiteUrl'] = $params->get('ihealth_site.url', '');
+		$displayData['ihealthSiteUrl'] = $params->get('ihealth_site.url', 'http://www.ihealth.com.tw');
 
 		$mailer->setSubject(sprintf('[iHealth] 註冊成功: %s 您好! 恭喜您已註冊成功。', $displayData['name']));
 		$mailer->setBody($layout->render($displayData));
