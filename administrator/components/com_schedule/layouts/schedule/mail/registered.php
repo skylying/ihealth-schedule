@@ -6,13 +6,14 @@
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
-$data = $displayData;
+$data['name'] = JArrayHelper::getValue($displayData, 'name', '');
+$data['email'] = JArrayHelper::getValue($displayData, 'email', '');
 
 ?>
 <!DOCTYPE html>
 <html>
 <body>
-<table border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" id="bodyTable" style="font-family: 微软雅黑; letter-spacing: 3px;"><!--first table-->
+<table border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" id="bodyTable" style="font-family: "Helvetica Neue", Helvetica, Arial, sans-serif, 微软雅黑; letter-spacing: 3px;"><!--first table-->
 	<tr>
 		<td valign="top">
 			<table border="0" cellpadding="20" cellspacing="0" width="600" id="emailContainer" style="background-color:#f2f2f2;"><!--second table-->
@@ -36,7 +37,7 @@ $data = $displayData;
 									<h3>資料如下:</h3>
 									<div>
 										<!--fourth table-->
-										<table style="line-height: 1.42857143; vertical-align: top; font-family: 微软雅黑;">
+										<table style="line-height: 1.42857143; vertical-align: top; font-family:"Helvetica Neue", Helvetica, Arial, sans-serif, 微软雅黑;">
 											<tr>
 												<td>會員姓名:</td>
 												<td style="padding:10px;"><?php echo $data['name']; ?></td>
@@ -47,8 +48,7 @@ $data = $displayData;
 											</tr>
 										</table>
 										<br />
-										可以開始預約處方宅配，
-										<a href="<?php echo $data['ihealthSiteUrl']; ?>">點擊這裡即可預約處方宅配</a>。
+										<a href="<?php echo $data['ihealthSiteUrl']; ?>">馬上預約</a>。
 										<!--end fourth table-->
 									</div>
 								</td>
