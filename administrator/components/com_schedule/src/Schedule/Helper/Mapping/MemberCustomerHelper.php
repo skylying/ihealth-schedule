@@ -265,11 +265,6 @@ class MemberCustomerHelper
 	 */
 	public static function updateCustomers($memberId, array $customerIds = array())
 	{
-		if (empty($customerIds))
-		{
-			return true;
-		}
-
 		$app = \JFactory::getApplication();
 
 		if (!static::disconnectCustomers($memberId))
@@ -299,11 +294,6 @@ class MemberCustomerHelper
 	 */
 	public static function updateMembers($customerId, array $memberIds = array())
 	{
-		if (empty($memberIds))
-		{
-			return true;
-		}
-
 		$app = \JFactory::getApplication();
 
 		if (!static::disconnectMembers($customerId))
