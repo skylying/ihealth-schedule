@@ -190,6 +190,7 @@ class ScheduleControllerPrescriptionEditSave extends ApiSaveController
 			$schedule['rx_id'] = $rxId;
 			$schedule['member_id'] = $validData['member_id'];
 			$schedule['customer_id'] = $validData['customer_id'];
+			$schedule['sender_id'] = $routeTable->sender_id;
 			$schedule['sender_name'] = $routeTable->sender_name;
 			$schedule['task_id'] = $taskTable->id;
 			$schedule['drug_empty_date'] = ScheduleHelper::getDrugEmptyDate(
