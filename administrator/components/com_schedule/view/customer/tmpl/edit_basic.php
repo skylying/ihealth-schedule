@@ -82,6 +82,9 @@ $addresses = isset($data->item->addresses) ? $data->item->addresses : array();
 	</div>
 
 	<div class="span6">
+		<div class="hide">
+			<?php echo $typeField->label; ?>
+		</div>
 		<?php echo $typeField->input; ?>
 		<div id="individualdiv" class="<?php echo $customerType == 'individual' ? '' : 'hide'; ?>">
 			<?php echo $this->loadTemplate('fieldset', array('fieldset' => $fieldsets['rxindividual'], 'class' => 'form-horizontal')); ?>
