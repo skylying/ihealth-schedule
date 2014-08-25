@@ -535,6 +535,8 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 		/** @var ScheduleModelRxIndividual $model */
 		$model = $this->getModel();
 		$form = $model->getSchedulesForm();
+		$validWeekdays = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'];
+		$errors = [];
 
 		foreach (array('1st', '2nd', '3rd') as $nth)
 		{
@@ -552,10 +554,27 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 				&& empty($schedule['tel_home'])
 				&& empty($schedule['mobile']))
 			{
-				$error = JText::_('COM_SCHEDULE_SCHEDULE_' . $nth) . '排程請輸入至少一個連絡方式';
-
-				throw new ValidateFailException([$error]);
+				$errors[] = JText::_('COM_SCHEDULE_SCHEDULE_' . $nth) . '排程請輸入至少一個連絡方式';
 			}
+
+			// Check sender information
+			if (!is_numeric($schedule['address_id']))
+			{
+				if ((int) $schedule['sender_id'] <= 0)
+				{
+					$errors[] = JText::_('COM_SCHEDULE_SCHEDULE_' . $nth) . '排程請選擇配送藥師';
+				}
+
+				if (!in_array($schedule['weekday'], $validWeekdays))
+				{
+					$errors[] = JText::_('COM_SCHEDULE_SCHEDULE_' . $nth) . '排程請選擇配送日';
+				}
+			}
+		}
+
+		if (count($errors) > 0)
+		{
+			throw new ValidateFailException($errors);
 		}
 
 		$model->validate($form, $this->data);
