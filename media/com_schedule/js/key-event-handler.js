@@ -16,8 +16,10 @@
 	 * Class KeyEventHandler
 	 *
 	 * - Used key list
-	 *  - 37 left arrow
-	 *  - 39 right arrow
+	 *  - 37 left
+	 *  - 39 right
+	 *  - 38 up
+	 *  - 40 down
 	 *  - 13 enter
 	 *
 	 * @param options
@@ -48,6 +50,8 @@
 
 			var LEFT = 37,
 				RIGHT = 39,
+				UP = 38,
+				DOWN = 40,
 				ENTER = 13;
 
 			/*
@@ -78,20 +82,24 @@
 			 */
 			self.$panel.on('keydown', 'input[type="checkbox"]:not([disabled])', function(e)
 			{
-				// Bind right arrow key
 				if(e.keyCode == RIGHT || e.which == RIGHT)
 				{
 					self.focusNextCb(this);
 				}
-				// Bind left arrow key
 				else if (e.keyCode == LEFT || e.which == LEFT)
 				{
 					self.focusPrevCb(this);
 				}
-				// Bind enter key event
 				else if (e.keyCode == ENTER || e.which == ENTER)
 				{
 					$(this).click();
+				}
+				else if (e.keyCode == DOWN || e.which == DOWN)
+				{
+					// Prevent screen scroll down
+					e.preventDefault();
+
+					self.focusNextRow(this);
 				}
 			});
 
@@ -119,7 +127,7 @@
 			 * 快速點兩下左鍵可以 focus 到上一個 <select2>
 			 *
 			 */
-			self.$panel.on('keydown', 'input[type="text"]', function(e)
+			self.$panel.on('keydown', 'input[type="text"].see-dr-date', function(e)
 			{
 				// Bind right arrow key
 				if (e.keyCode == RIGHT || e.which == RIGHT)
@@ -205,28 +213,28 @@
 				}
 			});
 
-			$('#s2id_jform_institute_id_selection input[type="text"]').on('keydown', function(e)
+			/**
+			 * Bind institute select2 element key event
+			 */
+			$('#s2id_jform_institute_id_selection').on('keydown', function(e)
 			{
 				// Bind right arrow key
 				if(e.keyCode == RIGHT || e.which == RIGHT)
 				{
-					if (self.doubleKeyFlag)
-					{
-						var thisKeyPressTime = new Date().getTime();
-
-						if (thisKeyPressTime - self.lastKeyPressTime <= self.doubleClickInterval)
-						{
-							$('.add-1-row').focus();
-						}
-
-						self.doubleKeyFlag = false;
-						self.lastKeyPressTime = thisKeyPressTime;
-					}
-
-					self.lastKeyPressTime = new Date().getTime();
-					self.doubleKeyFlag = true;
+					$('.add-1-row:first-child').focus();
 				}
-			})
+			});
+
+			/**
+			 * Bind customer select2 element key event
+			 */
+			self.$panel.on('keydown', '.customer-id-selection', function(e)
+			{
+				if (e.keyCode == RIGHT || e.which == RIGHT)
+				{
+					self.focusNext(this);
+				}
+			});
 		},
 
 		/**
@@ -372,6 +380,19 @@
 			{
 				$prevNode.focus();
 			}
+		},
+
+		/**
+		 * Focus next row's select2 element
+		 *
+		 * @param element
+		 */
+		focusNextRow : function(element)
+		{
+			var self = this,
+				$nextRow = $(element).closest('tr').next();
+
+			$nextRow.find('.customer-id-selection').select2('open');
 		}
 	};
 
