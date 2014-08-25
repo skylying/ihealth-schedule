@@ -60,6 +60,12 @@ $jsOption = [
 			<?php echo $instituteForm->getField('floor')->getControlGroup(); ?>
 		</div>
 	</div>
+	<div id="note-from-js" class="text-center"
+		<?php if (! $data->isEdit): ?>>
+		<span class="note-default">機構備註</span>
+		<?php endif; ?>
+		<span><?php echo $data->institute['note']; ?></span>
+	</div>
 	<div class="row-fluid">
 		<div class="col-md-4 deliveryblock">
 			<div class="weekday">
@@ -80,18 +86,8 @@ $jsOption = [
 		</div>
 	</div>
 
-	<div class="row-fluid">
-		<div class="col-md-12">
-			<div>
-				備註：
-				<span id="note-from-js">
-					<?php echo $data->institute['note']; ?>
-				</span>
-			</div>
-		</div>
-	</div>
-
 	<hr />
+
 	<?php if (! $data->isEdit): ?>
 		<p>
 			<button type="button" class="btn btn-primary button-add-row add-1-row" value="1">
