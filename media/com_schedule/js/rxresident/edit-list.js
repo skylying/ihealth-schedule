@@ -278,10 +278,20 @@
 				}
 				catch(e)
 				{
-					alert(e.message);
+					$(this).tooltip({
+						trigger : "manual",
+						title : e.message,
+						placement : "top"
+					}).tooltip('show');
 
-					// Remind user
-					$(this).focus();
+					// Destroy tooltip after 3 seconds
+					(function($node)
+					{
+						setTimeout(function()
+						{
+							$node.tooltip('destroy');
+						}, 3000)
+					})($(this));
 				}
 
 				updateDrugEmptyDate.call(this);
@@ -381,10 +391,20 @@
 					}
 					catch(e)
 					{
-						alert(e.message);
+						$(this).tooltip({
+							trigger : "manual",
+							title : e.message,
+							placement : "top"
+						}).tooltip('show');
 
-						// Remind user
-						$(this).focus();
+						// Destroy tooltip after 3 seconds
+						(function($node)
+						{
+							setTimeout(function()
+							{
+								$node.tooltip('destroy');
+							}, 3000)
+						})($(this));
 					}
 
 					updateDrugEmptyDate.call(this);
