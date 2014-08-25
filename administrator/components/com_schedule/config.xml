@@ -54,6 +54,17 @@
 		</fieldset>
 	</fields>
 
+	<fields name="ihealth_site">
+		<fieldset name="ihealth_site"
+			label="官網網址"
+			>
+			<field name="url"
+				type="text"
+				label="官網網址"
+				/>
+		</fieldset>
+	</fields>
+
 	<fields name="schedule">
 		<fieldset name="schedule"
 			label="郵件設定"

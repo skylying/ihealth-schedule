@@ -7,6 +7,7 @@
  */
 
 use Schedule\Controller\Api\ApiSaveController;
+use Schedule\Helper\MailHelper;
 
 /**
  * Class ScheduleControllerMemberEditSave
@@ -15,4 +16,19 @@ use Schedule\Controller\Api\ApiSaveController;
  */
 class ScheduleControllerMemberEditSave extends ApiSaveController
 {
+	/**
+	 * postSaveHook
+	 *
+	 * @param \Windwalker\Model\CrudModel $model
+	 * @param array                       $validData
+	 *
+	 * @return array
+	 */
+	protected function postSaveHook($model, $validData)
+	{
+		MailHelper::sendRegisteredLayout($validData['email'], $validData);
+
+		parent::postSaveHook($model, $validData);
+	}
 }
+
