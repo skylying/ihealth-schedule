@@ -257,8 +257,7 @@ class ScheduleViewDrugdetailHtml extends EditView
 			->where("task.sender " . (new JDatabaseQueryElement('IN ()', $senderIds)))
 			->where("task.date >= " . $q->quote($this->data->date_start))
 			->where('schedule.status != "delivered"')
-			->order("schedule.institute_id DESC")
-			->order("task.sender DESC");
+			->order("rx.floor DESC, schedule.drug_empty_date ASC");
 
 		if (!empty($this->data->date_end))
 		{
