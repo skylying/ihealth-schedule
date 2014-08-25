@@ -82,6 +82,9 @@ $id    = FieldHelper::resetGroup($form->getField('id'), $group);
 			<button type="button" class="btn btn-default button-delete-row">
 				<span class="glyphicon glyphicon-remove"></span>
 			</button>
+			<button type="button" class="btn btn-default button-add-row add-1-row" value="1">
+				<span class="glyphicon glyphicon-plus"></span>
+			</button>
 		</div>
 	</td>
 <?php endif; ?>

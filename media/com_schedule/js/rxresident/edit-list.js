@@ -421,7 +421,7 @@
 			});
 
 			// Add row
-			$('.button-add-row').click(function()
+			$('#adminForm').on('click', '.button-add-row', function()
 			{
 				var amount = $(this).val();
 
