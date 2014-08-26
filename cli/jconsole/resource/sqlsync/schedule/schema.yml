@@ -164,7 +164,7 @@
         area_title: { Field: area_title, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 區域名稱, From: [area_title] }
         address: { Field: address, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 機構路名, From: [address] }
         note: { Field: note, Type: text, 'Null': NO, Default: null, Extra: '', Comment: 備註, From: [note] }
-        state: { Field: state, Type: tinyint(3), 'Null': NO, Default: 0, Extra: '', Comment: 'State (0: 未發布, 1: 已發布)', From: [state] }
+        state: { Field: state, Type: tinyint(1), 'Null': NO, Default: '0', Extra: '', Comment: 'State (0: 未發布, 1: 已發布)', From: [state] }
         created: { Field: created, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: 'Created time', From: [created] }
         created_by: { Field: created_by, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: Author, From: [created_by] }
         modified: { Field: modified, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: 'Modified time', From: [modified] }
