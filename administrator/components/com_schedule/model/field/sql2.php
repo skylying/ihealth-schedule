@@ -53,10 +53,12 @@ class JFormFieldSQL2 extends JFormFieldSQL
 
 			if (true === $this->multiple)
 			{
-				if (is_array($replace) && count($replace) > 0)
+				if (!is_array($replace) || empty($replace))
 				{
-					$this->query = sprintf($this->query, implode(',', $replace));
+					$replace = array('""');
 				}
+
+				$this->query = sprintf($this->query, implode(',', $replace));
 			}
 			else
 			{
