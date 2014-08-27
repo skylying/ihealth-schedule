@@ -34,9 +34,6 @@ $item      = $data->item;
 		}
 		else
 		{
-			// Remove unnecessary form
-			CustomerJs.removeForm();
-
 			// Update hidden json inputs (for phone numbers)
 			CustomerJs.updatePhoneJson();
 
@@ -45,6 +42,9 @@ $item      = $data->item;
 
 			if (task == 'customer.edit.cancel' || document.formvalidator.isValid(document.id('adminForm')))
 			{
+				// Remove unnecessary form
+				CustomerJs.removeForm();
+
 				Joomla.submitform(task, document.getElementById('adminForm'));
 			}
 		}

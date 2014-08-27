@@ -54,7 +54,8 @@
 		type="radio"
 		label="客戶類型"
 		description="客戶類型"
-		class="btn-group btn-group-yesno customertype">
+		class="btn-group btn-group-yesno customertype required"
+		required="true">
 		<option value="resident">住民</option>
 		<option value="individual">散客</option>
 	</field>

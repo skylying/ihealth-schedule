@@ -35,7 +35,7 @@ $id    = FieldHelper::resetGroup($form->getField('id'), $group);
 		echo FieldHelper::resetGroup($form->getField('customer_id'), $group)->input;
 		?>
 	</td>
-	<td>
+	<td data-toggle="tooltip">
 		<?php echo FieldHelper::resetGroup($form->getField('see_dr_date'), $group)->input; ?>
 	</td>
 	<td>
@@ -81,6 +81,9 @@ $id    = FieldHelper::resetGroup($form->getField('id'), $group);
 			</button>
 			<button type="button" class="btn btn-default button-delete-row">
 				<span class="glyphicon glyphicon-remove"></span>
+			</button>
+			<button type="button" class="btn btn-default button-add-row add-1-row" value="1">
+				<span class="glyphicon glyphicon-plus"></span>
 			</button>
 		</div>
 	</td>
