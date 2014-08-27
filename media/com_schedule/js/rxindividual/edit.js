@@ -79,7 +79,7 @@
 			this.triggerEvent();
 
 			// Clear create address data
-			$('#' + this.optons.createAddressId).val('');
+			$('#' + this.options.createAddressId).val('');
 		},
 
 		/**
