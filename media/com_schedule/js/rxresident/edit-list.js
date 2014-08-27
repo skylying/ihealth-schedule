@@ -239,6 +239,37 @@
 	}
 
 	/**
+	 * Method to validate see doctor date and render tooltip
+	 */
+	function checkSeeDrDate()
+	{
+		var seeDrDate = $(this).val();
+
+		try
+		{
+			validateDate(seeDrDate, this);
+		}
+		catch(e)
+		{
+			var $node = $(this);
+
+			$node.tooltip({
+				trigger : "manual",
+				title : e.message,
+				placement : "top"
+			}).tooltip('show');
+
+			// Destroy tooltip after 3 seconds
+			setTimeout(function()
+			{
+				$node.tooltip('destroy');
+			}, 3000);
+		}
+
+		updateDrugEmptyDate.call(this);
+	}
+
+	/**
 	 * Exception object
 	 *
 	 * @param message
@@ -265,38 +296,8 @@
 		// 可調劑次數與處方箋外送次數連動處理
 		$panel.find('.times').change(timesChange);
 
-		// 就醫日期
-		$('.see-dr-date').each(function()
-		{
-			$(this).on('focusout', function()
-			{
-				var seeDrDate = $(this).val();
-
-				try
-				{
-					validateDate(seeDrDate, this);
-				}
-				catch(e)
-				{
-					$(this).tooltip({
-						trigger : "manual",
-						title : e.message,
-						placement : "top"
-					}).tooltip('show');
-
-					// Destroy tooltip after 3 seconds
-					(function($node)
-					{
-						setTimeout(function()
-						{
-							$node.tooltip('destroy');
-						}, 3000)
-					})($(this));
-				}
-
-				updateDrugEmptyDate.call(this);
-			});
-		});
+		// 檢查就醫日期
+		$panel.find('.see-dr-date').focusout(checkSeeDrDate);
 
 		// Bind form submit event
 		Joomla.submitbutton = function(task)
@@ -380,35 +381,8 @@
 			// Bind initialize event
 			handler.on('initializeRow', function($row)
 			{
-				// 就醫日期連動
-				$row.find('.see-dr-date').on('focusout', function()
-				{
-					var seeDrDate = $(this).val();
-
-					try
-					{
-						validateDate(seeDrDate, this);
-					}
-					catch(e)
-					{
-						$(this).tooltip({
-							trigger : "manual",
-							title : e.message,
-							placement : "top"
-						}).tooltip('show');
-
-						// Destroy tooltip after 3 seconds
-						(function($node)
-						{
-							setTimeout(function()
-							{
-								$node.tooltip('destroy');
-							}, 3000)
-						})($(this));
-					}
-
-					updateDrugEmptyDate.call(this);
-				});
+				// 檢查就醫日期
+				$row.find('.see-dr-date').focusout(checkSeeDrDate);
 
 				// Bind onchange event to update "就醫日期" & "給藥天數"
 				$row.find('.period').change(updateDrugEmptyDate);
