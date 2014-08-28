@@ -79,6 +79,33 @@
 		</fieldset>
 	</fields>
 
+	<fields name="upload">
+		<fieldset name="upload"
+			label="上傳設定"
+			>
+			<field name="base_dir"
+				type="text"
+				label="上傳資料夾位置"
+				description="上傳資料夾位置"
+				default="/media/com_schedule/upload"
+				/>
+
+			<field name="rx_image_folder"
+				type="text"
+				label="散客處方箋圖片資料夾名稱"
+				description="散客處方箋圖片資料夾名稱"
+				default="rx_images"
+				/>
+
+			<field name="hospital_rx_sample_folder"
+				type="text"
+				label="醫院處方箋範本資料夾名稱"
+				description="醫院處方箋範本資料夾名稱"
+				default="hospital_rx_samples"
+				/>
+		</fieldset>
+	</fields>
+
 	<fieldset
 		name="permissions"
 		label="JCONFIG_PERMISSIONS_LABEL"
