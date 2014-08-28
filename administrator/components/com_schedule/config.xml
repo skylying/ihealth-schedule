@@ -106,6 +106,59 @@
 		</fieldset>
 	</fields>
 
+	<fields name="s3">
+		<fieldset name="s3"
+			label="AWS S3 設定"
+			>
+			<field name="enable"
+				type="radio"
+				label="開啟 AWS S3 功能"
+				description="開啟 AWS S3 功能"
+				default="0"
+				class="btn-group btn-group-yesno">
+				<option value="1">開啟</option>
+				<option value="0">關閉</option>
+			</field>
+
+			<field name="key"
+				type="text"
+				label="Key"
+				description="Key"
+				/>
+
+			<field name="secret"
+				type="text"
+				label="Secret"
+				description="Secret"
+				/>
+
+			<field name="bucket"
+				type="text"
+				label="Bucket Name"
+				description="Bucket Name"
+				default="ihealth-tw"
+				/>
+
+			<field name="region"
+				type="list"
+				label="Region"
+				description="Region"
+				default="ap-northeast-1"
+				>
+				<option value="ap-northeast-1">Tokyo</option>
+				<option value="ap-southeast-1">Singapore</option>
+			</field>
+
+			<field name="url_prefix"
+				type="text"
+				label="File URL prefix"
+				description="File URL prefix"
+				default="https://ihealth-tw-dev.s3-ap-northeast-1.amazonaws.com"
+				class="input-xxlarge"
+				/>
+		</fieldset>
+	</fields>
+
 	<fieldset
 		name="permissions"
 		label="JCONFIG_PERMISSIONS_LABEL"
