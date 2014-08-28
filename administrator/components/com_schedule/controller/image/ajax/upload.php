@@ -67,7 +67,12 @@ class ScheduleControllerImageAjaxUpload extends DisplayController
 		$model->save($data);
 
 		$data['id'] = $model->getState()->get('image.id');
-		$data['url'] = JUri::root(true) . $data['path'];
+		$data['url'] = $data['path'];
+
+		if (!preg_match('#^(http|https|ftp)://#s', $image['path']))
+		{
+			$data['url'] = JUri::root(true) . $data['path'];
+		}
 
 		// Generate thumbnail
 		$data['thumb'] = array(
@@ -75,8 +80,6 @@ class ScheduleControllerImageAjaxUpload extends DisplayController
 			'width' => 360,
 			'height' => 360,
 		);
-
-		// Save to S3
 
 		jexit(json_encode($data));
 	}

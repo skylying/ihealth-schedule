@@ -8,6 +8,9 @@
 
 namespace Schedule\Uploader;
 
+use SMS\StorageFactory;
+use Windwalker\Helper\ArrayHelper;
+
 /**
  * Class ImageUploader
  */
@@ -74,6 +77,16 @@ class ImageUploader
 
 		if (true === \JFile::upload($file['tmp_name'], $dest))
 		{
+			if ($params->get('s3.enable', 0))
+			{
+				$path = self::uploadToS3($dest, $folderName);
+
+				if (false === $path)
+				{
+					return false;
+				}
+			}
+
 			return array(
 				'file' => $file,
 				'dest' => $dest,
@@ -82,6 +95,64 @@ class ImageUploader
 		}
 
 		return false;
+	}
+
+	/**
+	 * uploadToS3
+	 *
+	 * @param string $localFilePath Local file path
+	 * @param string $folderName    Upload destination folder name
+	 *
+	 * @return string S3 URL
+	 */
+	public static function uploadToS3($localFilePath, $folderName)
+	{
+		$s3 = self::getS3Instance();
+
+		$remoteFilePath = $folderName . '/' . basename($localFilePath);
+
+		$result = $s3->put($localFilePath, $remoteFilePath);
+
+		return ArrayHelper::getValue($result, 'ObjectURL', false);
+	}
+
+	/**
+	 * deleteFromS3
+	 *
+	 * @param string $url Remote file URL
+	 *
+	 * @return  void
+	 */
+	public static function deleteFromS3($url)
+	{
+		$params = \JComponentHelper::getParams('com_schedule');
+
+		$urlPrefix = $params->get('s3.url_prefix', '');
+
+		if (0 === strpos($url, $urlPrefix))
+		{
+			$path = substr($url, strlen($urlPrefix));
+
+			self::getS3Instance()->delete($path);
+		}
+	}
+
+	/**
+	 * getS3Instance
+	 *
+	 * @return \SMS\S3
+	 */
+	protected static function getS3Instance()
+	{
+		$params = \JComponentHelper::getParams('com_schedule');
+		$config = array(
+			'key' => $params->get('s3.key'),
+			'secret' => $params->get('s3.secret'),
+			'bucket' => $params->get('s3.bucket'),
+			'region' => $params->get('s3.region'),
+		);
+
+		return StorageFactory::factory('S3', $config);
 	}
 
 	/**

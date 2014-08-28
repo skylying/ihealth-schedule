@@ -9,6 +9,7 @@
 use Windwalker\Controller\DisplayController;
 use Windwalker\Joomla\DataMapper\DataMapper;
 use Schedule\Table\Table;
+use Schedule\Uploader\ImageUploader;
 
 /**
  * Class ScheduleControllerImageAjaxDelete
@@ -27,15 +28,36 @@ class ScheduleControllerImageAjaxDelete extends DisplayController
 		$id = $this->input->getInt('id');
 		$imageMapper = new DataMapper(Table::IMAGES);
 
-		if (empty($id))
+		if (!empty($id))
 		{
-			jexit('{"success": false}');
+			$image = $imageMapper->findOne($id);
+
+			if (!$image->isNull() && $imageMapper->delete($id))
+			{
+				if (!preg_match('#^(http|https|ftp)://#s', $image['path']))
+				{
+					$dest = JPATH_ROOT . $image['path'];
+
+					if (file_exists($dest))
+					{
+						unlink($dest);
+					}
+				}
+				else
+				{
+					// Delete S3 file
+					$params = \JComponentHelper::getParams('com_schedule');
+
+					if ($params->get('s3.enable', 0))
+					{
+						ImageUploader::deleteFromS3($image['path']);
+					}
+				}
+
+				jexit('{"success": true}');
+			}
 		}
 
-		$data = array(
-			'success' => $imageMapper->delete($id),
-		);
-
-		jexit(json_encode($data));
+		jexit('{"success": false}');
 	}
 }
