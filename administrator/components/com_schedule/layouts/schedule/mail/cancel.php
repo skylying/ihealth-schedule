@@ -6,7 +6,8 @@
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
-$data = $displayData;
+$data['schedule'] = JArrayHelper::getValue($displayData, 'schedule', '');
+$data['ihealthSiteUrl'] = JArrayHelper::getValue($displayData, 'ihealthSiteUrl', '');
 
 $nthDelivery = array('1st' => '第一次宅配', '2nd' => '第二次宅配', '3rd' => '第三次宅配');
 
@@ -24,7 +25,7 @@ $nthDelivery = array('1st' => '第一次宅配', '2nd' => '第二次宅配', '3r
 							<tr>
 								<td valign="top">
 									<div>
-										<a href="http://www.ihealth.com.tw" style="float: right;">
+										<a href="<?php echo $data['ihealthSiteUrl']; ?>" style="float: right;">
 											<img style="width: 83px; height: 20px;" src="<?php echo JUri::root() . '/media/com_schedule/images/ihealth.png'; ?>" />
 										</a>
 										<h2 style="letter-spacing: 2px;">
