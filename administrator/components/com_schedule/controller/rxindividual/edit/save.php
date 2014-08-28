@@ -210,6 +210,22 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 
 			MailHelper::sendMailWhenScheduleChange($memberTable->email, $mailData);
 		}
+
+		// Store images
+		$imageModel = $this->getModel('Image');
+
+		foreach (['ajax_image1', 'ajax_image2', 'ajax_image3'] as $key)
+		{
+			if ($this->data[$key] > 0)
+			{
+				$image = array(
+					'id' => $this->data[$key],
+					'rx_id' => $this->data['id'],
+				);
+
+				$imageModel->save($image);
+			}
+		}
 	}
 
 	/**
