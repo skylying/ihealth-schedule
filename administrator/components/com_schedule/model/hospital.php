@@ -93,35 +93,76 @@ class ScheduleModelHospital extends AdminModel
 	}
 
 	/**
-	 * Insert ajax_image id
+	 * Method to get a single record.
 	 *
-	 * @return  array
+	 * @param   integer  $pk  The id of the primary key.
+	 *
+	 * @return  mixed    Object on success, false on failure.
 	 */
-	protected function loadFormData()
+	public function getItem($pk = null)
 	{
-		$returnVal = parent::loadFormData();
+		$item = parent::getItem($pk);
 
-		// Return when it's empty
-		if (empty($returnVal))
+		if (empty($item))
 		{
-			return $returnVal;
+			return $item;
 		}
 
-		if (!empty($returnVal->id))
+		$imageIdList = $this->getImageIdList($item->id);
+
+		$item->image1 = empty($imageIdList['reserve']) ? 0 : $imageIdList['reserve'];
+		$item->image2 = empty($imageIdList['form']) ? 0 : $imageIdList['form'];
+
+		return $item;
+	}
+
+	/**
+	 * getImageList
+	 *
+	 * @param int $id Hospital ID
+	 *
+	 * @return array
+	 */
+	protected function getImageIdList($id)
+	{
+		$imageIdList = array();
+
+		if ($id > 0)
 		{
 			$db = JFactory::getDbo();
 			$query = $db->getQuery(true);
 
-			$query->select('`image`.`id`')
-				->from(Table::IMAGES . ' AS image')
-				->where('`image`.`hospital_id` = ' . $returnVal->id);
+			$query->select('id, path')
+				->from(Table::IMAGES)
+				->where('hospital_id=' . $id);
 
-			$imageIdList = $db->setQuery($query)->loadColumn();
+			$images = $db->setQuery($query)->loadObjectList();
 
-			$returnVal->ajax_image1 = isset($imageIdList[0]) ? $imageIdList[0] : null;
-			$returnVal->ajax_image2 = isset($imageIdList[1]) ? $imageIdList[1] : null;
+			foreach ($images as $image)
+			{
+				if (preg_match('/\-reserve\./i', $image->path))
+				{
+					$imageIdList['reserve'] = $image->id;
+				}
+				elseif (preg_match('/\-form\./i', $image->path))
+				{
+					$imageIdList['form'] = $image->id;
+				}
+			}
+
+			// Fallback for files which file name without suffix
+			if (empty($imageIdList))
+			{
+				foreach (['reserve', 'form'] as $index => $key)
+				{
+					if (!empty($images[$index]))
+					{
+						$imageIdList[$key] = $images[$index]->id;
+					}
+				}
+			}
 		}
 
-		return $returnVal;
+		return $imageIdList;
 	}
 }

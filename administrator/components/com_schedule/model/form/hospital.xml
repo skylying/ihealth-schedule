@@ -69,17 +69,19 @@
 			label="區域名稱"
 			description="區域名稱" />
 
-		<field name="ajax_image1"
-			type="image"
-			imageType="hospital"
-			purpose="reserve"
+		<field name="image1"
+			type="ImageUploader"
+			image_type="hospital"
+			image_file_suffix="-reserve"
+			upload_extra_data="function(){return {hospital_id:jQuery('#jform_id').val()};}"
 			label="預約用處方箋"
 			description="預約用處方箋" />
 
-		<field name="ajax_image2"
-			type="image"
-			imageType="hospital"
-			purpose="form"
+		<field name="image2"
+			type="ImageUploader"
+			image_type="hospital"
+			image_file_suffix="-form"
+			upload_extra_data="function(){return {hospital_id:jQuery('#jform_id').val()};}"
 			label="自行填表用處方箋"
 			description="自行填表用處方箋" />
 	</fieldset>
