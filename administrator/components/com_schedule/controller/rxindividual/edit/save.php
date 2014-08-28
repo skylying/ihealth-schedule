@@ -172,7 +172,7 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 			$scheduleModel->save($this->data["schedules_{$nth}"]);
 
 			if (! empty($scheduleTable->id)
-				&& ScheduleHelper::checkScheduleChanged($scheduleTable->getProperties(), $this->data["schedules_{$nth}"]))
+				|| ScheduleHelper::checkScheduleChanged($scheduleTable->getProperties(), $this->data["schedules_{$nth}"]))
 			{
 				$this->data["schedules_{$nth}"]['send_confirm_email'] = true;
 
