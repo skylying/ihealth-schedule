@@ -24,19 +24,18 @@ class ScheduleControllerImageAjaxDelete extends DisplayController
 	 */
 	protected function doExecute()
 	{
-		$id = $this->input->getInt("id");
+		$id = $this->input->getInt('id');
 		$imageMapper = new DataMapper(Table::IMAGES);
 
 		if (empty($id))
 		{
-			echo "{}";
-
-			jexit();
+			jexit('{"success": false}');
 		}
 
-		// Response true
-		echo json_encode($imageMapper->delete(array("id" => $id)));
+		$data = array(
+			'success' => $imageMapper->delete($id),
+		);
 
-		jexit();
+		jexit(json_encode($data));
 	}
 }
