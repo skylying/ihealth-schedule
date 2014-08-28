@@ -10,8 +10,10 @@
 defined('_JEXEC') or die;
 
 include_once JPATH_LIBRARIES . '/windwalker/src/init.php';
+include_once JPATH_LIBRARIES . '/aws/aws-autoloader.php';
 
 JLoader::registerPrefix('Schedule', JPATH_BASE . '/components/com_schedule');
 JLoader::registerNamespace('Schedule', JPATH_ADMINISTRATOR . '/components/com_schedule/src');
+JLoader::registerNamespace('SMS', JPATH_ADMINISTRATOR . '/components/com_schedule/src');
 JLoader::registerNamespace('Windwalker', __DIR__);
 JLoader::register('ScheduleComponent', JPATH_BASE . '/components/com_schedule/component.php');
