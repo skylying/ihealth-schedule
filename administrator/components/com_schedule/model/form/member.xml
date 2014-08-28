@@ -62,17 +62,9 @@
 		align="left"
 		horz="true">
 		<field name="customer_id_list"
-			type="sql2"
+			type="customer_list"
 			label="對應散客"
-			key_field="id"
 			value_field="name"
-			query="
-				SELECT c.id, c.name
-				FROM #__schedule_customers c
-					LEFT JOIN #__schedule_customer_member_maps m ON c.id=m.customer_id
-				WHERE m.member_id IS NULL
-					OR c.id IN (%s)
-			"
 			multiple="true"
 			/>
 	</fieldset>
