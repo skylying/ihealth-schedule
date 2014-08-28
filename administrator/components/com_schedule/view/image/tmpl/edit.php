@@ -10,7 +10,6 @@
 defined('_JEXEC') or die;
 
 JHtmlBootstrap::tooltip();
-JHtmlFormbehavior::chosen('select');
 JHtmlBehavior::formvalidation();
 
 /**
@@ -18,18 +17,28 @@ JHtmlBehavior::formvalidation();
  *
  * @var $container Windwalker\DI\Container
  * @var $data      Windwalker\Data\Data
+ * @var $form      JForm
+ * @var $asset     Windwalker\Helper\AssetHelper
  */
 $container = $this->getContainer();
 $form      = $data->form;
+$asset     = $data->asset;
+$fieldSets = $form->getFieldsets();
+$fieldSet  = $fieldSets['information'];
 
-$fieldsets = $data->form->getFieldsets();
-$fieldset = $fieldsets['information'];
+$asset->addJS('image/edit.js');
 
 ?>
-<!-- Validate Script -->
+
 <script type="text/javascript">
+	jQuery(function($)
+	{
+		ImageEdit.run();
+	});
+
 	Joomla.submitbutton = function(task)
 	{
+		// Validation
 		if (task == 'image.edit.cancel' || document.formvalidator.isValid(document.id('adminForm')))
 		{
 			Joomla.submitform(task, document.getElementById('adminForm'));
@@ -42,9 +51,9 @@ $fieldset = $fieldsets['information'];
 		class="form-validate" enctype="multipart/form-data">
 		<div class="row-fluid">
 			<div class="span8">
-				<fieldset id="image-edit-fieldset-<?php echo $fieldset->name ?>" class="form-horizontal">
+				<fieldset id="image-edit-fieldset-<?php echo $fieldSet->name ?>" class="form-horizontal">
 					<legend>圖片資訊</legend>
-					<?php foreach ($data->form->getFieldset($fieldset->name) as $field): ?>
+					<?php foreach ($form->getFieldset($fieldSet->name) as $field): ?>
 						<div id="control_<?php echo $field->id; ?>">
 							<?php echo $field->getControlGroup() . "\n\n"; ?>
 						</div>
@@ -61,4 +70,3 @@ $fieldset = $fieldsets['information'];
 		</div>
 	</form>
 </div>
-

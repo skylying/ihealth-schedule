@@ -89,7 +89,8 @@ class ScheduleModelImage extends AdminModel
 			return $item;
 		}
 
-		$item->upload_id = $item->id;
+		$item->rx_image = $item->id;
+		$item->hospital_rx_sample = $item->id;
 
 		return $item;
 	}
