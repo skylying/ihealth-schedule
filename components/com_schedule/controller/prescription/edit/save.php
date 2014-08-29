@@ -12,6 +12,7 @@ use Schedule\Helper\ScheduleHelper;
 use Schedule\Table\Collection as TableCollection;
 use Schedule\Helper\MailHelper;
 use Windwalker\Data\Data;
+use Windwalker\Helper\ArrayHelper;
 
 /**
  * Class ScheduleControllerPrescriptionEditSave
@@ -258,13 +259,15 @@ class ScheduleControllerPrescriptionEditSave extends ApiSaveController
 
 		foreach (['image1', 'image2', 'image3'] as $key)
 		{
-			$imageId = \Windwalker\Helper\ArrayHelper::getValue($this->data, $key, 0);
+			$path = ArrayHelper::getValue($this->data, $key, '');
 
-			if ($imageId > 0)
+			if (!empty($path))
 			{
 				$image = array(
-					'id' => $imageId,
 					'rx_id' => $rxId,
+					'type' => 'rxindividual',
+					'title' => $rxId . '-' . $key,
+					'path' => $path,
 				);
 
 				$imageModel->save($image);
