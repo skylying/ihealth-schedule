@@ -8,6 +8,7 @@
 
 use Windwalker\Controller\DisplayController;
 use Schedule\Uploader\ImageUploader;
+use Windwalker\Helper\ArrayHelper;
 
 /**
  * Class ScheduleControllerImageAjaxUpload
@@ -33,8 +34,9 @@ class ScheduleControllerImageAjaxUpload extends DisplayController
 		}
 
 		$model = $this->getModel('Image');
+		$data = $this->input->get('jform', array(), 'ARRAY');
 		$type = $this->input->getString('type');
-		$file['suffix'] = $this->input->getString('suffix');
+		$file['suffix'] = ArrayHelper::getValue($data, 'suffix', $this->input->getString('suffix'));
 
 		if (!in_array($type, ['rxindividual', 'hospital']))
 		{
@@ -56,8 +58,6 @@ class ScheduleControllerImageAjaxUpload extends DisplayController
 		{
 			$this->error('Upload image failed');
 		}
-
-		$data = $this->input->get('jform', array(), 'ARRAY');
 
 		$data['success'] = true;
 		$data['type'] = $type;
