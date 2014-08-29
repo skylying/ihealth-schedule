@@ -83,6 +83,11 @@ class ScheduleModelHospitals extends \Windwalker\Model\ListModel
 
 		foreach ($db->setQuery($query)->loadObjectList() as $image)
 		{
+			if (!preg_match('#^(http|https|ftp)://#i', $image->path))
+			{
+				$image->path = JUri::root() . $image->path;
+			}
+
 			$image->purpose = HospitalHelper::getImageSuffix($image->path);
 
 			if (!array_key_exists($image->hospital_id, $result))

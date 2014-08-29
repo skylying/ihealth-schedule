@@ -122,7 +122,17 @@ class ScheduleModelPrescription extends \Windwalker\Model\AdminModel
 			->from(Table::IMAGES . ' AS image')
 			->where('`image`.`rx_id`=' . (int) $rxId);
 
-		return $db->setQuery($query)->loadObjectList();
+		$images = $db->setQuery($query)->loadObjectList();
+
+		foreach ($images as &$image)
+		{
+			if (!preg_match('#^(http|https|ftp)://#i', $image->path))
+			{
+				$image->path = JUri::root() . $image->path;
+			}
+		}
+
+		return $images;
 	}
 
 	/**
