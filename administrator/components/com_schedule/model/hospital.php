@@ -8,6 +8,7 @@
 
 use Windwalker\Model\AdminModel;
 use Schedule\Table\Table;
+use Schedule\Helper\HospitalHelper;
 
 // No direct access
 defined('_JEXEC') or die;
@@ -140,13 +141,11 @@ class ScheduleModelHospital extends AdminModel
 
 			foreach ($images as $image)
 			{
-				if (preg_match('/\-reserve\./i', $image->path))
+				$suffix = HospitalHelper::getImageSuffix($image->path);
+
+				if (!empty($suffix))
 				{
-					$imageIdList['reserve'] = $image->id;
-				}
-				elseif (preg_match('/\-form\./i', $image->path))
-				{
-					$imageIdList['form'] = $image->id;
+					$imageIdList[$suffix] = $image->id;
 				}
 			}
 

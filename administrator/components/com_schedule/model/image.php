@@ -7,6 +7,7 @@
  */
 
 use Windwalker\Model\AdminModel;
+use Schedule\Helper\HospitalHelper;
 
 // No direct access
 defined('_JEXEC') or die;
@@ -91,6 +92,7 @@ class ScheduleModelImage extends AdminModel
 
 		$item->rx_image = $item->id;
 		$item->hospital_rx_sample = $item->id;
+		$item->hospital_image_suffix = '-' . HospitalHelper::getImageSuffix($item->path);
 
 		return $item;
 	}
