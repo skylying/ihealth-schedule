@@ -252,5 +252,23 @@ class ScheduleControllerPrescriptionEditSave extends ApiSaveController
 			// This API is only for creating a new individual prescription, so we use "confirm" email layout
 			MailHelper::sendMailWhenScheduleChange($memberTable->email, $mailDataSet);
 		}
+
+		// Store images
+		$imageModel = $this->getModel('Image');
+
+		foreach (['image1', 'image2', 'image3'] as $key)
+		{
+			$imageId = \Windwalker\Helper\ArrayHelper::getValue($this->data, $key, 0);
+
+			if ($imageId > 0)
+			{
+				$image = array(
+					'id' => $imageId,
+					'rx_id' => $rxId,
+				);
+
+				$imageModel->save($image);
+			}
+		}
 	}
 }
