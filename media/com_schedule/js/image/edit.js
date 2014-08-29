@@ -16,7 +16,9 @@
 		$rxImage,
 		$controlRxImage,
 		$hospitalRxSample,
-		$controlHospitalRxSample;
+		$controlHospitalRxSample,
+		$type,
+		$controlHospitalImageSuffix;
 
 	/**
 	 * Class ImageEdit
@@ -30,7 +32,7 @@
 			this.init();
 			this.registerEvents();
 
-			showUploadField($('#jform_type input:checked').val());
+			showUploadField($type.find('input:checked').val());
 		},
 
 		/**
@@ -45,12 +47,15 @@
 			$controlRxImage = $('#control_jform_rx_image');
 			$hospitalRxSample = $('#jform_hospital_rx_sample');
 			$controlHospitalRxSample = $('#control_jform_hospital_rx_sample');
+			$type = $('#jform_type');
+			$controlHospitalImageSuffix = $('#control_jform_hospital_image_suffix');
 
 			// Hide fields after page loaded
 			$controlRxId.hide();
 			$controlHospitalId.hide();
 			$controlRxImage.hide();
 			$controlHospitalRxSample.hide();
+			$controlHospitalImageSuffix.hide();
 		},
 
 		/**
@@ -59,7 +64,7 @@
 		registerEvents: function()
 		{
 			// Display proper upload field
-			$('#jform_type input').on('click', function()
+			$type.find('input').on('click', function()
 			{
 				showUploadField($(this).val());
 			});
@@ -82,6 +87,7 @@
 				$controlRxImage.show();
 				$hospitalRxSample.prop('disabled', true);
 				$controlHospitalRxSample.hide();
+				$controlHospitalImageSuffix.hide();
 				break;
 
 			case 'hospital':
@@ -91,6 +97,7 @@
 				$controlRxImage.hide();
 				$hospitalRxSample.prop('disabled', false);
 				$controlHospitalRxSample.show();
+				$controlHospitalImageSuffix.show();
 				break;
 		}
 	}

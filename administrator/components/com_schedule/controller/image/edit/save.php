@@ -41,6 +41,7 @@ class ScheduleControllerImageEditSave extends SaveController
 				break;
 
 			case 'hospital':
+				$file['suffix'] = $this->data['hospital_image_suffix'];
 				$image = ImageUploader::uploadHospitalRxSample($file);
 				$this->data['rx_id'] = 0;
 				break;
