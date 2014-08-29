@@ -73,6 +73,7 @@ class ScheduleViewPrescriptionJson extends ApiView
 
 		$item->schedules = $this->get('Schedules', null, array($item->id));
 		$item->drugs = $this->get('Drugs', null, array($item->id));
+		$item->images = $this->get('Images', null, array($item->id));
 
 		$data['item'] = $item;
 	}
