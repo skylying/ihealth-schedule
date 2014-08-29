@@ -136,7 +136,7 @@
 				type="text"
 				label="Bucket Name"
 				description="Bucket Name"
-				default="ihealth-tw"
+				default="ihealth-tw-dev"
 				/>
 
 			<field name="region"
