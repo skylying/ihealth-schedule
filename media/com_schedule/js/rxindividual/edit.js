@@ -77,6 +77,9 @@
 
 			this.registerEvent();
 			this.triggerEvent();
+
+			// Clear create address data
+			$('#' + this.options.createAddressId).val('');
 		},
 
 		/**
