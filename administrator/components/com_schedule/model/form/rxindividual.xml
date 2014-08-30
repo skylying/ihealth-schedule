@@ -156,22 +156,25 @@
 			/>
 
 		<field name="ajax_image1"
-			type="image"
-			imageType="rxindividual"
+			type="ImageUploader"
+			image_type="rxindividual"
+			upload_extra_data="function(){return {rx_id:jQuery('#jform_id').val()};}"
 			label="處方箋圖片 1"
 			description="處方箋圖片 1"
 			/>
 
 		<field name="ajax_image2"
-			type="image"
-			imageType="rxindividual"
+			type="ImageUploader"
+			image_type="rxindividual"
+			upload_extra_data="function(){return {rx_id:jQuery('#jform_id').val()};}"
 			label="處方箋圖片 2"
 			description="處方箋圖片 2"
 			/>
 
 		<field name="ajax_image3"
-			type="image"
-			imageType="rxindividual"
+			type="ImageUploader"
+			image_type="rxindividual"
+			upload_extra_data="function(){return {rx_id:jQuery('#jform_id').val()};}"
 			label="處方箋圖片 3"
 			description="處方箋圖片 3"
 			/>

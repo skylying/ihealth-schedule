@@ -130,9 +130,6 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 
 		$scheduleState->set('form.type', 'schedule_individual');
 
-		// 圖片處理
-		$this->rxImageHandler();
-
 		// 藥品健保碼處理
 		$this->processDrug();
 
@@ -209,6 +206,22 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 			);
 
 			MailHelper::sendMailWhenScheduleChange($memberTable->email, $mailData);
+		}
+
+		// Store images
+		$imageModel = $this->getModel('Image');
+
+		foreach (['ajax_image1', 'ajax_image2', 'ajax_image3'] as $key)
+		{
+			if ($this->data[$key] > 0)
+			{
+				$image = array(
+					'id' => $this->data[$key],
+					'rx_id' => $this->data['id'],
+				);
+
+				$imageModel->save($image);
+			}
 		}
 	}
 
@@ -434,26 +447,6 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 		);
 
 		return array_merge($formData, $scheduleUploadData);
-	}
-
-	/**
-	 * 圖片資料處理
-	 *
-	 * @return  void
-	 */
-	protected function rxImageHandler()
-	{
-		$resetId = array();
-
-		for ($i = 1; $i <= 3; $i++)
-		{
-			if (isset($this->data["ajax_image{$i}"]))
-			{
-				$resetId[] = $this->data["ajax_image{$i}"];
-			}
-		}
-
-		ImageHelper::resetImagesRxId($resetId, $this->data['id'], 'rxindividual');
 	}
 
 	/**

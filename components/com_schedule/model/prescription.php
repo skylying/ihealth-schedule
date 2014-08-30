@@ -107,6 +107,35 @@ class ScheduleModelPrescription extends \Windwalker\Model\AdminModel
 	}
 
 	/**
+	 * getImages
+	 *
+	 * @param   int  $rxId  Prescription id
+	 *
+	 * @return  array
+	 */
+	public function getImages($rxId)
+	{
+		$db    = \JFactory::getDbo();
+		$query = $db->getQuery(true);
+
+		$query->select('image.*')
+			->from(Table::IMAGES . ' AS image')
+			->where('`image`.`rx_id`=' . (int) $rxId);
+
+		$images = $db->setQuery($query)->loadObjectList();
+
+		foreach ($images as &$image)
+		{
+			if (!preg_match('#^(http|https|ftp)://#i', $image->path))
+			{
+				$image->path = JUri::root() . $image->path;
+			}
+		}
+
+		return $images;
+	}
+
+	/**
 	 * Get drug form object to perform validation
 	 *
 	 * @return  \JForm

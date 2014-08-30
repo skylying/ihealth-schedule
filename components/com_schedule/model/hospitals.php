@@ -8,6 +8,7 @@
 
 use Schedule\Table\Table;
 use Windwalker\Model\Helper\QueryHelper;
+use Schedule\Helper\HospitalHelper;
 
 // No direct access
 defined('_JEXEC') or die;
@@ -53,47 +54,20 @@ class ScheduleModelHospitals extends \Windwalker\Model\ListModel
 	public function getItems()
 	{
 		$items = parent::getItems();
+		$images = $this->getImages();
 
-		foreach ($items as $item)
+		foreach ($items as &$item)
 		{
-			$this->injectImageInfo($item);
+			$item->images = empty($images[$item->id]) ? array() : $images[$item->id];
 		}
 
 		return $items;
 	}
 
 	/**
-	 * injectImageInfo
-	 *
-	 * @param  {object} $item
-	 *
-	 * @return void
-	 */
-	public function injectImageInfo($item)
-	{
-		$item->images = array();
-
-		$imagesInfo = $this->getImages();
-
-		foreach ($imagesInfo as $image)
-		{
-			$tmp = [];
-
-			if ($image->hospital_id == $item->id)
-			{
-				$tmp['title'] = $image->title;
-				$tmp['path'] = $image->path;
-				$tmp['purpose'] = (strpos($image->title, 'reserve') !== false) ? 'reserve' : 'form';
-
-				array_push($item->images, $tmp);
-			}
-		}
-	}
-
-	/**
 	 * getImages
 	 *
-	 * @return  mixed
+	 * @return  array
 	 */
 	public function getImages()
 	{
@@ -105,7 +79,24 @@ class ScheduleModelHospitals extends \Windwalker\Model\ListModel
 			->from(Table::IMAGES)
 			->where('`type` = "hospital"');
 
-		$result = $db->setQuery($query)->loadObjectList();
+		$result = array();
+
+		foreach ($db->setQuery($query)->loadObjectList() as $image)
+		{
+			if (!preg_match('#^(http|https|ftp)://#i', $image->path))
+			{
+				$image->path = JUri::root() . $image->path;
+			}
+
+			$image->purpose = HospitalHelper::getImageSuffix($image->path);
+
+			if (!array_key_exists($image->hospital_id, $result))
+			{
+				$result[$image->hospital_id] = [];
+			}
+
+			$result[$image->hospital_id][] = $image;
+		}
 
 		return $result;
 	}

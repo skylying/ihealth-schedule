@@ -123,5 +123,23 @@
 			<option value="0">否</option>
 			<option value="1">是</option>
 		</field>
+
+		<field name="image1"
+			type="text"
+			label="處方箋圖片 1"
+			description="處方箋圖片 1"
+			/>
+
+		<field name="image2"
+			type="text"
+			label="處方箋圖片 2"
+			description="處方箋圖片 2"
+			/>
+
+		<field name="image3"
+			type="text"
+			label="處方箋圖片 3"
+			description="處方箋圖片 3"
+			/>
 	</fieldset>
 </form>

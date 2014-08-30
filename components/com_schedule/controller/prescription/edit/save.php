@@ -12,6 +12,7 @@ use Schedule\Helper\ScheduleHelper;
 use Schedule\Table\Collection as TableCollection;
 use Schedule\Helper\MailHelper;
 use Windwalker\Data\Data;
+use Windwalker\Helper\ArrayHelper;
 
 /**
  * Class ScheduleControllerPrescriptionEditSave
@@ -251,6 +252,26 @@ class ScheduleControllerPrescriptionEditSave extends ApiSaveController
 
 			// This API is only for creating a new individual prescription, so we use "confirm" email layout
 			MailHelper::sendMailWhenScheduleChange($memberTable->email, $mailDataSet);
+		}
+
+		// Store images
+		$imageModel = $this->getModel('Image');
+
+		foreach (['image1', 'image2', 'image3'] as $key)
+		{
+			$path = ArrayHelper::getValue($this->data, $key, '');
+
+			if (!empty($path))
+			{
+				$image = array(
+					'rx_id' => $rxId,
+					'type' => 'rxindividual',
+					'title' => $rxId . '-' . $key,
+					'path' => $path,
+				);
+
+				$imageModel->save($image);
+			}
 		}
 	}
 }

@@ -7,9 +7,8 @@
  */
 
 use Windwalker\Controller\DisplayController;
-use Windwalker\Joomla\DataMapper\DataMapper;
-use Schedule\Table\Table;
-use Schedule\Helper\ImageHelper;
+use Schedule\Uploader\ImageUploader;
+use Windwalker\Helper\ArrayHelper;
 
 /**
  * Class ScheduleControllerImageAjaxUpload
@@ -21,21 +20,84 @@ class ScheduleControllerImageAjaxUpload extends DisplayController
 	/**
 	 * doExecute
 	 *
-	 * @return  mixed|void
+	 * @return void
+	 *
+	 * @throws InvalidArgumentException
 	 */
 	protected function doExecute()
 	{
-		$foreignId   = $this->input->getInt("foreignId", 0);
-		$imageType   = $this->input->getString("imageType");
-		$purpose     = $this->input->getString("purpose");
-		$files       = $this->input->files->getVar('image');
-		$imageMapper = new DataMapper(Table::IMAGES);
+		$file = $this->input->files->get('image');
 
-		ImageHelper::handleUpload($foreignId, $imageType, array($files), $purpose);
+		if (empty($file))
+		{
+			$this->error('upload file is empty');
+		}
 
-		echo json_encode($imageMapper->findOne(array(), array("id DESC")));
+		$model = $this->getModel('Image');
+		$data = $this->input->get('jform', array(), 'ARRAY');
+		$type = $this->input->getString('type');
+		$file['suffix'] = ArrayHelper::getValue($data, 'suffix', $this->input->getString('suffix'));
 
-		jexit();
+		if (!in_array($type, ['rxindividual', 'hospital']))
+		{
+			$this->error(sprintf('Invalid image type "%s"', $type));
+		}
+
+		switch ($type)
+		{
+			case 'rxindividual':
+				$image = ImageUploader::uploadRxImage($file);
+				break;
+
+			case 'hospital':
+			default:
+				$image = ImageUploader::uploadHospitalRxSample($file);
+		}
+
+		if (false === $image)
+		{
+			$this->error('Upload image failed');
+		}
+
+		$data['success'] = true;
+		$data['type'] = $type;
+		$data['title'] = $image['file']['name'];
+		$data['path'] = $image['path'];
+
+		$model->save($data);
+
+		$data['id'] = $model->getState()->get('image.id');
+		$data['url'] = $data['path'];
+
+		if (!preg_match('#^(http|https|ftp)://#s', $image['path']))
+		{
+			$data['url'] = JUri::root(true) . $data['path'];
+		}
+
+		// Generate thumbnail
+		$data['thumb'] = array(
+			'url' => $data['url'],
+			'width' => 360,
+			'height' => 360,
+		);
+
+		jexit(json_encode($data));
+	}
+
+	/**
+	 * error
+	 *
+	 * @param string $message
+	 *
+	 * @return  void
+	 */
+	protected function error($message)
+	{
+		$data = array(
+			'success' => false,
+			'error' => $message,
+		);
+
+		jexit(json_encode($data));
 	}
 }
-

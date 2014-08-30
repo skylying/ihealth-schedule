@@ -5,7 +5,7 @@
 		horz="true">
 
 		<field name="id"
-			type="text"
+			type="hidden"
 			default="0"
 			label="JGLOBAL_FIELD_ID_LABEL"
 			readonly="true"
@@ -13,26 +13,59 @@
 			description="JGLOBAL_FIELD_ID_DESC"
 			/>
 
-		<field name="rx_id"
-			type="_list"
-			value_field="id"
-			key_field="id"
-			label="對應處方箋"
-			description="對應處方箋 id"
-			/>
+		<field name="type"
+			type="radio"
+			label="圖片類型"
+			description="圖片類型"
+			required="true"
+			class="btn-group btn-group-yesno required">
+			<option value="rxindividual">散客上傳</option>
+			<option value="hospital">醫院示範圖例</option>
+		</field>
 
 		<field name="title"
 			type="text"
-			label="JGLOBAL_TITLE"
-			description="JFIELD_TITLE_DESC"
-			required="true"
-			class="input-large"
+			label="圖片標題"
+			description="圖片標題"
 			/>
 
-		<field name="upload_id"
-			type="image"
-			label="圖片"
-			description="圖片"
+		<field name="rx_id"
+			type="text"
+			label="對應處方箋編號"
+			description="對應處方箋編號"
+			/>
+
+		<field name="hospital_id"
+			type="Hospital_List"
+			label="醫院"
+			description="醫院"
+			>
+			<option></option>
+		</field>
+
+		<field name="hospital_image_suffix"
+			type="list"
+			label="醫院圖片種類"
+			description="醫院圖片種類"
+			>
+			<option value="-reserve">預約用處方圖例</option>
+			<option value="-form">填表用處方圖例</option>
+		</field>
+
+		<field name="path"
+			type="hidden"
+			/>
+
+		<field name="rx_image"
+			type="ImageFile"
+			label="散客處方箋圖片"
+			description="散客處方箋圖片"
+			/>
+
+		<field name="hospital_rx_sample"
+			type="ImageFile"
+			label="醫院處方箋範例圖片"
+			description="醫院處方箋範例圖片"
 			/>
 	</fieldset>
 </form>
