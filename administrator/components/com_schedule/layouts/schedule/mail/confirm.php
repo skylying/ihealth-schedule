@@ -6,9 +6,9 @@
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
-$data['rx'] = JArrayHelper::getValue($displayData, 'rx', array());
+$data['rx'] = JArrayHelper::getValue($displayData, 'rx', new stdClass);
 $data['schedules'] = JArrayHelper::getValue($displayData, 'schedules', array());
-$data['drugs'] = JArrayHelper::getValue($displayData, 'drugs', '');
+$data['drugs'] = JArrayHelper::getValue($displayData, 'drugs', array());
 $data['ihealthSiteUrl'] = JArrayHelper::getValue($displayData, 'ihealthSiteUrl', '');
 
 $nthDelivery = array('第一次宅配', '第二次宅配', '第三次宅配');
@@ -30,9 +30,9 @@ $nthDelivery = array('第一次宅配', '第二次宅配', '第三次宅配');
 										<img style="width: 83px; height: 20px;" src="<?php echo JUri::root() . '/media/com_schedule/images/ihealth.png'; ?>" />
 									</a>
 									<h2 style="letter-spacing: 2px;">您好!</h2>
-									<h2 style="letter-spacing: 2px;">
-										以下是<?php echo $data['rx']['member_name']; ?> 先生/小姐的預約宅配資料
-									</h2>
+									<h3 style="letter-spacing: 2px;">
+										以下是<?php echo $data['rx']->member_name; ?> 先生/小姐的預約宅配資料
+									</h3>
 									<hr />
 									<table style="line-height: 1.42857143; vertical-align: top;"><!--fourth table-->
 										<tr>

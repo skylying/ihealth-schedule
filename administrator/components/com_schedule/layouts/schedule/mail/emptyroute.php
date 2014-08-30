@@ -6,9 +6,8 @@
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
-$data['schedules'] = JArrayHelper::getValue($displayData, 'schedules', '');
+$data['schedules'] = JArrayHelper::getValue($displayData, 'schedules', array());
 $data['ihealthSiteUrl'] = JArrayHelper::getValue($displayData, 'ihealthSiteUrl', '');
-$data['front'] = JArrayHelper::getValue($displayData, 'front', '');
 
 $nthDelivery = array('1st' => '第一次宅配', '2nd' => '第二次宅配', '3rd' => '第三次宅配');
 ?>

@@ -6,7 +6,7 @@
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
-$data['schedules'] = JArrayHelper::getValue($displayData, 'schedules', '');
+$data['schedules'] = JArrayHelper::getValue($displayData, 'schedules', array());
 $data['changedText'] = JArrayHelper::getValue($displayData, 'changedText', '');
 $data['ihealthSiteUrl'] = JArrayHelper::getValue($displayData, 'ihealthSiteUrl', '');
 
