@@ -31,6 +31,9 @@ class MailHelper
 		// Set layouts from admin
 		$layout = new FileLayout("schedule.mail.confirm", SCHEDULE_ADMIN . '/layouts');
 
+		$params = ExtensionHelper::getParams('com_schedule');
+		$displayData['ihealthSiteUrl'] = $params->get('ihealth_site.url', 'http://www.ihealth.com.tw');
+
 		$mailer->setSubject(sprintf('[iHealth] 處方預約確認: %s 您好! 您的處方宅配已預約完成', $displayData['member']->name));
 		$mailer->setBody($layout->render($displayData));
 		$mailer->addRecipient($mailTo);
@@ -63,6 +66,9 @@ class MailHelper
 		// Set layouts from admin
 		$layout = new FileLayout("schedule.mail.emptyroute", SCHEDULE_ADMIN . '/layouts');
 
+		$params = ExtensionHelper::getParams('com_schedule');
+		$displayData['ihealthSiteUrl'] = $params->get('ihealth_site.url', 'http://www.ihealth.com.tw');
+
 		$mailer->setSubject(sprintf('[無送藥路線] %s 宅配日期: %s', $displayData['memberName'], $displayData['date']));
 		$mailer->setBody($layout->render($displayData));
 		$mailer->addRecipient($mailTo);
@@ -94,6 +100,9 @@ class MailHelper
 
 		// Set layouts from admin
 		$layout = new FileLayout("schedule.mail.notify_staff", SCHEDULE_ADMIN . '/layouts');
+
+		$params = ExtensionHelper::getParams('com_schedule');
+		$displayData['ihealthSiteUrl'] = $params->get('ihealth_site.url', 'http://www.ihealth.com.tw');
 
 		$changedText = \JText::_('COM_SCHEDULE_EMAIL_TILE_SCHEDULE_' . $displayData['changed']);
 
@@ -149,6 +158,9 @@ class MailHelper
 
 		// Set layouts from admin
 		$layout = new FileLayout("schedule.mail.cancel", SCHEDULE_ADMIN . '/layouts');
+
+		$params = ExtensionHelper::getParams('com_schedule');
+		$displayData['ihealthSiteUrl'] = $params->get('ihealth_site.url', 'http://www.ihealth.com.tw');
 
 		$mailer->setSubject(sprintf('[iHealth] 取消確認: %s 您好! 您的處方宅配預約已取消', $displayData['member']->name));
 		$mailer->setBody($layout->render($displayData));

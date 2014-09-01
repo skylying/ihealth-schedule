@@ -6,7 +6,10 @@
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
-$data = $displayData;
+$data['rx'] = JArrayHelper::getValue($displayData, 'rx', new stdClass);
+$data['schedules'] = JArrayHelper::getValue($displayData, 'schedules', array());
+$data['drugs'] = JArrayHelper::getValue($displayData, 'drugs', array());
+$data['ihealthSiteUrl'] = JArrayHelper::getValue($displayData, 'ihealthSiteUrl', 'www.ihealth.com.tw');
 
 $nthDelivery = array('第一次宅配', '第二次宅配', '第三次宅配');
 
@@ -23,22 +26,22 @@ $nthDelivery = array('第一次宅配', '第二次宅配', '第三次宅配');
 						<table border="0" cellpadding="20" cellspacing="0" width="100%" id="emailBody" style="background-color: #FFFFFF; font-size: 15px;"><!--third table-->
 							<tr>
 								<td align="left" valign="top">
-									<a href="http://www.ihealth.com.tw" style="float: right;">
+									<a href="<?php echo $data['ihealthSiteUrl']; ?>" style="float: right;">
 										<img style="width: 83px; height: 20px;" src="<?php echo JUri::root() . '/media/com_schedule/images/ihealth.png'; ?>" />
 									</a>
 									<h2 style="letter-spacing: 2px;">您好!</h2>
-									<h2 style="letter-spacing: 2px;">
-										以下是<?php echo $data['rx']['member_name']; ?> 先生/小姐的預約宅配資料
-									</h2>
+									<h3 style="letter-spacing: 2px;">
+										以下是<?php echo $data['rx']->member_name; ?> 先生/小姐的預約宅配資料
+									</h3>
 									<hr />
 									<table style="line-height: 1.42857143; vertical-align: top;"><!--fourth table-->
 										<tr>
 											<td style="padding-right: 10px;">處方姓名:</td>
-											<td style="padding:10px;"><?php echo $data['rx']['customer_name']; ?></td>
+											<td style="padding:10px;"><?php echo $data['rx']->customer_name; ?></td>
 										</tr>
 										<tr>
 											<td style="padding-right: 10px;">身分證字號:</td>
-											<td style="padding:10px;"><?php echo $data['rx']['id_number']; ?></td>
+											<td style="padding:10px;"><?php echo $data['rx']->id_number; ?></td>
 										</tr>
 										<?php foreach ($data['schedules'] as $key => $schedule): ?>
 											<h3 style="font-family: 微软雅黑;"><?php echo $nthDelivery[$key]; ?></h3>
@@ -66,15 +69,15 @@ $nthDelivery = array('第一次宅配', '第二次宅配', '第三次宅配');
 									<table style=" line-height: 1.42857143; vertical-align: top; font-size: 15px;"><!--fifth table-->
 										<tr>
 											<td>就醫日期:</td>
-											<td style="padding:10px;"><?php echo $data['rx']['see_dr_date']; ?></td>
+											<td style="padding:10px;"><?php echo $data['rx']->see_dr_date; ?></td>
 										</tr>
 										<tr>
 											<td>處方箋傳送方式:</td>
-											<td style="padding:10px;"><?php echo JText::_('COM_SCHEDULE_RXINDIVIDUAL_PRINT_' . $data['rx']['method']); ?></td>
+											<td style="padding:10px;"><?php echo JText::_('COM_SCHEDULE_RXINDIVIDUAL_PRINT_' . $data['rx']->method); ?></td>
 										</tr>
 										<tr>
 											<td>可調劑次數:</td>
-											<td style="padding:10px;"><?php echo $data['rx']['times']; ?></td>
+											<td style="padding:10px;"><?php echo $data['rx']->times; ?></td>
 										</tr>
 										<tr>
 											<?php foreach ($data['drugs'] as $key => $drug): ?>
@@ -106,7 +109,7 @@ $nthDelivery = array('第一次宅配', '第二次宅配', '第三次宅配');
 								<td valign="top" style="background: #3D8C12;">
 									<div style="padding: 5px;">
 										<div style="padding:3px; color:#FFFFFF;">
-											<p>24hr免費諮詢專線: 0800-000-000</p>
+											<p>24hr免費諮詢專線: 0800-088-336</p>
 											<p>政昇處方宅配藥局</p>
 										</div>
 										<div style="padding: 5px;">

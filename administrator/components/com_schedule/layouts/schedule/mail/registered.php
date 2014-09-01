@@ -8,7 +8,7 @@
 
 $data['name'] = JArrayHelper::getValue($displayData, 'name', '');
 $data['email'] = JArrayHelper::getValue($displayData, 'email', '');
-$data['ihealthSiteUrl'] = JArrayHelper::getValue($displayData, 'ihealthSiteUrl', '');
+$data['ihealthSiteUrl'] = JArrayHelper::getValue($displayData, 'ihealthSiteUrl', 'www.ihealth.com.tw');
 
 ?>
 <!DOCTYPE html>

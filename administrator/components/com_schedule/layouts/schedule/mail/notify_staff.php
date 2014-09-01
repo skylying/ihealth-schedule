@@ -6,7 +6,9 @@
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
-$data = $displayData;
+$data['schedules'] = JArrayHelper::getValue($displayData, 'schedules', array());
+$data['changedText'] = JArrayHelper::getValue($displayData, 'changedText', '');
+$data['ihealthSiteUrl'] = JArrayHelper::getValue($displayData, 'ihealthSiteUrl', 'www.ihealth.com.tw');
 
 $nthDelivery = array('1st' => '第一次宅配', '2nd' => '第二次宅配', '3rd' => '第三次宅配');
 
@@ -25,7 +27,7 @@ $nthDelivery = array('1st' => '第一次宅配', '2nd' => '第二次宅配', '3r
 							<tr>
 								<td valign="top">
 									<div>
-										<a href="http://www.ihealth.com.tw" style="float: right;">
+										<a href="<?php echo $data['ihealthSiteUrl']; ?>" style="float: right;">
 											<img style="width: 83px; height: 20px;" src="<?php echo JUri::root() . '/media/com_schedule/images/ihealth.png'; ?>" />
 										</a>
 										<h2 style="letter-spacing: 2px;">
@@ -75,8 +77,7 @@ $nthDelivery = array('1st' => '第一次宅配', '2nd' => '第二次宅配', '3r
 												<td>住家:</td>
 												<td style="padding:10px;"><?php echo $schedule->tel_home; ?></td>
 											</tr>
-										</table>
-										<!--end fourth table-->
+										</table><!--end fourth table-->
 										<div style="padding-top: 20px;">
 											<a href="<?php echo JUri::root() . 'index.php?option=com_schedule&view=schedules'; ?>">進入後台送藥排程</a>
 										</div>
@@ -94,7 +95,7 @@ $nthDelivery = array('1st' => '第一次宅配', '2nd' => '第二次宅配', '3r
 								<td valign="top" style="background: #3D8C12;">
 									<div style="padding: 5px;">
 										<div style="padding:3px; color:#FFFFFF;">
-											<p>24hr免費諮詢專線: 0800-000-000</p>
+											<p>24hr免費諮詢專線: 0800-088-336</p>
 											<p>政昇處方宅配藥局</p>
 										</div>
 										<div style="padding: 5px;">

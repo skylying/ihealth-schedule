@@ -6,7 +6,8 @@
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
-$data = $displayData;
+$data['schedule'] = JArrayHelper::getValue($displayData, 'schedule', new stdClass);
+$data['ihealthSiteUrl'] = JArrayHelper::getValue($displayData, 'ihealthSiteUrl', 'www.ihealth.com.tw');
 
 $nthDelivery = array('1st' => '第一次宅配', '2nd' => '第二次宅配', '3rd' => '第三次宅配');
 
@@ -24,7 +25,7 @@ $nthDelivery = array('1st' => '第一次宅配', '2nd' => '第二次宅配', '3r
 							<tr>
 								<td valign="top">
 									<div>
-										<a href="http://www.ihealth.com.tw" style="float: right;">
+										<a href="<?php echo $data['ihealthSiteUrl']; ?>" style="float: right;">
 											<img style="width: 83px; height: 20px;" src="<?php echo JUri::root() . '/media/com_schedule/images/ihealth.png'; ?>" />
 										</a>
 										<h2 style="letter-spacing: 2px;">
@@ -91,7 +92,7 @@ $nthDelivery = array('1st' => '第一次宅配', '2nd' => '第二次宅配', '3r
 								<td valign="top" style="background: #3D8C12;">
 									<div style="padding: 5px;">
 										<div style="padding:3px; color:#FFFFFF;">
-											<p>24hr免費諮詢專線: 0800-000-000</p>
+											<p>24hr免費諮詢專線: 0800-088-336</p>
 											<p>政昇處方宅配藥局</p>
 										</div>
 										<div style="padding: 5px;">
