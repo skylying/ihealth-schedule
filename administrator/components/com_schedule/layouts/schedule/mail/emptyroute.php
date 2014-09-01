@@ -7,7 +7,7 @@
  */
 
 $data['schedules'] = JArrayHelper::getValue($displayData, 'schedules', array());
-$data['ihealthSiteUrl'] = JArrayHelper::getValue($displayData, 'ihealthSiteUrl', '');
+$data['ihealthSiteUrl'] = JArrayHelper::getValue($displayData, 'ihealthSiteUrl', 'www.ihealth.com.tw');
 
 $nthDelivery = array('1st' => '第一次宅配', '2nd' => '第二次宅配', '3rd' => '第三次宅配');
 ?>
