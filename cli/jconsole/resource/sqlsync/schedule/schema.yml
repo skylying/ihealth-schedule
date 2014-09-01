@@ -33,6 +33,8 @@
         customer_id: { Field: customer_id, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: '客戶 id', From: [customer_id] }
     index:
         - { Table: '#__schedule_customer_member_maps', Non_unique: '0', Key_name: PRIMARY, Seq_in_index: '1', Column_name: id, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
+        - { Table: '#__schedule_customer_member_maps', Non_unique: '1', Key_name: idx_customer_id, Seq_in_index: '1', Column_name: customer_id, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
+        - { Table: '#__schedule_customer_member_maps', Non_unique: '1', Key_name: idx_member_id, Seq_in_index: '1', Column_name: member_id, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
 '#__schedule_customers':
     name: '#__schedule_customers'
     from:
@@ -43,7 +45,7 @@
         route_id: { Field: route_id, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: '路線 id', From: [route_id] }
         id_number: { Field: id_number, Type: char(15), 'Null': NO, Default: null, Extra: '', Comment: 身分證字號, From: [id_number] }
         name: { Field: name, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 客戶姓名, From: [name] }
-        type: { Field: type, Type: char(20), 'Null': NO, Default: null, Extra: '', Comment: 客戶類別 (resident: 住民 / individual: 散客), From: [type] }
+        type: { Field: type, Type: char(20), 'Null': NO, Default: null, Extra: '', Comment: '客戶類別 (resident: 住民 / individual: 散客)', From: [type] }
         birth_date: { Field: birth_date, Type: date, 'Null': NO, Default: null, Extra: '', Comment: 出生年月日, From: [birth_date] }
         age: { Field: age, Type: tinyint(3), 'Null': NO, Default: null, Extra: '', Comment: 年齡, From: [age] }
         state: { Field: state, Type: tinyint(2), 'Null': NO, Default: null, Extra: '', Comment: '服務狀態', From: [state] }
@@ -74,8 +76,8 @@
         institute_id: { Field: institute_id, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: '對應機構 id', From: [institute_id] }
         price: { Field: price, Type: 'decimal(10,2)', 'Null': NO, Default: null, Extra: '', Comment: 單筆金額, From: [price] }
         task_id: { Field: task_id, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: '對應外送 id', From: [task_id] }
-        ice: { Field: ice, Type: int(1), 'Null': NO, Default: null, Extra: '', Comment: '是否有冰品', From: [ice] }
-        sorted: { Field: sorted, Type: int(1), 'Null': NO, Default: null, Extra: '', Comment: '是否完成分藥', From: [sorted] }
+        ice: { Field: ice, Type: int(1), 'Null': NO, Default: null, Extra: '', Comment: 是否有冰品, From: [ice] }
+        sorted: { Field: sorted, Type: int(1), 'Null': NO, Default: null, Extra: '', Comment: 是否完成分藥, From: [sorted] }
         modified_by: { Field: modified_by, Type: 'int(11) unsigned', 'Null': NO, Default: null, Extra: '', Comment: '最後修改人 id', From: [modified_by] }
     index:
         - { Table: '#__schedule_drug_extra_details', Non_unique: '0', Key_name: PRIMARY, Seq_in_index: '1', Column_name: id, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
@@ -99,7 +101,7 @@
         year: { Field: year, Type: mediumint(8), 'Null': NO, Default: null, Extra: '', Comment: 年份, From: [year] }
         month: { Field: month, Type: tinyint(2), 'Null': NO, Default: null, Extra: '', Comment: 月份, From: [month] }
         day: { Field: day, Type: tinyint(2), 'Null': NO, Default: null, Extra: '', Comment: 國定假日日期, From: [day] }
-        title: { Field: title, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: '假日種類說明', From: [title] }
+        title: { Field: title, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 假日種類說明, From: [title] }
         weekday: { Field: weekday, Type: 'enum(''MON'',''TUE'',''WED'',''THU'',''FRI'',''SAT'',''SUN'')', 'Null': NO, Default: null, Extra: '', Comment: 星期幾, From: [weekday] }
         date: { Field: date, Type: date, 'Null': NO, Default: null, Extra: '', Comment: 日期, From: [date] }
         state: { Field: state, Type: tinyint(1), 'Null': NO, Default: null, Extra: '', Comment: '假日狀態', From: [state] }
@@ -164,7 +166,7 @@
         area_title: { Field: area_title, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 區域名稱, From: [area_title] }
         address: { Field: address, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 機構路名, From: [address] }
         note: { Field: note, Type: text, 'Null': NO, Default: null, Extra: '', Comment: 備註, From: [note] }
-        state: { Field: state, Type: tinyint(3), 'Null': NO, Default: 0, Extra: '', Comment: 'State (0: 未發布, 1: 已發布)', From: [state] }
+        state: { Field: state, Type: tinyint(1), 'Null': NO, Default: '0', Extra: '', Comment: 'State (0: 未發布, 1: 已發布)', From: [state] }
         created: { Field: created, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: 'Created time', From: [created] }
         created_by: { Field: created_by, Type: int(11), 'Null': NO, Default: null, Extra: '', Comment: Author, From: [created_by] }
         modified: { Field: modified, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: 'Modified time', From: [modified] }
@@ -180,13 +182,13 @@
     columns:
         id: { Field: id, Type: 'int(11) unsigned', 'Null': NO, Default: null, Extra: auto_increment, Comment: 'Primary Key', From: [id] }
         name: { Field: name, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 'Member name', From: [name] }
-        username: { Field: username, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: '舊散客帳號', From: [username] }
+        username: { Field: username, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 舊散客帳號, From: [username] }
         email: { Field: email, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 'Member email', From: [email] }
         password: { Field: password, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 'Member password', From: [password] }
         tel: { Field: tel, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 'Member Phone Number', From: [tel] }
-        activated: { Field: activated, Type: tinyint(1), 'Null': YES, Default: null, Extra: '', Comment: '帳號是否啟動', From: [activated] }
-        created: { Field: created, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: '新增時間', From: [created] }
-        modified: { Field: modified, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: '更新時間', From: [modified] }
+        activated: { Field: activated, Type: tinyint(1), 'Null': YES, Default: null, Extra: '', Comment: 帳號是否啟動, From: [activated] }
+        created: { Field: created, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: 新增時間, From: [created] }
+        modified: { Field: modified, Type: datetime, 'Null': NO, Default: null, Extra: '', Comment: 更新時間, From: [modified] }
     index:
         - { Table: '#__schedule_members', Non_unique: '0', Key_name: PRIMARY, Seq_in_index: '1', Column_name: id, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
         - { Table: '#__schedule_members', Non_unique: '1', Key_name: idx_alias, Seq_in_index: '1', Column_name: email, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
@@ -228,7 +230,8 @@
         printed: { Field: printed, Type: tinyint(1), 'Null': YES, Default: null, Extra: '', Comment: '是否已列印 (0:否 / 1:是)', From: [printed] }
     index:
         - { Table: '#__schedule_prescriptions', Non_unique: '0', Key_name: PRIMARY, Seq_in_index: '1', Column_name: id, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
-        - { Table: '#__schedule_prescriptions', Non_unique: '1', Key_name: idx_created_by, Seq_in_index: '1', Column_name: created_by, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
+        - { Table: '#__schedule_prescriptions', Non_unique: '1', Key_name: idx_type_ordering, Seq_in_index: '1', Column_name: type, Sub_part: null, 'Null': YES, Comment: '', Index_comment: '' }
+        - { Table: '#__schedule_prescriptions', Non_unique: '1', Key_name: idx_type_ordering, Seq_in_index: '2', Column_name: ordering, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
 '#__schedule_routes':
     name: '#__schedule_routes'
     from:
@@ -257,8 +260,8 @@
         member_name: { Field: member_name, Type: varchar(255), 'Null': YES, Default: null, Extra: '', Comment: 會員姓名, From: [member_name] }
         customer_id: { Field: customer_id, Type: int(11), 'Null': YES, Default: null, Extra: '', Comment: '客戶 id', From: [customer_id] }
         customer_name: { Field: customer_name, Type: varchar(255), 'Null': YES, Default: null, Extra: '', Comment: 客戶名稱, From: [customer_name] }
-        tel_office: { Field: tel_office, Type: varchar(32), 'Null': YES, Default: null, Extra: '', Comment: 宅配電話(O), From: [tel_office] }
-        tel_home: { Field: tel_home, Type: varchar(32), 'Null': YES, Default: null, Extra: '', Comment: 宅配電話(H), From: [tel_home] }
+        tel_office: { Field: tel_office, Type: varchar(32), 'Null': YES, Default: null, Extra: '', Comment: '宅配電話(O)', From: [tel_office] }
+        tel_home: { Field: tel_home, Type: varchar(32), 'Null': YES, Default: null, Extra: '', Comment: '宅配電話(H)', From: [tel_home] }
         mobile: { Field: mobile, Type: varchar(32), 'Null': YES, Default: null, Extra: '', Comment: 手機, From: [mobile] }
         institute_id: { Field: institute_id, Type: int(11), 'Null': YES, Default: null, Extra: '', Comment: '機構 id', From: [institute_id] }
         institute_title: { Field: institute_title, Type: varchar(255), 'Null': YES, Default: null, Extra: '', Comment: 機構名稱, From: [institute_title] }
@@ -298,9 +301,10 @@
         id: { Field: id, Type: 'int(11) unsigned', 'Null': NO, Default: null, Extra: auto_increment, Comment: 'Primary Key', From: [id] }
         user_id: { Field: user_id, Type: int(11), 'Null': YES, Default: null, Extra: '', Comment: 外送藥師編號, From: [user_id] }
         name: { Field: name, Type: varchar(255), 'Null': NO, Default: null, Extra: '', Comment: 藥師姓名, From: [name] }
-        note: { Field: note, Type: text, 'Null': NO, Default: null, Extra: '', Comment: '備註', From: [note] }
+        note: { Field: note, Type: text, 'Null': NO, Default: null, Extra: '', Comment: 備註, From: [note] }
     index:
         - { Table: '#__schedule_senders', Non_unique: '0', Key_name: PRIMARY, Seq_in_index: '1', Column_name: id, Sub_part: null, 'Null': '', Comment: '', Index_comment: '' }
+        - { Table: '#__schedule_senders', Non_unique: '1', Key_name: idx_userid, Seq_in_index: '1', Column_name: user_id, Sub_part: null, 'Null': YES, Comment: '', Index_comment: '' }
 '#__schedule_tasks':
     name: '#__schedule_tasks'
     from:
