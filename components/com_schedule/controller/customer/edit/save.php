@@ -61,6 +61,8 @@ class ScheduleControllerCustomerEditSave extends ApiSaveController
 		}
 
 		/* We do not update members now
+		 * Keep customer-member n:1 relation in the FrontEnd API
+		 * In the BackEnd, the relation is n:n
 		$mIds = (array) $this->data['member_id'];
 
 		$members = MemberCustomerHelper::loadMembers($validData['id']);

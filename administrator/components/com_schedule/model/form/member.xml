@@ -66,8 +66,7 @@
 			label="對應散客"
 			value_field="name"
 			multiple="true"
-			>
-		</field>
+			/>
 	</fieldset>
 		<!--<field name="parent_id"
 			type="member_list"
