@@ -3,7 +3,7 @@
 namespace Schedule\Helper;
 
 /**
- * The CustomerHelper class.
+ * The IdSecureHelper class.
  *
  * @since  {DEPLOY_VERSION}
  */
@@ -12,14 +12,14 @@ class IdSecureHelper
 	/**
 	 * secureIdnumber
 	 *
-	 * @param string $id
+	 * @param string $idNumber
 	 *
 	 * @return  string
 	 */
-	public static function secureIdnumber($id)
+	public static function secureIdnumber($idNumber)
 	{
-		$id = substr($id, 0, -4);
+		$idNumber = substr($idNumber, 0, -4);
 
-		return $id . '****';
+		return $idNumber . '****';
 	}
 }
