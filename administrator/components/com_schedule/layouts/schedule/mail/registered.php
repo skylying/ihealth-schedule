@@ -49,7 +49,7 @@ $data['ihealthSiteUrl'] = JArrayHelper::getValue($displayData, 'ihealthSiteUrl',
 											</tr>
 										</table>
 										<br />
-										<a href="<?php echo $data['ihealthSiteUrl']; ?>">馬上預約</a>。
+										<a href="<?php echo $data['ihealthSiteUrl'] . '/schedules?new=1'; ?>">馬上預約</a>。
 										<!--end fourth table-->
 									</div>
 								</td>
