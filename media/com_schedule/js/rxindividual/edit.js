@@ -88,7 +88,7 @@
 		triggerEvent: function()
 		{
 			// Updated schedules' checkboxes
-			$('#' + this.options.timesId).change();
+			//$('#' + this.options.timesId).change();
 
 			// Trigger once to toggle the opacity of schedule
 			$('.js-nth-schedule-check input[type=checkbox]').change();
@@ -163,6 +163,10 @@
 					});
 				}
 			);
+
+			$('#jform_customer_id_quickadd_member_id-wrap').click(function(){
+				$('#jform_customer_id_quickadd-container').animate({ scrollTop: 150 }, 'slow');
+			});
 		}
 	};
 

@@ -196,8 +196,9 @@
 			value_field="name"
 			label="對應會員"
 			description="對應會員"
-			/>
-
+			>
+			<option></option>
+		</field>
 		<field name="type"
 			type="hidden"
 			default="individual"
