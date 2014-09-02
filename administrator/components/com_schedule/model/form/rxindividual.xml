@@ -84,7 +84,6 @@
 			type="hospital_list"
 			label="處方開立醫院"
 			description="處方開立醫院"
-			required="true"
 			>
 			<option></option>
 		</field>
