@@ -6,6 +6,8 @@
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
+use Schedule\Helper\IdSecureHelper;
+
 $data['rx'] = JArrayHelper::getValue($displayData, 'rx', new stdClass);
 $data['schedules'] = JArrayHelper::getValue($displayData, 'schedules', array());
 $data['drugs'] = JArrayHelper::getValue($displayData, 'drugs', array());
@@ -41,7 +43,7 @@ $nthDelivery = array('第一次宅配', '第二次宅配', '第三次宅配');
 										</tr>
 										<tr>
 											<td style="padding-right: 10px;">身分證字號:</td>
-											<td style="padding:10px;"><?php echo $data['rx']->id_number; ?></td>
+											<td style="padding:10px;"><?php echo IdSecureHelper::secureIdnumber($data['rx']->id_number); ?></td>
 										</tr>
 										<?php foreach ($data['schedules'] as $key => $schedule): ?>
 											<h3 style="font-family: 微软雅黑;"><?php echo $nthDelivery[$key]; ?></h3>
