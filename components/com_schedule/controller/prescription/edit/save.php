@@ -122,6 +122,8 @@ class ScheduleControllerPrescriptionEditSave extends ApiSaveController
 		$scheduleModel = $this->getModel('Schedule');
 		/** @var ScheduleModelTask $taskModel */
 		$taskModel = $this->getModel('Task');
+		/** @var ScheduleModelCustomer $customerModel */
+		$customerModel = $this->getModel('Customer');
 
 		$notifyEmails = MailHelper::getNotifyEmptyRouteMails();
 
@@ -252,6 +254,12 @@ class ScheduleControllerPrescriptionEditSave extends ApiSaveController
 
 			// This API is only for creating a new individual prescription, so we use "confirm" email layout
 			MailHelper::sendMailWhenScheduleChange($memberTable->email, $mailDataSet);
+		}
+
+		// Update hospital id in customer
+		if (!empty($validData['hospital_id']) && !empty($validData['customer_id']))
+		{
+			$customerModel->save(['id' => $validData['customer_id'], 'hospital' => $validData['hospital_id']]);
 		}
 
 		// Store images
