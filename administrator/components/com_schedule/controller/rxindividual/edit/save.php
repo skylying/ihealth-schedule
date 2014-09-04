@@ -555,14 +555,25 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 			// Check sender information
 			if (!is_numeric($schedule['address_id']))
 			{
-				if ((int) $schedule['sender_id'] <= 0)
-				{
-					$errors[] = JText::_('COM_SCHEDULE_SCHEDULE_' . $nth) . '排程請選擇配送藥師';
-				}
+				$route = TableCollection::loadTable(
+					'Route', [
+						'city' => $schedule['city'],
+						'area' => $schedule['area'],
+						'type' => 'individual'
+					]
+				);
 
-				if (!in_array($schedule['weekday'], $validWeekdays))
+				if (empty($route->id))
 				{
-					$errors[] = JText::_('COM_SCHEDULE_SCHEDULE_' . $nth) . '排程請選擇配送日';
+					if ((int) $schedule['sender_id'] <= 0)
+					{
+						$errors[] = JText::_('COM_SCHEDULE_SCHEDULE_' . $nth) . '排程請選擇配送藥師';
+					}
+
+					if (!in_array($schedule['weekday'], $validWeekdays))
+					{
+						$errors[] = JText::_('COM_SCHEDULE_SCHEDULE_' . $nth) . '排程請選擇配送日';
+					}
 				}
 			}
 		}
