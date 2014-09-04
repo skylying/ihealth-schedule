@@ -425,7 +425,7 @@
 		 * Fire ajax request and get from Customer model and Addresses modl
 		 *
 		 * @param {int}  id
-		 * @param {bool} skipHospital
+		 * @param {bool} b_skipHospital
 		 */
 		fireAjax: function(id, b_skipHospital)
 		{
