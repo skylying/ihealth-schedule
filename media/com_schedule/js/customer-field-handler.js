@@ -35,7 +35,7 @@
 			var self = this;
 			var customerDropDown = jQuery("#" + this.options.customerId);
 			// Fire update onload.
-			this.fireAjax(customerDropDown.val());
+			this.fireAjax(customerDropDown.val(), true);
 
 			// Fire ajax request while using modal to add new customer
 			customerDropDown.on('liszt:updated', function()
@@ -424,11 +424,14 @@
 		/**
 		 * Fire ajax request and get from Customer model and Addresses modl
 		 *
-		 * @param {int} id
+		 * @param {int}  id
+		 * @param {bool} b_skipHospital
 		 */
-		fireAjax: function(id)
+		fireAjax: function(id, b_skipHospital)
 		{
 			var self = this;
+
+			b_skipHospital = b_skipHospital || false;
 
 			// Fire ajax to Customer
 			$.ajax({
@@ -509,7 +512,10 @@
 					self.updateCustomerBirthDate(self.options.birthDateId, cdata.birth_date);
 
 					// Update Hospital
-					self.updateCustomerHospital(self.options.hospitalId, cdata.hospital);
+					if (!b_skipHospital)
+					{
+						self.updateCustomerHospital(self.options.hospitalId, cdata.hospital);
+					}
 				});
 
 			//Fire ajax to Addresses
