@@ -8,8 +8,9 @@
 			labelclass="pull-left"
 			class="input-small"
 			>
-			<option value="*">JALL</option>
+			<option value="customer.id">客戶姓名</option>
 			<option value="customer.name">客戶姓名</option>
+			<option value="customer.id_number">客戶姓名</option>
 		</field>
 
 		<field
