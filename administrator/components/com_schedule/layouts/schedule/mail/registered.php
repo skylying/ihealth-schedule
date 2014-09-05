@@ -9,6 +9,7 @@
 $data['name'] = JArrayHelper::getValue($displayData, 'name', '');
 $data['email'] = JArrayHelper::getValue($displayData, 'email', '');
 $data['ihealthSiteUrl'] = JArrayHelper::getValue($displayData, 'ihealthSiteUrl', 'www.ihealth.com.tw');
+$data['0800'] = JArrayHelper::getValue($displayData, '0800', '0800-088-336');
 
 ?>
 <!DOCTYPE html>
@@ -64,7 +65,7 @@ $data['ihealthSiteUrl'] = JArrayHelper::getValue($displayData, 'ihealthSiteUrl',
 								<td valign="top" style="background: #3D8C12;">
 									<div style="padding: 5px;">
 										<div style="padding:3px; color:#FFFFFF;">
-											<p>24hr免費諮詢專線: 0800-088-336</p>
+											<p>24hr免費諮詢專線: <?php echo $displayData['0800']; ?></p>
 											<p>政昇處方宅配藥局</p>
 										</div>
 										<div style="padding: 5px;">
