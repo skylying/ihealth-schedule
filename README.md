@@ -22,12 +22,15 @@ php cli/console cmf make
 
 The CMF system will convert this Joomla! package to CMF package, and ask you to create a new user.
 
-## Gulp
+## Install gulp
 
 ```bash
-# Install Gulp.js
-npm install gulp -g
-npm install
+# 移動到專案根目錄
+cd ./
+
+# Install gulp
+npm install gulp gulp-sms -g
+npm link gulp gulp-sms
 
 # Lunch gulp instance
 gulp
