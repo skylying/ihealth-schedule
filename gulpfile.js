@@ -37,11 +37,14 @@ var setup = {
 	 * @param {string} taskName Task name
 	 * @param {object} config   Task configuration
 	 */
-	less: function(taskName, config) {
-		gulp.task(taskName, function() {
+	less: function(taskName, config)
+	{
+		gulp.task(taskName, function()
+		{
 			var paths = config.paths.include;
 
-			config.paths.exclude.forEach(function(path) {
+			config.paths.exclude.forEach(function(path)
+			{
 				paths.push('!' + path);
 			});
 
@@ -49,7 +52,8 @@ var setup = {
 
 			task = task.pipe(less());
 
-			if ('single-file' === config.dest.type) {
+			if ('single-file' === config.dest.type)
+			{
 				task = task.pipe(concat(config.dest.filename));
 			}
 
@@ -59,10 +63,12 @@ var setup = {
 	}
 };
 
-configs.forEach(function(config, index) {
+configs.forEach(function(config, index)
+{
 	var taskName = config.type + index;
 
-	switch (config.type) {
+	switch (config.type)
+	{
 		case 'less':
 			setup.less(taskName, config);
 			break;
@@ -72,8 +78,10 @@ configs.forEach(function(config, index) {
 });
 
 // Rerun the task when a file changes
-gulp.task('watch', function() {
-	configs.forEach(function(config, index) {
+gulp.task('watch', function()
+{
+	configs.forEach(function(config, index)
+	{
 		var paths = [].concat(config.paths.include, config.paths.exclude);
 		var taskName = config.type + index;
 
