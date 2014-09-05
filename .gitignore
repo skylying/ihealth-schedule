@@ -23,3 +23,5 @@ Thumbs.db
 
 # Akeeba Backup
 /administrator/components/com_akeeba/backup/*
+
+/node_modules

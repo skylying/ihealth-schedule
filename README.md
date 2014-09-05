@@ -22,6 +22,21 @@ php cli/console cmf make
 
 The CMF system will convert this Joomla! package to CMF package, and ask you to create a new user.
 
+## Gulp
+
+```bash
+# Install Gulp.js
+npm install gulp -g
+npm install
+
+# Lunch gulp instance
+gulp
+```
+
+可搭配瀏覽器的 [LiveReload](http://feedback.livereload.com/knowledgebase/articles/86242-how-do-i-install-and-use-the-browser-extensions-) 擴充套件一起用
+- [Chrome Extension](https://chrome.google.com/webstore/detail/livereload/jnihajbhpnppcggbcgedagnkighmdlei?hl=en)
+- [Firefox Add-ons](http://download.livereload.com/2.0.8/LiveReload-2.0.8.xpi)
+
 ## Removed Core Extensions
 
 - component:
