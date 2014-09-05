@@ -4,7 +4,6 @@ use Windwalker\Controller\Edit\SaveController;
 use Windwalker\Joomla\DataMapper\DataMapper;
 use Windwalker\Data\Data;
 use Schedule\Table\Table;
-use Schedule\Helper\ImageHelper;
 use Schedule\Table\Collection as TableCollection;
 use Schedule\Helper\ScheduleHelper;
 use Schedule\Helper\MailHelper;
@@ -530,6 +529,7 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 		/** @var ScheduleModelRxIndividual $model */
 		$model = $this->getModel();
 		$form = $model->getSchedulesForm();
+		$createAddresses = isset($this->data['create_addresses']) ? json_decode($this->data['create_addresses']) : array();
 		$validWeekdays = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'];
 		$errors = [];
 
@@ -555,11 +555,24 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 			// Check sender information
 			if (!is_numeric($schedule['address_id']))
 			{
+				$createAddress = array_reduce(
+					$createAddresses,
+					function($carry, $address) use ($schedule)
+					{
+						return $schedule['address_id'] == $address->id ? $address : null;
+					}
+				);
+
+				if (empty($createAddress))
+				{
+					continue;
+				}
+
 				$route = TableCollection::loadTable(
 					'Route', [
-						'city' => $schedule['city'],
-						'area' => $schedule['area'],
-						'type' => 'individual'
+						'city' => $createAddress->city,
+						'area' => $createAddress->area,
+						'type' => 'customer',
 					]
 				);
 
@@ -567,12 +580,12 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 				{
 					if ((int) $schedule['sender_id'] <= 0)
 					{
-						$errors[] = JText::_('COM_SCHEDULE_SCHEDULE_' . $nth) . '排程請選擇配送藥師';
+						$errors[] = JText::_('COM_SCHEDULE_SCHEDULE_' . $nth) . '排程請選擇宅配區域路線的配送藥師';
 					}
 
 					if (!in_array($schedule['weekday'], $validWeekdays))
 					{
-						$errors[] = JText::_('COM_SCHEDULE_SCHEDULE_' . $nth) . '排程請選擇配送日';
+						$errors[] = JText::_('COM_SCHEDULE_SCHEDULE_' . $nth) . '排程請選擇宅配區域路線的配送日';
 					}
 				}
 			}
@@ -580,6 +593,8 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 
 		if (count($errors) > 0)
 		{
+			$this->data['create_addresses'] = '';
+
 			throw new ValidateFailException($errors);
 		}
 
