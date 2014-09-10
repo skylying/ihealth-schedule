@@ -7,6 +7,7 @@
  */
 
 use Windwalker\Data\Data;
+use Schedule\Helper\UiHelper;
 
 // No direct access
 defined('_JEXEC') or die;
@@ -51,17 +52,17 @@ $date      = $container->get('date');
 	</th>
 
 	<!-- 散客姓名 -->
-	<th>
+	<th class="center">
 		<?php echo $grid->sortTitle('散客姓名', 'rxindividual.customer_name'); ?>
 	</th>
 
 	<!-- 所屬會員 -->
-	<th>
+	<th class="center">
 		<?php echo $grid->sortTitle('所屬會員', 'rxindividual.member_name'); ?>
 	</th>
 
 	<!-- 上傳方式 -->
-	<th>
+	<th class="center">
 		<?php echo $grid->sortTitle('上傳方式', 'rxindividual.method'); ?>
 	</th>
 
@@ -80,23 +81,28 @@ $date      = $container->get('date');
 		<?php echo $grid->sortTitle('就醫日期', 'rxindividual.see_dr_date'); ?>
 	</th>
 
+	<!-- 新增日期 -->
+	<th class="center">
+		<?php echo $grid->sortTitle('新增日期', 'rxindividual.created'); ?>
+	</th>
+
 	<!-- 可調劑次數 -->
 	<th class="center">
 		<?php echo $grid->sortTitle('可調劑次數', 'rxindividual.times'); ?>
 	</th>
 
 	<!-- 宅配次數 -->
-	<th>
+	<th class="center">
 		<?php echo $grid->sortTitle('宅配次數', 'rxindividual.deliver_nths'); ?>
 	</th>
 
 	<!-- 新增人 -->
-	<th>
+	<th class="center">
 		<?php echo $grid->sortTitle('新增人', 'rxindividual.created_by'); ?>
 	</th>
 
 	<!-- 最後修改人 -->
-	<th>
+	<th class="center">
 		<?php echo $grid->sortTitle('最後修改人', 'rxindividual.modified_by'); ?>
 	</th>
 
@@ -136,7 +142,7 @@ $date      = $container->get('date');
 		</td>
 
 		<td class="center">
-			<?php echo \Schedule\Helper\UiHelper::editButton('rxindividual', $item->id); ?>
+			<?php echo UiHelper::editButton('rxindividual', $item->id); ?>
 		</td>
 
 		<!-- id -->
@@ -146,7 +152,7 @@ $date      = $container->get('date');
 
 		<!-- 散客名稱 -->
 		<td class="center">
-			<?php echo Schedule\Helper\UiHelper::foreignLink('customer', $item->customer_name, $item->customer_id, '', array('target' => '_blank'));?>
+			<?php echo UiHelper::foreignLink('customer', $item->customer_name, $item->customer_id, '', array('target' => '_blank'));?>
 		</td>
 
 		<!-- 所屬會員 -->
@@ -155,7 +161,7 @@ $date      = $container->get('date');
 				$members = empty($item->member_json) ? array() : json_decode("[" . $item->member_json . "]");
 				foreach ($members as $member)
 				{
-					echo Schedule\Helper\UiHelper::foreignLink('member', $member->name, $member->id, '', array('target' => '_blank'));
+					echo UiHelper::foreignLink('member', $member->name, $member->id, '', array('target' => '_blank'));
 				}
 			?>
 		</td class="center">
@@ -167,17 +173,22 @@ $date      = $container->get('date');
 
 		<!-- 處方簽狀態 -->
 		<td class="center">
-			<?php echo ($item->received) ? "已取得" : "未取得"; ?>
+			<?php echo ($item->received) ? '<span class="btn btn-success">已取得</span>' : '<span class="btn btn-danger">未取得</span>'; ?>
 		</td>
 
 		<!-- 電聯狀態 -->
 		<td class="center">
-			<?php echo ($item->called) ? "已電聯" : "未電聯"; ?>
+			<?php echo ($item->called) ? '<span class="btn btn-success">已電聯</span>' : '<span class="btn btn-danger">未電聯</span>'; ?>
 		</td>
 
 		<!-- 就醫日期 -->
 		<td class="center">
 			<?php echo $this->escape($item->see_dr_date); ?>
+		</td>
+
+		<!-- 新增日期 -->
+		<td class="center">
+			<?php echo substr($this->escape($item->created), 0, 10); ?>
 		</td>
 
 		<!-- 可調劑次數 -->
@@ -187,12 +198,27 @@ $date      = $container->get('date');
 
 		<!-- 宅配次數 -->
 		<td class="center">
-			<?php echo $this->escape($item->deliver_nths); ?>
+			<?php
+			foreach (explode(',', $item->deliver_nths) as $nth)
+			{
+				echo '<span class="badge">' . substr($nth, 0, 1) . '</span> ';
+			}
+			?>
 		</td>
 
 		<!-- 新增人 -->
 		<td class="center">
-			<?php echo $this->escape($item->author_name); ?>
+			<?php
+			// Define new prescription through API
+			if (empty($item->author_name))
+			{
+				echo '<span class="btn btn-warning">官網客戶</span>';
+			}
+			else
+			{
+				echo $this->escape($item->author_name);
+			}
+			?>
 		</td>
 
 		<!-- 修改人 -->
