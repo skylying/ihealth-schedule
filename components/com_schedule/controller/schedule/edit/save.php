@@ -12,6 +12,7 @@ use Schedule\Table\Collection as TableCollection;
 use Windwalker\Model\Exception\ValidateFailException;
 use Schedule\Helper\MailHelper;
 use Windwalker\Data\Data;
+use Schedule\Config\ConfigHelper;
 
 /**
  * Class ScheduleControllerPrescriptionEditSave
@@ -101,7 +102,7 @@ class ScheduleControllerScheduleEditSave extends ApiSaveController
 			$routeTable->area         = $addressTable->area;
 			$routeTable->area_title   = $addressTable->area_title;
 
-			$defaultWeekday = \JComponentHelper::getParams('com_schedule')->get('sender.default_weekday', 'MON');
+			$defaultWeekday = ConfigHelper::getParams('com_schedule')->get('sender.default_weekday', 'MON');
 			$defaultSender = \Schedule\Helper\SenderHelper::getDefaultSender();
 
 			$routeTable->sender_id   = $defaultSender['id'];

@@ -5,6 +5,7 @@ namespace Schedule\Helper;
 use Schedule\Table\Table;
 use Windwalker\Data\Data;
 use Windwalker\Joomla\DataMapper\DataMapper;
+use Schedule\Config\ConfigHelper;
 
 /**
  * Class SenderHelper
@@ -20,7 +21,7 @@ class SenderHelper
 	 */
 	public static function getDefaultSender()
 	{
-		$defaultSender = \JComponentHelper::getParams('com_schedule')->get('sender.default_sender');
+		$defaultSender = ConfigHelper::getParams('com_schedule')->get('sender.default_sender');
 
 		$defaultSenderFromConfig = (strpos($defaultSender, '-') !== false) ? $defaultSender : '0-0';
 

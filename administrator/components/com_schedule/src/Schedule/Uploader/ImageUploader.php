@@ -10,6 +10,7 @@ namespace Schedule\Uploader;
 
 use SMS\StorageFactory;
 use Windwalker\Helper\ArrayHelper;
+use Schedule\Config\ConfigHelper;
 
 /**
  * Class ImageUploader
@@ -27,7 +28,7 @@ class ImageUploader
 	 */
 	public static function uploadRxImage(array $file)
 	{
-		$folderName = \JComponentHelper::getParams('com_schedule')->get('upload.rx_image_folder', 'rx_images');
+		$folderName = ConfigHelper::getParams('com_schedule')->get('upload.rx_image_folder', 'rx_images');
 
 		return self::upload($file, $folderName);
 	}
@@ -43,7 +44,7 @@ class ImageUploader
 	 */
 	public static function uploadHospitalRxSample(array $file)
 	{
-		$folderName = \JComponentHelper::getParams('com_schedule')->get('upload.rx_image_folder', 'hospital_rx_samples');
+		$folderName = ConfigHelper::getParams('com_schedule')->get('upload.rx_image_folder', 'hospital_rx_samples');
 
 		return self::upload($file, $folderName);
 	}
@@ -63,7 +64,7 @@ class ImageUploader
 			return false;
 		}
 
-		$params = \JComponentHelper::getParams('com_schedule');
+		$params = ConfigHelper::getParams('com_schedule');
 		$baseDir = $params->get('upload.base_dir', '/media/com_schedule/upload');
 		$hash = md5_file($file['tmp_name']);
 		$ext = pathinfo($file['name'], PATHINFO_EXTENSION);
@@ -125,7 +126,7 @@ class ImageUploader
 	 */
 	public static function deleteFromS3($url)
 	{
-		$params = \JComponentHelper::getParams('com_schedule');
+		$params = ConfigHelper::getParams('com_schedule');
 
 		$urlPrefix = $params->get('s3.url_prefix', '');
 
@@ -144,7 +145,7 @@ class ImageUploader
 	 */
 	protected static function getS3Instance()
 	{
-		$params = \JComponentHelper::getParams('com_schedule');
+		$params = ConfigHelper::getParams('com_schedule');
 		$config = array(
 			'key' => $params->get('s3.key'),
 			'secret' => $params->get('s3.secret'),
