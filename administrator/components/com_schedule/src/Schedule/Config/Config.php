@@ -24,7 +24,7 @@ abstract class Config extends AbstractConfig
 	 *
 	 * @var  string
 	 */
-	protected static $type = 'json';
+	protected static $type = 'yaml';
 
 	/**
 	 * getPath
@@ -36,6 +36,13 @@ abstract class Config extends AbstractConfig
 		$type = static::$type;
 		$ext  = (static::$type == 'yaml') ? 'yml' : $type;
 
-		return SCHEDULE_ADMIN . '/etc/config.' . $ext;
+		$path = SCHEDULE_ADMIN . '/etc/runtime.' . $ext;
+
+		if (!is_file($path))
+		{
+			$path = SCHEDULE_ADMIN . '/etc/config.' . $ext;
+		}
+
+		return $path;
 	}
 }
