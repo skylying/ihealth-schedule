@@ -67,6 +67,11 @@ $asset->addJS('schedules/list.js');
 		<?php echo $grid->sortTitle('就醫日期', 'rxresident.see_dr_date'); ?>
 	</th>
 
+	<!-- 新增日期 -->
+	<th class="center">
+		<?php echo $grid->sortTitle('新增日期', 'rxresident.created'); ?>
+	</th>
+
 	<!-- 處方箋天數 -->
 	<th class="center">
 		<?php echo $grid->sortTitle('處方箋天數', 'rxresident.period'); ?>
@@ -145,6 +150,11 @@ $asset->addJS('schedules/list.js');
 		<!-- 就醫日期 -->
 		<td class="center">
 			<?php echo $this->escape($item->see_dr_date); ?>
+		</td>
+
+		<!-- 新增日期 -->
+		<td class="center">
+			<?php echo substr($this->escape($item->created), 0, 10); ?>
 		</td>
 
 		<!-- 處方箋天數 -->

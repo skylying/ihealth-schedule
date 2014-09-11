@@ -61,6 +61,11 @@ $date      = $container->get('date');
 			<?php echo $grid->sortTitle('會員信箱', 'member.email'); ?>
 		</th>
 
+		<!-- 新增日期 -->
+		<th class="center">
+			<?php echo $grid->sortTitle('新增日期', 'member.created'); ?>
+		</th>
+
 		<!--Customer Amount-->
 		<th width="10%" class="center">
 			<?php echo $grid->sortTitle('散客數', 'member.email'); ?>
@@ -120,6 +125,11 @@ $date      = $container->get('date');
 			<!--EMAIL-->
 			<td class="left">
 				<?php echo $this->escape($item->email); ?>
+			</td>
+
+			<!-- 新增日期 -->
+			<td class="center">
+				<?php echo substr($this->escape($item->created), 0, 10); ?>
 			</td>
 
 			<?php
