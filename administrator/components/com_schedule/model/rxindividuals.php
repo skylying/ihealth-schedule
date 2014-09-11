@@ -137,24 +137,24 @@ SQLALIAS;
 	/**
 	 * populateState
 	 *
-	 * @param null $ordering
-	 * @param null $direction
+	 * @param string $ordering
+	 * @param string $direction
 	 *
 	 * @return  void
 	 */
-	protected function populateState($ordering = null, $direction = null)
+	protected function populateState($ordering = 'rxindividual.created', $direction = 'DESC')
 	{
 		// Build ordering prefix
 		if (!$ordering)
 		{
 			$table = $this->getTable('Rxindividual');
 
-			$ordering = property_exists($table, 'ordering') ? 'rxindividual.ordering' : 'rxindividual.id';
+			$ordering = property_exists($table, 'ordering') ? 'rxindividual.created' : 'rxindividual.id';
 
 			$ordering = property_exists($table, 'catid') ? 'rxindividual.catid, ' . $ordering : $ordering;
 		}
 
-		parent::populateState($ordering, 'ASC');
+		parent::populateState($ordering, $direction);
 	}
 
 	/**

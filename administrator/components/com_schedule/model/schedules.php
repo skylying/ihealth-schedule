@@ -127,7 +127,7 @@ class ScheduleModelSchedules extends ListModel
 	 *
 	 * @return  void
 	 */
-	protected function populateState($ordering = 'schedule.date', $direction = 'ASC')
+	protected function populateState($ordering = 'schedule.id', $direction = 'DESC')
 	{
 		$app = JFactory::getApplication();
 

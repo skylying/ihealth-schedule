@@ -77,8 +77,8 @@
 			>
 			<option></option>
 			<option>--選擇處方箋狀態--</option>
-			<option value="0">已取得</option>
-			<option value="1">未取得</option>
+			<option value="1">已取得</option>
+			<option value="0">未取得</option>
 		</field>
 
 		<field name="rxindividual.method"
@@ -121,14 +121,13 @@
 			label="COM_CONTENT_LIST_FULL_ORDERING"
 			description="COM_CONTENT_LIST_FULL_ORDERING_DESC"
 			onchange="this.form.submit();"
+			default="rxindividual.created DESC"
 			>
 			<option value="">JGLOBAL_SORT_BY</option>
 			<option value="rxindividual.id ASC">編號升冪排序</option>
 			<option value="rxindividual.id DESC">編號降冪排序</option>
 			<option value="rxindividual.customer_name ASC">散客姓名升冪排序</option>
 			<option value="rxindividual.customer_name DESC">散客姓名降冪排序</option>
-			<option value="rxindividual.member_name ASC">所屬會員升冪排序</option>
-			<option value="rxindividual.member_name DESC">所屬會員降冪排序</option>
 			<option value="rxindividual.method ASC">上傳方式升冪排序</option>
 			<option value="rxindividual.method DESC">上傳方式降冪排序</option>
 			<option value="rxindividual.received ASC">處方箋狀態升冪排序</option>
@@ -137,6 +136,8 @@
 			<option value="rxindividual.called DESC">電聯紀錄降冪排序</option>
 			<option value="rxindividual.see_dr_date ASC">就醫日期升冪排序</option>
 			<option value="rxindividual.see_dr_date DESC">就醫日期降冪排序</option>
+			<option value="rxindividual.created ASC">依新增日期升序排列</option>
+			<option value="rxindividual.created DESC">依新增日期降序排列</option>
 			<option value="rxindividual.times ASC">可調劑次數升冪排序</option>
 			<option value="rxindividual.times DESC">可調劑次數降冪排序</option>
 			<option value="rxindividual.deliver_nths ASC">宅配次數升冪排序</option>
