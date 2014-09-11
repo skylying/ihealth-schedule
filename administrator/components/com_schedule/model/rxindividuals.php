@@ -113,6 +113,7 @@ class ScheduleModelRxindividuals extends ListModel
 	 */
 	protected function postGetQuery(\JDatabaseQuery $query)
 	{
+		// Subquery part is to find expired schedules
 		$sql = <<<SQLALIAS
 group_concat(
 	CONCAT(
@@ -126,16 +127,13 @@ group_concat(
 			'"',
 		'}'
 	)
-) AS `member_json`
-SQLALIAS;
-
-		// Subquery to find expired schedules
-		$subQuery = <<<SQLALIAS
-SELECT group_concat(`schedule`.`deliver_nth`) FROM #__schedule_schedules AS schedule WHERE `schedule`.`rx_id` = `rxindividual`.`id` AND `schedule`.`date` < NOW()
-SQLALIAS;
-
-		$sql .= <<<SQLALIAS
-, ({$subQuery}) AS `expired_schedules`
+) AS `member_json`,
+(
+	SELECT GROUP_CONCAT(`schedule`.`deliver_nth`)
+		FROM #__schedule_schedules AS schedule
+		WHERE `schedule`.`rx_id` = `rxindividual`.`id`
+			AND `schedule`.`date` < NOW()
+) AS `expired_schedules`
 SQLALIAS;
 
 		$query->select($sql);
