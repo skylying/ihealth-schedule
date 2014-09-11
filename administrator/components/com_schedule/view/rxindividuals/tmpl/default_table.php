@@ -50,6 +50,11 @@ $date      = $container->get('date');
 		<?php echo $grid->sortTitle('編號', 'rxindividual.id'); ?>
 	</th>
 
+	<!-- 過期排程 -->
+	<th class="center">
+		過期排程
+	</th>
+
 	<!-- 散客姓名 -->
 	<th>
 		<?php echo $grid->sortTitle('散客姓名', 'rxindividual.customer_name'); ?>
@@ -142,6 +147,27 @@ $date      = $container->get('date');
 		<!-- id -->
 		<td class="center">
 			<?php echo $this->escape($item->id); ?>
+		</td>
+
+		<!-- 過期排程 -->
+		<td class="center">
+			<?php
+			$output = '';
+
+			if (empty($item->expired_schedules))
+			{
+				$output = '<span class="btn btn-success">正常</span>';
+			}
+			else
+			{
+				foreach (explode(',', $item->expired_schedules) as $nth)
+				{
+					$output .= '<span class="label label-danger">' . substr($nth, 0, 1) . '</span> ';
+				}
+			}
+
+			echo $output;
+			?>
 		</td>
 
 		<!-- 散客名稱 -->
