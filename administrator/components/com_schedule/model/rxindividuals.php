@@ -113,7 +113,6 @@ class ScheduleModelRxindividuals extends ListModel
 	 */
 	protected function postGetQuery(\JDatabaseQuery $query)
 	{
-		// Subquery part is to find expired schedules
 		$sql = <<<SQLALIAS
 group_concat(
 	CONCAT(
@@ -127,18 +126,58 @@ group_concat(
 			'"',
 		'}'
 	)
-) AS `member_json`,
-(
-	SELECT GROUP_CONCAT(`schedule`.`deliver_nth`)
-		FROM #__schedule_schedules AS schedule
-		WHERE `schedule`.`rx_id` = `rxindividual`.`id`
-			AND `schedule`.`date` < NOW()
-) AS `expired_schedules`
+) AS `member_json`
 SQLALIAS;
 
 		$query->select($sql);
 
 		parent::postGetQuery($query);
+	}
+
+	/**
+	 * getItems
+	 *
+	 * @return  mixed
+	 */
+	public function getItems()
+	{
+		$items = parent::getItems();
+
+		$this->addExpiredNths($items);
+
+		return $items;
+	}
+
+	/**
+	 * Method to get expired schedules
+	 *
+	 * @param array $items
+	 *
+	 * @return  void
+	 */
+	public function addExpiredNths($items)
+	{
+		$rxIdList = JArrayHelper::getColumn($items, 'id');
+		$rxIds = (string) new JDatabaseQueryElement('IN()', $rxIdList);
+
+		$sql = <<<SQL
+SELECT `schedule`.`rx_id`, GROUP_CONCAT(`schedule`.`deliver_nth`) AS `expired_nths`
+	FROM #__schedule_schedules AS schedule
+	WHERE `schedule`.`rx_id` {$rxIds}
+		AND `schedule`.`date` < NOW()
+	GROUP BY `schedule`.`rx_id`
+SQL;
+		$expiredNths = array();
+
+		foreach (JFactory::getDbo()->setQuery($sql)->loadObjectList() as $data)
+		{
+			$expiredNths[$data->rx_id] = $data->expired_nths;
+		}
+
+		foreach ($items as &$item)
+		{
+			$item->expired_nths = JArrayHelper::getValue($expiredNths, $item->id, '');
+		}
 	}
 
 	/**

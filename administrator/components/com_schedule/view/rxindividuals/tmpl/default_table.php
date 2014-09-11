@@ -154,13 +154,13 @@ $date      = $container->get('date');
 			<?php
 			$output = '';
 
-			if (empty($item->expired_schedules))
+			if (empty($item->expired_nths))
 			{
 				$output = '<span class="btn btn-success">正常</span>';
 			}
 			else
 			{
-				foreach (explode(',', $item->expired_schedules) as $nth)
+				foreach (explode(',', $item->expired_nths) as $nth)
 				{
 					$output .= '<span class="label label-danger">' . substr($nth, 0, 1) . '</span> ';
 				}
