@@ -129,6 +129,15 @@ group_concat(
 ) AS `member_json`
 SQLALIAS;
 
+		// Subquery to find expired schedules
+		$subQuery = <<<SQLALIAS
+SELECT group_concat(`schedule`.`deliver_nth`) FROM #__schedule_schedules AS schedule WHERE `schedule`.`rx_id` = `rxindividual`.`id` AND `schedule`.`date` < NOW()
+SQLALIAS;
+
+		$sql .= <<<SQLALIAS
+, ({$subQuery}) AS `expired_schedules`
+SQLALIAS;
+
 		$query->select($sql);
 
 		parent::postGetQuery($query);
