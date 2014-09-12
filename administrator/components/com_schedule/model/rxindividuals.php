@@ -135,6 +135,54 @@ SQLALIAS;
 	}
 
 	/**
+	 * getItems
+	 *
+	 * @return  mixed
+	 */
+	public function getItems()
+	{
+		$items = parent::getItems();
+
+		$this->addExpiredNths($items);
+
+		return $items;
+	}
+
+	/**
+	 * Method to get expired schedules
+	 *
+	 * @param array $items
+	 *
+	 * @return  void
+	 */
+	public function addExpiredNths($items)
+	{
+		$rxIdList = JArrayHelper::getColumn($items, 'id');
+		$rxIds = (string) new JDatabaseQueryElement('IN()', $rxIdList);
+
+		$db = JFactory::getDbo();
+		$query = $db->getQuery(true);
+
+		$query->select('`schedule`.`rx_id`, GROUP_CONCAT(`schedule`.`deliver_nth`) AS `expired_nths`')
+			->from('#__schedule_schedules AS schedule')
+			->where('`schedule`.`rx_id`' . $rxIds)
+			->where('`schedule`.`date` < NOW()')
+			->group('`schedule`.`rx_id`');
+
+		$expiredNths = array();
+
+		foreach ($db->setQuery($query)->loadObjectList() as $data)
+		{
+			$expiredNths[$data->rx_id] = $data->expired_nths;
+		}
+
+		foreach ($items as &$item)
+		{
+			$item->expired_nths = JArrayHelper::getValue($expiredNths, $item->id, '');
+		}
+	}
+
+	/**
 	 * populateState
 	 *
 	 * @param null $ordering
