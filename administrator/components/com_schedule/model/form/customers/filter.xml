@@ -149,19 +149,17 @@
 			label="COM_CONTENT_LIST_FULL_ORDERING"
 			description="COM_CONTENT_LIST_FULL_ORDERING_DESC"
 			onchange="this.form.submit();"
-			default="a.title ASC"
+			default="customer.created DESC"
 			>
 			<option value="">JGLOBAL_SORT_BY</option>
+			<option value="customer.created ASC">依新增日期升序排列</option>
+			<option value="customer.created DESC">依新增日期降序排列</option>
 			<option value="customer.id ASC">依編號升序排列</option>
 			<option value="customer.id DESC">依編號降序排列</option>
 			<option value="customer.type ASC">依類別升序排列</option>
 			<option value="customer.type DESC">依類別降序排列</option>
 			<option value="customer.name ASC">依姓名升序排列</option>
 			<option value="customer.name DESC">依姓名降序排列</option>
-			<option value="customer.id_number ASC">依身份證字號升序排列</option>
-			<option value="customer.id_number DESC">依身份證字號降序排列</option>
-			<option value="customer.age ASC">依年齡升序排列</option>
-			<option value="customer.age DESC">依年齡降序排列</option>
 			<option value="customer.city_title ASC">依外送縣市升序排列</option>
 			<option value="customer.city_title DESC">依外送縣市降序排列</option>
 			<option value="customer.area_title ASC">依外送區域升序排列</option>

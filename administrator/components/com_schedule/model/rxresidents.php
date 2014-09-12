@@ -103,24 +103,24 @@ class ScheduleModelRxresidents extends ListModel
 	/**
 	 * populateState
 	 *
-	 * @param null $ordering
-	 * @param null $direction
+	 * @param string $ordering
+	 * @param string $direction
 	 *
 	 * @return  void
 	 */
-	protected function populateState($ordering = null, $direction = null)
+	protected function populateState($ordering = 'rxresident.created', $direction = 'DESC')
 	{
 		// Build ordering prefix
 		if (!$ordering)
 		{
 			$table = $this->getTable('Rxresident');
 
-			$ordering = property_exists($table, 'ordering') ? 'rxresident.ordering' : 'rxresident.id';
+			$ordering = property_exists($table, 'ordering') ? 'rxresident.created' : 'rxresident.id';
 
 			$ordering = property_exists($table, 'catid') ? 'rxresident.catid, ' . $ordering : $ordering;
 		}
 
-		parent::populateState($ordering, 'ASC');
+		parent::populateState($ordering, $direction);
 	}
 
 	/**

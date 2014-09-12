@@ -72,6 +72,11 @@ class ScheduleModelCustomers extends ListModel
 		'customers.age_end'
 	);
 
+	/**
+	 * configureTables
+	 *
+	 * @return  void
+	 */
 	protected function configureTables()
 	{
 		$queryHelper = $this->getContainer()->get('model.customers.helper.query', Container::FORCE_NEW);
@@ -81,32 +86,30 @@ class ScheduleModelCustomers extends ListModel
 					->addTable('member', '#__schedule_members', 'member.id = map.member_id ')
 					->addTable('institute', '#__schedule_institutes', '`customer`.`institute_id` = `institute`.`id` ');
 
-
-
 		$this->filterFields = array_merge($this->filterFields, $queryHelper->getFilterFields());
 	}
 
 	/**
 	 * populateState
 	 *
-	 * @param null $ordering
-	 * @param null $direction
+	 * @param string $ordering
+	 * @param string $direction
 	 *
 	 * @return  void
 	 */
-	protected function populateState($ordering = null, $direction = null)
+	protected function populateState($ordering = 'customer.created', $direction = 'DESC')
 	{
 		// Build ordering prefix
 		if (!$ordering)
 		{
 			$table = $this->getTable('Customer');
 
-			$ordering = property_exists($table, 'ordering') ? 'customer.ordering' : 'customer.id';
+			$ordering = property_exists($table, 'ordering') ? 'customer.created' : 'customer.id';
 
 			$ordering = property_exists($table, 'catid') ? 'customer.catid, ' . $ordering : $ordering;
 		}
 
-		parent::populateState($ordering, 'ASC');
+		parent::populateState($ordering, $direction);
 	}
 
 	/**

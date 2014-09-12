@@ -82,24 +82,24 @@ class ScheduleModelMembers extends ListModel
 	/**
 	 * populateState
 	 *
-	 * @param null $ordering
-	 * @param null $direction
+	 * @param string $ordering
+	 * @param string $direction
 	 *
 	 * @return  void
 	 */
-	protected function populateState($ordering = null, $direction = null)
+	protected function populateState($ordering = 'member.created', $direction = 'DESC')
 	{
 		// Build ordering prefix
 		if (!$ordering)
 		{
 			$table = $this->getTable('Member');
 
-			$ordering = property_exists($table, 'ordering') ? 'member.ordering' : 'member.id';
+			$ordering = property_exists($table, 'ordering') ? 'member.created' : 'member.id';
 
 			$ordering = property_exists($table, 'catid') ? 'member.catid, ' . $ordering : $ordering;
 		}
 
-		parent::populateState($ordering, 'ASC');
+		parent::populateState($ordering, $direction);
 	}
 
 	/**

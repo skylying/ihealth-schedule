@@ -71,6 +71,11 @@ $date      = $container->get('date');
 		<?php echo $grid->sortTitle('年齡', 'customer.age'); ?>
 	</th>
 
+	<!-- 新增日期 -->
+	<th width="8%" class="center">
+		<?php echo $grid->sortTitle('新增日期', 'customer.created'); ?>
+	</th>
+
 	<!--CUSTOMER_CUSTOMER_MEMBER_MAPS-->
 	<th width="10%" class="center">
 		<?php echo $grid->sortTitle('所屬機構/所屬會員', 'customer.type'); ?>
@@ -169,6 +174,11 @@ $date      = $container->get('date');
 		<!--CUSTOMER_AGE-->
 		<td class="center">
 			<?php echo $this->escape($item->age); ?>
+		</td>
+
+		<!-- 新增日期 -->
+		<td class="center">
+			<?php echo substr($this->escape($item->created), 0, 10); ?>
 		</td>
 
 		<!--CUSTOMER_MEMBER_MAPS-->

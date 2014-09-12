@@ -87,9 +87,14 @@ $date      = $container->get('date');
 		<?php echo $grid->sortTitle('外送藥師', 'route.sender_id'); ?>
 	</th>
 
-	<!-- route.sender_id -->
+	<!-- 預約日 -->
 	<th class="center">
 		<?php echo $grid->sortTitle('預約日', 'prescription.created'); ?>
+	</th>
+
+	<!-- 預約人 -->
+	<th class="center">
+		<?php echo $grid->sortTitle('新增人', 'prescription.created_by'); ?>
 	</th>
 
 	<!-- schedule.sorted -->
@@ -206,6 +211,23 @@ foreach ($data->items as $i => $item):
 		<!-- prescription created -->
 		<td class="center">
 			<?php echo date('Y-m-d', strtotime($item->prescription_created)); ?>
+		</td>
+
+		<!-- 新增人 -->
+		<td class="center">
+			<?php
+			if (!empty($item->user_name))
+			{
+				echo $item->user_name;
+			}
+			else
+			{
+				if ($item->type == 'individual')
+				{
+					echo '<span class="btn btn-warning">官網客戶</span>';
+				}
+			}
+			?>
 		</td>
 
 		<!-- sorted -->

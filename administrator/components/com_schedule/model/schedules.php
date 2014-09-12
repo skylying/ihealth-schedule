@@ -102,7 +102,8 @@ class ScheduleModelSchedules extends ListModel
 			->addTable('route', '#__schedule_routes', 'schedule.route_id = route.id')
 			->addTable('memberMap', '#__schedule_customer_member_maps', 'memberMap.customer_id = schedule.customer_id')
 			->addTable('prescription', '#__schedule_prescriptions', 'schedule.rx_id = prescription.id')
-			->addTable('member', '#__schedule_members', 'member.id = memberMap.member_id');
+			->addTable('member', '#__schedule_members', 'member.id = memberMap.member_id')
+			->addTable('user', '#__users', 'user.id = prescription.created_by');
 
 		$this->filterFields = array_merge($this->filterFields, $queryHelper->getFilterFields());
 	}
@@ -127,7 +128,7 @@ class ScheduleModelSchedules extends ListModel
 	 *
 	 * @return  void
 	 */
-	protected function populateState($ordering = 'schedule.date', $direction = 'ASC')
+	protected function populateState($ordering = 'schedule.id', $direction = 'DESC')
 	{
 		$app = JFactory::getApplication();
 

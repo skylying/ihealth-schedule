@@ -55,7 +55,7 @@
 			label="COM_CONTENT_LIST_FULL_ORDERING"
 			description="COM_CONTENT_LIST_FULL_ORDERING_DESC"
 			onchange="this.form.submit();"
-			default="a.id ASC"
+			default="member.created DESC"
 			>
 			<option value="">JGLOBAL_SORT_BY</option>
 			<option value="member.id, member.ordering ASC">JGRID_HEADING_ORDERING_ASC</option>
@@ -64,8 +64,8 @@
 			<option value="member.id DESC">依會員編號降序排列</option>
 			<option value="member.name ASC">依會員姓名升序排列</option>
 			<option value="member.name DESC">依會員姓名降序排列</option>
-			<option value="member.email ASC">依會員信箱升序排列</option>
-			<option value="member.email DESC">依會員信箱降序排列</option>
+			<option value="member.created ASC">依新增日期升序排列</option>
+			<option value="member.created DESC">依新增日期降序排列</option>
 		</field>
 
 		<field
