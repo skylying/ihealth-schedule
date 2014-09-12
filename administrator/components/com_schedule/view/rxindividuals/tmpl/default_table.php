@@ -151,23 +151,13 @@ $date      = $container->get('date');
 
 		<!-- 過期排程 -->
 		<td class="center">
-			<?php
-			$output = '';
-
-			if (empty($item->expired_nths))
-			{
-				$output = '<span class="btn btn-success">正常</span>';
-			}
-			else
-			{
-				foreach (explode(',', $item->expired_nths) as $nth)
-				{
-					$output .= '<span class="label label-danger">' . substr($nth, 0, 1) . '</span> ';
-				}
-			}
-
-			echo $output;
-			?>
+			<?php if (empty($item->expired_nths)): ?>
+				<span class="btn btn-success">正常</span>
+			<?php else: ?>
+				<?php foreach (explode(',', $item->expired_nths) as $nth): ?>
+					<span class="label label-danger"><?php echo substr($nth, 0, 1) ?></span>
+				<?php endforeach; ?>
+			<?php endif; ?>
 		</td>
 
 		<!-- 散客名稱 -->

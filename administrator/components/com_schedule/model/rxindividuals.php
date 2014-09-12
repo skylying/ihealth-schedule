@@ -160,16 +160,18 @@ SQLALIAS;
 		$rxIdList = JArrayHelper::getColumn($items, 'id');
 		$rxIds = (string) new JDatabaseQueryElement('IN()', $rxIdList);
 
-		$sql = <<<SQL
-SELECT `schedule`.`rx_id`, GROUP_CONCAT(`schedule`.`deliver_nth`) AS `expired_nths`
-	FROM #__schedule_schedules AS schedule
-	WHERE `schedule`.`rx_id` {$rxIds}
-		AND `schedule`.`date` < NOW()
-	GROUP BY `schedule`.`rx_id`
-SQL;
+		$db = JFactory::getDbo();
+		$query = $db->getQuery(true);
+
+		$query->select('`schedule`.`rx_id`, GROUP_CONCAT(`schedule`.`deliver_nth`) AS `expired_nths`')
+			->from('#__schedule_schedules AS schedule')
+			->where('`schedule`.`rx_id`' . $rxIds)
+			->where('`schedule`.`date` < NOW()')
+			->group('`schedule`.`rx_id`');
+
 		$expiredNths = array();
 
-		foreach (JFactory::getDbo()->setQuery($sql)->loadObjectList() as $data)
+		foreach ($db->setQuery($query)->loadObjectList() as $data)
 		{
 			$expiredNths[$data->rx_id] = $data->expired_nths;
 		}
