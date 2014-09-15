@@ -5,7 +5,7 @@ table:
     '#__schedule_customer_member_maps': cols
     '#__schedule_drug_extra_details': cols
     '#__schedule_drugs': cols
-    '#__schedule_holidays': all
+    '#__schedule_holidays': cols
     '#__schedule_hospitals': cols
     '#__schedule_images': cols
     '#__schedule_institutes': cols
