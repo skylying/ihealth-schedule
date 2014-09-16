@@ -81,8 +81,12 @@
 		horz="true">
 
 		<field name="members"
-			type="member_list"
-			value_field="name"
+			type="AjaxChosen"
+			viewList="members"
+			ajaxTask="members.search.json"
+			ajaxTermKey="filter_search"
+			valueField="name"
+			minTermLength="1"
 			multiple="true"
 			label="所屬會員"
 			description="所屬會員"

@@ -62,9 +62,12 @@
 		align="left"
 		horz="true">
 		<field name="customer_id_list"
-			type="customer_list"
+			type="AjaxChosen"
+			viewList="customers"
+			valueField="name"
+			ajaxTask="customers.ajax.json"
+			minTermLength="1"
 			label="對應散客"
-			value_field="name"
 			multiple="true"
 			/>
 	</fieldset>

@@ -14,11 +14,20 @@
 			/>
 
 		<field name="customer_id"
-			type="customer_list"
-			value_field="name"
+			type="select2"
+			query="SELECT `id`, `name` FROM #__schedule_customers WHERE id=%s"
+			idField="id"
+			textField="name"
+			apiUrl="index.php?option=com_schedule&amp;task=customers.ajax.json"
+			apiQueryKey="q"
+			minimumInputLength="1"
+			allowClear="true"
 			label="對應客戶"
 			description="對應客戶id"
-			/>
+			class="input-large"
+			>
+			<option></option>
+		</field>
 
 		<field name="city"
 			type="sql"
