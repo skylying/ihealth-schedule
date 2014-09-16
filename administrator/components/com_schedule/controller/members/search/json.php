@@ -40,6 +40,13 @@ class ScheduleControllerMembersSearchJson extends DisplayController
 
 		$items = $model->getItems();
 
+		foreach ($items as &$item)
+		{
+			// For AjaxChosen
+			$item->value = $item->id;
+			$item->text = $item->name;
+		}
+
 		jexit(json_encode($items));
 	}
 }
