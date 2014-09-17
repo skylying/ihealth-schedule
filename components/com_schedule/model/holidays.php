@@ -6,8 +6,8 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
+use Windwalker\Helper\DateHelper;
 use Schedule\Table\Table;
-use Windwalker\DI\Container;
 use Windwalker\Model\Helper\QueryHelper;
 
 // No direct access
@@ -127,10 +127,10 @@ class ScheduleModelHolidays extends \Windwalker\Model\ListModel
 			'start_date',
 			function($query, $field, $value)
 			{
-				$date = new \JDate($value);
+				$date = DateHelper::getDate($value);
 
 				/** @var $query \JDatabaseQuery */
-				$query->where($query->format('%n >= %q', 'date', $date->toSql()));
+				$query->where($query->format('%n >= %q', 'date', $date->toSql(true)));
 			}
 		);
 
@@ -139,10 +139,10 @@ class ScheduleModelHolidays extends \Windwalker\Model\ListModel
 			'end_date',
 			function($query, $field, $value)
 			{
-				$date = new \JDate($value);
+				$date = DateHelper::getDate($value);
 
 				/** @var $query \JDatabaseQuery */
-				$query->where($query->format('%n <= %q', 'date', $date->toSql()));
+				$query->where($query->format('%n <= %q', 'date', $date->toSql(true)));
 			}
 		);
 	}
