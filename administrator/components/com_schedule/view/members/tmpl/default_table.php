@@ -124,7 +124,16 @@ $date      = $container->get('date');
 
 			<!--EMAIL-->
 			<td class="left">
-				<?php echo $this->escape($item->email); ?>
+				<?php
+				if (strpos($this->escape($item->email), 'blackhole+') !== false)
+				{
+					echo substr($this->escape($item->email), 10);
+				}
+				else
+				{
+					echo $this->escape($item->email);
+				}
+				?>
 			</td>
 
 			<!-- 新增日期 -->
