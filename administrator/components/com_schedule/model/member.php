@@ -31,6 +31,15 @@ class ScheduleModelMember extends MemberModel
 
 		if (empty($this->item->id))
 		{
+			// Find next primary key
+			$db = \JFactory::getDbo();
+			$q = $db->getQuery(true);
+			$q->select('auto_increment')
+				->from('`information_schema`.`tables`')
+				->where('table_name = ' . $db->quote('ihealth_schedule_members'));
+
+			$this->item->next_id = $db->setQuery($q)->loadResult();
+
 			return $this->item;
 		}
 
