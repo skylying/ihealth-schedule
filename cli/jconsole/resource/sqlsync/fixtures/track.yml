@@ -5,7 +5,6 @@ table:
     '#__schedule_customer_member_maps': all
     '#__schedule_drug_extra_details': all
     '#__schedule_drugs': all
-    '#__schedule_holidays': all
     '#__schedule_hospitals': all
     '#__schedule_images': all
     '#__schedule_institutes': all
