@@ -246,6 +246,12 @@ class ScheduleModel extends AdminModel
 			->where('schedule.date >= ' . $this->db->q($validDateStart->toSql()))
 			->where('schedule.date <= ' . $this->db->q($validDateEnd->toSql()));
 
+		// Exclude this schedule id
+		if ($table->id > 0)
+		{
+			$query->where('schedule.id<>' . $table->id);
+		}
+
 		$result = (int) $this->db->setQuery($query)->loadResult();
 
 		return $result > 0 ? 1 : 0;
