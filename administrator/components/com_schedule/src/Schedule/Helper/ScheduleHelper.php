@@ -5,6 +5,7 @@ namespace Schedule\Helper;
 use Windwalker\Data\Data;
 use Schedule\Table\Table;
 use Windwalker\Model\Exception\ValidateFailException;
+use Windwalker\Helper\DateHelper;
 
 /**
  * Class ScheduleHelper
@@ -48,7 +49,7 @@ class ScheduleHelper
 	 * @param   string  $nth            第幾次送藥 ('1st','2nd','3rd')
 	 * @param   string  $seeDoctorDate  就醫日期
 	 * @param   int     $period         給藥天數
-	 * @param   string  $weekday        星期幾送藥 ('MON','TUE','WED','THU','FRI','SAT','SUN')
+	 * @param   string  $weekday        星期幾送藥 ('MON','TUE','WED','THU','FRI')
 	 *
 	 * @throws  \Exception
 	 * @return  \JDate  送藥日期
@@ -56,7 +57,7 @@ class ScheduleHelper
 	public static function calculateSendDate($nth, $seeDoctorDate, $period, $weekday = '')
 	{
 		$nth = (int) substr($nth, 0, 1);
-		$date = new \JDate($seeDoctorDate);
+		$date = DateHelper::getDate($seeDoctorDate);
 
 		if ($nth < 0 || $nth > 3)
 		{
@@ -97,7 +98,7 @@ class ScheduleHelper
 			->from(Table::HOLIDAYS)
 			->where('`state`=1')
 			->where('`weekday`=' . $db->q($weekday))
-			->where('`date`>' . $db->q($date->format('Y-m-d', false, false)));
+			->where('`date`>' . $db->q($date->format('Y-m-d', true, false)));
 
 		// Convert date string to timestamp
 		$holidays = array_map(
@@ -111,7 +112,7 @@ class ScheduleHelper
 		// Shift to first day
 		for ($i = 0; $i < $maxSearchDays; ++$i)
 		{
-			if (strtoupper($date->format('D', false, false)) === $weekday)
+			if (strtoupper($date->format('D', true, false)) === $weekday)
 			{
 				break;
 			}
@@ -130,7 +131,7 @@ class ScheduleHelper
 			$date->modify('+7 day');
 		}
 
-		return new \JDate($date->format('Y-m-d'));
+		return $date;
 	}
 
 	/**
