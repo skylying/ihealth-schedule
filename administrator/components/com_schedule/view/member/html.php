@@ -88,6 +88,18 @@ class ScheduleViewMemberHtml extends EditView
 	{
 		$data = $this->getData();
 		$form = $data->form;
+		$data->hasFakeMail = false;
+
+		/**
+		 * Prepare fake email address according rule below
+		 */
+		$memberId = $this->container->get('input')->getInt('id');
+
+		if (empty($memberId))
+		{
+			$data->hasFakeMail = true;
+			$data->fakeMail = 'blackhole+member' . ($data->item->next_id) . '@ihealth.com.tw';
+		}
 
 		$form->setValue('password', null);
 		$form->setValue('password2', null);
