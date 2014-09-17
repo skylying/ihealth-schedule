@@ -213,7 +213,7 @@ class ScheduleHelper
 
 		$nth = (int) substr($nth, 0, 1);
 
-		$date = new \JDate($seeDoctorDate);
+		$date = DateHelper::getDate($seeDoctorDate);
 
 		if (1 === $nth)
 		{
