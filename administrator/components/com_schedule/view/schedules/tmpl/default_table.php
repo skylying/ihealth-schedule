@@ -210,7 +210,7 @@ foreach ($data->items as $i => $item):
 
 		<!-- prescription created -->
 		<td class="center">
-			<?php echo date('Y-m-d', strtotime($item->prescription_created)); ?>
+			<?php echo empty($item->prescription_created) ? '' : substr($item->prescription_created, 0, 10); ?>
 		</td>
 
 		<!-- 新增人 -->
