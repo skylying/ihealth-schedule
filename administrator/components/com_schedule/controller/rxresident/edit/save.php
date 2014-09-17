@@ -252,7 +252,7 @@ class ScheduleControllerRxresidentEditSave extends SaveController
 
 		$task = $this->taskMapper->findOne(
 			array(
-				'date' => $sendDate->toSql(),
+				'date' => $sendDate->format('Y-m-d', true),
 				'sender' => $instituteTable->sender_id,
 			)
 		);
@@ -288,7 +288,7 @@ class ScheduleControllerRxresidentEditSave extends SaveController
 
 		$task = $this->taskMapper->findOne(
 			array(
-				'date' => $sendDate->toSql(),
+				'date' => $sendDate->format('Y-m-d', true),
 				'sender' => $instituteTable->sender_id,
 			)
 		);

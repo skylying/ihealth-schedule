@@ -59,7 +59,7 @@ class ScheduleControllerRxindividualAjaxSendDate extends DisplayController
 
 			echo json_encode(
 				array(
-					"date" => $result->format("Y-m-d"),
+					"date" => $result->format("Y-m-d", true),
 					"type" => ApiReturnCodeHelper::SUCCESS_ROUTE_EXIST,
 					"nth" => $nth
 				)
@@ -74,7 +74,7 @@ class ScheduleControllerRxindividualAjaxSendDate extends DisplayController
 
 				echo json_encode(
 					array(
-						"date" => $result->format("Y-m-d"),
+						"date" => $result->format("Y-m-d", true),
 						"type" => ApiReturnCodeHelper::SUCCESS_ROUTE_EXIST,
 						"nth" => $nth)
 				);
