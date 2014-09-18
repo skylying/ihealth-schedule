@@ -181,6 +181,7 @@
 
 		<field name="id_number"
 			type="text"
+			hint="如不知可以用 10 個 * 取代"
 			label="客戶身份證字號"
 			description="客戶身份證字號"
 			/>

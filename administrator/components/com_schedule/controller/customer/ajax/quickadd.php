@@ -23,39 +23,6 @@ use Schedule\Table\Table;
  */
 class ScheduleControllerCustomerAjaxQuickadd extends QuickaddController
 {
-	/**
-	 * prepareExecute
-	 *
-	 * @return void
-	 */
-	protected function prepareExecute()
-	{
-		// Init Variables
-		$data = $this->input->get($this->input->get('formctrl'), array(), 'array');
-
-		$birthDate = $data['birth_date'];
-
-		$result = new Registry;
-
-
-		switch (true)
-		{
-			case (preg_match('/^[12][0-9]{3}[01][0-9][0-3][0-9]$/', $birthDate)) :
-				break;
-			case (preg_match('/^[12][0-9]{3}-[01][0-9]-[0-3][0-9]$/', $birthDate)) :
-				break;
-			default:
-				$result->set('Result', false);
-
-				// Return Error Message.
-				$result->set('errorMsg', \JText::sprintf('請確認生日格式是否符合8位數字或(YYYY-MM-DD)格式。'));
-
-				jexit($result);
-		}
-
-		parent::prepareExecute();
-	}
-
     /**
 	 * doExecute
 	 *
