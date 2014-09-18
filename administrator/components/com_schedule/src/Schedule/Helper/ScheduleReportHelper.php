@@ -64,8 +64,8 @@ class ScheduleReportHelper
 	 */
 	public function extraFilter($query, $filter)
 	{
-		$date = DateHelper::getDate();
-		$thisYear = $date->format('Y', true);
+		$now = DateHelper::getDate();
+		$thisYear = $now->format('Y', true);
 
 		$defaultYearMonthStart = sprintf('%s-01-01', $thisYear);
 		$defaultYearMonthEnd   = sprintf('%s-12-31', $thisYear);

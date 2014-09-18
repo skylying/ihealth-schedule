@@ -25,11 +25,11 @@ JHtmlBehavior::multiselect('adminForm');
 $container = $this->getContainer();
 $asset     = $container->get('helper.asset');
 $grid      = $data->grid;
-$date      = DateHelper::getDate();
+$now       = DateHelper::getDate();
 
 // Get current year and month
-$year = (int) $date->format('Y', true);
-$month = (int) $date->format('m', true);
+$year = (int) $now->format('Y', true);
+$month = (int) $now->format('m', true);
 
 ?>
 
