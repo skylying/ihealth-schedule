@@ -23,16 +23,6 @@ use Schedule\Table\Table;
  */
 class ScheduleControllerCustomerAjaxQuickadd extends QuickaddController
 {
-	/**
-	 * prepareExecute
-	 *
-	 * @return void
-	 */
-	protected function prepareExecute()
-	{
-		parent::prepareExecute();
-	}
-
     /**
 	 * doExecute
 	 *
