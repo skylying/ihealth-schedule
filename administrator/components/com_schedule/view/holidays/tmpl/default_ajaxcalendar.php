@@ -7,6 +7,7 @@
  */
 
 use Windwalker\Data\Data;
+use Windwalker\Helper\DateHelper;
 
 // No direct access
 defined('_JEXEC') or die;
@@ -20,16 +21,15 @@ JHtmlBehavior::multiselect('adminForm');
  * @var $container Windwalker\DI\Container
  * @var $asset	   Windwalker\Helper\AssetHelper
  * @var $data      Windwalker\Data\Data
- * @var $date      \JDate
  */
 $container = $this->getContainer();
 $asset     = $container->get('helper.asset');
 $grid      = $data->grid;
-$date      = $container->get('date');
+$now       = DateHelper::getDate();
 
 // Get current year and month
-$year = date("Y");
-$month = (int) date("m");
+$year = (int) $now->format('Y', true);
+$month = (int) $now->format('m', true);
 
 ?>
 

@@ -9,6 +9,7 @@
 // No direct access
 defined('_JEXEC') or die;
 
+use Windwalker\Helper\DateHelper;
 use Schedule\Table\Table;
 use Schedule\Table\Collection as TableCollection;
 
@@ -184,8 +185,8 @@ class ScheduleModelPrescription extends \Windwalker\Model\AdminModel
 		$memberTable   = TableCollection::loadTable('Member',   $table->member_id);
 		$hospitalTable = TableCollection::loadTable('Hospital', $table->hospital_id);
 
-		$emptyDate1st = new JDate($table->see_dr_date);
-		$emptyDate2nd = new JDate($table->see_dr_date);
+		$emptyDate1st = DateHelper::getDate($table->see_dr_date);
+		$emptyDate2nd = DateHelper::getDate($table->see_dr_date);
 
 		$emptyDate1st->modify('+' . $table->period . ' days');
 		$emptyDate2nd->modify('+' . ($table->period * 2) . ' days');
@@ -196,7 +197,7 @@ class ScheduleModelPrescription extends \Windwalker\Model\AdminModel
 		$table->id_number = $customerTable->id_number;
 		$table->birth_date = $customerTable->birth_date;
 		$table->deliver_nths = implode(',', (array) $table->deliver_nths);
-		$table->empty_date_1st = $emptyDate1st->toSql();
-		$table->empty_date_2nd = $emptyDate2nd->toSql();
+		$table->empty_date_1st = $emptyDate1st->toSql(true);
+		$table->empty_date_2nd = $emptyDate2nd->toSql(true);
 	}
 }

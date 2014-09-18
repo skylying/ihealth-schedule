@@ -10,6 +10,7 @@ namespace Schedule\Helper;
 
 use Schedule\Table\Table;
 use Windwalker\Compare\InCompare;
+use Windwalker\Helper\DateHelper;
 
 /**
  * Class ScheduleReportHelper
@@ -63,7 +64,8 @@ class ScheduleReportHelper
 	 */
 	public function extraFilter($query, $filter)
 	{
-		$thisYear = date('Y');
+		$now = DateHelper::getDate();
+		$thisYear = $now->format('Y', true);
 
 		$defaultYearMonthStart = sprintf('%s-01-01', $thisYear);
 		$defaultYearMonthEnd   = sprintf('%s-12-31', $thisYear);

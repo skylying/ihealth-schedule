@@ -6,6 +6,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
+use Windwalker\Helper\DateHelper;
 use Joomla\DI\Container;
 use Windwalker\Model\Model;
 use Windwalker\View\Engine\PhpEngine;
@@ -104,8 +105,10 @@ class ScheduleViewHolidaysHtml extends GridView
 	 */
 	protected function prepareData()
 	{
+		$year = DateHelper::getDate()->format('Y', true);
+
 		// Get current year from filter value
-		$this->data->currentYear = $this->data->filterForm->getValue('holiday.year', 'filter', date("Y"));
+		$this->data->currentYear = $this->data->filterForm->getValue('holiday.year', 'filter', $year);
 
 		// Extract information we need
 		$dates = array_map(

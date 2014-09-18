@@ -170,13 +170,17 @@ class ScheduleHelper
 		$daysBefore = 1 === $nth ? -1 : 10;
 		$daysAfter  = 1 === $nth ? 3 : 10;
 
+		$now = DateHelper::getDate();
+
 		// Fill valid send dates
 		for ($i = -$daysBefore; $i <= $daysAfter; ++$i)
 		{
 			$unixTime = $drugEmptyDateUnixTime + $i * 86400;
 
+			$now->setTimestamp($unixTime);
+
 			// Get weekday, 1 (for Monday) through 7 (for Sunday)
-			$weekday = (int) date('N', $unixTime);
+			$weekday = (int) $now->format('N', true);
 
 			if ($weekday !== 6 && $weekday !== 7)
 			{

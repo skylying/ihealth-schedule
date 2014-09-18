@@ -6,6 +6,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
+use Windwalker\Helper\DateHelper;
 use Windwalker\Model\AdminModel;
 use Schedule\Table\Collection as TableCollection;
 
@@ -127,16 +128,22 @@ class ScheduleModelRxresident extends AdminModel
 
 		if (empty($table->empty_date_1st))
 		{
+			$date = DateHelper::getDate($table->see_dr_date);
 			$modify = sprintf('+%s day', $table->period);
 
-			$table->empty_date_1st = (new JDate($table->see_dr_date))->modify($modify)->toSql();
+			$date->modify($modify);
+
+			$table->empty_date_1st = $date->toSql(true);
 		}
 
 		if (empty($table->empty_date_2nd))
 		{
+			$date = DateHelper::getDate($table->see_dr_date);
 			$modify = sprintf('+%s day', $table->period * 2);
 
-			$table->empty_date_2nd = (new JDate($table->see_dr_date))->modify($modify)->toSql();
+			$date->modify($modify);
+
+			$table->empty_date_2nd = $date->toSql(true);
 		}
 	}
 }

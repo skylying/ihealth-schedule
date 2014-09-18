@@ -6,6 +6,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
+use Windwalker\Helper\DateHelper;
 use Windwalker\DI\Container;
 use Windwalker\Model\Filter\FilterHelper;
 use Windwalker\Model\ListModel;
@@ -136,8 +137,10 @@ class ScheduleModelSchedules extends ListModel
 
 		$this->state->set('report_filter', $filter);
 
-		$this->state->set('report_filter_start_date', ArrayHelper::getValue($filter, 'date_start', date('Y') . '-01-01'));
-		$this->state->set('report_filter_end_date', ArrayHelper::getValue($filter, 'date_end', date('Y') . '-12-31'));
+		$now = DateHelper::getDate();
+
+		$this->state->set('report_filter_start_date', ArrayHelper::getValue($filter, 'date_start', $now->format('Y', true) . '-01-01'));
+		$this->state->set('report_filter_end_date', ArrayHelper::getValue($filter, 'date_end', $now->format('Y', true) . '-12-31'));
 		$this->state->set('report_filter_city', ArrayHelper::getValue($filter, 'city', array()));
 
 		parent::populateState($ordering, $direction);
