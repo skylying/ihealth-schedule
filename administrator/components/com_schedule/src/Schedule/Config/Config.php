@@ -7,6 +7,7 @@
  */
 namespace Schedule\Config;
 
+use Windwalker\Helper\PathHelper;
 use Windwalker\System\Config\AbstractConfig;
 
 // No direct access
@@ -24,7 +25,7 @@ abstract class Config extends AbstractConfig
 	 *
 	 * @var  string
 	 */
-	protected static $type = 'json';
+	protected static $type = 'yaml';
 
 	/**
 	 * getPath
@@ -36,6 +37,13 @@ abstract class Config extends AbstractConfig
 		$type = static::$type;
 		$ext  = (static::$type == 'yaml') ? 'yml' : $type;
 
-		return SCHEDULE_ADMIN . '/etc/config.' . $ext;
+		$path = PathHelper::getAdmin('com_schedule') . '/etc/runtime.' . $ext;
+
+		if (!is_file($path))
+		{
+			$path = PathHelper::getAdmin('com_schedule') . '/etc/config.' . $ext;
+		}
+
+		return $path;
 	}
 }

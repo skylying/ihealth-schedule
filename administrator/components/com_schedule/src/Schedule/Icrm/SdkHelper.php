@@ -10,7 +10,7 @@ namespace Schedule\Icrm;
 
 use Schedule\Utilities\SingletonWrapperTrait;
 use Windwalker\DI\Container;
-use Windwalker\System\ExtensionHelper;
+use Schedule\Config\ConfigHelper;
 
 /**
  * Class SdkHelper
@@ -35,7 +35,7 @@ abstract class SdkHelper
 	{
 		$container = $container ? : Container::getInstance('com_schedule');
 
-		$params = ExtensionHelper::getParams('com_schedule');
+		$params = ConfigHelper::getParams('com_schedule');
 
 		$host = $params->get('icrm_api.host');
 

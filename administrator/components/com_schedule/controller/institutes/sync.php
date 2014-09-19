@@ -12,7 +12,7 @@ use Schedule\Icrm\SdkHelper;
 use Windwalker\Helper\ArrayHelper;
 use Schedule\Table\Table;
 use Windwalker\Joomla\DataMapper\DataMapper;
-use Windwalker\System\ExtensionHelper;
+use Schedule\Config\ConfigHelper;
 
 /**
  * Class ScheduleControllerInstitutesSync
@@ -49,7 +49,7 @@ class ScheduleControllerInstitutesSync extends AbstractRedirectController
 
 		$sdk = SdkHelper::getSdk();
 
-		$params = ExtensionHelper::getParams('com_schedule');
+		$params = ConfigHelper::getParams('com_schedule');
 
 		$username = $params->get('icrm_api.username', '');
 		$password = $params->get('icrm_api.password', '');

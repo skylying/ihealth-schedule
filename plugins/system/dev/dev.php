@@ -65,6 +65,26 @@ class PlgSystemDev extends JPlugin
 		$uri = JURI::getInstance();
 		$user = JFactory::getUser();
 		$query = $uri->getQuery();
+		$input = $app->input;
+
+		// Config override
+		if ($app->isAdmin() && $input->get('option') == 'com_config' && $input->get('component') == 'com_schedule')
+		{
+			include_once JPATH_ADMINISTRATOR . '/components/com_schedule/src/init.php';
+
+			if ($input->get('task'))
+			{
+				JObserverMapper::addObserverClassToClass(
+					'Schedule\\Table\\Observer\\ConfigObserver',
+					'JTableExtension',
+					array('typeAlias' => 'com_config.schedule')
+				);
+			}
+			else
+			{
+				\Schedule\Config\ConfigHelper::storeRuntime();
+			}
+		}
 
 		if ($this->setupApiRoute())
 		{

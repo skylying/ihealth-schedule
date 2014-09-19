@@ -10,6 +10,7 @@ use Windwalker\Controller\DisplayController;
 use Windwalker\Joomla\DataMapper\DataMapper;
 use Schedule\Table\Table;
 use Schedule\Uploader\ImageUploader;
+use Schedule\Config\ConfigHelper;
 
 /**
  * Class ScheduleControllerImageAjaxDelete
@@ -46,7 +47,7 @@ class ScheduleControllerImageAjaxDelete extends DisplayController
 				else
 				{
 					// Delete S3 file
-					$params = \JComponentHelper::getParams('com_schedule');
+					$params = ConfigHelper::getParams('com_schedule');
 
 					if ($params->get('s3.enable', 0))
 					{
