@@ -300,14 +300,18 @@
 
 			data.each(function()
 			{
-				var tmp      = {},
-					isDefult = ($(this).siblings().attr('title') == 'true'),
-					phone    = $(this).val();
+				var phone = $.trim($(this).val());
 
-				tmp["default"] = isDefult;
-				tmp["number"]  = phone;
+				if (phone)
+				{
+					var tmp      = {},
+						isDefult = ($(this).siblings().attr('title') == 'true');
 
-				result.push(tmp);
+					tmp["default"] = isDefult;
+					tmp["number"]  = phone;
+
+					result.push(tmp);
+				}
 			});
 
 			return JSON.stringify(result);
