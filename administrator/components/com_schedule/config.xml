@@ -62,6 +62,12 @@
 				type="text"
 				label="官網網址"
 				/>
+
+			<field
+				name="0800"
+				type="text"
+				label="0800電話："
+				/>
 		</fieldset>
 	</fields>
 
@@ -75,12 +81,6 @@
 				multiple="true"
 				label="無路線提醒信箱"
 				description="無路線提醒信箱"
-				/>
-
-			<field
-				name="0800"
-				type="text"
-				label="0800電話："
 				/>
 		</fieldset>
 	</fields>
