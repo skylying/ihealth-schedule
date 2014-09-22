@@ -62,6 +62,12 @@
 				type="text"
 				label="官網網址"
 				/>
+
+			<field
+				name="0800"
+				type="text"
+				label="0800電話："
+				/>
 		</fieldset>
 	</fields>
 

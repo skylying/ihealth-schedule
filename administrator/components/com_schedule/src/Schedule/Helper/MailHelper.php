@@ -33,6 +33,7 @@ class MailHelper
 
 		$params = ConfigHelper::getParams('com_schedule');
 		$displayData['ihealthSiteUrl'] = $params->get('ihealth_site.url', 'http://www.ihealth.com.tw');
+		$displayData['0800'] = $params->get('ihealth_site.0800', '0800-088-336');
 
 		$mailer->setSubject(sprintf('[iHealth] 處方預約確認: %s 您好! 您的處方宅配已預約完成', $displayData['member']->name));
 		$mailer->setBody($layout->render($displayData));
@@ -68,6 +69,7 @@ class MailHelper
 
 		$params = ConfigHelper::getParams('com_schedule');
 		$displayData['ihealthSiteUrl'] = $params->get('ihealth_site.url', 'http://www.ihealth.com.tw');
+		$displayData['0800'] = $params->get('ihealth_site.0800', '0800-088-336');
 
 		$mailer->setSubject(sprintf('[無送藥路線] %s 宅配日期: %s', $displayData['memberName'], $displayData['date']));
 		$mailer->setBody($layout->render($displayData));
@@ -103,6 +105,7 @@ class MailHelper
 
 		$params = ConfigHelper::getParams('com_schedule');
 		$displayData['ihealthSiteUrl'] = $params->get('ihealth_site.url', 'http://www.ihealth.com.tw');
+		$displayData['0800'] = $params->get('ihealth_site.0800', '0800-088-336');
 
 		$changedText = \JText::_('COM_SCHEDULE_EMAIL_TILE_SCHEDULE_' . $displayData['changed']);
 
@@ -161,6 +164,7 @@ class MailHelper
 
 		$params = ConfigHelper::getParams('com_schedule');
 		$displayData['ihealthSiteUrl'] = $params->get('ihealth_site.url', 'http://www.ihealth.com.tw');
+		$displayData['0800'] = $params->get('ihealth_site.0800', '0800-088-336');
 
 		$mailer->setSubject(sprintf('[iHealth] 取消確認: %s 您好! 您的處方宅配預約已取消', $displayData['member']->name));
 		$mailer->setBody($layout->render($displayData));
@@ -196,6 +200,7 @@ class MailHelper
 
 		$params = ConfigHelper::getParams('com_schedule');
 		$displayData['ihealthSiteUrl'] = $params->get('ihealth_site.url', 'http://www.ihealth.com.tw');
+		$displayData['0800'] = $params->get('ihealth_site.0800', '0800-088-336');
 
 		$mailer->setSubject(sprintf('[iHealth] 註冊成功: %s 您好! 恭喜您已註冊成功。', $displayData['name']));
 		$mailer->setBody($layout->render($displayData));
