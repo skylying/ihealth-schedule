@@ -17,7 +17,7 @@
 			query="SELECT `id`, `name` FROM #__schedule_customers WHERE id=%s"
 			idField="id"
 			textField="name"
-			apiUrl="index.php?option=com_schedule&amp;task=customers.ajax.json"
+			apiUrl="index.php?option=com_schedule&amp;task=customers.ajax.json&amp;filter[customer.type]=individual"
 			apiQueryKey="q"
 			minimumInputLength="1"
 			allowClear="true"
