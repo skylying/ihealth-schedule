@@ -300,7 +300,7 @@
 
 			data.each(function()
 			{
-				var phone = $(this).val();
+				var phone = $.trim($(this).val());
 
 				if (phone)
 				{
