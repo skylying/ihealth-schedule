@@ -24,6 +24,7 @@ JFormHelper::loadFieldClass('list');
  * - valueField:    (optional) List key field (default is "title")
  * - tableName:     (optional) Table name, overwrite default generated table name
  * - ajaxTermKey:   (optional) API term key, default is "q"
+ * - ajaxQuery:     (optional) API query parts, ex: 'foo=bar&xyz=123'
  * - ajaxMethod:    (optional) API http request method, default is "GET"
  * - minTermLength: (optional) Minimum term length, default is 2
  */
@@ -79,6 +80,13 @@ class JFormFieldAjaxChosen extends JFormFieldList
 	protected $ajaxTermKey = 'q';
 
 	/**
+	 * Property ajaxQuery.
+	 *
+	 * @var string
+	 */
+	protected $ajaxQuery = '';
+
+	/**
 	 * Property ajaxMethod.
 	 *
 	 * @var string
@@ -120,6 +128,7 @@ class JFormFieldAjaxChosen extends JFormFieldList
 		$this->valueField    = XmlHelper::get($element, 'valueField', 'title');
 		$this->ajaxTask      = XmlHelper::get($element, 'ajaxTask');
 		$this->ajaxTermKey   = XmlHelper::get($element, 'ajaxTermKey', 'q');
+		$this->ajaxQuery     = XmlHelper::get($element, 'ajaxQuery', '');
 		$this->ajaxMethod    = strtoupper(XmlHelper::get($element, 'ajaxMethod', 'GET'));
 		$this->minTermLength = XmlHelper::get($element, 'minTermLength', 2);
 
@@ -152,11 +161,13 @@ class JFormFieldAjaxChosen extends JFormFieldList
 	 */
 	protected function getInput()
 	{
+		$ajaxQuery = (empty($this->ajaxQuery) ? '' : '&' . $this->ajaxQuery);
+
 		$ajaxChosenOptions = new JRegistry(
 			array(
 				'selector'      => '#' . $this->id,
 				'type'          => $this->ajaxMethod,
-				'url'           => JRoute::_('index.php?option=com_schedule&task=' . $this->ajaxTask, false),
+				'url'           => JRoute::_('index.php?option=com_schedule&task=' . $this->ajaxTask . $ajaxQuery, false),
 				'dataType'      => 'json',
 				'jsonTermKey'   => $this->ajaxTermKey,
 				'minTermLength' => $this->minTermLength,
