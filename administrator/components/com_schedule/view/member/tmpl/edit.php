@@ -71,7 +71,7 @@ $relatedCustomersFieldset = $fieldsets['related_customers'];
 					<?php if ($data->hasFakeMail): ?>
 					<div class="control-group">
 						<div class="control-label">
-							<label id="" for="generate-mail-btn" class="hasTooltip" title="" data-original-title="<strong>產生假信箱</strong>">產生假信箱</label>
+							<label for="generate-mail-btn" class="hasTooltip" data-original-title="<strong>產生假信箱</strong>">產生假信箱</label>
 						</div>
 						<div class="controls">
 							<button id="generate-mail-btn" class="btn btn-info" type="button">點此產生</button>
