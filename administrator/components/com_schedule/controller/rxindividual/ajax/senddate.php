@@ -51,6 +51,8 @@ class ScheduleControllerRxindividualAjaxSendDate extends DisplayController
 					"nth" => $nth
 				)
 			);
+
+			jexit();
 		}
 
 		if (! empty($weekday))
