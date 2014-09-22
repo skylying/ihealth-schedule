@@ -201,7 +201,7 @@ class ScheduleControllerPrescriptionEditSave extends ApiSaveController
 				$schedule['deliver_nth'],
 				$validData['see_dr_date'],
 				$validData['period']
-			)->toSql();
+			)->format('Y-m-d', true);
 
 			$scheduleModel->save($schedule);
 

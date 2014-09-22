@@ -6,6 +6,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
+use Windwalker\Helper\DateHelper;
 use Windwalker\Data\Data;
 use Windwalker\Helper\ArrayHelper;
 use Schedule\Helper\ScheduleHelper;
@@ -210,7 +211,7 @@ foreach ($data->items as $i => $item):
 
 		<!-- prescription created -->
 		<td class="center">
-			<?php echo date('Y-m-d', strtotime($item->prescription_created)); ?>
+			<?php echo empty($item->prescription_created) ? '' : DateHelper::getDate($item->prescription_created)->format('Y-m-d', true); ?>
 		</td>
 
 		<!-- 新增人 -->

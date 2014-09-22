@@ -8,6 +8,7 @@
 
 namespace Schedule\Model;
 
+use Windwalker\Helper\DateHelper;
 use Windwalker\Model\AdminModel;
 use Schedule\Table\Collection AS TableCollection;
 use Schedule\Table\Table;
@@ -230,8 +231,8 @@ class ScheduleModel extends AdminModel
 	{
 		$query = $this->db->getQuery(true);
 
-		$validDateStart = new \JDate($table->date);
-		$validDateEnd = (new \JDate($table->date));
+		$validDateStart = DateHelper::getDate($table->date);
+		$validDateEnd = DateHelper::getDate($table->date);
 
 		$validDateStart->modify('-10 days');
 		$validDateEnd->modify('+10 days');
@@ -243,8 +244,8 @@ class ScheduleModel extends AdminModel
 			->where('schedule.member_id = ' . $table->member_id)
 			->where('schedule.address_id = ' . $table->address_id)
 			->where('task.status = 0')
-			->where('schedule.date >= ' . $this->db->q($validDateStart->toSql()))
-			->where('schedule.date <= ' . $this->db->q($validDateEnd->toSql()));
+			->where('schedule.date >= ' . $this->db->q($validDateStart->toSql(true)))
+			->where('schedule.date <= ' . $this->db->q($validDateEnd->toSql(true)));
 
 		// Exclude this schedule id
 		if ($table->id > 0)

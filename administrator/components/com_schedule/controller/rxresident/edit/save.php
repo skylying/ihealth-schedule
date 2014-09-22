@@ -1,5 +1,6 @@
 <?php
 
+use Windwalker\Helper\DateHelper;
 use Windwalker\Controller\Edit\SaveController;
 use Windwalker\Model\Exception\ValidateFailException;
 use Windwalker\Data\Data;
@@ -252,7 +253,7 @@ class ScheduleControllerRxresidentEditSave extends SaveController
 
 		$task = $this->taskMapper->findOne(
 			array(
-				'date' => $sendDate->toSql(),
+				'date' => $sendDate->format('Y-m-d', true),
 				'sender' => $instituteTable->sender_id,
 			)
 		);
@@ -288,7 +289,7 @@ class ScheduleControllerRxresidentEditSave extends SaveController
 
 		$task = $this->taskMapper->findOne(
 			array(
-				'date' => $sendDate->toSql(),
+				'date' => $sendDate->format('Y-m-d', true),
 				'sender' => $instituteTable->sender_id,
 			)
 		);
@@ -318,7 +319,7 @@ class ScheduleControllerRxresidentEditSave extends SaveController
 			'status' => 0,
 			'sender' => $instituteTable->sender_id,
 			'sender_name' => $instituteTable->sender_name,
-			'date' => $sendDate->toSql(),
+			'date' => $sendDate->toSql(true),
 		);
 
 		$this->taskState->set('task.id', 0);
@@ -416,7 +417,7 @@ class ScheduleControllerRxresidentEditSave extends SaveController
 	 */
 	private function getScheduleData($rx, $nth, $taskId, $sendDate)
 	{
-		$drugEmptyDate = new JDate($rx['see_dr_date']);
+		$drugEmptyDate = DateHelper::getDate($rx['see_dr_date']);
 		$number = (int) substr($nth, 0, 1);
 		$modify = sprintf('+%s day', ($number - 1) * $rx['period']);
 
@@ -429,9 +430,9 @@ class ScheduleControllerRxresidentEditSave extends SaveController
 			'institute_id' => $rx['institute_id'],
 			'rx_id' => $rx['id'],
 			'type' => 'resident',
-			'date' => $sendDate->toSql(),
+			'date' => $sendDate->toSql(true),
 			'deliver_nth' => $nth,
-			'drug_empty_date' => $drugEmptyDate->toSql(),
+			'drug_empty_date' => $drugEmptyDate->toSql(true),
 			'session' => 'daytime',
 			'status' => 'scheduled',
 			'sorted' => 0,

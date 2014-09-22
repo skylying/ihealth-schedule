@@ -8,6 +8,8 @@
 
 namespace Schedule\Helper;
 
+use Windwalker\Helper\DateHelper;
+
 /**
  * Class ColorHelper for Namespace.
  *
@@ -54,8 +56,12 @@ class CalendarHelper
 			$grid->setRowCell($value, \JText::_('COM_SCHEDULE_VIEW_HOLIDAY_WEEKDAY_' . $value), array('class' => 'center'));
 		}
 
+		$date = DateHelper::getDate();
+
+		$date->setDate($year, $month, 1);
+
 		// Fill the "blank days" at beginning
-		$firstWeekDay = date('w', mktime(null, null, null, $month, 1, $year));
+		$firstWeekDay = $date->format('w', true);
 
 		$grid->addRow();
 
@@ -67,7 +73,9 @@ class CalendarHelper
 		// Print table body with date
 		for ($i = 1; $i <= $daysInMonth; $i++)
 		{
-			$currentDay = date('w', mktime(null, null, null, $month, $i, $year));
+			$date->setDate($year, $month, $i);
+
+			$currentDay = $date->format('w', true);
 
 			// Add new row at Sunday
 			if ($currentDay == 0)
@@ -113,8 +121,10 @@ class CalendarHelper
 			$grid->setRowCell($currentDay, $i, $cellConfig);
 		}
 
+		$date->setDate($year, $month, $daysInMonth);
+
 		// Fill the "blank days" at end
-		$lastWeekDay = date('w', mktime(null, null, null, $month, $daysInMonth, $year));
+		$lastWeekDay = $date->format('w', true);
 
 		if ($lastWeekDay != 6)
 		{

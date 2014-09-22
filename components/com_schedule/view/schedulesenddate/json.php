@@ -64,6 +64,6 @@ class ScheduleViewScheduleSendDateJson extends ApiView
 
 		$item = $this->get('Item');
 
-		$data['item'] = ['date' => $item->format('Y-m-d')];
+		$data['item'] = ['date' => $item->format('Y-m-d', true)];
 	}
 }

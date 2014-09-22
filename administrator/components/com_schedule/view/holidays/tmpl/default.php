@@ -41,6 +41,7 @@ CSS;
 $doc->addStyleDeclaration($css);
 
 $filters = $this->data['filterForm']->getGroup('filter');
+$year = $this->data->currentYear;
 
 ?>
 
@@ -62,6 +63,11 @@ $filters = $this->data['filterForm']->getGroup('filter');
 					<?php
 					foreach ($filters as $filter)
 					{
+						if ('filter[holiday.year]' === $filter->name)
+						{
+							$filter->value = $year;
+						}
+
 						echo $filter->input;
 					}
 					?>

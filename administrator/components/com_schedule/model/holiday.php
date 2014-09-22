@@ -6,6 +6,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
+use Windwalker\Helper\DateHelper;
 use Windwalker\Model\AdminModel;
 
 // No direct access
@@ -82,17 +83,13 @@ class ScheduleModelHoliday extends AdminModel
 	 */
 	public function prepareTable(JTable $table)
 	{
-		$rawDate = new JDate($table->date);
+		$date = DateHelper::getDate($table->date);
 
-		$date = $rawDate->toSql();
+		$table->year  = $date->format('Y', true);
+		$table->month = $date->format('m', true);
+		$table->day   = $date->format('d', true);
 
-		$yearMonthDay = explode('-', $date);
-
-		$table->year  = $yearMonthDay[0];
-		$table->month = $yearMonthDay[1];
-		$table->day   = $yearMonthDay[2];
-
-		$weekDay = strtoupper(date('D', strtotime($date)));
+		$weekDay = strtoupper($date->format('D', true, false));
 
 		if ($weekDay == 'SAT' || $weekDay == 'SUN')
 		{
