@@ -223,6 +223,9 @@ class ScheduleControllerPrescriptionEditSave extends ApiSaveController
 			}
 		}
 
+		// Reset Reference Pointer
+		unset($schedule);
+
 		foreach ($this->data['drugs'] as $drug)
 		{
 			$drug['rx_id'] = $rxId;
