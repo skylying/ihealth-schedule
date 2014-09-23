@@ -29,14 +29,21 @@ class ScheduleModelMember extends MemberModel
 	{
 		$this->item = parent::getItem($pk);
 
+		// For fake email, we need to prepare "next primary key"
 		if (empty($this->item->id))
 		{
 			// Find next primary key
 			$db = \JFactory::getDbo();
+
+			$dbPrefix = $db->getPrefix();
+
+			// This will look like ihealth_schedule_members
+			$targetTableName = $dbPrefix . 'schedule_members';
+
 			$q = $db->getQuery(true);
 			$q->select('auto_increment')
 				->from('`information_schema`.`tables`')
-				->where('table_name = ' . $db->quote('ihealth_schedule_members'));
+				->where('table_name = ' . $db->quote($targetTableName));
 
 			$this->item->next_id = $db->setQuery($q)->loadResult();
 
