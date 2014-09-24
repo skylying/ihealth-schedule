@@ -29,7 +29,7 @@ class ScheduleModelMember extends MemberModel
 	{
 		$this->item = parent::getItem($pk);
 
-		// For fake email, we need to prepare "next primary key"
+		// For fake email, we need to prepare next "AUTO INCREMENT" value
 		if (empty($this->item->id))
 		{
 			// Find next primary key
