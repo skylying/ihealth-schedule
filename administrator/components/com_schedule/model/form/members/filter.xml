@@ -9,8 +9,9 @@
 			class="input-small"
 			>
 			<option value="*">JALL</option>
-			<option value="member.name">JGLOBAL_TITLE</option>
-			<option value="member.email">JCATEGORY</option>
+			<option value="member.id">會員編號</option>
+			<option value="member.name">會員姓名</option>
+			<option value="member.email">會員電郵</option>
 		</field>
 
 		<field
