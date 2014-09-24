@@ -228,7 +228,7 @@ $date      = $container->get('date');
 			// Define new prescription through API
 			$params = new Data(json_decode($item->params));
 
-			if ($params->fromRemote)
+			if ($params->fromOfficialSite)
 			{
 				echo '<span class="btn btn-warning">官網客戶</span>';
 			}

@@ -95,7 +95,7 @@ class ScheduleControllerPrescriptionEditSave extends ApiSaveController
 
 		// Restrict prescription type to "individual"
 		$this->data['type'] = 'individual';
-		$this->data['params'] = '{"fromRemote":"true"}';
+		$this->data['params'] = '{"fromOfficialSite":"true"}';
 
 		// Set prescription default values
 		$this->data['received']  = 0;
