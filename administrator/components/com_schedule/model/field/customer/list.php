@@ -9,14 +9,12 @@
 // No direct access
 defined('_JEXEC') or die;
 
-include_once JPATH_LIBRARIES . '/windwalker/src/init.php';
-JForm::addFieldPath(WINDWALKER_SOURCE . '/Form/Fields');
-JFormHelper::loadFieldClass('itemlist');
+JFormHelper::loadFieldClass('AjaxItemList');
 
 /**
  * Supports an HTML select list of categories
  */
-class JFormFieldCustomer_List extends JFormFieldItemlist
+class JFormFieldCustomer_List extends JFormFieldAjaxItemList
 {
 	/**
 	 * The form field type.
