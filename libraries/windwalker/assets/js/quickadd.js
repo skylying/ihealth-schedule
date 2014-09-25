@@ -107,10 +107,16 @@ var AKQuickAdd = ({
 
 						// Add new Option in Select
 						var select = jQuery(select_id);
+						var tagName = select.prop('tagName').toLowerCase();
 
-						if (select)
+						if ('select' === tagName)
 						{
 							select.append(new Option(data[option.value_field], data[option.key_field], true, true));
+						}
+						else if ('input' === tagName)
+						{
+							jQuery(select_id + '-typeahead').val(data[option.value_field]);
+							select.val(data[option.key_field]);
 						}
 					}
 					else
