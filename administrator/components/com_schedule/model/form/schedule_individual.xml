@@ -13,14 +13,18 @@
 		</field>
 
 		<field name="customer_id"
-			type="sql"
-			query="SELECT id, name FROM #__schedule_customers WHERE type = 'individual'"
-			default=""
-			key_field="id"
-			value_field="name"
+			type="select2"
+			query="SELECT `id`, `name` FROM #__schedule_customers WHERE id=%s"
+			idField="id"
+			textField="name"
+			apiUrl="index.php?option=com_schedule&amp;task=customers.ajax.json&amp;filter[customer.type]=individual"
+			apiQueryKey="q"
+			minimumInputLength="1"
+			allowClear="true"
 			label="散客名稱"
 			description="散客名稱"
-			onchange="ScheduleEdit.updateCustomerRelatedInfo(this);"
+			class="input-large"
+			onchange="function(e, $node) { ScheduleEdit.updateCustomerRelatedInfo($node); }"
 			>
 			<option></option>
 		</field>
