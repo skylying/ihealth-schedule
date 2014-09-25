@@ -25,7 +25,7 @@ class ScheduleControllerAddressesAjaxJson extends DisplayController
 	{
 		\JFactory::getDocument()->setMimeEncoding('application/json');
 
-		$id = $this->input->get('id');
+		$id = (int) $this->input->get('id');
 
 		$db    = \JFactory::getDbo();
 		$query = $db->getQuery(true);
