@@ -178,6 +178,7 @@ class JFormFieldAjaxItemList extends JFormFieldItemlist
 		$bloodhoundOption = json_encode(array(
 			'local' => $items,
 			'remote' => JRoute::_('index.php?option=com_schedule&task=' . $this->ajaxTask . '&' . $this->ajaxTermKey . '=%QUERY', false),
+			'limit' => 1000,
 		));
 		$typeaheadOption = json_encode(array(
 			'hint' => true,
