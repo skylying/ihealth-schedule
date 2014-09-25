@@ -211,7 +211,8 @@ jQuery(function($)
 	dataset['source'] = engine.ttAdapter();
 
 	\$node.typeahead(option, dataset);
-	\$node.on('typeahead:selected', function(e, item) {
+	\$node.on('typeahead:selected', function(e, item)
+	{
 		\$input.val(item['{$this->keyField}']);
 	});
 });
