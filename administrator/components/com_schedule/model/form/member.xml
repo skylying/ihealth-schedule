@@ -66,6 +66,7 @@
 			viewList="customers"
 			valueField="name"
 			ajaxTask="customers.ajax.json"
+			ajaxQuery="filter[customer.type]=individual"
 			minTermLength="1"
 			label="對應散客"
 			multiple="true"
