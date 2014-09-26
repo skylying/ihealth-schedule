@@ -165,9 +165,13 @@ SQLALIAS;
 
 		$query->select('`schedule`.`rx_id`, GROUP_CONCAT(`schedule`.`deliver_nth`) AS `expired_nths`')
 			->from('#__schedule_schedules AS schedule')
-			->where('`schedule`.`rx_id`' . $rxIds)
 			->where('`schedule`.`date` < NOW()')
 			->group('`schedule`.`rx_id`');
+
+		if ($rxIdList)
+		{
+			$query->where('`schedule`.`rx_id`' . $rxIds);
+		}
 
 		$expiredNths = array();
 

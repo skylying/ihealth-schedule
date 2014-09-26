@@ -9,8 +9,8 @@
 			class="input-small"
 			>
 			<option value="*">JALL</option>
-			<option value="rxindividual.title">JGLOBAL_TITLE</option>
-			<option value="category.title">JCATEGORY</option>
+			<option value="rxindividual.customer_name">散客姓名</option>
+			<option value="rxindividual.member_name">會員姓名</option>
 		</field>
 
 		<field
