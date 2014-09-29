@@ -175,20 +175,28 @@ class JFormFieldAjaxItemList extends JFormFieldItemlist
 			$items = array_merge(array($defaultItem), $items);
 		}
 
-		$bloodhoundOption = json_encode(array(
-			'local' => $items,
-			'remote' => JRoute::_('index.php?option=com_schedule&task=' . $this->ajaxTask . '&' . $this->ajaxTermKey . '=%QUERY', false),
-			'limit' => 1000,
-		));
-		$typeaheadOption = json_encode(array(
-			'hint' => true,
-			'highlight' => true,
-			'minLength' => $this->minTermLength,
-		));
-		$typeaheadDataset = json_encode(array(
-			'name' => $this->id . '-dataset',
-			'displayKey' => $this->valueField,
-		));
+		$bloodhoundOption = json_encode(
+			array(
+				'local' => $items,
+				'remote' => JRoute::_('index.php?option=com_schedule&task=' . $this->ajaxTask . '&' . $this->ajaxTermKey . '=%QUERY', false),
+				'limit' => 1000,
+			)
+		);
+
+		$typeaheadOption = json_encode(
+			array(
+				'hint' => true,
+				'highlight' => true,
+				'minLength' => $this->minTermLength,
+			)
+		);
+
+		$typeaheadDataset = json_encode(
+			array(
+				'name' => $this->id . '-dataset',
+				'displayKey' => $this->valueField,
+			)
+		);
 
 		$script = <<<SCRIPT
 jQuery(function($)
