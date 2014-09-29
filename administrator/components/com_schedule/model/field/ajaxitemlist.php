@@ -351,4 +351,33 @@ HTML;
 
 		$initialized = true;
 	}
+
+	/**
+	 * Add an quick add button & modal
+	 *
+	 * @return string
+	 */
+	public function quickadd()
+	{
+		$html = parent::quickadd();
+
+		$qid = $this->id . '_quickadd';
+
+		$script = <<<QA
+window.addEvent('domready', function()
+{
+	AKQuickAdd.option['{$qid}']['onAfterSubmitSuccess'] = function(data, selectId)
+	{
+		var option = this.option['{$qid}'];
+
+		jQuery(selectId + '-typeahead').val(data[option.value_field]);
+		select.val(data[option.key_field]);
+	};
+});
+QA;
+
+		JFactory::getDocument()->addScriptDeclaration($script);
+
+		return $html;
+	}
 }
