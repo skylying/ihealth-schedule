@@ -45,6 +45,8 @@ $fieldsets = $form->getFieldset("filter");
 		</div>
 	</div>
 
+	<?php echo $fieldsets['weekday']->getControlGroup(); ?>
+
 	<?php echo $fieldsets['senderIds']->getControlGroup(); ?>
 
 	<?php echo JHtml::_('form.token'); ?>
