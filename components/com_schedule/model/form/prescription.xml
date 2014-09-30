@@ -124,6 +124,10 @@
 			<option value="1">是</option>
 		</field>
 
+		<field name="params"
+			type="hidden"
+			/>
+
 		<field name="image1"
 			type="text"
 			label="處方箋圖片 1"

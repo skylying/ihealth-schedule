@@ -226,7 +226,9 @@ $date      = $container->get('date');
 		<td class="center">
 			<?php
 			// Define new prescription through API
-			if (empty($item->author_name))
+			$params = new Data(json_decode($item->params));
+
+			if ($params->fromOfficialSite)
 			{
 				echo '<span class="btn btn-warning">官網客戶</span>';
 			}
