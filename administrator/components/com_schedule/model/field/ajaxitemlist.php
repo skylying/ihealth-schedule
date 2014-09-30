@@ -222,6 +222,7 @@ jQuery(function($)
 	\$node.on('typeahead:selected', function(e, item)
 	{
 		\$input.val(item['{$this->keyField}']);
+		\$input.change();
 	});
 });
 SCRIPT;
