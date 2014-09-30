@@ -65,6 +65,7 @@ $user = JFactory::getUser();
 
 <h1 class="text-center">打包表</h1>
 <h2 class="text-center"><?php echo $data->date_start . ' ~ ' . $data->date_end; ?></h2>
+<h2 class="text-center">星期篩選：<?php echo empty($data->weekday) ? '無' : JText::_('COM_SCHEDULE_DRUGDETAIL_FILTER_WEEKDAY_' . $data->weekday); ?></h2>
 
 <?php foreach ($data->items as $sender):?>
 
