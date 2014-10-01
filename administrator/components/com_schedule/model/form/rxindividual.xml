@@ -24,13 +24,15 @@
 			/>
 
 		<field name="customer_id"
-			type="customer_rxlist"
+			type="Customer_List"
+			ajaxTask="customers.ajax.json"
+			ajaxQuery="filter[customer.type]=individual"
+			keyField="id"
+			valueField="name"
+			minTermLength="1"
+			quickadd="true"
 			label="客戶姓名"
 			description="客戶姓名"
-			customer="individual"
-			key_field="id"
-			value_field="name"
-			quickadd="true"
 			required="true"
 			>
 			<option></option>

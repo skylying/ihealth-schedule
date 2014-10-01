@@ -25,6 +25,7 @@ var AKQuickAdd = ({
 		option.option = option.quickadd_handler;
 		option.ajax = 1;
 		option.formctrl = id;
+		option.onAfterSubmitSuccess = option.onAfterSubmitSuccess || null;
 
 		if (!this.option)
 		{
@@ -53,6 +54,7 @@ var AKQuickAdd = ({
 	 */
 	submit: function(id, event)
 	{
+		var self = this;
 		var button = event.target;
 		var area = $$('.' + id).getLast();
 		var option = this.option[id];
@@ -105,9 +107,6 @@ var AKQuickAdd = ({
 						// Hide Modal
 						jQuery('.' + id).modal('hide');
 
-						// Add new Option in Select
-						var select = jQuery(select_id);
-
 						if (select)
 						{
 							select.append(new Option(data[option.value_field], data[option.key_field], true, true));
@@ -157,6 +156,11 @@ var AKQuickAdd = ({
 							modal_id.set('value', data[option.key_field]);
 							modal_name.highlight();
 						}, 500);
+					}
+
+					if (option.onAfterSubmitSuccess && 'function' === typeof option.onAfterSubmitSuccess)
+					{
+						option.onAfterSubmitSuccess.apply(self, [data, select_id]);
 					}
 				} else
 				{
