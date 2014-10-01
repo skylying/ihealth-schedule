@@ -97,6 +97,7 @@ class ScheduleViewDrugdetailHtml extends EditView
 		$senderIds = $this->handleFilterVar('senderIds');
 		$this->data->date_start = $this->handleFilterVar('date_start');
 		$this->data->date_end = $this->handleFilterVar('date_end');
+		$this->data->weekday = $this->handleFilterVar('weekday');
 
 		// Get schedules
 		$schedules = $this->getRelatedSchedules($senderIds);
@@ -160,6 +161,7 @@ class ScheduleViewDrugdetailHtml extends EditView
 		$filterData['senderIds']  = $senderIds;
 		$filterData['date_start'] = $this->data->date_start;
 		$filterData['date_end']   = $this->data->date_end;
+		$filterData['weekday']    = $this->data->weekday;
 
 		$this->data->filterForm = $this->get('FilterForm', null, array($filterData));
 
@@ -255,8 +257,18 @@ class ScheduleViewDrugdetailHtml extends EditView
 			->join("LEFT", Table::PRESCRIPTIONS . " AS rx on schedule.rx_id = rx.id")
 			->join("LEFT", Table::CUSTOMERS . " AS customer on schedule.customer_id = customer.id")
 			->where("task.sender " . (new JDatabaseQueryElement('IN ()', $senderIds)))
-			->where("task.date >= " . $q->quote($this->data->date_start))
-			->where('schedule.status != "delivered"')
+			->where("task.date >= " . $q->quote($this->data->date_start));
+
+		if ($this->data->weekday != '*')
+		{
+			$q->where("DAYOFWEEK(task.date) = " . $this->data->weekday);
+		}
+		else
+		{
+			$this->data->weekday = "";
+		}
+
+		$q->where('schedule.status != "delivered"')
 			->order("rx.floor DESC, schedule.drug_empty_date ASC");
 
 		if (!empty($this->data->date_end))

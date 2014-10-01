@@ -13,6 +13,19 @@
 			description="預計外送日(屹)"
 			/>
 
+		<field name="weekday"
+			type="list"
+			label="星期幾"
+			description=""
+			>
+			<option value="*">- 請選擇星期幾 -</option>
+			<option value="1">星期一</option>
+			<option value="2">星期二</option>
+			<option value="3">星期三</option>
+			<option value="4">星期四</option>
+			<option value="5">星期五</option>
+		</field>
+
 		<field name="senderIds"
 			type="itemscheckboxes"
 			option_title="name"
