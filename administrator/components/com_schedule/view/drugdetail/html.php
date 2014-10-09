@@ -158,6 +158,8 @@ class ScheduleViewDrugdetailHtml extends EditView
 
 		$this->data->items = $items;
 
+		$this->preparePrintData();
+
 		$filterData['senderIds']  = $senderIds;
 		$filterData['date_start'] = $this->data->date_start;
 		$filterData['date_end']   = $this->data->date_end;
@@ -294,7 +296,38 @@ class ScheduleViewDrugdetailHtml extends EditView
 		unset($buttonSet['save2new']);
 		unset($buttonSet['save2copy']);
 
+		$buttonSet['print']['handler'] = function ()
+		{
+			$html = <<<HTML
+<button class="btn btn-info" onclick="jQuery('input[name=save-and-print]').val('1');Joomla.submitbutton('drugdetail.edit.apply')">
+	<span class="glyphicon glyphicon-print"></span> 儲存&列印
+</button>
+HTML;
+			$bar  = JToolbar::getInstance('toolbar');
+
+			$bar->appendButton('custom', $html);
+		};
+
 		return $buttonSet;
+	}
+
+	/**
+	 * preparePrintData
+	 *
+	 * @return  void
+	 */
+	public function preparePrintData()
+	{
+		$app = JFactory::getApplication();
+
+		$isSaveAndPrint = $app->getUserState('save-and-print');
+
+		// SaveAndPrint state has only used once
+		$app->setUserState('save-and-print', null);
+
+		$data = $this->data;
+
+		$data->print = $isSaveAndPrint;
 	}
 
 	/**
