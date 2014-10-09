@@ -148,7 +148,7 @@
 		 *
 		 * @return  void
 		 */
-		addInstituteExtraRow: function(element)
+		addInstituteExtraRow : function(element)
 		{
 			var $baseRow = $(element).closest('tr');
 			var rowId = "#" + this.rowIdPrefix + $(element).data("instituteId");
@@ -206,6 +206,35 @@
 		isIpad : function()
 		{
 			return  (navigator.userAgent.indexOf('iPad') !== -1);
+		},
+
+		/**
+		 * When the print button click
+		 *
+		 * @return void
+		 */
+		doPrint : function()
+		{
+			var win = window.open('../administrator/index.php?option=com_schedule&view=drugdetail&layout=edit&tmpl=component', '_blank');
+
+			// var we use to monitor document focused status.
+			var document_focus = false;
+
+			// Now our event handlers.
+			jQuery(document).ready(function()
+			{
+				win.print();
+				document_focus = true;
+			});
+
+			setInterval(function()
+			{
+				if (document_focus === true)
+				{
+					win.close();
+				}
+			},
+			300);
 		}
 	};
 
