@@ -215,26 +215,11 @@
 		 */
 		doPrint : function()
 		{
-			var win = window.open('../administrator/index.php?option=com_schedule&view=drugdetail&layout=edit&tmpl=component', '_blank');
+			location.reload();
 
-			// var we use to monitor document focused status.
-			var document_focus = false;
-
-			// Now our event handlers.
-			jQuery(document).ready(function()
-			{
-				win.print();
-				document_focus = true;
-			});
-
-			setInterval(function()
-			{
-				if (document_focus === true)
-				{
-					win.close();
-				}
-			},
-			300);
+			var win = window.open(location.href + '&tmpl=component', '_blank');
+			
+			win.print();
 		}
 	};
 

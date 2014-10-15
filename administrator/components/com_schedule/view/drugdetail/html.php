@@ -92,8 +92,6 @@ class ScheduleViewDrugdetailHtml extends EditView
 	 */
 	protected function prepareData()
 	{
-		$app = JFactory::getApplication();
-
 		$senderIds = $this->handleFilterVar('senderIds');
 		$this->data->date_start = $this->handleFilterVar('date_start');
 		$this->data->date_end = $this->handleFilterVar('date_end');
@@ -299,7 +297,7 @@ class ScheduleViewDrugdetailHtml extends EditView
 		$buttonSet['print']['handler'] = function ()
 		{
 			$html = <<<HTML
-<button class="btn btn-info" onclick="jQuery('input[name=save-and-print]').val('1');Joomla.submitbutton('drugdetail.edit.apply')">
+<button class="btn btn-info" onclick="jQuery('input[name=save-and-print]').val('1');Joomla.submitbutton('drugdetail.edit.apply');">
 	<span class="glyphicon glyphicon-print"></span> 儲存&列印
 </button>
 HTML;
