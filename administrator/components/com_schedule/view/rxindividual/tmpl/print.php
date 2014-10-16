@@ -10,6 +10,8 @@
 defined('_JEXEC') or die;
 $scheduleInfos = $data->item->scheduleInfos;
 $drugs = $data->item->drugs;
+$fromOfficialSite = $data->item->params;
+$fromOfficialSite['fromOfficialSite'];
 ?>
 
 <style>
@@ -66,6 +68,9 @@ function markPrinted()
 		<div class="row-fluid">
 			<div class="col-lg-12">
 				<h2 class="center">
+					<?php if($fromOfficialSite['fromOfficialSite'] === 'true');
+					echo '<span class="btn btn-warning">官網客戶</span>';
+					?>
 					<?php echo $data->item->customer_name; ?>
 					第
 					<?php echo substr($scheduleInfo->deliver_nth, 0, 1); ?>
