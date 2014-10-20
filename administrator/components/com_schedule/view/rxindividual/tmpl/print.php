@@ -68,7 +68,7 @@ function markPrinted()
 			<div class="col-lg-12">
 				<h2 class="center">
 					<?php if ($params['fromOfficialSite'] == 'true'): ?>
-					<span class="btn btn-warning">官網客戶</span>
+					<label class="label label-warning"><span class="glyphicon glyphicon-user">官網客戶</span></label>
 					<?php endif; ?>
 					<?php echo $data->item->customer_name; ?>
 					第
