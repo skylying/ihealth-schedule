@@ -11,7 +11,6 @@ defined('_JEXEC') or die;
 $scheduleInfos = $data->item->scheduleInfos;
 $drugs = $data->item->drugs;
 $params = $data->item->params;
-$params['fromOfficialSite'];
 ?>
 
 <style>
@@ -68,7 +67,7 @@ function markPrinted()
 		<div class="row-fluid">
 			<div class="col-lg-12">
 				<h2 class="center">
-					<?php if ($params['fromOfficialSite'] === 'true'): ?>
+					<?php if ($params['fromOfficialSite'] == 'true'): ?>
 					<span class="btn btn-warning">官網客戶</span>
 					<?php endif; ?>
 					<?php echo $data->item->customer_name; ?>
