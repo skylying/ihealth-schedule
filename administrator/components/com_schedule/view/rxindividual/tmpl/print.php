@@ -10,7 +10,7 @@
 defined('_JEXEC') or die;
 $scheduleInfos = $data->item->scheduleInfos;
 $drugs = $data->item->drugs;
-$params = $data->item->params;
+$params = JArrayHelper::getValue($params, '');
 ?>
 
 <style>
