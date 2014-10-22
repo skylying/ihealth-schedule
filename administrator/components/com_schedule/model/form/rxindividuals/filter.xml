@@ -91,6 +91,7 @@
 			<option>--選擇處方箋取得方式--</option>
 			<option value="fax">傳真</option>
 			<option value="line">line</option>
+			<option value="email">E-MAIL</option>
 			<option value="form">自行填表</option>
 			<option value="file">上傳檔案</option>
 			<option value="photo">拍照</option>
