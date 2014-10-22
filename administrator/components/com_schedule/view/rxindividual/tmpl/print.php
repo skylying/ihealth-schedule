@@ -10,13 +10,19 @@
 defined('_JEXEC') or die;
 $scheduleInfos = $data->item->scheduleInfos;
 $drugs = $data->item->drugs;
-$params = JArrayHelper::getValue($params, '');
+$params = $data->item->params;
+$params['fromOfficialSite'] = JArrayHelper::getValue($params, 'fromOfficialSite', '');
 ?>
 
 <style>
 	tr td:nth-child(2)
 	{
 		border-right: 1px solid #efefef;
+	}
+
+	.from-official-site
+	{
+		padding: 10px;
 	}
 	@media print {
 		.printButton
@@ -68,7 +74,7 @@ function markPrinted()
 			<div class="col-lg-12">
 				<h2 class="center">
 					<?php if ($params['fromOfficialSite'] == 'true'): ?>
-					<label class="label label-warning"><span class="glyphicon glyphicon-user">官網客戶</span></label>
+					<label class="label label-warning from-official-site"><span class="glyphicon glyphicon-user">官網客戶</span></label>
 					<?php endif; ?>
 					<?php echo $data->item->customer_name; ?>
 					第
