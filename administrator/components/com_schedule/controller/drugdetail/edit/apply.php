@@ -8,6 +8,24 @@
 class ScheduleControllerDrugdetailEditApply extends ScheduleControllerDrugdetailEditSave
 {
 	/**
+	 * postExecute
+	 *
+	 * @param null $return
+	 *
+	 * @return  mixed|void
+	 */
+	public function postExecute($return = null)
+	{
+		$printButtonValue = $this->input->get('save-and-print');
+
+		if (false !== $return & $printButtonValue == '1')
+		{
+			$this->app->setUserState('save-and-print', $printButtonValue);
+		}
+
+		return parent::postExecute($return);
+	}
+	/**
 	 * Redirect
 	 *
 	 * @param string $url

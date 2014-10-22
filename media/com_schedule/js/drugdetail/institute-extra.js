@@ -148,7 +148,7 @@
 		 *
 		 * @return  void
 		 */
-		addInstituteExtraRow: function(element)
+		addInstituteExtraRow : function(element)
 		{
 			var $baseRow = $(element).closest('tr');
 			var rowId = "#" + this.rowIdPrefix + $(element).data("instituteId");
@@ -206,6 +206,20 @@
 		isIpad : function()
 		{
 			return  (navigator.userAgent.indexOf('iPad') !== -1);
+		},
+
+		/**
+		 * When the print button click
+		 *
+		 * @return void
+		 */
+		doPrint : function()
+		{
+			location.reload();
+
+			var win = window.open(location.href + '&tmpl=component', '_blank');
+			
+			win.print();
 		}
 	};
 

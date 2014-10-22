@@ -21,17 +21,18 @@ JHtmlFormbehavior::chosen('select');
  * @var $data      Windwalker\Data\Data
  * @var $item      \stdClass
  */
-$container  = $this->getContainer();
-$form       = $data->form;
-$filterForm = $data->filterForm;
-$item       = $data->item;
+$container      = $this->getContainer();
+$form           = $data->form;
+$filterForm     = $data->filterForm;
+$item           = $data->item;
+$isSaveAndPrint = $data->print;
 
 $doc = JFactory::getDocument();
 
 $asset = $container->get('helper.asset');
 $asset->addJs('library/jquery.touchSwipe.js');
-
 ?>
+
 <!-- Validate Script -->
 <script type="text/javascript">
 	Joomla.submitbutton = function(task)
@@ -40,8 +41,34 @@ $asset->addJs('library/jquery.touchSwipe.js');
 		window.InstituteExtraObject.deleteEmptyPrice();
 
 		Joomla.submitform(task, document.getElementById('adminForm'));
-	}
+	};
+
+	// If the button action is to print
+	<?php if ($isSaveAndPrint == '1'): ?>
+		jQuery(document).ready(function()
+		{
+			var Institute = new InstituteExtra();
+
+			// Print the window
+			Institute.doPrint();
+		});
+	<?php endif; ?>
 </script>
+
+<style>
+	@media print
+	{
+		.subhead-collapse
+		{
+			display: none;
+		}
+
+		.header
+		{
+			display: none;
+		}
+	}
+</style>
 
 <div id="schedule" class="windwalker drugdetails edit-form row-fluid">
 	<form action="<?php echo JURI::getInstance(); ?>"  method="post" name="adminForm" id="adminForm"
@@ -61,6 +88,7 @@ $asset->addJs('library/jquery.touchSwipe.js');
 				<?php echo $field->input; ?>
 			<?php endforeach; ?>
 		</div>
+		<input type="hidden" name="save-and-print" value="0"/>
 	</form>
 </div>
 
