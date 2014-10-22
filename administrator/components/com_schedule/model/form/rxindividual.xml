@@ -65,7 +65,7 @@
 			label="處方箋正本"
 			description="處方箋正本"
 			class="btn-group"
-			default="1"
+			default="0"
 			>
 			<option value="1">已取得</option>
 			<option value="0">未取得</option>
@@ -76,7 +76,7 @@
 			label="電聯狀態"
 			description="電聯狀態"
 			class="btn-group"
-			default="1"
+			default="0"
 			>
 			<option value="1">已電聯</option>
 			<option value="0">無法聯繫</option>
