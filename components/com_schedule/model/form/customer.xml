@@ -44,6 +44,13 @@
 			<option value="individual">散客</option>
 		</field>
 
+		<field name="state"
+			type="text"
+			label="服務狀態"
+			description="服務狀態"
+			default="1"
+			/>
+
 		<field name="hospital"
 			type="integer"
 			label="開立處方醫院編號"
