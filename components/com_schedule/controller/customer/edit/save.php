@@ -28,6 +28,8 @@ class ScheduleControllerCustomerEditSave extends ApiSaveController
 		// Restrict the customer type to "individual"
 		$this->data['type'] = 'individual';
 
+		$this->data['state'] = '1';
+
 		/* We do not update customer now.
 		// If ID Number exists, we update it.
 		if (empty($this->data['id']) && !empty($this->data['id_number']))
