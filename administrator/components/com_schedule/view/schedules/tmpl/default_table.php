@@ -88,6 +88,11 @@ $date      = $container->get('date');
 		<?php echo $grid->sortTitle('外送藥師', 'route.sender_id'); ?>
 	</th>
 
+	<!-- schedule.drug_empty_date -->
+	<th class="center">
+		<?php echo $grid->sortTitle('藥品吃完藥日', 'schedule.drug_empty_date'); ?>
+	</th>
+
 	<!-- 預約日 -->
 	<th class="center">
 		<?php echo $grid->sortTitle('預約日', 'prescription.created'); ?>
@@ -207,6 +212,11 @@ foreach ($data->items as $i => $item):
 		<!-- route_sender_name -->
 		<td class="center field-sender-id" data-sender-id="<?php echo $item->sender_id; ?>">
 			<?php echo $item->sender_name; ?>
+		</td>
+
+		<!-- drug_empty_date -->
+		<td class="center">
+			<?php echo $item->drug_empty_date; ?>
 		</td>
 
 		<!-- prescription created -->
