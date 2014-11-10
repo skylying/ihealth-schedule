@@ -149,15 +149,16 @@ class ScheduleViewSchedulesHtml extends GridView
 		$data->drugDetailForm = $this->get('DrugDetailFilterForm');
 
 		$notifies = $this->get('Notifies');
+		$notifyMessage = '';
 
 		if (count($notifies) > 0)
 		{
 			$fileLayout = new FileLayout('schedule.schedules.notify');
 
 			$notifyMessage = $fileLayout->render(new Data(['notifies' => $notifies]));
-
-			$app->enqueueMessage($notifyMessage, 'warning');
 		}
+
+		$data->notifyMessage = $notifyMessage;
 	}
 
 	/**
