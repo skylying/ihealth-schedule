@@ -12,6 +12,7 @@
 			<option value="schedule.customer_name">客戶名稱</option>
 			<option value="schedule.note">行政排程類別說明</option>
 			<option value="schedule.cancel_note">刪除原因說明</option>
+			<option value="prescription.member_name">會員名稱</option>
 		</field>
 
 		<field
