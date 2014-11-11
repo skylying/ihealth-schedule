@@ -67,19 +67,13 @@ else
 	</td>
 	<td class="text-center">
 		<!-- 處方編號 -->
-		<?php
-			if ("resident" === $schedule->type)
-			{
-					$view = "rxresident";
-					$layout = "edit_list";
-			}
-			elseif ("individual" === $schedule->type)
-			{
-					$view = "rxindividual";
-					$layout = "edit";
-			}
-		?>
-		<a href="<?php echo JRoute::_('index.php?option=com_schedule&view=' . $view . '&layout='. $layout .'&id=' . $schedule->rx_id) ?>" target="_blank">
+		<?php if ("resident" === $schedule->type): ?>
+		<a href="<?php echo JRoute::_('index.php?option=com_schedule&view=rxresident&layout=edit_list&id=' . $schedule->rx_id); ?>" target="_blank">
+		<?php elseif ("individual" === $schedule->type): ?>
+		<a href="<?php echo JRoute::_('index.php?option=com_schedule&view=rxindividual&layout=edit&id=' . $schedule->rx_id); ?>" target="_blank">
+		<?php else: ?>
+		<a href="#">
+		<?php endif; ?>
 			<?php echo $schedule->rx_id; ?>
 		</a>
 	</td>
@@ -91,7 +85,7 @@ else
 	<?php if ("resident" === $schedule->type): ?>
 		<td colspan='2' class='center'>--</td>
 	<?php elseif ("individual" === $schedule->type): ?>
-		<td><?php echo  $schedule->city_title; ?></td>
+		<td><?php echo $schedule->city_title; ?></td>
 		<td><?php echo $schedule->area_title; ?></td>
 	<?php endif; ?>
 	<!-- 所屬機構/會員 -->
