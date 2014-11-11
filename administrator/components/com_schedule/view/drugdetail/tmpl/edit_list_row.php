@@ -48,7 +48,11 @@ else
 <tr data-id="<?php echo $schedule->id; ?>">
 	<td class="text-center">
 		<!-- 排程編號 -->
-		<div class="row"><?php echo $schedule->id; ?></div>
+		<div class="row">
+			<a href="<?php echo JRoute::_('index.php?option=com_schedule&view=schedules&filter[schedule.id]=' . $schedule->id)?>" target="_blank">
+				<?php echo $schedule->id; ?>
+			</a>
+		</div>
 		<div class="row">
 			<span class="status-mark <?php echo $schedule->status; ?>">
 				<?php
@@ -63,46 +67,62 @@ else
 	</td>
 	<td class="text-center">
 		<!-- 處方編號 -->
-		<?php echo $schedule->rx_id; ?>
+		<?php
+			if ("resident" === $schedule->type)
+			{
+					$view = "rxresident";
+					$layout = "edit_list";
+			}
+			elseif ("individual" === $schedule->type)
+			{
+					$view = "rxindividual";
+					$layout = "edit";
+			}
+		?>
+		<a href="<?php echo JRoute::_('index.php?option=com_schedule&view=' . $view . '&layout='. $layout .'&id=' . $schedule->rx_id) ?>" target="_blank">
+			<?php echo $schedule->rx_id; ?>
+		</a>
 	</td>
 	<td>
 		<!-- 處方建立時間 -->
 		<?php echo substr($schedule->created, 0, 10); ?>
 	</td>
+	<!-- 縣市/區域 -->
+	<?php if ("resident" === $schedule->type): ?>
+		<td colspan='2' class='center'>--</td>
+	<?php elseif ("individual" === $schedule->type): ?>
+		<td><?php echo  $schedule->city_title; ?></td>
+		<td><?php echo $schedule->area_title; ?></td>
+	<?php endif; ?>
+	<!-- 所屬機構/會員 -->
+	<?php if ("resident" === $schedule->type): ?>
+		<td class='alert alert-info'><?php echo $schedule->institute_title . $floor; ?></td>
+	<?php elseif ("individual" === $schedule->type): ?>
+		<td class='alert alert-warning'><?php echo $schedule->member_name; ?></td>
+	<?php endif; ?>
 	<td>
 		<!-- 吃完藥日 -->
 		<?php echo $schedule->drug_empty_date; ?>
 	</td>
-	<!-- 所屬機構/會員 -->
-	<?php
-	switch ($schedule->type)
-	{
-		case "resident" :
-			echo "<td class='alert alert-info'>" . $schedule->institute_title . $floor . "</td>";
-		break;
-
-		case "individual" :
-			echo "<td class='alert alert-warning'>" . $schedule->member_name . "</td>";
-		break;
-	}
-	?>
-
-	<?php
-	switch ($schedule->type)
-	{
-		case "resident" :
-			echo "<td colspan='2' class='center'>--</td>";
-			break;
-
-		case "individual" :
-			echo "<td>" . $schedule->city_title . "</td>";
-			echo "<td>" . $schedule->area_title . "</td>";
-			break;
-	}
-	?>
 	<td>
 		<!-- 客戶 -->
 		<?php echo $schedule->customer_name; ?>
+	</td>
+	<td class="big-checkbox-td text-center">
+		<!-- 分藥完成 form -->
+		<?php echo $sorted->getControlGroup(); ?>
+	</td>
+	<td class="big-checkbox-td text-center">
+		<!-- 缺 ID -->
+		<?php echo $noid->getControlGroup(); ?>
+	</td>
+	<td class="big-checkbox-td text-center">
+		<!-- 冰品 -->
+		<?php echo $ice->getControlGroup(); ?>
+	</td>
+	<td>
+		<!-- 自費金額 -->
+		<?php echo $price->input; ?>
 	</td>
 	<td class="text-center">
 		<?php
@@ -120,22 +140,6 @@ else
 			echo '--';
 		}
 		?>
-	</td>
-	<td class="big-checkbox-td text-center">
-		<!-- 缺 ID -->
-		<?php echo $noid->getControlGroup(); ?>
-	</td>
-	<td class="big-checkbox-td text-center">
-		<!-- 分藥完成 form -->
-		<?php echo $sorted->getControlGroup(); ?>
-	</td>
-	<td class="big-checkbox-td text-center">
-		<!-- 冰品 -->
-		<?php echo $ice->getControlGroup(); ?>
-	</td>
-	<td>
-		<!-- 自費金額 -->
-		<?php echo $price->input; ?>
 	</td>
 	<td>
 		<?php
