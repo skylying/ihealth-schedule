@@ -45,6 +45,8 @@ div.modal.hide.in
 $editFormFields = $data->editFormFields;
 ?>
 
+<?php echo $data->notifyMessage; ?>
+
 <div id="schedule" class="windwalker schedules tablelist row-fluid">
 	<form action="<?php echo JUri::getInstance(); ?>" method="post" name="adminForm" id="adminForm">
 	<?php if (!empty($this->data->sidebar)): ?>

@@ -13,7 +13,13 @@ $notifies = $displayData->notifies;
 $urlPrefix = JRoute::_('index.php?option=com_schedule&view=schedules&filter[schedule.customer_id]=', false);
 ?>
 
+<div class="alert alert-warning">
 <div>
+	目前有 <span class="text-primary"><?php echo count($notifies); ?></span> 位客戶的排程需要被合併
+	<a href="#" onclick="jQuery('#notifies').show();" style="margin-left:0.5em;">[ 顯示 ]</a>
+	<a href="#" onclick="jQuery('#notifies').hide();" style="margin-left:0.5em;">[ 隱藏 ]</a>
+</div>
+<div id="notifies" style="display:none;padding-top:1em;">
 <?php foreach ($notifies as $notify): ?>
 	<div>
 		客戶
@@ -25,11 +31,7 @@ $urlPrefix = JRoute::_('index.php?option=com_schedule&view=schedules&filter[sche
 		</a>
 
 		<a href="#" class="skip-notify-button" style="margin-left:0.5em;"
-			data-schedule-cid="<?php echo $notify->id; ?>"
-			onclick="
-				jQuery('input[name=notify_schedule_cid]').val(jQuery(this).data('schedule-cid'));
-				Joomla.submitbutton('schedules.skip.notify');
-			">
+			data-schedule-cid="<?php echo $notify->id; ?>">
 			<small>[ 略過 ]</small>
 		</a>
 
@@ -42,3 +44,13 @@ $urlPrefix = JRoute::_('index.php?option=com_schedule&view=schedules&filter[sche
 	</div>
 <?php endforeach; ?>
 </div>
+</div>
+
+<script type="text/javascript">
+	// 處理略過按鈕的 onclick 事件
+	jQuery('#notifies').on('click', '.skip-notify-button', function()
+	{
+		jQuery('input[name=notify_schedule_cid]').val(jQuery(this).data('schedule-cid'));
+		Joomla.submitbutton('schedules.skip.notify');
+	});
+</script>
