@@ -12,18 +12,32 @@
 			<option></option>
 		</field>
 
-		<field name="institute_id"
-			type="sql"
-			query="SELECT id, short_title FROM #__schedule_institutes"
-			key_field="id"
-			value_field="short_title"
-			default=""
+		<field name="institute_id_selection"
+			type="select2"
+			class="input-large"
 			label="機構名稱"
 			description="機構名稱"
-			onchange="ScheduleEdit.updateInstituteRelatedInfo(this);"
-			>
-			<option></option>
-		</field>
+			hint="輸入機構名稱"
+			onchange="function(e, $node) { ScheduleEdit.updateInstituteRelatedInfo($node); }"
+			minimumInputLength="1"
+			apiUrl="index.php?option=com_schedule&amp;task=institutes.search.json&amp;show_floor=1"
+			apiQueryKey="filter_search"
+			query="
+				SELECT '%s' AS `id`, CONCAT(`short_title`, ' ', SUBSTRING_INDEX('%s', '-', -1)) AS `short_title`,
+					`color_hex`, `delivery_weekday`, `note`, `floor`
+				FROM #__schedule_institutes
+				WHERE `id` = SUBSTRING_INDEX('%s', '-', 1)
+			"
+			idField="id"
+			textField="short_title"
+			/>
+
+		<field name="institute_id"
+			type="hidden"
+			readonly="true"
+			label="機構名稱"
+			description="機構名稱"
+			/>
 
 		<field name="city_title"
 			type="text"
