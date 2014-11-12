@@ -11,6 +11,7 @@
 			<option value="*">JALL</option>
 			<option value="rxindividual.customer_name">散客姓名</option>
 			<option value="rxindividual.member_name">會員姓名</option>
+			<option value="rxindividual.note">備註</option>
 		</field>
 
 		<field
