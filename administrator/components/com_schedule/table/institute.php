@@ -118,7 +118,14 @@ class ScheduleTableInstitute extends Table
 	 */
 	public function delete($pk = null)
 	{
-		return parent::delete($pk);
+		$return = parent::delete($pk);
+
+		// Delete route
+		$tableRoute = \JTable::getInstance('Route', 'ScheduleTable');
+		$tableRoute->load($this->route_id);
+		$tableRoute->delete();
+
+		return $return;
 	}
 
 	/**
