@@ -13,6 +13,7 @@
 	var $instituteCityTitle,
 		$instituteAreaTitle,
 		$instituteAddress,
+		$instituteId,
 		$memberSelection,
 		$addressSelection;
 
@@ -60,6 +61,7 @@
 			$instituteAddress = $('#jform_address');
 			$memberSelection = $('#jform_member_id');
 			$addressSelection = $('#jform_address_id');
+			$instituteId = $('#jform_institute_id');
 		},
 
 		/**
@@ -114,6 +116,8 @@
 		updateInstituteRelatedInfo: function(elem)
 		{
 			var instituteId = parseInt($(elem).val());
+
+			$instituteId.val(instituteId);
 
 			$.getJSON(this.instituteApi + instituteId, function(institute)
 			{
