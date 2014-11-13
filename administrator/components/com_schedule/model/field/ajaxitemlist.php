@@ -224,6 +224,11 @@ jQuery(function($)
 		\$input.val(item['{$this->keyField}']);
 		\$input.change();
 	});
+	\$node.on('quickadd:created', function(e, item)
+	{
+		\$node.typeahead('val', item['{$this->valueField}']);
+		\$node.trigger('typeahead:selected', [item]);
+	});
 });
 SCRIPT;
 
@@ -371,8 +376,7 @@ window.addEvent('domready', function()
 	{
 		var option = this.option['{$qid}'];
 
-		jQuery(selectId + '-typeahead').val(data[option.value_field]);
-		select.val(data[option.key_field]);
+		jQuery(selectId + '-typeahead').trigger('quickadd:created', [data]);
 	};
 });
 QA;
