@@ -40,6 +40,10 @@ div.modal.hide.in
 {
 	top:0px !important;
 }
+.status-dropdown-menu > .dropdown-menu
+{
+	z-index: 1031;
+}
 ');
 
 $editFormFields = $data->editFormFields;
