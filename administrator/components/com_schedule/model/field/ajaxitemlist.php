@@ -226,7 +226,6 @@ jQuery(function($)
 	});
 	\$node.on('quickadd:created', function(e, item)
 	{
-		engine.add(item);
 		\$node.typeahead('val', item['{$this->valueField}']);
 		\$node.trigger('typeahead:selected', [item]);
 	});
