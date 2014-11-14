@@ -7,6 +7,7 @@
  */
 
 use Windwalker\View\Layout\FileLayout;
+use Schedule\Script\AddressScript;
 
 // No direct access
 defined('_JEXEC') or die;
@@ -15,6 +16,8 @@ defined('_JEXEC') or die;
 JHtmlBootstrap::tooltip();
 JHtmlFormbehavior::chosen('select');
 JHtmlDropdown::init();
+
+AddressScript::bind('filter_hospital_city', 'filter_hospital_area');
 
 /**
  * Prepare data for this template.
