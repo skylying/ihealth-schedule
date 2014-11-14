@@ -65,32 +65,28 @@
 			<option value="SUN">SUN</option>
 		</field>
 
-		<field
-			name="institute.city_title"
+		<field name="institute.city"
 			type="sql"
-			query="SELECT title FROM #__schedule_cities"
-			key_field="title"
+			query="SELECT id,title FROM #__schedule_cities"
+			key_field="id"
 			value_field="title"
-			default=""
 			label="縣市"
 			onchange="this.form.submit();"
 			>
 			<option></option>
-			<option>選擇縣市</option>
+			<option>--請選擇縣市--</option>
 		</field>
 
-		<field
-			name="institute.area_title"
+		<field name="institute.area"
 			type="sql"
-			query="SELECT title FROM #__schedule_areas"
-			key_field="title"
+			query="SELECT id,title FROM #__schedule_areas"
+			key_field="id"
 			value_field="title"
-			default=""
 			label="區域"
 			onchange="this.form.submit();"
 			>
 			<option></option>
-			<option>選擇區域</option>
+			<option>--請選擇區域--</option>
 		</field>
 
 	</fields>

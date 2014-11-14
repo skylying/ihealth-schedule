@@ -55,44 +55,36 @@
 			onchange="this.form.submit();"
 			>
 			<option></option>
-			<option value="1">有</option>
-			<option value="0">無</option>
+			<option>--是否有藥品健保碼--</option>
+			<option value="1">有藥品健保碼</option>
+			<option value="0">無藥品健保碼</option>
 			<option value="*">JALL</option>
 		</field>
 
 
-		<field
-			name="hospital.city"
-			type="list"
-			label="縣市名稱"
-			description="縣市名稱"
+		<field name="hospital.city"
+			type="sql"
+			query="SELECT id,title FROM #__schedule_cities"
+			key_field="id"
+			value_field="title"
+			label="縣市"
 			onchange="this.form.submit();"
 			>
 			<option></option>
-			<option value="1">台北市</option>
-			<option value="2">新北市</option>
-			<option value="3">台中市</option>
-			<option value="4">高雄市</option>
-			<option value="5">台灣市</option>
-			<option value="*">JALL</option>
+			<option>--請選擇縣市--</option>
 		</field>
 
-		<field
-			name="hospital.area"
-			type="list"
-			label="區域名稱"
-			description="區域名稱"
+		<field name="hospital.area"
+			type="sql"
+			query="SELECT id,title FROM #__schedule_areas"
+			key_field="id"
+			value_field="title"
+			label="區域"
 			onchange="this.form.submit();"
 			>
 			<option></option>
-			<option value="1">大同區</option>
-			<option value="2">中正區</option>
-			<option value="3">阿瑪茸區</option>
-			<option value="4">天龍區</option>
-			<option value="5">三角洲區</option>
-			<option value="*">JALL</option>
+			<option>--請選擇區域--</option>
 		</field>
-
 
 	</fields>
 
