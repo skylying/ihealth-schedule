@@ -61,6 +61,11 @@
 			default="scheduled"
 			/>
 
+		<field name="weekday"
+			type="hidden"
+			default="NULL"
+			/>
+
 		<field id="individual_date"
 			name="date"
 			type="datetimepicker"

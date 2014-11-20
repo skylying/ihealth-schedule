@@ -6,6 +6,7 @@ use Schedule\Table\Table;
 use Schedule\Table\Collection as TableCollection;
 use Windwalker\Data\Data;
 use Windwalker\Joomla\DataMapper\DataMapper;
+use Windwalker\Helper\DateHelper;
 use Schedule\Helper\MailHelper;
 
 /**
@@ -42,6 +43,12 @@ class ScheduleControllerScheduleEditSave extends SaveController
 		elseif (isset($this->data['individual_type']))
 		{
 			$this->data['type'] = $this->data['individual_type'];
+		}
+
+		if (($this->data['type'] != 'individual') && ($this->data['type'] != 'resident'))
+		{
+			$weekday = DateHelper::getDate($this->data['date'])->dayofweek;
+			$this->data['weekday'] = $this->getWeekDayString($weekday);
 		}
 
 		if (!empty($this->data['id']) && $this->data['id'] > 0)
@@ -164,5 +171,33 @@ JAVASCRIPT;
 		$task['id'] = $taskModel->getState()->get('task.id');
 
 		return new Data($task);
+	}
+
+	/**
+	 * getWeekDayString
+	 *
+	 * @param $day
+	 *
+	 * @return  string
+	 */
+	protected function getWeekDayString($day)
+	{
+		switch ($day)
+		{
+			case 0:
+				return 'SUN';
+			case 1:
+				return 'MON';
+			case 2:
+				return 'TUE';
+			case 3:
+				return 'WED';
+			case 4:
+				return 'THU';
+			case 5:
+				return 'FRI';
+			case 6:
+				return 'SAT';
+		}
 	}
 }
