@@ -150,6 +150,7 @@ class ScheduleViewDrugdetailHtml extends EditView
 						'type' => JText::_('COM_SCHEDULE_SCHEDULE_FIELD_TYPE_' . $schedule->type) ,
 						'to' => empty($schedule->name) ? $schedule->institute_title : $schedule->name,
 						'status' => $schedule->status,
+						'note' => $schedule->note,
 					);
 			}
 		}
@@ -244,6 +245,7 @@ class ScheduleViewDrugdetailHtml extends EditView
 			'`schedule`.`modified_by` AS modified_by',
 			'`schedule`.`params` AS params',
 			'`schedule`.`status` AS status',
+			'`schedule`.`note` AS note',
 			'`task`.`sender` AS sender',
 			'`schedule`.`institute_id` AS institute_id',
 			'`task`.`id` AS task_id',
