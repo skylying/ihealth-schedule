@@ -265,6 +265,7 @@ class ScheduleControllerRxresidentEditSave extends SaveController
 
 		$newSchedule = $this->getScheduleData($rx, $schedule->deliver_nth, $task['id'], $sendDate);
 		$newSchedule = array_merge((array) $schedule, $newSchedule);
+		$newSchedule['weekday'] = $instituteTable->delivery_weekday;
 
 		$this->scheduleModel->save($newSchedule);
 	}
@@ -300,6 +301,7 @@ class ScheduleControllerRxresidentEditSave extends SaveController
 		}
 
 		$schedule = $this->getScheduleData($rx, $nth, $task['id'], $sendDate);
+		$schedule['weekday'] = $instituteTable->delivery_weekday;
 
 		$this->scheduleState->set('schedule.id', 0);
 		$this->scheduleModel->save($schedule);
