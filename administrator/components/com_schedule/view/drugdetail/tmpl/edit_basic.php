@@ -86,6 +86,7 @@ $user = JFactory::getUser();
 						<th class="center" width="20%">日期</th>
 						<th class="center" width="20%">類型</th>
 						<th class="center">目的地 / 客戶</th>
+						<th class="center">備註</th>
 					</tr>
 					</thead>
 					<tbody>
@@ -118,6 +119,7 @@ $user = JFactory::getUser();
 		</td>
 		<td class="center">{$admin["type"]}</td>
 		<td class="center">{$admin["to"]}</td>
+		<td class="center">{$admin["note"]}</td>
 	</tr>
 HTML;
 					}
