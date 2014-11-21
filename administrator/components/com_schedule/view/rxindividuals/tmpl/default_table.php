@@ -215,9 +215,19 @@ $date      = $container->get('date');
 		<!-- 宅配次數 -->
 		<td class="center">
 			<?php
-			foreach (explode(',', $item->deliver_nths) as $nth)
+			$nths = explode(',', $item->deliver_nths);
+
+			foreach (array(1, 2, 3) as $nth)
 			{
-				echo '<span class="badge">' . substr($nth, 0, 1) . '</span> ';
+				if (!empty($nths[$nth]))
+				{
+					echo '<span class="badge" style="background-color: #ddd;">' . substr($nth, 0, 1) . '</span> ';
+				}
+				else
+				{
+					echo '<span class="badge">' . substr($nth, 0, 1) . '</span> ';
+				}
+
 			}
 			?>
 		</td>
