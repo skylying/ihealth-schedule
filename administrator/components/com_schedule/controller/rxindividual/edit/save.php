@@ -181,7 +181,7 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 		}
 
 		// Flush default address when lastAddress is not empty
-		if (! empty($lastAddress))
+		if ($lastAddress instanceof Data && !$lastAddress->isNull())
 		{
 			$this->addressModel->flushDefaultAddress($this->customer->id, $lastAddress->id);
 		}
