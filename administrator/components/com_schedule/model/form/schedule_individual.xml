@@ -63,7 +63,7 @@
 
 		<field name="weekday"
 			type="hidden"
-			default="NULL"
+			default=""
 			/>
 
 		<field id="individual_date"
