@@ -53,7 +53,7 @@ $date      = $container->get('date');
 
 	<!--Delivery Weekday-->
 	<th width="5%" class="left">
-		<?php echo $grid->sortTitle('外送日', 'institute.title'); ?>
+		<?php echo $grid->sortTitle('外送日', 'institute.delivery_weekday'); ?>
 	</th>
 
 	<!--Color for Weekday-->
