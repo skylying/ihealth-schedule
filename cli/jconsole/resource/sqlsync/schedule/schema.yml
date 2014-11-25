@@ -277,7 +277,7 @@
         sender_id: { Field: sender_id, Type: int(11), 'Null': YES, Default: null, Extra: '', Comment: 外送藥師編號, From: [sender_id] }
         sender_name: { Field: sender_name, Type: varchar(255), 'Null': YES, Default: null, Extra: '', Comment: 外送藥師, From: [sender_name] }
         date: { Field: date, Type: date, 'Null': YES, Default: null, Extra: '', Comment: 排程日期, From: [date] }
-        weekday: { Field: weekday, Type: 'enum(''MON'',''TUE'',''WED'',''THU'',''FRI'',''SAT'',''SUN'')', 'Null': YES, Default: null, Extra: '', Comment: '', From: [weekday] }
+        weekday: { Field: weekday, Type: 'enum(''MON'',''TUE'',''WED'',''THU'',''FRI'',''SAT'',''SUN'')', 'Null': YES, Default: null, Extra: '', Comment: 外送日, From: [weekday] }
         sorted: { Field: sorted, Type: tinyint(1), 'Null': YES, Default: null, Extra: '', Comment: '是否完成分藥 (0:否 / 1:是)', From: [sorted] }
         deliver_nth: { Field: deliver_nth, Type: 'enum(''1st'',''2nd'',''3rd'')', 'Null': YES, Default: null, Extra: '', Comment: '第幾次宅配', From: [deliver_nth] }
         drug_empty_date: { Field: drug_empty_date, Type: date, 'Null': YES, Default: null, Extra: '', Comment: 藥品吃完日, From: [drug_empty_date] }

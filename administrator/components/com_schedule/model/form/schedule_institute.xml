@@ -84,7 +84,7 @@
 
 		<field name="weekday"
 			type="hidden"
-			default="NULL"
+			default=""
 			/>
 
 		<field id="institute_date"
