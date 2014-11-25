@@ -97,7 +97,7 @@ $date      = $container->get('date');
 	</th>
 
 	<!-- 宅配次數 -->
-	<th class="center">
+	<th width="10%" class="center">
 		<?php echo $grid->sortTitle('宅配次數', 'rxindividual.deliver_nths'); ?>
 	</th>
 
@@ -215,9 +215,20 @@ $date      = $container->get('date');
 		<!-- 宅配次數 -->
 		<td class="center">
 			<?php
-			foreach (explode(',', $item->deliver_nths) as $nth)
+			$nths = explode(',', $item->deliver_nths);
+			$fadeStyle = 'style="background-color: #ddd;"';
+
+			foreach (array('1st', '2nd', '3rd') as $nth)
 			{
-				echo '<span class="badge">' . substr($nth, 0, 1) . '</span> ';
+				if (!in_array($nth, $nths))
+				{
+					echo '<span class="badge" ' . $fadeStyle . '>' . substr($nth, 0, 1) . '</span> ';
+				}
+				else
+				{
+					echo '<span class="badge">' . substr($nth, 0, 1) . '</span> ';
+				}
+
 			}
 			?>
 		</td>
