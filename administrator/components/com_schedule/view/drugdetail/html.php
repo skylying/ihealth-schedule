@@ -263,7 +263,7 @@ class ScheduleViewDrugdetailHtml extends EditView
 
 		if ($this->data->weekday != '*')
 		{
-			$q->where("DAYOFWEEK(task.date) = " . $this->data->weekday);
+			$q->where("schedule.weekday = " . $q->quote($this->data->weekday));
 		}
 		else
 		{

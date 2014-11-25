@@ -163,6 +163,7 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 			$task          = $this->getUpdatedScheduleTaskData($sender, $schedule);
 
 			$this->data["schedules_{$nth}"] = $this->getScheduleUploadData($task->id, $address, $nth, $schedule, $route);
+			$this->data["schedules_{$nth}"]["weekday"] = $route->weekday;
 
 			$scheduleModel->getState()->set("sender_id", $route->sender_id);
 			$scheduleModel->save($this->data["schedules_{$nth}"]);
