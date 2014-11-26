@@ -142,6 +142,9 @@ HTML;
 		$buttonSet['unpublish']['access'] = false;
 		$buttonSet['edit']['access'] = false;
 		$buttonSet['checkin']['access'] = false;
+		$buttonSet['add']['access'] = false;
+		$buttonSet['duplicate']['access'] = false;
+		$buttonSet['delete']['access'] = false;
 
 		return $buttonSet;
 	}

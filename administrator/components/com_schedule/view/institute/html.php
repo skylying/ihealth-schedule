@@ -83,4 +83,23 @@ class ScheduleViewInstituteHtml extends EditView
 	{
 		parent::prepareRender();
 	}
+
+	/**
+	 * configToolbar
+	 *
+	 * @param array $buttonSet
+	 * @param null  $canDo
+	 *
+	 * @return  array
+	 */
+	protected function configureToolbar($buttonSet = array(), $canDo = null)
+	{
+		// Get default button set.
+		$buttonSet = parent::configureToolbar($buttonSet, $canDo);
+
+		$buttonSet['save2new']['access'] = false;
+		$buttonSet['save2copy']['access'] = false;
+
+		return $buttonSet;
+	}
 }
