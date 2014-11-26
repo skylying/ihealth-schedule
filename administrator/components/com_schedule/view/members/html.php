@@ -128,6 +128,7 @@ class ScheduleViewMembersHtml extends GridView
 		$buttonSet['unpublish']['access'] = false;
 		$buttonSet['checkin']['access'] = false;
 		$buttonSet['batch']['access'] = false;
+		$buttonSet['duplicate']['access'] = false;
 
 		return $buttonSet;
 	}

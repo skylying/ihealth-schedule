@@ -104,4 +104,22 @@ class ScheduleViewMemberHtml extends EditView
 		$form->setValue('password', null);
 		$form->setValue('password2', null);
 	}
+
+	/**
+	 * configToolbar
+	 *
+	 * @param array $buttonSet
+	 * @param null  $canDo
+	 *
+	 * @return  array
+	 */
+	protected function configureToolbar($buttonSet = array(), $canDo = null)
+	{
+		$buttonSet = parent::configureToolbar($buttonSet, $canDo);
+
+		$buttonSet['save2new']['access'] = false;
+		$buttonSet['save2copy']['access'] = false;
+
+		return $buttonSet;
+	}
 }

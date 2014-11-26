@@ -103,6 +103,23 @@
 			<option value="">JGLOBAL_SORT_BY</option>
 			<option value="institute.id ASC">依機構編號升序排列</option>
 			<option value="institute.id DESC">依機構編號降序排列</option>
+			<option value="institute.short_title ASC">機構簡稱升序排列</option>
+			<option value="institute.short_title DESC">機構簡稱降序排列</option>
+			<option value="institute.delivery_weekday ASC">外送日升序排列</option>
+			<option value="institute.delivery_weekday DESC">外送日降序排列</option>
+			<option value="institute.color_hex ASC">註記顏色升序排列</option>
+			<option value="institute.color_hex DESC">註記顏色降序排列</option>
+			<option value="institute.sender_name ASC">依外送藥師升序排列</option>
+			<option value="institute.sender_name DESC">依外送藥師降序排列</option>
+			<option value="institute.tel ASC">電話升序排列</option>
+			<option value="institute.tel DESC">電話降序排列</option>
+			<option value="institute.city ASC">縣市升序排列</option>
+			<option value="institute.city DESC">縣市降序排列</option>
+			<option value="institute.area ASC">區域升序排列</option>
+			<option value="institute.area DESC">區域降序排列</option>
+			<option value="institute.address ASC">地址升序排列</option>
+			<option value="institute.address DESC">地址降序排列</option>
+
 		</field>
 
 		<field
