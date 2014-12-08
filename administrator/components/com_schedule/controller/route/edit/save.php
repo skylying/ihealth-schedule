@@ -26,12 +26,7 @@ class ScheduleControllerRouteEditSave extends SaveController
 		parent::preSaveHook();
 
 		// Get data input ("sender_id" and "weekday")
-		$data = $this->input->get('data', array(), 'ARRAY');
-
-		if (!empty($data))
-		{
-			$this->data = $data;
-		}
+		$this->data = $this->input->get('data', array(), 'ARRAY');
 	}
 
 	/**
@@ -95,24 +90,19 @@ class ScheduleControllerRouteEditSave extends SaveController
 
 		$modelInstitute = $this->getModel('Institute');
 
-		// Update institute "sender_id" and "delivery_weekday"
 		foreach ($validDataSet as $data)
 		{
 			$route = $this->model->getItem($data['id']);
 
+			// Update institute "sender_id", "sender_name" and "delivery_weekday"
 			if ('institute' === $route->type)
 			{
-				$updateData = array('id' => $route->institute_id);
-
-				if (!empty($data['sender_id']))
-				{
-					$updateData['sender_id'] = $data['sender_id'];
-				}
-
-				if (!empty($data['weekday']))
-				{
-					$updateData['delivery_weekday'] = $data['weekday'];
-				}
+				$updateData = array(
+					'id' => $route->institute_id,
+					'sender_id' => $route->sender_id,
+					'sender_name' => $route->sender_name,
+					'delivery_weekday' => $route->weekday,
+				);
 
 				$modelInstitute->save($updateData);
 			}
