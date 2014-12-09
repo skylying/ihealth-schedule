@@ -1,13 +1,10 @@
 <?php
 
 use Windwalker\Controller\Edit\SaveController;
-use Schedule\Helper\ScheduleHelper;
 use Schedule\Table\Table;
-use Schedule\Table\Collection as TableCollection;
 use Windwalker\Data\Data;
 use Windwalker\Joomla\DataMapper\DataMapper;
 use Windwalker\Helper\DateHelper;
-use Schedule\Helper\MailHelper;
 
 /**
  * Class SaveController
@@ -16,13 +13,6 @@ use Schedule\Helper\MailHelper;
  */
 class ScheduleControllerScheduleEditSave extends SaveController
 {
-	/**
-	 * Property sendNotifyMail.
-	 *
-	 * @var  bool
-	 */
-	protected $sendNotifyMail = false;
-
 	/**
 	 * preSaveHook
 	 *
@@ -43,17 +33,6 @@ class ScheduleControllerScheduleEditSave extends SaveController
 		elseif (isset($this->data['individual_type']))
 		{
 			$this->data['type'] = $this->data['individual_type'];
-		}
-
-		if (!empty($this->data['id']) && $this->data['id'] > 0)
-		{
-			$oldScheduleTable = TableCollection::loadTable('Schedule', $this->data['id']);
-
-			if (! empty($oldScheduleTable->id)
-				&& ScheduleHelper::checkScheduleChanged($oldScheduleTable->getProperties(), $this->data))
-			{
-				$this->sendNotifyMail = true;
-			}
 		}
 
 		$task = (new DataMapper(Table::TASKS))->findOne(
@@ -118,30 +97,6 @@ JAVASCRIPT;
 	protected function postSaveHook($model, $validData)
 	{
 		parent::postSaveHook($model, $validData);
-
-		if ($this->sendNotifyMail)
-		{
-			$oldScheduleTable = TableCollection::loadTable('Schedule', $this->data['id']);
-
-			$memberTable = TableCollection::loadTable('Member', $oldScheduleTable->member_id);
-			$rx = (new DataMapper(Table::PRESCRIPTIONS))->findOne($oldScheduleTable->rx_id);
-
-			if (!empty($memberTable->email) && 'individual' === $rx->type)
-			{
-				$schedules = (new DataMapper(Table::SCHEDULES))->find(array('rx_id' => $oldScheduleTable->rx_id));
-				$drugsModel = $this->getModel('Drugs');
-				$drugsModel->getState()->set('filter', array('drug.rx_id' => $oldScheduleTable->rx_id));
-
-				$mailData = array(
-					'schedules' => $schedules,
-					'rx'        => $rx,
-					'drugs'     => $drugsModel->getItems(),
-					'member'    => $memberTable,
-				);
-
-				MailHelper::sendMailWhenScheduleChange($memberTable->email, $mailData);
-			}
-		}
 	}
 
 	/**
