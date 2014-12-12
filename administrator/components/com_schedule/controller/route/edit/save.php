@@ -149,7 +149,7 @@ class ScheduleControllerRouteEditSave extends SaveController
 	}
 
 	/**
-	 * foo
+	 * updateSchedules
 	 *
 	 * @param  \stdClass  $route  Route data
 	 *
