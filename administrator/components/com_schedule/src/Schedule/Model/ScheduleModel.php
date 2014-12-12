@@ -174,6 +174,10 @@ class ScheduleModel extends AdminModel
 			$table->sender_id = $senderId;
 			$table->sender_name = $tableSender->name;
 		}
+
+		$weekdays = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI'];
+		$day = DateHelper::getDate($this->data['date'])->dayofweek;
+		$table->weekday = empty($weekdays[$day]) ? null : $weekdays[$day];
 	}
 
 	/**
