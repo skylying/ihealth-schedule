@@ -51,5 +51,5 @@ $item      = $data->item;
 			<?php echo JHtml::_('form.token'); ?>
 		</div>
 	</form>
+	<br/>
 </div>
-
