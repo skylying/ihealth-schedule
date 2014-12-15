@@ -3,6 +3,10 @@
 use Windwalker\Controller\Edit\SaveController;
 use Windwalker\Model\Exception\ValidateFailException;
 use Schedule\Table\Collection as TableCollection;
+use Schedule\Table\Table;
+use Schedule\Helper\ScheduleHelper;
+use Windwalker\Joomla\DataMapper\DataMapper;
+use Windwalker\Data\Data;
 
 /**
  * Class ScheduleControllerRouteEditSave
@@ -17,6 +21,34 @@ class ScheduleControllerRouteEditSave extends SaveController
 	protected $useTransaction = true;
 
 	/**
+	 * Property scheduleModel.
+	 *
+	 * @var  ScheduleModelSchedule
+	 */
+	protected $scheduleModel;
+
+	/**
+	 * Property taskMapper.
+	 *
+	 * @var  DataMapper
+	 */
+	protected $taskMapper;
+
+	/**
+	 * Property taskModel.
+	 *
+	 * @var  ScheduleModelTask
+	 */
+	protected $taskModel;
+
+	/**
+	 * Property taskState.
+	 *
+	 * @var  JRegistry
+	 */
+	protected $taskState;
+
+	/**
 	 * preSaveHook
 	 *
 	 * @return  void
@@ -26,12 +58,7 @@ class ScheduleControllerRouteEditSave extends SaveController
 		parent::preSaveHook();
 
 		// Get data input ("sender_id" and "weekday")
-		$data = $this->input->get('data', array(), 'ARRAY');
-
-		if (!empty($data))
-		{
-			$this->data = $data;
-		}
+		$this->data = $this->input->get('data', array(), 'ARRAY');
 	}
 
 	/**
@@ -87,6 +114,11 @@ class ScheduleControllerRouteEditSave extends SaveController
 	 */
 	protected function postSaveHook($model, $validDataSet)
 	{
+		$this->scheduleModel = $this->getModel('Schedule', '', array('ignore_request' => true));
+		$this->taskModel = $this->getModel('Task', '', array('ignore_request' => true));
+		$this->taskState = $this->taskModel->getState();
+		$this->taskMapper = new DataMapper(Table::TASKS);
+
 		// Fix task "edit.apply" redirect to edit page without id
 		if (count($validDataSet) === 1)
 		{
@@ -95,28 +127,116 @@ class ScheduleControllerRouteEditSave extends SaveController
 
 		$modelInstitute = $this->getModel('Institute');
 
-		// Update institute "sender_id" and "delivery_weekday"
 		foreach ($validDataSet as $data)
 		{
 			$route = $this->model->getItem($data['id']);
 
+			// Update institute "sender_id", "sender_name" and "delivery_weekday"
 			if ('institute' === $route->type)
 			{
-				$updateData = array('id' => $route->institute_id);
-
-				if (!empty($data['sender_id']))
-				{
-					$updateData['sender_id'] = $data['sender_id'];
-				}
-
-				if (!empty($data['weekday']))
-				{
-					$updateData['delivery_weekday'] = $data['weekday'];
-				}
+				$updateData = array(
+					'id' => $route->institute_id,
+					'sender_id' => $route->sender_id,
+					'sender_name' => $route->sender_name,
+					'delivery_weekday' => $route->weekday,
+				);
 
 				$modelInstitute->save($updateData);
 			}
+
+			$this->updateSchedules($route);
 		}
+	}
+
+	/**
+	 * updateSchedules
+	 *
+	 * @param  \stdClass  $route  Route data
+	 *
+	 * @return  void
+	 */
+	private function updateSchedules($route)
+	{
+		$db = JFactory::getDbo();
+		$query = $db->getQuery(true);
+		$select = [
+			'schedule.id', 'schedule.task_id', 'rx.see_dr_date', 'rx.`period`',
+			'schedule.deliver_nth', 'schedule.`weekday`', 'schedule.`date`'
+		];
+
+		// 取得需要修改日期的排程
+		$query->clear()
+			->select($select)
+			->from(Table::SCHEDULES . ' AS schedule')
+			->leftJoin(Table::PRESCRIPTIONS . ' AS rx ON schedule.rx_id=rx.id')
+			->where('schedule.route_id=' . $route->id)
+			->where('schedule.`weekday`<>' . $db->q($route->weekday))
+			->where('schedule.`status` NOT IN ("deleted", "cancel_only", "delivered")');
+
+		$schedules = $db->setQuery($query)->loadAssocList();
+		$tasks = [];
+
+		foreach ($schedules as $index => $schedule)
+		{
+			$sendDate = ScheduleHelper::calculateSendDate(
+				$schedule['deliver_nth'],
+				$schedule['see_dr_date'],
+				$schedule['period'],
+				$route->weekday
+			);
+
+			$taskKey = $sendDate->toSql(true) . $route->sender_id;
+
+			if (empty($tasks[$taskKey]))
+			{
+				$task = $this->taskMapper->findOne(
+					array(
+						'date' => $sendDate->toSql(true),
+						'sender' => $route->sender_id,
+					)
+				);
+
+				if (empty($task->id))
+				{
+					$task = $this->createTask($sendDate, $route);
+				}
+
+				$tasks[$taskKey] = $task;
+			}
+
+			$schedule['date'] = $sendDate->toSql(true);
+			$schedule['task_id'] = $tasks[$taskKey]->id;
+			$schedule['sender_id'] = $route->sender_id;
+			$schedule['sender_name'] = $route->sender_name;
+			$schedule['weekday'] = $route->weekday;
+
+			$this->scheduleModel->save($schedule);
+		}
+	}
+
+	/**
+	 * createTask
+	 *
+	 * @param   JDate      $sendDate
+	 * @param   \stdClass  $route
+	 *
+	 * @return  Data
+	 */
+	private function createTask(JDate $sendDate, $route)
+	{
+		$task = array(
+			'status' => 0,
+			'sender' => $route->sender_id,
+			'sender_name' => $route->sender_name,
+			'date' => $sendDate->toSql(true),
+		);
+
+		$this->taskState->set('task.id', 0);
+		$this->taskModel->save($task);
+
+		$task['id'] = $this->taskState->get('task.id');
+
+		return new Data($task);
 	}
 
 	/**
