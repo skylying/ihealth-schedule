@@ -176,7 +176,7 @@ class ScheduleModel extends AdminModel
 		}
 
 		$weekdays = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI'];
-		$day = DateHelper::getDate($this->data['date'])->dayofweek;
+		$day = DateHelper::getDate($table->date)->dayofweek;
 		$table->weekday = empty($weekdays[$day]) ? null : $weekdays[$day];
 	}
 
