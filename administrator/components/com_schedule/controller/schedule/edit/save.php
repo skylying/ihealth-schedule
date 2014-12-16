@@ -45,12 +45,6 @@ class ScheduleControllerScheduleEditSave extends SaveController
 			$this->data['type'] = $this->data['individual_type'];
 		}
 
-		if (($this->data['type'] != 'individual') && ($this->data['type'] != 'resident'))
-		{
-			$weekday = DateHelper::getDate($this->data['date'])->dayofweek;
-			$this->data['weekday'] = $this->getWeekDayString($weekday);
-		}
-
 		if (!empty($this->data['id']) && $this->data['id'] > 0)
 		{
 			$oldScheduleTable = TableCollection::loadTable('Schedule', $this->data['id']);
@@ -171,19 +165,5 @@ JAVASCRIPT;
 		$task['id'] = $taskModel->getState()->get('task.id');
 
 		return new Data($task);
-	}
-
-	/**
-	 * getWeekDayString
-	 *
-	 * @param $day
-	 *
-	 * @return  string
-	 */
-	protected function getWeekDayString($day)
-	{
-		$weekdays = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI'];
-
-		return empty($weekdays[$day]) ? null : $weekdays[$day];
 	}
 }
