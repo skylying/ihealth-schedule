@@ -98,13 +98,13 @@ class ScheduleHelper
 			->from(Table::HOLIDAYS)
 			->where('`state`=1')
 			->where('`weekday`=' . $db->q($weekday))
-			->where('`date`>' . $db->q($date->format('Y-m-d', true, false)));
+			->where('`date`>=' . $db->q($date->format('Y-m-d', true, false)));
 
 		// Convert date string to timestamp
 		$holidays = array_map(
 			function ($val)
 			{
-				return strtotime($val);
+				return DateHelper::getDate($val)->getTimestamp();
 			},
 			$db->setQuery($query, 0, $maxHolidays)->loadColumn()
 		);
