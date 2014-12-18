@@ -58,7 +58,7 @@
 
 		<field
 			name="see_dr_date_start"
-			type="calendar"
+			type="calendar2"
 			label="選擇就醫日期(起)"
 			description="選擇就醫日期(起)"
 			hint="選擇就醫日期(起)"
@@ -66,7 +66,7 @@
 
 		<field
 			name="see_dr_date_end"
-			type="calendar"
+			type="calendar2"
 			label="選擇就醫日期(訖)"
 			description="選擇就醫日期(訖)"
 			hint="選擇就醫日期(訖)"
