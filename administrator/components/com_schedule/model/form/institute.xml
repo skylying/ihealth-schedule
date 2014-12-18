@@ -8,7 +8,6 @@
 			type="text"
 			label="機構編號"
 			readonly="true"
-			class="readonly"
 			description="機構編號"
 			/>
 
@@ -16,16 +15,16 @@
 			type="text"
 			label="機構名稱"
 			description="機構名稱"
-			readonly="true"
-			class="readonly input-xxlarge required"
+			disabled="true"
+			class="input-xxlarge required"
 			/>
 
 		<field name="short_title"
 			type="text"
 			label="機構簡稱"
 			description="機構簡稱"
-			readonly="true"
-			class="readonly input-xxlarge required"
+			disabled="true"
+			class="input-xxlarge required"
 			/>
 
 		<field name="floor"
@@ -39,16 +38,16 @@
 			type="text"
 			label="電話"
 			description="電話"
-			readonly="true"
-			class="readonly input-xxlarge required"
+			disabled="true"
+			class="input-xxlarge required"
 			/>
 
 		<field name="fax"
 			type="text"
 			label="傳真"
 			description="傳真"
-			readonly="true"
-			class="readonly input-xxlarge"
+			disabled="true"
+			class="input-xxlarge"
 			/>
 
 		<field name="city"
@@ -58,8 +57,8 @@
 			value_field="title"
 			label="縣市"
 			description="縣市"
-			readonly="true"
-			class="readonly input-xxlarge required"
+			disabled="true"
+			class="input-xxlarge required"
 			/>
 
 		<field name="area"
@@ -69,16 +68,16 @@
 			value_field="title"
 			label="區域"
 			description="區域"
-			readonly="true"
-			class="readonly input-xxlarge required"
+			disabled="true"
+			class="input-xxlarge required"
 			/>
 
 		<field name="address"
 			type="text"
 			label="地址"
 			description="地址"
-			readonly="true"
-			class="readonly input-xxlarge required"
+			disabled="true"
+			class="input-xxlarge required"
 			/>
 
 		<field name="sender_id"
@@ -87,16 +86,16 @@
 			value_field="name"
 			label="外送藥師"
 			description="外送藥師"
-			readonly="true"
-			class="readonly input-xxlarge required"
+			disabled="true"
+			class="input-xxlarge required"
 			/>
 
 		<field name="delivery_weekday"
 			type="list"
 			label="外送日"
 			description="外送日"
-			readonly="true"
-			class="readonly input-xxlarge required"
+			disabled="true"
+			class="input-xxlarge required"
 			>
 			<option value="MON">MON</option>
 			<option value="TUE">TUE</option>
