@@ -23,5 +23,5 @@ class JFormRuleDate extends JFormRule
 	 * @since  11.1
 	 * @see    http://www.w3.org/TR/html-markup/input.email.html
 	 */
-	protected $regex = '20[0-9]{2}-[0-1][0-9]-[0-3][0-9]$';
+	protected $regex = '[1-2][0-9]{3}-[0-1][0-9]-[0-3][0-9]$';
 }
