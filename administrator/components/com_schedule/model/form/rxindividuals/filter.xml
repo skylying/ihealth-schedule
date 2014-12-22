@@ -48,7 +48,6 @@
 			label=""
 			description=""
 			hint="選擇就醫日期(起)"
-			validate="date"
 			/>
 
 		<field
@@ -57,7 +56,6 @@
 			label=""
 			description=""
 			hint="選擇就醫日期(訖)"
-			validate="date"
 			/>
 
 		<field

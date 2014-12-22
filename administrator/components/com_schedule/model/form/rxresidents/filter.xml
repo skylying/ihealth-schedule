@@ -62,7 +62,6 @@
 			label="選擇就醫日期(起)"
 			description="選擇就醫日期(起)"
 			hint="選擇就醫日期(起)"
-			validate="date"
 			/>
 
 		<field
@@ -72,7 +71,6 @@
 			description="選擇就醫日期(訖)"
 			hint="選擇就醫日期(訖)"
 			onchange="this.form.submit();"
-			validate="date"
 			/>
 
 		<field name="rxresident.method"
