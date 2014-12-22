@@ -5,8 +5,6 @@ use Windwalker\Joomla\DataMapper\DataMapper;
 use Windwalker\Data\Data;
 use Schedule\Table\Table;
 use Schedule\Table\Collection as TableCollection;
-use Schedule\Helper\ScheduleHelper;
-use Schedule\Helper\MailHelper;
 use Windwalker\Model\Exception\ValidateFailException;
 
 /**
@@ -147,15 +145,9 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 			{
 				$this->deleteSchedule($schedule['schedule_id']);
 
-				if (! empty($schedule['schedule_id']))
-				{
-					$this->data["schedules_{$nth}"]['send_confirm_email'] = true;
-				}
-
 				continue;
 			}
 
-			$scheduleTable = TableCollection::loadTable('Schedule', $schedule['schedule_id']);
 			$address       = $this->mapper['address']->findOne($schedule["address_id"]);
 			$lastAddress   = $address;
 			$route         = $this->getUpdatedRouteData($address, $schedule);
@@ -167,18 +159,6 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 
 			$scheduleModel->getState()->set("sender_id", $route->sender_id);
 			$scheduleModel->save($this->data["schedules_{$nth}"]);
-
-			$checkedSchedule = ScheduleHelper::checkScheduleChanged($scheduleTable->getProperties(), $this->data["schedules_{$nth}"]);
-
-			// If schedule was updated or new a schedule then we will send this email with data.
-			if ((! empty($scheduleTable->id) && $checkedSchedule !== false) || empty($scheduleTable->id))
-			{
-				$this->data["schedules_{$nth}"]['send_confirm_email'] = true;
-
-				$scheduleId = $scheduleModel->getState()->get('schedule.id');
-
-				$schedules[] = $scheduleModel->getItem($scheduleId);
-			}
 		}
 
 		// Flush default address when lastAddress is not empty
@@ -191,24 +171,6 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 		$customerModel = $this->getModel('Customer', '', array('ignore_request' => true));
 
 		$customerModel->setCustomerState(1, [$this->customer->id]);
-
-		// Send notify email to member
-		if ($this->sendNotifyMailToMember())
-		{
-			$memberTable = TableCollection::loadTable('Member', $validData['member_id']);
-			$drugsModel = $this->getModel('Drugs');
-
-			$drugsModel->getState()->set('filter', array('drug.rx_id' => $this->data['id']));
-
-			$mailData = array(
-				'schedules' => $schedules,
-				'rx'        => new Data($model->getItem($this->data['id'])),
-				'drugs'     => $drugsModel->getItems(),
-				'member'    => $memberTable,
-			);
-
-			MailHelper::sendMailWhenScheduleChange($memberTable->email, $mailData);
-		}
 
 		// Store images
 		$imageModel = $this->getModel('Image');
@@ -225,29 +187,6 @@ class ScheduleControllerRxindividualEditSave extends SaveController
 				$imageModel->save($image);
 			}
 		}
-	}
-
-	/**
-	 * sendNotifyMailToMember
-	 *
-	 * @return  bool
-	 */
-	private function sendNotifyMailToMember()
-	{
-		if ($this->isNew)
-		{
-			return true;
-		}
-
-		foreach (array("1st", "2nd", "3rd") as $nth)
-		{
-			if (! empty($this->data["schedules_{$nth}"]['send_confirm_email']))
-			{
-				return true;
-			}
-		}
-
-		return false;
 	}
 
 	/**

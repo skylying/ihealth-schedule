@@ -4,9 +4,6 @@ use Windwalker\Controller\Edit\SaveController;
 use Schedule\Table\Table as Table;
 use Windwalker\Joomla\DataMapper\DataMapper;
 use Windwalker\Data\Data;
-use Schedule\Table\Collection as TableCollection;
-use Schedule\Helper\ScheduleHelper;
-use Schedule\Helper\MailHelper;
 use Windwalker\Model\Exception\ValidateFailException;
 
 /**
@@ -61,13 +58,6 @@ class ScheduleControllerScheduleEdit extends SaveController
 	 * @var  boolean
 	 */
 	protected $useTransaction = false;
-
-	/**
-	 * Property sendNotifyMail.
-	 *
-	 * @var  array
-	 */
-	protected $sendNotifyMail = array();
 
 	/**
 	 * Prepare execute hook.
@@ -135,15 +125,6 @@ class ScheduleControllerScheduleEdit extends SaveController
 			}
 
 			$items[$id]['task_id'] = $task->id;
-
-			$oldScheduleTable = TableCollection::loadTable('Schedule', $id);
-
-			if (!empty($oldScheduleTable->id)
-				&& ScheduleHelper::checkScheduleChanged($oldScheduleTable->getProperties(), $this->stateData)
-			)
-			{
-				$this->sendNotifyMail[] = $id;
-			}
 		}
 	}
 
@@ -209,30 +190,6 @@ class ScheduleControllerScheduleEdit extends SaveController
 	 */
 	protected function postSaveHook($model, $validDataSet)
 	{
-		foreach ($this->sendNotifyMail as $scheduleId)
-		{
-			$oldScheduleTable = TableCollection::loadTable('Schedule', $scheduleId);
-
-			$memberTable = TableCollection::loadTable('Member', $oldScheduleTable->member_id);
-			$rx          = (new DataMapper(Table::PRESCRIPTIONS))->findOne($oldScheduleTable->rx_id);
-
-			if (!empty($memberTable->email) && 'individual' === $rx->type)
-			{
-				$schedules  = (new DataMapper(Table::SCHEDULES))->find(array('rx_id' => $oldScheduleTable->rx_id));
-				$drugsModel = $this->getModel('Drugs');
-				$drugsModel->getState()->set('filter', array('drug.rx_id' => $oldScheduleTable->rx_id));
-
-				$mailData = array(
-					'schedules' => $schedules,
-					'rx'        => $rx,
-					'drugs'     => $drugsModel->getItems(),
-					'member'    => $memberTable,
-				);
-
-				MailHelper::sendMailWhenScheduleChange($memberTable->email, $mailData);
-			}
-		}
-
 		$this->redirect(JRoute::_('index.php?option=com_schedule&view=schedules', false));
 	}
 
