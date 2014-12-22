@@ -44,6 +44,9 @@
 			this.addressTemplate    = $('#address-template');
 			this.addressAppendArea  = $('#address-append-area');
 
+			// Institute Id Element
+			this.$instituteId = $('#jform_institute_id');
+
 			// Prevent too much keyup event
 			this.defaultSwitch = false;
 
@@ -368,6 +371,28 @@
 			var pattern = /^[12][0-9]{3}-[01][0-9]-[0-3][0-9]/;
 
 			return birthday.match(pattern) ? true : false;
+		},
+
+		/**
+		 * Triggered by institute_id onchange event
+		 *
+		 * It will return a callback function, which contains params:
+		 * - {object}  e     Event object, Contains the following custom properties:
+		 *                        - val:     The current selection (taking into account the result of the change) - id or array of ids.
+		 *                        - added:   The added element, if any - the full element object, not just the id.
+		 *                        - removed: The removed element, if any - the full element object, not just the id.
+		 * - {element} $node Current Element node
+		 */
+		instituteIdChange: function()
+		{
+			var self = this;
+
+			return function(e, $node)
+			{
+				var data = $node.select2('data');
+
+				self.$instituteId.val(data.id);
+			};
 		}
 	};
 })(jQuery);

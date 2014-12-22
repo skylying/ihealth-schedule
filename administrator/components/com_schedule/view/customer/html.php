@@ -79,11 +79,21 @@ class ScheduleViewCustomerHtml extends EditView
 		parent::__construct($model, $container, $config, $paths);
 	}
 
-	protected function prepareRender()
+	/**
+	 * prepareData
+	 *
+	 * @return  void
+	 */
+	protected function prepareData()
 	{
+		$form = $this->data->form;
+
 		// Prepare isNew variable for javascript
 		$this->data->isNew = $this->container->get('input')->get('id') ? 'false' : 'true';
 
-		parent::prepareRender();
+		// Set select2 element value
+		$form->setValue('institute_id_selection', null, $form->getValue('institute_id'));
+
+		parent::prepareData();
 	}
 }
