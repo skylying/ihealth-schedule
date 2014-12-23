@@ -67,6 +67,10 @@ $asset->addJs('library/jquery.touchSwipe.js');
 		{
 			display: none;
 		}
+
+		a[href]:after {
+			content: none !important;
+		}
 	}
 </style>
 
