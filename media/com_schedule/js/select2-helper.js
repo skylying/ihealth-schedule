@@ -112,7 +112,10 @@
 						ret[config.textField] = term + (termExists ? '' : ' (新)');
 						ret['_new'] = !termExists;
 
-						return ret;
+						if (!termExists)
+						{
+							return ret;
+						}
 					}
 
 					return null;
