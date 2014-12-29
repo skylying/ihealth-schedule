@@ -43,7 +43,7 @@
 	<fields name="filter">
 		<field
 			name="task.date_start"
-			type="calendar"
+			type="calendar2"
 			default=""
 			format="%Y-%m-%d"
 			label="預計外送日(起)"
@@ -51,7 +51,7 @@
 
 		<field
 			name="task.date_end"
-			type="calendar"
+			type="calendar2"
 			format="%Y-%m-%d"
 			default=""
 			label="預計外送日(迄)"
