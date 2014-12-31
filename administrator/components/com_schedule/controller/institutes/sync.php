@@ -303,7 +303,7 @@ class ScheduleControllerInstitutesSync extends AbstractRedirectController
 								'address' => $item->address,
 							]
 						),
-						['institute_id' => $item->id, new InCompare('status', 'scheduled,emergency,pause')]
+						['institute_id' => $item->id, (string) new InCompare('`status`', ['"scheduled"','"emergency"','"pause"'])]
 					);
 					break;
 			}
