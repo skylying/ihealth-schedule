@@ -34,6 +34,7 @@ class ScheduleModelTask extends TaskModel
 		$query->clear()
 			->update(Table::SCHEDULES)
 			->set('status = "delivered"')
+			->set('notify = 0')
 			->where('task_id = ' . $taskId)
 			->where('status = "scheduled"');
 
