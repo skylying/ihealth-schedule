@@ -86,8 +86,6 @@ class ScheduleControllerInstitutesSync extends AbstractRedirectController
 			$this->saveInstitutes((array) $result['items']);
 		}
 
-		$this->updateInstituteState();
-
 		$this->setMessage(sprintf('同步完成, 已同步 %d 筆資料', $total));
 
 		$this->redirect(JRoute::_('index.php?option=com_schedule&view=institutes', false));
@@ -124,16 +122,17 @@ class ScheduleControllerInstitutesSync extends AbstractRedirectController
 	 * - note
 	 * - params
 	 *
-	 * @param array $item
+	 * @param \stdClass $item
 	 *
 	 * @return  void
 	 */
 	protected function saveInstitute($item)
 	{
 		$model = $this->getModel('Institute');
+		$oldItem = $model->getItem($item->id);
 
-		$cityId = ArrayHelper::getValue($this->cities, $item->city_title, 0);
-		$areaId = ArrayHelper::getValue($this->areas, $item->area_title, 0);
+		$item->city = ArrayHelper::getValue($this->cities, $item->city_title, 0);
+		$item->area = ArrayHelper::getValue($this->areas, $item->area_title, 0);
 
 		$institute = array(
 			'id' => $item->id,
@@ -141,43 +140,16 @@ class ScheduleControllerInstitutesSync extends AbstractRedirectController
 			'short_title' => $item->inner_title,
 			'tel' => $item->tel,
 			'fax' => $item->fax,
-			'city' => $cityId,
+			'city' => $item->city,
 			'city_title' => $item->city_title,
-			'area' => $areaId,
+			'area' => $item->area,
 			'area_title' => $item->area_title,
 			'address' => $item->address,
-			// Set state to "-11" to mark a updated record
-			'state' => -11,
+			'state' => 1,
 		);
 
 		$model->save($institute);
-	}
 
-	/**
-	 * updateInstituteState
-	 *
-	 * Step 1: If state is not "-11", set state to "0"
-	 * Step 2: If state is     "-11", set state to "1"
-	 *
-	 * @return  void
-	 */
-	protected function updateInstituteState()
-	{
-		$db = \JFactory::getDbo();
-		$query = $db->getQuery(true);
-
-		$query->update(Table::INSTITUTES)
-			->set('state = 0')
-			->where('state <> -11');
-
-		$db->setQuery($query)->execute();
-
-		$query->clear()
-			->update(Table::INSTITUTES)
-			->set('state = 1')
-			->where('state = -11');
-
-		$db->setQuery($query)->execute();
 	}
 
 	/**
