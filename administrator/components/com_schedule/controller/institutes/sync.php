@@ -259,7 +259,6 @@ class ScheduleControllerInstitutesSync extends AbstractRedirectController
 								'city_title' => $item->city_title,
 								'area' => $item->area,
 								'area_title' => $item->area_title,
-								'address' => $item->address,
 							]
 						),
 						['institute_id' => $item->id, 'type' => 'resident']
