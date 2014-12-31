@@ -27,6 +27,7 @@ class ScheduleControllerCustomersAjaxJson extends DisplayController
 		/** @var ScheduleModelCustomers $model */
 		$model = $this->getModel('Customers', '', array('ignore_request' => true));
 		$state = $model->getState();
+		$limit = $state->get('list.limit', 100);
 
 		$state->set(
 			'search',
@@ -35,17 +36,34 @@ class ScheduleControllerCustomersAjaxJson extends DisplayController
 			)
 		);
 
+		$state->set('list.limit', 0);
+
 		$items = array();
+		$equalItems = array();
 
 		foreach ($model->getItems() as $item)
 		{
-			$items[] = array(
+			$data = array(
 				'id' => $item->id,
 				'name' => $item->name,
 				'value' => $item->id,      // For AjaxChosen
 				'text' => $item->name,     // For AjaxChosen
 			);
+
+			if ($query === $item->name)
+			{
+				$equalItems[] = $data;
+			}
+			else
+			{
+				$items[] = $data;
+			}
 		}
+
+		// Limit results
+		$max = count($items) + count($equalItems);
+		$max = ($limit > $max ? $limit : $max) - count($equalItems);
+		$items = array_merge($equalItems, array_slice($items, 0, $max));
 
 		if (count($items) > 0)
 		{
