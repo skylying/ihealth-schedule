@@ -124,7 +124,7 @@ class ScheduleViewInstitutesHtml extends GridView
 			{
 				$html = <<<HTML
 <button class="btn btn-small" type="button"
-	onclick="if(confirm('同步資料會需要花點時間，確定要同步嗎?')){Joomla.submitbutton('institutes.sync');}">
+	onclick="if(confirm('同步資料約需要 5~10 分鐘，同步期間請勿關閉視窗，確定要同步嗎?')){Joomla.submitbutton('institutes.sync');}">
 	<span class="glyphicon glyphicon-transfer"></span> 同步
 </button>
 HTML;

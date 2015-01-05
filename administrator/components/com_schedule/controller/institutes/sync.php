@@ -7,8 +7,10 @@
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
+use Windwalker\Compare\InCompare;
 use Windwalker\Controller\Admin\AbstractRedirectController;
 use Schedule\Icrm\SdkHelper;
+use Windwalker\Data\Data;
 use Windwalker\Helper\ArrayHelper;
 use Schedule\Table\Table;
 use Windwalker\Joomla\DataMapper\DataMapper;
@@ -86,8 +88,6 @@ class ScheduleControllerInstitutesSync extends AbstractRedirectController
 			$this->saveInstitutes((array) $result['items']);
 		}
 
-		$this->updateInstituteState();
-
 		$this->setMessage(sprintf('同步完成, 已同步 %d 筆資料', $total));
 
 		$this->redirect(JRoute::_('index.php?option=com_schedule&view=institutes', false));
@@ -124,16 +124,17 @@ class ScheduleControllerInstitutesSync extends AbstractRedirectController
 	 * - note
 	 * - params
 	 *
-	 * @param array $item
+	 * @param \stdClass $item
 	 *
 	 * @return  void
 	 */
 	protected function saveInstitute($item)
 	{
 		$model = $this->getModel('Institute');
+		$oldItem = $model->getItem($item->id);
 
-		$cityId = ArrayHelper::getValue($this->cities, $item->city_title, 0);
-		$areaId = ArrayHelper::getValue($this->areas, $item->area_title, 0);
+		$item->city = ArrayHelper::getValue($this->cities, $item->city_title, 0);
+		$item->area = ArrayHelper::getValue($this->areas, $item->area_title, 0);
 
 		$institute = array(
 			'id' => $item->id,
@@ -141,43 +142,17 @@ class ScheduleControllerInstitutesSync extends AbstractRedirectController
 			'short_title' => $item->inner_title,
 			'tel' => $item->tel,
 			'fax' => $item->fax,
-			'city' => $cityId,
+			'city' => $item->city,
 			'city_title' => $item->city_title,
-			'area' => $areaId,
+			'area' => $item->area,
 			'area_title' => $item->area_title,
 			'address' => $item->address,
-			// Set state to "-11" to mark a updated record
-			'state' => -11,
+			'state' => 1,
 		);
 
 		$model->save($institute);
-	}
 
-	/**
-	 * updateInstituteState
-	 *
-	 * Step 1: If state is not "-11", set state to "0"
-	 * Step 2: If state is     "-11", set state to "1"
-	 *
-	 * @return  void
-	 */
-	protected function updateInstituteState()
-	{
-		$db = \JFactory::getDbo();
-		$query = $db->getQuery(true);
-
-		$query->update(Table::INSTITUTES)
-			->set('state = 0')
-			->where('state <> -11');
-
-		$db->setQuery($query)->execute();
-
-		$query->clear()
-			->update(Table::INSTITUTES)
-			->set('state = 1')
-			->where('state = -11');
-
-		$db->setQuery($query)->execute();
+		$this->updateRelatedTables($this->findUpdateRelateTables($oldItem, $item), $item);
 	}
 
 	/**
@@ -212,5 +187,125 @@ class ScheduleControllerInstitutesSync extends AbstractRedirectController
 		}
 
 		return $items;
+	}
+
+	/**
+	 * 找出新資料與已有資料的差異處，並決定要更新那些相關聯的 Table
+	 *
+	 * @param \stdClass $oldItem 已有的資料
+	 * @param \stdClass $item    新資料
+	 *
+	 * @return array 需要更新的相關聯 Table 清單
+	 */
+	protected function findUpdateRelateTables($oldItem, $item)
+	{
+		$tables = [];
+
+		if (!empty($oldItem->short_title) && $oldItem->short_title != $item->inner_title)
+		{
+			$tables[] = Table::PRESCRIPTIONS;
+			$tables[] = Table::SCHEDULES;
+		}
+
+		if (!empty($oldItem->city_title) && $oldItem->city_title != $item->city_title)
+		{
+			$tables[] = Table::CUSTOMERS;
+			$tables[] = Table::ROUTES;
+			$tables[] = Table::SCHEDULES;
+		}
+
+		if (!empty($oldItem->area_title) && $oldItem->city_title != $item->area_title)
+		{
+			$tables[] = Table::CUSTOMERS;
+			$tables[] = Table::ROUTES;
+			$tables[] = Table::SCHEDULES;
+		}
+
+		if (!empty($oldItem->address) && $oldItem->address != $item->address)
+		{
+			$tables[] = Table::CUSTOMERS;
+			$tables[] = Table::SCHEDULES;
+		}
+
+		$tables = array_unique($tables);
+
+		return $tables;
+	}
+
+	/**
+	 * 更新相關聯 Table
+	 *
+	 * @param array     $tables Table 清單
+	 * @param \stdClass $item   新資料
+	 *
+	 * @return void
+	 */
+	protected function updateRelatedTables(array $tables, $item)
+	{
+		$customerMapper     = new DataMapper(Table::CUSTOMERS);
+		$prescriptionMapper = new DataMapper(Table::PRESCRIPTIONS);
+		$routeMapper        = new DataMapper(Table::ROUTES);
+		$scheduleMapper     = new DataMapper(Table::SCHEDULES);
+
+		foreach ($tables as $table)
+		{
+			switch ($table)
+			{
+				case Table::CUSTOMERS:
+					$customerMapper->updateAll(
+						new Data(
+							[
+								'city' => $item->city,
+								'city_title' => $item->city_title,
+								'area' => $item->area,
+								'area_title' => $item->area_title,
+							]
+						),
+						['institute_id' => $item->id, 'type' => 'resident']
+					);
+					break;
+
+				case Table::PRESCRIPTIONS:
+					$prescriptionMapper->updateAll(
+						new Data(
+							[
+								'institute_short_title' => $item->inner_title,
+							]
+						),
+						['institute_id' => $item->id, 'type' => 'resident', 'delivered' => 0]
+					);
+					break;
+
+				case Table::ROUTES:
+					$routeMapper->updateAll(
+						new Data(
+							[
+								'city' => $item->city,
+								'city_title' => $item->city_title,
+								'area' => $item->area,
+								'area_title' => $item->area_title,
+							]
+						),
+						['institute_id' => $item->id, 'type' => 'institute']
+					);
+					break;
+
+				case Table::SCHEDULES:
+					$scheduleMapper->updateAll(
+						new Data(
+							[
+								'institute_title' => $item->inner_title,
+								'city' => $item->city,
+								'city_title' => $item->city_title,
+								'area' => $item->area,
+								'area_title' => $item->area_title,
+								'address' => $item->address,
+							]
+						),
+						['institute_id' => $item->id, (string) new InCompare('`status`', ['"scheduled"','"emergency"','"pause"'])]
+					);
+					break;
+			}
+		}
 	}
 }
