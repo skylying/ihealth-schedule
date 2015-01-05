@@ -74,7 +74,8 @@ class ScheduleModelRoutes extends ListModel
 		$queryHelper->addTable('route', '#__schedule_routes')
 					->addTable('sender', '#__schedule_senders', '`route`.`sender_id` = `sender`.`id`')
 					->addTable('area', '#__schedule_areas', '`route`.`area` = `area`.`id`')
-					->addTable('city', '#__schedule_cities', '`route`.`city` = `city`.`id`');
+					->addTable('city', '#__schedule_cities', '`route`.`city` = `city`.`id`')
+					->addTable('institute', '#__schedule_institutes', '`route`.`institute_id` = `institute`.`id`');
 
 		$this->filterFields = array_merge($this->filterFields, $queryHelper->getFilterFields());
 	}
@@ -116,6 +117,11 @@ class ScheduleModelRoutes extends ListModel
 		if (!isset($filters['route.state']) && property_exists($this->getTable(), 'state'))
 		{
 			$query->where($query->quoteName('route.state') . ' >= 0');
+		}
+
+		if (!isset($filters['institutes.state']))
+		{
+			$query->where($query->quoteName('institute.state') . ' = 1');
 		}
 
 		return parent::processFilters($query, $filters);
