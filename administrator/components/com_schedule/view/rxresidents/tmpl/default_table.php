@@ -187,6 +187,7 @@ $asset->addJS('schedules/list.js');
 			<?php echo $this->escape($item->modifier_name); ?>
 		</td>
 
+		<!-- 備註 -->
 		<td>
 			<?php echo $this->escape($item->note); ?>
 		</td>
