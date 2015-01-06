@@ -96,6 +96,11 @@ $asset->addJS('schedules/list.js');
 	<th class="center">
 		<?php echo $grid->sortTitle('最後修改人', 'rxresident.modified_by'); ?>
 	</th>
+
+	<!-- 備註 -->
+	<th class="center">
+		<?php echo $grid->sortTitle('備註', 'rxresident.note'); ?>
+	</th>
 </tr>
 </thead>
 
@@ -180,6 +185,11 @@ $asset->addJS('schedules/list.js');
 		<!-- 修改人 -->
 		<td class="center">
 			<?php echo $this->escape($item->modifier_name); ?>
+		</td>
+
+		<!-- 備註 -->
+		<td>
+			<?php echo $this->escape($item->note); ?>
 		</td>
 	</tr>
 <?php endforeach; ?>
